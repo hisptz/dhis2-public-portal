@@ -5,7 +5,7 @@
   "license": "BSD-3-Clause",
   "private": true,
   "scripts": {
-    "build": "d2-app-scripts build --no-verify",
+    "build": "yarn run tailwind:generate && yarn run tsr:generate && d2-app-scripts build --no-verify",
     "dev": "concurrently --names tsr,tailwind,app 'yarn tsr:watch' 'yarn tailwind:watch' 'yarn start:app'",
     "start:app": "dotenv -- cross-var d2-app-scripts start --proxy %DHIS2_PROXY_URL% --port 3001",
     "test": "d2-app-scripts test",
