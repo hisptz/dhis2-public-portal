@@ -8,8 +8,7 @@
     "dev:manager": "turbo run dev --filter manager",
     "lint": "turbo run lint",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
-    "check-types": "turbo run check-types",
-    "release": "semantic-release"
+    "check-types": "turbo run check-types"
   },
   "devDependencies": {
     "prettier": "^3.5.3",
@@ -23,5 +22,8 @@
   "workspaces": [
     "apps/*",
     "packages/*"
-  ]
+  ],
+  "repository": {
+    "url": "https://github.com/hisptz/dhis2-public-portal.git"
+  }
 }
