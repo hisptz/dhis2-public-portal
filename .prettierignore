@@ -1,0 +1,21 @@
+### react template
+
+logs
+**/*.backup.*
+**/*.back.*
+
+node_modules
+bower_components
+
+*.sublime*
+
+psd
+thumb
+sketch
+
+# DHIS2_INSTANCE Platform
+.d2
+src/locales
+build
+*.env
+cypress.env.json
