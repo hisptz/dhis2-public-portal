@@ -17,6 +17,7 @@
   },
   "devDependencies": {
     "@dhis2/cli-app-scripts": "^12.5.1",
+    "@packages/eslint-config": "*",
     "@tailwindcss/cli": "^4.1.4",
     "@tanstack/router-cli": "^1.116.0",
     "@tanstack/router-devtools": "^1.116.0",
