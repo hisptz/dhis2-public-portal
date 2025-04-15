@@ -3,7 +3,10 @@
 ## Introduction
 
 Overview
-The Customizable Health Portal is a dynamic, publicly accessible web platform designed to transform how national health data is shared, accessed, and understood. At its core, it brings together up-to-date, visualized, and aggregated health data from DHIS2 systems and enhances it with a suite of essential resources,  including strategic reports, guidelines, dashboards, and knowledge libraries, all in one unified, user-friendly space.
+The Customizable Health Portal is a dynamic, publicly accessible web platform designed to transform how national health
+data is shared, accessed, and understood. At its core, it brings together up-to-date, visualized, and aggregated health
+data from DHIS2 systems and enhances it with a suite of essential resources, including strategic reports, guidelines,
+dashboards, and knowledge libraries, all in one unified, user-friendly space.
 But this portal does more than just display data. It solves a real and recurring challenge:
 
 > Public health data is often meant to be open, but accessing it requires permissions and technical know-how.
