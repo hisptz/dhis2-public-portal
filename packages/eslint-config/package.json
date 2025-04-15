@@ -2,7 +2,6 @@
   "name": "@packages/eslint-config",
   "version": "0.0.0",
   "type": "module",
-  "private": true,
   "exports": {
     "./base": "./base.js",
     "./next-js": "./next.js",

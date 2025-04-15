@@ -15,7 +15,6 @@
     "react-dom": "^19.0.0"
   },
   "devDependencies": {
-    "@eslint/eslintrc": "^3",
     "@packages/eslint-config": "*",
     "@svgr/webpack": "^8.1.0",
     "@tailwindcss/postcss": "^4",
