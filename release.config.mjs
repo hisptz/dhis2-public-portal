@@ -3,6 +3,7 @@
  */
 export default {
 	branches: ["main"],
+	branch: "main",
 	plugins: [
 		"@semantic-release/commit-analyzer",
 		"@semantic-release/release-notes-generator",
