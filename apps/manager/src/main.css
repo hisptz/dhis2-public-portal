@@ -1,0 +1,22 @@
+@tailwind utilities;
+
+
+body {
+    background: #F8F9FA;
+}
+
+li.active {
+    background: #D5DDE5 !important;
+    font-weight: bold;
+}
+
+
+.icon-size-48 > svg {
+    width: 48px !important;
+    height: 48px !important;
+}
+
+.icon-size-64 > svg {
+    width: 64px !important;
+    height: 64px !important;
+}

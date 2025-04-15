@@ -1,14 +1,22 @@
-import i18n from '@dhis2/d2-i18n'
-import React, {FC} from 'react'
-import classes from './App.module.css'
+import React from 'react'
+import "./main.css";
+import "./output.css";
+import {createHashHistory, createRouter, RouterProvider} from "@tanstack/react-router";
+import {routeTree} from "./routes.gen";
 
-const MyApp: FC = () => {
 
-		return (
-				<div className={classes.container}>
-						<h1>{i18n.t('Welcome to Portal Manager!')}</h1>
-				</div>
-		)
+const hashHistory = createHashHistory();
+
+const router = createRouter({routeTree, history: hashHistory});
+
+// Register the router instance for type safety
+declare module "@tanstack/react-router" {
+		interface Register {
+				router: typeof router;
+		}
 }
 
+const MyApp = () => (
+		<RouterProvider router={router}/>
+);
 export default MyApp

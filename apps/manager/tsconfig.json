@@ -6,11 +6,13 @@
     "jsx": "react",
     "esModuleInterop": true,
     "target": "ESNext",
-    "module": "esnext",
-    "moduleResolution": "node"
+    "module": "commonjs",
+    "moduleResolution": "bundler",
+    "strictNullChecks": true
   },
   "include": [
     "src",
-    "types"
+    "types",
+    "tailwind.config.ts"
   ]
 }

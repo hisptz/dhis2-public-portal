@@ -6,18 +6,34 @@
   "private": true,
   "scripts": {
     "build": "d2-app-scripts build",
-    "dev": "d2-app-scripts start",
+    "dev": "concurrently --names tsr,tailwind,app 'yarn tsr:watch' 'yarn tailwind:watch' 'yarn start:app'",
+    "start:app": "dotenv -- cross-var d2-app-scripts start --proxy %DHIS2_PROXY_URL%",
     "test": "d2-app-scripts test",
-    "deploy": "d2-app-scripts deploy"
+    "deploy": "d2-app-scripts deploy",
+    "tsr:generate": "tsr generate",
+    "tsr:watch": "tsr watch",
+    "tailwind:watch": "npx @tailwindcss/cli -i ./src/main.css -o ./src/output.css --watch",
+    "tailwind:generate": "npx @tailwindcss/cli -i ./src/main.css -o ./src/output.css"
   },
   "devDependencies": {
     "@dhis2/cli-app-scripts": "^12.5.1",
+    "@tailwindcss/cli": "^4.1.4",
+    "@tanstack/router-cli": "^1.116.0",
+    "@tanstack/router-devtools": "^1.116.0",
+    "@tanstack/router-plugin": "^1.116.1",
     "@types/jest": "^29.5.14",
     "@types/react": "^19.1.2",
     "@types/react-dom": "^19.1.2",
+    "concurrently": "^9.1.2",
+    "cross-var": "^1.1.0",
+    "dotenv": "^16.5.0",
+    "dotenv-cli": "^8.0.0",
+    "tailwind": "4",
+    "tailwindcss": "4",
     "typescript": "^5"
   },
   "dependencies": {
-    "@dhis2/app-runtime": "^3.14.1"
+    "@dhis2/app-runtime": "^3.14.1",
+    "@tanstack/react-router": "^1.116.0"
   }
 }

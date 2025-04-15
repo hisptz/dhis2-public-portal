@@ -36,3 +36,6 @@ yarn-error.log*
 # Misc
 .DS_Store
 *.pem
+/apps/manager/src/output.css
+/apps/manager/src/routes.gen.ts
+/apps/manager/.env
