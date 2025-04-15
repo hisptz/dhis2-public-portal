@@ -1,6 +1,5 @@
 {
   "name": "dhis2-public-portal",
-  "version": "0.0.0",
   "private": true,
   "scripts": {
     "build": "turbo run build",
@@ -31,5 +30,8 @@
   "workspaces": [
     "apps/*",
     "packages/*"
-  ]
+  ],
+  "repository": {
+    "url": "git@github.com:hisptz/dhis2-public-portal.git"
+  }
 }
