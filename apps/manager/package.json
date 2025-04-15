@@ -14,7 +14,6 @@
     "tsr:watch": "tsr watch",
     "tailwind:watch": "npx @tailwindcss/cli -i ./src/main.css -o ./src/output.css --watch",
     "tailwind:generate": "npx @tailwindcss/cli -i ./src/main.css -o ./src/output.css",
-    "release": "semantic-release -d"
   },
   "devDependencies": {
     "@dhis2/cli-app-scripts": "^12.5.1",
