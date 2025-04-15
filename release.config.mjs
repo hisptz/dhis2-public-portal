@@ -26,8 +26,12 @@ export default {
 			{
 				assets: [
 					{
-						path: "build/bundle/*.zip",
-						label: "DHIS2 app bundle",
+						path: "apps/portal/build/bundle/*.zip",
+						label: "Web Portal",
+					},
+					{
+						path: "apps/manager/build/bundle/*.zip",
+						label: "DHIS2 Portal Manager App",
 					},
 				],
 			},
