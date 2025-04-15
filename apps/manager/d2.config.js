@@ -1,9 +1,10 @@
 const config = {
-    type: 'app',
-    name: 'Portal Manager',
-    entryPoints: {
-        app: './src/App.tsx',
-    },
-}
+	type: "app",
+	title: "Portal Manager",
+	name: "portal-manager",
+	entryPoints: {
+		app: "./src/App.tsx",
+	},
+};
 
-module.exports = config
+module.exports = config;
