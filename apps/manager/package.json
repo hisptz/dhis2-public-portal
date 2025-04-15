@@ -7,7 +7,7 @@
   "scripts": {
     "build": "d2-app-scripts build",
     "dev": "concurrently --names tsr,tailwind,app 'yarn tsr:watch' 'yarn tailwind:watch' 'yarn start:app'",
-    "start:app": "dotenv -- cross-var d2-app-scripts start --proxy %DHIS2_PROXY_URL%",
+    "start:app": "dotenv -- cross-var d2-app-scripts start --proxy %DHIS2_PROXY_URL% --port 3001",
     "test": "d2-app-scripts test",
     "deploy": "d2-app-scripts deploy",
     "tsr:generate": "tsr generate",
