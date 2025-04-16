@@ -40,6 +40,3 @@ jobs:
         env:
           CYPRESS_dhis2Username: ${{ secrets.CYPRESS_DHIS2_USERNAME }}
           CYPRESS_dhis2Password: ${{ secrets.CYPRESS_DHIS2_PASSWORD }}
-          CYPRESS_dhis2BaseUrl: ${{ vars.CYPRESS_DHIS2_BASE_URL }}
-          CYPRESS_dhis2DatatestPrefix: ${{ vars.CYPRESS_DHIS2_DATATEST_PREFIX }}
-          CYPRESS_dhis2InstanceVersion: ${{ vars.CYPRESS_DHIS2_INSTANCE_VERSION }}
