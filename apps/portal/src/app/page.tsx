@@ -1,9 +1,12 @@
+import { Button } from "@mantine/core";
+
 export default function Home() {
 	return (
 		<div className="w-screen h-screen flex items-center justify-center">
 			<h1 className="text-3xl font-bold">
 				Welcome to DHIS2 Public Portal!
 			</h1>
+			<Button>Click me</Button>
 		</div>
 	);
 }

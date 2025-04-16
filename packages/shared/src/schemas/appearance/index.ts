@@ -13,3 +13,5 @@ export type AppColorConfig = z.infer<typeof appColorConfig>;
 export const appAppearanceConfig = z.object({
 	colors: appColorConfig,
 });
+
+export type AppAppearanceConfig = z.infer<typeof appAppearanceConfig>;

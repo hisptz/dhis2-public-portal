@@ -12,6 +12,7 @@
     "test:e2e-open": "concurrently -c blue,green --names app,cypress 'yarn dev'  'cypress open'"
   },
   "dependencies": {
+    "@hisptz/dhis2-utils": "^2.0.17",
     "@mantine/core": "^7.17.4",
     "@mantine/hooks": "^7.17.4",
     "@mantine/modals": "^7.17.4",
@@ -33,6 +34,9 @@
     "bestzip": "^2.2.1",
     "eslint": "^9",
     "eslint-config-next": "15.3.0",
+    "postcss": "^8.5.3",
+    "postcss-preset-mantine": "^1.17.0",
+    "postcss-simple-vars": "^7.0.1",
     "tailwindcss": "^4",
     "typescript": "^5"
   }
