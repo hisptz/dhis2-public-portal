@@ -1,9 +1,10 @@
 "use client";
 
 import { AppAppearanceConfig } from "@packages/shared/schemas";
-import { AppShell } from "@mantine/core";
+import { AppShell, Center, Loader } from "@mantine/core";
 import { AppHeader } from "@/components/Header/Header";
 import { useDisclosure } from "@mantine/hooks";
+import { Suspense } from "react";
 
 export function MainLayout({
 	children,
@@ -33,7 +34,17 @@ export function MainLayout({
 				toggle={toggle}
 				config={appearanceConfig!.header}
 			/>
-			<AppShell.Main>{children}</AppShell.Main>
+			<AppShell.Main>
+				<Suspense
+					fallback={
+						<Center>
+							<Loader />
+						</Center>
+					}
+				>
+					{children}
+				</Suspense>
+			</AppShell.Main>
 		</AppShell>
 	);
 }
