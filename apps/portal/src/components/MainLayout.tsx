@@ -5,6 +5,7 @@ import { AppShell, Center, Loader } from "@mantine/core";
 import { AppHeader } from "@/components/Header/Header";
 import { useDisclosure } from "@mantine/hooks";
 import { Suspense } from "react";
+import { Footer } from "@/components/Footer/Footer";
 
 export function MainLayout({
 	children,
@@ -30,6 +31,8 @@ export function MainLayout({
 			padding="md"
 		>
 			<AppHeader
+				logo={appearanceConfig.logo}
+				title={appearanceConfig!.title}
 				opened={opened}
 				toggle={toggle}
 				config={appearanceConfig!.header}
@@ -45,6 +48,11 @@ export function MainLayout({
 					{children}
 				</Suspense>
 			</AppShell.Main>
+			<Footer
+				logo={appearanceConfig.logo}
+				title={appearanceConfig!.title}
+				config={appearanceConfig!.footer}
+			/>
 		</AppShell>
 	);
 }

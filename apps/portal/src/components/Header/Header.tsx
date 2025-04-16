@@ -1,5 +1,5 @@
 "use client";
-import { HeaderConfig } from "@packages/shared/schemas";
+import { AppTitleConfig, HeaderConfig } from "@packages/shared/schemas";
 import {
 	AppShell,
 	Burger,
@@ -16,8 +16,12 @@ export function AppHeader({
 	config,
 	opened,
 	toggle,
+	title,
+	logo,
 }: {
 	config: HeaderConfig;
+	title: AppTitleConfig;
+	logo: string;
 	opened: boolean;
 	toggle: () => void;
 }) {
@@ -37,15 +41,17 @@ export function AppHeader({
 					hiddenFrom="sm"
 					size="sm"
 				/>
-				<Image
-					component={NextImage}
-					width={60}
-					height={60}
-					alt="logo"
-					src={config.logo}
-					visibleFrom="sm"
-					fallbackSrc="https://avatars.githubusercontent.com/u/1089987?s=200&v=4"
-				/>
+				{config.logo.enabled && (
+					<Image
+						component={NextImage}
+						width={60}
+						height={60}
+						alt="logo"
+						src={logo}
+						visibleFrom="sm"
+						fallbackSrc="https://avatars.githubusercontent.com/u/1089987?s=200&v=4"
+					/>
+				)}
 				<Stack
 					align={config.title.style?.center ? "center" : "flex-start"}
 					flex={1}
@@ -60,11 +66,11 @@ export function AppHeader({
 						c={foregroundColor}
 						order={2}
 					>
-						{config.title.main}
+						{title.main}
 					</Title>
-					{config.title.sub && (
+					{title.subtitle && (
 						<Title c={foregroundColor} order={4}>
-							{config.title.sub}
+							{title.subtitle}
 						</Title>
 					)}
 				</Stack>
