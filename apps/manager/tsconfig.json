@@ -6,13 +6,19 @@
     "jsx": "react",
     "esModuleInterop": true,
     "target": "ESNext",
-    "module": "commonjs",
+    "module": "esnext",
     "moduleResolution": "bundler",
-    "strictNullChecks": true
+    "strictNullChecks": true,
+    "types": [
+      "cypress",
+      "node"
+    ]
   },
   "include": [
     "src",
     "types",
-    "tailwind.config.ts"
+    "tailwind.config.ts",
+    "cypress",
+    "cypress.config.ts"
   ]
 }

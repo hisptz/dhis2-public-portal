@@ -7,9 +7,12 @@
     "build": "next build",
     "postbuild": "./package.sh",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "test:e2e": "concurrently --kill-others --success first -c blue,green --names app,cypress 'yarn dev' 'cypress run'",
+    "test:e2e-open": "concurrently -c blue,green --names app,cypress 'yarn dev'  'cypress open'"
   },
   "dependencies": {
+    "cypress": "^14.3.0",
     "next": "15.3.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0"

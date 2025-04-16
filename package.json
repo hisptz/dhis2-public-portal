@@ -4,6 +4,7 @@
   "scripts": {
     "portal": "yarn workspace portal",
     "manager": "yarn workspace manager",
+    "test": "vitest",
     "build": "turbo run build",
     "dev": "turbo run dev",
     "dev:portal": "turbo run dev --filter portal",
@@ -14,16 +15,17 @@
     "release": "semantic-release"
   },
   "devDependencies": {
-    "prettier": "^3.5.3",
-    "turbo": "^2.5.0",
-    "typescript": "5.8.2",
     "@semantic-release/changelog": "^6.0.3",
     "@semantic-release/commit-analyzer": "^13.0.1",
     "@semantic-release/exec": "^7.0.3",
     "@semantic-release/git": "^10.0.1",
     "@semantic-release/github": "^11.0.1",
     "@semantic-release/release-notes-generator": "^14.0.3",
-    "semantic-release": "^24.2.3"
+    "prettier": "^3.5.3",
+    "semantic-release": "^24.2.3",
+    "turbo": "^2.5.0",
+    "typescript": "5.8.2",
+    "vitest": "^3.1.1"
   },
   "engines": {
     "node": ">=18"

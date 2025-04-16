@@ -1,0 +1,39 @@
+name: Portal E2E Tests
+
+on:
+  push:
+    branches:
+      - develop
+    paths:
+      - 'apps/portal/**'
+      - 'packages/**'
+      - 'package.json'
+      - 'yarn.lock'
+
+jobs:
+  e2e-test:
+    name: Run Portal E2E Tests
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          cache: 'yarn'
+
+      - name: Install dependencies
+        run: yarn install --frozen-lockfile
+
+      - name: Cypress run
+        uses: cypress-io/github-action@v6
+        with:
+          working-directory: apps/portal
+          start: yarn dev
+          wait-on: 'http://localhost:3000'
+          wait-on-timeout: 120
+          browser: chrome
+          config-file: cypress.config.ts
