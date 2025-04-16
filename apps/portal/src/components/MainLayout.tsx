@@ -17,11 +17,15 @@ export function MainLayout({
 	return (
 		<AppShell
 			header={{ height: { base: 100, md: 100, lg: 100 } }}
-			// navbar={{
-			// 	width: { base: 200, md: 300, lg: 400 },
-			// 	breakpoint: "sm",
-			// 	collapsed: { mobile: !opened },
-			// }}
+			navbar={
+				appearanceConfig.header.hasMenu
+					? undefined
+					: {
+							width: { base: 200, md: 300, lg: 400 },
+							breakpoint: "sm",
+							collapsed: { mobile: !opened },
+						}
+			}
 			padding="md"
 		>
 			<AppHeader
