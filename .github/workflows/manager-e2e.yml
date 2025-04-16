@@ -40,3 +40,4 @@ jobs:
         env:
           CYPRESS_dhis2Username: ${{ secrets.CYPRESS_DHIS2_USERNAME }}
           CYPRESS_dhis2Password: ${{ secrets.CYPRESS_DHIS2_PASSWORD }}
+          DHIS2_PROXY_URL: ${{ vars.DHIS2_BASE_URL }}
