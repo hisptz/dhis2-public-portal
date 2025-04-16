@@ -1,5 +1,6 @@
 import { z } from "zod";
-import { addressSchema, footerLinksConfig } from "@/schemas";
+import { addressSchema } from "./address";
+import { footerLinksConfig } from "./links";
 
 export const appMeta = z.object({
 	name: z.string(),

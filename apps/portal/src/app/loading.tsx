@@ -4,7 +4,6 @@ import NextImage from "next/image";
 
 export default async function MainLoadingScreen() {
 	const { appearanceConfig } = await getAppearanceConfig();
-	const config = appearanceConfig.header;
 
 	return (
 		<div className="h-screen w-screen">
@@ -16,7 +15,7 @@ export default async function MainLoadingScreen() {
 								width={160}
 								height={160}
 								component={NextImage}
-								src={appearanceConfig.header.logo}
+								src={appearanceConfig.logo}
 								alt="logo"
 								fallbackSrc="https://avatars.githubusercontent.com/u/1089987?s=200&v=4"
 							/>
@@ -27,7 +26,7 @@ export default async function MainLoadingScreen() {
 							c={appearanceConfig.colors.primary}
 							order={2}
 						>
-							{config.title.main}
+							{appearanceConfig.title.main}
 						</Title>
 					</Stack>
 				</Center>
