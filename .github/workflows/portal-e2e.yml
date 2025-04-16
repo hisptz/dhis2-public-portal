@@ -1,7 +1,7 @@
 name: Portal E2E Tests
 
 on:
-  push:
+  pull_request:
     branches:
       - develop
     paths:
@@ -22,7 +22,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '18'
+          node-version: '20'
           cache: 'yarn'
 
       - name: Install dependencies
