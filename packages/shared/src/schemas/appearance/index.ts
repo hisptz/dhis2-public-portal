@@ -1,5 +1,18 @@
 import { z } from "zod";
 
+export const appMeta = z.object({
+	name: z.string(),
+	description: z.string(),
+	icons: z.array(
+		z.object({
+			url: z.string().url(),
+			type: z.string(),
+			rel: z.string(),
+		}),
+	),
+});
+export type AppMeta = z.infer<typeof appMeta>;
+
 export const appColorConfig = z.object({
 	primary: z.string(),
 	background: z.string(),

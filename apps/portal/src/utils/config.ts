@@ -9,8 +9,12 @@ export async function getAppConfigWithNamespace<T>({
 	namespace: DatastoreNamespaces;
 	key: string;
 }) {
-	const url = `dataStore/${namespace}/${key}`;
-	return (await dhis2HttpClient.get(url)) as T | undefined;
+	try {
+		const url = `dataStore/${namespace}/${key}`;
+		return (await dhis2HttpClient.get(url)) as T | undefined;
+	} catch (e) {
+		return undefined;
+	}
 }
 
 export async function getAppConfigsFromNamespace<T>(

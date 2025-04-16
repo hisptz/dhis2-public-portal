@@ -1,4 +1,3 @@
-import type { Metadata } from "next";
 import "./globals.css";
 import "@mantine/core/styles.css";
 import {
@@ -8,11 +7,11 @@ import {
 } from "@mantine/core";
 import { getAppearanceConfig } from "@/utils/theme";
 import { MainLayout } from "@/components/MainLayout";
+import { getAppMetadata } from "@/utils/appMetadata";
 
-export const metadata: Metadata = {
-	title: "Public Portal",
-	description: "DHIS2 Public Portal",
-};
+export async function generateMetadata() {
+	return await getAppMetadata();
+}
 
 export default async function RootLayout({
 	children,
