@@ -6,7 +6,8 @@ import {
 	mantineHtmlProps,
 	MantineProvider,
 } from "@mantine/core";
-import { getAppTheme } from "@/utils/theme";
+import { getAppearanceConfig } from "@/utils/theme";
+import { MainLayout } from "@/components/MainLayout";
 
 export const metadata: Metadata = {
 	title: "Public Portal",
@@ -18,7 +19,7 @@ export default async function RootLayout({
 }: Readonly<{
 	children: React.ReactNode;
 }>) {
-	const theme = await getAppTheme();
+	const { appearanceConfig, theme } = await getAppearanceConfig();
 
 	return (
 		<html lang="en" {...mantineHtmlProps}>
@@ -26,7 +27,11 @@ export default async function RootLayout({
 				<ColorSchemeScript />
 			</head>
 			<body>
-				<MantineProvider theme={theme}>{children}</MantineProvider>
+				<MantineProvider theme={theme}>
+					<MainLayout appearanceConfig={appearanceConfig}>
+						{children}
+					</MainLayout>
+				</MantineProvider>
 			</body>
 		</html>
 	);
