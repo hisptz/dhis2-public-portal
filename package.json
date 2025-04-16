@@ -2,6 +2,8 @@
   "name": "dhis2-public-portal",
   "private": true,
   "scripts": {
+    "portal": "yarn workspace portal",
+    "manager": "yarn workspace manager",
     "build": "turbo run build",
     "dev": "turbo run dev",
     "dev:portal": "turbo run dev --filter portal",
