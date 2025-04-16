@@ -15,5 +15,8 @@ export default defineConfig({
 	},
 	env: {
 		networkMode: "live",
+		dhis2BaseUrl: "http://localhost:8080",
+		dhis2DataTestPrefix: "d2-ppm",
+		dhis2InstanceVersion: 41,
 	},
 });

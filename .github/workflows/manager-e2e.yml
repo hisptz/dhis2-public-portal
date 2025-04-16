@@ -1,7 +1,7 @@
 name: Manager E2E Tests
 
 on:
-  push:
+  pull_request:
     branches:
       - develop
     paths:
@@ -22,7 +22,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '18'
+          node-version: '20'
           cache: 'yarn'
 
       - name: Install dependencies
@@ -32,8 +32,12 @@ jobs:
         uses: cypress-io/github-action@v6
         with:
           working-directory: apps/manager
-          start: yarn start:app
+          start: yarn dev
           wait-on: 'http://localhost:3001'
           wait-on-timeout: 120
           browser: chrome
           config-file: cypress.config.ts
+        env:
+          CYPRESS_dhis2Username: ${{ secrets.CYPRESS_DHIS2_USERNAME }}
+          CYPRESS_dhis2Password: ${{ secrets.CYPRESS_DHIS2_PASSWORD }}
+          DHIS2_PROXY_URL: ${{ vars.DHIS2_BASE_URL }}
