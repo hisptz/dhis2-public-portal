@@ -40,6 +40,7 @@
   },
   "dependencies": {
     "@dhis2/app-runtime": "^3.14.1",
-    "@tanstack/react-router": "^1.116.0"
+    "@tanstack/react-router": "^1.116.0",
+    "@packages/shared": "*"
   }
 }

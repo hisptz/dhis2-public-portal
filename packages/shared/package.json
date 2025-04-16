@@ -1,0 +1,16 @@
+{
+  "name": "@packages/shared",
+  "version": "1.0.0",
+  "description": "Shared package for the health portal",
+  "main": "index.js",
+  "license": "MIT",
+  "private": true,
+  "exports": {
+    "./schemas": "./src/schemas/index.ts",
+    "./constants": "./src/constants/index.ts",
+    "./components": "./src/components/index.ts"
+  },
+  "dependencies": {
+    "zod": "^3.22.4"
+  }
+}

@@ -12,6 +12,13 @@
     "test:e2e-open": "concurrently -c blue,green --names app,cypress 'yarn dev'  'cypress open'"
   },
   "dependencies": {
+    "@emotion/cache": "^11.14.0",
+    "@emotion/react": "^11.14.0",
+    "@emotion/styled": "^11.14.0",
+    "@mui/icons-material": "^7.0.2",
+    "@mui/material": "^7.0.2",
+    "@mui/material-nextjs": "^7.0.2",
+    "@packages/shared": "*",
     "cypress": "^14.3.0",
     "next": "15.3.0",
     "react": "^19.0.0",
