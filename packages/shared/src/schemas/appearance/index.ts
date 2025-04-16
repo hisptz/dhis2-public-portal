@@ -10,8 +10,31 @@ export const appColorConfig = z.object({
 
 export type AppColorConfig = z.infer<typeof appColorConfig>;
 
+export const headerConfig = z.object({
+	logo: z.string().url(),
+	title: z.object({
+		main: z.string(),
+		sub: z.string().optional(),
+		style: z
+			.object({
+				center: z.boolean(),
+			})
+			.optional(),
+	}),
+	trailingLogo: z.string().url().optional(),
+	hasMenu: z.boolean().optional(),
+	style: z
+		.object({
+			coloredBackground: z.boolean(),
+		})
+		.optional(),
+});
+
+export type HeaderConfig = z.infer<typeof headerConfig>;
+
 export const appAppearanceConfig = z.object({
 	colors: appColorConfig,
+	header: headerCofig,
 });
 
 export type AppAppearanceConfig = z.infer<typeof appAppearanceConfig>;
