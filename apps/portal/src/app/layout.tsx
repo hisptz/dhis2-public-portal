@@ -8,6 +8,8 @@ import {
 import { getAppearanceConfig } from "@/utils/theme";
 import { MainLayout } from "@/components/MainLayout";
 import { getAppMetadata } from "@/utils/appMetadata";
+import { DHIS2AppProvider } from "@/components/DHIS2AppProvider";
+import { getSystemInfo } from "@/utils/systemInfo";
 
 export async function generateMetadata() {
 	return await getAppMetadata();
@@ -19,6 +21,7 @@ export default async function RootLayout({
 	children: React.ReactNode;
 }>) {
 	const { appearanceConfig, theme } = await getAppearanceConfig();
+	const systemInfo = await getSystemInfo();
 
 	return (
 		<html lang="en" {...mantineHtmlProps}>
@@ -27,9 +30,11 @@ export default async function RootLayout({
 			</head>
 			<body>
 				<MantineProvider theme={theme}>
-					<MainLayout appearanceConfig={appearanceConfig}>
-						{children}
-					</MainLayout>
+					<DHIS2AppProvider systemInfo={systemInfo}>
+						<MainLayout appearanceConfig={appearanceConfig}>
+							{children}
+						</MainLayout>
+					</DHIS2AppProvider>
 				</MantineProvider>
 			</body>
 		</html>

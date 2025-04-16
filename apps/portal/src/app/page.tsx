@@ -1,6 +1,8 @@
 import { Button, Stack } from "@mantine/core";
 
-export default function Home() {
+export default async function Home() {
+	// await new Promise((resolve) => setTimeout(resolve, 100000));
+
 	return (
 		<Stack>
 			<h1 className="text-3xl font-bold">
