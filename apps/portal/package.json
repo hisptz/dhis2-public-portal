@@ -20,6 +20,7 @@
     "@mantine/modals": "^7.17.4",
     "@mantine/notifications": "^7.17.4",
     "@mantine/nprogress": "^7.17.4",
+    "@next/env": "^15.3.0",
     "@packages/shared": "*",
     "cypress": "^14.3.0",
     "next": "15.3.0",
