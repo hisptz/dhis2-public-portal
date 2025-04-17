@@ -7,7 +7,6 @@ import { usePathname } from "next/navigation";
 
 export function ModuleNavItem({ config }: { config: ModuleMenuItem }) {
 	const pathname = usePathname();
-
 	const active = pathname.includes(config.path);
 
 	return (
@@ -16,7 +15,7 @@ export function ModuleNavItem({ config }: { config: ModuleMenuItem }) {
 			active={active}
 			variant="filled"
 			component={Link}
-			href={config.path}
+			href={`/${config.path}`}
 			label={config.label}
 		/>
 	);
