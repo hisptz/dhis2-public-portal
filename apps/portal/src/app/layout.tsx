@@ -10,6 +10,7 @@ import { MainLayout } from "@/components/MainLayout";
 import { getAppMetadata } from "@/utils/appMetadata";
 import { DHIS2AppProvider } from "@/components/DHIS2AppProvider";
 import { getSystemInfo } from "@/utils/systemInfo";
+import { NoConfigLandingPage } from "@/components/NoConfigLandingPage";
 
 export async function generateMetadata() {
 	return await getAppMetadata();
@@ -20,8 +21,24 @@ export default async function RootLayout({
 }: Readonly<{
 	children: React.ReactNode;
 }>) {
-	const { appearanceConfig, theme } = await getAppearanceConfig();
+	const config = await getAppearanceConfig();
 	const systemInfo = await getSystemInfo();
+
+	if (!config) {
+		return (
+			<html lang="en" {...mantineHtmlProps}>
+				<head>
+					<ColorSchemeScript />
+				</head>
+				<body>
+					<MantineProvider>
+						<NoConfigLandingPage />
+					</MantineProvider>
+				</body>
+			</html>
+		);
+	}
+	const { theme, appearanceConfig } = config;
 
 	return (
 		<html lang="en" {...mantineHtmlProps}>

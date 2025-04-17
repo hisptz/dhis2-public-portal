@@ -1,9 +1,16 @@
 import { Center, Flex, Image, Loader, Stack, Text, Title } from "@mantine/core";
 import { getAppearanceConfig } from "@/utils/theme";
 import NextImage from "next/image";
+import { NoConfigLandingPage } from "@/components/NoConfigLandingPage";
 
 export default async function MainLoadingScreen() {
-	const { appearanceConfig } = await getAppearanceConfig();
+	const config = await getAppearanceConfig();
+
+	if (!config) {
+		return <NoConfigLandingPage />;
+	}
+
+	const { appearanceConfig } = config;
 
 	return (
 		<div className="h-screen w-screen">
