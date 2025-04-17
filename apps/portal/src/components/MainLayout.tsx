@@ -1,18 +1,21 @@
 "use client";
 
-import { AppAppearanceConfig } from "@packages/shared/schemas";
+import { AppAppearanceConfig, AppMenuConfig } from "@packages/shared/schemas";
 import { AppShell, Center, Loader } from "@mantine/core";
 import { AppHeader } from "@/components/Header/Header";
 import { useDisclosure } from "@mantine/hooks";
 import { Suspense } from "react";
 import { Footer } from "@/components/Footer/Footer";
+import { SideAppMenu } from "@/components/AppMenu/SideAppMenu";
 
 export function MainLayout({
 	children,
 	appearanceConfig,
+	menuConfig,
 }: {
 	children: React.ReactNode;
 	appearanceConfig: AppAppearanceConfig;
+	menuConfig: AppMenuConfig;
 }) {
 	const [opened, { toggle }] = useDisclosure();
 
@@ -20,10 +23,10 @@ export function MainLayout({
 		<AppShell
 			header={{ height: { base: 100, md: 100, lg: 100 } }}
 			navbar={
-				appearanceConfig.header.hasMenu
+				menuConfig.position === "header"
 					? undefined
 					: {
-							width: { base: 200, md: 300, lg: 400 },
+							width: { base: 200, md: 240, lg: 300 },
 							breakpoint: "sm",
 							collapsed: { mobile: !opened },
 						}
@@ -37,6 +40,7 @@ export function MainLayout({
 				toggle={toggle}
 				config={appearanceConfig!.header}
 			/>
+			<SideAppMenu menuConfig={menuConfig} />
 			<AppShell.Main>
 				<Suspense
 					fallback={

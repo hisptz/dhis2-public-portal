@@ -1,5 +1,5 @@
 import { getAppConfigWithNamespace } from "@/utils/config";
-import { AppAppearanceConfig } from "@packages/shared/schemas";
+import { AppAppearanceConfig, AppMenuConfig } from "@packages/shared/schemas";
 import { DatastoreNamespaces } from "@packages/shared/constants";
 import { createTheme } from "@mantine/core";
 
@@ -10,12 +10,18 @@ export async function getAppearanceConfig() {
 			key: "appearance",
 		});
 
-	if (!appearanceConfig) {
+	const menuConfig = await getAppConfigWithNamespace<AppMenuConfig>({
+		namespace: DatastoreNamespaces.MAIN_CONFIG,
+		key: "menu",
+	});
+
+	if (!appearanceConfig || !menuConfig) {
 		return;
 	}
 	return {
 		appearanceConfig,
 		theme: getAppTheme(appearanceConfig!),
+		menuConfi,
 	};
 }
 

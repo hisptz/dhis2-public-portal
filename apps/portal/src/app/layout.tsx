@@ -38,7 +38,7 @@ export default async function RootLayout({
 			</html>
 		);
 	}
-	const { theme, appearanceConfig } = config;
+	const { theme, appearanceConfig, menuConfig } = config;
 
 	return (
 		<html lang="en" {...mantineHtmlProps}>
@@ -48,7 +48,10 @@ export default async function RootLayout({
 			<body>
 				<MantineProvider theme={theme}>
 					<DHIS2AppProvider systemInfo={systemInfo}>
-						<MainLayout appearanceConfig={appearanceConfig}>
+						<MainLayout
+							menuConfig={menuConfig}
+							appearanceConfig={appearanceConfig}
+						>
 							{children}
 						</MainLayout>
 					</DHIS2AppProvider>
