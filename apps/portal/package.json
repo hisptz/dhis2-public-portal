@@ -9,8 +9,8 @@
     "start": "next start",
     "lint": "next lint",
     "check-types": "tsc --noEmit",
-    "test:e2e": "concurrently --kill-others --success first -c blue,green --names app,cypress 'yarn dev' 'cypress run'",
-    "test:e2e-open": "concurrently -c blue,green --names app,cypress 'yarn dev'  'cypress open'"
+    "test:e2e": "dotenv -- cross-var concurrently --kill-others --success first -c blue,green --names app,cypress 'yarn dev' 'cypress run'",
+    "test:e2e-open": "dotenv -- cross-var concurrently -c blue,green --names app,cypress 'yarn dev'  'cypress open'"
   },
   "dependencies": {
     "@dhis2/app-runtime": "^3.14.1",

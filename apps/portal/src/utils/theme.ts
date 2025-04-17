@@ -11,9 +11,7 @@ export async function getAppearanceConfig() {
 		});
 
 	if (!appearanceConfig) {
-		throw new Error(
-			"Appearance config not found. Please check if the app is configured correctly.",
-		);
+		return;
 	}
 	return {
 		appearanceConfig,
