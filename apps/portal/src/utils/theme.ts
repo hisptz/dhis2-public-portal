@@ -21,7 +21,7 @@ export async function getAppearanceConfig() {
 	return {
 		appearanceConfig,
 		theme: getAppTheme(appearanceConfig!),
-		menuConfi,
+		menuConfig,
 	};
 }
 

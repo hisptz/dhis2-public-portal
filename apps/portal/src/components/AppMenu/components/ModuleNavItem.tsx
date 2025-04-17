@@ -1,43 +1,22 @@
-import { AppShell, NavLink, Skeleton } from "@mantine/core";
+"use client";
+
+import { NavLink } from "@mantine/core";
 import { ModuleMenuItem } from "@packages/shared/schemas";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 
-export async function ModuleNavItem({ config }: { config: ModuleMenuItem }) {
-	if (!config.path) {
-		if (config.itemsDisplay === "grouped") {
-			return (
-				<AppShell.Section>
-					{config.label}
-					{Array(3)
-						.fill(0)
-						.map((_, index) => (
-							<Skeleton
-								key={index}
-								h={28}
-								mt="sm"
-								animate={false}
-							/>
-						))}
-				</AppShell.Section>
-			);
-		}
-		return (
-			<NavLink childrenOffset={28} label={config.label}>
-				{Array(3)
-					.fill(0)
-					.map((_, index) => (
-						<Skeleton key={index} h={28} mt="sm" animate={false} />
-					))}
-			</NavLink>
-		);
-	}
+export function ModuleNavItem({ config }: { config: ModuleMenuItem }) {
+	const pathname = usePathname();
+
+	const active = pathname.includes(config.path);
 
 	return (
 		<NavLink
-			active
+			prefetch
+			active={active}
 			variant="filled"
 			component={Link}
-			href={config.path!}
+			href={config.path}
 			label={config.label}
 		/>
 	);

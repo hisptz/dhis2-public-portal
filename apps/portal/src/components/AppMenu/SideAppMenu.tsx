@@ -3,11 +3,7 @@ import { AppMenuConfig } from "@packages/shared/schemas";
 import { GroupSideNavItem } from "@/components/AppMenu/components/GroupSideNavItem";
 import { ModuleNavItem } from "@/components/AppMenu/components/ModuleNavItem";
 
-export async function SideAppMenu({
-	menuConfig,
-}: {
-	menuConfig: AppMenuConfig;
-}) {
+export function SideAppMenu({ menuConfig }: { menuConfig: AppMenuConfig }) {
 	if (!menuConfig) {
 		return null;
 	}

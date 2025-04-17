@@ -11,6 +11,7 @@ import { getAppMetadata } from "@/utils/appMetadata";
 import { DHIS2AppProvider } from "@/components/DHIS2AppProvider";
 import { getSystemInfo } from "@/utils/systemInfo";
 import { NoConfigLandingPage } from "@/components/NoConfigLandingPage";
+import { NavigationBar } from "@/components/NavigationBar";
 
 export async function generateMetadata() {
 	return await getAppMetadata();
@@ -47,6 +48,7 @@ export default async function RootLayout({
 			</head>
 			<body>
 				<MantineProvider theme={theme}>
+					<NavigationBar />
 					<DHIS2AppProvider systemInfo={systemInfo}>
 						<MainLayout
 							menuConfig={menuConfig}
