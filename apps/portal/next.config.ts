@@ -50,6 +50,7 @@ const nextConfig: NextConfig = {
 
 		return config;
 	},
+	transpilePackages: ["@packages/shared"],
 };
 
 export default nextConfig;

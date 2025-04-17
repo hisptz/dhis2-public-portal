@@ -15,6 +15,7 @@ mkdir "build/bundle"
 
 cp -r .next/standalone/apps/portal/.next build/app
 cp .next/standalone/apps/portal/package.json build/app
+cp -r .next/standalone/apps/portal/node_modules build/app
 cp .next/standalone/apps/portal/server.js build/app
 cp  -r .next/static build/app/.next/
 cp ../../yarn.lock build/app
