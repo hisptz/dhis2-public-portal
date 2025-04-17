@@ -5,4 +5,4 @@ const envSchema = z.object({
 	DHIS2_BASE_PAT_TOKEN: z.string(),
 });
 
-export const env = envSchema.parse(process.env);
+export const env = envSchema.safeParse(process.env).data;
