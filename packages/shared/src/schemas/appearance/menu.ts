@@ -19,7 +19,7 @@ export type ModuleMenuItem = z.infer<typeof moduleMenuItemSchema>;
 export const groupMenuItemSchema = baseMenuItemSchema.extend({
 	type: z.literal("group"),
 	items: z.array(moduleMenuItemSchema),
-	itemsDisplay: z.enum(["grouped", "dropdown"]).optional(,
+	itemsDisplay: z.enum(["grouped", "dropdown"]).optional(),
 });
 
 export type GroupMenuItem = z.infer<typeof groupMenuItemSchema>;
