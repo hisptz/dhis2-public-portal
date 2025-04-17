@@ -32,6 +32,9 @@ jobs:
 
       - name: Build
         run: yarn build
+        env:
+          DHIS2_BASE_URL: ${{vars.DHIS2_BASE_URL}}
+          DHIS2_BASE_PAT_TOKEN: ${{secrets.DHIS2_BASE_PAT_TOKEN}}
 
       - name: Check types
         run: yarn check-types
