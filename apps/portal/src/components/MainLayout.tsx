@@ -22,28 +22,25 @@ export function MainLayout({
 	menuConfig: AppMenuConfig;
 }) {
 	const [opened, { toggle }] = useDisclosure();
+	const hasMenuOnHeader = menuConfig.position === MenuPosition.HEADER;
+	const headerHeight = 138;
 
 	return (
 		<AppShell
 			header={{
 				height: {
-					base:
-						menuConfig.position === MenuPosition.HEADER ? 130 : 100,
+					base: hasMenuOnHeader ? headerHeight : 138 - 20,
 				},
 			}}
 			footer={{ height: { base: 100, md: 100, lg: 240 } }}
-			navbar={
-				menuConfig.position === "header"
-					? undefined
-					: {
-							width: { base: 200, md: 240, lg: 300 },
-							breakpoint: "sm",
-							collapsed: {
-								mobile: !opened,
-								desktop: !(menuConfig.position === "sidebar"),
-							},
-						}
-			}
+			navbar={{
+				width: { base: 200, md: 240, lg: 300 },
+				breakpoint: "sm",
+				collapsed: {
+					mobile: !opened,
+					desktop: hasMenuOnHeader,
+				},
+			}}
 			padding="md"
 		>
 			<AppHeader

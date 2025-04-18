@@ -6,7 +6,7 @@ import {
 } from "@packages/shared/schemas";
 import {
 	AppShell,
-	Box,
+	AspectRatio,
 	Burger,
 	Container,
 	Flex,
@@ -43,36 +43,34 @@ export function AppHeader({
 		: undefined;
 	return (
 		<AppShell.Header p={0} bg={backgroundColor} color="cyan">
-			<Stack gap={0}>
-				<Flex gap="lg" align="center" p="sm">
-					<Burger
-						opened={opened}
-						onClick={toggle}
-						hiddenFrom="sm"
-						size="sm"
-					/>
-					<Box className="min-w-[100px]">
-						{config.logo.enabled && (
-							<Image
-								component={NextImage}
-								width={60}
-								height={60}
-								alt="logo"
-								src={logo}
-								visibleFrom="sm"
-								fallbackSrc="https://avatars.githubusercontent.com/u/1089987?s=200&v=4"
-							/>
-						)}
-					</Box>
-					<Stack
-						align={
-							config.title.style?.center ? "center" : "flex-start"
-						}
-						flex={1}
-						gap="xs"
-						py={0}
-						my={0}
-					>
+			<Flex gap="lg" align="center" p={0}>
+				<Burger
+					opened={opened}
+					onClick={toggle}
+					hiddenFrom="sm"
+					size="sm"
+				/>
+				<AspectRatio ratio={1} p="sm" flex="0 0 120px">
+					{config.logo.enabled && (
+						<Image
+							component={NextImage}
+							width={120}
+							height={120}
+							alt="logo"
+							src={logo}
+							visibleFrom="sm"
+							fallbackSrc="https://avatars.githubusercontent.com/u/1089987?s=200&v=4"
+						/>
+					)}
+				</AspectRatio>
+				<Stack
+					align={config.title.style?.center ? "center" : "flex-start"}
+					justify="space-between"
+					flex={1}
+					py={0}
+					my={0}
+				>
+					<Stack p="sm" flex={1} justify="center" gap={0}>
 						<Title
 							bg={
 								config.style?.coloredBackground
@@ -85,29 +83,29 @@ export function AppHeader({
 							{title.main}
 						</Title>
 						{title.subtitle && (
-							<Title c={foregroundColor} order={4}>
+							<Title c="dimmed" order={4}>
 								{title.subtitle}
 							</Title>
 						)}
-						<Container className="min-w-full">
-							{menuConfig.position === "header" && (
-								<HeaderMenu config={menuConfig} />
-							)}
-						</Container>
 					</Stack>
-					{config.trailingLogo && (
-						<Image
-							component={NextImage}
-							width={60}
-							height={60}
-							alt="logo"
-							src={config.trailingLogo}
-							hiddenFrom="!xs"
-							fallbackSrc="https://avatars.githubusercontent.com/u/1089987?s=200&v=4"
-						/>
-					)}
-				</Flex>
-			</Stack>
+					<Container p={0} className="min-w-full">
+						{menuConfig.position === "header" && (
+							<HeaderMenu config={menuConfig} />
+						)}
+					</Container>
+				</Stack>
+				{config.trailingLogo && (
+					<Image
+						component={NextImage}
+						width={60}
+						height={60}
+						alt="logo"
+						src={config.trailingLogo}
+						hiddenFrom="!xs"
+						fallbackSrc="https://avatars.githubusercontent.com/u/1089987?s=200&v=4"
+					/>
+				)}
+			</Flex>
 		</AppShell.Header>
 	);
 }
