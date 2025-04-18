@@ -29,7 +29,10 @@ export function MainLayout({
 					: {
 							width: { base: 200, md: 240, lg: 300 },
 							breakpoint: "sm",
-							collapsed: { mobile: !opened },
+							collapsed: {
+								mobile: !opened,
+								desktop: !(menuConfig.position === "sidebar"),
+							},
 						}
 			}
 			padding="md"
