@@ -1,6 +1,10 @@
 "use client";
 
-import { AppAppearanceConfig, AppMenuConfig } from "@packages/shared/schemas";
+import {
+	AppAppearanceConfig,
+	AppMenuConfig,
+	MenuPosition,
+} from "@packages/shared/schemas";
 import { AppShell, Center, Loader } from "@mantine/core";
 import { AppHeader } from "@/components/Header/Header";
 import { useDisclosure } from "@mantine/hooks";
@@ -21,7 +25,12 @@ export function MainLayout({
 
 	return (
 		<AppShell
-			header={{ height: { base: 100, md: 100, lg: 100 } }}
+			header={{
+				height: {
+					base:
+						menuConfig.position === MenuPosition.HEADER ? 130 : 100,
+				},
+			}}
 			footer={{ height: { base: 100, md: 100, lg: 240 } }}
 			navbar={
 				menuConfig.position === "header"
@@ -38,6 +47,7 @@ export function MainLayout({
 			padding="md"
 		>
 			<AppHeader
+				menuConfig={menuConfig}
 				logo={appearanceConfig.logo}
 				title={appearanceConfig!.title}
 				opened={opened}

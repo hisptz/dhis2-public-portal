@@ -1,6 +1,21 @@
 import { z } from "zod";
 
-export const menuItemType = z.enum(["group", "module"]);
+export enum MenuPosition {
+	HEADER = "header",
+	SIDEBAR = "sidebar",
+}
+
+export enum MenuItemsDisplay {
+	GROUPED = "grouped",
+	DROPDOWN = "dropdown",
+}
+
+export enum MenuItemType {
+	MODULE = "module",
+	GROUP = "group",
+}
+
+export const menuItemType = z.nativeEnum(MenuItemType);
 
 export const baseMenuItemSchema = z.object({
 	type: menuItemType,
@@ -19,7 +34,7 @@ export type ModuleMenuItem = z.infer<typeof moduleMenuItemSchema>;
 export const groupMenuItemSchema = baseMenuItemSchema.extend({
 	type: z.literal("group"),
 	items: z.array(moduleMenuItemSchema),
-	itemsDisplay: z.enum(["grouped", "dropdown"]).optional(),
+	itemsDisplay: z.nativeEnum(MenuItemsDisplay).optional(),
 });
 
 export type GroupMenuItem = z.infer<typeof groupMenuItemSchema>;
@@ -31,7 +46,7 @@ export const menuItemSchema = z.discriminatedUnion("type", [
 export type MenuItem = z.infer<typeof menuItemSchema>;
 
 export const menuConfig = z.object({
-	position: z.enum(["header", "sidebar"]),
+	position: z.nativeEnum(MenuPosition),
 	items: z.array(menuItemSchema),
 });
 
