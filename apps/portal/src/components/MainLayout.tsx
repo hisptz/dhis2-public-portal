@@ -22,6 +22,7 @@ export function MainLayout({
 	return (
 		<AppShell
 			header={{ height: { base: 100, md: 100, lg: 100 } }}
+			footer={{ height: { base: 100, md: 100, lg: 300 } }}
 			navbar={
 				menuConfig.position === "header"
 					? undefined
