@@ -23,6 +23,8 @@ export function GroupTab({ config }: { config: GroupMenuItem }) {
 			opened={opened}
 			onChange={setOpened}
 			shadow="sm"
+			width={160}
+			withArrow
 		>
 			<Menu.Target>
 				{selected ? (
