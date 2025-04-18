@@ -42,7 +42,7 @@ export function MainLayout({
 				config={appearanceConfig!.header}
 			/>
 			<SideAppMenu menuConfig={menuConfig} />
-			<AppShell.Main>
+			<AppShell.Main style={{ background: "#F9F9FA" }}>
 				<Suspense
 					fallback={
 						<Center>
