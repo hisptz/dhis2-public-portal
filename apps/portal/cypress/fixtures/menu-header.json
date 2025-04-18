@@ -1,0 +1,46 @@
+{
+  "position": "header",
+  "items": [
+    {
+      "type": "module",
+      "label": "Home",
+      "icon": "home",
+      "sortOrder": 1,
+      "path": "",
+      "moduleId": "home"
+    },
+    {
+      "type": "module",
+      "label": "About",
+      "icon": "info",
+      "sortOrder": 2,
+      "path": "about",
+      "moduleId": "about"
+    },
+    {
+      "type": "group",
+      "label": "Services",
+      "icon": "services",
+      "sortOrder": 3,
+      "path": "services",
+      "items": [
+        {
+          "type": "module",
+          "label": "Service 1",
+          "icon": "service1",
+          "sortOrder": 1,
+          "path": "service1",
+          "moduleId": "service1"
+        },
+        {
+          "type": "module",
+          "label": "Service 2",
+          "icon": "service2",
+          "sortOrder": 2,
+          "path": "service2",
+          "moduleId": "service2"
+        }
+      ]
+    }
+  ]
+}

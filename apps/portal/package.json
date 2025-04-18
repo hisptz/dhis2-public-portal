@@ -41,6 +41,7 @@
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "bestzip": "^2.2.1",
+    "cypress-ssr-localhost-mocker": "^0.0.4",
     "eslint": "^9",
     "eslint-config-next": "15.3.0",
     "postcss": "^8.5.3",
