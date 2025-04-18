@@ -29,6 +29,7 @@
     "nextjs-toploader": "^3.8.16",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
+    "react-jsx-parser": "^2.4.0",
     "react-svg": "^16.3.0"
   },
   "devDependencies": {
