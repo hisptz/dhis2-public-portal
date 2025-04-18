@@ -13,3 +13,5 @@ export * from "./welcomeNote";
 export * from "./keyIndicator";
 export * from "./data-service/config";
 export * from "./appearance";
+export * from "./displayItems";
+export * from "./modules";

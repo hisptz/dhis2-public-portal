@@ -1,5 +1,6 @@
 import { z } from "zod";
-import { layoutSchema, visualizationSchema } from "./dashboard";
+import { visualizationSchema } from "./dashboard";
+import { layoutSchema } from "./layout";
 
 const favoriteConfigSchema = z.object({
 	visualizations: z.array(visualizationSchema),

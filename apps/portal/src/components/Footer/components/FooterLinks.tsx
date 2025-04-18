@@ -8,6 +8,7 @@ export function FooterLinks({ config }: { config: FooterLinksConfig }) {
 			<Title order={5}>{title}</Title>
 			{links.map((link) => (
 				<Text
+					c="dimmed"
 					target="_blank"
 					key={link.url}
 					href={link.url}

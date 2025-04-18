@@ -1,8 +1,14 @@
 "use client";
-import { AppTitleConfig, HeaderConfig } from "@packages/shared/schemas";
+import {
+	AppMenuConfig,
+	AppTitleConfig,
+	HeaderConfig,
+} from "@packages/shared/schemas";
 import {
 	AppShell,
+	AspectRatio,
 	Burger,
+	Container,
 	Flex,
 	Image,
 	Stack,
@@ -11,6 +17,7 @@ import {
 } from "@mantine/core";
 import NextImage from "next/image";
 import { getForeground } from "@/utils/colors";
+import { HeaderMenu } from "@/components/AppMenu/HeaderMenu";
 
 export function AppHeader({
 	config,
@@ -18,8 +25,10 @@ export function AppHeader({
 	toggle,
 	title,
 	logo,
+	menuConfig,
 }: {
 	config: HeaderConfig;
+	menuConfig: AppMenuConfig;
 	title: AppTitleConfig;
 	logo: string;
 	opened: boolean;
@@ -33,46 +42,57 @@ export function AppHeader({
 		? getForeground(backgroundColor)
 		: undefined;
 	return (
-		<AppShell.Header bg={backgroundColor} color="cyan">
-			<Flex gap="lg" align="center" p="sm">
+		<AppShell.Header p={0} bg={backgroundColor} color="cyan">
+			<Flex gap="lg" align="center" p={0}>
 				<Burger
 					opened={opened}
 					onClick={toggle}
 					hiddenFrom="sm"
 					size="sm"
 				/>
-				{config.logo.enabled && (
-					<Image
-						component={NextImage}
-						width={60}
-						height={60}
-						alt="logo"
-						src={logo}
-						visibleFrom="sm"
-						fallbackSrc="https://avatars.githubusercontent.com/u/1089987?s=200&v=4"
-					/>
-				)}
+				<AspectRatio ratio={1} p="sm" flex="0 0 120px">
+					{config.logo.enabled && (
+						<Image
+							component={NextImage}
+							width={120}
+							height={120}
+							alt="logo"
+							src={logo}
+							visibleFrom="sm"
+							fallbackSrc="https://avatars.githubusercontent.com/u/1089987?s=200&v=4"
+						/>
+					)}
+				</AspectRatio>
 				<Stack
 					align={config.title.style?.center ? "center" : "flex-start"}
+					justify="space-between"
 					flex={1}
-					gap="xs"
+					py={0}
+					my={0}
 				>
-					<Title
-						bg={
-							config.style?.coloredBackground
-								? theme.primaryColor
-								: undefined
-						}
-						c={foregroundColor}
-						order={2}
-					>
-						{title.main}
-					</Title>
-					{title.subtitle && (
-						<Title c={foregroundColor} order={4}>
-							{title.subtitle}
+					<Stack p="sm" flex={1} justify="center" gap={0}>
+						<Title
+							bg={
+								config.style?.coloredBackground
+									? theme.primaryColor
+									: undefined
+							}
+							c={foregroundColor}
+							order={2}
+						>
+							{title.main}
 						</Title>
-					)}
+						{title.subtitle && (
+							<Title c="dimmed" order={4}>
+								{title.subtitle}
+							</Title>
+						)}
+					</Stack>
+					<Container p={0} className="min-w-full">
+						{menuConfig.position === "header" && (
+							<HeaderMenu config={menuConfig} />
+						)}
+					</Container>
 				</Stack>
 				{config.trailingLogo && (
 					<Image
