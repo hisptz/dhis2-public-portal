@@ -3,13 +3,17 @@ import { getAppModule } from "@/utils/module";
 import { SectionModule } from "@/components/modules/SectionModule/SectionModule";
 import { ModuleType } from "@packages/shared/schemas";
 import { VisualizationModule } from "@/components/modules/VisualizationModule/VisualizationModule";
+import { ReadonlyURLSearchParams } from "next/navigation";
 
 export default async function ModuleLandingPage({
 	params,
+	searchParams,
 }: {
 	params: Promise<{ module: string[] }>;
+	searchParams: Promise<ReadonlyURLSearchParams>;
 }) {
 	const { module } = await params;
+	const searchParamsValue = await searchParams;
 	const moduleId = last(module);
 
 	if (!moduleId) {
@@ -26,7 +30,12 @@ export default async function ModuleLandingPage({
 		case ModuleType.SECTION:
 			return <SectionModule config={moduleConfig} />;
 		case ModuleType.VISUALIZATION:
-			return <VisualizationModule config={moduleConfig.config} />;
+			return (
+				<VisualizationModule
+					searchParams={searchParamsValue}
+					config={moduleConfig.config}
+				/>
+			);
 		default:
 			return <div>Module type is not supported</div>;
 	}

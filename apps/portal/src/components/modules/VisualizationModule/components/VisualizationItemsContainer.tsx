@@ -1,20 +1,18 @@
-"use client";
-
 import { VisualizationModuleConfig } from "@packages/shared/schemas";
 import { FlexibleLayoutContainer } from "@/components/FlexibleLayoutContainer";
-import { useSearchParams } from "next/navigation";
 import { FlexibleLayoutItem } from "@/components/FlexibleLayoutItem";
 import { Box, Text } from "@mantine/core";
 import { isEmpty } from "lodash";
-import { DisplayItemContainer } from "@/components/DisplayItemContainer";
+import { DisplayItemContainer } from "@/components/displayItems/DisplayItemContainer";
+import { DisplayItemSelector } from "@/components/displayItems/DisplayItemSelector";
 
 export function VisualizationItemsContainer({
 	config,
+	searchParams,
 }: {
 	config: VisualizationModuleConfig;
+	searchParams: { group?: string };
 }) {
-	const searchParams = useSearchParams();
-
 	if (!config.grouped) {
 		if (isEmpty(config.items)) {
 			return (
@@ -33,14 +31,16 @@ export function VisualizationItemsContainer({
 						id={item.item.id}
 						key={`${item.item.id}`}
 					>
-						<DisplayItemContainer item={item} />
+						<DisplayItemContainer item={item}>
+							<DisplayItemSelector item={item} />
+						</DisplayItemContainer>
 					</FlexibleLayoutItem>
 				))}
 			</FlexibleLayoutContainer>
 		);
 	}
 
-	const groupId = searchParams.get("group");
+	const groupId = searchParams.group;
 
 	if (!groupId) {
 		return (
@@ -78,7 +78,9 @@ export function VisualizationItemsContainer({
 		<FlexibleLayoutContainer layouts={group.layouts}>
 			{group.items.map((item) => (
 				<FlexibleLayoutItem id={item.item.id} key={`${item.item.id}`}>
-					<DisplayItemContainer item={item} />
+					<DisplayItemContainer item={item}>
+						<DisplayItemSelector item={item} />
+					</DisplayItemContainer>
 				</FlexibleLayoutItem>
 			))}
 		</FlexibleLayoutContainer>

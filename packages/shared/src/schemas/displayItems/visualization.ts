@@ -71,7 +71,13 @@ export const visualizationItemSchema = z.discriminatedUnion("type", [
 	chartVisualizationItem,
 ]);
 
+export type VisualizationItem = z.infer<typeof visualizationItemSchema>;
+
 export const visualizationDisplayItemSchema = baseDisplayItemSchema.extend({
 	type: z.literal(DisplayItemType.VISUALIZATION),
 	item: visualizationItemSchema,
 });
+
+export type VisualizationDisplayItem = z.infer<
+	typeof visualizationDisplayItemSchema
+>;
