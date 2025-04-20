@@ -12,6 +12,9 @@ import { getSystemInfo } from "@/utils/systemInfo";
 import { NoConfigLandingPage } from "@/components/NoConfigLandingPage";
 import { NavigationBar } from "@/components/NavigationBar";
 
+import "react-grid-layout/css/styles.css";
+import "react-resizable/css/styles.css";
+
 export async function generateMetadata() {
 	return await getAppMetadata();
 }

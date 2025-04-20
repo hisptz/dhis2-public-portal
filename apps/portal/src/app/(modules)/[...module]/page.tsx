@@ -1,6 +1,8 @@
 import { last } from "lodash";
 import { getAppModule } from "@/utils/module";
-import { SectionModule } from "@/components/SectionModule/SectionModule";
+import { SectionModule } from "@/components/modules/SectionModule/SectionModule";
+import { ModuleType } from "@packages/shared/schemas";
+import { VisualizationModule } from "@/components/modules/VisualizationModule/VisualizationModule";
 
 export default async function ModuleLandingPage({
 	params,
@@ -21,8 +23,10 @@ export default async function ModuleLandingPage({
 	}
 
 	switch (moduleConfig.type) {
-		case "SECTION":
+		case ModuleType.SECTION:
 			return <SectionModule config={moduleConfig} />;
+		case ModuleType.VISUALIZATION:
+			return <VisualizationModule config={moduleConfig.config} />;
 		default:
 			return <div>Module type is not supported</div>;
 	}

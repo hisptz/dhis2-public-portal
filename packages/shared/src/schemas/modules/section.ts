@@ -1,4 +1,4 @@
-import { baseModuleSchema } from "./base";
+import { baseModuleSchema, ModuleType } from "./base";
 import { z } from "zod";
 import { displayItemSchema } from "../displayItems";
 import { layoutSchema } from "../layout";
@@ -38,8 +38,10 @@ export const sectionSchema = z.discriminatedUnion("type", [
 ]);
 
 export const sectionModuleConfigSchema = baseModuleSchema.extend({
-	type: z.literal("SECTION"),
-	sections: z.array(sectionSchema),
+	type: z.literal(ModuleType.SECTION),
+	config: z.object({
+		sections: z.array(sectionSchema),
+	}),
 });
 
 export type SectionModuleConfig = z.infer<typeof sectionModuleConfigSchema>;

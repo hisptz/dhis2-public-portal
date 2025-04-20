@@ -9,6 +9,5 @@ export enum DisplayItemType {
 export const displayItemTypeSchema = z.nativeEnum(DisplayItemType);
 
 export const baseDisplayItemSchema = z.object({
-	id: z.string(),
 	type: displayItemTypeSchema,
 });
