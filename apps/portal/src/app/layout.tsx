@@ -6,7 +6,6 @@ import {
 	MantineProvider,
 } from "@mantine/core";
 import { getAppearanceConfig } from "@/utils/theme";
-import { MainLayout } from "@/components/MainLayout";
 import { getAppMetadata } from "@/utils/appMetadata";
 import { DHIS2AppProvider } from "@/components/DHIS2AppProvider";
 import { getSystemInfo } from "@/utils/systemInfo";
@@ -39,23 +38,18 @@ export default async function RootLayout({
 			</html>
 		);
 	}
-	const { theme, appearanceConfig, menuConfig } = config;
+	const { theme } = config;
 
 	return (
 		<html lang="en" {...mantineHtmlProps}>
 			<head>
 				<ColorSchemeScript />
 			</head>
-			<body>
+			<body className="h-screen w-screen">
 				<MantineProvider theme={theme}>
 					<NavigationBar />
 					<DHIS2AppProvider systemInfo={systemInfo}>
-						<MainLayout
-							menuConfig={menuConfig}
-							appearanceConfig={appearanceConfig}
-						>
-							{children}
-						</MainLayout>
+						{children}
 					</DHIS2AppProvider>
 				</MantineProvider>
 			</body>
