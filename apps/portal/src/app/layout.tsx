@@ -14,6 +14,7 @@ import { NavigationBar } from "@/components/NavigationBar";
 
 import "react-grid-layout/css/styles.css";
 import "react-resizable/css/styles.css";
+import { ModalsProvider } from "@mantine/modals";
 
 export async function generateMetadata() {
 	return await getAppMetadata();
@@ -50,10 +51,12 @@ export default async function RootLayout({
 			</head>
 			<body className="h-screen w-screen">
 				<MantineProvider theme={theme}>
-					<NavigationBar />
-					<DHIS2AppProvider systemInfo={systemInfo}>
-						{children}
-					</DHIS2AppProvider>
+					<ModalsProvider>
+						<NavigationBar />
+						<DHIS2AppProvider systemInfo={systemInfo}>
+							{children}
+						</DHIS2AppProvider>
+					</ModalsProvider>
 				</MantineProvider>
 			</body>
 		</html>

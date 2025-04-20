@@ -30,6 +30,7 @@ export const baseVisualizationModuleSchema = z.object({
 		.regex(/^\S*$/, { message: i18n.t("ID should not contain a space") }),
 	title: z.string(),
 	grouped: z.boolean(),
+	preamble: z.string().optional(),
 });
 
 export const groupedVisualizationModuleSchema =

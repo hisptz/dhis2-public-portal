@@ -1,5 +1,5 @@
 import { DisplayItem, DisplayItemType } from "@packages/shared/schemas";
-import { MainVisualization } from "@/components/visualizations/MainVisualization";
+import { MainVisualization } from "@/components/displayItems/visualizations/MainVisualization";
 
 export function DisplayItemSelector({ item }: { item: DisplayItem }) {
 	switch (item.type) {
