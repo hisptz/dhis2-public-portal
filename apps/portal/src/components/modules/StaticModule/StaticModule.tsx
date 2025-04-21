@@ -1,7 +1,18 @@
-export function StaticModule() {
+import { StaticModuleConfig } from "@packages/shared/schemas";
+import { Stack, Title } from "@mantine/core";
+import { StaticItemsList } from "@/components/modules/StaticModule/components/StaticItemsList";
+
+export function StaticModule({
+	config,
+	moduleId,
+}: {
+	config: StaticModuleConfig;
+	moduleId: string;
+}) {
 	return (
-		<div className="w-full h-full flex flex-col items-center justify-center">
-			Static Module
-		</div>
+		<Stack>
+			<Title order={2}>{config.title}</Title>
+			<StaticItemsList moduleId={moduleId} config={config} />
+		</Stack>
 	);
 }
