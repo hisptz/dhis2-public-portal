@@ -61,7 +61,7 @@ export function GroupTab({ config }: { config: GroupMenuItem }) {
 				<Menu.Label>{config.label}</Menu.Label>
 				{config.items.map((item) => (
 					<Menu.Item
-						href={item.path}
+						href={`/${item.path}`}
 						component={Link}
 						key={item.path}
 						color={
