@@ -2,7 +2,7 @@
 
 import { GroupedVisualizationModuleConfig } from "@packages/shared/schemas";
 import { Box, SegmentedControl } from "@mantine/core";
-import { usePathname, useSearchParams } from "next/navigation";
+import { redirect, usePathname, useSearchParams } from "next/navigation";
 import { useRouter } from "nextjs-toploader/app";
 
 export function GroupControl({
@@ -16,6 +16,12 @@ export function GroupControl({
 
 	const groupId = searchParams.get("group");
 	const groups = config.groups;
+
+	if (groupId == null) {
+		const params = new URLSearchParams(searchParams);
+		params.set("group", groups[0].id);
+		redirect(`${pathname}?${params.toString()}`);
+	}
 
 	const options = groups.map((group) => ({
 		label: group.title,
