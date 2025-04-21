@@ -7,6 +7,7 @@ export enum DocumentType {
 
 export const documentItemSchema = z.object({
 	id: z.string(),
+	label: z.string(),
 	type: z.nativeEnum(DocumentType),
 });
 
@@ -32,6 +33,10 @@ export const groupedDocumentModuleConfigSchema =
 		groups: z.array(documentGroupSchema),
 	});
 
+export type GroupedDocumentModuleConfig = z.infer<
+	typeof groupedDocumentModuleConfigSchema
+>;
+
 export const nonGroupedDocumentModuleConfigSchema =
 	baseDocumentModuleConfigSchema.extend({
 		grouped: z.literal(false),
@@ -45,9 +50,9 @@ export const documentsModuleConfigSchema = z.discriminatedUnion("grouped", [
 
 export type DocumentsModuleConfig = z.infer<typeof documentsModuleConfigSchema>;
 
-export const documentsModule = baseModuleSchema.extend({
+export const documentsModuleSchema = baseModuleSchema.extend({
 	type: z.literal(ModuleType.DOCUMENTS),
 	config: documentsModuleConfigSchema,
 });
 
-export type DocumentsModule = z.infer<typeof documentsModule>;
+export type DocumentsModule = z.infer<typeof documentsModuleSchema>;

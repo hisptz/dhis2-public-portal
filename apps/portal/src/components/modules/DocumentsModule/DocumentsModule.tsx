@@ -1,7 +1,23 @@
-export function DocumentsModule() {
+import { Stack, Title } from "@mantine/core";
+import { DocumentsItemsContainer } from "@/components/modules/DocumentsModule/components/DocumentsItemsContainer";
+import { DocumentsModuleConfig } from "@packages/shared/schemas";
+import { DocumentsGroupControl } from "@/components/modules/DocumentsModule/components/DocumentsGroupControl";
+
+export function DocumentsModule({
+	config,
+	searchParams,
+}: {
+	config: DocumentsModuleConfig;
+	searchParams: { group?: string };
+}) {
 	return (
-		<div className="w-full h-full flex flex-col items-center justify-center">
-			Documents Module
-		</div>
+		<Stack className="w-full h-full">
+			<Title order={2}>{config.title}</Title>
+			{config.grouped && <DocumentsGroupControl config={config} />}
+			<DocumentsItemsContainer
+				config={config}
+				searchParams={searchParams}
+			/>
+		</Stack>
 	);
 }

@@ -7,6 +7,7 @@ import { StaticModule } from "@/components/modules/StaticModule/StaticModule";
 import { DetailsPage } from "@/components/modules/StaticModule/components/DetailsPage";
 import { Box } from "@mantine/core";
 import { BaseCardError } from "@/components/CardError";
+import { DocumentsModule } from "@/components/modules/DocumentsModule/DocumentsModule";
 
 export default async function ModuleLandingPage({
 	params,
@@ -71,6 +72,13 @@ export default async function ModuleLandingPage({
 				<StaticModule
 					moduleId={moduleId}
 					config={moduleConfig.config}
+				/>
+			);
+		case ModuleType.DOCUMENTS:
+			return (
+				<DocumentsModule
+					config={moduleConfig.config}
+					searchParams={searchParamsValue}
 				/>
 			);
 		default:
