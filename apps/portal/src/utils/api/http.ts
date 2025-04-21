@@ -7,6 +7,30 @@ export class HttpClient {
 		this.pat = pat;
 	}
 
+	async getIcon(path: string) {
+		const url = new URL(`${path}`, this.baseURL);
+		const response = await fetch(url, {
+			cache: "no-store",
+			headers: {
+				Authorization: `ApiToken ${this.pat}`,
+				Accept: "application/octet-stream;charset=utf-8",
+			},
+		});
+
+		const status = response.status;
+		if (status >= 400) {
+			console.error(await response.json());
+			throw `Request failed with status code ${status}`;
+		}
+
+		const blob = await response.blob();
+		return new Response(blob, {
+			headers: {
+				...response.headers,
+			},
+		});
+	}
+
 	async getFile(
 		path: string,
 		meta?: {

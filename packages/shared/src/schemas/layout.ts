@@ -2,10 +2,10 @@ import { z } from "zod";
 
 export const dataGridSchema = z.object({
 	i: z.string(),
-	x: z.number().min(0).max(12).optional(),
-	y: z.number().min(0).optional(),
-	w: z.number().min(1).max(12).optional(),
-	h: z.number().min(1).optional(),
+	x: z.number().min(0).max(12),
+	y: z.number().min(0),
+	w: z.number().min(1).max(12),
+	h: z.number().min(1),
 	static: z.boolean().optional(),
 	minW: z.number().min(1).max(12).optional(),
 	maxW: z.number().min(1).max(12).optional(),
@@ -14,8 +14,10 @@ export const dataGridSchema = z.object({
 });
 
 export const layoutSchema = z.object({
-	lg: dataGridSchema.array().optional(),
-	md: dataGridSchema.array().optional(),
-	sm: dataGridSchema.array().optional(),
-	xs: dataGridSchema.array().optional(),
+	lg: dataGridSchema.array(),
+	md: dataGridSchema.array(),
+	sm: dataGridSchema.array(),
+	xs: dataGridSchema.array(),
 });
+
+export type FlexibleLayoutConfig = z.infer<typeof layoutSchema>;

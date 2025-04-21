@@ -14,7 +14,7 @@ export function HeaderMenu({ config }: { config: AppMenuConfig }) {
 		<Tabs
 			onChange={(value) => {
 				if (value !== "#") {
-					router.push(`/${value}`);
+					router.replace(`/${value}`);
 				}
 			}}
 			value={pathname.replace("/", "")}

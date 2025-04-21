@@ -1,6 +1,9 @@
-import { baseModuleSchema } from "./base";
+import { baseModuleSchema, ModuleType } from "./base";
 import { z } from "zod";
-import { displayItemSchema } from "../displayItems";
+import {
+	displayItemSchema,
+	singleValueDisplayItemSchema,
+} from "../displayItems";
 import { layoutSchema } from "../layout";
 
 export enum SectionType {
@@ -18,28 +21,40 @@ export const baseSectionSchema = z.object({
 
 export const gridLayoutSectionSchema = baseSectionSchema.extend({
 	type: z.literal("GRID_LAYOUT"),
-	items: z.array(displayItemSchema),
+	items: z.array(singleValueDisplayItemSchema),
 });
+
+export type GridLayoutSectionConfig = z.infer<typeof gridLayoutSectionSchema>;
 
 export const singleItemSectionSchema = baseSectionSchema.extend({
 	type: z.literal("SINGLE_ITEM"),
 	item: displayItemSchema,
 });
 
+export type SingleItemSectionConfig = z.infer<typeof singleItemSectionSchema>;
+
 export const flexibleLayoutSectionSchema = baseSectionSchema.extend({
 	type: z.literal("FLEXIBLE_LAYOUT"),
 	items: z.array(displayItemSchema),
-	layout: layoutSchema,
+	layouts: layoutSchema,
 });
+
+export type FlexibleLayoutSectionConfig = z.infer<
+	typeof flexibleLayoutSectionSchema
+>;
 export const sectionSchema = z.discriminatedUnion("type", [
 	gridLayoutSectionSchema,
 	singleItemSectionSchema,
 	flexibleLayoutSectionSchema,
 ]);
 
+export type Section = z.infer<typeof sectionSchema>;
+
 export const sectionModuleConfigSchema = baseModuleSchema.extend({
-	type: z.literal("SECTION"),
-	sections: z.array(sectionSchema),
+	type: z.literal(ModuleType.SECTION),
+	config: z.object({
+		sections: z.array(sectionSchema),
+	}),
 });
 
 export type SectionModuleConfig = z.infer<typeof sectionModuleConfigSchema>;
