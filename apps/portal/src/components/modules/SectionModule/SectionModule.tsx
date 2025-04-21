@@ -1,21 +1,17 @@
-"use client";
-
 import { SectionModuleConfig } from "@packages/shared/schemas";
-import { Flex, Stack, Title, useMantineTheme } from "@mantine/core";
+import { Stack } from "@mantine/core";
+import { SectionTitle } from "@/components/modules/SectionModule/components/SectionTitle";
+import { SectionDisplaySelector } from "@/components/modules/SectionModule/components/SectionDisplaySelector";
 
 export function SectionModule({ config }: { config: SectionModuleConfig }) {
-	const theme = useMantineTheme();
-
 	return (
 		<div className="w-full h-full flex flex-col gap-8">
-			{config.sections.map((section) => {
+			{config.config.sections.map((section) => {
 				return (
-					<Flex gap="md" direction="column" key={section.id}>
-						<Title c={theme.primaryColor} order={3}>
-							{section.title}
-						</Title>
-						<Stack>Content will be shown here</Stack>
-					</Flex>
+					<Stack gap="md" key={section.id}>
+						<SectionTitle section={section} />
+						<SectionDisplaySelector section={section} />
+					</Stack>
 				);
 			})}
 		</div>
