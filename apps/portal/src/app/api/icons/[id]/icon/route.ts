@@ -8,7 +8,5 @@ export async function GET(request: NextRequest) {
 		.substring(url.lastIndexOf("/api/"))
 		.replace("/api/", "");
 
-	console.log("Getting an icon: ", urlToForward, "");
-
 	return await dhis2HttpClient.getIcon(urlToForward);
 }

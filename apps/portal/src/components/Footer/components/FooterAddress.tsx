@@ -7,8 +7,6 @@ import JsxParser from "react-jsx-parser";
 export function FooterAddress({ config }: { config: AddressConfig }) {
 	const content = config?.content;
 
-	console.log(content);
-
 	return (
 		<Box
 			style={{

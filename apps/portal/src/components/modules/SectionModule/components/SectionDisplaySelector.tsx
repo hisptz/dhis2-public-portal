@@ -4,7 +4,6 @@ import { GridSection } from "@/components/modules/SectionModule/components/GridS
 import { SingleItemSection } from "@/components/modules/SectionModule/components/SingleItemSection";
 
 export function SectionDisplaySelector({ section }: { section: Section }) {
-	console.log(section);
 	switch (section.type) {
 		case SectionType.FLEXIBLE_LAYOUT:
 			return <FlexibleLayoutSection config={section} />;

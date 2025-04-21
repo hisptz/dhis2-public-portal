@@ -8,7 +8,6 @@ export function SingleItemSection({
 }: {
 	config: SingleItemSectionConfig;
 }) {
-	console.log(config);
 	return (
 		<Container fluid>
 			<DisplayItemContainer item={config.item}>

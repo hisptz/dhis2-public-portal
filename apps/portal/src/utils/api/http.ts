@@ -9,7 +9,6 @@ export class HttpClient {
 
 	async getIcon(path: string) {
 		const url = new URL(`${path}`, this.baseURL);
-		console.log({ url });
 		const response = await fetch(url, {
 			cache: "no-store",
 			headers: {
@@ -19,11 +18,6 @@ export class HttpClient {
 		});
 
 		const status = response.status;
-
-		console.log({
-			status,
-		});
-
 		if (status >= 400) {
 			console.error(await response.json());
 			throw `Request failed with status code ${status}`;
