@@ -8,7 +8,7 @@ export function WelcomePage() {
 	return (
 		<div className="w-full h-full flex flex-col">
 			<h1 className="font-bold">
-				{i18n.t("Welcome to the public portal manager")}
+				{i18n.t("Welcome to the public portal manager!")}
 			</h1>
 			<p className="text-gray-500">
 				{i18n.t(
