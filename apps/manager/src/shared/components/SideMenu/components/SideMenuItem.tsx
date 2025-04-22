@@ -8,7 +8,6 @@ export const SideMenuItem = createLink(
 		props: MenuItemProps,
 		ref,
 	) {
-		console.log(props);
 		return (
 			<MenuItem
 				{...props}
