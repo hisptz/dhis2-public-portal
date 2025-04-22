@@ -15,6 +15,7 @@
 
 // Import commands.js using ES2015 syntax:
 import "./commands";
+import "@cypress/code-coverage/support";
 
 // Import and initialize the SSR mocker
 // import "cypress-ssr-localhost-mocker/commands";
