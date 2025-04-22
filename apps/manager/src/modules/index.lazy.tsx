@@ -1,8 +1,8 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createLazyFileRoute } from "@tanstack/react-router";
 import React from "react";
 import { WelcomePage } from "../shared/components/WelcomePage";
 
-export const Route = createFileRoute("/")({
+export const Route = createLazyFileRoute("/")({
 	component: RouteComponent,
 });
 
