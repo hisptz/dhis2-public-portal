@@ -12,7 +12,7 @@
     "deploy": "d2-app-scripts deploy",
     "tsr:generate": "tsr generate",
     "tsr:watch": "tsr watch",
-    "tailwind:watch": "npx @tailwindcss/cli -i ./src/main.css -o ./src/output.css --watch",
+    "tailwind:watch": "npx @tailwindcss/cli -c tailwind.config.ts -i ./src/main.css -o ./src/output.css --watch",
     "tailwind:generate": "npx @tailwindcss/cli -i ./src/main.css -o ./src/output.css",
     "test:e2e": "concurrently --kill-others --success first -c blue,green --names app,cypress 'yarn start:app'  'cypress run'",
     "test:e2e-open": "concurrently -c blue,green --names app,cypress 'yarn start:app'  'cypress open'",
@@ -41,7 +41,8 @@
   },
   "dependencies": {
     "@dhis2/app-runtime": "^3.14.1",
-    "@tanstack/react-router": "^1.116.0",
-    "@packages/shared": "*"
+    "@dhis2/ui": "^10.5.1",
+    "@packages/shared": "*",
+    "@tanstack/react-router": "^1.116.0"
   }
 }

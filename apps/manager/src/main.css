@@ -1,4 +1,9 @@
-@tailwind utilities;
+@import "tailwindcss";
+
+
+@theme{
+    --color-primary-500: rgb(44, 102, 147);
+}
 
 
 body {
