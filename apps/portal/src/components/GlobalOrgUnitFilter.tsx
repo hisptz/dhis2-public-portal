@@ -2,7 +2,7 @@
 
 import { useRouter, useSearchParams } from "next/navigation";
 import { OrgUnitConfig } from "@packages/shared/schemas";
-import { Button, Stack, TextInput } from "@mantine/core";
+import { Button, Stack, TextInput, Title } from "@mantine/core";
 import { useBoolean } from "usehooks-ts";
 import i18n from "@dhis2/d2-i18n";
 import { useMemo, useTransition } from "react";
@@ -39,12 +39,20 @@ export function GlobalOrgUnitFilter({
 		});
 	};
 
+	const hasActiveParams = !!searchParams.get("ou");
+
+	const onReset = () => {
+		const params = new URLSearchParams(searchParams);
+		params.delete("ou");
+		startTransition(() => {
+			router.replace(`?${params.toString()}`);
+		});
+	};
+
 	return (
 		<>
 			<Stack>
-				<strong className="text-primary-400 pb-2" id={`period-label`}>
-					{i18n.t("Location")}
-				</strong>
+				<Title order={5}> {i18n.t("Location")}</Title>
 				<div className="w-full flex gap-2">
 					<TextInput
 						onClick={onOpen}
@@ -73,7 +81,7 @@ export function GlobalOrgUnitFilter({
 			</Stack>
 			{!hide && (
 				<CustomOrgUnitModal
-					onReset={() => {}}
+					onReset={hasActiveParams ? onReset : () => {}}
 					orgUnitState={orgUnits}
 					onUpdate={onUpdate}
 					open={!hide}

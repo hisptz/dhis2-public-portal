@@ -3,7 +3,6 @@
 import { Card, Group } from "@mantine/core";
 import { GlobalOrgUnitFilter } from "@/components/GlobalOrgUnitFilter";
 import { GlobalPeriodFilter } from "@/components/GlobalPeriodFilter";
-import { ResetDimensionButton } from "@/components/modules/VisualizationModule/components/ResetDimensionButton";
 import { VisualizationModuleConfig } from "@packages/shared/schemas";
 import { useSearchParams } from "next/navigation";
 
@@ -25,7 +24,6 @@ export function Selectors({ config }: { config: VisualizationModuleConfig }) {
 					title={currentSelectedGroup?.title}
 					periodConfig={currentSelectedGroup?.periodConfig}
 				/>
-				<ResetDimensionButton />
 			</Group>
 		</Card>
 	);

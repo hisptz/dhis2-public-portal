@@ -21,5 +21,9 @@ export function ResetDimensionButton() {
 		router.replace(`?${params.toString()}`);
 	};
 
-	return <Button onClick={onReset}>{i18n.t("Reset filters")}</Button>;
+	return (
+		<Button variant={"outlined"} onClick={onReset}>
+			{i18n.t("Reset filters")}
+		</Button>
+	);
 }

@@ -1,6 +1,6 @@
 "use client";
 
-import { Button, Stack, TextInput } from "@mantine/core";
+import { Button, Stack, TextInput, Title } from "@mantine/core";
 import i18n from "@dhis2/d2-i18n";
 import { useBoolean } from "usehooks-ts";
 
@@ -36,13 +36,20 @@ export function GlobalPeriodFilter({
 			router.replace(`?${updateSearchParams.toString()}`);
 		});
 	};
+	const hasActiveParams = !!searchParams.get("pe");
+
+	const onReset = () => {
+		const params = new URLSearchParams(searchParams);
+		params.delete("pe");
+		startTransition(() => {
+			router.replace(`?${params.toString()}`);
+		});
+	};
 
 	return (
 		<>
 			<Stack>
-				<strong className="text-primary-400 pb-2" id={`period-label`}>
-					{i18n.t("Period")}
-				</strong>
+				<Title order={5}> {i18n.t("Period")}</Title>
 				<div className="w-full flex gap-2">
 					<TextInput
 						disabled={isPending}
@@ -65,7 +72,7 @@ export function GlobalPeriodFilter({
 					{...(periodConfig ?? {})}
 					periodState={periods}
 					open={!hide}
-					onReset={() => {}}
+					onReset={hasActiveParams ? onReset : () => {}}
 					handleClose={onClose}
 					onUpdate={onUpdate}
 					title={title ?? ""}

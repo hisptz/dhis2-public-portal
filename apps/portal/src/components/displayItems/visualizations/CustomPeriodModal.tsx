@@ -1,15 +1,5 @@
 import React, { useState } from "react";
-import {
-	Button,
-	Modal,
-	CloseButton,
-	Text,
-	Menu,
-	Group,
-	Box,
-	Stack,
-	Title,
-} from "@mantine/core";
+import { Button, Modal, Group, Box, Title } from "@mantine/core";
 import { PeriodTypeCategory, PeriodUtility } from "@hisptz/dhis2-utils";
 import {
 	createFixedPeriodFromPeriodId,
@@ -145,6 +135,11 @@ export function CustomPeriodModal({
 	return (
 		<Modal
 			size="lg"
+			title={
+				<Title id="modal-title" order={4}>
+					{title}
+				</Title>
+			}
 			key={`${title}-modal`}
 			opened={open}
 			onClose={handleClose}
@@ -153,21 +148,16 @@ export function CustomPeriodModal({
 		>
 			<Box key={`${title}-card`}>
 				<div className="flex flex-row justify-between items-end">
-					<Stack>
-						<Title id="modal-title" order={4}>
-							{title}
-						</Title>
-						<Title id="modal-title" order={6}>
-							{i18n.t(" Select Period(s)")}
-						</Title>
-					</Stack>
+					<Title id="modal-title" order={5}>
+						{i18n.t(" Select Period(s)")}
+					</Title>
 					<Button
 						onClick={() => {
 							onReset();
 							handleClose();
 						}}
 						disabled={isEmpty(periodState)}
-						variant="outlined"
+						variant="outline"
 					>
 						{i18n.t("Reset")}
 					</Button>

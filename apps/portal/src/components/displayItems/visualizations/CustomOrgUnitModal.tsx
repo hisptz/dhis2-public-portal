@@ -51,6 +51,11 @@ export function CustomOrgUnitModal({
 
 	return (
 		<Modal
+			title={
+				<Title id="modal-title" order={4}>
+					{title}
+				</Title>
+			}
 			size="lg"
 			opened={open}
 			onClose={handleClose}
@@ -59,21 +64,16 @@ export function CustomOrgUnitModal({
 		>
 			<Box key={`${title}-card`}>
 				<div className="flex flex-row justify-between items-end">
-					<Stack>
-						<Title id="modal-title" order={4}>
-							{title}
-						</Title>
-						<Title id="modal-title" order={6}>
-							{i18n.t("Select Location(s)")}
-						</Title>
-					</Stack>
+					<Title id="modal-title" order={5}>
+						{i18n.t("Select Location(s)")}
+					</Title>
 					<Button
 						onClick={() => {
 							onReset();
 							handleClose();
 						}}
 						disabled={isEmpty(orgUnitState)}
-						variant="outlined"
+						variant="outline"
 					>
 						{i18n.t("Reset")}
 					</Button>
