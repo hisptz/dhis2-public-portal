@@ -45,7 +45,7 @@ export function ActionMenu({
 								</Menu.Item>
 							))
 						: actionMenuGroups?.map((group) => (
-								<>
+								<div key={group.label + id}>
 									<Menu.Label key={group.label + id}>
 										{group.label}
 									</Menu.Label>
@@ -58,7 +58,7 @@ export function ActionMenu({
 											{action.label}
 										</Menu.Item>
 									))}
-								</>
+								</div>
 							))}
 				</Menu.Dropdown>
 			</Menu>
