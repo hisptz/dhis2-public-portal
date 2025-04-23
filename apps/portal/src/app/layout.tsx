@@ -34,7 +34,10 @@ export default async function RootLayout({
 				<head>
 					<ColorSchemeScript />
 				</head>
-				<body>
+				<body
+					className="h-screen w-screen"
+					style={{ overflow: "hidden" }}
+				>
 					<MantineProvider>
 						<NoConfigLandingPage />
 					</MantineProvider>
