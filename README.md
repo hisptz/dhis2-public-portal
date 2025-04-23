@@ -1,7 +1,12 @@
 # Customizable DHIS2 Public Portal
 
-[![semantic-release: angular](https://img.shields.io/badge/semantic--release-angular-e10079?logo=semantic-release)](https://github.com/semantic-release/semantic-release)
+[![semantic-release: angular](https://img.shields.io/badge/semantic--release-angular-e10079?logo=semantic-release&style=for-the-badge)](https://github.com/semantic-release/semantic-release)
 
+
+[![DHIS2 Public Portal](https://img.shields.io/endpoint?url=https://cloud.cypress.io/badge/detailed/qufv5j/develop&style=for-the-badge&logo=cypress&label=Portal)](https://cloud.cypress.io/projects/qufv5j/runs)
+
+
+[![DHIS2 Public Portal Manager](https://img.shields.io/endpoint?url=https://cloud.cypress.io/badge/detailed/usucz3/develop&style=for-the-badge&logo=cypress&label=Manager)](https://cloud.cypress.io/projects/usucz3/runs)
 ## Introduction
 
 Overview
