@@ -13,6 +13,7 @@ export function Selectors({ config }: { config: VisualizationModuleConfig }) {
 	const currentSelectedGroup = config.grouped
 		? config.groups.find((group) => group.id == currentGroup)
 		: config;
+
 	return (
 		<Card className="w-full">
 			<Group>

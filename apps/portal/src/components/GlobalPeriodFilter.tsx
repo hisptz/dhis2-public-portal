@@ -38,8 +38,8 @@ export function GlobalPeriodFilter({
 	};
 
 	return (
-		<div className="flex flex-wrap gap-2">
-			<Stack className="form-control flex-1">
+		<>
+			<Stack>
 				<strong className="text-primary-400 pb-2" id={`period-label`}>
 					{i18n.t("Period")}
 				</strong>
@@ -71,6 +71,6 @@ export function GlobalPeriodFilter({
 					title={title ?? ""}
 				/>
 			)}
-		</div>
+		</>
 	);
 }
