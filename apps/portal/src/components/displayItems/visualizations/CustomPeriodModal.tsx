@@ -8,6 +8,7 @@ import {
 	Group,
 	Box,
 	Stack,
+	Title,
 } from "@mantine/core";
 import { PeriodTypeCategory, PeriodUtility } from "@hisptz/dhis2-utils";
 import {
@@ -143,6 +144,7 @@ export function CustomPeriodModal({
 
 	return (
 		<Modal
+			size="lg"
 			key={`${title}-modal`}
 			opened={open}
 			onClose={handleClose}
@@ -150,22 +152,14 @@ export function CustomPeriodModal({
 			aria-describedby="modal-description"
 		>
 			<Box key={`${title}-card`}>
-				<Group justify="space-between" align="center">
-					<></>
-					<Menu withinPortal position="bottom-end" shadow="sm">
-						<Menu.Target>
-							<CloseButton onClick={handleClose} />
-						</Menu.Target>
-					</Menu>
-				</Group>
 				<div className="flex flex-row justify-between items-end">
 					<Stack>
-						<Text id="modal-title" variant="h6" component="h2">
+						<Title id="modal-title" order={4}>
 							{title}
-						</Text>
-						<Text id="modal-title" variant="h6" component="h3">
+						</Title>
+						<Title id="modal-title" order={6}>
 							{i18n.t(" Select Period(s)")}
-						</Text>
+						</Title>
 					</Stack>
 					<Button
 						onClick={() => {
@@ -179,7 +173,10 @@ export function CustomPeriodModal({
 					</Button>
 				</div>
 
-				<div id="modal-description" style={{ marginTop: 2 }}>
+				<div
+					id="modal-description"
+					style={{ marginTop: 8, marginBottom: 16 }}
+				>
 					<SelectInputField
 						key={`${title}-categories`}
 						label={i18n.t("Categories")}
@@ -188,7 +185,7 @@ export function CustomPeriodModal({
 						options={categoryOptions}
 					/>
 
-					<div className="flex">
+					<Group grow>
 						<SelectInputField
 							key={`${title}-period-types`}
 							value={currentPeriodType}
@@ -203,7 +200,7 @@ export function CustomPeriodModal({
 								onChange={setYear}
 							/>
 						) : null}
-					</div>
+					</Group>
 
 					<SelectInputField
 						key={`${title}-periods`}

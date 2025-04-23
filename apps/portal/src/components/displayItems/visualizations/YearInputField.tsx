@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Box, Stack, TextInput } from "@mantine/core";
+import { Box, NumberInput, Text } from "@mantine/core";
 
 export function YearInputField({
 	onChange,
@@ -12,7 +12,7 @@ export function YearInputField({
 	const [year, setYear] = useState<number>(currentYear);
 
 	const handleChange = (event: any) => {
-		const newValue = event.target.value;
+		const newValue = event.toString();
 
 		if (newValue.length === 0) return;
 
@@ -40,24 +40,19 @@ export function YearInputField({
 	};
 
 	return (
-		<Stack
-			className="form-control"
-			style={{ marginInlineStart: 8, marginBlock: 4 }}
-			gap="sm"
-		>
-			<strong className="text-primary-400 pb-2" id={`${label}-label`}>
+		<Box className="form-control" style={{ marginBlock: 4 }}>
+			<Text
+				fw={700}
+				className="text-primary-400 pb-2"
+				id={`${label}-label`}
+			>
 				{label}
-			</strong>
-			<Box>
-				<TextInput
-					value={year}
-					onChange={handleChange}
-					onBlur={handleBlur}
-					variant="outlined"
-					size="small"
-					type="number"
-				/>
-			</Box>
-		</Stack>
+			</Text>
+			<NumberInput
+				value={year}
+				onChange={handleChange}
+				onBlur={handleBlur}
+			/>
+		</Box>
 	);
 }

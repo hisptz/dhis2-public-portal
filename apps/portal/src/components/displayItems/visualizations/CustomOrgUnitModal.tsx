@@ -16,15 +16,6 @@ import i18n from "@dhis2/d2-i18n";
 import { useOrgUnit } from "@/utils/orgUnits";
 import { isEmpty } from "lodash";
 
-const style = {
-	position: "absolute",
-	top: "50%",
-	left: "50%",
-	transform: "translate(-50%, -50%)",
-	width: 600,
-	p: 4,
-};
-
 export function CustomOrgUnitModal({
 	orgUnitState,
 	open,
@@ -60,28 +51,16 @@ export function CustomOrgUnitModal({
 
 	return (
 		<Modal
+			size="lg"
 			opened={open}
 			onClose={handleClose}
 			aria-labelledby="modal-title"
 			aria-describedby="modal-description"
 		>
-			<Box
-				key={`${title}-card`}
-				variant="outlined"
-				className="flex flex-col gap-4"
-			>
-				<Group justify="space-between" align="center">
-					<></>
-					<Menu withinPortal position="bottom-end" shadow="sm">
-						<Menu.Target>
-							<CloseButton onClick={handleClose} />
-						</Menu.Target>
-					</Menu>
-				</Group>
-
+			<Box key={`${title}-card`}>
 				<div className="flex flex-row justify-between items-end">
 					<Stack>
-						<Title id="modal-title" order={6}>
+						<Title id="modal-title" order={4}>
 							{title}
 						</Title>
 						<Title id="modal-title" order={6}>
@@ -105,20 +84,22 @@ export function CustomOrgUnitModal({
 						<Loader size={30} color="blue" />
 					</div>
 				) : (
-					<OrgUnitSelector
-						limitSelectionToLevels={limitSelectionToLevels}
-						searchable
-						value={{
-							orgUnits: selectedOrgUnits ?? [],
-						}}
-						onUpdate={(val: OrgUnitSelection) => {
-							setOrgUnits(
-								!isEmpty(val.orgUnits)
-									? val.orgUnits
-									: defaultOrgUnits,
-							);
-						}}
-					/>
+					<div className="flex justify-center items-center h-full">
+						<OrgUnitSelector
+							limitSelectionToLevels={limitSelectionToLevels}
+							searchable
+							value={{
+								orgUnits: selectedOrgUnits ?? [],
+							}}
+							onUpdate={(val: OrgUnitSelection) => {
+								setOrgUnits(
+									!isEmpty(val.orgUnits)
+										? val.orgUnits
+										: defaultOrgUnits,
+								);
+							}}
+						/>
+					</div>
 				)}
 				<div className="flex flex-row justify-end gap-2">
 					<Button
