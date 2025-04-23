@@ -1,5 +1,5 @@
 echo "Packaging NextJS application for standalone deployment"
-pwd
+
 PKG_VERSION=$(node -p "require('./package.json').version")
 PKG_NAME=$(node -p "require('./package.json').name")
 
