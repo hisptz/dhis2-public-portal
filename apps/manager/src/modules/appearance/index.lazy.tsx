@@ -1,16 +1,13 @@
 import { createLazyFileRoute } from "@tanstack/react-router";
 import React from "react";
 import i18n from "@dhis2/d2-i18n";
-import { ModuleContainer } from "../../../shared/components/ModuleContainer";
-import { useAppearance } from "../../../shared/components/AppearancePage/providers/AppearanceProvider";
+import { ModuleContainer } from "../../shared/components/ModuleContainer";
 
 export const Route = createLazyFileRoute("/appearance/_provider/")({
 	component: RouteComponent,
 });
 
 function RouteComponent() {
-	const real = useAppearance();
-	console.log("real", real);
 	return (
 		<ModuleContainer title="Appearance">
 			<section>
