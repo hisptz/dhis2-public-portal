@@ -1,6 +1,8 @@
 import * as React from "react";
-import { createRootRoute } from "@tanstack/react-router";
-import i18n from "@dhis2/d2-i18n";
+import { Suspense } from "react";
+import { createRootRoute, Outlet } from "@tanstack/react-router";
+import { SideMenu } from "../shared/components/SideMenu/SideMenu";
+import { CircularLoader } from "@dhis2/ui";
 
 export const Route = createRootRoute({
 	component: RootComponent,
@@ -9,8 +11,19 @@ export const Route = createRootRoute({
 function RootComponent() {
 	return (
 		<React.Fragment>
-			<div className="w-screen h-screen flex items-center justify-center">
-				<h1>{i18n.t("Welcome to DHIS2 Public Portal Manager!")}</h1>
+			<div className="h-full w-full flex">
+				<SideMenu />
+				<main className="flex-1 h-full p-[16px]">
+					<Suspense
+						fallback={
+							<div className="h-full w-full flex justify-center items-center">
+								<CircularLoader />
+							</div>
+						}
+					>
+						<Outlet />
+					</Suspense>
+				</main>
 			</div>
 		</React.Fragment>
 	);
