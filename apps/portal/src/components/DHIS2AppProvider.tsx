@@ -23,12 +23,12 @@ export function DHIS2AppProvider({
 	systemInfo: D2SystemInfo;
 }) {
 	const { contextPath, version } = systemInfo ?? {};
-	const [major, minor, patch, fix] = version.split(".") ?? [];
+	const [, minor] = version.split(".") ?? [];
 
 	return (
 		<NoSsrAppProvider
 			config={{
-				baseUrl: contextPath,
+				baseUrl: "/",
 				apiVersion: minor,
 				systemInfo: {
 					contextPath,

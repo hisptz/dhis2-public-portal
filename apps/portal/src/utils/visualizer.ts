@@ -19,13 +19,9 @@ import Highcharts, {
 } from "highcharts";
 import {
 	AnalyticsDimension,
-	chartVisualizationItem as CascadeChartVisualization,
 	MapConfig,
-	chartVisualizationItem as MultiChartVisualization,
 	VisualizationConfig,
-	ChartVisualizationItem,
 } from "@packages/shared/schemas";
-import { chartColors } from "@packages/shared/constants";
 import { ChartType } from "@hisptz/dhis2-analytics";
 
 export function getLayout(visualization: VisualizationConfig) {
@@ -186,10 +182,14 @@ export function getCategoryOptions(config: VisualizationConfig) {
 }
 
 export function getChartType(config: VisualizationConfig): ChartType {
-	if (uniq(compact(config.series.map((series) => series.type))).length >= 1) {
+	if (
+		uniq(compact(config.series?.map((series) => series.type))).length >= 1
+	) {
 		return "multi-series";
 	}
-	if (uniq(compact(config.series.map((series) => series.axis))).length >= 1) {
+	if (
+		uniq(compact(config.series?.map((series) => series.axis))).length >= 1
+	) {
 		return "multi-series";
 	}
 	return config.type.toLowerCase().replace("_", "-") as ChartType;

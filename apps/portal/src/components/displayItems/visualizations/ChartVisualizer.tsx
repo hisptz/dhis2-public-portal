@@ -43,8 +43,8 @@ export function ChartVisualizer({
 	legendSet,
 }: ChartVisualizerProps) {
 	const layout = getChartLayout(visualization);
-	const series = visualization.series;
-	const axes = visualization.axes;
+	const series = visualization.series ?? [];
+	const axes = visualization.axes ?? [];
 	return (
 		<ErrorBoundary FallbackComponent={CardError}>
 			<NoSSRDHIS2Chart
