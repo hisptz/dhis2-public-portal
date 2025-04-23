@@ -1,12 +1,12 @@
 "use client";
 
-import { ActionIcon, Loader, Tooltip } from "@mantine/core"; // @ts-ignore
+import { ActionIcon, Loader, Tooltip } from "@mantine/core";
 import { IconArrowsMaximize, IconArrowsMinimize } from "@tabler/icons-react";
 import i18n from "@dhis2/d2-i18n";
 import { TableVisualizer } from "@/components/displayItems/visualizations/TableVisualizer";
 import {
-	VisualizationItem,
 	VisualizationConfig,
+	VisualizationItem,
 	VisualizationType,
 } from "@packages/shared/schemas";
 import { FullScreen } from "react-full-screen";

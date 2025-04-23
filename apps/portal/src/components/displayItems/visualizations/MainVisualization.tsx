@@ -1,12 +1,8 @@
-import { FileVisualizer } from "@/components/displayItems/visualizations/FileVisualizer";
 import { DataVisualization } from "@/components/displayItems/visualizations/DataVisualization";
 import { MapVisualization } from "@/components/displayItems/visualizations/MapVisualization";
-import {
-	VisualizationItem,
-	LibraryFileData,
-	VisualizationType,
-} from "@packages/shared/schemas";
+import { VisualizationItem, VisualizationType } from "@packages/shared/schemas";
 import { BannerVisualization } from "@/components/displayItems/visualizations/BannerVisualization";
+import { BaseCardError } from "@/components/CardError";
 
 export interface MainVisualizationProps {
 	config: VisualizationItem;
@@ -43,9 +39,9 @@ export async function MainVisualization({
 			);
 		default:
 			return (
-				<div style={{ minHeight: "400px" }}>
-					Unsupported value type {type}
-				</div>
+				<BaseCardError
+					error={new Error("Unsupported visualization ")}
+				/>
 			);
 	}
 }
