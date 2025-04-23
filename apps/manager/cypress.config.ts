@@ -13,6 +13,7 @@ export default defineConfig({
 		defaultCommandTimeout: 15000,
 		testIsolation: false,
 	},
+	projectId: "usucz3",
 	env: {
 		networkMode: "live",
 		dhis2BaseUrl: "http://localhost:8080",
