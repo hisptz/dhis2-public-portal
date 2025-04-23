@@ -27,8 +27,6 @@ export function Footer({
         <div>
                 <div className="relative" style={{
                     clipPath: "polygon(0% 0, 100% 0%, 100% 100%, 0% 100%)",
-                    transition: "transform 0.3s ease-out, clip-path 10000000s ease-in"
-
                 }}>
                     <div className="sticky bottom-[calc(100vh)] h-[240px]"
                     >
