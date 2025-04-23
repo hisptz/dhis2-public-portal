@@ -25,6 +25,8 @@ export const chartVisualizationItem = baseVisualizationItem.extend({
 	]),
 });
 
+export type ChartVisualizationItem = z.infer<typeof chartVisualizationItem>;
+
 const bannerVisualizationSchema = baseVisualizationItem.extend({
 	type: z.literal(VisualizationType.BANNER),
 	label: z.string(),
@@ -35,6 +37,8 @@ const bannerVisualizationSchema = baseVisualizationItem.extend({
 		})
 		.array(),
 });
+
+export type bannerVisualizationItem = z.infer<typeof bannerVisualizationSchema>;
 
 export const visualizationItemSchema = z.discriminatedUnion("type", [
 	bannerVisualizationSchema,

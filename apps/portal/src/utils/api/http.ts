@@ -112,7 +112,13 @@ export class HttpClient {
 		//
 	}
 
-	async post<T>(path: string, meta?: { params?: { [key: string]: string } }) {
+	async post<T>(
+		path: string,
+		meta?: { params?: { [key: string]: string } },
+		p0?: {
+			params: { recipients: string; subject: string; message: string };
+		},
+	) {
 		const { params } = meta ?? {};
 		const url = new URL(`${path}`, this.baseURL);
 		if (params) {

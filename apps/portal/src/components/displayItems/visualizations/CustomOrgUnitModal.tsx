@@ -1,0 +1,149 @@
+import React, { useEffect, useState } from "react";
+import {
+	Button,
+	Loader,
+	Modal,
+	CloseButton,
+	Menu,
+	Group,
+	Box,
+	Title,
+	Stack,
+} from "@mantine/core";
+import { OrgUnitSelector } from "@hisptz/dhis2-ui";
+import { OrganisationUnit, OrgUnitSelection } from "@hisptz/dhis2-utils";
+import i18n from "@dhis2/d2-i18n";
+import { useOrgUnit } from "@/utils/orgUnits";
+import { isEmpty } from "lodash";
+
+const style = {
+	position: "absolute",
+	top: "50%",
+	left: "50%",
+	transform: "translate(-50%, -50%)",
+	width: 600,
+	p: 4,
+};
+
+export function CustomOrgUnitModal({
+	orgUnitState,
+	open,
+	onReset,
+	handleClose,
+	title,
+	orgUnitsId,
+	limitSelectionToLevels,
+	onUpdate,
+}: {
+	orgUnitState?: string[];
+	open: boolean;
+	onReset: () => void;
+	handleClose: () => void;
+	title: string;
+	orgUnitsId?: string[];
+	limitSelectionToLevels?: number[];
+	onUpdate: (val: string[] | undefined) => void;
+}) {
+	const { orgUnit: defaultOrgUnits, loading: orgUnitLoading } = useOrgUnit(
+		orgUnitState ?? orgUnitsId,
+	);
+
+	const [selectedOrgUnits, setOrgUnits] = useState<
+		OrganisationUnit[] | undefined
+	>(defaultOrgUnits);
+
+	useEffect(() => {
+		setOrgUnits(defaultOrgUnits);
+	}, [defaultOrgUnits]);
+
+	const orgUnits = selectedOrgUnits?.map(({ id }) => id);
+
+	return (
+		<Modal
+			opened={open}
+			onClose={handleClose}
+			aria-labelledby="modal-title"
+			aria-describedby="modal-description"
+		>
+			<Box
+				key={`${title}-card`}
+				variant="outlined"
+				className="flex flex-col gap-4"
+			>
+				<Group justify="space-between" align="center">
+					<></>
+					<Menu withinPortal position="bottom-end" shadow="sm">
+						<Menu.Target>
+							<CloseButton onClick={handleClose} />
+						</Menu.Target>
+					</Menu>
+				</Group>
+
+				<div className="flex flex-row justify-between items-end">
+					<Stack>
+						<Title id="modal-title" order={6}>
+							{title}
+						</Title>
+						<Title id="modal-title" order={6}>
+							{i18n.t("Select Location(s)")}
+						</Title>
+					</Stack>
+					<Button
+						onClick={() => {
+							onReset();
+							handleClose();
+						}}
+						disabled={isEmpty(orgUnitState)}
+						variant="outlined"
+					>
+						{i18n.t("Reset")}
+					</Button>
+				</div>
+
+				{orgUnitLoading ? (
+					<div className="flex justify-center items-center h-full">
+						<Loader size={30} color="blue" />
+					</div>
+				) : (
+					<OrgUnitSelector
+						limitSelectionToLevels={limitSelectionToLevels}
+						searchable
+						value={{
+							orgUnits: selectedOrgUnits ?? [],
+						}}
+						onUpdate={(val: OrgUnitSelection) => {
+							setOrgUnits(
+								!isEmpty(val.orgUnits)
+									? val.orgUnits
+									: defaultOrgUnits,
+							);
+						}}
+					/>
+				)}
+				<div className="flex flex-row justify-end gap-2">
+					<Button
+						onClick={() => {
+							handleClose();
+						}}
+						variant="contained"
+						color="secondary"
+					>
+						{i18n.t("Cancel")}
+					</Button>
+					<Button
+						color="primary"
+						onClick={() => {
+							onUpdate(orgUnits);
+							handleClose();
+						}}
+						size="medium"
+						variant="contained"
+						disabled={isEmpty(selectedOrgUnits)}
+					>
+						{i18n.t("Update")}
+					</Button>
+				</div>
+			</Box>
+		</Modal>
+	);
+}
