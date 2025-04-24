@@ -1,6 +1,6 @@
 "use client";
 
-import { Button, Stack, TextInput, Title } from "@mantine/core";
+import { Stack, TextInput, Tooltip } from "@mantine/core";
 import i18n from "@dhis2/d2-i18n";
 import { useBoolean } from "usehooks-ts";
 
@@ -8,16 +8,19 @@ import { useMemo, useTransition } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { PeriodConfig } from "@packages/shared/schemas";
 import { CustomPeriodModal } from "@/components/displayItems/visualizations/CustomPeriodModal";
+import { IconClock } from "@tabler/icons-react";
 
 export function GlobalPeriodFilter({
 	periodConfig,
 	title,
+	isPending,
 }: {
 	periodConfig?: PeriodConfig;
 	title?: string;
+	isPending: boolean;
 }) {
+	const [isPendingPeriod, startPeriodTransition] = useTransition();
 	const router = useRouter();
-	const [isPending, startTransition] = useTransition();
 	const searchParams = useSearchParams();
 	const {
 		value: hide,
@@ -32,7 +35,7 @@ export function GlobalPeriodFilter({
 	const onUpdate = (value: string[]) => {
 		const updateSearchParams = new URLSearchParams(searchParams);
 		updateSearchParams.set("pe", value.join(","));
-		startTransition(() => {
+		startPeriodTransition(() => {
 			router.replace(`?${updateSearchParams.toString()}`);
 		});
 	};
@@ -41,7 +44,7 @@ export function GlobalPeriodFilter({
 	const onReset = () => {
 		const params = new URLSearchParams(searchParams);
 		params.delete("pe");
-		startTransition(() => {
+		startPeriodTransition(() => {
 			router.replace(`?${params.toString()}`);
 		});
 	};
@@ -49,22 +52,25 @@ export function GlobalPeriodFilter({
 	return (
 		<>
 			<Stack>
-				<Title order={5}> {i18n.t("Period")}</Title>
 				<div className="w-full flex gap-2">
-					<TextInput
-						disabled={isPending}
-						value={periods.join(", ")}
-						onClick={onOpen}
-					/>
-					<Button
-						disabled={isPending}
-						variant="outlined"
-						onClick={onOpen}
+					<Tooltip
+						withArrow
+						position={"bottom"}
+						label={i18n.t("Click to change period")}
 					>
-						{isPending
-							? i18n.t("Please wait...")
-							: i18n.t("Change period")}
-					</Button>
+						<TextInput
+							label={"Period"}
+							disabled={isPending || isPendingPeriod}
+							readOnly
+							rightSection={<IconClock size={16} />}
+							value={
+								isPending || isPendingPeriod
+									? i18n.t("Please wait...")
+									: periods.join(", ")
+							}
+							onClick={onOpen}
+						/>
+					</Tooltip>
 				</div>
 			</Stack>
 			{!hide && (

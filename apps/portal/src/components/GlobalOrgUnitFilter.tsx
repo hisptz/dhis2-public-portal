@@ -2,22 +2,25 @@
 
 import { useRouter, useSearchParams } from "next/navigation";
 import { OrgUnitConfig } from "@packages/shared/schemas";
-import { Button, Stack, TextInput, Title } from "@mantine/core";
+import { Stack, TextInput, Tooltip } from "@mantine/core";
 import { useBoolean } from "usehooks-ts";
 import i18n from "@dhis2/d2-i18n";
 import { useMemo, useTransition } from "react";
 import { useOrgUnit } from "@/utils/orgUnits";
 import { OrganisationUnit } from "@hisptz/dhis2-utils";
 import { CustomOrgUnitModal } from "@/components/displayItems/visualizations/CustomOrgUnitModal";
+import { IconMapPin } from "@tabler/icons-react";
 
 export function GlobalOrgUnitFilter({
 	orgUnitConfig,
 	title,
+	isPending,
 }: {
 	orgUnitConfig?: OrgUnitConfig;
 	title: string;
+	isPending: boolean;
 }) {
-	const [isPending, startTransition] = useTransition();
+	const [isPendingOrgUnit, startOrgUnitTransition] = useTransition();
 	const searchParams = useSearchParams();
 	const orgUnits = useMemo(
 		() => searchParams.get("ou")?.split(",") ?? [],
@@ -34,7 +37,7 @@ export function GlobalOrgUnitFilter({
 	const onUpdate = (value: string[] | undefined) => {
 		const updateSearchParams = new URLSearchParams(searchParams);
 		updateSearchParams.set("ou", value?.join(",") ?? "");
-		startTransition(() => {
+		startOrgUnitTransition(() => {
 			router.replace(`?${updateSearchParams.toString()}`);
 		});
 	};
@@ -44,7 +47,7 @@ export function GlobalOrgUnitFilter({
 	const onReset = () => {
 		const params = new URLSearchParams(searchParams);
 		params.delete("ou");
-		startTransition(() => {
+		startOrgUnitTransition(() => {
 			router.replace(`?${params.toString()}`);
 		});
 	};
@@ -52,31 +55,33 @@ export function GlobalOrgUnitFilter({
 	return (
 		<>
 			<Stack>
-				<Title order={5}> {i18n.t("Location")}</Title>
 				<div className="w-full flex gap-2">
-					<TextInput
-						onClick={onOpen}
-						disabled={isPending}
-						value={
-							loading
-								? i18n.t("Loading...")
-								: orgUnit
-										?.map(
-											(ou: OrganisationUnit) =>
-												ou.name ?? ou.displayName,
-										)
-										.join(", ")
-						}
-					/>
-					<Button
-						disabled={isPending}
-						variant="outlined"
-						onClick={onOpen}
+					<Tooltip
+						withArrow
+						position={"bottom"}
+						label={i18n.t("Click to change location")}
 					>
-						{isPending
-							? i18n.t("Please wait...")
-							: i18n.t("Change location")}
-					</Button>
+						<TextInput
+							onClick={onOpen}
+							readOnly
+							label={i18n.t("Location")}
+							disabled={isPending || isPendingOrgUnit}
+							rightSection={<IconMapPin size={16} />}
+							value={
+								isPending || isPendingOrgUnit
+									? i18n.t("Please wait...")
+									: loading
+										? i18n.t("Loading...")
+										: orgUnit
+												?.map(
+													(ou: OrganisationUnit) =>
+														ou.name ??
+														ou.displayName,
+												)
+												.join(", ")
+							}
+						/>
+					</Tooltip>
 				</div>
 			</Stack>
 			{!hide && (

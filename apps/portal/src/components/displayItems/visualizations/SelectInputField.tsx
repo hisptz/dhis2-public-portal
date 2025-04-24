@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Box, MultiSelect, Select, Text } from "@mantine/core";
+import { Box, MultiSelect, Select } from "@mantine/core";
 
 export function SelectInputField({
 	label,
@@ -47,15 +47,13 @@ export function SelectInputField({
 	if (multiple) {
 		return (
 			<Box className="form-control" style={{ marginBlock: 8 }}>
-				<Text fw={700} c="blue" id={`${label}-label`}>
-					{label}
-				</Text>
 				<MultiSelect
+					label={label}
 					data={transformedOptions}
 					value={selectedOptions}
 					onChange={handleChange}
 					disabled={disabled}
-					size="md"
+					size="sm"
 					checkIconPosition="left"
 					clearable
 					searchable
@@ -66,10 +64,8 @@ export function SelectInputField({
 
 	return (
 		<Box className="form-control" style={{ marginBlock: 8 }}>
-			<Text fw={700} c="blue" id={`${label}-label`}>
-				{label}
-			</Text>
 			<Select
+				label={label}
 				data={transformedOptions}
 				value={selectedOptions}
 				onChange={handleChange}

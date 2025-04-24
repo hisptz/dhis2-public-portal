@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Box, NumberInput, Text } from "@mantine/core";
+import { Box, NumberInput } from "@mantine/core";
 
 export function YearInputField({
 	onChange,
@@ -22,11 +22,9 @@ export function YearInputField({
 
 	return (
 		<Box className="form-control" style={{ marginBlock: 8 }}>
-			<Text fw={700} c="blue" id={`${label}-label`}>
-				{label}
-			</Text>
 			<NumberInput
 				value={year}
+				label={label}
 				max={currentYear}
 				clampBehavior="strict"
 				onChange={handleChange}
