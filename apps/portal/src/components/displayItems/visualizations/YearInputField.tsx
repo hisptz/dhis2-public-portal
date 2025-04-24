@@ -11,31 +11,12 @@ export function YearInputField({
 	const currentYear = new Date().getFullYear();
 	const [year, setYear] = useState<number>(currentYear);
 
-	const handleChange = (event: any) => {
-		const newValue = event.toString();
+	const handleChange = (inputValue: any) => {
+		const digits: number = inputValue.toString().length;
 
-		if (newValue.length === 0) return;
-
-		if (/^\d*$/.test(newValue)) {
-			let numericValue: number;
-
-			if (newValue.length < 4) {
-				numericValue = currentYear;
-			} else {
-				numericValue = Number(newValue);
-			}
-
-			const displayValue = Number(newValue);
-			if (displayValue <= currentYear) {
-				setYear(displayValue);
-				onChange(numericValue);
-			}
-		}
-	};
-
-	const handleBlur = () => {
-		if (year.toString().length === 0) {
-			setYear(currentYear);
+		if (digits >= 4 && inputValue <= currentYear) {
+			setYear(inputValue);
+			onChange(inputValue);
 		}
 	};
 
@@ -50,8 +31,9 @@ export function YearInputField({
 			</Text>
 			<NumberInput
 				value={year}
+				max={currentYear}
+				clampBehavior="strict"
 				onChange={handleChange}
-				onBlur={handleBlur}
 			/>
 		</Box>
 	);
