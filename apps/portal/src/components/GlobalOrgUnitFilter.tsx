@@ -65,7 +65,7 @@ export function GlobalOrgUnitFilter({
 							onClick={onOpen}
 							readOnly
 							label={i18n.t("Location")}
-							disabled={isPending || isPendingOrgUnit}
+							disabled={isPending || isPendingOrgUnit || loading}
 							rightSection={<IconMapPin size={16} />}
 							value={
 								isPending || isPendingOrgUnit

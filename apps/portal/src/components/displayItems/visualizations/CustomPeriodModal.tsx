@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Button, Modal, Group, Box, Title } from "@mantine/core";
+import { Box, Button, Group, Modal, Text, Title } from "@mantine/core";
 import { PeriodTypeCategory, PeriodUtility } from "@hisptz/dhis2-utils";
 import {
 	createFixedPeriodFromPeriodId,
@@ -136,9 +136,9 @@ export function CustomPeriodModal({
 		<Modal
 			size="lg"
 			title={
-				<Title id="modal-title" order={4}>
+				<Text fw={"bold"} id="modal-title">
 					{title}
-				</Title>
+				</Text>
 			}
 			key={`${title}-modal`}
 			opened={open}
