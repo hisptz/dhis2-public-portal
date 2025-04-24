@@ -30,7 +30,7 @@ export async function MapVisualization({
 	);
 
 	const thematicLayers: ThematicLayerConfig[] = compact(
-		uniqBy(mapConfig.mapViews, "id").map(
+		uniqBy(mapConfig.mapViews, "displayName").map(
 			({ id, legendSet, classes, displayName, dataDimensionItems }) => {
 				const dataItem = head(dataDimensionItems);
 

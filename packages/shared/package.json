@@ -15,5 +15,9 @@
   },
   "dependencies": {
     "zod": "^3.22.4"
+  },
+  "devDependencies": {
+    "axios": "^1.8.4",
+    "dotenv": "^16.5.0"
   }
 }

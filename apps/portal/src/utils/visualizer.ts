@@ -19,6 +19,7 @@ import Highcharts, {
 } from "highcharts";
 import {
 	AnalyticsDimension,
+	ChartVisualizationItem,
 	MapConfig,
 	VisualizationConfig,
 } from "@packages/shared/schemas";
@@ -249,115 +250,115 @@ export function getChartType(config: VisualizationConfig): ChartType {
  * *
  * */
 
-// export function getCascadeHighchartOverride({
-// 	config,
-// 	originalConfig,
-// }: {
-// 	config: ChartVisualizationItem;
-// 	originalConfig: Options;
-// }): Partial<Options> {
-// 	const { axes } = config;
-// 	const yAxes = axes.map(
-// 		(axis, index) =>
-// 			({
-// 				min: 0,
-// 				id: axis.id,
-// 				title: {
-// 					text: axis.name ?? "",
-// 				},
-// 				opposite: index % 2 === 1,
-// 				stackLabels: {
-// 					enabled: true,
-// 					verticalAlign: "top",
-// 				},
-// 			}) as YAxisOptions,
-// 	);
-//
-// 	const series = originalConfig.series
-// 		?.map((seriesOptions: SeriesOptionsType) => {
-// 			if (!("data" in seriesOptions)) {
-// 				return seriesOptions;
-// 			}
-//
-// 			const seriesData = seriesOptions.data as number[];
-// 			return axes
-// 				.map((axis, axisIndex) => {
-// 					if (axis.multiple) {
-// 						if (axis.ids?.includes(seriesOptions.id as string)) {
-// 							return axis.ids?.map((id) => ({
-// 								...seriesOptions,
-// 								yAxis: axisIndex,
-// 								as: (axis.type.toLowerCase() ?? "column") as
-// 									| "column"
-// 									| "line",
-// 							}));
-// 						} else {
-// 							const data = Array.from(
-// 								Array(seriesData.length),
-// 							).fill(null);
-//
-// 							forEach(axis.ids, (id, index) => {
-// 								set(
-// 									data,
-// 									[index + axisIndex],
-// 									seriesData?.[index + axisIndex],
-// 								);
-// 							});
-//
-// 							return {
-// 								...seriesOptions,
-// 								as: (axis.type.toLowerCase() ?? "column") as
-// 									| "column"
-// 									| "line",
-// 								yAxis: axisIndex,
-// 								color: chartColors[axisIndex],
-// 								data,
-// 							};
-// 						}
-// 					}
-//
-// 					if (axis.id === seriesOptions.id) {
-// 						return {
-// 							id: axis.id,
-// 							yAxis: axisIndex,
-// 							as: (axis.type.toLowerCase() ?? "column") as
-// 								| "column"
-// 								| "line",
-// 						};
-// 					}
-// 					const data = Array.from(
-// 						Array(seriesOptions.data?.length),
-// 					).fill(null);
-// 					set(data, [0], seriesData?.[0]);
-//
-// 					return {
-// 						...seriesOptions,
-// 						yAxis: axisIndex,
-// 						as: (axis.type.toLowerCase() ?? "column") as
-// 							| "column"
-// 							| "line",
-// 						data,
-// 					};
-// 				})
-// 				.flat();
-// 		})
-// 		.flat() as SeriesOptionsType[];
-//
-// 	return {
-// 		yAxis: yAxes,
-// 		plotOptions: {
-// 			...originalConfig.plotOptions,
-// 			column: {
-// 				...(originalConfig.plotOptions?.column ?? {}),
-// 				dataLabels: {
-// 					enabled: false,
-// 				},
-// 				stacking: "normal",
-// 			},
-// 		},
-// 		series,
-// 	};
-// }
+export function getCascadeHighchartOverride({
+	config,
+	originalConfig,
+}: {
+	config: ChartVisualizationItem;
+	originalConfig: Options;
+}): Partial<Options> {
+	const { axes } = config;
+	const yAxes = axes.map(
+		(axis, index) =>
+			({
+				min: 0,
+				id: axis.id,
+				title: {
+					text: axis.name ?? "",
+				},
+				opposite: index % 2 === 1,
+				stackLabels: {
+					enabled: true,
+					verticalAlign: "top",
+				},
+			}) as YAxisOptions,
+	);
+
+	const series = originalConfig.series
+		?.map((seriesOptions: SeriesOptionsType) => {
+			if (!("data" in seriesOptions)) {
+				return seriesOptions;
+			}
+
+			const seriesData = seriesOptions.data as number[];
+			return axes
+				.map((axis, axisIndex) => {
+					if (axis.multiple) {
+						if (axis.ids?.includes(seriesOptions.id as string)) {
+							return axis.ids?.map((id) => ({
+								...seriesOptions,
+								yAxis: axisIndex,
+								as: (axis.type.toLowerCase() ?? "column") as
+									| "column"
+									| "line",
+							}));
+						} else {
+							const data = Array.from(
+								Array(seriesData.length),
+							).fill(null);
+
+							forEach(axis.ids, (id, index) => {
+								set(
+									data,
+									[index + axisIndex],
+									seriesData?.[index + axisIndex],
+								);
+							});
+
+							return {
+								...seriesOptions,
+								as: (axis.type.toLowerCase() ?? "column") as
+									| "column"
+									| "line",
+								yAxis: axisIndex,
+								color: chartColors[axisIndex],
+								data,
+							};
+						}
+					}
+
+					if (axis.id === seriesOptions.id) {
+						return {
+							id: axis.id,
+							yAxis: axisIndex,
+							as: (axis.type.toLowerCase() ?? "column") as
+								| "column"
+								| "line",
+						};
+					}
+					const data = Array.from(
+						Array(seriesOptions.data?.length),
+					).fill(null);
+					set(data, [0], seriesData?.[0]);
+
+					return {
+						...seriesOptions,
+						yAxis: axisIndex,
+						as: (axis.type.toLowerCase() ?? "column") as
+							| "column"
+							| "line",
+						data,
+					};
+				})
+				.flat();
+		})
+		.flat() as SeriesOptionsType[];
+
+	return {
+		yAxis: yAxes,
+		plotOptions: {
+			...originalConfig.plotOptions,
+			column: {
+				...(originalConfig.plotOptions?.column ?? {}),
+				dataLabels: {
+					enabled: false,
+				},
+				stacking: "normal",
+			},
+		},
+		series,
+	};
+}
 
 function getDataWithCategories(config: Options, series: SeriesOptionsType) {
 	if (!("data" in series)) {
