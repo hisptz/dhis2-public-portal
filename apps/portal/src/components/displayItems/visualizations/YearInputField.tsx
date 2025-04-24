@@ -21,12 +21,8 @@ export function YearInputField({
 	};
 
 	return (
-		<Box className="form-control" style={{ marginBlock: 4 }}>
-			<Text
-				fw={700}
-				className="text-primary-400 pb-2"
-				id={`${label}-label`}
-			>
+		<Box className="form-control" style={{ marginBlock: 8 }}>
+			<Text fw={700} c="blue" id={`${label}-label`}>
 				{label}
 			</Text>
 			<NumberInput

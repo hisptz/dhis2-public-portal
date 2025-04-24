@@ -73,7 +73,7 @@ export function CustomOrgUnitModal({
 							handleClose();
 						}}
 						disabled={isEmpty(orgUnitState)}
-						variant="outline"
+						variant="subtle"
 					>
 						{i18n.t("Reset")}
 					</Button>
@@ -84,7 +84,7 @@ export function CustomOrgUnitModal({
 						<Loader size={30} color="blue" />
 					</div>
 				) : (
-					<div className="flex justify-center items-center h-full">
+					<div className="flex justify-center items-center h-full pb-2">
 						<OrgUnitSelector
 							limitSelectionToLevels={limitSelectionToLevels}
 							searchable
@@ -106,19 +106,16 @@ export function CustomOrgUnitModal({
 						onClick={() => {
 							handleClose();
 						}}
-						variant="contained"
-						color="secondary"
+						variant="subtle"
+						color="gray"
 					>
 						{i18n.t("Cancel")}
 					</Button>
 					<Button
-						color="primary"
 						onClick={() => {
 							onUpdate(orgUnits);
 							handleClose();
 						}}
-						size="medium"
-						variant="contained"
 						disabled={isEmpty(selectedOrgUnits)}
 					>
 						{i18n.t("Update")}

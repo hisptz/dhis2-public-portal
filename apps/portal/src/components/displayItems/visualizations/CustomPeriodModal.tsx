@@ -157,7 +157,7 @@ export function CustomPeriodModal({
 							handleClose();
 						}}
 						disabled={isEmpty(periodState)}
-						variant="outline"
+						variant="subtle"
 					>
 						{i18n.t("Reset")}
 					</Button>
@@ -206,8 +206,8 @@ export function CustomPeriodModal({
 						onClick={() => {
 							handleClose();
 						}}
-						variant="contained"
-						color="secondary"
+						variant="subtle"
+						color="gray"
 					>
 						{i18n.t("Cancel")}
 					</Button>
@@ -216,8 +216,6 @@ export function CustomPeriodModal({
 							onUpdate(selectedPeriods);
 							handleClose();
 						}}
-						size="medium"
-						variant="contained"
 						disabled={
 							isEmpty(periodState) && isEmpty(selectedPeriods)
 						}

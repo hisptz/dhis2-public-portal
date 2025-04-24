@@ -46,12 +46,8 @@ export function SelectInputField({
 
 	if (multiple) {
 		return (
-			<Box className="form-control" style={{ marginBlock: 4 }}>
-				<Text
-					fw={700}
-					className="text-primary-400 pb-2"
-					id={`${label}-label`}
-				>
+			<Box className="form-control" style={{ marginBlock: 8 }}>
+				<Text fw={700} c="blue" id={`${label}-label`}>
 					{label}
 				</Text>
 				<MultiSelect
@@ -59,8 +55,8 @@ export function SelectInputField({
 					value={selectedOptions}
 					onChange={handleChange}
 					disabled={disabled}
-					size="sm"
-					checkIconPosition="right"
+					size="md"
+					checkIconPosition="left"
 					clearable
 					searchable
 				/>
@@ -69,12 +65,8 @@ export function SelectInputField({
 	}
 
 	return (
-		<Box className="form-control" style={{ marginBlock: 4 }}>
-			<Text
-				fw={700}
-				className="text-primary-400 pb-2"
-				id={`${label}-label`}
-			>
+		<Box className="form-control" style={{ marginBlock: 8 }}>
+			<Text fw={700} c="blue" id={`${label}-label`}>
 				{label}
 			</Text>
 			<Select
