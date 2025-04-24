@@ -35,13 +35,15 @@ export function GlobalPeriodFilter({
 			?.split(",")
 			?.map((id: string) => {
 				const label =
-					PeriodUtility.getPeriodById(id).type.type ==
-					PeriodTypeCategory.FIXED
-						? createFixedPeriodFromPeriodId({
-								periodId: id,
-								calendar: "gregory",
-							})?.displayName
-						: PeriodUtility.getPeriodById(id).name;
+					/^\d{4}$/.test(id) && parseInt(id) < 1009
+						? id
+						: PeriodUtility.getPeriodById(id).type.type ==
+							  PeriodTypeCategory.FIXED
+							? createFixedPeriodFromPeriodId({
+									periodId: id,
+									calendar: "gregory",
+								})?.displayName
+							: PeriodUtility.getPeriodById(id).name;
 				return { value: id, label: label };
 			});
 	}, [searchParams]);
