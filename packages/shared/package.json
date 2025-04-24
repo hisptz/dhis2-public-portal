@@ -14,9 +14,13 @@
     "./components": "./src/components/index.ts"
   },
   "dependencies": {
+    "@dhis2/multi-calendar-dates": "^2.1.0",
+    "@hisptz/dhis2-utils": "^2.0.17",
+    "lodash": "^4.17.21",
     "zod": "^3.22.4"
   },
   "devDependencies": {
+    "@types/lodash": "^4.17.16",
     "axios": "^1.8.4",
     "dotenv": "^16.5.0"
   }

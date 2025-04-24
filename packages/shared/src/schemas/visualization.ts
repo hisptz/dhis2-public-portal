@@ -12,7 +12,7 @@ export const visualizationFields = [
 	"created",
 	"cumulative",
 	"cumulativeValues",
-	"dataDimensionItems[dataDimensionItemType,expressionDimensionItem[dimensionItem~rename(id),name,displayName,displayShortName,dimensionItemType,expression,access],dataElement[dimensionItem~rename(id),name,displayName,displayShortName,dimensionItemType,expression,access],dataElementOperand[dimensionItem~rename(id),name,displayName,displayShortName,dimensionItemType,expression,access],reportingRate[dimensionItem~rename(id),name,displayName,displayShortName,dimensionItemType,expression,access],programAttribute[dimensionItem~rename(id),name,displayName,displayShortName,dimensionItemType,expression,access],programIndicator[dimensionItem~rename(id),name,displayName,displayShortName,dimensionItemType,expression,access],indicator[dimensionItem~rename(id),name,displayName,displayShortName,dimensionItemType,expression,access]]",
+	"dataDimensionItems[dataDimensionItemType,expressionDimensionItem[dimensionItem~rename(id),name,displayName,displayShortName,dimensionItemType,expression,access],dataElement[dimensionItem~rename(id),name,displayName,displayShortName,dimensionItemType,expression,access],dataElementOperand[dimensionItem~rename(id),name,displayName,displayShortName,dimensionItemType,expression,access],reportingRate[dimensionItem~rename(id),name,displayName,displayShortName,dimensionItemType,expression,access],programAttribute[dimensionItem~rename(id),name,displayName,displayShortName,dimensionItemType,expression,access],programIndicator[dimensionItem~rename(id),name,displayName,displayShortName,dimensionItemType,expression,access],indicator[dimensionItem~rename(id),name,displayName,displayShortName,dimensionItemType,expression,access],programDataElement[dimensionItem~rename(id),name,displayName,displayShortName,dimensionItemType,expression,access]]",
 	"description",
 	"digitGroupSeparator",
 	"displayDensity",
@@ -99,12 +99,18 @@ export const visualizationFields = [
 	"!userOrganisationUnitGrandChildren",
 ];
 
-export enum AnalyticsDimension {
+export enum DefaultAnalyticsDimension {
 	ou = "ou",
 	dx = "dx",
 	pe = "pe",
 	co = "co",
 }
+
+export const analyticsDimensionSchema = z.union([
+	z.nativeEnum(DefaultAnalyticsDimension),
+	z.string().max(11).min(11),
+]);
+export type AnalyticsDimensionSchema = z.infer<typeof analyticsDimensionSchema>;
 
 export enum VisualizationType {
 	BAR = "BAR",
@@ -192,12 +198,11 @@ const dataDimensionItem = z.object({
 	dimensionItemType: z.string(),
 });
 
+export type DataDimensionItem = z.infer<typeof dataDimensionItem>;
+
 const dimension = z.object({
-	dimension: z.union([
-		z.nativeEnum(AnalyticsDimension),
-		z.string().max(11).min(11),
-	]),
-	filter: z.nativeEnum(AnalyticsDimension).optional(),
+	dimension: analyticsDimensionSchema,
+	filter: analyticsDimensionSchema.optional(),
 	items: z.array(dimensionItem),
 	legendSet: legendSet.optional(),
 });

@@ -25,22 +25,6 @@ import {
 } from "@packages/shared/schemas";
 import { ChartType } from "@hisptz/dhis2-analytics";
 
-export function getLayout(visualization: VisualizationConfig) {
-	return {
-		rows: visualization.rows.map((row: any) => row.id),
-		columns: visualization.columns.map((col: any) => col.id),
-		filters: visualization.filters.map((filter: any) => filter.id),
-	};
-}
-
-export function getChartLayout(visualization: VisualizationConfig): any {
-	return {
-		category: visualization.rows.map((row: any) => row.id),
-		series: visualization.columns.map((col: any) => col.id),
-		filter: visualization.filters.map((filter: any) => filter.id) ?? [],
-	};
-}
-
 export function getDataItems(visualization: VisualizationConfig): string[] {
 	return visualization.dataDimensionItems.map((item: any) => {
 		const dataItem = item[camelCase(item.dataDimensionItemType)];
