@@ -3,7 +3,7 @@ import React from "react";
 import i18n from "@dhis2/d2-i18n";
 import { ModuleContainer } from "../../shared/components/ModuleContainer";
 
-export const Route = createLazyFileRoute("/appearance/_provider/")({
+export const Route = createLazyFileRoute("/appearance/")({
 	component: RouteComponent,
 });
 
