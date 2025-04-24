@@ -1,7 +1,7 @@
 import { createLazyFileRoute } from "@tanstack/react-router";
 import React from "react";
-import { ModuleContainer } from "../../shared/components/ModuleContainer";
 import i18n from "@dhis2/d2-i18n";
+import { ModuleContainer } from "../../shared/components/ModuleContainer";
 
 export const Route = createLazyFileRoute("/appearance/")({
 	component: RouteComponent,
