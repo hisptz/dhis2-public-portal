@@ -11,7 +11,8 @@
   "exports": {
     "./schemas": "./src/schemas/index.ts",
     "./constants": "./src/constants/index.ts",
-    "./components": "./src/components/index.ts"
+    "./components": "./src/components/index.ts",
+    "./utils": "./src/utils/index.ts"
   },
   "dependencies": {
     "zod": "^3.22.4"
