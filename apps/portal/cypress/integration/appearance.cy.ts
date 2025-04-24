@@ -54,6 +54,7 @@ describe("Appearance Tests", () => {
 	// });
 
 	it("should display the correct footer links", () => {
+		cy.scrollTo('bottom');
 		// Check if the footer links section has the correct title
 		cy.contains(appearanceConfig.footer.footerLinks.title).should(
 			"be.visible",
