@@ -1,7 +1,8 @@
 import { InputField, InputFieldProps } from "@dhis2/ui";
-import { RHFFieldProps } from "@hisptz/dhis2-ui/dist/types/forms/interfaces";
+// import { RHFFieldProps } from "@hisptz/dhis2-ui/dist/types/forms/interfaces";
 import React from "react";
 import { useController } from "react-hook-form";
+import { RHFFieldProps } from "../../interfaces/interface";
 
 export type RHFNumberFieldProps = InputFieldProps & RHFFieldProps & {};
 
