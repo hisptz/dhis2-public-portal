@@ -97,14 +97,18 @@ export function CustomPeriodModal({
 			}) ?? [];
 
 	const fixedPeriods =
-		currentCategory == PeriodTypeCategory.FIXED
+		currentCategory === PeriodTypeCategory.FIXED
 			? generateFixedPeriods({
-					year: selectedYear,
+					year:
+						currentPeriodType === "YEARLY" && selectedYear < 1009
+							? 1009
+							: selectedYear,
 					calendar: "gregory",
 					periodType: currentPeriodType,
-				}).map((period: any) => {
-					return { value: period.id, label: period.displayName };
-				})
+				}).map((period: any) => ({
+					value: period.id,
+					label: period.displayName,
+				}))
 			: [];
 
 	const defaultPeriods =
