@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { Box, MultiSelect, Select } from "@mantine/core";
 
 export function SelectInputField({
@@ -16,41 +16,77 @@ export function SelectInputField({
 	onChange: (val: any) => void;
 	disabled?: boolean;
 }) {
-	const [selectedOptions, setSelectedOptions] = useState<any | []>(
-		value ?? [],
+	const extractValues = (val: string | string[]) => {
+		if (Array.isArray(val)) {
+			return val.map((v) => {
+				try {
+					return JSON.parse(v)?.value || v;
+				} catch {
+					return v;
+				}
+			});
+		}
+		try {
+			return JSON.parse(val)?.value || val;
+		} catch {
+			return val;
+		}
+	};
+
+	const [selectedOptions, setSelectedOptions] = useState<string | string[]>(
+		extractValues(value ?? (multiple ? [] : "")),
 	);
 
+	const [labelMap, setLabelMap] = useState<Record<string, string>>({});
+
 	useEffect(() => {
-		if (multiple) {
-			const periods = selectedOptions.map((selectedOption: string) => {
-				const option = JSON.parse(selectedOption);
-				return option.value;
+		const map: Record<string, string> = {};
+		options.forEach((opt) => {
+			map[opt.value] = opt.label;
+		});
+		if (Array.isArray(value)) {
+			value.forEach((val) => {
+				const opt = JSON.parse(val);
+				map[opt.value] = opt.label;
 			});
-			onChange(periods);
-		} else {
-			onChange(selectedOptions);
 		}
-	}, [multiple, onChange, selectedOptions]);
+		setLabelMap((prev) => ({ ...prev, ...map }));
+	}, [options]);
+
+	useEffect(() => {
+		onChange(selectedOptions);
+	}, [onChange, selectedOptions]);
 
 	const handleChange = (value: string | string[] | null) => {
-		if (value) {
+		if (value !== null) {
 			setSelectedOptions(value);
 		}
 	};
 
-	// Transform options for Mantine Select/MultiSelect
-	const transformedOptions = options.map((option) => ({
-		value: multiple ? JSON.stringify(option) : option.value,
-		label: option.label,
-	}));
+	const displayOptions = useMemo(() => {
+		const optionMap = Object.fromEntries(options.map((o) => [o.value, o]));
+		const values = Array.isArray(selectedOptions)
+			? selectedOptions
+			: [selectedOptions];
+
+		const missingSelected = values
+			.filter((val) => !optionMap[val])
+			.map((val) => ({
+				value: val,
+				label: labelMap[val] ?? val,
+			}));
+
+		return [...options, ...missingSelected];
+	}, [options, selectedOptions, labelMap]);
 
 	if (multiple) {
 		return (
 			<Box className="form-control" style={{ marginBlock: 8 }}>
 				<MultiSelect
+					mt="md"
 					label={label}
-					data={transformedOptions}
-					value={selectedOptions}
+					data={displayOptions}
+					value={selectedOptions as string[]}
 					onChange={handleChange}
 					disabled={disabled}
 					size="sm"
@@ -66,8 +102,8 @@ export function SelectInputField({
 		<Box className="form-control" style={{ marginBlock: 8 }}>
 			<Select
 				label={label}
-				data={transformedOptions}
-				value={selectedOptions}
+				data={displayOptions}
+				value={selectedOptions as string}
 				onChange={handleChange}
 				disabled={disabled}
 				size="sm"

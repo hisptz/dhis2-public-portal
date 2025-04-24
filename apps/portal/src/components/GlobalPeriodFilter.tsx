@@ -9,6 +9,8 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { PeriodConfig } from "@packages/shared/schemas";
 import { CustomPeriodModal } from "@/components/displayItems/visualizations/CustomPeriodModal";
 import { IconClock } from "@tabler/icons-react";
+import { PeriodTypeCategory, PeriodUtility } from "@hisptz/dhis2-utils";
+import { createFixedPeriodFromPeriodId } from "@dhis2/multi-calendar-dates";
 
 export function GlobalPeriodFilter({
 	periodConfig,
@@ -27,10 +29,22 @@ export function GlobalPeriodFilter({
 		setTrue: onClose,
 		setFalse: onOpen,
 	} = useBoolean(true);
-	const periods = useMemo(
-		() => searchParams.get("pe")?.split(",") ?? [],
-		[searchParams],
-	);
+	const periods = useMemo(() => {
+		return searchParams
+			.get("pe")
+			?.split(",")
+			?.map((id: string) => {
+				const label =
+					PeriodUtility.getPeriodById(id).type.type ==
+					PeriodTypeCategory.FIXED
+						? createFixedPeriodFromPeriodId({
+								periodId: id,
+								calendar: "gregory",
+							})?.displayName
+						: PeriodUtility.getPeriodById(id).name;
+				return { value: id, label: label };
+			});
+	}, [searchParams]);
 
 	const onUpdate = (value: string[]) => {
 		const updateSearchParams = new URLSearchParams(searchParams);
@@ -66,7 +80,9 @@ export function GlobalPeriodFilter({
 							value={
 								isPending || isPendingPeriod
 									? i18n.t("Please wait...")
-									: periods.join(", ")
+									: (periods
+											?.map((pe) => pe.label)
+											.join(", ") ?? "")
 							}
 							onClick={onOpen}
 						/>
@@ -76,7 +92,7 @@ export function GlobalPeriodFilter({
 			{!hide && (
 				<CustomPeriodModal
 					{...(periodConfig ?? {})}
-					periodState={periods}
+					periodState={periods?.map((pe) => pe.value)}
 					open={!hide}
 					onReset={hasActiveParams ? onReset : () => {}}
 					handleClose={onClose}
