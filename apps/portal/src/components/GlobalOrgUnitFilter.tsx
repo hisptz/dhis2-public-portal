@@ -1,6 +1,6 @@
 "use client";
 
-import { useRouter, useSearchParams } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 import { OrgUnitConfig } from "@packages/shared/schemas";
 import { Stack, TextInput, Tooltip } from "@mantine/core";
 import { useBoolean } from "usehooks-ts";
@@ -10,6 +10,7 @@ import { useOrgUnit } from "@/utils/orgUnits";
 import { OrganisationUnit } from "@hisptz/dhis2-utils";
 import { CustomOrgUnitModal } from "@/components/displayItems/visualizations/CustomOrgUnitModal";
 import { IconMapPin } from "@tabler/icons-react";
+import { useRouter } from "nextjs-toploader/app";
 
 export function GlobalOrgUnitFilter({
 	orgUnitConfig,

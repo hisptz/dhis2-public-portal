@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { AnalyticsDimension } from "./visualization";
+import { analyticsDimensionSchema } from "./visualization";
 
 const mapSchema = z.object({
 	id: z.string(),
@@ -45,7 +45,7 @@ const mapSchema = z.object({
 			columns: z.array(
 				z.object({
 					id: z.string(),
-					dimension: z.nativeEnum(AnalyticsDimension),
+					dimension: analyticsDimensionSchema,
 					items: z.array(z.object({ id: z.string() })),
 				}),
 			),
@@ -58,14 +58,14 @@ const mapSchema = z.object({
 			rows: z.array(
 				z.object({
 					id: z.string(),
-					dimension: z.nativeEnum(AnalyticsDimension),
+					dimension: analyticsDimensionSchema,
 					items: z.array(z.object({ id: z.string() })),
 				}),
 			),
 			filters: z.array(
 				z.object({
 					id: z.string(),
-					dimension: z.nativeEnum(AnalyticsDimension),
+					dimension: analyticsDimensionSchema,
 					items: z.array(z.object({ id: z.string() })),
 				}),
 			),

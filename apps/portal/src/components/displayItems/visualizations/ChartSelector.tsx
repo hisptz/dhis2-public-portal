@@ -9,18 +9,15 @@ import {
 import { SingleValueVisualizer } from "@/components/displayItems/SingleValueVisualizer/SingleValueVisualizer";
 import { LegendSet } from "@hisptz/dhis2-utils";
 import { TableVisualizer } from "@/components/displayItems/visualizations/TableVisualizer";
-import { GaugeVisualizer } from "@/components/displayItems/visualizations/GaugeVisualizer";
 import { ChartVisualizer } from "@/components/displayItems/visualizations/ChartVisualizer";
 
 export function ChartSelector({
 	analytics,
 	visualization,
-	legendSet,
 	tableRef,
 	setRef,
 	config,
 	fullScreen,
-	containerRef,
 	colors,
 }: {
 	setSingleValueRef: Dispatch<SetStateAction<HTMLDivElement | null>>;
@@ -49,16 +46,6 @@ export function ChartSelector({
 					setRef={tableRef}
 					analytics={analytics}
 					visualization={visualization}
-				/>
-			);
-		case "GAUGE":
-			return (
-				<GaugeVisualizer
-					setRef={setRef}
-					analytics={analytics}
-					visualization={visualization}
-					containerRef={containerRef}
-					legendSet={legendSet}
 				/>
 			);
 		default:

@@ -14,7 +14,6 @@ import { CustomOrgUnitModal } from "./CustomOrgUnitModal";
 import { CustomPeriodModal } from "./CustomPeriodModal";
 import { useSearchParams } from "next/navigation";
 import { isEmpty } from "lodash";
-import { PyramidChartVisualizer } from "@/components/displayItems/visualizations/PyramidChartVisualizer";
 import { ActionMenu } from "@/components/displayItems/visualizations/ActionMenu";
 import { CaptionPopover } from "@/components/CaptionPopover";
 import { VisualizationTitle } from "@/components/displayItems/visualizations/VisualizationTitle";
@@ -140,14 +139,6 @@ export function DataVisComponent({
 										legendSet={legendSet}
 										tableRef={tableRef}
 										setSingleValueRef={setSingleValueRef}
-									/>
-								)}
-								{type ===
-									VisualizationDisplayItemType.PYRAMID && (
-									<PyramidChartVisualizer
-										setRef={chartRef}
-										visualization={visualizationConfig}
-										analytics={analytics}
 									/>
 								)}
 							</div>
