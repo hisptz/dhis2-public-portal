@@ -42,6 +42,8 @@
   "dependencies": {
     "@dhis2/app-runtime": "^3.14.1",
     "@dhis2/ui": "^10.5.1",
+    "@hisptz/dhis2-ui": "^2.0.42",
+    "react-hook-form": "^7.56.1",
     "@packages/shared": "*",
     "@tanstack/react-router": "^1.116.0"
   }

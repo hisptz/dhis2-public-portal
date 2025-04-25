@@ -5,8 +5,8 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
-"POT-Creation-Date: 2025-04-24T16:07:33.950Z\n"
-"PO-Revision-Date: 2025-04-24T16:07:33.951Z\n"
+"POT-Creation-Date: 2025-04-25T14:21:17.570Z\n"
+"PO-Revision-Date: 2025-04-25T14:21:17.571Z\n"
 
 msgid "Could not get Appearance configurations"
 msgstr "Could not get Appearance configurations"
@@ -28,6 +28,9 @@ msgstr "You can use this application to configure your public portal web applica
 
 msgid "Application colors"
 msgstr "Application colors"
+
+msgid "Update"
+msgstr "Update"
 
 msgid "Header configuration"
 msgstr "Header configuration"
@@ -53,6 +56,21 @@ msgstr "Trailing logo"
 msgid "Footer configuration"
 msgstr "Footer configuration"
 
+msgid "Copyright"
+msgstr "Copyright"
+
+msgid "Footer links"
+msgstr "Footer links"
+
+msgid "Label"
+msgstr "Label"
+
+msgid "Links"
+msgstr "Links"
+
+msgid "Address"
+msgstr "Address"
+
 msgid "Missing Appearance configurations"
 msgstr "Missing Appearance configurations"
 
@@ -62,6 +80,48 @@ msgid ""
 msgstr ""
 "There are no appearance configurations yet. Click the below button to "
 "create one."
+
+msgid "Color configurations updated successfully"
+msgstr "Color configurations updated successfully"
+
+msgid "Error updating color configurations"
+msgstr "Error updating color configurations"
+
+msgid "Updating..."
+msgstr "Updating..."
+
+msgid "Could not save form. Fix the form errors fist and try again"
+msgstr "Could not save form. Fix the form errors fist and try again"
+
+msgid "Application Color Configurations"
+msgstr "Application Color Configurations"
+
+msgid "Primary color"
+msgstr "Primary color"
+
+msgid "Background color"
+msgstr "Background color"
+
+msgid "Chart colors"
+msgstr "Chart colors"
+
+msgid "Cancel"
+msgstr "Cancel"
+
+msgid "Color"
+msgstr "Color"
+
+msgid "Add"
+msgstr "Add"
+
+msgid "There are colors selected. Click the add button to add one."
+msgstr "There are colors selected. Click the add button to add one."
+
+msgid "Add color"
+msgstr "Add color"
+
+msgid "Color Selector"
+msgstr "Color Selector"
 
 msgid "General"
 msgstr "General"
