@@ -28,19 +28,49 @@ export type AppColorConfig = z.infer<typeof appColorConfig>;
 export const headerConfig = z.object({
 	logo: z.object({
 		enabled: z.boolean(),
+		width: z.number().optional(),
+		height: z.number().optional(),
+	}),
+	subtitle: z.object({
+		style: z
+			.object({
+				center: z.boolean(),
+				textColor: z.string().optional(),
+				textSize: z.number().optional(),
+			})
+			.optional(),
 	}),
 	title: z.object({
 		style: z
 			.object({
 				center: z.boolean(),
+				textColor: z.string().optional(),
+				textSize: z.number().optional(),
+				align: z.enum(["left", "center", "right"]).optional(),
+
 			})
 			.optional(),
 	}),
 	trailingLogo: z.string().url().optional(),
+
 	hasMenu: z.boolean().optional(),
 	style: z
 		.object({
 			coloredBackground: z.boolean(),
+			headerBackgroundColor: z.string().optional(),
+			containerHeight: z.number().optional(),
+			trailingLogoSize: z
+				.object({
+					width: z.number().optional(),
+					height: z.number().optional(),
+				})
+				.optional(),
+			leadingLogoSize: z
+				.object({
+					width: z.number().optional(),
+					height: z.number().optional(),
+				})
+				.optional(),
 		})
 		.optional(),
 });

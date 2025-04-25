@@ -41,8 +41,27 @@ export function AppHeader({
 	const foregroundColor = backgroundColor
 		? getForeground(backgroundColor)
 		: undefined;
+	const containerHeight = config.style?.containerHeight ?? 119;
+	const headerBackgroundColor = config.style?.headerBackgroundColor ?? foregroundColor;
+	const titleTextColor = config.title.style?.textColor ??  foregroundColor;
+	const titleTextSize = config.title.style?.textSize ?? 20;
+	const subtitleTextColor = config.subtitle.style?.textColor ?? foregroundColor;
+	const subtitleTextSize = config.subtitle.style?.textSize ?? 14;
+	const headerTitleStackAlign =
+		config.title.style?.align === "center"
+			? "center"
+			: config.title.style?.align ==="right"
+				? "flex-end"
+				: "flex-start";
+	const trailingLogoSizeHeight = config.style?.trailingLogoSize?.height ?? 100
+	const trailingLogoSizeWidth = config.style?.trailingLogoSize?.width ?? 100
+	const leadingLogoSizeHeight = config.style?.leadingLogoSize?.height ?? 200
+	const leadingLogoSizeWidth = config.style?.leadingLogoSize?.width ?? 400
+
 	return (
-		<AppShell.Header p={0} bg={backgroundColor} color="cyan">
+		<AppShell.Header p={0} bg={headerBackgroundColor}  style = {{
+			height : containerHeight
+		}}>
 			<Flex gap="lg" align="center" p={0}>
 				<Burger
 					opened={opened}
@@ -54,8 +73,8 @@ export function AppHeader({
 					{config.logo.enabled && (
 						<Image
 							component={NextImage}
-							width={120}
-							height={120}
+							width={leadingLogoSizeWidth}
+							height={leadingLogoSizeHeight}
 							alt="logo"
 							src={logo}
 							visibleFrom="sm"
@@ -64,26 +83,31 @@ export function AppHeader({
 					)}
 				</AspectRatio>
 				<Stack
-					align={config.title.style?.center ? "center" : "flex-start"}
+					align= {headerTitleStackAlign}
 					justify="space-between"
 					flex={1}
 					py={0}
 					my={0}
 				>
-					<Stack p="sm" flex={1} justify="center" gap={0}>
+					<Stack p="sm" flex={1} justify="space-between" gap={0}>
 						<Title
-							bg={
-								config.style?.coloredBackground
-									? theme.primaryColor
-									: undefined
-							}
-							c={foregroundColor}
+							// bg={
+							// 	config.style?.coloredBackground
+							// 		? theme.primaryColor
+							// 		: undefined
+							// }
+							c={titleTextColor}
+							style = {{
+								fontSize : titleTextSize
+							}}
 							order={2}
 						>
 							{title.main}
 						</Title>
 						{title.subtitle && (
-							<Title c="dimmed" order={4}>
+							<Title c={subtitleTextColor} order={4}  style = {{
+								fontSize : subtitleTextSize
+							}} >
 								{title.subtitle}
 							</Title>
 						)}
@@ -97,8 +121,8 @@ export function AppHeader({
 				{config.trailingLogo && (
 					<Image
 						component={NextImage}
-						width={60}
-						height={60}
+						width={trailingLogoSizeWidth}
+						height={trailingLogoSizeHeight}
 						alt="logo"
 						src={config.trailingLogo}
 						hiddenFrom="!xs"
