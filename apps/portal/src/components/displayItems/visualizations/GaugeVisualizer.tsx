@@ -5,7 +5,7 @@ import { flatten, get, head, truncate } from "lodash";
 import Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
 import { chartColors } from "@packages/shared/constants";
-import { RefObject, useMemo } from "react";
+import { RefObject, useCallback, useMemo } from "react";
 import { Tooltip } from "@mantine/core";
 import { useResizeObserver } from "usehooks-ts";
 import { LegendSet } from "@hisptz/dhis2-utils";
@@ -48,110 +48,107 @@ export function GaugeVisualizer({
 		[value, legendSet],
 	);
 
-	const getChartConfig = ({
-		width,
-		height,
-	}: {
-		width: number;
-		height: number;
-	}) => {
-		return {
-			chart: {
-				type: "solidgauge",
-				height,
-				width,
-			},
-			title: null,
-			pane: {
-				startAngle: -90,
-				endAngle: 89.9,
-				center: ["50%", "60%"],
-				size: Math.min(width - 16, height - 16),
-				background: {
-					backgroundColor: "#D1D5D8",
-					borderRadius: 8,
-					innerRadius: "60%",
-					outerRadius: "100%",
-					shape: "arc",
-				} as Highcharts.PaneBackgroundOptions,
-			} as Highcharts.PaneOptions,
-			exporting: {
-				enabled: false,
-			},
-			tooltip: {
-				enabled: false,
-			},
-
-			// the value axis
-			yAxis: {
-				min: 0,
-				max: 100,
-				offset: 0,
-				lineWidth: 0,
-				minorTicks: false,
-				width: width - 16,
-				height: height - 16,
-				tickWidth: 0,
-				type: "linear",
-				labels: {
+	const getChartConfig = useCallback(
+		({ width, height }: { width: number; height: number }) => {
+			return {
+				chart: {
+					type: "solidgauge",
+					height,
+					width,
+				},
+				title: null,
+				pane: {
+					startAngle: -90,
+					endAngle: 89.9,
+					center: ["50%", "60%"],
+					size: Math.min(width - 16, height - 16),
+					background: {
+						backgroundColor: "#D1D5D8",
+						borderRadius: 8,
+						innerRadius: "60%",
+						outerRadius: "100%",
+						shape: "arc",
+					} as Highcharts.PaneBackgroundOptions,
+				} as Highcharts.PaneOptions,
+				exporting: {
 					enabled: false,
-					distance: 20,
-					style: {
-						fontSize: "14px",
-					},
 				},
-				maxPadding: 0,
-				pane: 0,
-				minColor: legendColor ?? head(chartColors),
-				maxColor: legendColor ?? head(chartColors),
-				margin: 0,
-			} as Highcharts.YAxisOptions,
-			credits: {
-				enabled: false,
-			},
-			plotOptions: {
-				solidgauge: {
-					borderRadius: 4,
-					color: head(chartColors),
-					dataLabels: {
-						y: 5,
-						borderWidth: 0,
-						useHTML: true,
-					},
-					borderWidth: 0,
-					borderColor: "white",
-					innerRadius: "60%",
+				tooltip: {
+					enabled: false,
 				},
-			} as Highcharts.PlotOptions,
-			series: [
-				{
-					name: visualization.name,
-					data: [Math.round(value)],
-					color: "white",
-					dataLabels: {
-						y: -70,
+
+				// the value axis
+				yAxis: {
+					min: 0,
+					max: 100,
+					offset: 0,
+					lineWidth: 0,
+					minorTicks: false,
+					width: width - 16,
+					height: height - 16,
+					tickWidth: 0,
+					type: "linear",
+					labels: {
+						enabled: false,
+						distance: 20,
 						style: {
-							fontSize: "48px",
+							fontSize: "14px",
 						},
-						align: "center",
-						verticalAlign: "end",
-						format: "{y}%",
 					},
-					compare: "percent",
-					tooltip: {
-						valueSuffix: "%",
-					},
+					maxPadding: 0,
+					pane: 0,
+					minColor: legendColor ?? head(chartColors),
+					maxColor: legendColor ?? head(chartColors),
+					margin: 0,
+				} as Highcharts.YAxisOptions,
+				credits: {
+					enabled: false,
 				},
-			] as Highcharts.SeriesGaugeOptions[],
-		};
-	};
+				plotOptions: {
+					solidgauge: {
+						borderRadius: 4,
+						color: head(chartColors),
+						dataLabels: {
+							y: 5,
+							borderWidth: 0,
+							useHTML: true,
+						},
+						borderWidth: 0,
+						borderColor: "white",
+						innerRadius: "60%",
+					},
+				} as Highcharts.PlotOptions,
+				series: [
+					{
+						name: visualization.name,
+						data: [Math.round(value)],
+						color: "white",
+						dataLabels: {
+							y: -70,
+							style: {
+								fontSize: "48px",
+							},
+							align: "center",
+							verticalAlign: "end",
+							format: "{y}%",
+						},
+						compare: "percent",
+						tooltip: {
+							valueSuffix: "%",
+						},
+					},
+				] as Highcharts.SeriesGaugeOptions[],
+			};
+		},
+		[legendColor, value, visualization.name],
+	);
 
 	useResizeObserver({
 		ref: containerRef as RefObject<HTMLDivElement>,
 		onResize: ({ width, height }) => {
 			if (width && height) {
 				setRef?.current?.chart.update(
-					getChartConfig({ width, height }) as any,
+					getChartConfig({ width, height }),
 				);
 			}
 		},
@@ -161,7 +158,7 @@ export function GaugeVisualizer({
 		const height = containerRef.current?.clientHeight ?? 400;
 		const width = containerRef.current?.clientWidth ?? 400;
 		return getChartConfig({ width, height });
-	}, [containerRef.current?.clientHeight, containerRef.current?.clientWidth]);
+	}, [containerRef, getChartConfig]);
 
 	return (
 		<div className="w-full flex flex-col align-middle justify-center gap-2">

@@ -6,8 +6,8 @@ import i18n from "@dhis2/d2-i18n";
 import { TableVisualizer } from "@/components/displayItems/visualizations/TableVisualizer";
 import {
 	VisualizationConfig,
+	VisualizationDisplayItemType,
 	VisualizationItem,
-	VisualizationType,
 } from "@packages/shared/schemas";
 import { FullScreen } from "react-full-screen";
 import { CustomOrgUnitModal } from "./CustomOrgUnitModal";
@@ -125,7 +125,8 @@ export function DataVisComponent({
 							</div>
 						) : (
 							<div className="flex-1 h-full">
-								{type === VisualizationType.CHART && (
+								{type ===
+									VisualizationDisplayItemType.CHART && (
 									<ChartSelector
 										setRef={chartRef}
 										analytics={analytics}
@@ -138,7 +139,8 @@ export function DataVisComponent({
 										setSingleValueRef={setSingleValueRef}
 									/>
 								)}
-								{type === VisualizationType.PYRAMID && (
+								{type ===
+									VisualizationDisplayItemType.PYRAMID && (
 									<PyramidChartVisualizer
 										setRef={chartRef}
 										visualization={visualizationConfig}

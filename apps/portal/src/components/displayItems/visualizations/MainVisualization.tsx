@@ -1,6 +1,9 @@
 import { DataVisualization } from "@/components/displayItems/visualizations/DataVisualization";
 import { MapVisualization } from "@/components/displayItems/visualizations/MapVisualization";
-import { VisualizationItem, VisualizationType } from "@packages/shared/schemas";
+import {
+	VisualizationDisplayItemType,
+	VisualizationItem,
+} from "@packages/shared/schemas";
 import { BannerVisualization } from "@/components/displayItems/visualizations/BannerVisualization";
 import { BaseCardError } from "@/components/CardError";
 
@@ -14,23 +17,24 @@ export async function MainVisualization({
 	disableActions,
 }: MainVisualizationProps) {
 	const { type } = config;
+
 	switch (type) {
-		case VisualizationType.CHART:
-		case VisualizationType.PYRAMID:
+		case VisualizationDisplayItemType.CHART:
+		case VisualizationDisplayItemType.PYRAMID:
 			return (
 				<DataVisualization
 					disableActions={disableActions}
 					config={config}
 				/>
 			);
-		case VisualizationType.MAP:
+		case VisualizationDisplayItemType.MAP:
 			return (
 				<MapVisualization
 					disableActions={disableActions}
 					config={config}
 				/>
 			);
-		case VisualizationType.BANNER:
+		case VisualizationDisplayItemType.BANNER:
 			return (
 				<BannerVisualization
 					config={config}
