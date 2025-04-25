@@ -7,11 +7,15 @@ import { CircularLoader, NoticeBox } from "@dhis2/ui";
 import { AppAppearanceConfig } from "@packages/shared/schemas";
 import { AppearanceConfig } from "../../shared/components/appearance/AppearanceConfig/AppearanceConfig";
 import { MissingAppearanceConfig } from "../../shared/components/appearance/MissingAppearanceConfig";
+import {
+	APP_NAMESPACE,
+	APPEARANCE_CONFIG_KEY,
+} from "../../shared/constants/datastore";
 
 const query = {
 	appearanceConfig: {
 		resource: "dataStore",
-		id: "hisptz-public-portal/appearance",
+		id: `${APP_NAMESPACE}/${APPEARANCE_CONFIG_KEY}`,
 	},
 };
 
@@ -24,7 +28,7 @@ export const Route = createLazyFileRoute("/appearance/")({
 });
 
 function RouteComponent() {
-	const { loading, data, error } = useDataQuery<QueryResult>(query);
+	const { loading, data, error, refetch } = useDataQuery<QueryResult>(query);
 
 	if (error) {
 		return (
@@ -51,7 +55,10 @@ function RouteComponent() {
 					<CircularLoader />
 				</div>
 			) : appearanceConfig ? (
-				<AppearanceConfig appearanceConfig={appearanceConfig} />
+				<AppearanceConfig
+					appearanceConfig={appearanceConfig}
+					refetchConfig={refetch}
+				/>
 			) : (
 				<MissingAppearanceConfig
 					onAddConfigurations={() =>

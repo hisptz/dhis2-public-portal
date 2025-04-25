@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import i18n from "@dhis2/d2-i18n";
 import { map } from "lodash";
 import { AppAppearanceConfig } from "@packages/shared/schemas";
@@ -6,9 +6,14 @@ import { ConfigurationTitle } from "./components/ConfigurationTitle";
 import { ConfigurationDetails } from "./components/ConfigurationDetails";
 import { ConfigurationColor } from "./components/ConfigurationColor";
 import { getTitleCaseFromCamelCase } from "@packages/shared/utils";
+import { Button, IconEdit16 } from "@dhis2/ui";
+import { AppColorConfigForm } from "../appearance-config-forms/AppColorConfigForm";
+import { HeaderConfigForm } from "../appearance-config-forms/HeaderConfigForm";
+import { FooterConfigForm } from "../appearance-config-forms/FooterConfigForm";
 
 type Props = {
 	appearanceConfig: AppAppearanceConfig;
+	refetchConfig: () => void;
 };
 
 function getObjectKeyValueArray(
@@ -19,7 +24,11 @@ function getObjectKeyValueArray(
 	}));
 }
 
-export function AppearanceConfig({ appearanceConfig }: Props) {
+export function AppearanceConfig({ appearanceConfig, refetchConfig }: Props) {
+	const [showAppColor, setShowAppColor] = useState(false);
+	const [showHeaderConfig, setShowHeaderConfig] = useState(false);
+	const [showFooterConfig, setShowFooterConfig] = useState(false);
+
 	const { colors, header, footer, title } = appearanceConfig;
 	const { primary, chartColors, background } = colors;
 	const { title: titleConfigurations, logo, hasMenu, trailingLogo } = header;
@@ -50,9 +59,25 @@ export function AppearanceConfig({ appearanceConfig }: Props) {
 						</ConfigurationDetails>
 					)}
 				</div>
-
-				{/*	@TODO: add button for editing*/}
+				<div className="mt-2">
+					<Button
+						onClick={() => setShowAppColor(true)}
+						small
+						secondary
+						icon={<IconEdit16 />}
+					>
+						{i18n.t("Update")}
+					</Button>
+				</div>
 			</section>
+
+			{showAppColor && (
+				<AppColorConfigForm
+					configurations={appearanceConfig}
+					onClose={() => setShowAppColor(false)}
+					onComplete={() => refetchConfig()}
+				/>
+			)}
 
 			{/*Header configurations*/}
 			<section>
@@ -108,8 +133,24 @@ export function AppearanceConfig({ appearanceConfig }: Props) {
 					)}
 				</div>
 
-				{/*	@TODO: add button for editing*/}
+				<div className="mt-2">
+					<Button
+						onClick={() => setShowHeaderConfig(true)}
+						small
+						secondary
+						icon={<IconEdit16 />}
+					>
+						{i18n.t("Update")}
+					</Button>
+				</div>
 			</section>
+			{showHeaderConfig && (
+				<HeaderConfigForm
+					configurations={appearanceConfig}
+					onClose={() => setShowHeaderConfig(false)}
+					onComplete={() => refetchConfig()}
+				/>
+			)}
 
 			{/*Footer configurations*/}
 			<section>
@@ -162,8 +203,24 @@ export function AppearanceConfig({ appearanceConfig }: Props) {
 					)}
 				</div>
 
-				{/*	@TODO: add button for editing*/}
+				<div className="mt-2">
+					<Button
+						onClick={() => setShowFooterConfig(true)}
+						small
+						secondary
+						icon={<IconEdit16 />}
+					>
+						{i18n.t("Update")}
+					</Button>
+				</div>
 			</section>
+			{showFooterConfig && (
+				<FooterConfigForm
+					configurations={appearanceConfig}
+					onClose={() => setShowFooterConfig(false)}
+					onComplete={() => refetchConfig()}
+				/>
+			)}
 		</div>
 	);
 }
