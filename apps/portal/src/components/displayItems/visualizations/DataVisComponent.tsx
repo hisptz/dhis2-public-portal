@@ -31,9 +31,11 @@ export function DataVisComponent({
 	visualizationConfig,
 	config,
 	disableActions,
+	colors,
 }: {
 	visualizationConfig: VisualizationConfig;
 	config: VisualizationItem;
+	colors: string[];
 	disableActions?: boolean;
 }) {
 	const { type, orgUnitConfig, periodConfig } = config;
@@ -128,6 +130,7 @@ export function DataVisComponent({
 								{type ===
 									VisualizationDisplayItemType.CHART && (
 									<ChartSelector
+										colors={colors}
 										setRef={chartRef}
 										analytics={analytics}
 										visualization={visualizationConfig}

@@ -3,7 +3,6 @@ import dynamic from "next/dynamic";
 import HighchartsReact from "highcharts-react-official";
 import { RefObject } from "react";
 import { AnalyticsData, VisualizationConfig } from "@packages/shared/schemas";
-import { LegendSet } from "@hisptz/dhis2-utils";
 import { ErrorBoundary } from "react-error-boundary";
 import { CardError } from "@/components/CardError";
 import { CardLoading } from "@/components/CardLoading";
@@ -25,18 +24,19 @@ export interface ChartVisualizerProps {
 	analytics: AnalyticsData;
 	visualization: VisualizationConfig;
 	setRef: RefObject<HighchartsReact.RefObject | null>;
-	legendSet?: LegendSet;
+	colors: string[];
 }
 
 export function ChartVisualizer({
 	analytics,
 	visualization,
 	setRef,
+	colors,
 }: ChartVisualizerProps) {
 	return (
 		<ErrorBoundary FallbackComponent={CardError}>
 			<NoSSRDHIS2Chart
-				colors={[]}
+				colors={colors}
 				setRef={setRef}
 				visualization={visualization}
 				analytics={analytics}

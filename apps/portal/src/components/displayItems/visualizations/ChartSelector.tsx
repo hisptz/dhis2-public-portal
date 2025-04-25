@@ -2,9 +2,9 @@ import HighchartsReact from "highcharts-react-official";
 import { Dispatch, RefObject, SetStateAction } from "react";
 import {
 	AnalyticsData,
-	VisualizationItem,
-	VisualizationConfig,
 	SingleValueConfig,
+	VisualizationConfig,
+	VisualizationItem,
 } from "@packages/shared/schemas";
 import { SingleValueVisualizer } from "@/components/displayItems/SingleValueVisualizer/SingleValueVisualizer";
 import { LegendSet } from "@hisptz/dhis2-utils";
@@ -21,6 +21,7 @@ export function ChartSelector({
 	config,
 	fullScreen,
 	containerRef,
+	colors,
 }: {
 	setSingleValueRef: Dispatch<SetStateAction<HTMLDivElement | null>>;
 	setRef: RefObject<HighchartsReact.RefObject | null>;
@@ -31,6 +32,7 @@ export function ChartSelector({
 	tableRef: RefObject<HTMLTableElement | null>;
 	containerRef: RefObject<HTMLDivElement | null>;
 	fullScreen: boolean;
+	colors: string[];
 }) {
 	const chartType = visualization.type;
 	switch (chartType) {
@@ -62,7 +64,7 @@ export function ChartSelector({
 		default:
 			return (
 				<ChartVisualizer
-					legendSet={legendSet}
+					colors={colors}
 					setRef={setRef}
 					analytics={analytics}
 					visualization={visualization}
