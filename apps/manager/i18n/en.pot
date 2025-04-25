@@ -1,0 +1,76 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: i18next-conv\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1)\n"
+"POT-Creation-Date: 2025-04-23T11:55:42.294Z\n"
+"PO-Revision-Date: 2025-04-23T11:55:42.295Z\n"
+
+msgid "Application colors"
+msgstr "Application colors"
+
+msgid "Header configuration"
+msgstr "Header configuration"
+
+msgid "Footer configuration"
+msgstr "Footer configuration"
+
+msgid "General configuration"
+msgstr "General configuration"
+
+msgid "Modules"
+msgstr "Modules"
+
+msgid "Welcome to the public portal manager!"
+msgstr "Welcome to the public portal manager!"
+
+msgid "You can use this application to configure your public portal web application"
+msgstr "You can use this application to configure your public portal web application"
+
+msgid "General"
+msgstr "General"
+
+msgid "Setup application name and related information"
+msgstr "Setup application name and related information"
+
+msgid "Appearance"
+msgstr "Appearance"
+
+msgid ""
+"Configure the logo, different icons, colors, and layouts of the web portal "
+"application"
+msgstr ""
+"Configure the logo, different icons, colors, and layouts of the web portal "
+"application"
+
+msgid "Configure appearance"
+msgstr "Configure appearance"
+
+msgid "App Menu"
+msgstr "App Menu"
+
+msgid ""
+"Configure the position and contents of the app menu of the web portal "
+"application"
+msgstr ""
+"Configure the position and contents of the app menu of the web portal "
+"application"
+
+msgid "Configure app menu"
+msgstr "Configure app menu"
+
+msgid "Configure different modules of the web portal application"
+msgstr "Configure different modules of the web portal application"
+
+msgid "Configure modules"
+msgstr "Configure modules"
+
+msgctxt "Application title"
+msgid "__MANIFEST_APP_TITLE"
+msgstr "Portal Manager"
+
+msgctxt "Application description"
+msgid "__MANIFEST_APP_DESCRIPTION"
+msgstr ""
