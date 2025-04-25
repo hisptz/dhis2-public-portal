@@ -1,8 +1,9 @@
 import { AnalyticsData, VisualizationConfig } from "@packages/shared/schemas";
-import { RefObject } from "react";
+import { RefObject, useRef } from "react";
 import HighchartsReact from "highcharts-react-official";
 import { DHIS2Chart } from "@hisptz/dhis2-analytics";
 import { getChartLayout, getChartType } from "@packages/shared/utils";
+import { useResizeObserver } from "usehooks-ts";
 
 export interface ChartVisualizerProps {
 	analytics: AnalyticsData;
@@ -20,24 +21,34 @@ export function ChartVisualizer({
 	const type = getChartType(visualization);
 	const layout = getChartLayout(visualization);
 
+	const ref = useRef<HTMLDivElement>(null);
+	const { height = 0 } = useResizeObserver<HTMLDivElement>({
+		// @ts-expect-error ref will always have a nullable value
+		ref: ref!,
+		box: "border-box",
+	});
+
 	return (
-		<DHIS2Chart
-			analytics={analytics}
-			setRef={setRef}
-			containerProps={{
-				style: {
-					height: "100%",
-					width: "100%",
-				},
-			}}
-			config={{
-				type,
-				colors,
-				layout,
-				showFilterAsTitle: false,
-				name: visualization.displayName,
-				allowChartTypeChange: false,
-			}}
-		/>
+		<div ref={ref} style={{ width: "100%", height: "100%" }}>
+			<DHIS2Chart
+				immutable
+				containerProps={{
+					style: {
+						height: "100%",
+					},
+				}}
+				analytics={analytics}
+				setRef={setRef}
+				config={{
+					type,
+					colors,
+					layout,
+					height: height,
+					showFilterAsTitle: false,
+					name: visualization.displayName,
+					allowChartTypeChange: false,
+				}}
+			/>
+		</div>
 	);
 }

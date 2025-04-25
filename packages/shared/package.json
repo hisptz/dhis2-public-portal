@@ -12,7 +12,8 @@
     "./schemas": "./src/schemas/index.ts",
     "./constants": "./src/constants/index.ts",
     "./components": "./src/components/index.ts",
-    "./utils": "./src/utils/index.ts"
+    "./utils": "./src/utils/index.ts",
+    "./hooks": "./src/hooks/index.ts"
   },
   "dependencies": {
     "@dhis2/multi-calendar-dates": "^2.1.0",

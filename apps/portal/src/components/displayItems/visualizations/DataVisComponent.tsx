@@ -17,7 +17,6 @@ import { isEmpty } from "lodash";
 import { PyramidChartVisualizer } from "@/components/displayItems/visualizations/PyramidChartVisualizer";
 import { ActionMenu } from "@/components/displayItems/visualizations/ActionMenu";
 import { CaptionPopover } from "@/components/CaptionPopover";
-import { useAnalytics } from "@/utils/hooks/charts";
 import { VisualizationTitle } from "@/components/displayItems/visualizations/VisualizationTitle";
 import {
 	useContainerSize,
@@ -26,6 +25,7 @@ import {
 	useVisualizationRefs,
 } from "@/hooks/dataVisualization";
 import { ChartSelector } from "@/components/displayItems/visualizations/ChartSelector";
+import { useAnalytics } from "@packages/shared/hooks";
 
 export function DataVisComponent({
 	visualizationConfig,

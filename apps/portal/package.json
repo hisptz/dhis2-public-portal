@@ -15,7 +15,7 @@
   "dependencies": {
     "@dhis2/app-runtime": "^3.14.1",
     "@dhis2/multi-calendar-dates": "^2.1.0",
-    "@hisptz/dhis2-analytics": "^2.0.67",
+    "@hisptz/dhis2-analytics": "^2.1.0",
     "@hisptz/dhis2-ui": "^2.0.29",
     "@hisptz/dhis2-utils": "^2.0.17",
     "@hookform/resolvers": "^5.0.1",

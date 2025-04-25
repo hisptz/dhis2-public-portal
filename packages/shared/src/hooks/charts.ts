@@ -2,10 +2,7 @@ import { AnalyticsData, VisualizationConfig } from "@packages/shared/schemas";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useDataQuery } from "@dhis2/app-runtime";
-import {
-	getVisualizationDimensions,
-	getVisualizationFilters,
-} from "@/utils/visualizer";
+import { getVisualizationDimensions, getVisualizationFilters } from "../utils";
 
 type Dimension = "ou" | "pe" | "dx" | string;
 

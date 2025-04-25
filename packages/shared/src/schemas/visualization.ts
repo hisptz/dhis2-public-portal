@@ -208,6 +208,8 @@ const dimension = z.object({
 	legendSet: legendSet.optional(),
 });
 
+export type DimensionConfig = z.infer<typeof dimension>;
+
 export const visualizationSchema = z.object({
 	access: accessSchema,
 	aggregationType: z.nativeEnum(AggregationType),

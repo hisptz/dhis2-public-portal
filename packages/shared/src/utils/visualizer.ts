@@ -1,9 +1,10 @@
 import {
 	AnalyticsDimensionSchema,
 	DataDimensionItem,
+	DimensionConfig,
 	VisualizationConfig,
 } from "../schemas";
-import { camelCase, flattenDeep } from "lodash";
+import { camelCase, flattenDeep, fromPairs, isEmpty } from "lodash";
 import { ChartType } from "@hisptz/dhis2-analytics";
 
 export function getLayout(visualization: VisualizationConfig): {
@@ -67,4 +68,95 @@ export function getOrgUnits(visualization: VisualizationConfig): Array<string> {
 
 export function getChartType(config: VisualizationConfig): ChartType {
 	return config.type.toLowerCase().replace("_", "-") as ChartType;
+}
+
+interface SelectedValues {
+	searchParams?: Map<string, string>;
+	selectedOrgUnits?: string[];
+	selectedPeriods?: string[];
+}
+
+function getDimensionItems(
+	dimension: DimensionConfig[],
+	{ searchParams, selectedPeriods, selectedOrgUnits }: SelectedValues,
+) {
+	const orgUnitParams = !isEmpty(selectedOrgUnits)
+		? selectedOrgUnits
+		: searchParams?.get("ou")?.split(",");
+	const periodParams = !isEmpty(selectedPeriods)
+		? selectedPeriods
+		: searchParams?.get("pe")?.split(",");
+	return fromPairs(
+		dimension.map((column) => {
+			if (column.dimension === "ou") {
+				if (isEmpty(orgUnitParams)) {
+					return [
+						column.dimension,
+						column.items.map((item) => item.id),
+					];
+				}
+				return [column.dimension, orgUnitParams!];
+			}
+			if (column.dimension === "pe") {
+				if (isEmpty(periodParams)) {
+					return [
+						column.dimension,
+						column.items.map((item) => item.id),
+					];
+				}
+				return [column.dimension, periodParams!];
+			}
+			return [column.dimension, column.items.map((item) => item.id)];
+		}),
+	);
+}
+
+function getColumnItems(
+	config: VisualizationConfig,
+	selectedValues: SelectedValues,
+) {
+	return getDimensionItems(config.columns, selectedValues);
+}
+
+function getRowItems(
+	config: VisualizationConfig,
+	selectedValues: SelectedValues,
+) {
+	return getDimensionItems(config.rows, selectedValues);
+}
+
+function getFilterItems(
+	config: VisualizationConfig,
+	selectedValues: SelectedValues,
+) {
+	return getDimensionItems(config.filters, selectedValues);
+}
+
+function getYearByYearDimension(
+	config: VisualizationConfig,
+	selectedValues: SelectedValues,
+) {}
+
+export function getVisualizationDimensions(
+	config: VisualizationConfig,
+	selectedValues: SelectedValues,
+): {
+	[key: string]: Array<string>;
+} {
+	const rows = getRowItems(config, selectedValues);
+	const columns = getColumnItems(config, selectedValues);
+
+	return {
+		...rows,
+		...columns,
+	};
+}
+
+export function getVisualizationFilters(
+	config: VisualizationConfig,
+	selectedValues: SelectedValues,
+): {
+	[key: string]: Array<string>;
+} {
+	return getFilterItems(config, selectedValues);
 }
