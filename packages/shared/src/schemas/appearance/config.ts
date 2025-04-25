@@ -28,8 +28,6 @@ export type AppColorConfig = z.infer<typeof appColorConfig>;
 export const headerConfig = z.object({
 	logo: z.object({
 		enabled: z.boolean(),
-		width: z.number().optional(),
-		height: z.number().optional(),
 	}),
 	subtitle: z.object({
 		style: z
@@ -52,7 +50,6 @@ export const headerConfig = z.object({
 			.optional(),
 	}),
 	trailingLogo: z.string().url().optional(),
-
 	hasMenu: z.boolean().optional(),
 	style: z
 		.object({
