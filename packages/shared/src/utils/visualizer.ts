@@ -4,6 +4,7 @@ import {
 	VisualizationConfig,
 } from "../schemas";
 import { camelCase, flattenDeep } from "lodash";
+import { ChartType } from "@hisptz/dhis2-analytics";
 
 export function getLayout(visualization: VisualizationConfig): {
 	rows: AnalyticsDimensionSchema[];
@@ -62,4 +63,8 @@ export function getOrgUnits(visualization: VisualizationConfig): Array<string> {
 			.filter(({ dimension }) => dimension === "ou")
 			.map((item) => item.items.map((item) => item.id)),
 	);
+}
+
+export function getChartType(config: VisualizationConfig): ChartType {
+	return config.type.toLowerCase().replace("_", "-") as ChartType;
 }

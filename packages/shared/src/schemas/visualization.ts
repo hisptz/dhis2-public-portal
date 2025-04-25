@@ -7,7 +7,7 @@ export const visualizationFields = [
 	"colSubTotals",
 	"colTotals",
 	"colorSet",
-	"columns[dimension,filter,legendSet[id,name,displayName,displayShortName],items[dimensionItem~rename(id),name,displayName,displayShortName,dimensionItemType,expression,access]]",
+	"columns[dimension,filter,legendSet[id,name,displayName,displayShortName,legends[id,color,startValue,endValue]],items[dimensionItem~rename(id),name,displayName,displayShortName,dimensionItemType,expression,access]]",
 	"completedOnly",
 	"created",
 	"cumulative",
@@ -23,7 +23,7 @@ export const visualizationFields = [
 	"displayTitle",
 	"favorite",
 	"favorites",
-	"filters[dimension,filter,legendSet[id,name,displayName,displayShortName],items[dimensionItem~rename(id),name,displayName,displayShortName,dimensionItemType,expression,access]]",
+	"filters[dimension,filter,legendSet[id,name,displayName,displayShortName,legends[id,color,startValue,endValue]],items[dimensionItem~rename(id),name,displayName,displayShortName,dimensionItemType,expression,access]]",
 	"fixColumnHeaders",
 	"fixRowHeaders",
 	"fontSize",
@@ -53,7 +53,7 @@ export const visualizationFields = [
 	"reportingParams",
 	"rowSubTotals",
 	"rowTotals",
-	"rows[dimension,filter,legendSet[id,name,displayName,displayShortName],items[dimensionItem~rename(id),name,displayName,displayShortName,dimensionItemType,expression,access]]",
+	"rows[dimension,filter,legendSet[id,name,displayName,displayShortName,legends[id,color,startValue,endValue]],items[dimensionItem~rename(id),name,displayName,displayShortName,dimensionItemType,expression,access]]",
 	"series",
 	"seriesKey",
 	"shortName",
@@ -186,6 +186,7 @@ const dimensionItem = z.object({
 	dimensionItemType: z.string().optional(),
 	expression: z.string().optional(),
 	access: accessSchema,
+	legendSet: legendSet.optional(),
 });
 
 const dataDimensionItem = z.object({

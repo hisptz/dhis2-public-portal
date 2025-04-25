@@ -16,7 +16,7 @@ import {
 	useMantineTheme,
 } from "@mantine/core";
 import NextImage from "next/image";
-import { getForeground } from "@/utils/colors";
+import { getForeground } from "@packages/shared/utils";
 import { HeaderMenu } from "@/components/AppMenu/HeaderMenu";
 
 export function AppHeader({
