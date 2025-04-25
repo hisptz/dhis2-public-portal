@@ -10,7 +10,6 @@ import { PeriodConfig } from "@packages/shared/schemas";
 import { CustomPeriodModal } from "@/components/displayItems/visualizations/CustomPeriodModal";
 import { IconClock } from "@tabler/icons-react";
 import { PeriodTypeCategory, PeriodUtility } from "@hisptz/dhis2-utils";
-//@ts-expect-error multi calendar dates doesn't have proper typing
 import { createFixedPeriodFromPeriodId } from "@dhis2/multi-calendar-dates";
 import { useRouter } from "nextjs-toploader/app";
 
