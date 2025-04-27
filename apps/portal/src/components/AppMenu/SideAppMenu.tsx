@@ -10,6 +10,7 @@ import classes from "./NavbarNested.module.css";
 import { LinksGroup } from "@/components/AppMenu/components/NavbarLinksGroup";
 import { Dispatch, SetStateAction } from "react";
 import { useMediaQuery } from "usehooks-ts";
+import { usePathname } from "next/navigation";
 
 export function SideAppMenu({
 	menuConfig,
@@ -21,6 +22,7 @@ export function SideAppMenu({
 	setOpen: Dispatch<SetStateAction<boolean>>;
 }) {
 	const theme = useMantineTheme();
+	const pathname = usePathname();
 	const isLargerThanSm = useMediaQuery(
 		`(min-width: ${theme.breakpoints.sm})`,
 	);
@@ -35,29 +37,41 @@ export function SideAppMenu({
 
 	const toggleSideMenu = () => setOpen((prev) => !prev);
 
-	const links = menuConfig.items.map((item) => (
-		<LinksGroup
-			key={item.label}
-			label={item.label}
-			collapsed={!isOpen}
-			icon={item.icon}
-			initiallyOpened
-			path={item.type === "module" ? item.path : undefined}
-			onOpen={item.type === "group" ? () => setOpen(true) : undefined}
-			subMenus={
-				item.type === "group"
-					? item.items.map((item) => {
-							return {
-								key: item.label,
-								icon: item.icon,
-								path: item.path,
-								label: item.label,
-							};
-						})
-					: undefined
-			}
-		/>
-	));
+	const links = menuConfig.items.map((item) => {
+		const isActive = item.path && pathname.includes(item.path);
+
+		const hasActiveSubmenu =
+			item.type === "group"
+				? item.items?.some(
+						(subMenu) =>
+							subMenu.path && pathname.includes(subMenu.path),
+					)
+				: false;
+
+		return (
+			<LinksGroup
+				key={item.label}
+				label={item.label}
+				collapsed={!isOpen}
+				icon={item.icon}
+				initiallyOpened={isActive || hasActiveSubmenu}
+				path={item.type === "module" ? item.path : undefined}
+				onOpen={item.type === "group" ? () => setOpen(true) : undefined}
+				subMenus={
+					item.type === "group"
+						? item.items.map((item) => {
+								return {
+									key: item.label,
+									icon: item.icon,
+									path: item.path,
+									label: item.label,
+								};
+							})
+						: undefined
+				}
+			/>
+		);
+	});
 
 	return (
 		<AppShell.Navbar
