@@ -84,7 +84,6 @@ describe("Modules Page", () => {
         cy.get('input[name="config.title"]').type("New Test Module");
         cy.get('.gap-4 > .flex > [data-test="dhis2-uiwidgets-singleselectfield"] > [data-test="dhis2-uiwidgets-singleselectfield-content"] > [data-test="dhis2-uicore-box"] > [data-test="dhis2-uicore-singleselect"] > .jsx-114080822 > [data-test="dhis2-uicore-select"] > [data-test="dhis2-uicore-select-input"]').click();
         cy.get('[data-value="VISUALIZATION"]').click();
-        cy.get('input[name="id"]').type("new-module-123");
 
         cy.contains("button", "Create module").should("be.visible").click();
 
