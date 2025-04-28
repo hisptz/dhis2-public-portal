@@ -52,7 +52,7 @@ export default async function RootLayout({
 			<head>
 				<ColorSchemeScript />
 			</head>
-			<body >
+			<body>
 				<MantineProvider theme={theme}>
 					<ModalsProvider>
 						<NavigationBar />

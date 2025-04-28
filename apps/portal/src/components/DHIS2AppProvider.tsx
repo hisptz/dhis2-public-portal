@@ -3,6 +3,9 @@
 import { ComponentType, ReactNode } from "react";
 import dynamic from "next/dynamic";
 import { D2SystemInfo } from "@/types/d2SystemInfo";
+import { QueryClient, QueryClientProvider } from "react-query";
+
+const queryClient = new QueryClient();
 
 const NoSsrAppProvider: ComponentType<any> = dynamic(
 	async () => {
@@ -26,20 +29,22 @@ export function DHIS2AppProvider({
 	const [, minor] = version.split(".") ?? [];
 
 	return (
-		<NoSsrAppProvider
-			config={{
-				baseUrl: "/",
-				apiVersion: minor,
-				systemInfo: {
-					contextPath,
-					version,
-				},
-			}}
-			plugin={{}}
-			parentAlertsAdd={{}}
-			showAlertsInPlugin={false}
-		>
-			{children}
-		</NoSsrAppProvider>
+		<QueryClientProvider client={queryClient}>
+			<NoSsrAppProvider
+				config={{
+					baseUrl: "/",
+					apiVersion: minor,
+					systemInfo: {
+						contextPath,
+						version,
+					},
+				}}
+				plugin={{}}
+				parentAlertsAdd={{}}
+				showAlertsInPlugin={false}
+			>
+				{children}
+			</NoSsrAppProvider>
+		</QueryClientProvider>
 	);
 }

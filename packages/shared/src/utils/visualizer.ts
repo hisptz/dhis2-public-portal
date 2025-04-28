@@ -67,6 +67,12 @@ export function getOrgUnits(visualization: VisualizationConfig): Array<string> {
 }
 
 export function getChartType(config: VisualizationConfig): ChartType {
+	if (config.type.match(/YEAR_OVER_YEAR_/)) {
+		return config.type
+			.replace("YEAR_OVER_YEAR_", "")
+			.toLowerCase()
+			.replace("_", "-") as ChartType;
+	}
 	return config.type.toLowerCase().replace("_", "-") as ChartType;
 }
 
@@ -131,11 +137,6 @@ function getFilterItems(
 ) {
 	return getDimensionItems(config.filters, selectedValues);
 }
-
-function getYearByYearDimension(
-	config: VisualizationConfig,
-	selectedValues: SelectedValues,
-) {}
 
 export function getVisualizationDimensions(
 	config: VisualizationConfig,

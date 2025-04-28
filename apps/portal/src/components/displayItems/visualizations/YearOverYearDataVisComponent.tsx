@@ -23,10 +23,10 @@ import {
 	useVisualizationRefs,
 } from "@/hooks/dataVisualization";
 import { ChartSelector } from "@/components/displayItems/visualizations/ChartSelector";
-import { useAnalytics } from "@packages/shared/hooks";
+import { useYearOverYearAnalytics } from "@packages/shared/hooks";
 import { TableVisualizer } from "@packages/ui/visualizations";
 
-export function DataVisComponent({
+export function YearOverYearDataVisComponent({
 	visualizationConfig,
 	config,
 	disableActions,
@@ -64,7 +64,7 @@ export function DataVisComponent({
 		setSelectedOrgUnits,
 		selectedPeriods,
 		selectedOrgUnits,
-	} = useAnalytics({ visualizationConfig });
+	} = useYearOverYearAnalytics({ visualizationConfig });
 
 	const { loading: legendSetLoading, legendSet } =
 		useVisualizationLegendSet(visualizationConfig);

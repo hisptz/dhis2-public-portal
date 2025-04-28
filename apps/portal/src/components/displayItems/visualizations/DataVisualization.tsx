@@ -3,9 +3,11 @@ import { dhis2HttpClient } from "@/utils/api/dhis2";
 import { DataVisComponent } from "@/components/displayItems/visualizations/DataVisComponent";
 import {
 	ChartVisualizationItem,
+	VisualizationChartType,
 	VisualizationConfig,
 } from "@packages/shared/schemas";
 import { getAppearanceConfig } from "@/utils/theme";
+import { YearOverYearDataVisComponent } from "@/components/displayItems/visualizations/YearOverYearDataVisComponent";
 
 export interface MainVisualizationProps {
 	searchParams?: ReadonlyURLSearchParams;
@@ -35,6 +37,22 @@ export async function DataVisualization({
 	const { visualizationConfig } = await getDataVisualization(config);
 	const { appearanceConfig } = (await getAppearanceConfig())!;
 	const colors = appearanceConfig.colors.chartColors;
+
+	if (
+		[
+			VisualizationChartType.YEAR_OVER_YEAR_COLUMN,
+			VisualizationChartType.YEAR_OVER_YEAR_LINE,
+		].includes(visualizationConfig.type)
+	) {
+		return (
+			<YearOverYearDataVisComponent
+				colors={colors}
+				disableActions={disableActions}
+				config={config}
+				visualizationConfig={visualizationConfig}
+			/>
+		);
+	}
 
 	return (
 		<DataVisComponent
