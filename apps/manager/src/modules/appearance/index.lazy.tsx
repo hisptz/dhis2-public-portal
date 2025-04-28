@@ -10,6 +10,7 @@ import {
 	APP_NAMESPACE,
 	APPEARANCE_CONFIG_KEY,
 } from "../../shared/constants/datastore";
+import { ModuleContainer } from "../../shared/components/ModuleContainer";
 
 const query = {
 	appearanceConfig: {

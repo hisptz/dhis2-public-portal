@@ -5,8 +5,8 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
-"POT-Creation-Date: 2025-04-25T17:35:52.964Z\n"
-"PO-Revision-Date: 2025-04-25T17:35:52.965Z\n"
+"POT-Creation-Date: 2025-04-28T07:18:09.908Z\n"
+"PO-Revision-Date: 2025-04-28T07:18:09.908Z\n"
 
 msgid "Could not get Appearance configurations"
 msgstr "Could not get Appearance configurations"
@@ -20,6 +20,9 @@ msgstr "General configuration"
 msgid "Modules"
 msgstr "Modules"
 
+msgid "Size"
+msgstr "Size"
+
 msgid "Something went wrong"
 msgstr "Something went wrong"
 
@@ -28,6 +31,123 @@ msgstr "Reload"
 
 msgid "This will be a part of the url. It should not contain spaces"
 msgstr "This will be a part of the url. It should not contain spaces"
+
+msgid "Title"
+msgstr "Title"
+
+msgid "Short Description"
+msgstr "Short Description"
+
+msgid "Content"
+msgstr "Content"
+
+msgid "Should be a valid svg string"
+msgstr "Should be a valid svg string"
+
+msgid "Icon"
+msgstr "Icon"
+
+msgid "Create a new dashboard"
+msgstr "Create a new dashboard"
+
+msgid "Dashboard created successfully"
+msgstr "Dashboard created successfully"
+
+msgid "Could not create new dashboard"
+msgstr "Could not create new dashboard"
+
+msgid "Create Dashboard"
+msgstr "Create Dashboard"
+
+msgid "Cancel"
+msgstr "Cancel"
+
+msgid "Creating..."
+msgstr "Creating..."
+
+msgid "Create dashboard"
+msgstr "Create dashboard"
+
+msgid "ID"
+msgstr "ID"
+
+msgid "Add group"
+msgstr "Add group"
+
+msgid "Create Dashboard Group"
+msgstr "Create Dashboard Group"
+
+msgid "Short description"
+msgstr "Short description"
+
+msgid "Create group"
+msgstr "Create group"
+
+msgid "Add visualizations"
+msgstr "Add visualizations"
+
+msgid "{{action}} visualization"
+msgstr "{{action}} visualization"
+
+msgid "Type"
+msgstr "Type"
+
+msgid "Visualization"
+msgstr "Visualization"
+
+msgid "Map"
+msgstr "Map"
+
+msgid "Caption"
+msgstr "Caption"
+
+msgid "Edit visualization"
+msgstr "Edit visualization"
+
+msgid "Visualization type"
+msgstr "Visualization type"
+
+msgid "All"
+msgstr "All"
+
+msgid "Column"
+msgstr "Column"
+
+msgid "Bar"
+msgstr "Bar"
+
+msgid "Line"
+msgstr "Line"
+
+msgid "Pie"
+msgstr "Pie"
+
+msgid "Gauge"
+msgstr "Gauge"
+
+msgid "Single value"
+msgstr "Single value"
+
+msgid "Column chart"
+msgstr "Column chart"
+
+msgid "Remove"
+msgstr "Remove"
+
+msgid "Groups"
+msgstr "Groups"
+
+msgid "Description"
+msgstr "Description"
+
+msgid "Actions"
+msgstr "Actions"
+
+msgid "Visualizations"
+msgstr "Visualizations"
+
+msgid "Configure layout"
+msgstr "Configure layout"
 
 msgid "Welcome to the public portal manager!"
 msgstr "Welcome to the public portal manager!"
@@ -113,9 +233,6 @@ msgstr "Background color"
 
 msgid "Chart colors"
 msgstr "Chart colors"
-
-msgid "Cancel"
-msgstr "Cancel"
 
 msgid "Color"
 msgstr "Color"
