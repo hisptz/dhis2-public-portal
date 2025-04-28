@@ -1,7 +1,10 @@
 "use client";
 
-import { GroupedDocumentModuleConfig } from "@packages/shared/schemas";
-import { Box, SegmentedControl } from "@mantine/core";
+import {
+	GroupedDocumentModuleConfig,
+	ItemsDisplay,
+} from "@packages/shared/schemas";
+import { Box, Group, SegmentedControl, Select } from "@mantine/core";
 import { redirect, usePathname, useSearchParams } from "next/navigation";
 import { useRouter } from "nextjs-toploader/app";
 
@@ -28,11 +31,29 @@ export function DocumentsGroupControl({
 		value: group.id,
 	}));
 
-	const onGroupChange = (value: string) => {
+	const onGroupChange = (value: string | null) => {
 		const params = new URLSearchParams(searchParams);
-		params.set("group", value);
-		router.replace(`${pathname}?${params.toString()}`);
+		if (value) {
+			params.set("group", value);
+			router.replace(`${pathname}?${params.toString()}`);
+		}
 	};
+
+	if (config.itemsDisplay == ItemsDisplay.DROPDOWN) {
+		return (
+			<Group>
+				<Select
+					className="md:min-w-[20%] min-w-full"
+					allowDeselect={false}
+					placeholder="Pick one"
+					nothingFoundMessage="Nothing found"
+					data={options}
+					onChange={onGroupChange}
+					defaultValue={groupId ?? undefined}
+				/>
+			</Group>
+		);
+	}
 
 	return (
 		<Box className="">
