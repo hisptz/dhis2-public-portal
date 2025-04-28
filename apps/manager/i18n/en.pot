@@ -5,8 +5,8 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
-"POT-Creation-Date: 2025-04-28T06:55:19.313Z\n"
-"PO-Revision-Date: 2025-04-28T06:55:19.313Z\n"
+"POT-Creation-Date: 2025-04-28T12:41:26.536Z\n"
+"PO-Revision-Date: 2025-04-28T12:41:26.536Z\n"
 
 msgid "Application colors"
 msgstr "Application colors"
@@ -199,27 +199,6 @@ msgstr "Visualization type"
 
 msgid "All"
 msgstr "All"
-
-msgid "Column"
-msgstr "Column"
-
-msgid "Bar"
-msgstr "Bar"
-
-msgid "Line"
-msgstr "Line"
-
-msgid "Pie"
-msgstr "Pie"
-
-msgid "Gauge"
-msgstr "Gauge"
-
-msgid "Single value"
-msgstr "Single value"
-
-msgid "Column chart"
-msgstr "Column chart"
 
 msgid "Please fix the validation errors before saving"
 msgstr "Please fix the validation errors before saving"
