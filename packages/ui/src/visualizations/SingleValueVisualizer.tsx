@@ -1,22 +1,24 @@
-import { Dispatch, RefObject, SetStateAction, useMemo, useRef } from "react";
+import { RefObject, useMemo, useRef } from "react";
 import { clamp, flatten, get, head, truncate } from "lodash";
 import { useResizeObserver } from "usehooks-ts";
 import i18n from "@dhis2/d2-i18n";
 import { AnalyticsData, VisualizationConfig } from "@packages/shared/schemas";
 import {
+	getForeground,
 	getLegendColorFromValue,
 	numberFormatter,
 } from "@packages/shared/utils";
 
 export function SingleValueVisualizer({
 	analytics,
-	setRef,
 	visualization,
+	colors,
+	background,
 }: {
 	analytics: AnalyticsData;
-	setRef: Dispatch<SetStateAction<HTMLDivElement | null>>;
 	visualization: VisualizationConfig;
 	colors: string[];
+	background?: boolean;
 }) {
 	const legendSet = head(visualization.columns[0]!.items)?.legendSet;
 	const ref = useRef<HTMLDivElement | null>(null);
@@ -49,16 +51,16 @@ export function SingleValueVisualizer({
 	);
 
 	const { backgroundColor, color } = useMemo(() => {
-		if (config.background) {
+		if (background) {
 			if (legendColor) {
 				return {
 					backgroundColor: legendColor,
-					color: getTextColorFromBackgroundColor(legendColor),
+					color: getForeground(legendColor),
 				};
 			}
 			return {
-				backgroundColor: chartColors[0],
-				color: getTextColorFromBackgroundColor(chartColors[0]),
+				backgroundColor: colors[0],
+				color: getForeground(colors[0]!),
 			};
 		}
 
@@ -72,15 +74,15 @@ export function SingleValueVisualizer({
 			}
 			return {
 				backgroundColor: legendColor,
-				color: getTextColorFromBackgroundColor(legendColor),
+				color: getForeground(legendColor),
 			};
 		}
 
 		return {
 			backgroundColor: "#FFFFFF",
-			color: chartColors[1],
+			color: colors[1],
 		};
-	}, [config.background, legendColor, visualization.legend]);
+	}, [background, colors, legendColor, visualization.legend]);
 
 	const fontSize = useMemo(() => {
 		const textLength = value.toString().length;
@@ -89,21 +91,16 @@ export function SingleValueVisualizer({
 	}, [width, value]);
 
 	return (
-		<div
-			className="w-full h-full flex flex-col align-center justify-center gap-2"
-			ref={setRef}
-		>
-			<Tooltip title={labels.join(" - ")}>
-				<span
-					style={{ fontSize: 16 }}
-					className="text-background-500 text-center"
-				>
-					{truncate(labels.join(" - "), {
-						length: 50,
-						omission: "...",
-					})}
-				</span>
-			</Tooltip>
+		<div className="w-full h-full flex flex-col align-center justify-center gap-2">
+			<span
+				style={{ fontSize: 16 }}
+				className="text-background-500 text-center"
+			>
+				{truncate(labels.join(" - "), {
+					length: 50,
+					omission: "...",
+				})}
+			</span>
 			{isNaN(value) ? (
 				<span
 					style={{
@@ -132,7 +129,6 @@ export function SingleValueVisualizer({
 					className="flex-1 flex flex-col font-bold text-center justify-center align-middle"
 				>
 					{numberFormatter(value)}
-					{config.suffix ?? ""}
 				</span>
 			)}
 		</div>

@@ -2,21 +2,22 @@ import HighchartsReact from "highcharts-react-official";
 import { Dispatch, RefObject, SetStateAction } from "react";
 import {
 	AnalyticsData,
-	SingleValueConfig,
 	VisualizationConfig,
 	VisualizationItem,
+	VisualizationType,
 } from "@packages/shared/schemas";
-import { SingleValueVisualizer } from "@/components/displayItems/SingleValueVisualizer/SingleValueVisualizer";
 import { LegendSet } from "@hisptz/dhis2-utils";
-import { TableVisualizer } from "../../../../../../packages/ui/src/visualizations/TableVisualizer";
 import { ChartVisualizer } from "@/components/displayItems/visualizations/ChartVisualizer";
+import {
+	SingleValueVisualizer,
+	TableVisualizer,
+} from "@packages/ui/visualizations";
 
 export function ChartSelector({
 	analytics,
 	visualization,
 	tableRef,
 	setRef,
-	config,
 	fullScreen,
 	colors,
 }: {
@@ -33,13 +34,15 @@ export function ChartSelector({
 }) {
 	const chartType = visualization.type;
 	switch (chartType) {
-		case "SINGLE_VALUE":
+		case VisualizationType.SINGLE_VALUE:
 			return (
 				<SingleValueVisualizer
-					config={config as unknown as SingleValueConfig}
+					visualization={visualization}
+					analytics={analytics}
+					colors={colors}
 				/>
 			);
-		case "PIVOT_TABLE":
+		case VisualizationType.TABLE:
 			return (
 				<TableVisualizer
 					fullScreen={fullScreen}

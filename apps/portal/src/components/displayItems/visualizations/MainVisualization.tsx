@@ -20,7 +20,6 @@ export async function MainVisualization({
 
 	switch (type) {
 		case VisualizationDisplayItemType.CHART:
-		case VisualizationDisplayItemType.PYRAMID:
 			return (
 				<DataVisualization
 					disableActions={disableActions}
