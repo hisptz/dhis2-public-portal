@@ -41,7 +41,6 @@ export function AppHeader({
 	const foregroundColor = backgroundColor
 		? getForeground(backgroundColor)
 		: undefined;
-	const containerHeight = config.style?.containerHeight ?? 119;
 	const headerBackgroundColor = config.style?.headerBackgroundColor ?? foregroundColor;
 	const titleTextColor = config.title.style?.textColor ??  foregroundColor;
 	const titleTextSize = config.title.style?.textSize ?? 20;
@@ -59,9 +58,7 @@ export function AppHeader({
 	const leadingLogoSizeWidth = config.style?.leadingLogoSize?.width ?? 400
 
 	return (
-		<AppShell.Header p={0} bg={headerBackgroundColor}  style = {{
-			height : containerHeight
-		}}>
+		<AppShell.Header p={0} bg={headerBackgroundColor} >
 			<Flex gap="lg" align="center" p={0}>
 				<Burger
 					opened={opened}

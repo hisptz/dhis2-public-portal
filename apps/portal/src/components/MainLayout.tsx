@@ -23,7 +23,7 @@ export function MainLayout({
 }) {
 	const [opened, { toggle }] = useDisclosure();
 	const hasMenuOnHeader = menuConfig.position === MenuPosition.HEADER;
-	const headerHeight = 138;
+	const headerHeight = appearanceConfig.header.style?.containerHeight ?? 138;
 
 	return (
 		<AppShell
