@@ -5,8 +5,8 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
-"POT-Creation-Date: 2025-04-28T07:18:09.908Z\n"
-"PO-Revision-Date: 2025-04-28T07:18:09.908Z\n"
+"POT-Creation-Date: 2025-04-28T09:59:39.017Z\n"
+"PO-Revision-Date: 2025-04-28T09:59:39.017Z\n"
 
 msgid "Could not get Appearance configurations"
 msgstr "Could not get Appearance configurations"
@@ -234,11 +234,44 @@ msgstr "Background color"
 msgid "Chart colors"
 msgstr "Chart colors"
 
-msgid "Color"
-msgstr "Color"
+msgid "Footer configurations updated successfully"
+msgstr "Footer configurations updated successfully"
+
+msgid "Error updating footer configurations"
+msgstr "Error updating footer configurations"
+
+msgid "Footer configurations"
+msgstr "Footer configurations"
+
+msgid "Footer links label"
+msgstr "Footer links label"
 
 msgid "Add"
 msgstr "Add"
+
+msgid "S/N"
+msgstr "S/N"
+
+msgid "Name"
+msgstr "Name"
+
+msgid "Url"
+msgstr "Url"
+
+msgid "Remove Link"
+msgstr "Remove Link"
+
+msgid "Edit link"
+msgstr "Edit link"
+
+msgid "There are no Footer links defined"
+msgstr "There are no Footer links defined"
+
+msgid "Add footer link"
+msgstr "Add footer link"
+
+msgid "Color"
+msgstr "Color"
 
 msgid "There are colors selected. Click the add button to add one."
 msgstr "There are colors selected. Click the add button to add one."

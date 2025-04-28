@@ -35,7 +35,7 @@ export function AppearanceConfig({ appearanceConfig, refetchConfig }: Props) {
 	const { copyright, footerLinks, address } = footer;
 
 	return (
-		<div className="flex flex-col gap-6">
+		<div className="flex flex-col gap-6 pb-8">
 			{/*Application colors configurations*/}
 			<section>
 				<ConfigurationTitle title={i18n.t("Application colors")} />
