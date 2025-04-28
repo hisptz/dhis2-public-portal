@@ -3,6 +3,7 @@ import { FullLoader } from "../../FullLoader";
 import ErrorPage from "../../ErrorPage/ErrorPage";
 import { AppModule } from "@packages/shared/schemas";
 import { useModuleById } from "../hooks/data";
+import { useParams } from "@tanstack/react-router";
 
 const ModuleContext = createContext<AppModule | null>(null);
 const ModuleRefreshContext = createContext<() => Promise<void>>(
@@ -18,11 +19,12 @@ export function useRefreshModule() {
 }
 
 export function ModuleProvider({ children }: { children: React.ReactNode }) {
-    //TODO: Get the module ID from the URL parameters
-	const ModuleId = "";
+	const { moduleId } = useParams({
+		from: "/modules/_provider/$moduleId",
+	});
 
 	const { loading, error, module, refetch } =
-		useModuleById(ModuleId);
+		useModuleById(moduleId);
 
 	if (loading) {
 		return <FullLoader />;
