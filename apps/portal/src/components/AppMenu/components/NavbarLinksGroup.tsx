@@ -13,7 +13,7 @@ import classes from "./NavbarLinksGroup.module.css";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 import { ReactSVG } from "react-svg";
-import { getForeground } from "@/utils/colors";
+import { getForeground } from "@packages/shared/utils";
 
 interface LinksGroupProps {
 	icon?: string;

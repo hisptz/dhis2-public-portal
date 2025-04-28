@@ -13,9 +13,13 @@ import {
 import i18n from "@dhis2/d2-i18n";
 import { RHFSingleSelectField } from "@hisptz/dhis2-ui";
 import { VisualizationSelector } from "./VisualizationSelector";
-import { VisualizationItem, visualizationItemSchema, VisualizationType } from "@packages/shared/schemas";
+import {
+	VisualizationDisplayItemType,
+	VisualizationItem,
+	visualizationItemSchema,
+} from "@packages/shared/schemas";
 import { RHFTextAreaField } from "../../../../Fields/RHFTextAreaField";
- 
+
 export function AddVisualizationForm({
 	visualization,
 	hide,
@@ -53,11 +57,11 @@ export function AddVisualizationForm({
 							options={[
 								{
 									label: i18n.t("Visualization"),
-									value: VisualizationType.CHART,
+									value: VisualizationDisplayItemType.CHART,
 								},
 								{
 									label: i18n.t("Map"),
-									value: VisualizationType.MAP,
+									value: VisualizationDisplayItemType.MAP,
 								},
 							]}
 							name="type"

@@ -6,58 +6,98 @@ import { useFieldArray, useFormContext, useWatch } from "react-hook-form";
 import { AddVisualization } from "../AddVisualization/AddVisualization";
 import { mapValues } from "lodash";
 import { EditVisualization } from "../AddVisualization/componets/EditVisualization";
-import { DisplayItem, FlexibleLayoutConfig, VisualizationItem, VisualizationModuleConfig, DisplayItemType } from "@packages/shared/schemas";
+import { DisplayItem, FlexibleLayoutConfig, VisualizationItem, DisplayItemType, VisualizationModule } from "@packages/shared/schemas";
+import { useNavigate, useParams } from "@tanstack/react-router";
 
 export function DashboardVisualizationsConfig() {
-    const { setValue, getValues } = useFormContext<VisualizationModuleConfig>();
-    const grouped = useWatch<VisualizationModuleConfig>({
-        name: "grouped",
-    });
-    const { fields, append, update, remove } = useFieldArray<
-        VisualizationModuleConfig,
-        "items"
-    >({
-        name: "items",
-        keyName: "fieldId" as unknown as "id",
-    });
+	const { moduleId } = useParams({
+		from: "/modules/_provider/$moduleId",
+	});
+	const { setValue, getValues } = useFormContext<VisualizationModule>();
+	const navigate = useNavigate();
+	const hasGroups = useWatch<VisualizationModule, "config.grouped">({
+		name: "config.grouped",
+	});
 
-    const onAddVisualization = useCallback(
-        (visualization: VisualizationItem) => {
-            const displayItem: DisplayItem = {
-                type: DisplayItemType.VISUALIZATION,
-                item: visualization,
-             };
-            append(displayItem);
+	const { fields, append, update, remove } = useFieldArray<
+		VisualizationModule,
+		"config.items"
+	>({
+		name: "config.items",
+		keyName: "fieldId" as unknown as "id",
+	});
 
-            const layouts = getValues("layouts") as FlexibleLayoutConfig;
-            const newLayoutItem = {
-                i: visualization.id,
-                x: 0,
-                y: 0,
-                w: 4,
-                h: 4,
-            };
+	const onAddVisualization = useCallback(
+		(visualization: VisualizationItem) => {
+			const displayItem: DisplayItem = {
+				type: DisplayItemType.VISUALIZATION,
+				item: visualization,
+			};
+			append(displayItem);
+			const layouts = getValues("config.layouts") as FlexibleLayoutConfig;
+			if (layouts) {
+				const updatedLayouts = mapValues(layouts, (value) => {
+					if (value) {
+						return [
+							...value,
+							{
+								i: visualization.id,
+								x: 0,
+								y: 0,
+								w: 4,
+								h: 4,
+							},
+						];
+					}
+				});
+				setValue("config.layouts", updatedLayouts);
+			} else {
+				setValue("config.layouts", {
+					lg: [
+						{
+							i: visualization.id,
+							x: 0,
+							y: 0,
+							w: 4,
+							h: 4,
+						},
+					],
+					md: [
+						{
+							i: visualization.id,
+							x: 0,
+							y: 0,
+							w: 4,
+							h: 4,
+						},
+					],
+					sm: [
+						{
+							i: visualization.id,
+							x: 0,
+							y: 0,
+							w: 4,
+							h: 4,
+						},
+					],
+					xs: [
+						{
+							i: visualization.id,
+							x: 0,
+							y: 0,
+							w: 4,
+							h: 4,
+						},
+					],
+				});
+			}
+		},
+		[append, getValues, setValue],
+	);
 
-            if (layouts) {
-                const updatedLayouts = mapValues(layouts, (value) => 
-                    value ? [...value, newLayoutItem] : undefined
-                );
-                setValue("layouts", updatedLayouts);
-            } else {
-                setValue("layouts", {
-                    lg: [newLayoutItem],
-                    md: [newLayoutItem],
-                    sm: [newLayoutItem],
-                    xs: [newLayoutItem],
-                });
-            }
-        },
-        [append, getValues, setValue]
-    );
-
-    if (grouped) {
-        return null;
-    }
+	if (hasGroups) {
+		return null;
+	}
 
 	const rows = fields
     .filter((field) => field.type === DisplayItemType.VISUALIZATION)
@@ -88,22 +128,27 @@ export function DashboardVisualizationsConfig() {
         };
     });
 
-    return (
-        <div className="flex-1 w-full flex flex-col gap-2">
-            <div className="flex items-center justify-between">
-                <h3 className="text-2xl">{i18n.t("Visualizations")}</h3>
-                <ButtonStrip end>
-                    <Button
-                        onClick={() =>{}}
-                        icon={<IconLayoutColumns24 />}
-                    >
-                        {i18n.t("Configure layout")}
-                    </Button>
-                    <AddVisualization onAdd={onAddVisualization} />
-                </ButtonStrip>
-            </div>
-            <Divider />
-            <DashboardVisualizations visualizations={rows} />
-        </div>
-    );
+	return (
+		<div className="flex-1 w-full flex flex-col gap-2">
+			<div className="flex items-center justify-between">
+				<h3 className="text-2xl">{i18n.t("Visualizations")}</h3>
+				<ButtonStrip end>
+					<Button
+						onClick={() =>
+							navigate({
+								to: "/modules/$moduleId/edit/layout",
+								params: { moduleId },
+							})
+						}
+						icon={<IconLayoutColumns24 />}
+					>
+						{i18n.t("Configure layout")}
+					</Button>
+					<AddVisualization onAdd={onAddVisualization} />
+				</ButtonStrip>
+			</div>
+			<Divider />
+			<DashboardVisualizations visualizations={rows} />
+		</div>
+	);
 }

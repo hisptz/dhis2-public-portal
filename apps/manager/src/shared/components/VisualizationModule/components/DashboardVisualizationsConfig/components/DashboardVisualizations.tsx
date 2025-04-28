@@ -23,7 +23,7 @@ const columns: SimpleTableColumn[] = [
 ];
 
 type VisualizationRow = VisualizationItem & {
-    actions: React.ReactNode;
+	actions: React.ReactNode;
 };
 
 export function DashboardVisualizations({

@@ -9,7 +9,7 @@ export function SingleItemSection({
 	config: SingleItemSectionConfig;
 }) {
 	return (
-		<Container fluid>
+		<Container p={0} fluid>
 			<DisplayItemContainer item={config.item}>
 				<DisplayItemSelector item={config.item} />
 			</DisplayItemContainer>

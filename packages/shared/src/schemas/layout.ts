@@ -2,7 +2,7 @@ import { z } from "zod";
 
 export const dataGridSchema = z.object({
 	i: z.string(),
-	x: z.number().min(0).max(12),
+	x: z.number(),
 	y: z.number().min(0),
 	w: z.number().min(1).max(12),
 	h: z.number().min(1),

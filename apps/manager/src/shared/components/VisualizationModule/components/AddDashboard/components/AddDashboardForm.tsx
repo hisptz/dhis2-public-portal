@@ -32,7 +32,7 @@ export function AddDashboardForm({
 	);
 	const form = useForm<VisualizationModuleConfig>({
 		resolver: zodResolver(visualizationModuleConfig),
-		mode: "onChange",
+		 
 		shouldFocusError: false,
 		defaultValues: {
 			layouts: {},

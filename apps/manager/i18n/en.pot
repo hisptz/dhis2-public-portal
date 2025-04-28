@@ -5,8 +5,8 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
-"POT-Creation-Date: 2025-04-28T09:59:39.017Z\n"
-"PO-Revision-Date: 2025-04-28T09:59:39.017Z\n"
+"POT-Creation-Date: 2025-04-23T11:55:42.294Z\n"
+"PO-Revision-Date: 2025-04-23T11:55:42.295Z\n"
 
 msgid "Could not get Appearance configurations"
 msgstr "Could not get Appearance configurations"
@@ -16,6 +16,24 @@ msgstr "Error"
 
 msgid "General configuration"
 msgstr "General configuration"
+
+msgid "Layout editor"
+msgstr "Layout editor"
+
+msgid "Cancel"
+msgstr "Cancel"
+
+msgid "Update layout"
+msgstr "Update layout"
+
+msgid "Unknown module type"
+msgstr "Unknown module type"
+
+msgid "Back to all modules"
+msgstr "Back to all modules"
+
+msgid "Module"
+msgstr "Module"
 
 msgid "Modules"
 msgstr "Modules"
