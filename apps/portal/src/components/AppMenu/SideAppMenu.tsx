@@ -97,7 +97,6 @@ export function SideAppMenu({
 					/>
 				</Group>
 			)}
-
 			<ScrollArea className={classes.links}>
 				{links.map((link, index) => (
 					<div key={index}>{link}</div>

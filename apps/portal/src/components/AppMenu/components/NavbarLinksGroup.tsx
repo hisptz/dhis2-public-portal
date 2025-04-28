@@ -13,6 +13,7 @@ import classes from "./NavbarLinksGroup.module.css";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 import { ReactSVG } from "react-svg";
+import { getForeground } from "@/utils/colors";
 
 interface LinksGroupProps {
 	icon?: string;
@@ -54,8 +55,12 @@ export function LinksGroup({
 						<Text
 							className={classes.link}
 							data-active={isActiveSubMenu ? true : undefined}
-							c={isActiveSubMenu ? color : undefined}
-							bg={isActiveSubMenu ? color + ".1" : undefined}
+							c={
+								isActiveSubMenu
+									? getForeground(color)
+									: undefined
+							}
+							bg={isActiveSubMenu ? color : undefined}
 						>
 							{subMenu.label}
 						</Text>
@@ -99,7 +104,7 @@ export function LinksGroup({
 							size="lg"
 							radius="sm"
 							autoContrast
-							c={isActive ? color : "gray"}
+							c={isActive || hasActiveSubmenu ? color : "gray"}
 							style={{
 								marginLeft: collapsed ? 8 : 0,
 								transition:
