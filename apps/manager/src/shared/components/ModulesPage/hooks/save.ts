@@ -19,8 +19,7 @@ export function useSaveModule(moduleId: string) {
 		({ message }) => message,
 		({ type }) => ({ ...type, duration: 3000 }),
 	);
-    console.log("here", moduleId);
-	const [mutate, rest] = useDataMutation(mutation, {
+ 	const [mutate, rest] = useDataMutation(mutation, {
 		variables: {
 			id: moduleId,
 		},
