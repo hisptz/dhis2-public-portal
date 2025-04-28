@@ -5,12 +5,13 @@ import {
 	AppMenuConfig,
 	MenuPosition,
 } from "@packages/shared/schemas";
-import { AppShell, Center, Loader } from "@mantine/core";
+import { AppShell, Center, Loader, useMantineTheme } from "@mantine/core";
 import { AppHeader } from "@/components/Header/Header";
 import { useDisclosure } from "@mantine/hooks";
-import { Suspense } from "react";
+import { Suspense, useState } from "react";
 import { Footer } from "@/components/Footer/Footer";
 import { SideAppMenu } from "@/components/AppMenu/SideAppMenu";
+import { useMediaQuery } from "usehooks-ts";
 
 const DEFAULT_HEADER_HEIGHT = 138;
 
@@ -27,6 +28,11 @@ export function MainLayout({
 	const hasMenuOnHeader = menuConfig.position === MenuPosition.HEADER;
 	const headerHeight =
 		appearanceConfig.header.style?.containerHeight ?? DEFAULT_HEADER_HEIGHT;
+	const [isOpen, setOpen] = useState(true);
+	const theme = useMantineTheme();
+	const isLargerThanSm = useMediaQuery(
+		`(min-width: ${theme.breakpoints.sm})`,
+	);
 
 	return (
 		<AppShell
@@ -37,7 +43,11 @@ export function MainLayout({
 			}}
 			footer={{ height: { base: 100, md: 100, lg: 240 } }}
 			navbar={{
-				width: { base: 200, md: 240, lg: 300 },
+				width: {
+					base: isOpen ? 200 : 70,
+					md: isOpen ? 240 : 70,
+					lg: isOpen ? 300 : 70,
+				},
 				breakpoint: "sm",
 				collapsed: {
 					mobile: !opened,
@@ -54,7 +64,11 @@ export function MainLayout({
 				toggle={toggle}
 				config={appearanceConfig!.header}
 			/>
-			<SideAppMenu menuConfig={menuConfig} />
+			<SideAppMenu
+				menuConfig={menuConfig}
+				isOpen={isLargerThanSm ? isOpen : opened}
+				setOpen={setOpen}
+			/>
 			<AppShell.Main style={{ background: "#F9F9FA" }}>
 				<Suspense
 					fallback={
