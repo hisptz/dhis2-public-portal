@@ -1,32 +1,9 @@
-"use client";
-
-import {
-	AnalyticsData,
-	VisualizationConfig,
-} from "@packages/shared/schemas";
-import dynamic from "next/dynamic";
-import { Loader } from "@mantine/core";
+import { AnalyticsData, VisualizationConfig } from "@packages/shared/schemas";
 import { isEmpty } from "lodash";
 import { RefObject } from "react";
+import { DHIS2PivotTable } from "@hisptz/dhis2-analytics";
 
-const NoSSRDHIS2Table = dynamic(
-	() =>
-		import("@hisptz/dhis2-analytics").then(({ DHIS2PivotTable }) => ({
-			default: DHIS2PivotTable,
-		})),
-	{
-		ssr: false,
-		loading: () => {
-			return (
-				<div className="w-full h-full flex items-center justify-center min-h-[400px]">
-					<Loader color="blue" />
-				</div>
-			);
-		},
-	},
-);
-
-export interface ChartVisualizerProps {
+export interface TableVisualizerProps {
 	analytics: AnalyticsData;
 	visualization: VisualizationConfig;
 	setRef: RefObject<HTMLTableElement | null>;
@@ -38,9 +15,9 @@ export function TableVisualizer({
 	visualization,
 	setRef,
 	fullScreen,
-}: ChartVisualizerProps) {
+}: TableVisualizerProps) {
 	return (
-		<NoSSRDHIS2Table
+		<DHIS2PivotTable
 			setRef={setRef as any}
 			tableProps={{
 				scrollHeight: fullScreen

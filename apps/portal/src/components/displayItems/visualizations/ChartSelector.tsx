@@ -8,7 +8,7 @@ import {
 } from "@packages/shared/schemas";
 import { SingleValueVisualizer } from "@/components/displayItems/SingleValueVisualizer/SingleValueVisualizer";
 import { LegendSet } from "@hisptz/dhis2-utils";
-import { TableVisualizer } from "@/components/displayItems/visualizations/TableVisualizer";
+import { TableVisualizer } from "../../../../../../packages/ui/src/visualizations/TableVisualizer";
 import { ChartVisualizer } from "@/components/displayItems/visualizations/ChartVisualizer";
 
 export function ChartSelector({

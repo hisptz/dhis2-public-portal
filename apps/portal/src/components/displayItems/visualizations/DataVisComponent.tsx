@@ -3,7 +3,6 @@
 import { ActionIcon, Loader, Tooltip } from "@mantine/core";
 import { IconArrowsMaximize, IconArrowsMinimize } from "@tabler/icons-react";
 import i18n from "@dhis2/d2-i18n";
-import { TableVisualizer } from "@/components/displayItems/visualizations/TableVisualizer";
 import {
 	VisualizationConfig,
 	VisualizationDisplayItemType,
@@ -25,6 +24,7 @@ import {
 } from "@/hooks/dataVisualization";
 import { ChartSelector } from "@/components/displayItems/visualizations/ChartSelector";
 import { useAnalytics } from "@packages/shared/hooks";
+import { TableVisualizer } from "@packages/ui/visualizations";
 
 export function DataVisComponent({
 	visualizationConfig,

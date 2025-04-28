@@ -176,6 +176,14 @@ const legendSet = z.object({
 	name: z.string(),
 	displayName: z.string(),
 	displayShortName: z.string(),
+	legends: z.array(
+		z.object({
+			id: z.string(),
+			color: z.string(),
+			startValue: z.number(),
+			endValue: z.number(),
+		}),
+	),
 });
 
 const dimensionItem = z.object({

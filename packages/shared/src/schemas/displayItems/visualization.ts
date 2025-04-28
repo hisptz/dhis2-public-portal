@@ -6,7 +6,6 @@ export enum VisualizationDisplayItemType {
 	CHART = "CHART",
 	MAP = "MAP",
 	BANNER = "BANNER",
-	PYRAMID = "PYRAMID",
 }
 
 export const baseVisualizationItem = z.object({
@@ -20,7 +19,6 @@ export const baseVisualizationItem = z.object({
 export const chartVisualizationItem = baseVisualizationItem.extend({
 	type: z.enum([
 		VisualizationDisplayItemType.CHART,
-		VisualizationDisplayItemType.PYRAMID,
 		VisualizationDisplayItemType.MAP,
 	]),
 });
