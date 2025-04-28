@@ -2532,9 +2532,9 @@
   integrity sha512-MDWhGtE+eHw5JW7lq4qhc5yRLS11ERl1c7Z6Xd0a58DozHES6EnNNwUWbMiG4J9Cgj053Bhk8zvlhFYKVhULwg==
 
 "@hisptz/dhis2-analytics@^2.0.67":
-  version "2.0.67"
-  resolved "https://registry.yarnpkg.com/@hisptz/dhis2-analytics/-/dhis2-analytics-2.0.67.tgz#b444e9aea6e09e104109d22f1be157256d33067f"
-  integrity sha512-lArM8m06wHoA6y0PhR4nQRBejAj5S6mi9DxL/kbe+xeG5hH6VeoxsnZcEca9CIaPRzZmcISxhzLtw1KWu7Lngw==
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/@hisptz/dhis2-analytics/-/dhis2-analytics-2.1.0.tgz#61476cc5f357392bd086c9b727163560d9de19bf"
+  integrity sha512-Tkr0OG/hr4DR8B9GiCG6+rihfX34UOiG5zL3qWVMpcZppPgtoZiBwbMnZQ8mTUr5lT72+OTeKRUbVJJDsih0Lw==
   dependencies:
     "@hisptz/dhis2-ui" "2.0.42"
     "@hisptz/dhis2-utils" "2.0.17"
@@ -2545,8 +2545,8 @@
     d3-color "^3.1.0"
     d3-scale "^4.0.2"
     file-saver "^2.0.5"
-    highcharts "^10.3.2"
-    highcharts-react-official "^3.1.0"
+    highcharts "^12.2.0"
+    highcharts-react-official "^3.2.1"
     jotai-devtools "^0.10.1"
     leaflet "^1.9.3"
     leaflet-easyprint "^2.1.9"
@@ -11587,15 +11587,15 @@ header-case@^1.0.0:
     no-case "^2.2.0"
     upper-case "^1.1.3"
 
-highcharts-react-official@^3.1.0:
+highcharts-react-official@^3.2.1:
   version "3.2.1"
   resolved "https://registry.yarnpkg.com/highcharts-react-official/-/highcharts-react-official-3.2.1.tgz#4b62a7af2969bdebde6b338d36f6b9bf1f1029bc"
   integrity sha512-hyQTX7ezCxl7JqumaWiGsroGWalzh24GedQIgO3vJbkGOZ6ySRAltIYjfxhrq4HszJOySZegotEF7v+haQ75UA==
 
-highcharts@^10.3.2:
-  version "10.3.3"
-  resolved "https://registry.yarnpkg.com/highcharts/-/highcharts-10.3.3.tgz#b8acca24f2d4b1f2f726540734166e59e07b35c4"
-  integrity sha512-r7wgUPQI9tr3jFDn3XT36qsNwEIZYcfgz4mkKEA6E4nn5p86y+u1EZjazIG4TRkl5/gmGRtkBUiZW81g029RIw==
+highcharts@^12.2.0:
+  version "12.2.0"
+  resolved "https://registry.yarnpkg.com/highcharts/-/highcharts-12.2.0.tgz#264633af7e815f0f6291c0d570b1da12e323e9de"
+  integrity sha512-UUN+osTP3aeGc4KmoMuWAjzpKif8GYHFozzYI4O8h1ILGof25M/ZGBpXLvgqf1z0LVh7N9eG7i0HnzMfjcR4nA==
 
 highlight.js@^10.7.1:
   version "10.7.3"

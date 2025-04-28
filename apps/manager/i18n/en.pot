@@ -5,23 +5,23 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
-"POT-Creation-Date: 2025-04-23T11:55:42.294Z\n"
-"PO-Revision-Date: 2025-04-23T11:55:42.295Z\n"
+"POT-Creation-Date: 2025-04-28T09:59:39.017Z\n"
+"PO-Revision-Date: 2025-04-28T09:59:39.017Z\n"
 
-msgid "Application colors"
-msgstr "Application colors"
+msgid "Could not get Appearance configurations"
+msgstr "Could not get Appearance configurations"
 
-msgid "Header configuration"
-msgstr "Header configuration"
-
-msgid "Footer configuration"
-msgstr "Footer configuration"
+msgid "Error"
+msgstr "Error"
 
 msgid "General configuration"
 msgstr "General configuration"
 
 msgid "Modules"
 msgstr "Modules"
+
+msgid "Size"
+msgstr "Size"
 
 msgid "Something went wrong"
 msgstr "Something went wrong"
@@ -32,11 +32,255 @@ msgstr "Reload"
 msgid "This will be a part of the url. It should not contain spaces"
 msgstr "This will be a part of the url. It should not contain spaces"
 
+msgid "Title"
+msgstr "Title"
+
+msgid "Short Description"
+msgstr "Short Description"
+
+msgid "Content"
+msgstr "Content"
+
+msgid "Should be a valid svg string"
+msgstr "Should be a valid svg string"
+
+msgid "Icon"
+msgstr "Icon"
+
+msgid "Create a new dashboard"
+msgstr "Create a new dashboard"
+
+msgid "Dashboard created successfully"
+msgstr "Dashboard created successfully"
+
+msgid "Could not create new dashboard"
+msgstr "Could not create new dashboard"
+
+msgid "Create Dashboard"
+msgstr "Create Dashboard"
+
+msgid "Cancel"
+msgstr "Cancel"
+
+msgid "Creating..."
+msgstr "Creating..."
+
+msgid "Create dashboard"
+msgstr "Create dashboard"
+
+msgid "ID"
+msgstr "ID"
+
+msgid "Add group"
+msgstr "Add group"
+
+msgid "Create Dashboard Group"
+msgstr "Create Dashboard Group"
+
+msgid "Short description"
+msgstr "Short description"
+
+msgid "Create group"
+msgstr "Create group"
+
+msgid "Add visualizations"
+msgstr "Add visualizations"
+
+msgid "{{action}} visualization"
+msgstr "{{action}} visualization"
+
+msgid "Type"
+msgstr "Type"
+
+msgid "Visualization"
+msgstr "Visualization"
+
+msgid "Map"
+msgstr "Map"
+
+msgid "Caption"
+msgstr "Caption"
+
+msgid "Edit visualization"
+msgstr "Edit visualization"
+
+msgid "Visualization type"
+msgstr "Visualization type"
+
+msgid "All"
+msgstr "All"
+
+msgid "Column"
+msgstr "Column"
+
+msgid "Bar"
+msgstr "Bar"
+
+msgid "Line"
+msgstr "Line"
+
+msgid "Pie"
+msgstr "Pie"
+
+msgid "Gauge"
+msgstr "Gauge"
+
+msgid "Single value"
+msgstr "Single value"
+
+msgid "Column chart"
+msgstr "Column chart"
+
+msgid "Remove"
+msgstr "Remove"
+
+msgid "Groups"
+msgstr "Groups"
+
+msgid "Description"
+msgstr "Description"
+
+msgid "Actions"
+msgstr "Actions"
+
+msgid "Visualizations"
+msgstr "Visualizations"
+
+msgid "Configure layout"
+msgstr "Configure layout"
+
 msgid "Welcome to the public portal manager!"
 msgstr "Welcome to the public portal manager!"
 
 msgid "You can use this application to configure your public portal web application"
 msgstr "You can use this application to configure your public portal web application"
+
+msgid "Application colors"
+msgstr "Application colors"
+
+msgid "Update"
+msgstr "Update"
+
+msgid "Header configuration"
+msgstr "Header configuration"
+
+msgid "Title enabled"
+msgstr "Title enabled"
+
+msgid "Title label"
+msgstr "Title label"
+
+msgid "Subtitle label"
+msgstr "Subtitle label"
+
+msgid "Title style"
+msgstr "Title style"
+
+msgid "Has menu"
+msgstr "Has menu"
+
+msgid "Trailing logo"
+msgstr "Trailing logo"
+
+msgid "Footer configuration"
+msgstr "Footer configuration"
+
+msgid "Copyright"
+msgstr "Copyright"
+
+msgid "Footer links"
+msgstr "Footer links"
+
+msgid "Label"
+msgstr "Label"
+
+msgid "Links"
+msgstr "Links"
+
+msgid "Address"
+msgstr "Address"
+
+msgid "Missing Appearance configurations"
+msgstr "Missing Appearance configurations"
+
+msgid ""
+"There are no appearance configurations yet. Click the below button to "
+"create one."
+msgstr ""
+"There are no appearance configurations yet. Click the below button to "
+"create one."
+
+msgid "Color configurations updated successfully"
+msgstr "Color configurations updated successfully"
+
+msgid "Error updating color configurations"
+msgstr "Error updating color configurations"
+
+msgid "Updating..."
+msgstr "Updating..."
+
+msgid "Could not save form. Fix the form errors fist and try again"
+msgstr "Could not save form. Fix the form errors fist and try again"
+
+msgid "Application Color Configurations"
+msgstr "Application Color Configurations"
+
+msgid "Primary color"
+msgstr "Primary color"
+
+msgid "Background color"
+msgstr "Background color"
+
+msgid "Chart colors"
+msgstr "Chart colors"
+
+msgid "Footer configurations updated successfully"
+msgstr "Footer configurations updated successfully"
+
+msgid "Error updating footer configurations"
+msgstr "Error updating footer configurations"
+
+msgid "Footer configurations"
+msgstr "Footer configurations"
+
+msgid "Footer links label"
+msgstr "Footer links label"
+
+msgid "Add"
+msgstr "Add"
+
+msgid "S/N"
+msgstr "S/N"
+
+msgid "Name"
+msgstr "Name"
+
+msgid "Url"
+msgstr "Url"
+
+msgid "Remove Link"
+msgstr "Remove Link"
+
+msgid "Edit link"
+msgstr "Edit link"
+
+msgid "There are no Footer links defined"
+msgstr "There are no Footer links defined"
+
+msgid "Add footer link"
+msgstr "Add footer link"
+
+msgid "Color"
+msgstr "Color"
+
+msgid "There are colors selected. Click the add button to add one."
+msgstr "There are colors selected. Click the add button to add one."
+
+msgid "Add color"
+msgstr "Add color"
+
+msgid "Color Selector"
+msgstr "Color Selector"
 
 msgid "General"
 msgstr "General"
