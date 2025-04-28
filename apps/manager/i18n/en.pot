@@ -20,6 +20,15 @@ msgstr "General configuration"
 msgid "Modules"
 msgstr "Modules"
 
+msgid "Something went wrong"
+msgstr "Something went wrong"
+
+msgid "Reload"
+msgstr "Reload"
+
+msgid "This will be a part of the url. It should not contain spaces"
+msgstr "This will be a part of the url. It should not contain spaces"
+
 msgid "Welcome to the public portal manager!"
 msgstr "Welcome to the public portal manager!"
 

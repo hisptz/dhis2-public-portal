@@ -1,6 +1,5 @@
 import { createLazyFileRoute } from "@tanstack/react-router";
 import React from "react";
-import { ModuleContainer } from "../../shared/components/ModuleContainer";
 import i18n from "@dhis2/d2-i18n";
 import { useDataQuery } from "@dhis2/app-runtime";
 import { CircularLoader, NoticeBox } from "@dhis2/ui";

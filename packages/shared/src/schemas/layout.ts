@@ -14,10 +14,10 @@ export const dataGridSchema = z.object({
 });
 
 export const layoutSchema = z.object({
-	lg: dataGridSchema.array(),
-	md: dataGridSchema.array(),
-	sm: dataGridSchema.array(),
-	xs: dataGridSchema.array(),
+	lg: dataGridSchema.array().optional(),
+	md: dataGridSchema.array().optional(),
+	sm: dataGridSchema.array().optional(),
+	xs: dataGridSchema.array().optional(),
 });
 
 export type FlexibleLayoutConfig = z.infer<typeof layoutSchema>;
