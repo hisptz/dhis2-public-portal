@@ -34,7 +34,7 @@ export function DHIS2AppProvider({
 		<QueryClientProvider client={queryClient}>
 			<NoSsrAppProvider
 				config={{
-					baseUrl,
+					baseUrl: `/${baseUrl}/api`,
 					apiVersion: minor,
 					systemInfo: {
 						contextPath,
