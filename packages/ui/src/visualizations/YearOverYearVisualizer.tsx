@@ -1,8 +1,6 @@
 import { AnalyticsData, VisualizationConfig } from "@packages/shared/schemas";
 import { RefObject, useRef } from "react";
 import HighchartsReact from "highcharts-react-official";
-import { getChartLayout, getChartType } from "@packages/shared/utils";
-import { useResizeObserver } from "usehooks-ts";
 
 export interface ChartVisualizerProps {
 	analytics: AnalyticsData;
@@ -11,21 +9,16 @@ export interface ChartVisualizerProps {
 	setRef: RefObject<HighchartsReact.RefObject | null>;
 }
 
-export function YearOverYearVisualizer({
-	analytics,
-	visualization,
-	colors,
-	setRef,
-}: ChartVisualizerProps) {
-	const type = getChartType(visualization);
-	const layout = getChartLayout(visualization);
+export function YearOverYearVisualizer({}: ChartVisualizerProps) {
+	// const type = getChartType(visualization);
+	// const layout = getChartLayout(visualization);
 
 	const ref = useRef<HTMLDivElement>(null);
-	const { height = 0 } = useResizeObserver<HTMLDivElement>({
-		// @ts-expect-error ref will always have a nullable value
-		ref: ref!,
-		box: "border-box",
-	});
+	// const { height = 0 } = useResizeObserver<HTMLDivElement>({
+	// 	// @ts-expect-error ref will always have a nullable value
+	// 	ref: ref!,
+	// 	box: "border-box",
+	// });
 
 	return (
 		<div ref={ref} style={{ width: "100%", height: "100%" }}>
