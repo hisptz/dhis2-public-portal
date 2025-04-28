@@ -1,8 +1,8 @@
 import { createLazyFileRoute } from "@tanstack/react-router";
 import React from "react";
-import { ModuleContainer } from "../../shared/components/ModuleContainer";
+import { ModuleContainer } from "../../../shared/components/ModuleContainer";
 
-export const Route = createLazyFileRoute("/menu/")({
+export const Route = createLazyFileRoute("/menu/_provider/")({
 	component: RouteComponent,
 });
 
