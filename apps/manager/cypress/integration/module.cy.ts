@@ -2,16 +2,15 @@ import { ModuleType } from "@packages/shared/schemas";
 import { appMenus } from "../../src/shared/constants/menu";
 
 describe("Modules Page", () => {
-    beforeEach(() => {
-        cy.visit("/");
-    });
+	beforeEach(() => {
+		cy.visit("/");
+	});
 
-    const modulesMenu = appMenus.find((menu) => menu.label === "Modules");
+	const modulesMenu = appMenus.find((menu) => menu.label === "Modules");
 
-
-    if (!modulesMenu) {
-        throw new Error("Modules menu item not found in appMenus");
-    }
+	if (!modulesMenu) {
+		throw new Error("Modules menu item not found in appMenus");
+	}
 
       it("should navigate to Modules page via side navigation", () => {
         cy.contains("a", modulesMenu.label).should("be.visible").click();
@@ -31,46 +30,62 @@ describe("Modules Page", () => {
         cy.contains("th", "Actions").should("be.visible");
       });
 
-    it("should filter modules by type", () => {
-        cy.contains("a", modulesMenu.label).click();
+	it("should filter modules by type", () => {
+		cy.contains("a", modulesMenu.label).click();
 
-        const filterOptions = [
-            { label: "VISUALIZATION", value: ModuleType.VISUALIZATION, urlContains: "type=VISUALIZATION" },
-            { label: "SECTION", value: ModuleType.SECTION, urlContains: "type=SECTION" },
-            { label: "DOCUMENTS", value: ModuleType.DOCUMENTS, urlContains: "type=DOCUMENTS" },
-            { label: "STATIC", value: ModuleType.STATIC, urlContains: "type=STATIC" },
-        ];
+		const filterOptions = [
+			{
+				label: "VISUALIZATION",
+				value: ModuleType.VISUALIZATION,
+				urlContains: "type=VISUALIZATION",
+			},
+			{
+				label: "SECTION",
+				value: ModuleType.SECTION,
+				urlContains: "type=SECTION",
+			},
+			{
+				label: "DOCUMENTS",
+				value: ModuleType.DOCUMENTS,
+				urlContains: "type=DOCUMENTS",
+			},
+			{
+				label: "STATIC",
+				value: ModuleType.STATIC,
+				urlContains: "type=STATIC",
+			},
+		];
 
-        filterOptions.forEach(({ label, value, urlContains }) => {
-            cy.get('[data-test="dhis2-uicore-select-input"]').click();
-            cy.get(`[data-value="${value}"]`).click();
+		filterOptions.forEach(({ label, value, urlContains }) => {
+			cy.get('[data-test="dhis2-uicore-select-input"]').click();
+			cy.get(`[data-value="${value}"]`).click();
 
-            cy.get('[data-test="dhis2-uicore-select-input"]').should("contain", label);
+			cy.get('[data-test="dhis2-uicore-select-input"]').should(
+				"contain",
+				label,
+			);
 
-            if (urlContains) {
-                cy.url().should("include", urlContains);
-            } else {
-                cy.url().should("not.include", "type=");
-            }
+			if (urlContains) {
+				cy.url().should("include", urlContains);
+			} else {
+				cy.url().should("not.include", "type=");
+			}
 
-            cy.get("table tbody tr").then(($rows) => {
-                if ($rows.length === 0) {
-                    cy.contains("There are no modules matching the selected type").should("be.visible");
-                } else if ($rows.length > 0) {
-                    cy.wrap($rows).each(($row) => {
-                        cy.wrap($row)
-                            .find("td")
-                            .eq(1)
-                            .should("contain", value);
-                    });
-                }
-            });
+			cy.get("table tbody tr").then(($rows) => {
+				if ($rows.length === 0) {
+					cy.contains(
+						"There are no modules matching the selected type",
+					).should("be.visible");
+				} else if ($rows.length > 0) {
+					cy.wrap($rows).each(($row) => {
+						cy.wrap($row).find("td").eq(1).should("contain", value);
+					});
+				}
+			});
+		});
 
-
-        });
-
-        cy.get('[data-test="dhis2-uicore-singleselect-clear"]').click();
-    });
+		cy.get('[data-test="dhis2-uicore-singleselect-clear"]').click();
+	});
 
     it("should create a new module", () => {
 

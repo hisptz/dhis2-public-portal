@@ -5,6 +5,11 @@ import { displayItemSchema } from "../displayItems";
 import { layoutSchema } from "../layout";
 import { orgUnitConfigSchema, periodConfigSchema } from "../dimensions";
 
+export enum ItemsDisplay {
+	SEGMENTED = "segmented",
+	DROPDOWN = "dropdown",
+}
+
 export const visualizationGroupSchema = z.object({
 	id: z
 		.string()
@@ -31,6 +36,7 @@ export const baseVisualizationModuleSchema = z.object({
 	title: z.string(),
 	grouped: z.boolean(),
 	preamble: z.string().optional(),
+	itemsDisplay: z.nativeEnum(ItemsDisplay).optional(),
 });
 
 export const groupedVisualizationModuleSchema =

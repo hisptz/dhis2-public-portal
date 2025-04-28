@@ -15,6 +15,7 @@ import { NavigationBar } from "@/components/NavigationBar";
 import "react-grid-layout/css/styles.css";
 import "react-resizable/css/styles.css";
 import { ModalsProvider } from "@mantine/modals";
+import { env } from "@/utils/env";
 
 export async function generateMetadata() {
 	return await getAppMetadata();
@@ -27,6 +28,7 @@ export default async function RootLayout({
 }>) {
 	const config = await getAppearanceConfig();
 	const systemInfo = await getSystemInfo();
+	const baseUrl = env.CONTEXT_PATH;
 
 	if (!config) {
 		return (
@@ -34,7 +36,10 @@ export default async function RootLayout({
 				<head>
 					<ColorSchemeScript />
 				</head>
-				<body>
+				<body
+					className="h-screen w-screen"
+					style={{ overflow: "hidden" }}
+				>
 					<MantineProvider>
 						<NoConfigLandingPage />
 					</MantineProvider>
@@ -49,11 +54,14 @@ export default async function RootLayout({
 			<head>
 				<ColorSchemeScript />
 			</head>
-			<body >
+			<body>
 				<MantineProvider theme={theme}>
 					<ModalsProvider>
 						<NavigationBar />
-						<DHIS2AppProvider systemInfo={systemInfo}>
+						<DHIS2AppProvider
+							baseUrl={baseUrl}
+							systemInfo={systemInfo}
+						>
 							{children}
 						</DHIS2AppProvider>
 					</ModalsProvider>

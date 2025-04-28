@@ -1,29 +1,50 @@
-//TODO: Replace this with the one from the migration
+import { DataVisualization } from "@/components/displayItems/visualizations/DataVisualization";
+import { MapVisualization } from "@/components/displayItems/visualizations/MapVisualization";
+import {
+	VisualizationDisplayItemType,
+	VisualizationItem,
+} from "@packages/shared/schemas";
+import { BannerVisualization } from "@/components/displayItems/visualizations/BannerVisualization";
+import { BaseCardError } from "@/components/CardError";
 
-import { VisualizationItem } from "@packages/shared/schemas";
-import { Group, Text } from "@mantine/core";
-import { dhis2HttpClient } from "@/utils/api/dhis2";
+export interface MainVisualizationProps {
+	config: VisualizationItem;
+	disableActions?: boolean;
+}
 
 export async function MainVisualization({
 	config,
-}: {
-	config: VisualizationItem;
-}) {
-	async function getDetails() {
-		const url =
-			config.type === "MAP"
-				? `maps/${config.id}`
-				: `visualizations/${config.id}`;
-		return await dhis2HttpClient.get<{ name: string }>(url);
+	disableActions,
+}: MainVisualizationProps) {
+	const { type } = config;
+
+	switch (type) {
+		case VisualizationDisplayItemType.CHART:
+			return (
+				<DataVisualization
+					disableActions={disableActions}
+					config={config}
+				/>
+			);
+		case VisualizationDisplayItemType.MAP:
+			return (
+				<MapVisualization
+					disableActions={disableActions}
+					config={config}
+				/>
+			);
+		case VisualizationDisplayItemType.BANNER:
+			return (
+				<BannerVisualization
+					config={config}
+					disableActions={disableActions}
+				/>
+			);
+		default:
+			return (
+				<BaseCardError
+					error={new Error("Unsupported visualization ")}
+				/>
+			);
 	}
-
-	const details = await getDetails();
-
-	return (
-		<>
-			<Group justify="space-between">
-				<Text fw={500}>{details.name}</Text>
-			</Group>
-		</>
-	);
 }

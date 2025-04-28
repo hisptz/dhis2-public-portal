@@ -2,15 +2,14 @@ import { z } from "zod";
 import { baseDisplayItemSchema, DisplayItemType } from "./base";
 import { orgUnitConfigSchema, periodConfigSchema } from "../dimensions";
 
-export enum VisualizationType {
+export enum VisualizationDisplayItemType {
 	CHART = "CHART",
 	MAP = "MAP",
 	BANNER = "BANNER",
-	PYRAMID = "PYRAMID",
 }
 
 export const baseVisualizationItem = z.object({
-	type: z.nativeEnum(VisualizationType),
+	type: z.nativeEnum(VisualizationDisplayItemType),
 	id: z.string(),
 	periodConfig: periodConfigSchema.optional(),
 	orgUnitConfig: orgUnitConfigSchema.optional(),
@@ -19,14 +18,15 @@ export const baseVisualizationItem = z.object({
 
 export const chartVisualizationItem = baseVisualizationItem.extend({
 	type: z.enum([
-		VisualizationType.CHART,
-		VisualizationType.PYRAMID,
-		VisualizationType.MAP,
+		VisualizationDisplayItemType.CHART,
+		VisualizationDisplayItemType.MAP,
 	]),
 });
 
+export type ChartVisualizationItem = z.infer<typeof chartVisualizationItem>;
+
 const bannerVisualizationSchema = baseVisualizationItem.extend({
-	type: z.literal(VisualizationType.BANNER),
+	type: z.literal(VisualizationDisplayItemType.BANNER),
 	label: z.string(),
 	data: z
 		.object({
@@ -35,6 +35,8 @@ const bannerVisualizationSchema = baseVisualizationItem.extend({
 		})
 		.array(),
 });
+
+export type bannerVisualizationItem = z.infer<typeof bannerVisualizationSchema>;
 
 export const visualizationItemSchema = z.discriminatedUnion("type", [
 	bannerVisualizationSchema,

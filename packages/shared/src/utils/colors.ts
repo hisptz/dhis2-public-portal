@@ -5,7 +5,7 @@ export function getForeground(backgroundColor: string) {
 	);
 
 	// Calculate brightness (YIQ)
-	const brightness = r * 0.299 + g * 0.587 + b * 0.114;
+	const brightness = r! * 0.299 + g! * 0.587 + b! * 0.114;
 
 	// Set a threshold (you can adjust this)
 	const threshold = 128;
