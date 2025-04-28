@@ -14,3 +14,4 @@ export * from "./displayItems";
 export * from "./modules";
 export * from "./layout";
 export * from "./dimensions";
+export * from "./metadata"
