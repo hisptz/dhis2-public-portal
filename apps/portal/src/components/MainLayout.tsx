@@ -12,6 +12,8 @@ import { Suspense } from "react";
 import { Footer } from "@/components/Footer/Footer";
 import { SideAppMenu } from "@/components/AppMenu/SideAppMenu";
 
+const DEFAULT_HEADER_HEIGHT = 138;
+
 export function MainLayout({
 	children,
 	appearanceConfig,
@@ -23,13 +25,14 @@ export function MainLayout({
 }) {
 	const [opened, { toggle }] = useDisclosure();
 	const hasMenuOnHeader = menuConfig.position === MenuPosition.HEADER;
-	const headerHeight = appearanceConfig.header.style?.containerHeight ?? 138;
+	const headerHeight =
+		appearanceConfig.header.style?.containerHeight ?? DEFAULT_HEADER_HEIGHT;
 
 	return (
 		<AppShell
 			header={{
 				height: {
-					base: hasMenuOnHeader ? headerHeight : 138 - 20,
+					base: hasMenuOnHeader ? headerHeight : headerHeight - 20,
 				},
 			}}
 			footer={{ height: { base: 100, md: 100, lg: 240 } }}
