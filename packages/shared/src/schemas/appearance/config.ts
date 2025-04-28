@@ -29,10 +29,23 @@ export const headerConfig = z.object({
 	logo: z.object({
 		enabled: z.boolean(),
 	}),
+	subtitle: z.object({
+		style: z
+			.object({
+				center: z.boolean(),
+				textColor: z.string().optional(),
+				textSize: z.number().optional(),
+			})
+			.optional(),
+	}),
 	title: z.object({
 		style: z
 			.object({
 				center: z.boolean(),
+				textColor: z.string().optional(),
+				textSize: z.number().optional(),
+				align: z.enum(["left", "center", "right"]).optional(),
+
 			})
 			.optional(),
 	}),
@@ -41,6 +54,20 @@ export const headerConfig = z.object({
 	style: z
 		.object({
 			coloredBackground: z.boolean(),
+			headerBackgroundColor: z.string().optional(),
+			containerHeight: z.number().optional(),
+			trailingLogoSize: z
+				.object({
+					width: z.number().optional(),
+					height: z.number().optional(),
+				})
+				.optional(),
+			leadingLogoSize: z
+				.object({
+					width: z.number().optional(),
+					height: z.number().optional(),
+				})
+				.optional(),
 		})
 		.optional(),
 });
