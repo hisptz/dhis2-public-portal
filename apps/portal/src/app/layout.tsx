@@ -49,7 +49,7 @@ export default async function RootLayout({
 			<head>
 				<ColorSchemeScript />
 			</head>
-			<body className="h-screen w-screen">
+			<body >
 				<MantineProvider theme={theme}>
 					<ModalsProvider>
 						<NavigationBar />

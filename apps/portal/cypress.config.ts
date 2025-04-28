@@ -18,6 +18,7 @@ export default defineConfig({
 			// });
 			return config;
 		},
+		projectId: "qufv5j",
 		baseUrl: "http://localhost:3000",
 		specPattern: "cypress/integration/**/*.cy.ts",
 		viewportWidth: 1280,
