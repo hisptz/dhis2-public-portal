@@ -78,7 +78,7 @@ export function DataVisComponent({
 			<FullScreen className="bg-white w-full h-full" handle={handler}>
 				<div
 					key={visualizationConfig.name}
-					className="flex flex-col gap-2 p-4 w-full h-full"
+					className="flex flex-col gap-2 w-full h-full"
 					ref={containerRef}
 				>
 					<div className="flex flex-row place-content-between">

@@ -112,7 +112,7 @@ export const analyticsDimensionSchema = z.union([
 ]);
 export type AnalyticsDimensionSchema = z.infer<typeof analyticsDimensionSchema>;
 
-export enum VisualizationType {
+export enum VisualizationChartType {
 	BAR = "BAR",
 	LINE = "LINE",
 	PIE = "PIE",
@@ -325,7 +325,7 @@ export const visualizationSchema = z.object({
 	title: z.string().optional(),
 	topLimit: z.number(),
 	translations: z.array(z.object({})),
-	type: z.nativeEnum(VisualizationType),
+	type: z.nativeEnum(VisualizationChartType),
 	yearlySeries: z.array(z.string()),
 });
 

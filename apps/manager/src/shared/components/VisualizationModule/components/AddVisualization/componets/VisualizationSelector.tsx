@@ -5,7 +5,10 @@ import { RHFSingleSelectField } from "@hisptz/dhis2-ui";
 import { capitalize } from "lodash";
 import i18n from "@dhis2/d2-i18n";
 import { SingleSelectField, SingleSelectOption } from "@dhis2/ui";
-import { VisualizationItem, VisualizationType } from "@packages/shared/schemas";
+import {
+	VisualizationDisplayItemType,
+	VisualizationItem,
+} from "@packages/shared/schemas";
 
 const visQuery = {
 	vis: {
@@ -161,11 +164,11 @@ export function VisualizationSelector() {
 		name: "type",
 	});
 
-	if (visType == VisualizationType.MAP) {
+	if (visType == VisualizationDisplayItemType.MAP) {
 		return <MapSelector />;
 	}
 
-	if (visType === VisualizationType.CHART) {
+	if (visType === VisualizationDisplayItemType.CHART) {
 		return <VisSelector />;
 	}
 

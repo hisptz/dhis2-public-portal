@@ -2,10 +2,10 @@ import { describe, expect, it } from "vitest";
 import axios from "axios";
 import {
 	analyticsDimensionSchema,
+	VisualizationChartType,
 	VisualizationConfig,
 	visualizationFields,
 	visualizationSchema,
-	VisualizationType,
 } from "./visualization";
 import { config } from "dotenv";
 import {
@@ -60,7 +60,7 @@ describe("get layout function", async () => {
 });
 describe("get chart layout function", async () => {
 	visualizations.forEach((visualization) => {
-		if (visualization.type !== VisualizationType.TABLE) {
+		if (visualization.type !== VisualizationChartType.TABLE) {
 			it(`Passes the get chart layout function for chart visualization ${visualization.name}<${visualization.type}>`, () => {
 				const layout = getChartLayout(visualization);
 				Object.values(layout).forEach((value) => {

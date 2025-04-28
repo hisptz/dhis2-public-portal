@@ -2,9 +2,9 @@ import HighchartsReact from "highcharts-react-official";
 import { Dispatch, RefObject, SetStateAction } from "react";
 import {
 	AnalyticsData,
+	VisualizationChartType,
 	VisualizationConfig,
 	VisualizationItem,
-	VisualizationType,
 } from "@packages/shared/schemas";
 import { LegendSet } from "@hisptz/dhis2-utils";
 import { ChartVisualizer } from "@/components/displayItems/visualizations/ChartVisualizer";
@@ -34,7 +34,7 @@ export function ChartSelector({
 }) {
 	const chartType = visualization.type;
 	switch (chartType) {
-		case VisualizationType.SINGLE_VALUE:
+		case VisualizationChartType.SINGLE_VALUE:
 			return (
 				<SingleValueVisualizer
 					visualization={visualization}
@@ -42,7 +42,7 @@ export function ChartSelector({
 					colors={colors}
 				/>
 			);
-		case VisualizationType.TABLE:
+		case VisualizationChartType.TABLE:
 			return (
 				<TableVisualizer
 					fullScreen={fullScreen}

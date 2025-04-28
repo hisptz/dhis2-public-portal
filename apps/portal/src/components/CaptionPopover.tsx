@@ -1,4 +1,4 @@
-import { ActionIcon, Popover, Text } from "@mantine/core";
+import { ActionIcon, Box, Popover, Text, Title } from "@mantine/core";
 import { useRef } from "react";
 import { useBoolean } from "usehooks-ts";
 import { IconInfoCircle } from "@tabler/icons-react";
@@ -25,14 +25,25 @@ export function CaptionPopover({
 
 	return (
 		<>
-			<ActionIcon onClick={onToggle} ref={anchorRef}>
-				<IconInfoCircle />
-			</ActionIcon>
-			<Popover opened={open} id={captionId} onClose={onClose}>
-				<div className="p-2 flex flex-col gap-1 w-[400px]">
-					<span className="text-sm font-bold">{label}</span>
-					<Text variant="caption">{caption} </Text>
-				</div>
+			<Popover withArrow id={captionId}>
+				<Popover.Target>
+					<ActionIcon
+						variant="subtle"
+						color="gray"
+						onClick={onToggle}
+						ref={anchorRef}
+					>
+						<IconInfoCircle size={16} />
+					</ActionIcon>
+				</Popover.Target>
+				<Popover.Dropdown>
+					<Box className="flex flex-col gap-1 w-[400px]">
+						<Title order={6}>{label}</Title>
+						<Text size="sm" c="dimmed" variant="caption">
+							{caption}
+						</Text>
+					</Box>
+				</Popover.Dropdown>
 			</Popover>
 		</>
 	);
