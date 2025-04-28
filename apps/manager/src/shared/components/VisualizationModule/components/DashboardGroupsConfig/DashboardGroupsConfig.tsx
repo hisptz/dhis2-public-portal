@@ -10,40 +10,51 @@ import {
 import { DashboardGroups } from "./components/DashboardGroups";
 import { useFieldArray, useWatch } from "react-hook-form";
 import { AddGroup } from "../AddGroup/AddGroup";
-import { VisualizationModuleConfig } from "@packages/shared/schemas";
+import { useNavigate, useParams } from "@tanstack/react-router";
+import { VisualizationModule } from "@packages/shared/schemas";
 
 export function DashboardGroupsConfig() {
-	const hasGroups = useWatch<VisualizationModuleConfig>({
-		name: "grouped",
+	const { moduleId } = useParams({
+		from: "/modules/_provider/$moduleId",
 	});
-	const { fields, append, remove } = useFieldArray<VisualizationModuleConfig, "groups">({
-		name: "groups",
+	const navigate = useNavigate();
+	const hasGroups = useWatch<VisualizationModule, "config.grouped">({
+		name: "config.grouped",
+	});
+	const { fields, append, remove } = useFieldArray<
+		VisualizationModule,
+		"config.groups"
+	>({
+		name: "config.groups",
 	});
 
 	if (!hasGroups) {
 		return null;
 	}
-
-	const groups = fields.map((field, index) => {
-		return {
-			...field,
-			actions: (
-				<ButtonStrip>
-					<Button
-						onClick={() => {
-							// TODO: Implement navigation logic here
-						}}
-						icon={<IconEdit16 />}
-					/>
-					<Button
-						onClick={() => remove(index)}
-						title={i18n.t("Remove")}
-						icon={<IconDelete16 />}
-					/>
-				</ButtonStrip>
-			),
-		};
-	});
+	const groups = fields.map((field, index) => ({
+		...field,
+		actions: (
+			<ButtonStrip>
+				<Button
+					onClick={() =>
+						navigate({
+							to: "/modules/$moduleId/edit/$groupIndex",
+							params: {
+								moduleId,
+								groupIndex: index,
+							},
+						})
+					}
+					icon={<IconEdit16 />}
+				/>
+				<Button
+					onClick={() => remove(index)}
+					title={i18n.t("Remove")}
+					icon={<IconDelete16 />}
+				/>
+			</ButtonStrip>
+		),
+	}));
 
 	return (
 		<div className="flex-1 w-full flex flex-col gap-2">
@@ -52,8 +63,14 @@ export function DashboardGroupsConfig() {
 				<AddGroup
 					onAdd={(data) => {
 						append(data);
-							// TODO: Implement navigation logic here
-						}}
+						navigate({
+							to: "/modules/$moduleId/edit/$groupIndex",
+							params: {
+								moduleId,
+								groupIndex: fields.length,
+							},
+						});
+					}}
 				/>
 			</div>
 			<Divider />
