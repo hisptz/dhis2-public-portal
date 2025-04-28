@@ -37,41 +37,47 @@ export function SideAppMenu({
 
 	const toggleSideMenu = () => setOpen((prev) => !prev);
 
-	const links = menuConfig.items.map((item) => {
-		const isActive = item.path && pathname.includes(item.path);
+	const links = menuConfig.items
+		.sort((a, b) => a.sortOrder - b.sortOrder)
+		.map((item) => {
+			const isActive = item.path && pathname.includes(item.path);
 
-		const hasActiveSubmenu =
-			item.type === "group"
-				? item.items?.some(
-						(subMenu) =>
-							subMenu.path && pathname.includes(subMenu.path),
-					)
-				: false;
+			const hasActiveSubmenu =
+				item.type === "group"
+					? item.items?.some(
+							(subMenu) =>
+								subMenu.path && pathname.includes(subMenu.path),
+						)
+					: false;
 
-		return (
-			<LinksGroup
-				key={item.label}
-				label={item.label}
-				collapsed={!isOpen}
-				icon={item.icon}
-				initiallyOpened={isActive || hasActiveSubmenu}
-				path={item.type === "module" ? item.path : undefined}
-				onOpen={item.type === "group" ? () => setOpen(true) : undefined}
-				subMenus={
-					item.type === "group"
-						? item.items.map((item) => {
-								return {
-									key: item.label,
-									icon: item.icon,
-									path: item.path,
-									label: item.label,
-								};
-							})
-						: undefined
-				}
-			/>
-		);
-	});
+			return (
+				<LinksGroup
+					key={item.label}
+					label={item.label}
+					collapsed={!isOpen}
+					icon={item.icon}
+					initiallyOpened={isActive || hasActiveSubmenu}
+					path={item.type === "module" ? item.path : undefined}
+					onOpen={
+						item.type === "group" ? () => setOpen(true) : undefined
+					}
+					subMenus={
+						item.type === "group"
+							? item.items
+									.sort((a, b) => a.sortOrder - b.sortOrder)
+									.map((item) => {
+										return {
+											key: item.label,
+											icon: item.icon,
+											path: item.path,
+											label: item.label,
+										};
+									})
+							: undefined
+					}
+				/>
+			);
+		});
 
 	return (
 		<AppShell.Navbar
