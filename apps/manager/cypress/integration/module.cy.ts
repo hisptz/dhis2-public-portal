@@ -3,9 +3,9 @@ import { appMenus } from "../../src/shared/constants/menu";
 import { capitalize, startCase } from "lodash";
 
 describe("Modules Page", () => {
-	beforeEach(() => {
-		cy.visit("/");
-	});
+    beforeEach(() => {
+        cy.visit("/");
+    });
 
 	const modulesMenu = appMenus.find((menu) => menu.label === "Modules");
 
@@ -26,7 +26,7 @@ describe("Modules Page", () => {
         cy.get('select, [data-test="dhis2-uicore-select"]').should("be.visible");
 
         cy.get('table').should("be.visible");
-        cy.contains("th", "Title").should("be.visible");
+        cy.contains("th", "Label").should("be.visible");
         cy.contains("th", "Type").should("be.visible");
         cy.contains("th", "Actions").should("be.visible");
       });
@@ -84,7 +84,7 @@ describe("Modules Page", () => {
         cy.get('[data-test="dhis2-uicore-modal"]').should("be.visible");
         cy.contains("Create Module").should("be.visible");
 
-        cy.get('input[name="config.title"]').type("New Test Module");
+        cy.get('input[name="label"]').type("New Test Module");
         cy.get('.gap-4 > .flex > [data-test="dhis2-uiwidgets-singleselectfield"] > [data-test="dhis2-uiwidgets-singleselectfield-content"] > [data-test="dhis2-uicore-box"] > [data-test="dhis2-uicore-singleselect"] > .jsx-114080822 > [data-test="dhis2-uicore-select"] > [data-test="dhis2-uicore-select-input"]').click();
         cy.get('[data-value="VISUALIZATION"]').click();
 
@@ -123,9 +123,9 @@ describe("Modules Page", () => {
             cy.get('[data-test="dhis2-uicore-button"]').click();
         });
 
-        cy.get('input[name="config.title"]').clear().type("New Test Module");
-        cy.get(':nth-child(2) > [data-test="dhis2-uicore-field-content"] > .jodit-react-container > .jodit-container > .jodit-workplace > .jodit-wysiwyg').type("Short description");
-        cy.get(':nth-child(3) > [data-test="dhis2-uicore-field-content"] > .jodit-react-container > .jodit-container > .jodit-workplace > .jodit-wysiwyg').type("Full desc");
+        cy.get('input[name="config.title"]').type("New Test Module");
+        cy.get(':nth-child(3) > [data-test="dhis2-uicore-field-content"] > .jodit-react-container > .jodit-container > .jodit-workplace > .jodit-wysiwyg').type("Short description");
+        cy.get(':nth-child(4) > [data-test="dhis2-uicore-field-content"] > .jodit-react-container > .jodit-container > .jodit-workplace > .jodit-wysiwyg').type("Full desc");
 
 
         cy.contains("button", "Add visualizations").click();
