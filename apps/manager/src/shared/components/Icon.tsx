@@ -1,5 +1,6 @@
 import styled from "@emotion/styled";
 import React from "react";
+import DOMPurify from "dompurify";
 
 export interface IconProps {
 	icon: string;
@@ -15,5 +16,9 @@ export function StyledIcon({ icon }: IconProps) {
 		}
 	`;
 
-	return <Parent dangerouslySetInnerHTML={{ __html: icon }} />;
+	return (
+		<Parent
+			dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(icon) }}
+		/>
+	);
 }
