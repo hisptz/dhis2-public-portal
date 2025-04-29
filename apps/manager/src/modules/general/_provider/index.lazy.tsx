@@ -30,6 +30,12 @@ function RouteComponent() {
 						label={i18n.t("Description")}
 						name="description"
 					/>
+					<RHFTextInputField
+						placeholder={"https://example.org/portal"}
+						label={i18n.t("Application URL")}
+						helpText={i18n.t("Where your portal can be found")}
+						name="applicationURL"
+					/>
 				</div>
 				<ButtonStrip>
 					<Button

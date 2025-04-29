@@ -5,8 +5,8 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
-"POT-Creation-Date: 2025-04-29T05:16:29.169Z\n"
-"PO-Revision-Date: 2025-04-29T05:16:29.170Z\n"
+"POT-Creation-Date: 2025-04-29T06:03:38.577Z\n"
+"PO-Revision-Date: 2025-04-29T06:03:38.578Z\n"
 
 msgid "Could not get Appearance configurations"
 msgstr "Could not get Appearance configurations"
@@ -17,14 +17,17 @@ msgstr "Error"
 msgid "General configuration"
 msgstr "General configuration"
 
-msgid "Application details"
-msgstr "Application details"
-
 msgid "Application name"
 msgstr "Application name"
 
 msgid "Description"
 msgstr "Description"
+
+msgid "Application URL"
+msgstr "Application URL"
+
+msgid "Where your portal can be found"
+msgstr "Where your portal can be found"
 
 msgid "Saving..."
 msgstr "Saving..."
