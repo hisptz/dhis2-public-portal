@@ -4,13 +4,13 @@ import i18n from "@dhis2/d2-i18n";
 import React from "react";
 import { useNavigate, useParams } from "@tanstack/react-router";
 import { useAlert } from "@dhis2/app-runtime";
-import { VisualizationModule } from "@packages/shared/schemas";
+import { AppModule } from "@packages/shared/schemas";
 import { useSaveModule } from "../../ModulesPage/hooks/save";
 
-export function DashboardEditActions() {
+export function ModuleEditActions() {
     const { moduleId } = useParams({ from: "/modules/_provider/$moduleId" });
     const { save } = useSaveModule(moduleId);
-    const { handleSubmit, formState } = useFormContext<VisualizationModule>();
+    const { handleSubmit, formState } = useFormContext<AppModule>();
     const navigate = useNavigate();
     const { show } = useAlert(
         ({ message }) => message,
@@ -24,25 +24,16 @@ export function DashboardEditActions() {
         });
     };
 
-	const onSubmit = async (data: VisualizationModule) => {
-		try {
-			const submissionData: VisualizationModule = {
-				...data,
-				config: {
-					...data.config,
-					type: data.type,
-					id: data.id,
-				}
-			};
-			await save(submissionData);
-		} catch (error) {
-			show({
-				message: i18n.t("Failed to save module"),
-				type: { critical: true },
-			});
-			console.error('Save error:', error);
-		}
-	};
+    const onSubmit = async (data: AppModule) => {
+        try {
+            await save(data);
+        } catch (error) {
+            show({
+                message: i18n.t("Failed to save module", error),
+                type: { critical: true },
+            });
+        }
+    };
 
     return (
         <ButtonStrip end>
@@ -54,7 +45,7 @@ export function DashboardEditActions() {
                 loading={formState.isSubmitting}
                 disabled={!formState.isDirty || formState.isSubmitting}
                 onClick={() => {
-                     handleSubmit(onSubmit, onError)();
+                    handleSubmit(onSubmit, onError)();
                 }}
             >
                 {i18n.t("Save changes")}
@@ -62,3 +53,4 @@ export function DashboardEditActions() {
         </ButtonStrip>
     );
 }
+
