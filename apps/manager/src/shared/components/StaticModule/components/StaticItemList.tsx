@@ -50,10 +50,12 @@ export function StaticItemList() {
             : item?.content,
         icon: (
             <div
-                style={{borderRadius: "10%" }}
+                style={{ borderRadius: "10%" }}
                 className="p-4 flex items-center justify-center"
             >
                 <StyledIcon
+                    height={48}
+                    width={48}
                     icon={item.icon}
                 />
 
@@ -73,8 +75,8 @@ export function StaticItemList() {
         ),
     }));
 
-    if (loading) return <div><FullLoader/></div>;
-    if (error) return <div><ErrorPage error={i18n.t("Error: {{error}}", { error: error.message })}/></div>;
+    if (loading) return <div><FullLoader /></div>;
+    if (error) return <div><ErrorPage error={i18n.t("Error: {{error}}", { error: error.message })} /></div>;
 
     return (
         <div className="flex flex-col gap-4">
