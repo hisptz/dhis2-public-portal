@@ -14,3 +14,5 @@ export const baseModuleSchema = z.object({
 	type: moduleType,
 	label: z.string(),
 });
+
+export type BaseModule = z.infer<typeof baseModuleSchema>;

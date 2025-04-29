@@ -23,13 +23,17 @@ function RouteComponent() {
 	if (!module) {
 		return <ErrorPage error={Error("Module not found")} />;
 	}
-	
- 	const renderModulePage = () => {
+
+	const renderModulePage = () => {
 		switch (module.type) {
 			case ModuleType.VISUALIZATION:
-				return <DashboardConfigPage />; 
+				return <DashboardConfigPage />;
 			default:
-				return <ErrorPage error={new Error(i18n.t("Unknown module type"))} />;
+				return (
+					<ErrorPage
+						error={new Error(i18n.t("Unknown module type"))}
+					/>
+				);
 		}
 	};
 	return (
@@ -45,7 +49,7 @@ function RouteComponent() {
 				</Button>
 			</div>
 			<PageHeader
-				title={`${i18n.t("Module")} - ${module.config.title}`}
+				title={`${i18n.t("Module")} - ${module.label}`}
 				actions={
 					<div className="flex gap-4 items-center">
 						<DeleteDashboard />
@@ -54,6 +58,6 @@ function RouteComponent() {
 				}
 			/>
 			{renderModulePage()}
-			</div>
+		</div>
 	);
 }
