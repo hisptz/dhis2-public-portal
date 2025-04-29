@@ -7,7 +7,7 @@ import { useAlert } from "@dhis2/app-runtime";
 import { AppModule } from "@packages/shared/schemas";
 import { useSaveModule } from "../../ModulesPage/hooks/save";
 
-export function DashboardEditActions() {
+export function ModuleEditActions() {
     const { moduleId } = useParams({ from: "/modules/_provider/$moduleId" });
     const { save } = useSaveModule(moduleId);
     const { handleSubmit, formState } = useFormContext<AppModule>();
@@ -53,3 +53,4 @@ export function DashboardEditActions() {
         </ButtonStrip>
     );
 }
+

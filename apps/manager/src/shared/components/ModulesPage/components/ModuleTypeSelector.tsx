@@ -2,34 +2,22 @@ import React from "react";
 import { RHFSingleSelectField } from "@hisptz/dhis2-ui";
 import i18n from "@dhis2/d2-i18n";
 import { ModuleType } from "@packages/shared/schemas";
+import { startCase } from "lodash";
 
-export function ModuleTypeSelector(){
+export function ModuleTypeSelector() {
 	return (
 		<div className="flex flex-col gap-2">
 			<RHFSingleSelectField
 				label={i18n.t("Type")}
+				required
 				defaultValue={ModuleType.VISUALIZATION}
 				placeholder={i18n.t("Select type")}
-				options={[
-					{
-						label: i18n.t("VISUALIZATION"),
-						value: ModuleType.VISUALIZATION,
-					},
-					{
-						label: i18n.t("DOCUMENTS"),
-						value: ModuleType.DOCUMENTS,
-					},
-					{
-						label: i18n.t("SECTION"),
-						value: ModuleType.SECTION,
-					},
-					{
-						label: i18n.t("STATIC"),
-						value: ModuleType.STATIC,
-					},
-				]}
+				options={Object.values(ModuleType).map((module) => ({
+					label: startCase(module.toLowerCase()),
+					value: module,
+				}))}
 				name="type"
 			/>
 		</div>
 	);
-};
+}
