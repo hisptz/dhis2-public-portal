@@ -5,8 +5,8 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
-"POT-Creation-Date: 2025-04-29T12:31:41.611Z\n"
-"PO-Revision-Date: 2025-04-29T12:31:41.612Z\n"
+"POT-Creation-Date: 2025-04-29T13:09:28.560Z\n"
+"PO-Revision-Date: 2025-04-29T13:09:28.561Z\n"
 
 msgid "Could not get Appearance configurations"
 msgstr "Could not get Appearance configurations"
@@ -110,6 +110,15 @@ msgstr "Actions"
 msgid "Add menu item"
 msgstr "Add menu item"
 
+msgid "Confirm delete"
+msgstr "Confirm delete"
+
+msgid "Are you sure you want to delete the menu item "
+msgstr "Are you sure you want to delete the menu item "
+
+msgid "Delete"
+msgstr "Delete"
+
 msgid "Add sub item"
 msgstr "Add sub item"
 
@@ -157,6 +166,21 @@ msgstr "Sidebar"
 
 msgid "Header"
 msgstr "Header"
+
+msgid "The form has errors. Please fix them and try again"
+msgstr "The form has errors. Please fix them and try again"
+
+msgid "Confirm reset"
+msgstr "Confirm reset"
+
+msgid "Are you sure you want to reset all changes? This action is not reversible."
+msgstr "Are you sure you want to reset all changes? This action is not reversible."
+
+msgid "Reset changes"
+msgstr "Reset changes"
+
+msgid "Reset"
+msgstr "Reset"
 
 msgid "Create a new module"
 msgstr "Create a new module"
@@ -283,9 +307,6 @@ msgstr "Are you sure you want to delete the module "
 
 msgid "This action is irreversible"
 msgstr "This action is irreversible"
-
-msgid "Delete"
-msgstr "Delete"
 
 msgid "Welcome to the public portal manager!"
 msgstr "Welcome to the public portal manager!"

@@ -7,6 +7,7 @@ import { useFieldArray } from "react-hook-form";
 import { AddMenuItem } from "./AddMenuItem";
 import { ButtonStrip } from "@dhis2/ui";
 import { EditMenuItem } from "./EditMenuItem";
+import { DeleteMenuItem } from "./DeleteMenuItem";
 
 const columns: SimpleTableColumn[] = [
 	{
@@ -28,7 +29,10 @@ const columns: SimpleTableColumn[] = [
 ];
 
 export function MenuList() {
-	const { fields, append, update } = useFieldArray<AppMenuConfig, "items">({
+	const { fields, append, update, remove } = useFieldArray<
+		AppMenuConfig,
+		"items"
+	>({
 		name: "items",
 	});
 
@@ -50,11 +54,15 @@ export function MenuList() {
 							}}
 							item={item}
 						/>
+						<DeleteMenuItem
+							item={item}
+							onDelete={() => remove(index)}
+						/>
 					</ButtonStrip>
 				),
 			};
 		});
-	}, [fields, update]);
+	}, [fields, remove, update]);
 
 	return (
 		<div className="w-full flex flex-col gap-2">
