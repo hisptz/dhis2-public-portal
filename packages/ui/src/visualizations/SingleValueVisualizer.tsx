@@ -1,4 +1,4 @@
-import { RefObject, useMemo, useRef } from "react";
+import React, { RefObject, useMemo, useRef } from "react";
 import { clamp, flatten, get, head, truncate } from "lodash";
 import { useResizeObserver } from "usehooks-ts";
 import i18n from "@dhis2/d2-i18n";

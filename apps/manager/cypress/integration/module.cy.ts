@@ -1,5 +1,6 @@
 import { ModuleType } from "@packages/shared/schemas";
 import { appMenus } from "../../src/shared/constants/menu";
+import { capitalize, startCase } from "lodash";
 import { startCase } from "lodash";
 
 describe("Modules Page", () => {
@@ -34,6 +35,11 @@ describe("Modules Page", () => {
 	it("should filter modules by type", () => {
 		cy.contains("a", modulesMenu.label).click();
 
+		const filterOptions = Object.values(ModuleType).map((item) => ({
+			label: capitalize(startCase(item)),
+			value: item,
+			urlContains: `type=${item}`,
+		}));
 		const filterOptions = [
 			{
 				label: startCase(ModuleType.VISUALIZATION.toLowerCase()),
@@ -79,6 +85,10 @@ describe("Modules Page", () => {
 					).should("be.visible");
 				} else if ($rows.length > 0) {
 					cy.wrap($rows).each(($row) => {
+						cy.wrap($row)
+							.find("td")
+							.eq(1)
+							.should("contain", capitalize(startCase(value)));
 						cy.wrap($row).find("td").eq(1).should("contain", label);
 					});
 				}
