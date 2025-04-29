@@ -69,7 +69,6 @@ export function AddDashboardForm({
 					type: { critical: true },
 				});
 			}
-			console.error(e);
 		}
 	};
 
