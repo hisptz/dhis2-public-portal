@@ -41,8 +41,7 @@ export function ModuleList({ filterType }: { filterType?: ModuleType }) {
 			filteredModules.map((module) => ({
 				...module,
 				type: startCase(module.type.toLowerCase()),
-				title: module.config.title ?? module.id,
-
+				title: module?.config?.title ?? module.id ?? "",
 				actions: (
 					<ButtonStrip>
 						<Button

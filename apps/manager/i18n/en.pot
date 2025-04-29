@@ -5,8 +5,8 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
-"POT-Creation-Date: 2025-04-29T06:03:38.577Z\n"
-"PO-Revision-Date: 2025-04-29T06:03:38.578Z\n"
+"POT-Creation-Date: 2025-04-29T13:50:08.078Z\n"
+"PO-Revision-Date: 2025-04-29T13:50:08.078Z\n"
 
 msgid "Could not get Appearance configurations"
 msgstr "Could not get Appearance configurations"
@@ -125,26 +125,38 @@ msgstr "Creating..."
 msgid "Create module"
 msgstr "Create module"
 
+msgid "Module deleted successfully"
+msgstr "Module deleted successfully"
+
+msgid "Could not delete module"
+msgstr "Could not delete module"
+
+msgid "Deleting..."
+msgstr "Deleting..."
+
+msgid "Delete module"
+msgstr "Delete module"
+
+msgid "Are you sure you want to delete the module "
+msgstr "Are you sure you want to delete the module "
+
+msgid "This action is irreversible"
+msgstr "This action is irreversible"
+
+msgid "Delete"
+msgstr "Delete"
+
 msgid "Filter by Type"
 msgstr "Filter by Type"
 
 msgid "Select type"
 msgstr "Select type"
 
-msgid "All Types"
-msgstr "All Types"
+msgid "Please fix the validation errors before saving"
+msgstr "Please fix the validation errors before saving"
 
-msgid "VISUALIZATION"
-msgstr "VISUALIZATION"
-
-msgid "DOCUMENTS"
-msgstr "DOCUMENTS"
-
-msgid "SECTION"
-msgstr "SECTION"
-
-msgid "STATIC"
-msgstr "STATIC"
+msgid "Failed to save module"
+msgstr "Failed to save module"
 
 msgid "There are no modules matching the selected type."
 msgstr "There are no modules matching the selected type."
@@ -215,12 +227,6 @@ msgstr "Visualization type"
 msgid "All"
 msgstr "All"
 
-msgid "Please fix the validation errors before saving"
-msgstr "Please fix the validation errors before saving"
-
-msgid "Failed to save module"
-msgstr "Failed to save module"
-
 msgid "Has groups"
 msgstr "Has groups"
 
@@ -229,27 +235,6 @@ msgstr "Save group changes"
 
 msgid "Groups"
 msgstr "Groups"
-
-msgid "Module deleted successfully"
-msgstr "Module deleted successfully"
-
-msgid "Could not delete module"
-msgstr "Could not delete module"
-
-msgid "Deleting..."
-msgstr "Deleting..."
-
-msgid "Delete module"
-msgstr "Delete module"
-
-msgid "Are you sure you want to delete the module "
-msgstr "Are you sure you want to delete the module "
-
-msgid "This action is irreversible"
-msgstr "This action is irreversible"
-
-msgid "Delete"
-msgstr "Delete"
 
 msgid "Welcome to the public portal manager!"
 msgstr "Welcome to the public portal manager!"

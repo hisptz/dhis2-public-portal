@@ -1,5 +1,6 @@
 import { ModuleType } from "@packages/shared/schemas";
 import { appMenus } from "../../src/shared/constants/menu";
+import { startCase } from "lodash";
 
 describe("Modules Page", () => {
 	beforeEach(() => {
@@ -35,22 +36,22 @@ describe("Modules Page", () => {
 
 		const filterOptions = [
 			{
-				label: "VISUALIZATION",
+				label: startCase(ModuleType.VISUALIZATION.toLowerCase()),
 				value: ModuleType.VISUALIZATION,
 				urlContains: "type=VISUALIZATION",
 			},
 			{
-				label: "SECTION",
+				label: startCase(ModuleType.SECTION.toLowerCase()),
 				value: ModuleType.SECTION,
 				urlContains: "type=SECTION",
 			},
 			{
-				label: "DOCUMENTS",
+				label: startCase(ModuleType.DOCUMENTS.toLowerCase()),
 				value: ModuleType.DOCUMENTS,
 				urlContains: "type=DOCUMENTS",
 			},
 			{
-				label: "STATIC",
+				label: startCase(ModuleType.STATIC.toLowerCase()),
 				value: ModuleType.STATIC,
 				urlContains: "type=STATIC",
 			},
@@ -78,7 +79,7 @@ describe("Modules Page", () => {
 					).should("be.visible");
 				} else if ($rows.length > 0) {
 					cy.wrap($rows).each(($row) => {
-						cy.wrap($row).find("td").eq(1).should("contain", value);
+						cy.wrap($row).find("td").eq(1).should("contain", label);
 					});
 				}
 			});
