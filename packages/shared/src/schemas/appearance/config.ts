@@ -25,29 +25,24 @@ export const appColorConfig = z.object({
 
 export type AppColorConfig = z.infer<typeof appColorConfig>;
 
+export const styleConfig = z.object({
+	center: z.boolean(),
+	align: z.enum(["left", "center", "right"]).optional(),
+	textColor: z.string().optional(),
+	textSize: z.number().optional(),
+});
+
+export type StyleConfig = z.infer<typeof styleConfig>;
+
 export const headerConfig = z.object({
 	logo: z.object({
 		enabled: z.boolean(),
 	}),
 	subtitle: z.object({
-		style: z
-			.object({
-				center: z.boolean(),
-				textColor: z.string().optional(),
-				textSize: z.number().optional(),
-			})
-			.optional(),
+		style: styleConfig.optional(),
 	}),
 	title: z.object({
-		style: z
-			.object({
-				center: z.boolean(),
-				textColor: z.string().optional(),
-				textSize: z.number().optional(),
-				align: z.enum(["left", "center", "right"]).optional(),
-
-			})
-			.optional(),
+		style: styleConfig.optional(),
 	}),
 	trailingLogo: z.string().url().optional(),
 	hasMenu: z.boolean().optional(),
