@@ -12,4 +12,5 @@ export const moduleType = z.nativeEnum(ModuleType);
 export const baseModuleSchema = z.object({
 	id: z.string(),
 	type: moduleType,
+	label: z.string(),
 });
