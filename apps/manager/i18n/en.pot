@@ -5,8 +5,8 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
-"POT-Creation-Date: 2025-04-29T06:03:38.577Z\n"
-"PO-Revision-Date: 2025-04-29T06:03:38.578Z\n"
+"POT-Creation-Date: 2025-04-29T13:30:09.533Z\n"
+"PO-Revision-Date: 2025-04-29T13:30:09.533Z\n"
 
 msgid "Could not get Appearance configurations"
 msgstr "Could not get Appearance configurations"
@@ -107,6 +107,81 @@ msgstr "Caption"
 msgid "Actions"
 msgstr "Actions"
 
+msgid "Add menu item"
+msgstr "Add menu item"
+
+msgid "Confirm delete"
+msgstr "Confirm delete"
+
+msgid "Are you sure you want to delete the menu item "
+msgstr "Are you sure you want to delete the menu item "
+
+msgid "Delete"
+msgstr "Delete"
+
+msgid "Add sub item"
+msgstr "Add sub item"
+
+msgid "Label"
+msgstr "Label"
+
+msgid "Path"
+msgstr "Path"
+
+msgid "Update"
+msgstr "Update"
+
+msgid "Create"
+msgstr "Create"
+
+msgid "Confirm exit"
+msgstr "Confirm exit"
+
+msgid "Are you sure you want to close this form?. All changes will be lost"
+msgstr "Are you sure you want to close this form?. All changes will be lost"
+
+msgid " menu item"
+msgstr " menu item"
+
+msgid "Menu items"
+msgstr "Menu items"
+
+msgid "There are no sub menus defined"
+msgstr "There are no sub menus defined"
+
+msgid " sub menu item"
+msgstr " sub menu item"
+
+msgid "Name"
+msgstr "Name"
+
+msgid "N/A"
+msgstr "N/A"
+
+msgid "Menu Position"
+msgstr "Menu Position"
+
+msgid "Sidebar"
+msgstr "Sidebar"
+
+msgid "Header"
+msgstr "Header"
+
+msgid "The form has errors. Please fix them and try again"
+msgstr "The form has errors. Please fix them and try again"
+
+msgid "Confirm reset"
+msgstr "Confirm reset"
+
+msgid "Are you sure you want to reset all changes? This action is not reversible."
+msgstr "Are you sure you want to reset all changes? This action is not reversible."
+
+msgid "Reset changes"
+msgstr "Reset changes"
+
+msgid "Reset"
+msgstr "Reset"
+
 msgid "Create a new module"
 msgstr "Create a new module"
 
@@ -130,21 +205,6 @@ msgstr "Filter by Type"
 
 msgid "Select type"
 msgstr "Select type"
-
-msgid "All Types"
-msgstr "All Types"
-
-msgid "VISUALIZATION"
-msgstr "VISUALIZATION"
-
-msgid "DOCUMENTS"
-msgstr "DOCUMENTS"
-
-msgid "SECTION"
-msgstr "SECTION"
-
-msgid "STATIC"
-msgstr "STATIC"
 
 msgid "There are no modules matching the selected type."
 msgstr "There are no modules matching the selected type."
@@ -248,9 +308,6 @@ msgstr "Are you sure you want to delete the module "
 msgid "This action is irreversible"
 msgstr "This action is irreversible"
 
-msgid "Delete"
-msgstr "Delete"
-
 msgid "Welcome to the public portal manager!"
 msgstr "Welcome to the public portal manager!"
 
@@ -259,9 +316,6 @@ msgstr "You can use this application to configure your public portal web applica
 
 msgid "Application colors"
 msgstr "Application colors"
-
-msgid "Update"
-msgstr "Update"
 
 msgid "Header configuration"
 msgstr "Header configuration"
@@ -292,9 +346,6 @@ msgstr "Copyright"
 
 msgid "Footer links"
 msgstr "Footer links"
-
-msgid "Label"
-msgstr "Label"
 
 msgid "Links"
 msgstr "Links"
@@ -353,9 +404,6 @@ msgstr "Add"
 
 msgid "S/N"
 msgstr "S/N"
-
-msgid "Name"
-msgstr "Name"
 
 msgid "Url"
 msgstr "Url"
@@ -421,6 +469,10 @@ msgstr "Configure different modules of the web portal application"
 
 msgid "Configure modules"
 msgstr "Configure modules"
+
+msgctxt "Follows either create or update"
+msgid " menu item"
+msgstr " menu item"
 
 msgctxt "Application title"
 msgid "__MANIFEST_APP_TITLE"
