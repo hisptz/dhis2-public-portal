@@ -7,7 +7,7 @@ loadEnvConfig(projectDir);
 const envSchema = z.object({
 	DHIS2_BASE_URL: z.string(),
 	DHIS2_BASE_PAT_TOKEN: z.string(),
-	CONTEXT_PATH: z.string().optional(),
+	CONTEXT_PATH: z.string(),
 });
 
 export const env = envSchema.safeParse(process.env).data ?? {

@@ -1,5 +1,6 @@
 import { baseModuleSchema, ModuleType } from "./base";
 import { z } from "zod";
+import { ItemsDisplay } from "./visualization";
 
 export enum DocumentType {
 	PDF = "PDF",
@@ -17,6 +18,7 @@ export const baseDocumentModuleConfigSchema = z.object({
 	title: z.string(),
 	id: z.string(),
 	grouped: z.boolean(),
+	itemsDisplay: z.nativeEnum(ItemsDisplay).optional(),
 });
 
 export const documentGroupSchema = z.object({

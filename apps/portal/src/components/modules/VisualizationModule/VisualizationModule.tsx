@@ -16,7 +16,7 @@ export function VisualizationModule({
 		<Stack className="w-full h-full">
 			<Title order={2}>{config.title}</Title>
 			{config.grouped && <GroupControl config={config} />}
-			<Selectors />
+			<Selectors config={config} />
 			<DescriptionArea searchParams={searchParams} config={config} />
 			<Box flex={1}>
 				<VisualizationItemsContainer

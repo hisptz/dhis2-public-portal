@@ -2,10 +2,14 @@ import { useDataQuery } from "@dhis2/app-runtime";
 import { useWatch } from "react-hook-form";
 import React, { useEffect, useMemo, useState } from "react";
 import { RHFSingleSelectField } from "@hisptz/dhis2-ui";
-import { capitalize } from "lodash";
+import { capitalize, startCase } from "lodash";
 import i18n from "@dhis2/d2-i18n";
 import { SingleSelectField, SingleSelectOption } from "@dhis2/ui";
-import { VisualizationItem, VisualizationType } from "@packages/shared/schemas";
+import {
+	VisualizationChartType,
+	VisualizationDisplayItemType,
+	VisualizationItem,
+} from "@packages/shared/schemas";
 
 const visQuery = {
 	vis: {
@@ -87,7 +91,7 @@ export function VisSelector() {
 					: `${displayName} (${capitalize(type)})`,
 				value: id,
 			})) ?? [],
-		[data],
+		[data?.vis?.visualizations, visualizationType],
 	);
 
 	useEffect(() => {
@@ -96,7 +100,7 @@ export function VisSelector() {
 				type: visualizationType,
 			});
 		}
-	}, [visualizationType]);
+	}, [refetch, visualizationType]);
 
 	return (
 		<div className="flex flex-col gap-4 ">
@@ -108,34 +112,10 @@ export function VisSelector() {
 				selected={visualizationType}
 			>
 				{[
-					{
-						label: i18n.t("Column"),
-						value: "COLUMN",
-					},
-					{
-						label: i18n.t("Bar"),
-						value: "BAR",
-					},
-					{
-						label: i18n.t("Line"),
-						value: "LINE",
-					},
-					{
-						label: i18n.t("Pie"),
-						value: "PIE",
-					},
-					{
-						label: i18n.t("Gauge"),
-						value: "GAUGE",
-					},
-					{
-						label: i18n.t("Single value"),
-						value: "SINGLE_VALUE",
-					},
-					{
-						label: i18n.t("Column chart"),
-						value: "PIVOT_TABLE",
-					},
+					...Object.values(VisualizationChartType).map((type) => ({
+						label: capitalize(startCase(type)),
+						value: type,
+					})),
 				].map((option) => (
 					<SingleSelectOption
 						key={option.value}
@@ -161,11 +141,11 @@ export function VisualizationSelector() {
 		name: "type",
 	});
 
-	if (visType == VisualizationType.MAP) {
+	if (visType == VisualizationDisplayItemType.MAP) {
 		return <MapSelector />;
 	}
 
-	if (visType === VisualizationType.CHART) {
+	if (visType === VisualizationDisplayItemType.CHART) {
 		return <VisSelector />;
 	}
 
