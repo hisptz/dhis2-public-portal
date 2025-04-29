@@ -3,14 +3,14 @@ import i18n from "@dhis2/d2-i18n";
 import { RHFTextInputField } from "@hisptz/dhis2-ui";
 import React, { useEffect } from "react";
 import { kebabCase } from "lodash";
-import { VisualizationModuleConfig } from "@packages/shared/schemas";
+import { AppModule } from "@packages/shared/schemas";
 
 export function DashboardIDField() {
-	const { setValue } = useFormContext<VisualizationModuleConfig>();
-	const title = useWatch<VisualizationModuleConfig, "title">({
-		name: "title",
+	const { setValue } = useFormContext<AppModule>();
+	const title = useWatch<AppModule, "config.title">({
+		name: "config.title",
 	});
-
+	console.log("title", title);
 	useEffect(() => {
 		if (title) {
 			setValue("id", kebabCase(title.toLowerCase()));
