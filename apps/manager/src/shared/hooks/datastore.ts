@@ -45,15 +45,16 @@ const datastoreQuery = {
 	},
 };
 
-export function useGetDatastoreEntries<
-	DataType,
-	Fields extends keyof DataType = keyof DataType,
->({ namespace, fields }: { namespace: string; fields?: string[] }) {
+export function useGetDatastoreEntries<DataType>({
+	namespace,
+	fields,
+}: {
+	namespace: string;
+	fields?: string[];
+}) {
 	const { data, loading, error } = useDataQuery<{
 		ds: {
-			entries: Fields extends keyof DataType
-				? Pick<DataType, Fields>[]
-				: DataType[];
+			entries: DataType[];
 		};
 	}>(datastoreQuery, {
 		variables: {

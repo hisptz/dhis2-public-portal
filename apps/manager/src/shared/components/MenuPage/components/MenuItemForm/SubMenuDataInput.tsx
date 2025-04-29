@@ -8,12 +8,10 @@ import { DatastoreNamespaces } from "@packages/shared/constants";
 
 export function SubMenuDataInput({ parentPath }: { parentPath: string }) {
 	const { setValue } = useFormContext<ModuleMenuItem>();
-	const { data } = useGetDatastoreEntries<AppModule, "id" | "label" | "type">(
-		{
-			namespace: DatastoreNamespaces.MODULES,
-			fields: ["id", "label", "type"],
-		},
-	);
+	const { data } = useGetDatastoreEntries<AppModule>({
+		namespace: DatastoreNamespaces.MODULES,
+		fields: ["id", "label", "type"],
+	});
 	const moduleId = useWatch<ModuleMenuItem, "moduleId">({
 		name: "moduleId",
 	});

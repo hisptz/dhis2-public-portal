@@ -8,10 +8,7 @@ import i18n from "@dhis2/d2-i18n";
 import { MenuDataInput } from "./MenuDataInput";
 
 export function ModuleSelector({ subMenu }: { subMenu?: boolean }) {
-	const { data, loading } = useGetDatastoreEntries<
-		AppModule,
-		"id" | "label" | "type"
-	>({
+	const { data, loading } = useGetDatastoreEntries<AppModule>({
 		namespace: DatastoreNamespaces.MODULES,
 		fields: ["id", "label", "type"],
 	});
