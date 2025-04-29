@@ -3,6 +3,7 @@ import { FullLoader } from "../../FullLoader";
 import ErrorPage from "../../ErrorPage/ErrorPage";
 import { MetadataConfig } from "@packages/shared/schemas";
 import { useMetadataQuery } from "../hooks/data";
+import { FormProvider } from "react-hook-form";
 
 const MetadataContext = createContext<MetadataConfig | null>(null);
 const MetadataRefreshContext = createContext<() => Promise<void>>(
@@ -18,8 +19,7 @@ export function useRefreshMetadata() {
 }
 
 export function MetadataProvider({ children }: { children: React.ReactNode }) {
-	const { loading, error, metadata, refetch } =
-    useMetadataQuery();
+	const { loading, error, form, refetch } = useMetadataQuery();
 
 	if (loading) {
 		return <FullLoader />;
@@ -29,17 +29,8 @@ export function MetadataProvider({ children }: { children: React.ReactNode }) {
 		return <ErrorPage error={error} resetErrorBoundary={() => refetch()} />;
 	}
 
-	if (!metadata) {
-		return (
-			<ErrorPage
-				error={Error("Metadata not found")}
-				resetErrorBoundary={() => refetch()}
-			/>
-		);
-	}
-
 	return (
-		<MetadataContext.Provider value={metadata}>
+		<FormProvider {...form}>
 			<MetadataRefreshContext.Provider
 				value={async () => {
 					await refetch();
@@ -47,6 +38,6 @@ export function MetadataProvider({ children }: { children: React.ReactNode }) {
 			>
 				{children}
 			</MetadataRefreshContext.Provider>
-		</MetadataContext.Provider>
+		</FormProvider>
 	);
 }
