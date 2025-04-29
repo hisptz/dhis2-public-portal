@@ -5,8 +5,8 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
-"POT-Creation-Date: 2025-04-29T14:25:22.258Z\n"
-"PO-Revision-Date: 2025-04-29T14:25:22.258Z\n"
+"POT-Creation-Date: 2025-04-29T16:52:57.009Z\n"
+"PO-Revision-Date: 2025-04-29T16:52:57.010Z\n"
 
 msgid "Could not get Appearance configurations"
 msgstr "Could not get Appearance configurations"
@@ -239,8 +239,35 @@ msgstr "There are no modules configuration present"
 msgid "Could not save changes"
 msgstr "Could not save changes"
 
-msgid "Short Description"
-msgstr "Short Description"
+msgid "Add Item"
+msgstr "Add Item"
+
+msgid "Could not create new item"
+msgstr "Could not create new item"
+
+msgid "Create an item"
+msgstr "Create an item"
+
+msgid "Create item"
+msgstr "Create item"
+
+msgid "Item deleted successfully"
+msgstr "Item deleted successfully"
+
+msgid "Could not delete item"
+msgstr "Could not delete item"
+
+msgid "Delete item"
+msgstr "Delete item"
+
+msgid "Are you sure you want to delete the item "
+msgstr "Are you sure you want to delete the item "
+
+msgid "Error loading item"
+msgstr "Error loading item"
+
+msgid "Back"
+msgstr "Back"
 
 msgid "Content"
 msgstr "Content"
@@ -250,6 +277,12 @@ msgstr "Should be a valid svg string"
 
 msgid "Icon"
 msgstr "Icon"
+
+msgid "Short Description"
+msgstr "Short Description"
+
+msgid "Items"
+msgstr "Items"
 
 msgid "Add group"
 msgstr "Add group"
