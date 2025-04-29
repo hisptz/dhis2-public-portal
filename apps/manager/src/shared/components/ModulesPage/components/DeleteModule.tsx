@@ -66,7 +66,7 @@ export function DeleteModule() {
 					<ModalContent>
 						<span>
 							{i18n.t("Are you sure you want to delete the module ")}
-							<b>{module.config.title}</b>? {i18n.t("This action is irreversible")}
+							<b>{module?.config?.title}</b>? {i18n.t("This action is irreversible")}
 						</span>
 					</ModalContent>
 					<ModalActions>
