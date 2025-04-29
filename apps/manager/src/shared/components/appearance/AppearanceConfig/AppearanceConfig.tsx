@@ -10,7 +10,7 @@ import { Button, IconEdit16 } from "@dhis2/ui";
 import { AppColorConfigForm } from "../appearance-config-forms/AppColorConfigForm";
 import { HeaderConfigForm } from "../appearance-config-forms/HeaderConfigForm";
 import { FooterConfigForm } from "../appearance-config-forms/FooterConfigForm";
-import DOMPurify from "dompurify";
+import { RichTextView } from "@packages/ui/visualizations";
 
 type Props = {
 	appearanceConfig: AppAppearanceConfig;
@@ -173,6 +173,7 @@ export function AppearanceConfig({ appearanceConfig, refetchConfig }: Props) {
 															href={link.url}
 															target="_blank"
 															className="text-primary-500 hover:underline"
+															rel="noreferrer"
 														>
 															{link.name}
 														</a>
@@ -187,19 +188,9 @@ export function AppearanceConfig({ appearanceConfig, refetchConfig }: Props) {
 					)}
 
 					{address && (
-						<div className="flex flex-col">
-							<p className="text-sm">
-								<span className="text-gray-500">
-									{i18n.t("Address")}:{" "}
-								</span>
-							</p>
-							<div
-								className="flex-1 my-1 ml-2 text-sm"
-								dangerouslySetInnerHTML={{
-									__html: DOMPurify.sanitize(address.content),
-								}}
-							/>
-						</div>
+						<ConfigurationDetails title={i18n.t("Address")}>
+							<RichTextView content={address.content} />
+						</ConfigurationDetails>
 					)}
 				</div>
 

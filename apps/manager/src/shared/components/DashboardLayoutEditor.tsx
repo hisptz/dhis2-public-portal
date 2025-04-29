@@ -16,8 +16,9 @@ import i18n from "@dhis2/d2-i18n";
 import { Responsive as ResponsiveGridLayout } from "react-grid-layout";
 import { capitalize } from "lodash";
 import { useDashboardItemConfig } from "../hooks/dashboardItem";
-import {   VisualizationItem, VisualizationModule } from "@packages/shared/schemas";
- 
+import {   FlexibleLayoutConfig, VisualizationItem, VisualizationModule } from "@packages/shared/schemas";
+import "react-grid-layout/css/styles.css";
+import "react-resizable/css/styles.css";
  
 function DashboardItem({ item }: { item: VisualizationItem }) {  
  	const { loading, config } = useDashboardItemConfig(item);
@@ -44,30 +45,32 @@ function DashboardItem({ item }: { item: VisualizationItem }) {
 const GridItem = forwardRef<
 	HTMLDivElement,
 	{
-		item: VisualizationItem; 
+		item: VisualizationItem;
 	} & DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement>
 >(function GridItem(
 	{
-		item,  
+		item,
 		style,
 		className,
 		children,
 		...rest
 	}: {
-		item: VisualizationItem; 
+		item: VisualizationItem;
 	} & DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement>,
 	ref,
-) {
+)  {
 	return (
 		<div
 			ref={ref}
 			style={{ ...style }}
  			data-prefix={item.id}
-			className={`border-2 border-gray-400 rounded-md p-2 flex flex-col ${className ?? ""}`}
+			prefix={item.id}
+			className={`border-2 border-gray-400 rounded-md p-2 flex flex-col ${className}`}
 			{...rest}
 		>
  			<DashboardItem item={item} />
 			{children}
+			{/* <span className="react-resizable-handle" /> */}
 		</div>
 	);
 });
@@ -90,25 +93,23 @@ const GridItem = forwardRef<
  export function DashboardLayoutEditor({
 	prefix,
 }: {
-	prefix: `config` | `config.groups.${number}`;
+	prefix?:  `config.groups.${number}`;
 }) {
 	const [size, setSize] = useState<number>(1200);
 	const ref = useRef<HTMLDivElement>(null);
 
-	const { field: layoutField } = useController<
+	const { field } = useController<
 		VisualizationModule,
-		`${typeof prefix}.layouts`
+		"config.layouts" | `config.groups.${number}.layouts`
 	>({
-		name: `${prefix}.layouts`,
+		name: !prefix ? "config.layouts" : `${prefix}.layouts`,
 	});
-
-	const items = useWatch<
+ 	const visualizations = useWatch<
 		VisualizationModule,
-		`${typeof prefix}.items`
+		"config.items" | `config.groups.${number}.items`
 	>({
-		name: `${prefix}.items`,
+		name: !prefix ? "config.items" : `${prefix}.items`,
 	});
-
 	return (
 		<div className="flex flex-col gap-2" ref={ref}>
 			<div className="p-4 max-w-[300px]">
@@ -127,22 +128,37 @@ const GridItem = forwardRef<
 				</SingleSelectField>
 			</div>
 			<div className="flex-1 flex justify-center w-full">
-				<div className="bg-white" style={{ width: size }}>
+				<div className="bg-white w-full" style={{ width: size }}>
 					<ResponsiveGridLayout
- 						layouts={layoutField.value as any}
-						margin={[8, 8]}
-						className="layout"
-						allowOverlap={false}
-						rowHeight={80}
-						width={size}
-						isDraggable
-						isDroppable
-						isResizable
-						onLayoutChange={(updatedLayout, actualLayoutsForAllBreakpoints) => {
-							layoutField.onChange(actualLayoutsForAllBreakpoints);
+						breakpoints={{
+							lg: 1200,
+							md: 996,
+							sm: 768,
+							xs: 480,
+							xxs: 120,
+						}}
+						cols={{
+							lg: 12,
+							md: 10,
+							sm: 6,
+							xs: 4,
+							xxs: 1,
+						}}
+ 						layouts={field.value as FlexibleLayoutConfig}
+						 margin={[8, 8]}
+						 className="layout"
+						 allowOverlap={false}
+						 rowHeight={80}
+						 width={size}
+						 autoSize
+						 isDraggable
+						 isDroppable
+						 isResizable
+						onLayoutChange={(updatedLayout, actualValue) => {
+							field.onChange(actualValue);
 						}}
 					>
- 						{items?.map((item) => (
+ 						{visualizations?.map((item) => (
  							<GridItem key={item.item.id} item={item.item as VisualizationItem} />
 						))}
 					</ResponsiveGridLayout>

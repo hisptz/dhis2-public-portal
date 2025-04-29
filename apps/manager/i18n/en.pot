@@ -5,8 +5,8 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
-"POT-Creation-Date: 2025-04-29T10:30:15.981Z\n"
-"PO-Revision-Date: 2025-04-29T10:30:15.982Z\n"
+"POT-Creation-Date: 2025-04-29T10:37:16.240Z\n"
+"PO-Revision-Date: 2025-04-29T10:37:16.240Z\n"
 
 msgid "Could not get Appearance configurations"
 msgstr "Could not get Appearance configurations"
@@ -16,6 +16,42 @@ msgstr "Error"
 
 msgid "General configuration"
 msgstr "General configuration"
+
+msgid "Application name"
+msgstr "Application name"
+
+msgid "Description"
+msgstr "Description"
+
+msgid "Application URL"
+msgstr "Application URL"
+
+msgid "Where your portal can be found"
+msgstr "Where your portal can be found"
+
+msgid "Saving..."
+msgstr "Saving..."
+
+msgid "Save changes"
+msgstr "Save changes"
+
+msgid "Layout editor"
+msgstr "Layout editor"
+
+msgid "Cancel"
+msgstr "Cancel"
+
+msgid "Update layout"
+msgstr "Update layout"
+
+msgid "Unknown module type"
+msgstr "Unknown module type"
+
+msgid "Back to all modules"
+msgstr "Back to all modules"
+
+msgid "Module"
+msgstr "Module"
 
 msgid "Modules"
 msgstr "Modules"
@@ -32,8 +68,77 @@ msgstr "Reload"
 msgid "This will be a part of the url. It should not contain spaces"
 msgstr "This will be a part of the url. It should not contain spaces"
 
+msgid "Error saving changes"
+msgstr "Error saving changes"
+
+msgid "Changes saved successfully"
+msgstr "Changes saved successfully"
+
+msgid "Dashboard group"
+msgstr "Dashboard group"
+
+msgid "Back to dashboard "
+msgstr "Back to dashboard "
+
 msgid "Title"
 msgstr "Title"
+
+msgid "Short description"
+msgstr "Short description"
+
+msgid "Remove"
+msgstr "Remove"
+
+msgid "Visualizations"
+msgstr "Visualizations"
+
+msgid "Configure layout"
+msgstr "Configure layout"
+
+msgid "ID"
+msgstr "ID"
+
+msgid "Type"
+msgstr "Type"
+
+msgid "Caption"
+msgstr "Caption"
+
+msgid "Actions"
+msgstr "Actions"
+
+msgid "Create a new module"
+msgstr "Create a new module"
+
+msgid "Module created successfully"
+msgstr "Module created successfully"
+
+msgid "Could not create new module"
+msgstr "Could not create new module"
+
+msgid "Create Module"
+msgstr "Create Module"
+
+msgid "Creating..."
+msgstr "Creating..."
+
+msgid "Create module"
+msgstr "Create module"
+
+msgid "Filter by Type"
+msgstr "Filter by Type"
+
+msgid "Select type"
+msgstr "Select type"
+
+msgid "There are no modules matching the selected type."
+msgstr "There are no modules matching the selected type."
+
+msgid "There are no dashboard configuration present"
+msgstr "There are no dashboard configuration present"
+
+msgid "Could not save changes"
+msgstr "Could not save changes"
 
 msgid "Short Description"
 msgstr "Short Description"
@@ -59,17 +164,8 @@ msgstr "Could not create new dashboard"
 msgid "Create Dashboard"
 msgstr "Create Dashboard"
 
-msgid "Cancel"
-msgstr "Cancel"
-
-msgid "Creating..."
-msgstr "Creating..."
-
 msgid "Create dashboard"
 msgstr "Create dashboard"
-
-msgid "ID"
-msgstr "ID"
 
 msgid "Add group"
 msgstr "Add group"
@@ -77,8 +173,8 @@ msgstr "Add group"
 msgid "Create Dashboard Group"
 msgstr "Create Dashboard Group"
 
-msgid "Short description"
-msgstr "Short description"
+msgid "Short Name"
+msgstr "Short Name"
 
 msgid "Create group"
 msgstr "Create group"
@@ -89,17 +185,11 @@ msgstr "Add visualizations"
 msgid "{{action}} visualization"
 msgstr "{{action}} visualization"
 
-msgid "Type"
-msgstr "Type"
-
 msgid "Visualization"
 msgstr "Visualization"
 
 msgid "Map"
 msgstr "Map"
-
-msgid "Caption"
-msgstr "Caption"
 
 msgid "Edit visualization"
 msgstr "Edit visualization"
@@ -110,44 +200,41 @@ msgstr "Visualization type"
 msgid "All"
 msgstr "All"
 
-msgid "Column"
-msgstr "Column"
+msgid "Please fix the validation errors before saving"
+msgstr "Please fix the validation errors before saving"
 
-msgid "Bar"
-msgstr "Bar"
+msgid "Failed to save module"
+msgstr "Failed to save module"
 
-msgid "Line"
-msgstr "Line"
+msgid "Has groups"
+msgstr "Has groups"
 
-msgid "Pie"
-msgstr "Pie"
-
-msgid "Gauge"
-msgstr "Gauge"
-
-msgid "Single value"
-msgstr "Single value"
-
-msgid "Column chart"
-msgstr "Column chart"
-
-msgid "Remove"
-msgstr "Remove"
+msgid "Save group changes"
+msgstr "Save group changes"
 
 msgid "Groups"
 msgstr "Groups"
 
-msgid "Description"
-msgstr "Description"
+msgid "Module deleted successfully"
+msgstr "Module deleted successfully"
 
-msgid "Actions"
-msgstr "Actions"
+msgid "Could not delete module"
+msgstr "Could not delete module"
 
-msgid "Visualizations"
-msgstr "Visualizations"
+msgid "Deleting..."
+msgstr "Deleting..."
 
-msgid "Configure layout"
-msgstr "Configure layout"
+msgid "Delete module"
+msgstr "Delete module"
+
+msgid "Are you sure you want to delete the module "
+msgstr "Are you sure you want to delete the module "
+
+msgid "This action is irreversible"
+msgstr "This action is irreversible"
+
+msgid "Delete"
+msgstr "Delete"
 
 msgid "Welcome to the public portal manager!"
 msgstr "Welcome to the public portal manager!"

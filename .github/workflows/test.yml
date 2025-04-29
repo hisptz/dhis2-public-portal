@@ -25,3 +25,6 @@ jobs:
 
       - name: Run tests
         run: yarn test
+        env:
+          VITE_DHIS2_BASE_URL: ${{vars.DHIS2_BASE_URL}}
+          VITE_DHIS2_BASE_PAT_TOKEN: ${{secrets.DHIS2_BASE_PAT_TOKEN}}

@@ -4,6 +4,8 @@
   "scripts": {
     "portal": "yarn workspace portal",
     "manager": "yarn workspace manager",
+    "shared": "yarn workspace @packages/shared",
+    "ui": "yarn workspace @packages/ui",
     "test": "vitest -c vitest.config.ts",
     "build": "turbo run build",
     "dev": "turbo run dev",
