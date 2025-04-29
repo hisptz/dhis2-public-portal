@@ -14,10 +14,10 @@ const deleteMutation: any = {
 	id: ({ id }: { id: string }) => id,
 };
 
-const deleteNamespaceMutation:any = (namespace: string) => ({
+const deleteNamespaceMutation: any = (namespace: string) => ({
 	type: "delete",
 	resource: `dataStore/${namespace}`,
-  });
+});
 
 export function DeleteDashboard() {
 	const [showDialog, setShowDialog] = useState(false);
@@ -26,11 +26,11 @@ export function DeleteDashboard() {
 	});
 	const module = useModule() as AppModule;
 	const [onDelete, { loading }] = useDataMutation(deleteMutation);
-	const [deleteNamespace, { loading: namespaceLoading }] = useDataMutation(
+	const [deleteNamespace] = useDataMutation(
 		module.type === ModuleType.STATIC && (module.config as StaticModuleConfig).namespace
-		  ? deleteNamespaceMutation((module.config as StaticModuleConfig).namespace)
-		  : { type: "delete", resource: "" } 
-	  );
+			? deleteNamespaceMutation((module.config as StaticModuleConfig).namespace)
+			: { type: "delete", resource: "" }
+	);
 	const { show } = useAlert(
 		({ message }) => message,
 		({ type }) => ({ ...type, duration: 3000 }),
