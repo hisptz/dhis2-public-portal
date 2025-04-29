@@ -9,7 +9,7 @@ export function useModuleForm() {
 		resolver: zodResolver(moduleSchema),
 		defaultValues: {
 			...module,
-			config: (module.config as any) ?? {},
+			config: (module?.config as any) ?? {},
 		},
 	});
 }

@@ -6,8 +6,8 @@ import { useModule } from "../../../../../../shared/components/ModulesPage/provi
 import ErrorPage from "../../../../../../shared/components/ErrorPage/ErrorPage";
 import { DashboardConfigPage } from "../../../../../../shared/components/VisualizationModule/DashboardConfigPage";
 import { PageHeader } from "../../../../../../shared/components/PageHeader";
-import { DeleteDashboard } from "../../../../../../shared/components/VisualizationModule/components/DeleteDashboard";
-import { DashboardEditActions } from "../../../../../../shared/components/VisualizationModule/components/DashboardEditActions";
+import { DeleteModule } from "../../../../../../shared/components/ModulesPage/components/DeleteModule";
+import { ModuleEditActions } from "../../../../../../shared/components/ModulesPage/components/ModuleEditActions";
 import { ModuleType } from "@packages/shared/schemas";
 
 export const Route = createLazyFileRoute(
@@ -52,8 +52,8 @@ function RouteComponent() {
 				title={`${i18n.t("Module")} - ${module.label}`}
 				actions={
 					<div className="flex gap-4 items-center">
-						<DeleteDashboard />
-						<DashboardEditActions />
+						<DeleteModule />
+						<ModuleEditActions />
 					</div>
 				}
 			/>

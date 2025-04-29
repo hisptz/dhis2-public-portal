@@ -4,8 +4,8 @@ import i18n from "@dhis2/d2-i18n";
 import { FetchError, useAlert, useDataMutation, } from "@dhis2/app-runtime";
 import { useNavigate } from "@tanstack/react-router";
 import { DatastoreNamespaces } from "@packages/shared/constants";
-import { useModule } from "../../ModulesPage/providers/ModuleProvider";
-import { useRefreshModules } from "../../ModulesPage/providers/ModulesProvider";
+import { useModule } from "../providers/ModuleProvider";
+import { useRefreshModules } from "../providers/ModulesProvider";
 import { VisualizationModule } from "@packages/shared/schemas";
 
 const deleteMutation: any = {
@@ -15,7 +15,7 @@ const deleteMutation: any = {
 };
 
 
-export function DeleteDashboard() {
+export function DeleteModule() {
 	const [showDialog, setShowDialog] = useState(false);
 	const navigate = useNavigate({
 		from: "/modules/$moduleId/edit",
@@ -66,7 +66,7 @@ export function DeleteDashboard() {
 					<ModalContent>
 						<span>
 							{i18n.t("Are you sure you want to delete the module ")}
-							<b>{module.config.title}</b>? {i18n.t("This action is irreversible")}
+							<b>{module?.config?.title}</b>? {i18n.t("This action is irreversible")}
 						</span>
 					</ModalContent>
 					<ModalActions>
