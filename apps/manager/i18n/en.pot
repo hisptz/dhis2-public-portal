@@ -5,8 +5,8 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
-"POT-Creation-Date: 2025-04-28T13:50:49.728Z\n"
-"PO-Revision-Date: 2025-04-28T13:50:49.728Z\n"
+"POT-Creation-Date: 2025-04-29T16:52:57.009Z\n"
+"PO-Revision-Date: 2025-04-29T16:52:57.010Z\n"
 
 msgid "Could not get Appearance configurations"
 msgstr "Could not get Appearance configurations"
@@ -191,9 +191,6 @@ msgstr "Module created successfully"
 msgid "Could not create new module"
 msgstr "Could not create new module"
 
-msgid "Please fix the validation errors before saving"
-msgstr "Please fix the validation errors before saving"
-
 msgid "Create Module"
 msgstr "Create Module"
 
@@ -254,32 +251,17 @@ msgstr "Create an item"
 msgid "Create item"
 msgstr "Create item"
 
-msgid "Failed to save Item"
-msgstr "Failed to save Item"
-
 msgid "Item deleted successfully"
 msgstr "Item deleted successfully"
 
 msgid "Could not delete item"
 msgstr "Could not delete item"
 
-msgid "Deleting..."
-msgstr "Deleting..."
-
 msgid "Delete item"
 msgstr "Delete item"
 
-msgid "Save changes"
-msgstr "Save changes"
-
 msgid "Are you sure you want to delete the item "
 msgstr "Are you sure you want to delete the item "
-
-msgid "This action is irreversible"
-msgstr "This action is irreversible"
-
-msgid "Delete"
-msgstr "Delete"
 
 msgid "Error loading item"
 msgstr "Error loading item"
@@ -290,23 +272,17 @@ msgstr "Back"
 msgid "Content"
 msgstr "Content"
 
+msgid "Should be a valid svg string"
+msgstr "Should be a valid svg string"
+
 msgid "Icon"
 msgstr "Icon"
 
-msgid "Create a new dashboard"
-msgstr "Create a new dashboard"
+msgid "Short Description"
+msgstr "Short Description"
 
-msgid "Dashboard created successfully"
-msgstr "Dashboard created successfully"
-
-msgid "Could not create new dashboard"
-msgstr "Could not create new dashboard"
-
-msgid "Create Dashboard"
-msgstr "Create Dashboard"
-
-msgid "Create dashboard"
-msgstr "Create dashboard"
+msgid "Items"
+msgstr "Items"
 
 msgid "Add group"
 msgstr "Add group"
@@ -341,15 +317,6 @@ msgstr "Visualization type"
 msgid "All"
 msgstr "All"
 
-msgid "Please fix the validation errors before saving"
-msgstr "Please fix the validation errors before saving"
-
-msgid "Failed to save module"
-msgstr "Failed to save module"
-
-msgid "Save changes"
-msgstr "Save changes"
-
 msgid "Has groups"
 msgstr "Has groups"
 
@@ -358,27 +325,6 @@ msgstr "Save group changes"
 
 msgid "Groups"
 msgstr "Groups"
-
-msgid "Module deleted successfully"
-msgstr "Module deleted successfully"
-
-msgid "Could not delete module"
-msgstr "Could not delete module"
-
-msgid "Deleting..."
-msgstr "Deleting..."
-
-msgid "Delete module"
-msgstr "Delete module"
-
-msgid "Are you sure you want to delete the module "
-msgstr "Are you sure you want to delete the module "
-
-msgid "This action is irreversible"
-msgstr "This action is irreversible"
-
-msgid "Delete"
-msgstr "Delete"
 
 msgid "Welcome to the public portal manager!"
 msgstr "Welcome to the public portal manager!"
