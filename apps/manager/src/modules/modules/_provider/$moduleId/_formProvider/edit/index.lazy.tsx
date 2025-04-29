@@ -32,7 +32,11 @@ function RouteComponent() {
 			case ModuleType.STATIC:
 				return <StaticConfigPage />;
 			default:
-				return <ErrorPage error={new Error(i18n.t("Unknown module type"))} />;
+				return (
+					<ErrorPage
+						error={new Error(i18n.t("Unknown module type"))}
+					/>
+				);
 		}
 	};
 	return (
@@ -48,7 +52,7 @@ function RouteComponent() {
 				</Button>
 			</div>
 			<PageHeader
-				title={`${i18n.t("Module")} - ${module.config.title}`}
+				title={`${i18n.t("Module")} - ${module.label}`}
 				actions={
 					<div className="flex gap-4 items-center">
 						<DeleteModule />

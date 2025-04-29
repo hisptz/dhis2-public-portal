@@ -12,7 +12,7 @@ import React, { useEffect } from "react";
 import i18n from "@dhis2/d2-i18n";
 import { RHFTextInputField } from "@hisptz/dhis2-ui";
 import { FetchError, useAlert } from "@dhis2/app-runtime";
-import { AppModule, moduleSchema, ModuleType } from "@packages/shared/schemas";
+import { BaseModule, baseModuleSchema } from "@packages/shared/schemas";
 import { DashboardIDField } from "./DashboardIDField";
 import { useCreateDashboard } from "../hooks/create";
 import { ModuleTypeSelector } from "../../ModuleTypeSelector";
@@ -24,15 +24,15 @@ export function AddModuleForm({
 }: {
 	hide: boolean;
 	onClose: () => void;
-	onComplete: (dashboard: AppModule) => void;
+	onComplete: (dashboard: BaseModule) => void;
 }) {
 	const { createDashboard } = useCreateDashboard();
 	const { show } = useAlert(
 		({ message }) => message,
 		({ type }) => ({ ...type, duration: 3000 }),
 	);
-	const form = useForm<AppModule>({
-		resolver: zodResolver(moduleSchema),
+	const form = useForm<BaseModule>({
+		resolver: zodResolver(baseModuleSchema),
 		shouldFocusError: false,
 		defaultValues: {
 			config: {
@@ -55,7 +55,7 @@ export function AddModuleForm({
         }
     }, [moduleType, moduleId, form]);
 
-	const onSave = async (data: AppModule) => {
+	const onSave = async (data: BaseModule) => {
 		try {
 			await createDashboard(data);
 			show({
@@ -80,6 +80,7 @@ export function AddModuleForm({
 				type: { critical: true },
 			});
 		}
+	};
 	}
 
 
@@ -92,10 +93,10 @@ export function AddModuleForm({
 					<form className="flex flex-col gap-4">
 						<RHFTextInputField
 							required
-							name="config.title"
-							label={i18n.t("Title")}
+							name="label"
+							label={i18n.t("Label")}
 						/>
-						<ModuleTypeSelector/>
+						<ModuleTypeSelector />
 						<DashboardIDField />
 					</form>
 				</ModalContent>

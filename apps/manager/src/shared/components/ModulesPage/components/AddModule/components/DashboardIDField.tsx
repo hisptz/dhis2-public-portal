@@ -7,8 +7,8 @@ import { AppModule } from "@packages/shared/schemas";
 
 export function DashboardIDField() {
 	const { setValue } = useFormContext<AppModule>();
-	const title = useWatch<AppModule, "config.title">({
-		name: "config.title",
+	const title = useWatch<AppModule, "label">({
+		name: "label",
 	});
 	useEffect(() => {
 		if (title) {

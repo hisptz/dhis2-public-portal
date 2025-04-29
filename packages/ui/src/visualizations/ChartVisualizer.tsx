@@ -1,5 +1,5 @@
 import { AnalyticsData, VisualizationConfig } from "@packages/shared/schemas";
-import { RefObject, useRef } from "react";
+import React, { RefObject, useRef } from "react";
 import HighchartsReact from "highcharts-react-official";
 import { DHIS2Chart } from "@hisptz/dhis2-analytics";
 import { getChartLayout, getChartType } from "@packages/shared/utils";

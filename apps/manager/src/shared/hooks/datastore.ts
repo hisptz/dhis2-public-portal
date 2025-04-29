@@ -1,4 +1,4 @@
-import { useDataMutation } from "@dhis2/app-runtime";
+import { useDataMutation, useDataQuery } from "@dhis2/app-runtime";
 
 const updateMutation: any = {
 	type: "update",
@@ -29,6 +29,42 @@ export function useUpdateDatastoreEntry<DataType>({
 
 	return {
 		update,
+		loading,
+		error,
+	};
+}
+
+const datastoreQuery = {
+	ds: {
+		resource: "dataStore",
+		id: ({ namespace }: { key: string; namespace: string }) =>
+			`${namespace}`,
+		params: ({ fields }: { fields: string }) => ({
+			fields,
+		}),
+	},
+};
+
+export function useGetDatastoreEntries<DataType>({
+	namespace,
+	fields,
+}: {
+	namespace: string;
+	fields?: string[];
+}) {
+	const { data, loading, error } = useDataQuery<{
+		ds: {
+			entries: DataType[];
+		};
+	}>(datastoreQuery, {
+		variables: {
+			namespace,
+			fields: fields?.join(",") ?? ".",
+		},
+	});
+
+	return {
+		data: data?.ds?.entries,
 		loading,
 		error,
 	};

@@ -1,6 +1,6 @@
 import { ModuleType } from "@packages/shared/schemas";
 import { appMenus } from "../../src/shared/constants/menu";
-import { startCase } from "lodash";
+import { capitalize, startCase } from "lodash";
 
 describe("Modules Page", () => {
     beforeEach(() => {
@@ -34,28 +34,11 @@ describe("Modules Page", () => {
 	it("should filter modules by type", () => {
 		cy.contains("a", modulesMenu.label).click();
 
-		const filterOptions = [
-			{
-				label: startCase(ModuleType.VISUALIZATION.toLowerCase()),
-				value: ModuleType.VISUALIZATION,
-				urlContains: "type=VISUALIZATION",
-			},
-			{
-				label: startCase(ModuleType.SECTION.toLowerCase()),
-				value: ModuleType.SECTION,
-				urlContains: "type=SECTION",
-			},
-			{
-				label: startCase(ModuleType.DOCUMENTS.toLowerCase()),
-				value: ModuleType.DOCUMENTS,
-				urlContains: "type=DOCUMENTS",
-			},
-			{
-				label: startCase(ModuleType.STATIC.toLowerCase()),
-				value: ModuleType.STATIC,
-				urlContains: "type=STATIC",
-			},
-		];
+		const filterOptions = Object.values(ModuleType).map((item) => ({
+			label: capitalize(startCase(item)),
+			value: item,
+			urlContains: `type=${item}`,
+		}));
 
 		filterOptions.forEach(({ label, value, urlContains }) => {
 			cy.get('[data-test="dhis2-uicore-select-input"]').click();
@@ -79,6 +62,10 @@ describe("Modules Page", () => {
 					).should("be.visible");
 				} else if ($rows.length > 0) {
 					cy.wrap($rows).each(($row) => {
+						cy.wrap($row)
+							.find("td")
+							.eq(1)
+							.should("contain", capitalize(startCase(value)));
 						cy.wrap($row).find("td").eq(1).should("contain", label);
 					});
 				}
