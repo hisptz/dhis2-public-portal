@@ -4,15 +4,9 @@ import i18n from "@dhis2/d2-i18n";
 import { FetchError, useAlert, useDataMutation, } from "@dhis2/app-runtime";
 import { useNavigate } from "@tanstack/react-router";
 import { DatastoreNamespaces } from "@packages/shared/constants";
-<<<<<<< HEAD:apps/manager/src/shared/components/VisualizationModule/components/DeleteDashboard.tsx
-import { useModule } from "../../ModulesPage/providers/ModuleProvider";
-import { useRefreshModules } from "../../ModulesPage/providers/ModulesProvider";
-import { AppModule, ModuleType, StaticModuleConfig } from "@packages/shared/schemas";
-=======
 import { useModule } from "../providers/ModuleProvider";
 import { useRefreshModules } from "../providers/ModulesProvider";
-import { VisualizationModule } from "@packages/shared/schemas";
->>>>>>> 75eddebfc4261f895f8cddff209211aabc07ccdf:apps/manager/src/shared/components/ModulesPage/components/DeleteModule.tsx
+import { AppModule, ModuleType, StaticModuleConfig } from "@packages/shared/schemas";
 
 const deleteMutation: any = {
 	type: "delete",
