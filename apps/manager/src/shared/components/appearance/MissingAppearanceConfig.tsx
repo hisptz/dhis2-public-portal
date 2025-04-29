@@ -14,13 +14,13 @@ export function MissingAppearanceConfig({ onAddConfigurations }: Props) {
 					<div className="flex flex-col gap-2">
 						<p>
 							{i18n.t(
-								"There are no appearance configurations yet. Click the below button to create one.",
+								"There are no appearance configurations yet. Click the below button to import the default configurations.",
 							)}
 						</p>
 
 						<div className="flex mt-4">
 							<Button onClick={onAddConfigurations} small primary>
-								Create
+								Import
 							</Button>
 						</div>
 					</div>

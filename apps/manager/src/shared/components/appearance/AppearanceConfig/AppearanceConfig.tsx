@@ -30,9 +30,9 @@ export function AppearanceConfig({ appearanceConfig, refetchConfig }: Props) {
 	const [showHeaderConfig, setShowHeaderConfig] = useState(false);
 	const [showFooterConfig, setShowFooterConfig] = useState(false);
 
-	const { colors, header, footer, title } = appearanceConfig;
+	const { colors, header, footer } = appearanceConfig;
 	const { primary, chartColors, background } = colors;
-	const { title: titleConfigurations, logo, hasMenu, trailingLogo } = header;
+	const { logo, trailingLogo } = header;
 	const { copyright, footerLinks, address } = footer;
 
 	return (
@@ -88,31 +88,6 @@ export function AppearanceConfig({ appearanceConfig, refetchConfig }: Props) {
 						title={i18n.t("Logo enabled")}
 						value={logo.enabled ? "Yes" : "No"}
 					/>
-					{titleConfigurations?.style && (
-						<ConfigurationDetails title={i18n.t("Title style")}>
-							<div className="ml-2 flex flex-col gap-1">
-								{getObjectKeyValueArray(
-									titleConfigurations.style,
-								).map((item, index) => {
-									const [key, value] =
-										Object.entries(item)[0];
-									return (
-										<ConfigurationDetails
-											key={`${index}-${key}`}
-											title={key}
-											value={value}
-										/>
-									);
-								})}
-							</div>
-						</ConfigurationDetails>
-					)}
-					{hasMenu && (
-						<ConfigurationDetails
-							title={i18n.t("Has menu")}
-							value={hasMenu ? "Yes" : "No"}
-						/>
-					)}
 					{trailingLogo && (
 						<ConfigurationDetails title={i18n.t("Trailing logo")}>
 							<img
