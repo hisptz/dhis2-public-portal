@@ -21,11 +21,9 @@ const NoSsrAppProvider: ComponentType<any> = dynamic(
 export function DHIS2AppProvider({
 	children,
 	systemInfo,
-	baseUrl,
 }: {
 	children: ReactNode;
 	systemInfo: D2SystemInfo;
-	baseUrl: string;
 }) {
 	const { contextPath, version } = systemInfo ?? {};
 	const [, minor] = version.split(".") ?? [];
@@ -34,7 +32,7 @@ export function DHIS2AppProvider({
 		<QueryClientProvider client={queryClient}>
 			<NoSsrAppProvider
 				config={{
-					baseUrl: `/${baseUrl}/api`,
+					baseUrl: "",
 					apiVersion: minor,
 					systemInfo: {
 						contextPath,

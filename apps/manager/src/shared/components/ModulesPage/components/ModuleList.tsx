@@ -4,7 +4,8 @@ import React, { useMemo } from "react";
 import { Button, ButtonStrip, IconView16 } from "@dhis2/ui";
 import { useNavigate } from "@tanstack/react-router";
 import { useModules } from "../providers/ModulesProvider";
-import { ModuleType } from "@packages/shared/schemas"; 
+import { ModuleType } from "@packages/shared/schemas";
+import { startCase } from "lodash";
 
 const columns: SimpleTableColumn[] = [
 	{
@@ -21,28 +22,27 @@ const columns: SimpleTableColumn[] = [
 	},
 ];
 
-
-export function ModuleList({ filterType }: {filterType?: ModuleType}) {  
+export function ModuleList({ filterType }: { filterType?: ModuleType }) {
 	const modules = useModules();
 	const navigate = useNavigate();
 
- 	const filteredModules = useMemo(() => {
-        if (!modules) {
-            return [];
-        }
-         if (!filterType) {
-            return modules;
-        }
-         return modules.filter(module => module.type === filterType);
-
-    }, [modules, filterType]);  
+	const filteredModules = useMemo(() => {
+		if (!modules) {
+			return [];
+		}
+		if (!filterType) {
+			return modules;
+		}
+		return modules.filter((module) => module.type === filterType);
+	}, [modules, filterType]);
 
 	const rows = useMemo(
 		() =>
-             filteredModules.map((module) => ({
+			filteredModules.map((module) => ({
 				...module,
-                 type: module.type,  
-				title: module.config.title ?? module.id,  
+				type: startCase(module.type.toLowerCase()),
+				title: module.config.title ?? module.id,
+
 				actions: (
 					<ButtonStrip>
 						<Button
@@ -60,16 +60,16 @@ export function ModuleList({ filterType }: {filterType?: ModuleType}) {
 					</ButtonStrip>
 				),
 			})),
-		[filteredModules, navigate],  
+		[filteredModules, navigate],
 	);
 
 	return (
 		<SimpleTable
 			emptyLabel={
-                filterType
-                    ? i18n.t("There are no modules matching the selected type.")
-                    : i18n.t("There are no dashboard configuration present")
-            }
+				filterType
+					? i18n.t("There are no modules matching the selected type.")
+					: i18n.t("There are no dashboard configuration present")
+			}
 			columns={columns}
 			rows={rows}
 		/>

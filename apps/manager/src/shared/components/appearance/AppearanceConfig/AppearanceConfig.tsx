@@ -10,6 +10,7 @@ import { Button, IconEdit16 } from "@dhis2/ui";
 import { AppColorConfigForm } from "../appearance-config-forms/AppColorConfigForm";
 import { HeaderConfigForm } from "../appearance-config-forms/HeaderConfigForm";
 import { FooterConfigForm } from "../appearance-config-forms/FooterConfigForm";
+import { RichTextView } from "@packages/ui/visualizations";
 
 type Props = {
 	appearanceConfig: AppAppearanceConfig;
@@ -182,6 +183,7 @@ export function AppearanceConfig({ appearanceConfig, refetchConfig }: Props) {
 															href={link.url}
 															target="_blank"
 															className="text-primary-500 hover:underline"
+															rel="noreferrer"
 														>
 															{link.name}
 														</a>
@@ -196,10 +198,9 @@ export function AppearanceConfig({ appearanceConfig, refetchConfig }: Props) {
 					)}
 
 					{address && (
-						<ConfigurationDetails
-							title={i18n.t("Address")}
-							value={address.content}
-						/>
+						<ConfigurationDetails title={i18n.t("Address")}>
+							<RichTextView content={address.content} />
+						</ConfigurationDetails>
 					)}
 				</div>
 
