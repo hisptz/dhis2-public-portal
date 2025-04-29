@@ -10,7 +10,6 @@ export function DashboardIDField() {
 	const title = useWatch<AppModule, "config.title">({
 		name: "config.title",
 	});
-	console.log("title", title);
 	useEffect(() => {
 		if (title) {
 			setValue("id", kebabCase(title.toLowerCase()));
