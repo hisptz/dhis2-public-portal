@@ -9,6 +9,7 @@ import { PageHeader } from "../../../../../../shared/components/PageHeader";
 import { DeleteDashboard } from "../../../../../../shared/components/VisualizationModule/components/DeleteDashboard";
 import { DashboardEditActions } from "../../../../../../shared/components/VisualizationModule/components/DashboardEditActions";
 import { ModuleType } from "@packages/shared/schemas";
+import { StaticConfigPage } from "../../../../../../shared/components/StaticModule/StaticConfigPage";
 
 export const Route = createLazyFileRoute(
 	"/modules/_provider/$moduleId/_formProvider/edit/",
@@ -27,7 +28,9 @@ function RouteComponent() {
  	const renderModulePage = () => {
 		switch (module.type) {
 			case ModuleType.VISUALIZATION:
-				return <DashboardConfigPage />; 
+				return <DashboardConfigPage />;
+			case ModuleType.STATIC:
+				return <StaticConfigPage />;
 			default:
 				return <ErrorPage error={new Error(i18n.t("Unknown module type"))} />;
 		}
