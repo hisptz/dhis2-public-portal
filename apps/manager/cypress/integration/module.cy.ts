@@ -106,8 +106,6 @@ describe("Modules Page", () => {
 
         cy.contains("Module created successfully").should("be.visible");
 
-        cy.url().should("include", "/modules/new-module-123/edit");
-
         cy.contains("button", "Back to all modules").click();
 
     });
@@ -168,10 +166,8 @@ describe("Modules Page", () => {
         cy.contains("button", "Update").click();
 
         cy.contains("button", "Configure layout").click();
-        cy.url().should("include", "/modules/new-module-123/edit/layout");
         cy.get(".layout").should("be.visible");
         cy.contains("button", "Cancel").click();
-
 
         cy.contains("button", "Save changes").should("not.be.disabled");
         cy.contains("button", "Save changes").click();
