@@ -1,7 +1,6 @@
 import { ModuleType } from "@packages/shared/schemas";
 import { appMenus } from "../../src/shared/constants/menu";
 import { capitalize, startCase } from "lodash";
-import { startCase } from "lodash";
 
 describe("Modules Page", () => {
 	beforeEach(() => {
@@ -40,28 +39,6 @@ describe("Modules Page", () => {
 			value: item,
 			urlContains: `type=${item}`,
 		}));
-		const filterOptions = [
-			{
-				label: startCase(ModuleType.VISUALIZATION.toLowerCase()),
-				value: ModuleType.VISUALIZATION,
-				urlContains: "type=VISUALIZATION",
-			},
-			{
-				label: startCase(ModuleType.SECTION.toLowerCase()),
-				value: ModuleType.SECTION,
-				urlContains: "type=SECTION",
-			},
-			{
-				label: startCase(ModuleType.DOCUMENTS.toLowerCase()),
-				value: ModuleType.DOCUMENTS,
-				urlContains: "type=DOCUMENTS",
-			},
-			{
-				label: startCase(ModuleType.STATIC.toLowerCase()),
-				value: ModuleType.STATIC,
-				urlContains: "type=STATIC",
-			},
-		];
 
 		filterOptions.forEach(({ label, value, urlContains }) => {
 			cy.get('[data-test="dhis2-uicore-select-input"]').click();
