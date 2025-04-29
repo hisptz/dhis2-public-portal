@@ -27,7 +27,7 @@ type Response = {
 
 export function useItemList() {
     const module = useModule() as StaticModule;
-    const namespace = module?.config.namespace;
+    const namespace = module?.config?.namespace;
     const {
         data: namespaceData,
         loading: namespaceLoading,

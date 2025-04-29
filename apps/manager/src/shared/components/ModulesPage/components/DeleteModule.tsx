@@ -27,8 +27,8 @@ export function DeleteModule() {
 	const module = useModule() as AppModule;
 	const [onDelete, { loading }] = useDataMutation(deleteMutation);
 	const [deleteNamespace] = useDataMutation(
-		module.type === ModuleType.STATIC && (module.config as StaticModuleConfig).namespace
-			? deleteNamespaceMutation((module.config as StaticModuleConfig).namespace)
+		module.type === ModuleType.STATIC && (module?.config as StaticModuleConfig)?.namespace
+			? deleteNamespaceMutation((module?.config as StaticModuleConfig)?.namespace)
 			: { type: "delete", resource: "" }
 	);
 	const { show } = useAlert(
@@ -46,9 +46,9 @@ export function DeleteModule() {
 			await onDelete({ id: module.id });
 			if (
 				module.type === ModuleType.STATIC &&
-				(module.config as StaticModuleConfig).namespace
+				(module?.config as StaticModuleConfig)?.namespace
 			) {
-				const namespace = (module.config as StaticModuleConfig).namespace;
+				const namespace = (module?.config as StaticModuleConfig)?.namespace;
 				await deleteNamespace({ namespace });
 			}
 			await refreshModules();

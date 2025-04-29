@@ -51,7 +51,7 @@ const updateMutation: any = ({ namespace, id }: { namespace: string; id: string 
         try {
           await engine.mutate(
             updateMutation({
-              namespace: module.config.namespace,
+              namespace: module?.config?.namespace,
               id: itemId,
             }),
             {

@@ -22,7 +22,7 @@ export function ItemActions() {
     const navigate = useNavigate({ from: "/modules/$moduleId/edit/static/$itemId" })
     const { save } = useSaveItem(itemId!);
     const module = useModule() as StaticModule;
-    const [onDelete, { loading }] = useDataMutation(deleteMutation(module.config.namespace));
+    const [onDelete, { loading }] = useDataMutation(deleteMutation(module?.config?.namespace));
     const refreshModules = useRefreshModules();
     const [showDialog, setShowDialog] = useState(false);
     const { handleSubmit, formState } = useFormContext<StaticItemConfig>();
@@ -54,7 +54,7 @@ export function ItemActions() {
     };
 
     const onConfirm = async () => {
-        if (!module || !module.config.namespace || !itemId) {
+        if (!module || !module?.config?.namespace || !itemId) {
             show({
                 message: i18n.t("Cannot delete item: Missing module or item information"),
                 type: { critical: true },

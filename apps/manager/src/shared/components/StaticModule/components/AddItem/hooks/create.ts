@@ -17,14 +17,14 @@ export function useCreateItem() {
     const module = useModule() as StaticModule;
     const createItem = useCallback(
         async (data: StaticItemConfig) => {
-            await engine.mutate(getMutation({ namespace: module.config.namespace,
+            await engine.mutate(getMutation({ namespace: module?.config?.namespace,
                 id: data.id,}) as any, {
                 variables: {
                     data,
                 },
             });
         },
-        [engine, module.config.namespace],
+        [engine, module?.config?.namespace],
     );
 
     return {

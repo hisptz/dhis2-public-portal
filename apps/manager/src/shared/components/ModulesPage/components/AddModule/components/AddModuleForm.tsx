@@ -8,7 +8,7 @@ import {
 	ModalContent,
 	ModalTitle,
 } from "@dhis2/ui";
-import React, { useEffect } from "react";
+import React from "react";
 import i18n from "@dhis2/d2-i18n";
 import { RHFTextInputField } from "@hisptz/dhis2-ui";
 import { FetchError, useAlert } from "@dhis2/app-runtime";
@@ -34,26 +34,8 @@ export function AddModuleForm({
 	const form = useForm<BaseModule>({
 		resolver: zodResolver(baseModuleSchema),
 		shouldFocusError: false,
-		defaultValues: {
-			config: {
-				id: "",
-				grouped: false,
-				layouts: {},
-				items: [],
-				title: "",
-				type: ModuleType.VISUALIZATION,
-			}
-		},
+		defaultValues: {},
 	});
-    const moduleType = form.watch("type");
-    const moduleId = form.watch("id");
-    useEffect(() => {
-        if (moduleType === ModuleType.STATIC && moduleId) {
-            form.setValue("config.namespace", `health-portal-${moduleId}`, {
-                shouldValidate: true,
-            });
-        }
-    }, [moduleType, moduleId, form]);
 
 	const onSave = async (data: BaseModule) => {
 		try {
@@ -73,17 +55,6 @@ export function AddModuleForm({
 			}
 		}
 	};
-	const onError = (e) => {
-		if (e instanceof FetchError || e instanceof Error) {
-			show({
-				message: `${i18n.t("Please fix the validation errors before saving")}: ${e.message ?? e.toString()}`,
-				type: { critical: true },
-			});
-		}
-	};
-	}
-
-
 
 	return (
 		<FormProvider {...form}>
@@ -106,7 +77,8 @@ export function AddModuleForm({
 						<Button
 							loading={form.formState.isSubmitting}
 							primary
-                            onClick={(_, e) => form.handleSubmit(onSave,onError)(e)}						>
+							onClick={(_, e) => form.handleSubmit(onSave)(e)}
+						>
 							{form.formState.isSubmitting
 								? i18n.t("Creating...")
 								: i18n.t("Create module")}

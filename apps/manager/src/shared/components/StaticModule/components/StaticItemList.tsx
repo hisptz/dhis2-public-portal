@@ -42,12 +42,12 @@ export function StaticItemList() {
 
     const rows = itemList.map((item: StaticItemConfig) => ({
         ...item,
-        shortDescription: item.shortDescription.length > 100
-            ? item.shortDescription.slice(0, 100) + "..."
-            : item.shortDescription,
-        content: item.content.length > 100
-            ? item.content.slice(0, 100) + "..."
-            : item.content,
+        shortDescription: item?.shortDescription.length > 100
+            ? item?.shortDescription.slice(0, 100) + "..."
+            : item?.shortDescription,
+        content: item?.content.length > 100
+            ? item?.content.slice(0, 100) + "..."
+            : item?.content,
         icon: (
             <div
                 style={{borderRadius: "10%" }}
