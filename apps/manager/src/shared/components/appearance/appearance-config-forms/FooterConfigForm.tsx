@@ -111,6 +111,7 @@ export function FooterConfigForm({
 	};
 
 	return (
+		// @Todo: Make this configurable, ensure that the form is not static. It should allow
 		<FormProvider {...form}>
 			<Modal position="middle" onClose={onClose}>
 				<ModalTitle>{i18n.t("Footer configurations")}</ModalTitle>

@@ -5,8 +5,8 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
-"POT-Creation-Date: 2025-04-28T09:59:39.017Z\n"
-"PO-Revision-Date: 2025-04-28T09:59:39.017Z\n"
+"POT-Creation-Date: 2025-04-29T10:30:15.981Z\n"
+"PO-Revision-Date: 2025-04-29T10:30:15.982Z\n"
 
 msgid "Could not get Appearance configurations"
 msgstr "Could not get Appearance configurations"
@@ -164,14 +164,8 @@ msgstr "Update"
 msgid "Header configuration"
 msgstr "Header configuration"
 
-msgid "Title enabled"
-msgstr "Title enabled"
-
-msgid "Title label"
-msgstr "Title label"
-
-msgid "Subtitle label"
-msgstr "Subtitle label"
+msgid "Logo enabled"
+msgstr "Logo enabled"
 
 msgid "Title style"
 msgstr "Title style"
@@ -245,6 +239,75 @@ msgstr "Footer configurations"
 
 msgid "Footer links label"
 msgstr "Footer links label"
+
+msgid "Header configurations updated successfully"
+msgstr "Header configurations updated successfully"
+
+msgid "Error updating header configurations"
+msgstr "Error updating header configurations"
+
+msgid "Header configurations"
+msgstr "Header configurations"
+
+msgid "Show Logo"
+msgstr "Show Logo"
+
+msgid "Hide advanced options"
+msgstr "Hide advanced options"
+
+msgid "Show advanced options"
+msgstr "Show advanced options"
+
+msgid "Title styles"
+msgstr "Title styles"
+
+msgid "Subtitle styles"
+msgstr "Subtitle styles"
+
+msgid "Header styles"
+msgstr "Header styles"
+
+msgid "Show colored background"
+msgstr "Show colored background"
+
+msgid "Background Color"
+msgstr "Background Color"
+
+msgid "Header height"
+msgstr "Header height"
+
+msgid "Leading logo size"
+msgstr "Leading logo size"
+
+msgid "Width"
+msgstr "Width"
+
+msgid "Height"
+msgstr "Height"
+
+msgid "Trailing logo size"
+msgstr "Trailing logo size"
+
+msgid "Centered"
+msgstr "Centered"
+
+msgid "Center"
+msgstr "Center"
+
+msgid "Left"
+msgstr "Left"
+
+msgid "Right"
+msgstr "Right"
+
+msgid "Alignment"
+msgstr "Alignment"
+
+msgid "Text size"
+msgstr "Text size"
+
+msgid "Text color"
+msgstr "Text color"
 
 msgid "Add"
 msgstr "Add"

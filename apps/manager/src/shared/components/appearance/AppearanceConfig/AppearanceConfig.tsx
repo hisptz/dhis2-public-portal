@@ -10,6 +10,7 @@ import { Button, IconEdit16 } from "@dhis2/ui";
 import { AppColorConfigForm } from "../appearance-config-forms/AppColorConfigForm";
 import { HeaderConfigForm } from "../appearance-config-forms/HeaderConfigForm";
 import { FooterConfigForm } from "../appearance-config-forms/FooterConfigForm";
+import DOMPurify from "dompurify";
 
 type Props = {
 	appearanceConfig: AppAppearanceConfig;
@@ -84,19 +85,9 @@ export function AppearanceConfig({ appearanceConfig, refetchConfig }: Props) {
 				<ConfigurationTitle title={i18n.t("Header configuration")} />
 				<div className="flex flex-col gap-2">
 					<ConfigurationDetails
-						title={i18n.t("Title enabled")}
+						title={i18n.t("Logo enabled")}
 						value={logo.enabled ? "Yes" : "No"}
 					/>
-					<ConfigurationDetails
-						title={i18n.t("Title label")}
-						value={title.main}
-					/>
-					{title.subtitle && (
-						<ConfigurationDetails
-							title={i18n.t("Subtitle label")}
-							value={title.subtitle}
-						/>
-					)}
 					{titleConfigurations?.style && (
 						<ConfigurationDetails title={i18n.t("Title style")}>
 							<div className="ml-2 flex flex-col gap-1">
@@ -196,10 +187,19 @@ export function AppearanceConfig({ appearanceConfig, refetchConfig }: Props) {
 					)}
 
 					{address && (
-						<ConfigurationDetails
-							title={i18n.t("Address")}
-							value={address.content}
-						/>
+						<div className="flex flex-col">
+							<p className="text-sm">
+								<span className="text-gray-500">
+									{i18n.t("Address")}:{" "}
+								</span>
+							</p>
+							<div
+								className="flex-1 my-1 ml-2 text-sm"
+								dangerouslySetInnerHTML={{
+									__html: DOMPurify.sanitize(address.content),
+								}}
+							/>
+						</div>
 					)}
 				</div>
 
