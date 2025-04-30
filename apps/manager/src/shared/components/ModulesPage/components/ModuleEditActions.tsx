@@ -10,15 +10,15 @@ import { useSaveModule } from "../hooks/save";
 export function ModuleEditActions() {
 	const { moduleId } = useParams({ from: "/modules/_provider/$moduleId" });
 	const { save } = useSaveModule(moduleId);
-	const { handleSubmit, formState, getValues } = useFormContext<AppModule>();
+	const { handleSubmit, formState } = useFormContext<AppModule>();
 	const navigate = useNavigate();
 	const { show } = useAlert(
 		({ message }) => message,
 		({ type }) => ({ ...type, duration: 3000 }),
 	);
-	const values = getValues();
-	const onError = (e) => {
-		console.log(e);
+
+	const onError = (error) => {
+		console.error(error);
 		show({
 			message: i18n.t("Please fix the validation errors before saving"),
 			type: { critical: true },

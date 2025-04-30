@@ -13,9 +13,9 @@ import { NavigationBar } from "@/components/NavigationBar";
 
 import "react-grid-layout/css/styles.css";
 import "react-resizable/css/styles.css";
-import { ModalsProvider } from "@mantine/modals";
 import { Providers } from "@/components/Providers";
 import { getAppearanceConfig } from "@/utils/config/appConfig";
+import { env } from "@/utils/env";
 
 export async function generateMetadata() {
 	return await getAppMetadata();
@@ -28,6 +28,7 @@ export default async function RootLayout({
 }>) {
 	const config = await getAppearanceConfig();
 	const systemInfo = await getSystemInfo();
+	const contextPath = env.CONTEXT_PATH ?? "";
 
 	if (!config) {
 		return (
@@ -53,12 +54,13 @@ export default async function RootLayout({
 			</head>
 			<body>
 				<Providers config={config.appearanceConfig}>
-					<ModalsProvider>
-						<NavigationBar />
-						<DHIS2AppProvider systemInfo={systemInfo}>
-							{children}
-						</DHIS2AppProvider>
-					</ModalsProvider>
+					<NavigationBar />
+					<DHIS2AppProvider
+						contextPath={contextPath}
+						systemInfo={systemInfo}
+					>
+						{children}
+					</DHIS2AppProvider>
 				</Providers>
 			</body>
 		</html>
