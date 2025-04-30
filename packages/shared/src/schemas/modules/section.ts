@@ -12,12 +12,20 @@ export enum SectionType {
 	FLEXIBLE_LAYOUT = "FLEXIBLE_LAYOUT",
 }
 
+export enum SectionDisplay {
+	HORIZONTAL = "Horizontal",
+	VERTICAL = "Vertical",
+}
+
 export const sectionType = z.nativeEnum(SectionType);
 export const baseSectionSchema = z.object({
 	id: z.string(),
 	title: z.string(),
+	sortOrder: z.number(),
 	type: sectionType,
 });
+
+export type BaseSectionConfig = z.infer<typeof baseSectionSchema>;
 
 export const gridLayoutSectionSchema = baseSectionSchema.extend({
 	type: z.literal("GRID_LAYOUT"),
@@ -52,6 +60,7 @@ export type Section = z.infer<typeof sectionSchema>;
 
 export const sectionModuleConfigSchema = baseModuleSchema.extend({
 	type: z.literal(ModuleType.SECTION),
+	sectionDisplay: z.nativeEnum(SectionDisplay),
 	config: z.object({
 		title: z.string(),
 		sections: z.array(sectionSchema),
