@@ -16,7 +16,7 @@ export function AddSection({
 }) {
 	const { value: hide, setTrue: onHide, setFalse: onShow } = useBoolean(true);
 	const module = useModule() as SectionModuleConfig;
-	const sections = module.config.sections ?? [];
+	const sections = module.config?.sections ?? [];
 
 	return (
 		<>
