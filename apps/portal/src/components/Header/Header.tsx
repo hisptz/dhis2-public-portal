@@ -33,8 +33,7 @@ export function AppHeader({
 	const foregroundColor = backgroundColor
 		? getForeground(backgroundColor)
 		: undefined;
-	const headerBackgroundColor =
-		headerConfig.style?.headerBackgroundColor ?? foregroundColor;
+	const headerBackgroundColor = backgroundColor ?? foregroundColor;
 	const titleTextColor =
 		headerConfig.title.style?.textColor ?? foregroundColor;
 	const titleTextSize = headerConfig.title.style?.textSize ?? 20;
