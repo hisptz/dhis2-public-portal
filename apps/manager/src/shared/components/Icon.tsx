@@ -1,5 +1,5 @@
 import React from "react";
-import styled from "styled-components";
+import DOMPurify from "dompurify";
 
 export interface IconProps {
   icon: string;
@@ -17,5 +17,9 @@ export function StyledIcon({ icon, height = 24, width = 24 }: IconProps) {
     }
   `;
 
-  return <Parent dangerouslySetInnerHTML={{ __html: icon }} />;
+	return (
+		<Parent
+			dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(icon) }}
+		/>
+	);
 }

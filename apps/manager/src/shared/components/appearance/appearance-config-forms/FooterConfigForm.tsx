@@ -111,8 +111,9 @@ export function FooterConfigForm({
 	};
 
 	return (
+		// @Todo: Make this configurable, ensure that the form is not static. It should allow
 		<FormProvider {...form}>
-			<Modal position="middle" onClose={onClose}>
+			<Modal position="middle" onClose={onClose} large>
 				<ModalTitle>{i18n.t("Footer configurations")}</ModalTitle>
 				<ModalContent>
 					<form className="flex flex-col gap-2">

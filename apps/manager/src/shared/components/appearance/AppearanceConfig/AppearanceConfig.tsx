@@ -1,11 +1,9 @@
 import React, { useState } from "react";
 import i18n from "@dhis2/d2-i18n";
-import { map } from "lodash";
 import { AppAppearanceConfig } from "@packages/shared/schemas";
 import { ConfigurationTitle } from "./components/ConfigurationTitle";
 import { ConfigurationDetails } from "./components/ConfigurationDetails";
 import { ConfigurationColor } from "./components/ConfigurationColor";
-import { getTitleCaseFromCamelCase } from "@packages/shared/utils";
 import { Button, IconEdit16 } from "@dhis2/ui";
 import { AppColorConfigForm } from "../appearance-config-forms/AppColorConfigForm";
 import { HeaderConfigForm } from "../appearance-config-forms/HeaderConfigForm";
@@ -17,22 +15,14 @@ type Props = {
 	refetchConfig: () => void;
 };
 
-function getObjectKeyValueArray(
-	object: Record<string, unknown>,
-): Array<{ [key: string]: string }> {
-	return map(object, (value, key) => ({
-		[getTitleCaseFromCamelCase(key)]: `${value}`,
-	}));
-}
-
 export function AppearanceConfig({ appearanceConfig, refetchConfig }: Props) {
 	const [showAppColor, setShowAppColor] = useState(false);
 	const [showHeaderConfig, setShowHeaderConfig] = useState(false);
 	const [showFooterConfig, setShowFooterConfig] = useState(false);
 
-	const { colors, header, footer, title } = appearanceConfig;
+	const { colors, header, footer } = appearanceConfig;
 	const { primary, chartColors, background } = colors;
-	const { title: titleConfigurations, logo, hasMenu, trailingLogo } = header;
+	const { style } = header;
 	const { copyright, footerLinks, address } = footer;
 
 	return (
@@ -40,7 +30,7 @@ export function AppearanceConfig({ appearanceConfig, refetchConfig }: Props) {
 			{/*Application colors configurations*/}
 			<section>
 				<ConfigurationTitle title={i18n.t("Application colors")} />
-				<div className="flex flex-col gap-2">
+				<div className="mx-2 flex flex-col gap-2">
 					<ConfigurationDetails title={"Primary color"}>
 						<ConfigurationColor colorCode={primary} />
 					</ConfigurationDetails>
@@ -83,50 +73,38 @@ export function AppearanceConfig({ appearanceConfig, refetchConfig }: Props) {
 			{/*Header configurations*/}
 			<section>
 				<ConfigurationTitle title={i18n.t("Header configuration")} />
-				<div className="flex flex-col gap-2">
-					<ConfigurationDetails
-						title={i18n.t("Title enabled")}
-						value={logo.enabled ? "Yes" : "No"}
-					/>
-					<ConfigurationDetails
-						title={i18n.t("Title label")}
-						value={title.main}
-					/>
-					{title.subtitle && (
+				<div className="mx-2 flex flex-col gap-2">
+					{style?.headerBackgroundColor &&
+						style?.coloredBackground && (
+							<ConfigurationDetails
+								title={i18n.t("Background color")}
+							>
+								<ConfigurationColor
+									colorCode={style?.headerBackgroundColor}
+								/>
+							</ConfigurationDetails>
+						)}
+
+					{style?.containerHeight && (
 						<ConfigurationDetails
-							title={i18n.t("Subtitle label")}
-							value={title.subtitle}
+							title={i18n.t("Header height")}
+							value={`${style?.containerHeight}px`}
 						/>
 					)}
-					{titleConfigurations?.style && (
-						<ConfigurationDetails title={i18n.t("Title style")}>
-							<div className="ml-2 flex flex-col gap-1">
-								{getObjectKeyValueArray(
-									titleConfigurations.style,
-								).map((item, index) => {
-									const [key, value] =
-										Object.entries(item)[0];
-									return (
-										<ConfigurationDetails
-											key={`${index}-${key}`}
-											title={key}
-											value={value}
-										/>
-									);
-								})}
-							</div>
+
+					{style?.leadingLogo && (
+						<ConfigurationDetails title={i18n.t("Leading logo")}>
+							<img
+								src={style?.leadingLogo.url}
+								alt={i18n.t("Trailing logo")}
+								className="w-16 h-16 object-cover rounded-sm shadow-md border-gray-500"
+							/>
 						</ConfigurationDetails>
 					)}
-					{hasMenu && (
-						<ConfigurationDetails
-							title={i18n.t("Has menu")}
-							value={hasMenu ? "Yes" : "No"}
-						/>
-					)}
-					{trailingLogo && (
+					{style?.trailingLogo && (
 						<ConfigurationDetails title={i18n.t("Trailing logo")}>
 							<img
-								src={trailingLogo}
+								src={style?.trailingLogo.url}
 								alt={i18n.t("Trailing logo")}
 								className="w-16 h-16 object-cover rounded-sm shadow-md border-gray-500"
 							/>
@@ -156,7 +134,7 @@ export function AppearanceConfig({ appearanceConfig, refetchConfig }: Props) {
 			{/*Footer configurations*/}
 			<section>
 				<ConfigurationTitle title={i18n.t("Footer configuration")} />
-				<div className="flex flex-col gap-2">
+				<div className="mx-2 flex flex-col gap-2">
 					{copyright && (
 						<ConfigurationDetails
 							title={i18n.t("Copyright")}
