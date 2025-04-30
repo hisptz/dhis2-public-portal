@@ -29,6 +29,6 @@ jobs:
           context: .
           file: ./apps/portal/Dockerfile
           push: true
-          tags: hisptz/dhis2-public-portal:develop
+          tags: hisptanzania/dhis2-public-portal:develop
           cache-from: type=gha
           cache-to: type=gha,mode=max
