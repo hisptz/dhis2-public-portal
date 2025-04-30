@@ -5,19 +5,19 @@ import React from "react";
 import { useNavigate, useParams } from "@tanstack/react-router";
 import { useAlert } from "@dhis2/app-runtime";
 import { AppModule } from "@packages/shared/schemas";
-import { useSaveModule } from "../../ModulesPage/hooks/save";
+import { useSaveModule } from "../hooks/save";
 
 export function ModuleEditActions() {
 	const { moduleId } = useParams({ from: "/modules/_provider/$moduleId" });
 	const { save } = useSaveModule(moduleId);
-	const { handleSubmit, formState } = useFormContext<AppModule>();
+	const { handleSubmit, formState, getValues } = useFormContext<AppModule>();
 	const navigate = useNavigate();
 	const { show } = useAlert(
 		({ message }) => message,
 		({ type }) => ({ ...type, duration: 3000 }),
 	);
-
-	const onError = () => {
+	const values = getValues();
+	const onError = (e) => {
 		show({
 			message: i18n.t("Please fix the validation errors before saving"),
 			type: { critical: true },
@@ -26,6 +26,7 @@ export function ModuleEditActions() {
 
 	const onSubmit = async (data: AppModule) => {
 		try {
+			console.log(data);
 			await save(data);
 		} catch (error) {
 			show({
