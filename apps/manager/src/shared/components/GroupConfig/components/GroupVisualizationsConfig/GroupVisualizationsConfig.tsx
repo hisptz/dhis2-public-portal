@@ -8,10 +8,15 @@ import {
 	IconLayoutColumns24,
 } from "@dhis2/ui";
 import { GroupVisualizations } from "./components/GroupVisualizations";
-import { useFieldArray} from "react-hook-form";
+import { useFieldArray } from "react-hook-form";
 import { useNavigate, useParams } from "@tanstack/react-router";
 import { useGroupNamePrefix } from "../../hooks/route";
-import {  DisplayItem, DisplayItemType, VisualizationItem, VisualizationModule } from "@packages/shared/schemas";
+import {
+	DisplayItem,
+	DisplayItemType,
+	VisualizationItem,
+	VisualizationModule,
+} from "@packages/shared/schemas";
 import { EditVisualization } from "../../../VisualizationModule/components/AddVisualization/componets/EditVisualization";
 import { AddVisualization } from "../../../VisualizationModule/components/AddVisualization/AddVisualization";
 
@@ -30,7 +35,7 @@ export function GroupVisualizationsConfig() {
 		keyName: "fieldId" as unknown as "id",
 	});
 
-  	const rows = fields.map((field, index) => ({
+	const rows = fields.map((field, index) => ({
 		...field,
 		actions: (
 			<ButtonStrip key={field.id}>
@@ -38,10 +43,13 @@ export function GroupVisualizationsConfig() {
 					<EditVisualization
 						visualization={field.item}
 						onUpdate={(data) =>
-							update(index, { type: DisplayItemType.VISUALIZATION, item: data })
+							update(index, {
+								type: DisplayItemType.VISUALIZATION,
+								item: data,
+							})
 						}
 					/>
-				)}	
+				)}
 				<Button
 					onClick={() => remove(index)}
 					title={i18n.t("Remove")}
