@@ -43,6 +43,25 @@ export function SectionVisualizationsConfig() {
 		keyName: "fieldId" as unknown as "id",
 	});
 
+	const {
+		fields: singleItemfield,
+		remove: singleItemRemove,
+		update: singleItemUpdate,
+		append: singleItemAppend,
+	} = useFieldArray<
+		{
+			config: {
+				sections: {
+					item: any;
+				};
+			};
+		},
+		`config.sections.${number}.item`
+	>({
+		name: `${namePrefix}.item`,
+		keyName: "fieldId" as unknown as "id",
+	});
+
 	const rows = fields.map((field, index) => ({
 		...field,
 		actions: (
@@ -66,18 +85,39 @@ export function SectionVisualizationsConfig() {
 			</ButtonStrip>
 		),
 	}));
-
-	const onAddVisualization = (visualization: VisualizationItem) => {
-		const displayItem: DisplayItem = {
-			type: DisplayItemType.VISUALIZATION,
-			item: visualization,
-		};
-		append(displayItem);
-	};
-
 	const sectionType = useWatch({
 		name: `config.sections.${sectionIndex}.type`,
 	});
+
+	const onAddVisualization = (visualization: VisualizationItem) => {
+		if (sectionType == SectionType.SINGLE_ITEM) {
+			const displayItem: DisplayItem = {
+				type: DisplayItemType.VISUALIZATION,
+				item: {
+					...visualization,
+				},
+			};
+			singleItemAppend(displayItem);
+		} else {
+			const displayItem: DisplayItem =
+				sectionType === SectionType.GRID_LAYOUT
+					? {
+							type: DisplayItemType.SINGLE_VALUE,
+							item: {
+								...visualization,
+								icon: "",
+							},
+						}
+					: {
+							type: DisplayItemType.VISUALIZATION,
+							item: {
+								...visualization,
+							},
+						};
+
+			append(displayItem);
+		}
+	};
 
 	const singleItemValue = useWatch({
 		name: `config.sections.${sectionIndex}.item`,
@@ -110,8 +150,6 @@ export function SectionVisualizationsConfig() {
 				return <div>Display Type not supported yet</div>;
 		}
 	};
-
-	console.log(singleItemValue);
 
 	return (
 		<div className="flex-1 w-full flex flex-col gap-2">
