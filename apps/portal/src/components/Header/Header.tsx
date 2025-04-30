@@ -53,11 +53,11 @@ export function AppHeader({
 			: config.title.style?.align === "right"
 				? "flex-end"
 				: "flex-start";
-	const trailingLogoSizeHeight =
-		config.style?.trailingLogoSize?.height ?? 100;
-	const trailingLogoSizeWidth = config.style?.trailingLogoSize?.width ?? 100;
-	const leadingLogoSizeHeight = config.style?.leadingLogoSize?.height ?? 200;
-	const leadingLogoSizeWidth = config.style?.leadingLogoSize?.width ?? 400;
+
+	const trailingLogoSizeHeight = config.style?.trailingLogo?.height ?? 100;
+	const trailingLogoSizeWidth = config.style?.trailingLogo?.width ?? 100;
+	const leadingLogoSizeHeight = config.style?.leadingLogo?.height ?? 200;
+	const leadingLogoSizeWidth = config.style?.leadingLogo?.width ?? 400;
 
 	return (
 		<AppShell.Header p={0} bg={headerBackgroundColor}>
@@ -120,13 +120,13 @@ export function AppHeader({
 						)}
 					</Container>
 				</Stack>
-				{config.trailingLogo && (
+				{config.style?.trailingLogo?.url && (
 					<Image
 						component={NextImage}
 						width={trailingLogoSizeWidth}
 						height={trailingLogoSizeHeight}
 						alt="logo"
-						src={config.trailingLogo}
+						src={config.style?.trailingLogo?.url}
 						hiddenFrom="!xs"
 						fallbackSrc="https://avatars.githubusercontent.com/u/1089987?s=200&v=4"
 					/>

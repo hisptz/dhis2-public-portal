@@ -13,5 +13,5 @@ const envSchema = z.object({
 export const env = envSchema.safeParse(process.env).data ?? {
 	DHIS2_BASE_URL: "http://localhost:8080",
 	DHIS2_BASE_PAT_TOKEN: "d2_pat-placeholder",
-	CONTEXT_PATH: "/publicportal/demo",
+	CONTEXT_PATH: "",
 };

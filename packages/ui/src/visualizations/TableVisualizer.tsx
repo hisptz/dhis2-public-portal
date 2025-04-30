@@ -27,8 +27,6 @@ export function TableVisualizer({
 					? `calc(100dvh - 96px)`
 					: `calc(100% - 48px)`,
 			}}
-			/*
-	 // @ts-expect-error library fix */
 			analytics={analytics}
 			config={{
 				options: {

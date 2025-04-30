@@ -15,9 +15,10 @@
   "dependencies": {
     "@dhis2/app-runtime": "^3.14.1",
     "@dhis2/multi-calendar-dates": "^2.1.0",
-    "@hisptz/dhis2-analytics": "^2.1.0",
+    "@dhis2/ui": "^10.5.1",
+    "@hisptz/dhis2-analytics": "^2.1.1",
     "@hisptz/dhis2-ui": "^2.0.29",
-    "@hisptz/dhis2-utils": "^2.0.17",
+    "@hisptz/dhis2-utils": "^2.0.18",
     "@hookform/resolvers": "^5.0.1",
     "@mantine/core": "^7.17.4",
     "@mantine/dates": "^7.17.4",

@@ -5,8 +5,8 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
-"POT-Creation-Date: 2025-04-30T06:03:46.914Z\n"
-"PO-Revision-Date: 2025-04-30T06:03:46.914Z\n"
+"POT-Creation-Date: 2025-04-30T10:03:09.699Z\n"
+"PO-Revision-Date: 2025-04-30T10:03:09.700Z\n"
 
 msgid "Could not get Appearance configurations"
 msgstr "Could not get Appearance configurations"
@@ -239,42 +239,6 @@ msgstr "There are no modules configuration present"
 msgid "Could not save changes"
 msgstr "Could not save changes"
 
-msgid "Section"
-msgstr "Section"
-
-msgid "Back to Module"
-msgstr "Back to Module"
-
-msgid "Item Type"
-msgstr "Item Type"
-
-msgid "Select Item type"
-msgstr "Select Item type"
-
-msgid "Add Section"
-msgstr "Add Section"
-
-msgid "Create Section"
-msgstr "Create Section"
-
-msgid "Please select the display type of this section first"
-msgstr "Please select the display type of this section first"
-
-msgid "Create section"
-msgstr "Create section"
-
-msgid "Save section changes"
-msgstr "Save section changes"
-
-msgid "Display type"
-msgstr "Display type"
-
-msgid "Select display type"
-msgstr "Select display type"
-
-msgid "Sections"
-msgstr "Sections"
-
 msgid "Add Item"
 msgstr "Add Item"
 
@@ -374,20 +338,14 @@ msgstr "Application colors"
 msgid "Header configuration"
 msgstr "Header configuration"
 
-msgid "Title enabled"
-msgstr "Title enabled"
+msgid "Background color"
+msgstr "Background color"
 
-msgid "Title label"
-msgstr "Title label"
+msgid "Header height"
+msgstr "Header height"
 
-msgid "Subtitle label"
-msgstr "Subtitle label"
-
-msgid "Title style"
-msgstr "Title style"
-
-msgid "Has menu"
-msgstr "Has menu"
+msgid "Leading logo"
+msgstr "Leading logo"
 
 msgid "Trailing logo"
 msgstr "Trailing logo"
@@ -411,11 +369,11 @@ msgid "Missing Appearance configurations"
 msgstr "Missing Appearance configurations"
 
 msgid ""
-"There are no appearance configurations yet. Click the below button to "
-"create one."
+"There are no appearance configurations yet. Refresh the browser to import "
+"the default configurations."
 msgstr ""
-"There are no appearance configurations yet. Click the below button to "
-"create one."
+"There are no appearance configurations yet. Refresh the browser to import "
+"the default configurations."
 
 msgid "Color configurations updated successfully"
 msgstr "Color configurations updated successfully"
@@ -435,9 +393,6 @@ msgstr "Application Color Configurations"
 msgid "Primary color"
 msgstr "Primary color"
 
-msgid "Background color"
-msgstr "Background color"
-
 msgid "Chart colors"
 msgstr "Chart colors"
 
@@ -452,6 +407,63 @@ msgstr "Footer configurations"
 
 msgid "Footer links label"
 msgstr "Footer links label"
+
+msgid "Header configurations updated successfully"
+msgstr "Header configurations updated successfully"
+
+msgid "Error updating header configurations"
+msgstr "Error updating header configurations"
+
+msgid "Header configurations"
+msgstr "Header configurations"
+
+msgid "Title styles"
+msgstr "Title styles"
+
+msgid "Subtitle styles"
+msgstr "Subtitle styles"
+
+msgid "Hide advanced options"
+msgstr "Hide advanced options"
+
+msgid "Show advanced options"
+msgstr "Show advanced options"
+
+msgid "Header styles"
+msgstr "Header styles"
+
+msgid "Show colored background"
+msgstr "Show colored background"
+
+msgid "Background Color"
+msgstr "Background Color"
+
+msgid "Logo url"
+msgstr "Logo url"
+
+msgid "Width"
+msgstr "Width"
+
+msgid "Height"
+msgstr "Height"
+
+msgid "Center"
+msgstr "Center"
+
+msgid "Left"
+msgstr "Left"
+
+msgid "Right"
+msgstr "Right"
+
+msgid "Alignment"
+msgstr "Alignment"
+
+msgid "Text size"
+msgstr "Text size"
+
+msgid "Text color"
+msgstr "Text color"
 
 msgid "Add"
 msgstr "Add"

@@ -1,10 +1,21 @@
 import { z } from "zod";
 import { analyticsDimensionSchema } from "./visualization";
 
+export enum MapLayerType {
+	THEMATIC = "thematic",
+	ORG_UNIT = "orgUnit",
+}
+
+export enum ThematicMapType {
+	CHOROPLETH = "choropleth",
+	BUBBLE = "bubble",
+}
+
 const mapSchema = z.object({
 	id: z.string(),
-	basemap: z.string(),
+	basemap: z.string().optional(),
 	name: z.string(),
+	zoom: z.number(),
 	mapViews: z.array(
 		z.object({
 			id: z.string(),
@@ -20,12 +31,16 @@ const mapSchema = z.object({
 			organisationUnits: z.array(
 				z.object({ id: z.string(), path: z.string() }),
 			),
+			thematicMapType: z.nativeEnum(ThematicMapType),
+			layer: z.nativeEnum(MapLayerType),
 			organisationUnitLevels: z.array(z.number()),
 			itemOrganisationUnitGroups: z.array(z.string()),
 			organisationUnitGroupSetDimensions: z.array(
 				z.object({ id: z.string() }),
 			),
 			name: z.string(),
+			radiusHigh: z.number().optional(),
+			radiusLow: z.number().optional(),
 			dataDimensionItems: z.array(
 				z
 					.object({
@@ -46,7 +61,12 @@ const mapSchema = z.object({
 				z.object({
 					id: z.string(),
 					dimension: analyticsDimensionSchema,
-					items: z.array(z.object({ id: z.string() })),
+					items: z.array(
+						z.object({
+							id: z.string(),
+							dimensionItemType: z.string(),
+						}),
+					),
 				}),
 			),
 			displayName: z.string(),
