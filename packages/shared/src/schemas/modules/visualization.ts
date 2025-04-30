@@ -29,10 +29,6 @@ export const visualizationGroupSchema = z.object({
 });
 
 export const baseVisualizationModuleSchema = z.object({
-	type: z.literal(ModuleType.VISUALIZATION),
-	id: z
-		.string()
-		.regex(/^\S*$/, { message: i18n.t("ID should not contain a space") }),
 	title: z.string(),
 	grouped: z.boolean(),
 	preamble: z.string().optional(),
@@ -41,7 +37,6 @@ export const baseVisualizationModuleSchema = z.object({
 
 export const groupedVisualizationModuleSchema =
 	baseVisualizationModuleSchema.extend({
-		type: z.literal(ModuleType.VISUALIZATION),
 		grouped: z.literal(true),
 		groups: z.array(visualizationGroupSchema),
 	});
@@ -53,7 +48,6 @@ export type GroupedVisualizationModuleConfig = z.infer<
 export type VisualizationGroup = z.infer<typeof visualizationGroupSchema>;
 export const nonGroupedVisualizationModuleSchema =
 	baseVisualizationModuleSchema.extend({
-		type: z.literal(ModuleType.VISUALIZATION),
 		grouped: z.literal(false),
 		items: z.array(displayItemSchema),
 		layouts: layoutSchema,
