@@ -46,9 +46,6 @@ export function MapVisualizer({
 	periodSelection,
 	orgUnitSelection,
 }: MapViewProps) {
-	console.log({
-		mapConfig,
-	});
 	const thematicLayers = useMemo(() => {
 		return mapConfig.mapViews
 			.filter((view) => view.layer.includes(MapLayerType.THEMATIC))
@@ -120,10 +117,6 @@ export function MapVisualizer({
 
 		return getOrgUnitSelectionFromIds(orgUnitConfig);
 	}, [mapConfig.mapViews, orgUnitSelection]);
-
-	console.log({
-		thematicLayers,
-	});
 
 	return (
 		<DHIS2Map
