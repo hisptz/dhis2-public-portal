@@ -36,13 +36,43 @@ This requires you to have a [vercel](https://vercel.com/) account.
 [![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/hisptz/dhis2-public-portal&env=DHIS2_BASE_URL,DHIS2_BASE_PAT_TOKEN&envDescription=The%20DHIS2%20base%20URL%20and%20PAT%20token%20variables%20enable%20you%20to%20connect%20your%20deployed%20portal%20to%20a%20DHIS2%20instance&project-name=dhis2-public-portal&repository-name=dhis2-public-portal&root-directory=apps/portal&install-command=yarn%20install&build-command=turbo%20build%20--filter%20portal&skip-unaffected=true)
 
 #### Docker
-You can the portal app in docker by using docker.
+You can run the portal app in docker by using the following command:
 
 ```bash
-
-docker run example will be shown here
-
+docker run -d \
+  -p 3000:3000 \
+  -e DHIS2_BASE_URL=https://your-dhis2-instance.org \
+  -e DHIS2_BASE_PAT_TOKEN=your-personal-access-token \
+  -e CONTEXT_PATH="" \
+  --name dhis2-public-portal \
+  hisptz/dhis2-public-portal:latest
 ```
 
-You can also use `docker compose` with this docker-compose.yml file
+You can also use `docker compose` with this docker-compose.yml file:
 
+```yaml
+version: '3'
+services:
+  portal:
+    image: hisptz/dhis2-public-portal:latest
+    ports:
+      - "3000:3000"
+    environment:
+      - DHIS2_BASE_URL=https://your-dhis2-instance.org
+      - DHIS2_BASE_PAT_TOKEN=your-personal-access-token
+      - CONTEXT_PATH=""
+```
+
+Save this to a file named `docker-compose.yml` and run:
+
+```bash
+docker-compose up -d
+```
+
+### Environment Variables
+
+The following environment variables are required:
+
+- `DHIS2_BASE_URL`: The URL of your DHIS2 instance
+- `DHIS2_BASE_PAT_TOKEN`: A Personal Access Token for your DHIS2 instance
+- `CONTEXT_PATH`: The context path for the application (default: "")
