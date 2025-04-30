@@ -80,6 +80,7 @@ export function SectionVisualizationsConfig() {
 					...visualization,
 				},
 			};
+
 			setValue(`config.sections.${sectionIndex}.item`, displayItem);
 		} else {
 			const displayItem: DisplayItem =
@@ -107,36 +108,40 @@ export function SectionVisualizationsConfig() {
 	});
 
 	const DisplaySingleItemSelector = (item: DisplayItem) => {
-		const singleItemVisualization = [item].map((item, index) => {
-			return {
-				...item,
-				actions: (
-					<ButtonStrip key={item.item.id}>
-						{item.type === DisplayItemType.VISUALIZATION && (
-							<EditVisualization
-								visualization={item.item}
-								onUpdate={(data) => {
-									setValue(
-										`config.sections.${sectionIndex}.item`,
-										{
-											type: DisplayItemType.VISUALIZATION,
-											item: data,
-										},
-									);
-								}}
+		const singleItemVisualization = [singleItemValue]?.map(
+			(item, index) => {
+				return {
+					...item,
+					actions: (
+						<ButtonStrip key={item?.item?.id}>
+							{
+								<EditVisualization
+									visualization={item.item}
+									onUpdate={(data) => {
+										setValue(
+											`config.sections.${sectionIndex}.item`,
+											{
+												type: DisplayItemType.VISUALIZATION,
+												item: {
+													...data,
+												},
+											},
+										);
+									}}
+								/>
+							}
+							<Button
+								onClick={() => remove(index)}
+								title={i18n.t("Remove")}
+								icon={<IconDelete16 />}
 							/>
-						)}
-						<Button
-							onClick={() => remove(index)}
-							title={i18n.t("Remove")}
-							icon={<IconDelete16 />}
-						/>
-					</ButtonStrip>
-				),
-			};
-		});
+						</ButtonStrip>
+					),
+				};
+			},
+		);
 
-		switch (item.type) {
+		switch (item?.type) {
 			case DisplayItemType.VISUALIZATION:
 			case DisplayItemType.SINGLE_VALUE:
 				return (
@@ -147,6 +152,7 @@ export function SectionVisualizationsConfig() {
 							</ButtonStrip>
 						)}
 						<Divider />
+
 						<SectionVisualizations
 							visualizations={singleItemVisualization}
 						/>
