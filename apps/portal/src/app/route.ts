@@ -10,7 +10,6 @@ export async function GET() {
 		namespace: DatastoreNamespaces.MAIN_CONFIG,
 		key: "menu",
 	});
-
 	const firstMenu = sortBy(menuConfig?.items, "sortOrder")[0];
 
 	if (firstMenu.type === "module") {

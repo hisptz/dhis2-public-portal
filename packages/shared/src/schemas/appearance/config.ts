@@ -26,7 +26,6 @@ export const appColorConfig = z.object({
 export type AppColorConfig = z.infer<typeof appColorConfig>;
 
 export const styleConfig = z.object({
-	center: z.boolean(),
 	align: z.enum(["left", "center", "right"]).optional(),
 	textColor: z.string().optional(),
 	textSize: z.number().optional(),

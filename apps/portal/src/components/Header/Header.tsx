@@ -23,13 +23,11 @@ export function AppHeader({
 	opened,
 	toggle,
 	title,
-	logo,
 	menuConfig,
 }: {
 	config: HeaderConfig;
 	menuConfig: AppMenuConfig;
 	title: AppTitleConfig;
-	logo: string;
 	opened: boolean;
 	toggle: () => void;
 }) {
@@ -53,11 +51,13 @@ export function AppHeader({
 			: config.title.style?.align === "right"
 				? "flex-end"
 				: "flex-start";
-	const trailingLogoSizeHeight =
-		config.style?.trailingLogoSize?.height ?? 100;
-	const trailingLogoSizeWidth = config.style?.trailingLogoSize?.width ?? 100;
-	const leadingLogoSizeHeight = config.style?.leadingLogoSize?.height ?? 200;
-	const leadingLogoSizeWidth = config.style?.leadingLogoSize?.width ?? 400;
+
+	const headerSubtitleStackAlign =
+		config.subtitle.style?.align === "center"
+			? "center"
+			: config.subtitle.style?.align === "right"
+				? "flex-end"
+				: "flex-start";
 
 	return (
 		<AppShell.Header p={0} bg={headerBackgroundColor}>
@@ -72,10 +72,10 @@ export function AppHeader({
 				{config.logo.enabled && (
 					<Image
 						component={NextImage}
-						width={leadingLogoSizeWidth}
-						height={leadingLogoSizeHeight}
+						width={config.style?.leadingLogo?.width ?? 100}
+						height={config.style?.leadingLogo?.height ?? 100}
 						alt="logo"
-						src={logo}
+						src={config.style?.leadingLogo?.url}
 						visibleFrom="sm"
 						fallbackSrc="https://avatars.githubusercontent.com/u/1089987?s=200&v=4"
 					/>
@@ -89,14 +89,10 @@ export function AppHeader({
 				>
 					<Stack p="sm" flex={1} justify="space-between" gap={0}>
 						<Title
-							// bg={
-							// 	config.style?.coloredBackground
-							// 		? theme.primaryColor
-							// 		: undefined
-							// }
 							c={titleTextColor}
 							style={{
 								fontSize: titleTextSize,
+								alignSelf: headerTitleStackAlign,
 							}}
 							order={2}
 						>
@@ -108,6 +104,7 @@ export function AppHeader({
 								order={4}
 								style={{
 									fontSize: subtitleTextSize,
+									alignSelf: headerSubtitleStackAlign,
 								}}
 							>
 								{title.subtitle}
@@ -120,13 +117,13 @@ export function AppHeader({
 						)}
 					</Container>
 				</Stack>
-				{config.trailingLogo && (
+				{config.style?.trailingLogo && (
 					<Image
 						component={NextImage}
-						width={trailingLogoSizeWidth}
-						height={trailingLogoSizeHeight}
+						width={config.style?.trailingLogo?.width ?? 100}
+						height={config.style?.trailingLogo?.height ?? 100}
 						alt="logo"
-						src={config.trailingLogo}
+						src={config.style?.trailingLogo?.url}
 						hiddenFrom="!xs"
 						fallbackSrc="https://avatars.githubusercontent.com/u/1089987?s=200&v=4"
 					/>
