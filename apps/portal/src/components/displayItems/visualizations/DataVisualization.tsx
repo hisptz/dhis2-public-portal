@@ -6,7 +6,7 @@ import {
 	VisualizationChartType,
 	VisualizationConfig,
 } from "@packages/shared/schemas";
-import { getAppearanceConfig } from "@/utils/theme";
+import { getAppearanceConfig } from "@/utils/config/appConfig";
 import { YearOverYearDataVisComponent } from "@/components/displayItems/visualizations/YearOverYearDataVisComponent";
 
 export interface MainVisualizationProps {
