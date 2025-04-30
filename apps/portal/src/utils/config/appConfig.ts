@@ -1,6 +1,7 @@
 import { dhis2HttpClient } from "@/utils/api/dhis2";
 import { Pagination } from "@hisptz/dhis2-utils";
 import { DatastoreNamespaces } from "@packages/shared/constants";
+import { AppAppearanceConfig, AppMenuConfig } from "@packages/shared/schemas";
 
 const appConfigKeys = [
 	"dashboards",
@@ -46,4 +47,25 @@ export async function getAppConfigsFromNamespace<T>(
 		},
 	});
 	return response.entries.map(({ value }) => value);
+}
+
+export async function getAppearanceConfig() {
+	const appearanceConfig =
+		await getAppConfigWithNamespace<AppAppearanceConfig>({
+			namespace: DatastoreNamespaces.MAIN_CONFIG,
+			key: "appearance",
+		});
+
+	const menuConfig = await getAppConfigWithNamespace<AppMenuConfig>({
+		namespace: DatastoreNamespaces.MAIN_CONFIG,
+		key: "menu",
+	});
+
+	if (!appearanceConfig || !menuConfig) {
+		return;
+	}
+	return {
+		appearanceConfig,
+		menuConfig,
+	};
 }
