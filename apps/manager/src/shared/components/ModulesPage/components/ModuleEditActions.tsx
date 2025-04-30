@@ -18,6 +18,7 @@ export function ModuleEditActions() {
 	);
 	const values = getValues();
 	const onError = (e) => {
+		console.log(e);
 		show({
 			message: i18n.t("Please fix the validation errors before saving"),
 			type: { critical: true },
@@ -26,7 +27,6 @@ export function ModuleEditActions() {
 
 	const onSubmit = async (data: AppModule) => {
 		try {
-			console.log(data);
 			await save(data);
 		} catch (error) {
 			show({
