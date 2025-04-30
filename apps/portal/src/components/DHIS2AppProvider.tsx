@@ -21,23 +21,24 @@ const NoSsrAppProvider: ComponentType<any> = dynamic(
 export function DHIS2AppProvider({
 	children,
 	systemInfo,
+	contextPath,
 }: {
 	children: ReactNode;
 	systemInfo: D2SystemInfo;
+	contextPath: string;
 }) {
-	const { contextPath, version } = systemInfo ?? {};
-	const [, minor] = version.split(".") ?? [];
+	if (typeof window === "undefined") {
+		return null;
+	}
 
+	const [, minor] = systemInfo.version.split(".") ?? [];
 	return (
 		<QueryClientProvider client={queryClient}>
 			<NoSsrAppProvider
 				config={{
-					baseUrl: "",
+					baseUrl: `${window.location.protocol}//${window.location.host}${contextPath ?? ""}`,
 					apiVersion: minor,
-					systemInfo: {
-						contextPath,
-						version,
-					},
+					systemInfo,
 				}}
 				plugin={{}}
 				parentAlertsAdd={{}}
