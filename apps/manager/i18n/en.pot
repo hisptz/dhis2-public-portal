@@ -5,8 +5,8 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
-"POT-Creation-Date: 2025-04-29T13:55:54.969Z\n"
-"PO-Revision-Date: 2025-04-29T13:55:54.969Z\n"
+"POT-Creation-Date: 2025-04-29T16:35:05.695Z\n"
+"PO-Revision-Date: 2025-04-29T16:35:05.695Z\n"
 
 msgid "Could not get Appearance configurations"
 msgstr "Could not get Appearance configurations"
@@ -214,6 +214,30 @@ msgstr "There are no modules configuration present"
 
 msgid "Could not save changes"
 msgstr "Could not save changes"
+
+msgid "Section"
+msgstr "Section"
+
+msgid "Back to Module"
+msgstr "Back to Module"
+
+msgid "Items"
+msgstr "Items"
+
+msgid "Add Section"
+msgstr "Add Section"
+
+msgid "Create Section"
+msgstr "Create Section"
+
+msgid "Create section"
+msgstr "Create section"
+
+msgid "Save section changes"
+msgstr "Save section changes"
+
+msgid "Sections"
+msgstr "Sections"
 
 msgid "Short Description"
 msgstr "Short Description"
