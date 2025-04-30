@@ -8,7 +8,7 @@ import {
 	IconLayoutColumns24,
 } from "@dhis2/ui";
 import { SectionVisualizations } from "./components/SectionVisualizations";
-import { useFieldArray, useWatch } from "react-hook-form";
+import { useFieldArray, useFormContext, useWatch } from "react-hook-form";
 import { useNavigate, useParams } from "@tanstack/react-router";
 import { useSectionNamePrefix } from "../../hooks/route";
 import {
@@ -43,24 +43,7 @@ export function SectionVisualizationsConfig() {
 		keyName: "fieldId" as unknown as "id",
 	});
 
-	const {
-		fields: singleItemfield,
-		remove: singleItemRemove,
-		update: singleItemUpdate,
-		append: singleItemAppend,
-	} = useFieldArray<
-		{
-			config: {
-				sections: {
-					item: any;
-				};
-			};
-		},
-		`config.sections.${number}.item`
-	>({
-		name: `${namePrefix}.item`,
-		keyName: "fieldId" as unknown as "id",
-	});
+	const { setValue } = useFormContext();
 
 	const rows = fields.map((field, index) => ({
 		...field,
@@ -97,7 +80,7 @@ export function SectionVisualizationsConfig() {
 					...visualization,
 				},
 			};
-			singleItemAppend(displayItem);
+			setValue(`config.sections.${sectionIndex}.item`, displayItem);
 		} else {
 			const displayItem: DisplayItem =
 				sectionType === SectionType.GRID_LAYOUT
@@ -124,18 +107,49 @@ export function SectionVisualizationsConfig() {
 	});
 
 	const DisplaySingleItemSelector = (item: DisplayItem) => {
+		const singleItemVisualization = [item].map((item, index) => {
+			return {
+				...item,
+				actions: (
+					<ButtonStrip key={item.item.id}>
+						{item.type === DisplayItemType.VISUALIZATION && (
+							<EditVisualization
+								visualization={item.item}
+								onUpdate={(data) => {
+									setValue(
+										`config.sections.${sectionIndex}.item`,
+										{
+											type: DisplayItemType.VISUALIZATION,
+											item: data,
+										},
+									);
+								}}
+							/>
+						)}
+						<Button
+							onClick={() => remove(index)}
+							title={i18n.t("Remove")}
+							icon={<IconDelete16 />}
+						/>
+					</ButtonStrip>
+				),
+			};
+		});
+
 		switch (item.type) {
 			case DisplayItemType.VISUALIZATION:
 			case DisplayItemType.SINGLE_VALUE:
 				return (
 					<>
-						{rows.length != 1 && (
+						{singleItemVisualization.length != 1 && (
 							<ButtonStrip end>
 								<AddVisualization onAdd={onAddVisualization} />
 							</ButtonStrip>
 						)}
 						<Divider />
-						<SectionVisualizations visualizations={rows} />
+						<SectionVisualizations
+							visualizations={singleItemVisualization}
+						/>
 					</>
 				);
 			case DisplayItemType.RICH_TEXT:
