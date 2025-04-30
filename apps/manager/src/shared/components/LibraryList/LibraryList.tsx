@@ -38,12 +38,12 @@ export function LibraryList() {
 							small
 							icon={<IconView16 />}
 							onClick={() => {
-								// navigate({
-								// 	to: "/library/$libraryId/edit",
-								// 	params: {
-								// 		libraryId: library.id,
-								// 	},
-								// });
+								navigate({
+									to: "/library/$libraryId/edit",
+									params: {
+										libraryId: library.id,
+									},
+								});
 							}}
 						/>
 					</ButtonStrip>

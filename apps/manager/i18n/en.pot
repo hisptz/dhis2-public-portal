@@ -5,8 +5,8 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
-"POT-Creation-Date: 2025-04-29T11:27:10.460Z\n"
-"PO-Revision-Date: 2025-04-29T11:27:10.461Z\n"
+"POT-Creation-Date: 2025-04-30T05:51:06.624Z\n"
+"PO-Revision-Date: 2025-04-30T05:51:06.625Z\n"
 
 msgid "Could not get Appearance configurations"
 msgstr "Could not get Appearance configurations"
@@ -34,6 +34,15 @@ msgstr "Saving..."
 
 msgid "Save changes"
 msgstr "Save changes"
+
+msgid "Back to all libraries"
+msgstr "Back to all libraries"
+
+msgid "Library"
+msgstr "Library"
+
+msgid "Libraries"
+msgstr "Libraries"
 
 msgid "Layout editor"
 msgstr "Layout editor"
@@ -125,8 +134,32 @@ msgstr "Creating..."
 msgid "Create library"
 msgstr "Create library"
 
+msgid "Delete library"
+msgstr "Delete library"
+
+msgid "Deleting..."
+msgstr "Deleting..."
+
+msgid "Delete"
+msgstr "Delete"
+
+msgid "Library deleted successfully"
+msgstr "Library deleted successfully"
+
+msgid "Could not delete library"
+msgstr "Could not delete library"
+
+msgid "Are you sure you want to delete the library "
+msgstr "Are you sure you want to delete the library "
+
+msgid "This action is irreversible"
+msgstr "This action is irreversible"
+
 msgid "Title description"
 msgstr "Title description"
+
+msgid "Could not save form, check the logs for more information"
+msgstr "Could not save form, check the logs for more information"
 
 msgid "Label"
 msgstr "Label"
@@ -160,12 +193,6 @@ msgstr "This will delete all files and sub groups in this group as well."
 
 msgid "This action is irreversible."
 msgstr "This action is irreversible."
-
-msgid "Deleting..."
-msgstr "Deleting..."
-
-msgid "Delete"
-msgstr "Delete"
 
 msgid "Delete group"
 msgstr "Delete group"
@@ -230,6 +257,9 @@ msgstr "Has sub groups"
 msgid "There are no sub groups present"
 msgstr "There are no sub groups present"
 
+msgid "Could not save changes"
+msgstr "Could not save changes"
+
 msgid "Name"
 msgstr "Name"
 
@@ -262,9 +292,6 @@ msgstr "There are no modules matching the selected type."
 
 msgid "There are no dashboard configuration present"
 msgstr "There are no dashboard configuration present"
-
-msgid "Could not save changes"
-msgstr "Could not save changes"
 
 msgid "Short Description"
 msgstr "Short Description"
@@ -346,9 +373,6 @@ msgstr "Delete module"
 
 msgid "Are you sure you want to delete the module "
 msgstr "Are you sure you want to delete the module "
-
-msgid "This action is irreversible"
-msgstr "This action is irreversible"
 
 msgid "Welcome to the public portal manager!"
 msgstr "Welcome to the public portal manager!"

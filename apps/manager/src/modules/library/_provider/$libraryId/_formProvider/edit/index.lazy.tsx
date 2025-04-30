@@ -7,6 +7,7 @@ import { LibraryConfigPage } from "../../../../../../shared/components/LibraryCo
 import React from "react";
 import { useLibrary } from "../../../../../../shared/components/LibraryProvider";
 import { DeleteLibrary } from "../../../../../../shared/components/LibraryConfigPage/components/DeleteLibrary";
+import { LibraryEditActions } from "../../../../../../shared/components/LibraryConfigPage/components/LibraryEditActions";
 
 export const Route = createLazyFileRoute(
 	"/library/_provider/$libraryId/_formProvider/edit/",

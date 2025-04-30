@@ -9,7 +9,7 @@ import { PageHeader } from "../../../../../../shared/components/PageHeader";
 import { DeleteDashboard } from "../../../../../../shared/components/VisualizationModule/components/DeleteDashboard";
 import { DashboardEditActions } from "../../../../../../shared/components/VisualizationModule/components/DashboardEditActions";
 import { ModuleType } from "@packages/shared/schemas";
-import { LibraryConfigPage } from "../../../../../../shared/components/LibraryConfigPage/LibraryConfigPage";
+import { LibraryList } from "../../../../../../shared/components/LibraryList/LibraryList";
 
 export const Route = createLazyFileRoute(
 	"/modules/_provider/$moduleId/_formProvider/edit/",
@@ -30,7 +30,7 @@ function RouteComponent() {
 			case ModuleType.VISUALIZATION:
 				return <DashboardConfigPage />;
 			case ModuleType.DOCUMENTS:
-				return <LibraryConfigPage />;
+				return <LibraryList />;
 			default:
 				return (
 					<ErrorPage
@@ -39,6 +39,7 @@ function RouteComponent() {
 				);
 		}
 	};
+	
 	return (
 		<div className="h-full w-full flex flex-col gap-2">
 			<div>
