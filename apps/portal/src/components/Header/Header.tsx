@@ -1,9 +1,5 @@
 "use client";
-import {
-	AppMenuConfig,
-	AppTitleConfig,
-	HeaderConfig,
-} from "@packages/shared/schemas";
+import { AppAppearanceConfig, AppMenuConfig } from "@packages/shared/schemas";
 import {
 	AppShell,
 	Burger,
@@ -12,50 +8,50 @@ import {
 	Image,
 	Stack,
 	Title,
-	useMantineTheme,
 } from "@mantine/core";
 import NextImage from "next/image";
 import { getForeground } from "@packages/shared/utils";
 import { HeaderMenu } from "@/components/AppMenu/HeaderMenu";
+import { getAppTheme } from "@/utils/theme";
 
 export function AppHeader({
 	config,
 	opened,
 	toggle,
-	title,
 	menuConfig,
 }: {
-	config: HeaderConfig;
+	config: AppAppearanceConfig;
 	menuConfig: AppMenuConfig;
-	title: AppTitleConfig;
 	opened: boolean;
 	toggle: () => void;
 }) {
-	const theme = useMantineTheme();
-	const backgroundColor = config.style?.coloredBackground
+	const { header: headerConfig, title } = config;
+	const theme = getAppTheme(config);
+	const backgroundColor = headerConfig.style?.coloredBackground
 		? theme.primaryColor
 		: undefined;
 	const foregroundColor = backgroundColor
 		? getForeground(backgroundColor)
 		: undefined;
 	const headerBackgroundColor =
-		config.style?.headerBackgroundColor ?? foregroundColor;
-	const titleTextColor = config.title.style?.textColor ?? foregroundColor;
-	const titleTextSize = config.title.style?.textSize ?? 20;
+		headerConfig.style?.headerBackgroundColor ?? foregroundColor;
+	const titleTextColor =
+		headerConfig.title.style?.textColor ?? foregroundColor;
+	const titleTextSize = headerConfig.title.style?.textSize ?? 20;
 	const subtitleTextColor =
-		config.subtitle.style?.textColor ?? foregroundColor;
-	const subtitleTextSize = config.subtitle.style?.textSize ?? 14;
+		headerConfig.subtitle.style?.textColor ?? foregroundColor;
+	const subtitleTextSize = headerConfig.subtitle.style?.textSize ?? 14;
 	const headerTitleStackAlign =
-		config.title.style?.align === "center"
+		headerConfig.title.style?.align === "center"
 			? "center"
-			: config.title.style?.align === "right"
+			: headerConfig.title.style?.align === "right"
 				? "flex-end"
 				: "flex-start";
 
 	const headerSubtitleStackAlign =
-		config.subtitle.style?.align === "center"
+		headerConfig.subtitle.style?.align === "center"
 			? "center"
-			: config.subtitle.style?.align === "right"
+			: headerConfig.subtitle.style?.align === "right"
 				? "flex-end"
 				: "flex-start";
 
@@ -69,13 +65,13 @@ export function AppHeader({
 					size="sm"
 				/>
 
-				{config.logo.enabled && (
+				{headerConfig.logo.enabled && (
 					<Image
 						component={NextImage}
-						width={config.style?.leadingLogo?.width ?? 100}
-						height={config.style?.leadingLogo?.height ?? 100}
+						width={headerConfig.style?.leadingLogo?.width ?? 100}
+						height={headerConfig.style?.leadingLogo?.height ?? 100}
 						alt="logo"
-						src={config.style?.leadingLogo?.url}
+						src={headerConfig.style?.leadingLogo?.url}
 						visibleFrom="sm"
 						fallbackSrc="https://avatars.githubusercontent.com/u/1089987?s=200&v=4"
 					/>
@@ -117,13 +113,13 @@ export function AppHeader({
 						)}
 					</Container>
 				</Stack>
-				{config.style?.trailingLogo && (
+				{headerConfig.style?.trailingLogo && (
 					<Image
 						component={NextImage}
-						width={config.style?.trailingLogo?.width ?? 100}
-						height={config.style?.trailingLogo?.height ?? 100}
+						width={headerConfig.style?.trailingLogo?.width ?? 100}
+						height={headerConfig.style?.trailingLogo?.height ?? 100}
 						alt="logo"
-						src={config.style?.trailingLogo?.url}
+						src={headerConfig.style?.trailingLogo?.url}
 						hiddenFrom="!xs"
 						fallbackSrc="https://avatars.githubusercontent.com/u/1089987?s=200&v=4"
 					/>

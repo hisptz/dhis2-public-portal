@@ -3083,6 +3083,11 @@
     clsx "^2.1.1"
     highlight.js "^11.10.0"
 
+"@mantine/colors-generator@^7.17.5":
+  version "7.17.5"
+  resolved "https://registry.yarnpkg.com/@mantine/colors-generator/-/colors-generator-7.17.5.tgz#06f80f406ee86c7e340a5084d87608d09785b7a3"
+  integrity sha512-OEskYYba8760q0t/6Xkyv9b+QYxVKW/0593Vg9Qyvul18EVW7Bq8PhtIiGg26KOn3JXfTRDmt/nKxCBI0OF77A==
+
 "@mantine/core@^7.11.2", "@mantine/core@^7.17.4":
   version "7.17.4"
   resolved "https://registry.yarnpkg.com/@mantine/core/-/core-7.17.4.tgz#a537cc673d3e052da5bbec01bdd77cd87cacd9e1"
@@ -4964,6 +4969,11 @@
   integrity sha512-z9fJ5Im06zvUL548KvYNecEVlA7cVDkGUi6kZusb04mpyEFKCIZJvloCcmpmLaIahDpOQGHaHmG6imtPMmPXGQ==
   dependencies:
     "@types/node" "*"
+
+"@types/chroma-js@^3.1.1":
+  version "3.1.1"
+  resolved "https://registry.yarnpkg.com/@types/chroma-js/-/chroma-js-3.1.1.tgz#92cac57fb32d642ce156dbc4c052b5e3a3a25db1"
+  integrity sha512-SFCr4edNkZ1bGaLzGz7rgR1bRzVX4MmMxwsIa3/Bh6ose8v+hRpneoizHv0KChdjxaXyjRtaMq7sCuZSzPomQA==
 
 "@types/connect-history-api-fallback@^1.3.5":
   version "1.5.4"
@@ -7900,6 +7910,11 @@ chownr@^3.0.0:
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/chownr/-/chownr-3.0.0.tgz#9855e64ecd240a9cc4267ce8a4aa5d24a1da15e4"
   integrity sha512-+IxzY9BZOQd/XuYPRmrvEVjF/nqj5kgT4kEq7VofrDoM1MxoRjEWkrCC3EtLi59TVawxTAn+orJwFQcrqEN1+g==
+
+chroma-js@^3.1.2:
+  version "3.1.2"
+  resolved "https://registry.yarnpkg.com/chroma-js/-/chroma-js-3.1.2.tgz#cfb807045182228574eae5380587cdb830e985d6"
+  integrity sha512-IJnETTalXbsLx1eKEgx19d5L6SRM7cH4vINw/99p/M11HCuXGRWL+6YmCm7FWFGIo6dtWuQoQi1dc5yQ7ESIHg==
 
 chrome-trace-event@^1.0.2:
   version "1.0.4"
