@@ -1,25 +1,55 @@
 import React from "react";
-import { RHFSingleSelectField, RHFTextInputField } from "@hisptz/dhis2-ui";
+import { RHFTextInputField } from "@hisptz/dhis2-ui";
 import i18n from "@dhis2/d2-i18n";
-import { SectionDisplay } from "@packages/shared/schemas";
-import { startCase } from "lodash";
+import {
+	MenuPosition,
+	SectionDisplay,
+	SectionModuleConfig,
+} from "@packages/shared/schemas";
+import { Field, Radio } from "@dhis2/ui";
+import { useController } from "react-hook-form";
 
 export function SectionModuleGeneralConfig() {
+	const { field, fieldState } = useController<
+		SectionModuleConfig,
+		"sectionDisplay"
+	>({
+		name: "sectionDisplay",
+	});
 	return (
 		<div className="flex flex-col gap-2">
 			<RHFTextInputField required name="label" label={i18n.t("Label")} />
-			<RHFSingleSelectField
+			<Field
+				{...field}
 				required
-				label={i18n.t("Display type")}
-				placeholder={i18n.t("Select display type")}
-				options={Object.values(SectionDisplay).map((type) => {
-					return {
-						label: i18n.t(startCase(type.toLowerCase())),
-						value: type,
-					};
-				})}
+				validationText={fieldState?.error?.message}
 				name="sectionDisplay"
-			/>
+				error={!!fieldState.error}
+				label={i18n.t("Display type")}
+			>
+				<div className="flex gap-4 items-center">
+					<Radio
+						onChange={({ checked }) => {
+							if (checked) {
+								field.onChange(SectionDisplay.VERTICAL);
+							}
+						}}
+						checked={field.value === SectionDisplay.VERTICAL}
+						label={i18n.t("Vertical")}
+						value={MenuPosition.SIDEBAR}
+					/>
+					<Radio
+						onChange={({ checked }) => {
+							if (checked) {
+								field.onChange(SectionDisplay.HORIZONTAL);
+							}
+						}}
+						checked={field.value === SectionDisplay.HORIZONTAL}
+						label={i18n.t("Horizontal")}
+						value={MenuPosition.HEADER}
+					/>
+				</div>
+			</Field>
 		</div>
 	);
 }
