@@ -1,6 +1,5 @@
 import React from "react";
-import { useWatch } from "react-hook-form";
-import { RHFCheckboxField, RHFSingleSelectField } from "@hisptz/dhis2-ui";
+import { RHFSingleSelectField } from "@hisptz/dhis2-ui";
 import i18n from "@dhis2/d2-i18n";
 import { ColorPicker } from "../../ColorPicker";
 import { RHFNumberField } from "../../../../../Fields/RHFNumberField";
@@ -11,21 +10,12 @@ type Props = {
 };
 
 export function StyleConfig({ label, parentName }: Props) {
-	const centred = useWatch({
-		name: `${parentName}.center`,
-	});
-
-	console.log(`${parentName}.textColor`);
 	return (
 		<div key={parentName} className="my-4 flex flex-col gap-2">
 			<h3 className="text-md font-medium">{label}</h3>
 			<div className="mx-2 flex flex-col gap-2">
-				<RHFCheckboxField
-					name={`${parentName}.center`}
-					label={i18n.t("Centered")}
-				/>
 				<div className="flex flex-wrap gap-2">
-					{!centred && (
+					{
 						<RHFSingleSelectField
 							small
 							options={[
@@ -45,7 +35,7 @@ export function StyleConfig({ label, parentName }: Props) {
 							name={`${parentName}.align`}
 							label={i18n.t("Alignment")}
 						/>
-					)}
+					}
 					<RHFNumberField
 						small
 						name={`${parentName}.textSize`}

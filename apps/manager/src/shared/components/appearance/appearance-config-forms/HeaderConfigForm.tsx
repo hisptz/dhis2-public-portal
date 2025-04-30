@@ -23,8 +23,9 @@ import {
 	ModalContent,
 	ModalTitle,
 } from "@dhis2/ui";
-import { RHFCheckboxField, RHFTextInputField } from "@hisptz/dhis2-ui";
-import { AdvancedHeaderConfig } from "./components/AdvancedHeaderConfig/AdvancedHeaderConfig";
+import { StyleConfig } from "./components/AdvancedHeaderConfig/components/StyleConfig";
+import { LogoConfig } from "./components/AdvancedHeaderConfig/components/LogoConfig";
+import { HeaderStyleConfig } from "./components/AdvancedHeaderConfig/components/HeaderStyleConfig";
 
 type props = {
 	configurations: AppAppearanceConfig;
@@ -111,22 +112,45 @@ export function HeaderConfigForm({
 
 	return (
 		<FormProvider {...form}>
-			<Modal position="middle" onClose={onClose}>
+			<Modal position="middle" onClose={onClose} large>
 				<ModalTitle>{i18n.t("Header configurations")}</ModalTitle>
 				<ModalContent>
 					<form className="flex flex-col gap-2">
-						<RHFCheckboxField
-							name="logo.enabled"
-							label={i18n.t("Show Logo")}
-						/>
-						<RHFTextInputField
-							type="url"
-							name="trailingLogo"
-							label={i18n.t("Trailing logo")}
+						{/*Header style config*/}
+						<HeaderStyleConfig />
+						<hr className="border-gray-200 my-2" />
+
+						{/*Leading logo*/}
+						<LogoConfig
+							logoType="leadingLogo"
+							label={i18n.t("Leading logo")}
 						/>
 
-						{/*Advanced Options*/}
-						{showAdvanced && <AdvancedHeaderConfig />}
+						{showAdvanced && (
+							<>
+								<hr className="border-gray-200 my-2" />
+
+								{/*Trailing logo*/}
+								<LogoConfig
+									logoType="trailingLogo"
+									label={i18n.t("Trailing logo")}
+								/>
+								<hr className="border-gray-200 my-2" />
+
+								{/*	title style*/}
+								<StyleConfig
+									label={i18n.t("Title styles")}
+									parentName={"title.style"}
+								/>
+								<hr className="border-gray-200 my-2" />
+
+								{/*	subtitle style*/}
+								<StyleConfig
+									label={i18n.t("Subtitle styles")}
+									parentName={"subtitle.style"}
+								/>
+							</>
+						)}
 
 						{/*Advance Options toggle*/}
 						<div

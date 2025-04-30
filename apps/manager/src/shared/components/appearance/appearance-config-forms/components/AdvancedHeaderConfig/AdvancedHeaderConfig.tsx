@@ -7,7 +7,6 @@ export function AdvancedHeaderConfig() {
 	return (
 		<div className="flex flex-col gap-2">
 			<HeaderStyleConfig />
-
 			<hr className="border-gray-200 my-2" />
 
 			{/*	title style*/}

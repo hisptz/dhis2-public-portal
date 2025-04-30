@@ -5,8 +5,8 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
-"POT-Creation-Date: 2025-04-29T10:37:16.240Z\n"
-"PO-Revision-Date: 2025-04-29T10:37:16.240Z\n"
+"POT-Creation-Date: 2025-04-30T03:24:01.005Z\n"
+"PO-Revision-Date: 2025-04-30T03:24:01.006Z\n"
 
 msgid "Could not get Appearance configurations"
 msgstr "Could not get Appearance configurations"
@@ -251,14 +251,14 @@ msgstr "Update"
 msgid "Header configuration"
 msgstr "Header configuration"
 
-msgid "Logo enabled"
-msgstr "Logo enabled"
+msgid "Background color"
+msgstr "Background color"
 
-msgid "Title style"
-msgstr "Title style"
+msgid "Header height"
+msgstr "Header height"
 
-msgid "Has menu"
-msgstr "Has menu"
+msgid "Leading logo"
+msgstr "Leading logo"
 
 msgid "Trailing logo"
 msgstr "Trailing logo"
@@ -286,10 +286,10 @@ msgstr "Missing Appearance configurations"
 
 msgid ""
 "There are no appearance configurations yet. Click the below button to "
-"create one."
+"import the default configurations."
 msgstr ""
 "There are no appearance configurations yet. Click the below button to "
-"create one."
+"import the default configurations."
 
 msgid "Color configurations updated successfully"
 msgstr "Color configurations updated successfully"
@@ -308,9 +308,6 @@ msgstr "Application Color Configurations"
 
 msgid "Primary color"
 msgstr "Primary color"
-
-msgid "Background color"
-msgstr "Background color"
 
 msgid "Chart colors"
 msgstr "Chart colors"
@@ -336,20 +333,17 @@ msgstr "Error updating header configurations"
 msgid "Header configurations"
 msgstr "Header configurations"
 
-msgid "Show Logo"
-msgstr "Show Logo"
+msgid "Title styles"
+msgstr "Title styles"
+
+msgid "Subtitle styles"
+msgstr "Subtitle styles"
 
 msgid "Hide advanced options"
 msgstr "Hide advanced options"
 
 msgid "Show advanced options"
 msgstr "Show advanced options"
-
-msgid "Title styles"
-msgstr "Title styles"
-
-msgid "Subtitle styles"
-msgstr "Subtitle styles"
 
 msgid "Header styles"
 msgstr "Header styles"
@@ -360,23 +354,14 @@ msgstr "Show colored background"
 msgid "Background Color"
 msgstr "Background Color"
 
-msgid "Header height"
-msgstr "Header height"
-
-msgid "Leading logo size"
-msgstr "Leading logo size"
+msgid "Logo url"
+msgstr "Logo url"
 
 msgid "Width"
 msgstr "Width"
 
 msgid "Height"
 msgstr "Height"
-
-msgid "Trailing logo size"
-msgstr "Trailing logo size"
-
-msgid "Centered"
-msgstr "Centered"
 
 msgid "Center"
 msgstr "Center"

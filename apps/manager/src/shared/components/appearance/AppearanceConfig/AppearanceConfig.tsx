@@ -32,7 +32,7 @@ export function AppearanceConfig({ appearanceConfig, refetchConfig }: Props) {
 
 	const { colors, header, footer } = appearanceConfig;
 	const { primary, chartColors, background } = colors;
-	const { logo, trailingLogo } = header;
+	const { style } = header;
 	const { copyright, footerLinks, address } = footer;
 
 	return (
@@ -40,7 +40,7 @@ export function AppearanceConfig({ appearanceConfig, refetchConfig }: Props) {
 			{/*Application colors configurations*/}
 			<section>
 				<ConfigurationTitle title={i18n.t("Application colors")} />
-				<div className="flex flex-col gap-2">
+				<div className="mx-2 flex flex-col gap-2">
 					<ConfigurationDetails title={"Primary color"}>
 						<ConfigurationColor colorCode={primary} />
 					</ConfigurationDetails>
@@ -83,15 +83,38 @@ export function AppearanceConfig({ appearanceConfig, refetchConfig }: Props) {
 			{/*Header configurations*/}
 			<section>
 				<ConfigurationTitle title={i18n.t("Header configuration")} />
-				<div className="flex flex-col gap-2">
-					<ConfigurationDetails
-						title={i18n.t("Logo enabled")}
-						value={logo.enabled ? "Yes" : "No"}
-					/>
-					{trailingLogo && (
+				<div className="mx-2 flex flex-col gap-2">
+					{style?.headerBackgroundColor &&
+						style?.coloredBackground && (
+							<ConfigurationDetails
+								title={i18n.t("Background color")}
+							>
+								<ConfigurationColor
+									colorCode={style?.headerBackgroundColor}
+								/>
+							</ConfigurationDetails>
+						)}
+
+					{style?.containerHeight && (
+						<ConfigurationDetails
+							title={i18n.t("Header height")}
+							value={`${style?.containerHeight}px`}
+						/>
+					)}
+
+					{style?.leadingLogo && (
+						<ConfigurationDetails title={i18n.t("Leading logo")}>
+							<img
+								src={style?.leadingLogo.url}
+								alt={i18n.t("Trailing logo")}
+								className="w-16 h-16 object-cover rounded-sm shadow-md border-gray-500"
+							/>
+						</ConfigurationDetails>
+					)}
+					{style?.trailingLogo && (
 						<ConfigurationDetails title={i18n.t("Trailing logo")}>
 							<img
-								src={trailingLogo}
+								src={style?.trailingLogo.url}
 								alt={i18n.t("Trailing logo")}
 								className="w-16 h-16 object-cover rounded-sm shadow-md border-gray-500"
 							/>
@@ -121,7 +144,7 @@ export function AppearanceConfig({ appearanceConfig, refetchConfig }: Props) {
 			{/*Footer configurations*/}
 			<section>
 				<ConfigurationTitle title={i18n.t("Footer configuration")} />
-				<div className="flex flex-col gap-2">
+				<div className="mx-2 flex flex-col gap-2">
 					{copyright && (
 						<ConfigurationDetails
 							title={i18n.t("Copyright")}

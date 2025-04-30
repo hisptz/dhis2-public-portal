@@ -34,6 +34,24 @@ export const styleConfig = z.object({
 
 export type StyleConfig = z.infer<typeof styleConfig>;
 
+export const logoConfig = z.object({
+	url: z.string().url(),
+	width: z.number().optional(),
+	height: z.number().optional(),
+});
+
+export type LogoConfig = z.infer<typeof logoConfig>;
+
+export const headerStyleConfig = z.object({
+	coloredBackground: z.boolean(),
+	headerBackgroundColor: z.string().optional(),
+	containerHeight: z.number().optional(),
+	trailingLogo: logoConfig.optional(),
+	leadingLogo: logoConfig.optional(),
+});
+
+export type HeaderStyleConfig = z.infer<typeof headerStyleConfig>;
+
 export const headerConfig = z.object({
 	logo: z.object({
 		enabled: z.boolean(),
@@ -46,25 +64,7 @@ export const headerConfig = z.object({
 	}),
 	trailingLogo: z.string().url().optional(),
 	hasMenu: z.boolean().optional(),
-	style: z
-		.object({
-			coloredBackground: z.boolean(),
-			headerBackgroundColor: z.string().optional(),
-			containerHeight: z.number().optional(),
-			trailingLogoSize: z
-				.object({
-					width: z.number().optional(),
-					height: z.number().optional(),
-				})
-				.optional(),
-			leadingLogoSize: z
-				.object({
-					width: z.number().optional(),
-					height: z.number().optional(),
-				})
-				.optional(),
-		})
-		.optional(),
+	style: headerStyleConfig.optional(),
 });
 
 export const appTitleConfig = z.object({
