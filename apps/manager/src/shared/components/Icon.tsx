@@ -3,13 +3,15 @@ import styled from "styled-components";
 
 export interface IconProps {
 	icon: string;
+	height?: number | string;
+	width?: number | string;
 }
 
-export function StyledIcon({ icon }: IconProps) {
+export function StyledIcon({ icon, height = 24, width = 24 }: IconProps) {
 	const Parent = styled.div`
 		svg {
-			height: 24px;
-			width: 24px;
+			height: ${typeof height === "number" ? `${height}px` : height};
+			width: ${typeof width === "number" ? `${width}px` : width};
 			color: black;
 			aspect-ratio: 1/1;
 		}

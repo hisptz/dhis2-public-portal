@@ -1,20 +1,22 @@
 import React from "react";
 import { RHFTextInputField } from "@hisptz/dhis2-ui";
 import i18n from "@dhis2/d2-i18n";
-import { RHFTextAreaField } from "./Fields/RHFTextAreaField";
-import { RHFRichTextAreaField } from "./Fields/RHFRichTextAreaField";
-
+import { RHFRichTextAreaField } from "../../../Fields/RHFRichTextAreaField";
+import { RHFTextAreaField } from "../../../Fields/RHFTextAreaField";
 
 export function StaticForm() {
 	return (
-		<form className="h-full w-full gap-4 flex flex-col">
+		<form
+			onSubmit={(e) => e.preventDefault()}
+			className="flex flex-col gap-2"
+		>
 			<RHFTextInputField required name="title" label={i18n.t("Title")} />
-			<RHFTextAreaField
+			<RHFRichTextAreaField
 				required
 				autoGrow
 				rows={2}
 				name="shortDescription"
-				label={i18n.t("Short Description")}
+				label={i18n.t("Short description")}
 			/>
 			<RHFRichTextAreaField
 				required

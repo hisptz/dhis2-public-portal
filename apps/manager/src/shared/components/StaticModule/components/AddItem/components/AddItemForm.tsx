@@ -12,52 +12,39 @@ import React from "react";
 import i18n from "@dhis2/d2-i18n";
 import { RHFTextInputField } from "@hisptz/dhis2-ui";
 import { FetchError, useAlert } from "@dhis2/app-runtime";
-import { visualizationModuleConfig, VisualizationModuleConfig } from "@packages/shared/schemas";
-import { DashboardIDField } from "./DashboardIDField";
-import { useCreateDashboard } from "../hooks/create";
+import { StaticItemConfig, staticItemSchema } from "@packages/shared/schemas";
+import { RHFIDField } from "../../../../Fields/IDField";
+import { useCreateItem } from "../hooks/create";
 
-export function AddDashboardForm({
+export function AddItemForm({
 	hide,
 	onClose,
 	onComplete,
 }: {
 	hide: boolean;
 	onClose: () => void;
-	onComplete: (dashboard: VisualizationModuleConfig) => void;
+	onComplete: (item: StaticItemConfig) => void;
 }) {
-	const { createDashboard } = useCreateDashboard();
+	const { createItem } = useCreateItem();
 	const { show } = useAlert(
 		({ message }) => message,
 		({ type }) => ({ ...type, duration: 3000 }),
 	);
-	const form = useForm<VisualizationModuleConfig>({
-		resolver: zodResolver(visualizationModuleConfig),
-		 
+	const form = useForm<StaticItemConfig>({
+		resolver: zodResolver(staticItemSchema),
 		shouldFocusError: false,
 		defaultValues: {
-			layouts: {},
-			description: "",
-			highlights: [],
-			groups: [],
-			orgUnitConfig: {
-				orgUnitLevels: [],
-				orgUnits: [],
-			},
-			periodConfig: {
-				categories: ["FIXED", "RELATIVE"],
-				periods: [],
-				periodTypes: [],
-				singleSelection: false,
-			},
+			content: "",
+			icon: "",
 			shortDescription: "",
 		},
 	});
 
-	const onSave = async (data: VisualizationModuleConfig) => {
+	const onSave = async (data: StaticItemConfig) => {
 		try {
-			await createDashboard(data);
+			await createItem(data);
 			show({
-				message: i18n.t("Dashboard created successfully"),
+				message: i18n.t("Module created successfully"),
 				type: { success: true },
 			});
 			onComplete(data);
@@ -65,18 +52,17 @@ export function AddDashboardForm({
 		} catch (e) {
 			if (e instanceof FetchError || e instanceof Error) {
 				show({
-					message: `${i18n.t("Could not create new dashboard")}: ${e.message ?? e.toString()}`,
+					message: `${i18n.t("Could not create new item")}: ${e.message ?? e.toString()}`,
 					type: { critical: true },
 				});
 			}
-			console.error(e);
 		}
 	};
 
 	return (
 		<FormProvider {...form}>
 			<Modal position="middle" onClose={onClose} hide={hide}>
-				<ModalTitle>{i18n.t("Create Dashboard")}</ModalTitle>
+				<ModalTitle>{i18n.t("Create an item")}</ModalTitle>
 				<ModalContent>
 					<form className="flex flex-col gap-4">
 						<RHFTextInputField
@@ -84,7 +70,7 @@ export function AddDashboardForm({
 							name="title"
 							label={i18n.t("Title")}
 						/>
-						<DashboardIDField />
+						<RHFIDField label="ID" name="id" dependsOn="title" />
 					</form>
 				</ModalContent>
 				<ModalActions>
@@ -97,7 +83,7 @@ export function AddDashboardForm({
 						>
 							{form.formState.isSubmitting
 								? i18n.t("Creating...")
-								: i18n.t("Create dashboard")}
+								: i18n.t("Create item")}
 						</Button>
 					</ButtonStrip>
 				</ModalActions>

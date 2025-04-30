@@ -53,7 +53,6 @@ export function AddModuleForm({
 					type: { critical: true },
 				});
 			}
-			console.error(e);
 		}
 	};
 
