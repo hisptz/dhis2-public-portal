@@ -5,8 +5,8 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
-"POT-Creation-Date: 2025-04-29T06:03:38.577Z\n"
-"PO-Revision-Date: 2025-04-29T06:03:38.578Z\n"
+"POT-Creation-Date: 2025-04-29T11:27:10.460Z\n"
+"PO-Revision-Date: 2025-04-29T11:27:10.461Z\n"
 
 msgid "Could not get Appearance configurations"
 msgstr "Could not get Appearance configurations"
@@ -107,6 +107,135 @@ msgstr "Caption"
 msgid "Actions"
 msgstr "Actions"
 
+msgid "Create a new library"
+msgstr "Create a new library"
+
+msgid "Library created successfully"
+msgstr "Library created successfully"
+
+msgid "Could not create new library"
+msgstr "Could not create new library"
+
+msgid "Create Library"
+msgstr "Create Library"
+
+msgid "Creating..."
+msgstr "Creating..."
+
+msgid "Create library"
+msgstr "Create library"
+
+msgid "Title description"
+msgstr "Title description"
+
+msgid "Label"
+msgstr "Label"
+
+msgid "Sub groups"
+msgstr "Sub groups"
+
+msgid "Files"
+msgstr "Files"
+
+msgid "N/A"
+msgstr "N/A"
+
+msgid "Groups"
+msgstr "Groups"
+
+msgid "There are no library configuration present"
+msgstr "There are no library configuration present"
+
+msgid "Add group"
+msgstr "Add group"
+
+msgid "Confirm deleting group"
+msgstr "Confirm deleting group"
+
+msgid "Are you sure you want to remove the group "
+msgstr "Are you sure you want to remove the group "
+
+msgid "This will delete all files and sub groups in this group as well."
+msgstr "This will delete all files and sub groups in this group as well."
+
+msgid "This action is irreversible."
+msgstr "This action is irreversible."
+
+msgid "Deleting..."
+msgstr "Deleting..."
+
+msgid "Delete"
+msgstr "Delete"
+
+msgid "Delete group"
+msgstr "Delete group"
+
+msgid "Edit group"
+msgstr "Edit group"
+
+msgid "There are no files present"
+msgstr "There are no files present"
+
+msgid "Add file"
+msgstr "Add file"
+
+msgid "Confirm deleting file"
+msgstr "Confirm deleting file"
+
+msgid "Are you sure you want to remove the file "
+msgstr "Are you sure you want to remove the file "
+
+msgid "Delete icon"
+msgstr "Delete icon"
+
+msgid "Edit file"
+msgstr "Edit file"
+
+msgid "PDF"
+msgstr "PDF"
+
+msgid "File type"
+msgstr "File type"
+
+msgid "File"
+msgstr "File"
+
+msgid "Uploading..."
+msgstr "Uploading..."
+
+msgid "Save"
+msgstr "Save"
+
+msgid "Could not upload file {{ errorMessage }}"
+msgstr "Could not upload file {{ errorMessage }}"
+
+msgid "Could not create document {{ errorMessage }}"
+msgstr "Could not create document {{ errorMessage }}"
+
+msgid "Could not delete file {{ errorMessage }}"
+msgstr "Could not delete file {{ errorMessage }}"
+
+msgid "Edit Library Group"
+msgstr "Edit Library Group"
+
+msgid "Add Library Group"
+msgstr "Add Library Group"
+
+msgid "Update"
+msgstr "Update"
+
+msgid "Has sub groups"
+msgstr "Has sub groups"
+
+msgid "There are no sub groups present"
+msgstr "There are no sub groups present"
+
+msgid "Name"
+msgstr "Name"
+
+msgid "View"
+msgstr "View"
+
 msgid "Create a new module"
 msgstr "Create a new module"
 
@@ -119,9 +248,6 @@ msgstr "Could not create new module"
 msgid "Create Module"
 msgstr "Create Module"
 
-msgid "Creating..."
-msgstr "Creating..."
-
 msgid "Create module"
 msgstr "Create module"
 
@@ -130,21 +256,6 @@ msgstr "Filter by Type"
 
 msgid "Select type"
 msgstr "Select type"
-
-msgid "All Types"
-msgstr "All Types"
-
-msgid "VISUALIZATION"
-msgstr "VISUALIZATION"
-
-msgid "DOCUMENTS"
-msgstr "DOCUMENTS"
-
-msgid "SECTION"
-msgstr "SECTION"
-
-msgid "STATIC"
-msgstr "STATIC"
 
 msgid "There are no modules matching the selected type."
 msgstr "There are no modules matching the selected type."
@@ -181,9 +292,6 @@ msgstr "Create Dashboard"
 
 msgid "Create dashboard"
 msgstr "Create dashboard"
-
-msgid "Add group"
-msgstr "Add group"
 
 msgid "Create Dashboard Group"
 msgstr "Create Dashboard Group"
@@ -227,17 +335,11 @@ msgstr "Has groups"
 msgid "Save group changes"
 msgstr "Save group changes"
 
-msgid "Groups"
-msgstr "Groups"
-
 msgid "Module deleted successfully"
 msgstr "Module deleted successfully"
 
 msgid "Could not delete module"
 msgstr "Could not delete module"
-
-msgid "Deleting..."
-msgstr "Deleting..."
 
 msgid "Delete module"
 msgstr "Delete module"
@@ -248,9 +350,6 @@ msgstr "Are you sure you want to delete the module "
 msgid "This action is irreversible"
 msgstr "This action is irreversible"
 
-msgid "Delete"
-msgstr "Delete"
-
 msgid "Welcome to the public portal manager!"
 msgstr "Welcome to the public portal manager!"
 
@@ -259,9 +358,6 @@ msgstr "You can use this application to configure your public portal web applica
 
 msgid "Application colors"
 msgstr "Application colors"
-
-msgid "Update"
-msgstr "Update"
 
 msgid "Header configuration"
 msgstr "Header configuration"
@@ -292,9 +388,6 @@ msgstr "Copyright"
 
 msgid "Footer links"
 msgstr "Footer links"
-
-msgid "Label"
-msgstr "Label"
 
 msgid "Links"
 msgstr "Links"
@@ -353,9 +446,6 @@ msgstr "Add"
 
 msgid "S/N"
 msgstr "S/N"
-
-msgid "Name"
-msgstr "Name"
 
 msgid "Url"
 msgstr "Url"

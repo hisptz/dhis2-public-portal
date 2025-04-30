@@ -1,15 +1,20 @@
-import { createFileRoute } from "@tanstack/react-router"
+import { createFileRoute, Outlet } from "@tanstack/react-router";
+import { LibraryProvider } from "../../../../shared/components/LibraryProvider";
+import { LibraryFormProvider } from "../../../../shared/components/LibraryConfigPage/components/LibraryFormProvider";
+import React from "react";
 
 export const Route = createFileRoute(
-  "/library/_provider/$libraryId/_formProvider",
+	"/library/_provider/$libraryId/_formProvider",
 )({
-  component: RouteComponent,
-})
+	component: RouteComponent,
+});
 
 function RouteComponent() {
-  return (
-    <div>
-      Hello "/library/_provider/$libraryId/_formProvider/_formProvider"!
-    </div>
-  )
+	return (
+		<LibraryProvider>
+			<LibraryFormProvider>
+				<Outlet />
+			</LibraryFormProvider>
+		</LibraryProvider>
+	);
 }

@@ -1,6 +1,5 @@
 import React from "react";
 import { GroupGeneralConfig } from "./components/GroupGeneralConfig";
-// import { SubGroupsConfig } from "./components/SubGroupsConfig/SubGroupsConfig";
 import { GroupVisualizationsConfig } from "./components/GroupVisualizationsConfig/GroupVisualizationsConfig";
 import { Button, IconArrowLeft24 } from "@dhis2/ui";
 import i18n from "@dhis2/d2-i18n";
