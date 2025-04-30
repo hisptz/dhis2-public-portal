@@ -5,8 +5,8 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
-"POT-Creation-Date: 2025-04-29T16:35:05.695Z\n"
-"PO-Revision-Date: 2025-04-29T16:35:05.695Z\n"
+"POT-Creation-Date: 2025-04-30T06:03:46.914Z\n"
+"PO-Revision-Date: 2025-04-30T06:03:46.914Z\n"
 
 msgid "Could not get Appearance configurations"
 msgstr "Could not get Appearance configurations"
@@ -200,11 +200,35 @@ msgstr "Creating..."
 msgid "Create module"
 msgstr "Create module"
 
+msgid "Module deleted successfully"
+msgstr "Module deleted successfully"
+
+msgid "Could not delete module"
+msgstr "Could not delete module"
+
+msgid "Deleting..."
+msgstr "Deleting..."
+
+msgid "Delete module"
+msgstr "Delete module"
+
+msgid "Are you sure you want to delete the module "
+msgstr "Are you sure you want to delete the module "
+
+msgid "This action is irreversible"
+msgstr "This action is irreversible"
+
 msgid "Filter by Type"
 msgstr "Filter by Type"
 
 msgid "Select type"
 msgstr "Select type"
+
+msgid "Please fix the validation errors before saving"
+msgstr "Please fix the validation errors before saving"
+
+msgid "Failed to save module"
+msgstr "Failed to save module"
 
 msgid "There are no modules matching the selected type."
 msgstr "There are no modules matching the selected type."
@@ -221,8 +245,11 @@ msgstr "Section"
 msgid "Back to Module"
 msgstr "Back to Module"
 
-msgid "Items"
-msgstr "Items"
+msgid "Item Type"
+msgstr "Item Type"
+
+msgid "Select Item type"
+msgstr "Select Item type"
 
 msgid "Add Section"
 msgstr "Add Section"
@@ -230,17 +257,53 @@ msgstr "Add Section"
 msgid "Create Section"
 msgstr "Create Section"
 
+msgid "Please select the display type of this section first"
+msgstr "Please select the display type of this section first"
+
 msgid "Create section"
 msgstr "Create section"
 
 msgid "Save section changes"
 msgstr "Save section changes"
 
+msgid "Display type"
+msgstr "Display type"
+
+msgid "Select display type"
+msgstr "Select display type"
+
 msgid "Sections"
 msgstr "Sections"
 
-msgid "Short Description"
-msgstr "Short Description"
+msgid "Add Item"
+msgstr "Add Item"
+
+msgid "Could not create new item"
+msgstr "Could not create new item"
+
+msgid "Create an item"
+msgstr "Create an item"
+
+msgid "Create item"
+msgstr "Create item"
+
+msgid "Item deleted successfully"
+msgstr "Item deleted successfully"
+
+msgid "Could not delete item"
+msgstr "Could not delete item"
+
+msgid "Delete item"
+msgstr "Delete item"
+
+msgid "Are you sure you want to delete the item "
+msgstr "Are you sure you want to delete the item "
+
+msgid "Error loading item"
+msgstr "Error loading item"
+
+msgid "Back"
+msgstr "Back"
 
 msgid "Content"
 msgstr "Content"
@@ -251,20 +314,11 @@ msgstr "Should be a valid svg string"
 msgid "Icon"
 msgstr "Icon"
 
-msgid "Create a new dashboard"
-msgstr "Create a new dashboard"
+msgid "Short Description"
+msgstr "Short Description"
 
-msgid "Dashboard created successfully"
-msgstr "Dashboard created successfully"
-
-msgid "Could not create new dashboard"
-msgstr "Could not create new dashboard"
-
-msgid "Create Dashboard"
-msgstr "Create Dashboard"
-
-msgid "Create dashboard"
-msgstr "Create dashboard"
+msgid "Items"
+msgstr "Items"
 
 msgid "Add group"
 msgstr "Add group"
@@ -299,12 +353,6 @@ msgstr "Visualization type"
 msgid "All"
 msgstr "All"
 
-msgid "Please fix the validation errors before saving"
-msgstr "Please fix the validation errors before saving"
-
-msgid "Failed to save module"
-msgstr "Failed to save module"
-
 msgid "Has groups"
 msgstr "Has groups"
 
@@ -313,24 +361,6 @@ msgstr "Save group changes"
 
 msgid "Groups"
 msgstr "Groups"
-
-msgid "Module deleted successfully"
-msgstr "Module deleted successfully"
-
-msgid "Could not delete module"
-msgstr "Could not delete module"
-
-msgid "Deleting..."
-msgstr "Deleting..."
-
-msgid "Delete module"
-msgstr "Delete module"
-
-msgid "Are you sure you want to delete the module "
-msgstr "Are you sure you want to delete the module "
-
-msgid "This action is irreversible"
-msgstr "This action is irreversible"
 
 msgid "Welcome to the public portal manager!"
 msgstr "Welcome to the public portal manager!"
