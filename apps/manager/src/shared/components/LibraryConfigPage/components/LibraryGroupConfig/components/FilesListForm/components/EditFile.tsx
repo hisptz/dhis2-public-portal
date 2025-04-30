@@ -1,4 +1,4 @@
-import { LibraryFileData } from "@packages/shared/schemas";
+import { DocumentItem } from "@packages/shared/schemas";
 import { useBoolean } from "usehooks-ts";
 import { Button, IconEdit16 } from "@dhis2/ui";
 import React from "react";
@@ -10,13 +10,13 @@ export function EditFile({
 	file,
 	nested,
 }: {
-	onUpdate: (file: LibraryFileData) => void;
-	file: LibraryFileData;
+	onUpdate: (file: DocumentItem) => void;
+	file: DocumentItem;
 	nested?: boolean;
 }) {
 	const { value: hide, setTrue: onHide, setFalse: onOpen } = useBoolean(true);
 
-	const onSave = (file: LibraryFileData) => {
+	const onSave = (file: DocumentItem) => {
 		onHide();
 		onUpdate(file);
 	};

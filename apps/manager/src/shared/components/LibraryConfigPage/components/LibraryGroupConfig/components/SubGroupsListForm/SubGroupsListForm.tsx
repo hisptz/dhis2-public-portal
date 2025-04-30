@@ -1,6 +1,6 @@
 import { SimpleTable, SimpleTableColumn } from "@hisptz/dhis2-ui";
 import i18n from "@dhis2/d2-i18n";
-import { LibraryGroupData } from "@packages/shared/schemas";
+import { DocumentGroup } from "@packages/shared/schemas";
 import { useFieldArray } from "react-hook-form";
 import { ButtonStrip, Field } from "@dhis2/ui";
 import React, { useMemo } from "react";
@@ -25,10 +25,10 @@ const columns: SimpleTableColumn[] = [
 
 export function SubGroupsListForm() {
 	const { fields, append, update, remove } = useFieldArray<
-		LibraryGroupData,
-		"subGroups"
+		DocumentGroup,
+		"items"
 	>({
-		name: "subGroups",
+		name: "items",
 		keyName: "key" as unknown as "id",
 	});
 

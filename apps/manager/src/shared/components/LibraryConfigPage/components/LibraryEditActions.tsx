@@ -5,11 +5,11 @@ import React from "react";
 import { useNavigate } from "@tanstack/react-router";
 import { useAlert } from "@dhis2/app-runtime";
 import { useSaveLibrary } from "../hooks/saveLibrary";
-import { LibraryData } from "@packages/shared/schemas";
+import { DocumentsModule } from "@packages/shared/schemas";
 
 export function LibraryEditActions() {
 	const { save } = useSaveLibrary();
-	const { handleSubmit, formState } = useFormContext<LibraryData>();
+	const { handleSubmit, formState } = useFormContext<DocumentsModule>();
 	const navigate = useNavigate();
 	const { show } = useAlert(
 		({ message }) => message,

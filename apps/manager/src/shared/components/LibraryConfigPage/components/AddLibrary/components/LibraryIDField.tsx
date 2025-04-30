@@ -1,13 +1,13 @@
 import { useFormContext, useWatch } from "react-hook-form";
-import { LibraryData } from "@packages/shared/schemas";
+import { DocumentsModule } from "@packages/shared/schemas";
 import i18n from "@dhis2/d2-i18n";
 import { RHFTextInputField } from "@hisptz/dhis2-ui";
 import React, { useEffect } from "react";
 import { kebabCase } from "lodash";
 
 export function LibraryIDField() {
-	const { setValue } = useFormContext<LibraryData>();
-	const title = useWatch<LibraryData, "label">({
+	const { setValue } = useFormContext<DocumentsModule>();
+	const title = useWatch<DocumentsModule, "label">({
 		name: "label",
 	});
 

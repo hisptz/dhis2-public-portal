@@ -1,6 +1,6 @@
 import { FormProvider, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { LibraryData, librarySchema } from "@packages/shared/schemas";
+import { DocumentsModule, documentsModuleSchema } from "@packages/shared/schemas";
 import {
 	Button,
 	ButtonStrip,
@@ -25,15 +25,15 @@ export function AddLibraryForm({
 	sortOrder: number;
 	hide: boolean;
 	onClose: () => void;
-	onComplete: (library: LibraryData) => void;
+	onComplete: (library: DocumentsModule) => void;
 }) {
 	const { createLibrary } = useCreateLibrary();
 	const { show } = useAlert(
 		({ message }) => message,
 		({ type }) => ({ ...type, duration: 3000 }),
 	);
-	const form = useForm<LibraryData>({
-		resolver: zodResolver(librarySchema),
+	const form = useForm<DocumentsModule>({
+		resolver: zodResolver(documentsModuleSchema),
 		mode: "onChange",
 		shouldFocusError: false,
 		defaultValues: {
@@ -42,7 +42,7 @@ export function AddLibraryForm({
 		},
 	});
 
-	const onSave = async (data: LibraryData) => {
+	const onSave = async (data: DocumentsModule) => {
 		try {
 			await createLibrary(data);
 			show({

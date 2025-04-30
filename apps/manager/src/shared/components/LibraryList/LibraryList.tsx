@@ -3,7 +3,6 @@ import i18n from "@dhis2/d2-i18n";
 import React, { useMemo } from "react";
 import { Button, ButtonStrip, IconView16 } from "@dhis2/ui";
 import { useNavigate } from "@tanstack/react-router";
-import { useLibraries } from "../LibrariesProvider";
 import { useModule } from "../ModulesPage/providers/ModuleProvider";
 import { DocumentsModule } from "@packages/shared/schemas";
 

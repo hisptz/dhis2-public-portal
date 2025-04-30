@@ -2,7 +2,8 @@ import { DatastoreNamespaces } from "@packages/shared/constants";
 import { useDataQuery } from "@dhis2/app-runtime";
 import { Pagination } from "@hisptz/dhis2-utils";
 import { sortBy } from "lodash";
-import { LibraryData } from "@packages/shared/schemas";
+import { DocumentsModule } from "@packages/shared/schemas";
+import { D } from "vitest/dist/chunks/reporters.d.CfRkRKN2.js";
 
 const query: any = {
 	libraries: {
@@ -18,7 +19,7 @@ type Response = {
 		pager: Pagination;
 		entries: {
 			key: string;
-			value: LibraryData;
+			value: DocumentsModule;
 		}[];
 	};
 };
@@ -46,7 +47,7 @@ const singleQuery: any = {
 };
 
 type SingleResponse = {
-	library: LibraryData;
+	library: DocumentsModule;
 };
 
 export function useLibraryById(id: string) {

@@ -1,6 +1,6 @@
 import { SimpleTable, SimpleTableColumn } from "@hisptz/dhis2-ui";
 import { useFieldArray } from "react-hook-form";
-import { LibraryGroupData } from "@packages/shared/schemas";
+import { DocumentGroup } from "@packages/shared/schemas";
 import React, { useMemo } from "react";
 import i18n from "@dhis2/d2-i18n";
 import { ButtonStrip, Field } from "@dhis2/ui";
@@ -23,9 +23,9 @@ const columns: SimpleTableColumn[] = [
 ];
 
 export function FilesListForm({ nested }: { nested?: boolean }) {
-	const { fields, append, remove } = useFieldArray<LibraryGroupData, "files">(
+	const { fields, append, remove } = useFieldArray<DocumentGroup, "items">(
 		{
-			name: "files",
+			name: "items",
 			keyName: "key" as unknown as "id",
 		},
 	);

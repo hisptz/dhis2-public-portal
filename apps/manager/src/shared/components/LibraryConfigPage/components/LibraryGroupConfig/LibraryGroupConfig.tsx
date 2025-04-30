@@ -1,6 +1,6 @@
 import React, { useMemo } from "react";
 import { useFieldArray } from "react-hook-form";
-import { LibraryData } from "@packages/shared/schemas";
+import { DocumentsModule } from "@packages/shared/schemas";
 import { SimpleTable, SimpleTableColumn } from "@hisptz/dhis2-ui";
 import i18n from "@dhis2/d2-i18n";
 import { ButtonStrip, Field } from "@dhis2/ui";
@@ -29,10 +29,10 @@ const columns: SimpleTableColumn[] = [
 
 export function LibraryGroupConfig() {
 	const { fields, append, update, remove } = useFieldArray<
-		LibraryData,
-		"groups"
+		DocumentsModule,
+		"config.groups"
 	>({
-		name: "groups",
+		name: "config.groups",
 		keyName: "key" as unknown as "id",
 	});
 
