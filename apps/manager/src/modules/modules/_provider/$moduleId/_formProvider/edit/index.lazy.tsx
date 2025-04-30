@@ -6,9 +6,10 @@ import { useModule } from "../../../../../../shared/components/ModulesPage/provi
 import ErrorPage from "../../../../../../shared/components/ErrorPage/ErrorPage";
 import { DashboardConfigPage } from "../../../../../../shared/components/VisualizationModule/DashboardConfigPage";
 import { PageHeader } from "../../../../../../shared/components/PageHeader";
-import { DeleteDashboard } from "../../../../../../shared/components/VisualizationModule/components/DeleteDashboard";
-import { DashboardEditActions } from "../../../../../../shared/components/VisualizationModule/components/DashboardEditActions";
+import { DeleteModule } from "../../../../../../shared/components/ModulesPage/components/DeleteModule";
+import { ModuleEditActions } from "../../../../../../shared/components/ModulesPage/components/ModuleEditActions";
 import { ModuleType } from "@packages/shared/schemas";
+import { StaticConfigPage } from "../../../../../../shared/components/StaticModule/StaticConfigPage";
 
 export const Route = createLazyFileRoute(
 	"/modules/_provider/$moduleId/_formProvider/edit/",
@@ -23,13 +24,19 @@ function RouteComponent() {
 	if (!module) {
 		return <ErrorPage error={Error("Module not found")} />;
 	}
-	
- 	const renderModulePage = () => {
+
+	const renderModulePage = () => {
 		switch (module.type) {
 			case ModuleType.VISUALIZATION:
-				return <DashboardConfigPage />; 
+				return <DashboardConfigPage />;
+			case ModuleType.STATIC:
+				return <StaticConfigPage />;
 			default:
-				return <ErrorPage error={new Error(i18n.t("Unknown module type"))} />;
+				return (
+					<ErrorPage
+						error={new Error(i18n.t("Unknown module type"))}
+					/>
+				);
 		}
 	};
 	return (
@@ -45,15 +52,15 @@ function RouteComponent() {
 				</Button>
 			</div>
 			<PageHeader
-				title={`${i18n.t("Module")} - ${module.config.title}`}
+				title={`${i18n.t("Module")} - ${module.label}`}
 				actions={
 					<div className="flex gap-4 items-center">
-						<DeleteDashboard />
-						<DashboardEditActions />
+						<DeleteModule />
+						<ModuleEditActions />
 					</div>
 				}
 			/>
 			{renderModulePage()}
-			</div>
+		</div>
 	);
 }

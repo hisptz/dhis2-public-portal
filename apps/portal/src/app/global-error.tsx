@@ -14,8 +14,8 @@ import {
 
 export default function GlobalError() {
 	return (
-		<MantineProvider>
-			<html {...mantineHtmlProps}>
+		<html {...mantineHtmlProps}>
+			<MantineProvider>
 				<body>
 					<Container
 						fluid
@@ -57,7 +57,7 @@ export default function GlobalError() {
 						</Box>
 					</Container>
 				</body>
-			</html>
-		</MantineProvider>
+			</MantineProvider>
+		</html>
 	);
 }

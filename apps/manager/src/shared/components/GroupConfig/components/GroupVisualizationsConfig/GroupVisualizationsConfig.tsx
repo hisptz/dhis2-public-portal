@@ -30,9 +30,7 @@ export function GroupVisualizationsConfig() {
 		keyName: "fieldId" as unknown as "id",
 	});
 
-	
-	console.log("xfields", fields);
-	const rows = fields.map((field, index) => ({
+  	const rows = fields.map((field, index) => ({
 		...field,
 		actions: (
 			<ButtonStrip key={field.id}>

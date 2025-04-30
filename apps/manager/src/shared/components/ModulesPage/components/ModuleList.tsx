@@ -9,8 +9,8 @@ import { startCase } from "lodash";
 
 const columns: SimpleTableColumn[] = [
 	{
-		label: i18n.t("Title"),
-		key: "title",
+		label: i18n.t("Label"),
+		key: "label",
 	},
 	{
 		label: i18n.t("Type"),
@@ -41,8 +41,6 @@ export function ModuleList({ filterType }: { filterType?: ModuleType }) {
 			filteredModules.map((module) => ({
 				...module,
 				type: startCase(module.type.toLowerCase()),
-				title: module.config.title ?? module.id,
-
 				actions: (
 					<ButtonStrip>
 						<Button
@@ -68,7 +66,7 @@ export function ModuleList({ filterType }: { filterType?: ModuleType }) {
 			emptyLabel={
 				filterType
 					? i18n.t("There are no modules matching the selected type.")
-					: i18n.t("There are no dashboard configuration present")
+					: i18n.t("There are no modules configuration present")
 			}
 			columns={columns}
 			rows={rows}

@@ -13,7 +13,7 @@ export function AddGroup({
 }) {
 	const { value: hide, setTrue: onHide, setFalse: onShow } = useBoolean(true);
 	const module = useModule() as VisualizationModule;
-	const groups = module?.config.grouped ? module.config.groups : [];
+	const groups = module?.config?.grouped ? module?.config?.groups : [];
 
 	return (
 		<>

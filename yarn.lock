@@ -2490,7 +2490,7 @@
   resolved "https://registry.yarnpkg.com/@floating-ui/utils/-/utils-0.2.9.tgz#50dea3616bc8191fb8e112283b49eaff03e78429"
   integrity sha512-MDWhGtE+eHw5JW7lq4qhc5yRLS11ERl1c7Z6Xd0a58DozHES6EnNNwUWbMiG4J9Cgj053Bhk8zvlhFYKVhULwg==
 
-"@hisptz/dhis2-analytics@^2.0.67", "@hisptz/dhis2-analytics@^2.1.0":
+"@hisptz/dhis2-analytics@^2.0.67":
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/@hisptz/dhis2-analytics/-/dhis2-analytics-2.1.0.tgz#61476cc5f357392bd086c9b727163560d9de19bf"
   integrity sha512-Tkr0OG/hr4DR8B9GiCG6+rihfX34UOiG5zL3qWVMpcZppPgtoZiBwbMnZQ8mTUr5lT72+OTeKRUbVJJDsih0Lw==
@@ -2526,6 +2526,42 @@
     xlsx "^0.18.5"
     zod "^3.23.8"
 
+"@hisptz/dhis2-analytics@^2.1.1":
+  version "2.1.1"
+  resolved "https://registry.yarnpkg.com/@hisptz/dhis2-analytics/-/dhis2-analytics-2.1.1.tgz#d3b9fac3f5251744621fb7cf7cbe9cf502929afd"
+  integrity sha512-4yTW9dKbGQFZzWuLcNhRA+tBI4GQV+5GT8HLg+MM9MuykV7j/Y3EEV5kx9lUxDio9MUOfpEU9inn4jSJCAco3g==
+  dependencies:
+    "@hisptz/dhis2-ui" "2.0.43"
+    "@hisptz/dhis2-utils" "2.0.18"
+    "@react-leaflet/core" "^2.1.0"
+    "@react-pdf/renderer" "^4.0.0"
+    "@tanstack/react-table" "^8.19.3"
+    async-es "^3.2.5"
+    d3-color "^3.1.0"
+    d3-scale "^4.0.2"
+    file-saver "^2.0.5"
+    highcharts "^12.2.0"
+    highcharts-react-official "^3.2.1"
+    jotai-devtools "^0.10.1"
+    leaflet "^1.9.4"
+    leaflet-easyprint "^2.1.9"
+    leaflet.fullscreen "^4.0.0"
+    luxon "^3.4.4"
+    react-circular-progressbar "^2.1.0"
+    react-dnd "^16.0.1"
+    react-dnd-html5-backend "^16.0.1"
+    react-error-boundary "^4.0.12"
+    react-helmet "^6.1.0"
+    react-leaflet "^5.0.0"
+    react-leaflet-custom-control "^1.4.0"
+    react-query "^3.39.3"
+    react-spring "^9.6.1"
+    react-to-print "^3.0.1"
+    recoil "^0.7.7"
+    screenfull "^6.0.2"
+    xlsx "^0.18.5"
+    zod "^3.23.8"
+
 "@hisptz/dhis2-ui@2.0.42", "@hisptz/dhis2-ui@^2.0.29", "@hisptz/dhis2-ui@^2.0.42":
   version "2.0.42"
   resolved "https://registry.yarnpkg.com/@hisptz/dhis2-ui/-/dhis2-ui-2.0.42.tgz#4333a68a96e94821e7756fc6f497f8e00bd634d0"
@@ -2545,10 +2581,37 @@
     styled-components "^6.1.8"
     usehooks-ts "^2.9.2"
 
+"@hisptz/dhis2-ui@2.0.43":
+  version "2.0.43"
+  resolved "https://registry.yarnpkg.com/@hisptz/dhis2-ui/-/dhis2-ui-2.0.43.tgz#8781b50578707095ed676c1907300c2c65def02c"
+  integrity sha512-G20U6nnbAfB+6rtiDnLs9thHDoTePlr6eliAZTF3+tttl4HuEAbv0asotLnvUl1Ea9o7ouoDXMQ+a2LL3s24XA==
+  dependencies:
+    "@hisptz/dhis2-utils" "2.0.18"
+    classnames "^2.5.1"
+    dexie "^3.2.3"
+    jodit-react "^1.3.39"
+    lodash "^4.17.21"
+    luxon "^3.4.4"
+    react-circular-progressbar "^2.1.0"
+    react-collapsible "^2.10.0"
+    react-color "^2.19.3"
+    react-hook-form "^7.53.0"
+    recoil "^0.7.7"
+    styled-components "^6.1.8"
+    usehooks-ts "^2.9.2"
+
 "@hisptz/dhis2-utils@2.0.17", "@hisptz/dhis2-utils@^2.0.17":
   version "2.0.17"
   resolved "https://registry.yarnpkg.com/@hisptz/dhis2-utils/-/dhis2-utils-2.0.17.tgz#9884c8fcaa8c456d45e838df261e0cf12f54cf71"
   integrity sha512-gBn6eBTRvzz5FQU7feurLsu45al67KS76ylTCUssP7yljPQFmyevRA7wFNhj+6TrxhzoYVlrVe9t4LeEogytmA==
+  dependencies:
+    "@dhis2/multi-calendar-dates" "^1.2.4"
+    luxon "^3.4.4"
+
+"@hisptz/dhis2-utils@2.0.18", "@hisptz/dhis2-utils@^2.0.18":
+  version "2.0.18"
+  resolved "https://registry.yarnpkg.com/@hisptz/dhis2-utils/-/dhis2-utils-2.0.18.tgz#56bc5a9fad96a1539198de2e7eed820546638f58"
+  integrity sha512-tP33Xky9Sa9fd7EjTDS5SzRyOTWksQj81g8P2+vS/WQEdU9NMvPvtHNCmPnQ99sDclzY+ZoCTTGe8Ci3WBc3SA==
   dependencies:
     "@dhis2/multi-calendar-dates" "^1.2.4"
     luxon "^3.4.4"
@@ -3695,6 +3758,11 @@
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/@react-leaflet/core/-/core-2.1.0.tgz#383acd31259d7c9ae8fb1b02d5e18fe613c2a13d"
   integrity sha512-Qk7Pfu8BSarKGqILj4x7bCSZ1pjuAPZ+qmRwH5S7mDS91VSbVVsJSrW4qA+GPrro8t69gFYVMWb1Zc4yFmPiVg==
+
+"@react-leaflet/core@^3.0.0":
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/@react-leaflet/core/-/core-3.0.0.tgz#34ccc280ce7d8ac5c09f2b3d5fffded450bdf1a2"
+  integrity sha512-3EWmekh4Nz+pGcr+xjf0KNyYfC3U2JjnkWsh0zcqaexYqmmB5ZhH37kz41JXGmKzpaMZCnPofBBm64i+YrEvGQ==
 
 "@react-pdf-viewer/core@3.12.0", "@react-pdf-viewer/core@^3.12.0":
   version "3.12.0"
@@ -13693,6 +13761,11 @@ leaflet.fullscreen@^2.4.0:
   resolved "https://registry.yarnpkg.com/leaflet.fullscreen/-/leaflet.fullscreen-2.4.0.tgz#8503c69b6f6afe6f54594c9cdd5e4f131cfa97b4"
   integrity sha512-41O0ikdUR0bVC0QfoFN3W5S+9yoeHqL74i0QQafa/W79+ij/G7IRZwpfwPuxoNwpydoUJ/9Mq/6Hp7WZOnkWzQ==
 
+leaflet.fullscreen@^4.0.0:
+  version "4.0.0"
+  resolved "https://registry.yarnpkg.com/leaflet.fullscreen/-/leaflet.fullscreen-4.0.0.tgz#a2517c2c9cb06d2be9d68e2ed0cf8d109867aec6"
+  integrity sha512-wIV7R6yxtlk95/Er31ptCL0MQCmG4OUU4U0SwNeamEb2xBNDIeU8GtWF2S7PaxV/fdfReNmp+QCT9cUPSNIgdw==
+
 leaflet@^1.9.3, leaflet@^1.9.4:
   version "1.9.4"
   resolved "https://registry.yarnpkg.com/leaflet/-/leaflet-1.9.4.tgz#23fae724e282fa25745aff82ca4d394748db7d8d"
@@ -16850,7 +16923,7 @@ react-jsx-parser@^2.4.0:
     "@types/react" "^18.3.12"
     "@types/react-dom" "^18.3.1"
 
-react-leaflet-custom-control@^1.3.1:
+react-leaflet-custom-control@^1.3.1, react-leaflet-custom-control@^1.4.0:
   version "1.4.0"
   resolved "https://registry.yarnpkg.com/react-leaflet-custom-control/-/react-leaflet-custom-control-1.4.0.tgz#3f3a644c26bdedd10a44e57671d6958c6ff0a2ad"
   integrity sha512-E5sM7avHdFApzXTW7GvdPbhgBonu3j0lr1/DzZWz9OMzGbnSTkYPhE0VIYHAyOBvUoZU/TWjtkyVPS68GyeDiw==
@@ -16863,6 +16936,13 @@ react-leaflet@^4.2.0, react-leaflet@^4.2.1:
   integrity sha512-p9chkvhcKrWn/H/1FFeVSqLdReGwn2qmiobOQGO3BifX+/vV/39qhY8dGqbdcPh1e6jxh/QHriLXr7a4eLFK4Q==
   dependencies:
     "@react-leaflet/core" "^2.1.0"
+
+react-leaflet@^5.0.0:
+  version "5.0.0"
+  resolved "https://registry.yarnpkg.com/react-leaflet/-/react-leaflet-5.0.0.tgz#945d40bad13b69e8606278b19446b00bab57376a"
+  integrity sha512-CWbTpr5vcHw5bt9i4zSlPEVQdTVcML390TjeDG0cK59z1ylexpqC6M1PJFjV8jD7CF+ACBFsLIDs6DRMoLEofw==
+  dependencies:
+    "@react-leaflet/core" "^3.0.0"
 
 react-number-format@^5.4.3:
   version "5.4.4"

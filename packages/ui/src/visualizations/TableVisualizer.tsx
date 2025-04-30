@@ -1,6 +1,7 @@
+import React, { RefObject } from "react";
+
 import { AnalyticsData, VisualizationConfig } from "@packages/shared/schemas";
 import { isEmpty } from "lodash";
-import { RefObject } from "react";
 import { DHIS2PivotTable } from "@hisptz/dhis2-analytics";
 
 export interface TableVisualizerProps {
@@ -18,13 +19,17 @@ export function TableVisualizer({
 }: TableVisualizerProps) {
 	return (
 		<DHIS2PivotTable
-			setRef={setRef as any}
+			/*
+	 // @ts-expect-error library fix */
+			setRef={setRef}
 			tableProps={{
 				scrollHeight: fullScreen
 					? `calc(100dvh - 96px)`
 					: `calc(100% - 48px)`,
 			}}
-			analytics={analytics as any}
+			/*
+	 // @ts-expect-error library fix */
+			analytics={analytics}
 			config={{
 				options: {
 					fixColumnHeaders: true,
