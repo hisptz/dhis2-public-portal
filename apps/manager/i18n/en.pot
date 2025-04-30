@@ -5,8 +5,8 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
-"POT-Creation-Date: 2025-04-30T10:44:30.644Z\n"
-"PO-Revision-Date: 2025-04-30T10:44:30.645Z\n"
+"POT-Creation-Date: 2025-04-30T11:45:56.745Z\n"
+"PO-Revision-Date: 2025-04-30T11:45:56.746Z\n"
 
 msgid "Could not get Appearance configurations"
 msgstr "Could not get Appearance configurations"
@@ -68,54 +68,6 @@ msgstr "Modules"
 msgid "Size"
 msgstr "Size"
 
-msgid "Something went wrong"
-msgstr "Something went wrong"
-
-msgid "Reload"
-msgstr "Reload"
-
-msgid "This will be a part of the url. It should not contain spaces"
-msgstr "This will be a part of the url. It should not contain spaces"
-
-msgid "Error saving changes"
-msgstr "Error saving changes"
-
-msgid "Changes saved successfully"
-msgstr "Changes saved successfully"
-
-msgid "Dashboard group"
-msgstr "Dashboard group"
-
-msgid "Back to dashboard "
-msgstr "Back to dashboard "
-
-msgid "Title"
-msgstr "Title"
-
-msgid "Short description"
-msgstr "Short description"
-
-msgid "Remove"
-msgstr "Remove"
-
-msgid "Visualizations"
-msgstr "Visualizations"
-
-msgid "Configure layout"
-msgstr "Configure layout"
-
-msgid "ID"
-msgstr "ID"
-
-msgid "Type"
-msgstr "Type"
-
-msgid "Caption"
-msgstr "Caption"
-
-msgid "Actions"
-msgstr "Actions"
-
 msgid "Create a new library"
 msgstr "Create a new library"
 
@@ -128,11 +80,20 @@ msgstr "Could not create new library"
 msgid "Create Library"
 msgstr "Create Library"
 
+msgid "Title"
+msgstr "Title"
+
 msgid "Creating..."
 msgstr "Creating..."
 
 msgid "Create library"
 msgstr "Create library"
+
+msgid "This will be a part of the url. It should not contain spaces"
+msgstr "This will be a part of the url. It should not contain spaces"
+
+msgid "ID"
+msgstr "ID"
 
 msgid "Delete library"
 msgstr "Delete library"
@@ -155,32 +116,20 @@ msgstr "Are you sure you want to delete the library "
 msgid "This action is irreversible"
 msgstr "This action is irreversible"
 
-msgid "Label"
-msgstr "Label"
-
-msgid "Has groups"
-msgstr "Has groups"
-
-msgid "Title description"
-msgstr "Title description"
-
-msgid "Item Display"
-msgstr "Item Display"
-
-msgid "Segmented"
-msgstr "Segmented"
-
-msgid "DropDown"
-msgstr "DropDown"
-
 msgid "Could not save form, check the logs for more information"
 msgstr "Could not save form, check the logs for more information"
+
+msgid "Label"
+msgstr "Label"
 
 msgid "Sub groups"
 msgstr "Sub groups"
 
 msgid "Files"
 msgstr "Files"
+
+msgid "Actions"
+msgstr "Actions"
 
 msgid "N/A"
 msgstr "N/A"
@@ -209,8 +158,26 @@ msgstr "This action is irreversible."
 msgid "Delete group"
 msgstr "Delete group"
 
+msgid "Edit Library Group"
+msgstr "Edit Library Group"
+
+msgid "Add Library Group"
+msgstr "Add Library Group"
+
+msgid "Update"
+msgstr "Update"
+
+msgid "Save"
+msgstr "Save"
+
+msgid "Has sub groups"
+msgstr "Has sub groups"
+
 msgid "Edit group"
 msgstr "Edit group"
+
+msgid "Type"
+msgstr "Type"
 
 msgid "There are no files present"
 msgstr "There are no files present"
@@ -242,9 +209,6 @@ msgstr "File"
 msgid "Uploading..."
 msgstr "Uploading..."
 
-msgid "Save"
-msgstr "Save"
-
 msgid "Could not upload file {{ errorMessage }}"
 msgstr "Could not upload file {{ errorMessage }}"
 
@@ -254,20 +218,26 @@ msgstr "Could not create document {{ errorMessage }}"
 msgid "Could not delete file {{ errorMessage }}"
 msgstr "Could not delete file {{ errorMessage }}"
 
-msgid "Edit Library Group"
-msgstr "Edit Library Group"
-
-msgid "Add Library Group"
-msgstr "Add Library Group"
-
-msgid "Update"
-msgstr "Update"
-
-msgid "Has sub groups"
-msgstr "Has sub groups"
-
 msgid "There are no sub groups present"
 msgstr "There are no sub groups present"
+
+msgid "Has groups"
+msgstr "Has groups"
+
+msgid "Title description"
+msgstr "Title description"
+
+msgid "Item Display"
+msgstr "Item Display"
+
+msgid "Segmented"
+msgstr "Segmented"
+
+msgid "DropDown"
+msgstr "DropDown"
+
+msgid "Changes saved successfully"
+msgstr "Changes saved successfully"
 
 msgid "Could not save changes"
 msgstr "Could not save changes"
@@ -277,6 +247,36 @@ msgstr "Name"
 
 msgid "View"
 msgstr "View"
+
+msgid "Something went wrong"
+msgstr "Something went wrong"
+
+msgid "Reload"
+msgstr "Reload"
+
+msgid "Error saving changes"
+msgstr "Error saving changes"
+
+msgid "Dashboard group"
+msgstr "Dashboard group"
+
+msgid "Back to dashboard "
+msgstr "Back to dashboard "
+
+msgid "Short description"
+msgstr "Short description"
+
+msgid "Remove"
+msgstr "Remove"
+
+msgid "Visualizations"
+msgstr "Visualizations"
+
+msgid "Configure layout"
+msgstr "Configure layout"
+
+msgid "Caption"
+msgstr "Caption"
 
 msgid "Add menu item"
 msgstr "Add menu item"

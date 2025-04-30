@@ -1,5 +1,5 @@
 import React, { createContext, useContext } from "react";
-import { useLibraryList } from "./LibraryList/hooks/libraryList";
+import { useLibraryList } from "./DocumentList/hooks/documentList";
 import { FullLoader } from "./FullLoader";
 import ErrorPage from "./ErrorPage/ErrorPage";
 import { LibraryData } from "@packages/shared/schemas";

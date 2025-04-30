@@ -3,11 +3,11 @@ import ErrorPage from "../../../../../../shared/components/ErrorPage/ErrorPage";
 import { Button, IconArrowLeft24 } from "@dhis2/ui";
 import i18n from "@dhis2/d2-i18n";
 import { PageHeader } from "../../../../../../shared/components/PageHeader";
-import { LibraryConfigPage } from "../../../../../../shared/components/LibraryConfigPage/LibraryConfigPage";
+import { DocumentConfigPage } from "../../../../../../shared/components/DocumentConfigPage/DocumentConfigPage";
 import React from "react";
 import { useLibrary } from "../../../../../../shared/components/LibraryProvider";
-import { DeleteLibrary } from "../../../../../../shared/components/LibraryConfigPage/components/DeleteLibrary";
-import { LibraryEditActions } from "../../../../../../shared/components/LibraryConfigPage/components/LibraryEditActions";
+import { DeleteDocument } from "../../../../../../shared/components/DocumentConfigPage/components/DeleteDocument";
+import { DocumentEditActions } from "../../../../../../shared/components/DocumentConfigPage/components/DocumentEditActions";
 
 export const Route = createLazyFileRoute(
 	"/library/_provider/$libraryId/_formProvider/edit/",
@@ -39,12 +39,12 @@ function RouteComponent() {
 				title={`${i18n.t("Library")} - ${library.label}`}
 				actions={
 					<div className="flex gap-4 items-center">
-						<DeleteLibrary />
-						<LibraryEditActions />
+						<DeleteDocument />
+						<DocumentEditActions />
 					</div>
 				}
 			/>
-			<LibraryConfigPage />
+			<DocumentConfigPage />
 		</div>
 	);
 }

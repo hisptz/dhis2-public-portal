@@ -1,5 +1,5 @@
 import { useBoolean } from "usehooks-ts";
-import { AddLibraryForm } from "./components/AddLibraryForm";
+import { AddDocumentForm } from "./components/AddDocumentForm";
 import React from "react";
 import { Button, IconAdd24 } from "@dhis2/ui";
 import i18n from "@dhis2/d2-i18n";
@@ -18,7 +18,7 @@ export function AddLibrary() {
 	return (
 		<>
 			{!hide && (
-				<AddLibraryForm
+				<AddDocumentForm
 					onComplete={(library: LibraryData) => {
 						refreshLibraries();
 						navigate({

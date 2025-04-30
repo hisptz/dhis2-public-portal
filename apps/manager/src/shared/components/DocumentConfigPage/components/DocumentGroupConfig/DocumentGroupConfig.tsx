@@ -4,9 +4,9 @@ import { DocumentsModule } from "@packages/shared/schemas";
 import { SimpleTable, SimpleTableColumn } from "@hisptz/dhis2-ui";
 import i18n from "@dhis2/d2-i18n";
 import { ButtonStrip, Field } from "@dhis2/ui";
-import { AddLibraryGroup } from "./components/AddLibraryGroup";
-import { EditLibraryGroup } from "./components/EditLibraryGroup";
-import { DeleteLibraryGroup } from "./components/DeleteLibraryGroup";
+import { AddDocumentGroup } from "./components/AddDocumentGroup";
+import { EditDocumentGroup } from "./components/EditDocumentGroup";
+import { DeleteDocumentGroup } from "./components/DeleteDocumentGroup";
 
 const columns: SimpleTableColumn[] = [
 	{
@@ -27,7 +27,7 @@ const columns: SimpleTableColumn[] = [
 	},
 ];
 
-export function LibraryGroupConfig() {
+export function DocumentGroupConfig() {
 	const { fields, append, update, remove } = useFieldArray<
 		DocumentsModule,
 		"config.groups"
@@ -47,11 +47,11 @@ export function LibraryGroupConfig() {
 					i18n.t("N/A"),
 				actions: (
 					<ButtonStrip>
-						<EditLibraryGroup
+						<EditDocumentGroup
 							onUpdate={(data) => update(index, data)}
 							group={field}
 						/>
-						<DeleteLibraryGroup
+						<DeleteDocumentGroup
 							onRemove={() => remove(index)}
 							group={field}
 						/>
@@ -65,7 +65,7 @@ export function LibraryGroupConfig() {
 		<Field label={i18n.t("Groups")}>
 			<div className="flex flex-col gap-4">
 				<ButtonStrip end>
-					<AddLibraryGroup onAdd={append} />
+					<AddDocumentGroup onAdd={append} />
 				</ButtonStrip>
 				<SimpleTable
 					emptyLabel={i18n.t(

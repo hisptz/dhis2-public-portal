@@ -1,5 +1,5 @@
 import React, { createContext, useContext } from "react";
-import { useLibraryById } from "./LibraryList/hooks/libraryList";
+import { useLibraryById } from "./DocumentList/hooks/documentList";
 import { FullLoader } from "./FullLoader";
 import ErrorPage from "./ErrorPage/ErrorPage";
 import { useParams } from "@tanstack/react-router";

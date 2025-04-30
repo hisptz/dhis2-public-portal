@@ -15,7 +15,7 @@ import { RHFTextInputField } from "@hisptz/dhis2-ui";
 import { DocumentGroupTypeSelector } from "./DocumentGroupTypeSelector";
 import { RHFIDField } from "../../../../Fields/IDField";
 
-export function LibraryGroupForm({
+export function DocumentGroupForm({
 	hide,
 	onClose,
 	group,

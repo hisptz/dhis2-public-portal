@@ -4,9 +4,9 @@ import { DocumentGroup } from "@packages/shared/schemas";
 import { useFieldArray } from "react-hook-form";
 import { ButtonStrip, Field } from "@dhis2/ui";
 import React, { useMemo } from "react";
-import { EditLibraryGroup } from "../EditLibraryGroup";
-import { AddLibraryGroup } from "../AddLibraryGroup";
-import { DeleteLibraryGroup } from "../DeleteLibraryGroup";
+import { EditDocumentGroup } from "../EditDocumentGroup";
+import { AddDocumentGroup } from "../AddDocumentGroup";
+import { DeleteDocumentGroup } from "../DeleteDocumentGroup";
 
 const columns: SimpleTableColumn[] = [
 	{
@@ -38,11 +38,11 @@ export function SubGroupsListForm() {
 			files: field?.map((file) => file.label).join(", "),
 			actions: (
 				<ButtonStrip>
-					<EditLibraryGroup
+					<EditDocumentGroup
 						onUpdate={(dgroupata) => update(index, data)}
 						group={field}
 					/>
-					<DeleteLibraryGroup
+					<DeleteDocumentGroup
 						group={field}
 						onRemove={() => remove(index)}
 					/>
@@ -55,7 +55,7 @@ export function SubGroupsListForm() {
 		<Field required label={i18n.t("Sub groups")}>
 			<div className="flex flex-col gap-2">
 				<ButtonStrip end>
-					<AddLibraryGroup nested onAdd={append} />
+					<AddDocumentGroup nested onAdd={append} />
 				</ButtonStrip>
 				<SimpleTable
 					emptyLabel={i18n.t("There are no sub groups present")}

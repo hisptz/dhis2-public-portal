@@ -1,12 +1,12 @@
 import React from "react";
 import { GeneralDocumentConfig } from "./components/GeneralDocumentConfig";
-import { LibraryList } from "../LibraryList/LibraryList";
+import { DocumentList } from "../DocumentList/DocumentList";
 
-export function LibraryConfigPage() {
+export function DocumentConfigPage() {
 	return (
 		<div>
 			<GeneralDocumentConfig />
-			<LibraryList />
+			<DocumentList />
 		</div>
 	);
 }

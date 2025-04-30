@@ -6,7 +6,7 @@ import { DocumentGroup } from "@packages/shared/schemas";
 import { SubGroupsListForm } from "./SubGroupsListForm/SubGroupsListForm";
 import { FilesListForm } from "./FilesListForm/FilesListForm";
 
-export function LibraryGroupTypeSelector({ nested }: { nested?: boolean }) {
+export function DocumentGroupTypeSelector({ nested }: { nested?: boolean }) {
 	const { setValue } = useFormContext();
 	// const value = useWatch<DocumentGroup, "subGroups">({
 	// 	name: "subGroups",

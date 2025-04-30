@@ -6,7 +6,7 @@ import { useDialog } from "@hisptz/dhis2-ui";
 import { useDeleteDocuments } from "./FilesListForm/components/FileForm/hooks/file";
 import { compact, flatten } from "lodash";
 
-export function DeleteLibraryGroup({
+export function DeleteDocumentGroup({
 	group,
 	onRemove,
 }: {

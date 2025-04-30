@@ -9,9 +9,9 @@ import { PageHeader } from "../../../../../../shared/components/PageHeader";
 import { DeleteModule } from "../../../../../../shared/components/ModulesPage/components/DeleteModule";
 import { ModuleEditActions } from "../../../../../../shared/components/ModulesPage/components/ModuleEditActions";
 import { ModuleType } from "@packages/shared/schemas";
-import { LibraryList } from "../../../../../../shared/components/LibraryList/LibraryList";
+import { DocumentList } from "../../../../../../shared/components/DocumentList/DocumentList";
 import { StaticConfigPage } from "../../../../../../shared/components/StaticModule/StaticConfigPage";
-import { LibraryConfigPage } from "../../../../../../shared/components/LibraryConfigPage/LibraryConfigPage";
+import { DocumentConfigPage } from "../../../../../../shared/components/DocumentConfigPage/DocumentConfigPage";
 
 export const Route = createLazyFileRoute(
 	"/modules/_provider/$moduleId/_formProvider/edit/",
@@ -32,7 +32,7 @@ function RouteComponent() {
 			case ModuleType.VISUALIZATION:
 				return <DashboardConfigPage />;
 			case ModuleType.DOCUMENTS:
-				return <LibraryConfigPage />;
+				return <DocumentConfigPage />;
 			case ModuleType.STATIC:
 				return <StaticConfigPage />;
 			default:

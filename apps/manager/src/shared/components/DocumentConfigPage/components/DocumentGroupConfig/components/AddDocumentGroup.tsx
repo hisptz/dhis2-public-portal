@@ -5,7 +5,7 @@ import i18n from "@dhis2/d2-i18n";
 import React from "react";
 import { DocumentGroupForm } from "./DocumentGroupForm";
 
-export function AddLibraryGroup({
+export function AddDocumentGroup({
 	onAdd,
 	nested,
 }: {

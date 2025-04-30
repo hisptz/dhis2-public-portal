@@ -34,7 +34,7 @@ export function FileForm({
 	onSave: (file: DocumentItem) => void;
 	onClose: () => void;
 	hide: boolean;
-	file?: LibraryFileData;
+	file?: DocumentItem;
 	nested?: boolean;
 }) {
 	const { getFile } = useGetFile();

@@ -14,7 +14,7 @@ const deleteMutation: any = {
 	id: ({ id }: { id: string }) => id,
 };
 
-export function DeleteLibrary() {
+export function DeleteDocument() {
 	const navigate = useNavigate({
 		from: "/library/$libraryId/edit",
 	});

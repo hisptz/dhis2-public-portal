@@ -1,6 +1,9 @@
 import { FormProvider, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { DocumentsModule, documentsModuleSchema } from "@packages/shared/schemas";
+import {
+	DocumentsModule,
+	documentsModuleSchema,
+} from "@packages/shared/schemas";
 import {
 	Button,
 	ButtonStrip,
@@ -12,11 +15,11 @@ import {
 import React from "react";
 import i18n from "@dhis2/d2-i18n";
 import { RHFTextInputField } from "@hisptz/dhis2-ui";
-import { LibraryIDField } from "./LibraryIDField";
+import { DocumentIDField } from "./DocumentIDField";
 import { useCreateLibrary } from "../hooks/library";
 import { FetchError, useAlert } from "@dhis2/app-runtime";
 
-export function AddLibraryForm({
+export function AddDocumentForm({
 	sortOrder,
 	hide,
 	onClose,
@@ -73,7 +76,7 @@ export function AddLibraryForm({
 							name="label"
 							label={i18n.t("Title")}
 						/>
-						<LibraryIDField />
+						<DocumentIDField />
 					</form>
 				</ModalContent>
 				<ModalActions>

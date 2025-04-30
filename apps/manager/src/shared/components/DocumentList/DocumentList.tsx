@@ -21,7 +21,7 @@ const columns: SimpleTableColumn[] = [
 	},
 ];
 
-export function LibraryList() {
+export function DocumentList() {
 	const module = useModule() as DocumentsModule;
 	console.log("module", module);
 	const libraries = module?.config?.groups || [];

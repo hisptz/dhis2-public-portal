@@ -7,7 +7,7 @@ import { useAlert } from "@dhis2/app-runtime";
 import { useSaveLibrary } from "../hooks/saveLibrary";
 import { DocumentsModule } from "@packages/shared/schemas";
 
-export function LibraryEditActions() {
+export function DocumentEditActions() {
 	const { save } = useSaveLibrary();
 	const { handleSubmit, formState } = useFormContext<DocumentsModule>();
 	const navigate = useNavigate();

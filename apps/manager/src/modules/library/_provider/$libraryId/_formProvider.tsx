@@ -1,6 +1,6 @@
 import { createFileRoute, Outlet } from "@tanstack/react-router";
 import { LibraryProvider } from "../../../../shared/components/LibraryProvider";
-import { LibraryFormProvider } from "../../../../shared/components/LibraryConfigPage/components/LibraryFormProvider";
+import { LibraryFormProvider } from "../../../../shared/components/DocumentConfigPage/components/LibraryFormProvider";
 import React from "react";
 
 export const Route = createFileRoute(

@@ -5,7 +5,7 @@ import { RHFTextInputField } from "@hisptz/dhis2-ui";
 import React, { useEffect } from "react";
 import { kebabCase } from "lodash";
 
-export function LibraryIDField() {
+export function DocumentIDField() {
 	const { setValue } = useFormContext<DocumentsModule>();
 	const title = useWatch<DocumentsModule, "label">({
 		name: "label",
