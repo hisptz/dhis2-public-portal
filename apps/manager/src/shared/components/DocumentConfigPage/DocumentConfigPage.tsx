@@ -1,11 +1,11 @@
 import React from "react";
-import { GeneralLibraryConfig } from "./components/GeneralLibraryConfig";
+import { GeneralDocumentConfig } from "./components/GeneralDocumentConfig";
 import { LibraryList } from "../LibraryList/LibraryList";
 
 export function LibraryConfigPage() {
 	return (
 		<div>
-			<GeneralLibraryConfig />
+			<GeneralDocumentConfig />
 			<LibraryList />
 		</div>
 	);

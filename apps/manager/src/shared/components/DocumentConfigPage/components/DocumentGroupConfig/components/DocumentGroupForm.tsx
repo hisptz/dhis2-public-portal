@@ -8,11 +8,11 @@ import {
 	ModalContent,
 	ModalTitle,
 } from "@dhis2/ui";
-import{ DocumentGroup,documentGroupSchema } from "@packages/shared/schemas";
+import { DocumentGroup, documentGroupSchema } from "@packages/shared/schemas";
 import i18n from "@dhis2/d2-i18n";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { RHFTextInputField } from "@hisptz/dhis2-ui";
-import { LibraryGroupTypeSelector } from "./LibraryGroupTypeSelector";
+import { DocumentGroupTypeSelector } from "./DocumentGroupTypeSelector";
 import { RHFIDField } from "../../../../Fields/IDField";
 
 export function LibraryGroupForm({
@@ -60,7 +60,7 @@ export function LibraryGroupForm({
 							label={i18n.t("ID")}
 							dependsOn="label"
 						/>
-						<LibraryGroupTypeSelector nested={nested} />
+						<DocumentGroupTypeSelector nested={nested} />
 					</form>
 				</ModalContent>
 				<ModalActions>

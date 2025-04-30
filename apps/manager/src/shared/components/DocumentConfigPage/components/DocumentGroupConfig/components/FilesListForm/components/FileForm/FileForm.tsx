@@ -10,20 +10,17 @@ import {
 import React from "react";
 import i18n from "@dhis2/d2-i18n";
 import { FormProvider, useForm } from "react-hook-form";
-
+import { DocumentItem, documentItemSchema } from "@packages/shared/schemas";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { RHFSingleSelectField, RHFTextInputField } from "@hisptz/dhis2-ui";
 import { z } from "zod";
 import { CustomFile, useGetFile, useUploadFile } from "./hooks/file";
 import { RHFFileInputField } from "../../../../../../../Fields/RHFFileInputField";
-import { DocumentItem, documentItemSchema } from "@packages/shared/schemas";
 
 const libraryFileFormSchema = documentItemSchema.extend({
-  id: z.string().optional(),
-  file: z.instanceof(File),
+	id: z.string().optional(),
+	file: z.instanceof(File),
 });
-
-
 
 type LibraryFileFormData = z.infer<typeof libraryFileFormSchema>;
 
@@ -37,7 +34,7 @@ export function FileForm({
 	onSave: (file: DocumentItem) => void;
 	onClose: () => void;
 	hide: boolean;
-	file?: DocumentItem;
+	file?: LibraryFileData;
 	nested?: boolean;
 }) {
 	const { getFile } = useGetFile();

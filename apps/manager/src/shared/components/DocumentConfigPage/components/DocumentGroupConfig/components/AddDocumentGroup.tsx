@@ -3,7 +3,7 @@ import { useBoolean } from "usehooks-ts";
 import { Button, IconAdd24 } from "@dhis2/ui";
 import i18n from "@dhis2/d2-i18n";
 import React from "react";
-import { LibraryGroupForm } from "./LibraryGroupForm";
+import { DocumentGroupForm } from "./DocumentGroupForm";
 
 export function AddLibraryGroup({
 	onAdd,
@@ -25,7 +25,7 @@ export function AddLibraryGroup({
 				{i18n.t("Add group")}
 			</Button>
 			{!hide && (
-				<LibraryGroupForm
+				<DocumentGroupForm
 					nested={nested}
 					hide={hide}
 					onClose={onHide}
