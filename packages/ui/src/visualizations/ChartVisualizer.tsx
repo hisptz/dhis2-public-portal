@@ -37,7 +37,6 @@ export function ChartVisualizer({
 						height: "100%",
 					},
 				}}
-				// @ts-expect-error fixes on the lib
 				analytics={analytics}
 				// @ts-expect-error fixes on the lib
 				setRef={setRef}

@@ -5,14 +5,13 @@ import i18n from "@dhis2/d2-i18n";
 import {
 	IconClock,
 	IconDownload,
+	IconMap,
+	IconMapPin,
 	IconMaximize,
 	IconMinimize,
-	IconMapPin,
-	IconMap,
 	IconTable,
 } from "@tabler/icons-react";
 import { FullScreen, useFullScreenHandle } from "react-full-screen";
-import { MapView } from "@/components/displayItems/visualizations/MapView";
 import { OrgUnitSelection } from "@hisptz/dhis2-utils";
 import { RefObject, useCallback, useMemo, useRef, useState } from "react";
 import L, { Map as LeafletMap } from "leaflet";
@@ -29,18 +28,13 @@ import { downloadExcelFromTable } from "@/utils/table";
 import { CaptionPopover } from "@/components/CaptionPopover";
 import { MapConfig, VisualizationItem } from "@packages/shared/schemas";
 import { VisualizationTitle } from "@/components/displayItems/visualizations/VisualizationTitle";
+import { MapVisualizer } from "@packages/ui/visualizations";
 
 export function MapVisComponent({
-	orgUnitSelection,
-	thematicLayers,
-	periods,
 	mapConfig,
 	config,
 	disableActions,
 }: {
-	orgUnitSelection: OrgUnitSelection;
-	thematicLayers: any[];
-	periods: string[];
 	mapConfig: MapConfig;
 	config: VisualizationItem;
 	disableActions?: boolean;
@@ -89,7 +83,7 @@ export function MapVisComponent({
 				.addTo(map);
 		}
 		return null;
-	}, [map]);
+	}, [map, mapConfig.name]);
 
 	const tableRef = useRef<HTMLTableElement>(null);
 
@@ -117,9 +111,10 @@ export function MapVisComponent({
 		setFalse: hidePeriods,
 	} = useBoolean(false);
 
-	const [periodState, setPeriodState] = useState<string[]>(periods);
-	const [orgUnitSelectionState, setOrgUnitSelectionState] =
-		useState<OrgUnitSelection>(orgUnitSelection);
+	const [periodState, setPeriodState] = useState<string[] | undefined>();
+	const [orgUnitSelectionState, setOrgUnitSelectionState] = useState<
+		OrgUnitSelection | undefined
+	>();
 
 	const onFullScreen = async () => {
 		if (handler.active) {
@@ -239,62 +234,30 @@ export function MapVisComponent({
 							<div className="flex-1 h-full">
 								<MapTableComponent
 									fullScreen={handler.active}
-									orgUnitSelection={orgUnitSelectionState}
+									orgUnitSelection={
+										orgUnitSelectionState ?? {
+											orgUnits: [],
+										}
+									}
 									periodSelection={{
-										periods: periodState,
+										periods: periodState ?? [],
 									}}
 									setRef={tableRef}
 									mapConfig={mapConfig}
 								/>
 							</div>
 						) : (
-							<MapView
-								mapOptions={{
-									trackResize: true,
-									zoomControl: true,
-									scrollWheelZoom: false,
-									bounceAtZoomLimits: true,
-									boxZoom: true,
-									zoom: 1,
-									style: {
-										height: "100%",
-										width: "100%",
-										background: "#FFFFFF",
-									},
-								}}
-								base={{
-									enabled: false,
-									url: "",
-									attribution: "",
-								}}
+							<MapVisualizer
+								mapConfig={mapConfig}
 								setRef={mapRef}
 								orgUnitSelection={orgUnitSelectionState}
-								thematicLayers={thematicLayers}
-								legends={{
-									collapsible: false,
-									enabled: true,
-									position: "topright",
-								}}
-								periodSelection={{
-									periods: periodState,
-								}}
-								boundaryLayer={{
-									enabled: true,
-								}}
-								controls={[
-									{
-										type: "scale",
-										position: "bottomleft",
-										options: {
-											imperial: false,
-											metric: true,
-										},
-									},
-									{
-										type: "compass",
-										position: "bottomleft",
-									},
-								]}
+								periodSelection={
+									periodState
+										? {
+												periods: periodState,
+											}
+										: undefined
+								}
 							/>
 						)}
 					</div>
@@ -302,8 +265,8 @@ export function MapVisComponent({
 			</FullScreen>
 			{orgUnits && (
 				<CustomOrgUnitModal
-					onReset={() => setOrgUnitSelectionState(orgUnitSelection)}
-					orgUnitState={orgUnitSelectionState.orgUnits?.map(
+					onReset={() => setOrgUnitSelectionState(undefined)}
+					orgUnitState={orgUnitSelectionState?.orgUnits?.map(
 						(ou) => ou.id,
 					)}
 					onUpdate={(val) => {
@@ -326,7 +289,7 @@ export function MapVisComponent({
 
 			{period && (
 				<CustomPeriodModal
-					onReset={() => setPeriodState(periods)}
+					onReset={() => setPeriodState(undefined)}
 					periodState={periodState}
 					onUpdate={(val) => {
 						setPeriodState(val);

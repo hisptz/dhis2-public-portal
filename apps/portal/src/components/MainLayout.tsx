@@ -69,7 +69,7 @@ export function MainLayout({
 				isOpen={isLargerThanSm ? isOpen : opened}
 				setOpen={setOpen}
 			/>
-			<AppShell.Main style={{ background: "#F9F9FA" }}>
+			<AppShell.Main style={{ background: "#F9F9FA", paddingBottom: 16 }}>
 				<Suspense
 					fallback={
 						<Center>
