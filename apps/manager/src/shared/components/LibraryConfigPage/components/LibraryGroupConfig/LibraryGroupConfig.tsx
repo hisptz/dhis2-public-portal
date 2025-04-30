@@ -35,16 +35,15 @@ export function LibraryGroupConfig() {
 		name: "config.groups",
 		keyName: "key" as unknown as "id",
 	});
-
 	const rows = useMemo(
 		() =>
 			fields.map((field, index) => ({
 				...field,
 				groups:
-					field.subGroups?.map((group) => group.label).join(", ") ??
+					field.items?.map((group) => group.label).join(", ") ??
 					i18n.t("N/A"),
 				files:
-					field.files?.map((file) => file.label).join(", ") ??
+					field.items?.map((file) => file.label).join(", ") ??
 					i18n.t("N/A"),
 				actions: (
 					<ButtonStrip>

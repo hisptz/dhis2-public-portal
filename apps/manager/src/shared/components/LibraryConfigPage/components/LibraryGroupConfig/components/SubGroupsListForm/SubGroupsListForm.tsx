@@ -35,11 +35,11 @@ export function SubGroupsListForm() {
 	const rows = useMemo(() => {
 		return fields.map((field, index) => ({
 			...field,
-			files: field.files?.map((file) => file.label).join(", "),
+			files: field?.map((file) => file.label).join(", "),
 			actions: (
 				<ButtonStrip>
 					<EditLibraryGroup
-						onUpdate={(data) => update(index, data)}
+						onUpdate={(dgroupata) => update(index, data)}
 						group={field}
 					/>
 					<DeleteLibraryGroup

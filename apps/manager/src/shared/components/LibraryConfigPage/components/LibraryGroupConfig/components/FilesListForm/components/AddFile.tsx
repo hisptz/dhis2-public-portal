@@ -1,4 +1,4 @@
-import { LibraryFileData } from "@packages/shared/schemas";
+import { DocumentItem } from "@packages/shared/schemas";
 import { useBoolean } from "usehooks-ts";
 import i18n from "@dhis2/d2-i18n";
 import { Button, IconAdd24 } from "@dhis2/ui";
@@ -9,12 +9,12 @@ export function AddFile({
 	onAdd,
 	nested,
 }: {
-	onAdd: (file: LibraryFileData) => void;
+	onAdd: (file: DocumentItem) => void;
 	nested?: boolean;
 }) {
 	const { value: hide, setTrue: onHide, setFalse: onOpen } = useBoolean(true);
 
-	const onSave = (file: LibraryFileData) => {
+	const onSave = (file: DocumentItem) => {
 		onHide();
 		onAdd(file);
 	};

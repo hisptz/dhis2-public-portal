@@ -15,13 +15,15 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { RHFSingleSelectField, RHFTextInputField } from "@hisptz/dhis2-ui";
 import { z } from "zod";
 import { CustomFile, useGetFile, useUploadFile } from "./hooks/file";
-import { LibraryFileData, libraryFilesSchema } from "@packages/shared/schemas";
 import { RHFFileInputField } from "../../../../../../../Fields/RHFFileInputField";
+import { DocumentItem, documentItemSchema } from "@packages/shared/schemas";
 
-const libraryFileFormSchema = libraryFilesSchema.extend({
-	id: z.string().optional(),
-	file: z.instanceof(File),
+const libraryFileFormSchema = documentItemSchema.extend({
+  id: z.string().optional(),
+  file: z.instanceof(File),
 });
+
+
 
 type LibraryFileFormData = z.infer<typeof libraryFileFormSchema>;
 
@@ -32,10 +34,10 @@ export function FileForm({
 	hide,
 	nested,
 }: {
-	onSave: (file: LibraryFileData) => void;
+	onSave: (file: DocumentItem) => void;
 	onClose: () => void;
 	hide: boolean;
-	file?: LibraryFileData;
+	file?: DocumentItem;
 	nested?: boolean;
 }) {
 	const { getFile } = useGetFile();

@@ -2,14 +2,14 @@ import { useDialog } from "@hisptz/dhis2-ui";
 import { Button, IconDelete16 } from "@dhis2/ui";
 import React from "react";
 import i18n from "@dhis2/d2-i18n";
-import { LibraryFileData } from "@packages/shared/schemas";
+import { DocumentItem } from "@packages/shared/schemas";
 import { useDeleteDocument } from "./FileForm/hooks/file";
 
 export function DeleteFile({
 	file,
 	onRemove,
 }: {
-	file: LibraryFileData;
+	file: DocumentItem;
 	onRemove: () => void;
 }) {
 	const { confirm } = useDialog();
