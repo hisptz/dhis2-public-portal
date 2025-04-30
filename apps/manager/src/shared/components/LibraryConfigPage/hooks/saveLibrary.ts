@@ -1,13 +1,13 @@
-import { DATASTORE_LIBRARIES_NAMESPACE } from "@health-portal/shared/constants";
+import { DatastoreNamespaces } from "@packages/shared/constants";
 import { useNavigate, useParams } from "@tanstack/react-router";
 import { useAlert, useDataMutation } from "@dhis2/app-runtime";
 import i18n from "@dhis2/d2-i18n";
 import { useRefreshLibrary } from "../../LibraryProvider";
-import { LibraryData } from "@health-portal/shared/schemas";
+import { LibraryData } from "@packages/shared/schemas";
 
 const mutation: any = {
 	type: "update",
-	resource: `dataStore/${DATASTORE_LIBRARIES_NAMESPACE}`,
+	resource: `dataStore/${DatastoreNamespaces.MODULES}`,
 	id: ({ id }: { id: string }) => id,
 	data: ({ data }: { data: LibraryData }) => data,
 };

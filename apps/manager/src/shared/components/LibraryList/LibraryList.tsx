@@ -4,6 +4,8 @@ import React, { useMemo } from "react";
 import { Button, ButtonStrip, IconView16 } from "@dhis2/ui";
 import { useNavigate } from "@tanstack/react-router";
 import { useLibraries } from "../LibrariesProvider";
+import { useModule } from "../ModulesPage/providers/ModuleProvider";
+import { DocumentsModule } from "@packages/shared/schemas";
 
 const columns: SimpleTableColumn[] = [
 	{
@@ -21,15 +23,16 @@ const columns: SimpleTableColumn[] = [
 ];
 
 export function LibraryList() {
-	const libraries = useLibraries();
+	const module = useModule() as DocumentsModule;
+	console.log("module", module);
+	const libraries = module?.config?.groups || [];
 	const navigate = useNavigate();
 
 	const rows = useMemo(
 		() =>
-			libraries?.map((library) => ({
-				...library,
-				label: library.label,
-				groups: library.groups.map((group) => group.label).join(", "),
+			libraries.map((group) => ({
+				label: group.title,
+				groups: group.items.map((item) => item.label).join(", "),
 				actions: (
 					<ButtonStrip>
 						<Button
@@ -41,7 +44,7 @@ export function LibraryList() {
 								navigate({
 									to: "/library/$libraryId/edit",
 									params: {
-										libraryId: library.id,
+										libraryId: group.id,
 									},
 								});
 							}}

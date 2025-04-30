@@ -8,7 +8,7 @@ import {
 	ModalContent,
 	ModalTitle,
 } from "@dhis2/ui";
-import { LibraryGroupData, libraryGroupSchema } from "@packages/shared/schemas";
+import{ DocumentGroup,documentGroupSchema } from "@packages/shared/schemas";
 import i18n from "@dhis2/d2-i18n";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { RHFTextInputField } from "@hisptz/dhis2-ui";
@@ -24,14 +24,14 @@ export function LibraryGroupForm({
 }: {
 	hide: boolean;
 	onClose: () => void;
-	group?: LibraryGroupData;
-	onSave: (group: LibraryGroupData) => void;
+	group?: DocumentGroup;
+	onSave: (group: DocumentGroup) => void;
 	nested?: boolean;
 }) {
-	const form = useForm<LibraryGroupData>({
+	const form = useForm<DocumentGroup>({
 		defaultValues: group ?? {},
 		mode: "onChange",
-		resolver: zodResolver(libraryGroupSchema),
+		resolver: zodResolver(documentGroupSchema),
 	});
 	const editMode = !!group;
 	const title = editMode

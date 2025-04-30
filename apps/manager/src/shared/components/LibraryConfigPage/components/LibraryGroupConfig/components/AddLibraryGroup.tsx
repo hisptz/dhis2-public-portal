@@ -1,4 +1,4 @@
-import { LibraryGroupData } from "@packages/shared/schemas";
+import { DocumentGroup } from "@packages/shared/schemas";
 import { useBoolean } from "usehooks-ts";
 import { Button, IconAdd24 } from "@dhis2/ui";
 import i18n from "@dhis2/d2-i18n";
@@ -9,12 +9,12 @@ export function AddLibraryGroup({
 	onAdd,
 	nested,
 }: {
-	onAdd: (group: LibraryGroupData) => void;
+	onAdd: (group: DocumentGroup) => void;
 	nested?: boolean;
 }) {
 	const { value: hide, setTrue: onHide, setFalse: onOpen } = useBoolean(true);
 
-	const onSave = (group: LibraryGroupData) => {
+	const onSave = (group: DocumentGroup) => {
 		onHide();
 		onAdd(group);
 	};

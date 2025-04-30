@@ -1,4 +1,4 @@
-import { LibraryGroupData } from "@packages/shared/schemas";
+import { DocumentGroup } from "@packages/shared/schemas";
 import { useBoolean } from "usehooks-ts";
 import { Button, IconEdit16 } from "@dhis2/ui";
 import React from "react";
@@ -9,12 +9,12 @@ export function EditLibraryGroup({
 	onUpdate,
 	group,
 }: {
-	onUpdate: (group: LibraryGroupData) => void;
-	group: LibraryGroupData;
+	onUpdate: (group: DocumentGroup) => void;
+	group: DocumentGroup;
 }) {
 	const { value: hide, setTrue: onHide, setFalse: onOpen } = useBoolean(true);
 
-	const onSave = (group: LibraryGroupData) => {
+	const onSave = (group: DocumentGroup) => {
 		onHide();
 		onUpdate(group);
 	};
