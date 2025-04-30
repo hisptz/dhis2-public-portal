@@ -23,6 +23,7 @@ import { AddVisualization } from "../../../VisualizationModule/components/AddVis
 import { RHFRichTextAreaField } from "../../../Fields/RHFRichTextAreaField";
 import { RHFSingleSelectField } from "@hisptz/dhis2-ui";
 import { startCase } from "lodash";
+import { FeedbakForm } from "./components/FeedbackForm";
 
 export function SectionVisualizationsConfig() {
 	const { moduleId, sectionIndex } = useParams({
@@ -166,6 +167,10 @@ export function SectionVisualizationsConfig() {
 						label={""}
 					/>
 				);
+				case DisplayItemType.FEEDBACK:
+					return (
+						<FeedbakForm />
+					);
 			default:
 				return <div>Display Type not supported yet</div>;
 		}
