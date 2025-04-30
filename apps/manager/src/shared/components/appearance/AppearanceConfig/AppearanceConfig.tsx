@@ -1,11 +1,9 @@
 import React, { useState } from "react";
 import i18n from "@dhis2/d2-i18n";
-import { map } from "lodash";
 import { AppAppearanceConfig } from "@packages/shared/schemas";
 import { ConfigurationTitle } from "./components/ConfigurationTitle";
 import { ConfigurationDetails } from "./components/ConfigurationDetails";
 import { ConfigurationColor } from "./components/ConfigurationColor";
-import { getTitleCaseFromCamelCase } from "@packages/shared/utils";
 import { Button, IconEdit16 } from "@dhis2/ui";
 import { AppColorConfigForm } from "../appearance-config-forms/AppColorConfigForm";
 import { HeaderConfigForm } from "../appearance-config-forms/HeaderConfigForm";
@@ -16,14 +14,6 @@ type Props = {
 	appearanceConfig: AppAppearanceConfig;
 	refetchConfig: () => void;
 };
-
-function getObjectKeyValueArray(
-	object: Record<string, unknown>,
-): Array<{ [key: string]: string }> {
-	return map(object, (value, key) => ({
-		[getTitleCaseFromCamelCase(key)]: `${value}`,
-	}));
-}
 
 export function AppearanceConfig({ appearanceConfig, refetchConfig }: Props) {
 	const [showAppColor, setShowAppColor] = useState(false);

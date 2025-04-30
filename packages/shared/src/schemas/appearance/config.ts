@@ -62,8 +62,6 @@ export const headerConfig = z.object({
 	title: z.object({
 		style: styleConfig.optional(),
 	}),
-	trailingLogo: z.string().url().optional(),
-	hasMenu: z.boolean().optional(),
 	style: headerStyleConfig.optional(),
 });
 

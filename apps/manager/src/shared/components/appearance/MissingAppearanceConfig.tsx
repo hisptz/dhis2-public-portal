@@ -1,28 +1,21 @@
 import React from "react";
 import i18n from "@dhis2/d2-i18n";
-import { Button, NoticeBox } from "@dhis2/ui";
+import { NoticeBox } from "@dhis2/ui";
 
-type Props = {
-	onAddConfigurations?: () => void;
-};
-
-export function MissingAppearanceConfig({ onAddConfigurations }: Props) {
+export function MissingAppearanceConfig() {
 	return (
 		<div className="w-full">
-			<NoticeBox title={i18n.t("Missing Appearance configurations")}>
+			<NoticeBox
+				error={true}
+				title={i18n.t("Missing Appearance configurations")}
+			>
 				{
 					<div className="flex flex-col gap-2">
 						<p>
 							{i18n.t(
-								"There are no appearance configurations yet. Click the below button to import the default configurations.",
+								"There are no appearance configurations yet. Refresh the browser to import the default configurations.",
 							)}
 						</p>
-
-						<div className="flex mt-4">
-							<Button onClick={onAddConfigurations} small primary>
-								Import
-							</Button>
-						</div>
 					</div>
 				}
 			</NoticeBox>
