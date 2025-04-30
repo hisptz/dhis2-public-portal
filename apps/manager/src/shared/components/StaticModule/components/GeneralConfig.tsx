@@ -11,7 +11,7 @@ export function GeneralConfig() {
     
         useEffect(() => {
             if (moduleId) {
-                setValue("config.namespace", `health-portal-${moduleId}`);
+                setValue("config.namespace", `hisptz-public-portal-${moduleId}`);
             }
         }, [moduleId, setValue]);
     
