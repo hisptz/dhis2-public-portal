@@ -5,8 +5,8 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
-"POT-Creation-Date: 2025-04-30T05:51:06.624Z\n"
-"PO-Revision-Date: 2025-04-30T05:51:06.625Z\n"
+"POT-Creation-Date: 2025-04-29T16:52:57.009Z\n"
+"PO-Revision-Date: 2025-04-29T16:52:57.010Z\n"
 
 msgid "Could not get Appearance configurations"
 msgstr "Could not get Appearance configurations"
@@ -34,15 +34,6 @@ msgstr "Saving..."
 
 msgid "Save changes"
 msgstr "Save changes"
-
-msgid "Back to all libraries"
-msgstr "Back to all libraries"
-
-msgid "Library"
-msgstr "Library"
-
-msgid "Libraries"
-msgstr "Libraries"
 
 msgid "Layout editor"
 msgstr "Layout editor"
@@ -116,155 +107,80 @@ msgstr "Caption"
 msgid "Actions"
 msgstr "Actions"
 
-msgid "Create a new library"
-msgstr "Create a new library"
+msgid "Add menu item"
+msgstr "Add menu item"
 
-msgid "Library created successfully"
-msgstr "Library created successfully"
+msgid "Confirm delete"
+msgstr "Confirm delete"
 
-msgid "Could not create new library"
-msgstr "Could not create new library"
-
-msgid "Create Library"
-msgstr "Create Library"
-
-msgid "Creating..."
-msgstr "Creating..."
-
-msgid "Create library"
-msgstr "Create library"
-
-msgid "Delete library"
-msgstr "Delete library"
-
-msgid "Deleting..."
-msgstr "Deleting..."
+msgid "Are you sure you want to delete the menu item "
+msgstr "Are you sure you want to delete the menu item "
 
 msgid "Delete"
 msgstr "Delete"
 
-msgid "Library deleted successfully"
-msgstr "Library deleted successfully"
-
-msgid "Could not delete library"
-msgstr "Could not delete library"
-
-msgid "Are you sure you want to delete the library "
-msgstr "Are you sure you want to delete the library "
-
-msgid "This action is irreversible"
-msgstr "This action is irreversible"
-
-msgid "Title description"
-msgstr "Title description"
-
-msgid "Could not save form, check the logs for more information"
-msgstr "Could not save form, check the logs for more information"
+msgid "Add sub item"
+msgstr "Add sub item"
 
 msgid "Label"
 msgstr "Label"
 
-msgid "Sub groups"
-msgstr "Sub groups"
-
-msgid "Files"
-msgstr "Files"
-
-msgid "N/A"
-msgstr "N/A"
-
-msgid "Groups"
-msgstr "Groups"
-
-msgid "There are no library configuration present"
-msgstr "There are no library configuration present"
-
-msgid "Add group"
-msgstr "Add group"
-
-msgid "Confirm deleting group"
-msgstr "Confirm deleting group"
-
-msgid "Are you sure you want to remove the group "
-msgstr "Are you sure you want to remove the group "
-
-msgid "This will delete all files and sub groups in this group as well."
-msgstr "This will delete all files and sub groups in this group as well."
-
-msgid "This action is irreversible."
-msgstr "This action is irreversible."
-
-msgid "Delete group"
-msgstr "Delete group"
-
-msgid "Edit group"
-msgstr "Edit group"
-
-msgid "There are no files present"
-msgstr "There are no files present"
-
-msgid "Add file"
-msgstr "Add file"
-
-msgid "Confirm deleting file"
-msgstr "Confirm deleting file"
-
-msgid "Are you sure you want to remove the file "
-msgstr "Are you sure you want to remove the file "
-
-msgid "Delete icon"
-msgstr "Delete icon"
-
-msgid "Edit file"
-msgstr "Edit file"
-
-msgid "PDF"
-msgstr "PDF"
-
-msgid "File type"
-msgstr "File type"
-
-msgid "File"
-msgstr "File"
-
-msgid "Uploading..."
-msgstr "Uploading..."
-
-msgid "Save"
-msgstr "Save"
-
-msgid "Could not upload file {{ errorMessage }}"
-msgstr "Could not upload file {{ errorMessage }}"
-
-msgid "Could not create document {{ errorMessage }}"
-msgstr "Could not create document {{ errorMessage }}"
-
-msgid "Could not delete file {{ errorMessage }}"
-msgstr "Could not delete file {{ errorMessage }}"
-
-msgid "Edit Library Group"
-msgstr "Edit Library Group"
-
-msgid "Add Library Group"
-msgstr "Add Library Group"
+msgid "Path"
+msgstr "Path"
 
 msgid "Update"
 msgstr "Update"
 
-msgid "Has sub groups"
-msgstr "Has sub groups"
+msgid "Create"
+msgstr "Create"
 
-msgid "There are no sub groups present"
-msgstr "There are no sub groups present"
+msgid "Confirm exit"
+msgstr "Confirm exit"
 
-msgid "Could not save changes"
-msgstr "Could not save changes"
+msgid "Are you sure you want to close this form?. All changes will be lost"
+msgstr "Are you sure you want to close this form?. All changes will be lost"
+
+msgid " menu item"
+msgstr " menu item"
+
+msgid "Menu items"
+msgstr "Menu items"
+
+msgid "There are no sub menus defined"
+msgstr "There are no sub menus defined"
+
+msgid " sub menu item"
+msgstr " sub menu item"
 
 msgid "Name"
 msgstr "Name"
 
-msgid "View"
-msgstr "View"
+msgid "N/A"
+msgstr "N/A"
+
+msgid "Menu Position"
+msgstr "Menu Position"
+
+msgid "Sidebar"
+msgstr "Sidebar"
+
+msgid "Header"
+msgstr "Header"
+
+msgid "The form has errors. Please fix them and try again"
+msgstr "The form has errors. Please fix them and try again"
+
+msgid "Confirm reset"
+msgstr "Confirm reset"
+
+msgid "Are you sure you want to reset all changes? This action is not reversible."
+msgstr "Are you sure you want to reset all changes? This action is not reversible."
+
+msgid "Reset changes"
+msgstr "Reset changes"
+
+msgid "Reset"
+msgstr "Reset"
 
 msgid "Create a new module"
 msgstr "Create a new module"
@@ -278,8 +194,29 @@ msgstr "Could not create new module"
 msgid "Create Module"
 msgstr "Create Module"
 
+msgid "Creating..."
+msgstr "Creating..."
+
 msgid "Create module"
 msgstr "Create module"
+
+msgid "Module deleted successfully"
+msgstr "Module deleted successfully"
+
+msgid "Could not delete module"
+msgstr "Could not delete module"
+
+msgid "Deleting..."
+msgstr "Deleting..."
+
+msgid "Delete module"
+msgstr "Delete module"
+
+msgid "Are you sure you want to delete the module "
+msgstr "Are you sure you want to delete the module "
+
+msgid "This action is irreversible"
+msgstr "This action is irreversible"
 
 msgid "Filter by Type"
 msgstr "Filter by Type"
@@ -287,14 +224,50 @@ msgstr "Filter by Type"
 msgid "Select type"
 msgstr "Select type"
 
+msgid "Please fix the validation errors before saving"
+msgstr "Please fix the validation errors before saving"
+
+msgid "Failed to save module"
+msgstr "Failed to save module"
+
 msgid "There are no modules matching the selected type."
 msgstr "There are no modules matching the selected type."
 
-msgid "There are no dashboard configuration present"
-msgstr "There are no dashboard configuration present"
+msgid "There are no modules configuration present"
+msgstr "There are no modules configuration present"
 
-msgid "Short Description"
-msgstr "Short Description"
+msgid "Could not save changes"
+msgstr "Could not save changes"
+
+msgid "Add Item"
+msgstr "Add Item"
+
+msgid "Could not create new item"
+msgstr "Could not create new item"
+
+msgid "Create an item"
+msgstr "Create an item"
+
+msgid "Create item"
+msgstr "Create item"
+
+msgid "Item deleted successfully"
+msgstr "Item deleted successfully"
+
+msgid "Could not delete item"
+msgstr "Could not delete item"
+
+msgid "Delete item"
+msgstr "Delete item"
+
+msgid "Are you sure you want to delete the item "
+msgstr "Are you sure you want to delete the item "
+
+msgid "Error loading item"
+msgstr "Error loading item"
+
+msgid "Back"
+msgstr "Back"
 
 msgid "Content"
 msgstr "Content"
@@ -305,20 +278,14 @@ msgstr "Should be a valid svg string"
 msgid "Icon"
 msgstr "Icon"
 
-msgid "Create a new dashboard"
-msgstr "Create a new dashboard"
+msgid "Short Description"
+msgstr "Short Description"
 
-msgid "Dashboard created successfully"
-msgstr "Dashboard created successfully"
+msgid "Items"
+msgstr "Items"
 
-msgid "Could not create new dashboard"
-msgstr "Could not create new dashboard"
-
-msgid "Create Dashboard"
-msgstr "Create Dashboard"
-
-msgid "Create dashboard"
-msgstr "Create dashboard"
+msgid "Add group"
+msgstr "Add group"
 
 msgid "Create Dashboard Group"
 msgstr "Create Dashboard Group"
@@ -350,29 +317,14 @@ msgstr "Visualization type"
 msgid "All"
 msgstr "All"
 
-msgid "Please fix the validation errors before saving"
-msgstr "Please fix the validation errors before saving"
-
-msgid "Failed to save module"
-msgstr "Failed to save module"
-
 msgid "Has groups"
 msgstr "Has groups"
 
 msgid "Save group changes"
 msgstr "Save group changes"
 
-msgid "Module deleted successfully"
-msgstr "Module deleted successfully"
-
-msgid "Could not delete module"
-msgstr "Could not delete module"
-
-msgid "Delete module"
-msgstr "Delete module"
-
-msgid "Are you sure you want to delete the module "
-msgstr "Are you sure you want to delete the module "
+msgid "Groups"
+msgstr "Groups"
 
 msgid "Welcome to the public portal manager!"
 msgstr "Welcome to the public portal manager!"
@@ -535,6 +487,10 @@ msgstr "Configure different modules of the web portal application"
 
 msgid "Configure modules"
 msgstr "Configure modules"
+
+msgctxt "Follows either create or update"
+msgid " menu item"
+msgstr " menu item"
 
 msgctxt "Application title"
 msgid "__MANIFEST_APP_TITLE"

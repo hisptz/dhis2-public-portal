@@ -6,7 +6,12 @@ import { RHFRichTextAreaField } from "../../Fields/RHFRichTextAreaField";
 export function DashboardGeneralConfig() {
 	return (
 		<div className="flex flex-col gap-2">
-			<RHFTextInputField required name="config.title" label={i18n.t("Title")} />
+			<RHFTextInputField required name="label" label={i18n.t("Label")} />
+			<RHFTextInputField
+				required
+				name="config.title"
+				label={i18n.t("Title")}
+			/>
 			<RHFRichTextAreaField
 				required
 				autoGrow
@@ -19,7 +24,10 @@ export function DashboardGeneralConfig() {
 				name="config.description"
 				label={i18n.t("Description")}
 			/>
-			<RHFCheckboxField name="config.grouped" label={i18n.t("Has groups")} />
+			<RHFCheckboxField
+				name="config.grouped"
+				label={i18n.t("Has groups")}
+			/>
 		</div>
 	);
 }

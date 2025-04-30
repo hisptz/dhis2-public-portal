@@ -5,21 +5,18 @@ import { useMenuQuery } from "../hooks/data";
 import { AppMenuConfig } from "@packages/shared/schemas";
 
 const MenuContext = createContext<AppMenuConfig | null>(null);
-const MenuRefreshContext = createContext<() => Promise<void>>(
-	async () => {},
-);
+const MenuRefreshContext = createContext<() => Promise<void>>(async () => {});
 
-export function useMenu() {
+export function useMenuConfig() {
 	return useContext(MenuContext)!;
 }
 
-export function useRefreshMenu() {
+export function useRefreshMenuConfig() {
 	return useContext(MenuRefreshContext);
 }
 
 export function MenuProvider({ children }: { children: React.ReactNode }) {
-	const { loading, error, menu, refetch } =
-    useMenuQuery();
+	const { loading, error, menu, refetch } = useMenuQuery();
 
 	if (loading) {
 		return <FullLoader />;

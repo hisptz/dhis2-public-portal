@@ -6,10 +6,11 @@ import { useModule } from "../../../../../../shared/components/ModulesPage/provi
 import ErrorPage from "../../../../../../shared/components/ErrorPage/ErrorPage";
 import { DashboardConfigPage } from "../../../../../../shared/components/VisualizationModule/DashboardConfigPage";
 import { PageHeader } from "../../../../../../shared/components/PageHeader";
-import { DeleteDashboard } from "../../../../../../shared/components/VisualizationModule/components/DeleteDashboard";
-import { DashboardEditActions } from "../../../../../../shared/components/VisualizationModule/components/DashboardEditActions";
+import { DeleteModule } from "../../../../../../shared/components/ModulesPage/components/DeleteModule";
+import { ModuleEditActions } from "../../../../../../shared/components/ModulesPage/components/ModuleEditActions";
 import { ModuleType } from "@packages/shared/schemas";
 import { LibraryList } from "../../../../../../shared/components/LibraryList/LibraryList";
+import { StaticConfigPage } from "../../../../../../shared/components/StaticModule/StaticConfigPage";
 
 export const Route = createLazyFileRoute(
 	"/modules/_provider/$moduleId/_formProvider/edit/",
@@ -31,6 +32,9 @@ function RouteComponent() {
 				return <DashboardConfigPage />;
 			case ModuleType.DOCUMENTS:
 				return <LibraryList />;
+				return <DashboardConfigPage />;
+			case ModuleType.STATIC:
+				return <StaticConfigPage />;
 			default:
 				return (
 					<ErrorPage
@@ -39,7 +43,6 @@ function RouteComponent() {
 				);
 		}
 	};
-	
 	return (
 		<div className="h-full w-full flex flex-col gap-2">
 			<div>
@@ -53,11 +56,11 @@ function RouteComponent() {
 				</Button>
 			</div>
 			<PageHeader
-				title={`${i18n.t("Module")} - ${module.config.title}`}
+				title={`${i18n.t("Module")} - ${module.label}`}
 				actions={
 					<div className="flex gap-4 items-center">
-						<DeleteDashboard />
-						<DashboardEditActions />
+						<DeleteModule />
+						<ModuleEditActions />
 					</div>
 				}
 			/>

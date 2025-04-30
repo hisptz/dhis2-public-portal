@@ -22,7 +22,7 @@ export const baseMenuItemSchema = z.object({
 	label: z.string(),
 	icon: z.string().optional(),
 	sortOrder: z.number(),
-	path: z.string(),
+	path: z.string().max(50),
 });
 
 export const moduleMenuItemSchema = baseMenuItemSchema.extend({
@@ -33,7 +33,9 @@ export type ModuleMenuItem = z.infer<typeof moduleMenuItemSchema>;
 
 export const groupMenuItemSchema = baseMenuItemSchema.extend({
 	type: z.literal("group"),
-	items: z.array(moduleMenuItemSchema),
+	items: z
+		.array(moduleMenuItemSchema)
+		.min(2, { message: "Group must have at least 2 items" }),
 	itemsDisplay: z.nativeEnum(MenuItemsDisplay).optional(),
 });
 
