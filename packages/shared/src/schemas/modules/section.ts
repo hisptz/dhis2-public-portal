@@ -62,7 +62,6 @@ export const sectionModuleConfigSchema = baseModuleSchema.extend({
 	type: z.literal(ModuleType.SECTION),
 	sectionDisplay: z.nativeEnum(SectionDisplay),
 	config: z.object({
-		title: z.string(),
 		sections: z.array(sectionSchema),
 	}),
 });
