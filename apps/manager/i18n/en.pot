@@ -5,8 +5,8 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
-"POT-Creation-Date: 2025-04-30T12:50:22.992Z\n"
-"PO-Revision-Date: 2025-04-30T12:50:22.993Z\n"
+"POT-Creation-Date: 2025-05-01T09:40:40.537Z\n"
+"PO-Revision-Date: 2025-05-01T09:40:40.537Z\n"
 
 msgid "Could not get Appearance configurations"
 msgstr "Could not get Appearance configurations"
@@ -338,6 +338,9 @@ msgstr "Application colors"
 msgid "Header configuration"
 msgstr "Header configuration"
 
+msgid "Subtitle"
+msgstr "Subtitle"
+
 msgid "Background color"
 msgstr "Background color"
 
@@ -464,6 +467,9 @@ msgstr "Text size"
 
 msgid "Text color"
 msgstr "Text color"
+
+msgid "Header title"
+msgstr "Header title"
 
 msgid "Add"
 msgstr "Add"

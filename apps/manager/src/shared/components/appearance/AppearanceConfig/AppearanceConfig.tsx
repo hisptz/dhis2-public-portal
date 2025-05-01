@@ -20,7 +20,7 @@ export function AppearanceConfig({ appearanceConfig, refetchConfig }: Props) {
 	const [showHeaderConfig, setShowHeaderConfig] = useState(false);
 	const [showFooterConfig, setShowFooterConfig] = useState(false);
 
-	const { colors, header, footer } = appearanceConfig;
+	const { colors, header, footer, title } = appearanceConfig;
 	const { primary, chartColors, background } = colors;
 	const { style } = header;
 	const { copyright, footerLinks, address } = footer;
@@ -74,6 +74,20 @@ export function AppearanceConfig({ appearanceConfig, refetchConfig }: Props) {
 			<section>
 				<ConfigurationTitle title={i18n.t("Header configuration")} />
 				<div className="mx-2 flex flex-col gap-2">
+					{title?.main && (
+						<ConfigurationDetails
+							title={i18n.t("Title")}
+							value={title?.main}
+						/>
+					)}
+
+					{title?.subtitle && (
+						<ConfigurationDetails
+							title={i18n.t("Subtitle")}
+							value={title?.subtitle}
+						/>
+					)}
+
 					{style?.headerBackgroundColor &&
 						style?.coloredBackground && (
 							<ConfigurationDetails

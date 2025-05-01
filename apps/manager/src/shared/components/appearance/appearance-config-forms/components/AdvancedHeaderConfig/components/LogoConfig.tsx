@@ -9,7 +9,7 @@ type Props = {
 };
 
 export function LogoConfig({ logoType, label }: Props) {
-	const STYLE_KEY = "style";
+	const STYLE_KEY = "header.style";
 
 	return (
 		<div className="my-2 flex flex-col gap-2">

@@ -53,7 +53,7 @@ export type HeaderStyleConfig = z.infer<typeof headerStyleConfig>;
 
 export const headerConfig = z.object({
 	logo: z.object({
-		enabled: z.boolean(),
+		enabled: z.boolean().optional(),
 	}),
 	subtitle: z.object({
 		style: styleConfig.optional(),
@@ -65,8 +65,14 @@ export const headerConfig = z.object({
 });
 
 export const appTitleConfig = z.object({
-	main: z.string(),
-	subtitle: z.string().optional(),
+	main: z
+		.string()
+		.min(1, { message: "Title is required" })
+		.max(50, { message: "Title must be less than 50 characters" }),
+	subtitle: z
+		.string()
+		.max(100, { message: "Subtitle must be less than 100 characters" })
+		.optional(),
 });
 
 export type AppTitleConfig = z.infer<typeof appTitleConfig>;
