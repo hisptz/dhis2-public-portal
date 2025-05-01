@@ -3,13 +3,13 @@ import { useNavigate, useParams } from "@tanstack/react-router";
 import { useAlert, useDataMutation } from "@dhis2/app-runtime";
 import i18n from "@dhis2/d2-i18n";
 import { useRefreshLibrary } from "../../LibraryProvider";
-import { DocumentGroup } from "@packages/shared/schemas";
+import { DocumentItem, DocumentsModule } from "@packages/shared/schemas";
 
 const mutation: any = {
 	type: "update",
 	resource: `dataStore/${DatastoreNamespaces.MODULES}`,
 	id: ({ id }: { id: string }) => id,
-	data: ({ data }: { data: DocumentGroup }) => data,
+	data: ({ data }: { data: DocumentItem }) => data,
 };
 
 export function useSaveLibrary() {
@@ -44,7 +44,7 @@ export function useSaveLibrary() {
 		},
 	});
 
-	const save = async (data: DocumentGroup) => {
+	const save = async (data: DocumentsModule) => {
 		return await mutate({ data: data });
 	};
 

@@ -12,17 +12,16 @@ import { mapValues } from "lodash";
 import {
 	DisplayItem,
 	FlexibleLayoutConfig,
-	DocumentItem,
+	DocumentGroup,
 	DisplayItemType,
 	DocumentsModule,
 } from "@packages/shared/schemas";
 import { useNavigate, useParams } from "@tanstack/react-router";
 import { DashboardVisualizations } from "../../VisualizationModule/components/DashboardVisualizationsConfig/components/DashboardVisualizations";
-import { DocumentItemListConfig } from "./DocumentItemList";
 import { AddLibrary } from "./AddDocument/AddLibrary";
 import { AddVisualization } from "../../VisualizationModule/components/AddVisualization/AddVisualization";
 
-export function DocumentItemConfig() {
+export function DocumentGroupItemConfig() {
 	const { moduleId } = useParams({
 		from: "/modules/_provider/$moduleId",
 	});
@@ -34,25 +33,25 @@ export function DocumentItemConfig() {
 
 	const { fields, append, update, remove } = useFieldArray<
 		DocumentsModule,
-		"config.items"
+		"config.groups"
 	>({
-		name: "config.items",
+		name: "config.groups",
 		keyName: "fieldId" as unknown as "id",
 	});
 
-	const onAddDocument = useCallback(
-		(Document: DocumentItem) => {
+	const onAddVisualization = useCallback(
+		(visualization: DocumentGroup) => {
 			// const displayItem: DisplayItem = {
 			// 	type: DisplayItemType.VISUALIZATION,
 			// 	item: visualization,
 			// };
-			append(Document);
+			append(visualization);
 			
 		},
 		[append, getValues, setValue],
 	);
 
-	if (hasGroups) {
+	if (!hasGroups) {
 		return null;
 	}
 
@@ -60,7 +59,7 @@ export function DocumentItemConfig() {
 		.map((field, index) => {
 			// const visualizationField = field as DisplayItem & {
 			// 	type: DisplayItemType.VISUALIZATION;
-			// 	item: DocumentItem;
+			// 	item: DocumentGroup;
 			// };
 
 			return {
@@ -89,14 +88,15 @@ export function DocumentItemConfig() {
 	return (
 		<div className="flex-1 w-full flex flex-col gap-2">
 			<div className="flex items-center justify-between">
-				<h3 className="text-2xl">{i18n.t("Documents")}</h3>
+				<h3 className="text-2xl">{i18n.t("Visualizations")}</h3>
 				<ButtonStrip end>
-					<AddLibrary  onAdd={onAddDocument} />
+					
+					{/* <AddLibrary  onAdd={onAddVisualization} /> */}
 					{/* <AddVisualization onAdd={onAddVisualization} /> */}
 				</ButtonStrip>
-			</div>	
+			</div>
 			<Divider />
-			<DocumentItemListConfig Documents={rows} />
+			{/* <DocumentListConfig visualizations={rows} /> */}
 		</div>
 	);
 }

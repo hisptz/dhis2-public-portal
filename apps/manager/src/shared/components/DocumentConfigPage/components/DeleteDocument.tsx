@@ -29,7 +29,7 @@ export function DeleteDocument() {
 
 	const handleDelete = () => {
 		confirm({
-			title: i18n.t("Delete library"),
+			title: i18n.t("Delete document"),
 			loadingText: i18n.t("Deleting..."),
 			confirmButtonText: i18n.t("Delete"),
 			onConfirm: async () => {
@@ -37,7 +37,7 @@ export function DeleteDocument() {
 					await onDelete({ id: library.id });
 					await refreshLibraries();
 					show({
-						message: i18n.t("Library deleted successfully"),
+						message: i18n.t("Document deleted successfully"),
 						type: { success: true },
 					});
 					navigate({
@@ -46,7 +46,7 @@ export function DeleteDocument() {
 				} catch (e) {
 					if (e instanceof Error || e instanceof FetchError) {
 						show({
-							message: `${i18n.t("Could not delete library")}: ${e.message}`,
+							message: `${i18n.t("Could not delete document")}: ${e.message}`,
 							type: { critical: true },
 						});
 					}
@@ -55,7 +55,7 @@ export function DeleteDocument() {
 			position: "middle",
 			message: (
 				<span>
-					{i18n.t("Are you sure you want to delete the library ")}
+					{i18n.t("Are you sure you want to delete the document ")}
 					<b>{library.label}</b>?{" "}
 					{i18n.t("This action is irreversible")}
 				</span>
@@ -66,7 +66,7 @@ export function DeleteDocument() {
 	return (
 		<>
 			<Button loading={loading} onClick={handleDelete}>
-				{loading ? i18n.t("Deleting...") : i18n.t("Delete library")}
+				{loading ? i18n.t("Deleting...") : i18n.t("Delete document")}
 			</Button>
 		</>
 	);

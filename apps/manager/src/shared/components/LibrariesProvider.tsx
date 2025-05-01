@@ -2,9 +2,9 @@ import React, { createContext, useContext } from "react";
 import { useLibraryList } from "./DocumentList/hooks/documentList";
 import { FullLoader } from "./FullLoader";
 import ErrorPage from "./ErrorPage/ErrorPage";
-import { LibraryData } from "@packages/shared/schemas";
+import { DocumentItem } from "@packages/shared/schemas";
 
-const LibraryContext = createContext<LibraryData[]>([]);
+const LibraryContext = createContext<DocumentItem[]>([]);
 const LibraryRefreshContext = createContext<() => Promise<void>>(
 	async () => {},
 );

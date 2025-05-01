@@ -5,8 +5,8 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
-"POT-Creation-Date: 2025-04-30T11:45:56.745Z\n"
-"PO-Revision-Date: 2025-04-30T11:45:56.746Z\n"
+"POT-Creation-Date: 2025-04-30T14:31:48.080Z\n"
+"PO-Revision-Date: 2025-04-30T14:31:48.080Z\n"
 
 msgid "Could not get Appearance configurations"
 msgstr "Could not get Appearance configurations"
@@ -71,17 +71,32 @@ msgstr "Size"
 msgid "Create a new library"
 msgstr "Create a new library"
 
+msgid "Add visualizations"
+msgstr "Add visualizations"
+
 msgid "Library created successfully"
 msgstr "Library created successfully"
 
 msgid "Could not create new library"
 msgstr "Could not create new library"
 
-msgid "Create Library"
-msgstr "Create Library"
+msgid "Create Item"
+msgstr "Create Item"
 
 msgid "Title"
 msgstr "Title"
+
+msgid "Label"
+msgstr "Label"
+
+msgid "PDF"
+msgstr "PDF"
+
+msgid "File type"
+msgstr "File type"
+
+msgid "File"
+msgstr "File"
 
 msgid "Creating..."
 msgstr "Creating..."
@@ -118,9 +133,6 @@ msgstr "This action is irreversible"
 
 msgid "Could not save form, check the logs for more information"
 msgstr "Could not save form, check the logs for more information"
-
-msgid "Label"
-msgstr "Label"
 
 msgid "Sub groups"
 msgstr "Sub groups"
@@ -197,15 +209,6 @@ msgstr "Delete icon"
 msgid "Edit file"
 msgstr "Edit file"
 
-msgid "PDF"
-msgstr "PDF"
-
-msgid "File type"
-msgstr "File type"
-
-msgid "File"
-msgstr "File"
-
 msgid "Uploading..."
 msgstr "Uploading..."
 
@@ -220,6 +223,18 @@ msgstr "Could not delete file {{ errorMessage }}"
 
 msgid "There are no sub groups present"
 msgstr "There are no sub groups present"
+
+msgid "Remove"
+msgstr "Remove"
+
+msgid "Visualizations"
+msgstr "Visualizations"
+
+msgid "Configure layout"
+msgstr "Configure layout"
+
+msgid "Caption"
+msgstr "Caption"
 
 msgid "Has groups"
 msgstr "Has groups"
@@ -265,18 +280,6 @@ msgstr "Back to dashboard "
 
 msgid "Short description"
 msgstr "Short description"
-
-msgid "Remove"
-msgstr "Remove"
-
-msgid "Visualizations"
-msgstr "Visualizations"
-
-msgid "Configure layout"
-msgstr "Configure layout"
-
-msgid "Caption"
-msgstr "Caption"
 
 msgid "Add menu item"
 msgstr "Add menu item"
@@ -436,9 +439,6 @@ msgstr "Short Name"
 
 msgid "Create group"
 msgstr "Create group"
-
-msgid "Add visualizations"
-msgstr "Add visualizations"
 
 msgid "{{action}} visualization"
 msgstr "{{action}} visualization"

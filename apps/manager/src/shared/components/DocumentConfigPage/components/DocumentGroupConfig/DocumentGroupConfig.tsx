@@ -69,7 +69,7 @@ export function DocumentGroupConfig() {
 				</ButtonStrip>
 				<SimpleTable
 					emptyLabel={i18n.t(
-						"There are no library configuration present",
+						"There are no document configuration present",
 					)}
 					columns={columns}
 					rows={rows}

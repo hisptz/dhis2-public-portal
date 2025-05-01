@@ -3,9 +3,9 @@ import { useLibraryById } from "./DocumentList/hooks/documentList";
 import { FullLoader } from "./FullLoader";
 import ErrorPage from "./ErrorPage/ErrorPage";
 import { useParams } from "@tanstack/react-router";
-import { LibraryData } from "@packages/shared/schemas";
+import { DocumentItem } from "@packages/shared/schemas";
 
-const LibraryContext = createContext<LibraryData | null>(null);
+const LibraryContext = createContext<DocumentItem | null>(null);
 const LibraryRefreshContext = createContext<() => Promise<void>>(
 	async () => {},
 );

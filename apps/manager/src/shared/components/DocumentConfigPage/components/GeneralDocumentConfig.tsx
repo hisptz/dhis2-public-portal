@@ -23,7 +23,7 @@ export function GeneralDocumentConfig() {
 				name="labelDescription"
 				label={i18n.t("Title description")}
 			/> */}
-			<DocumentGroupConfig />
+			{/* <DocumentGroupConfig /> */}
 		</div>
 	);
 }

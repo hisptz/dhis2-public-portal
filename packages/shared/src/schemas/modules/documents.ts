@@ -9,6 +9,7 @@ export enum DocumentType {
 export const documentItemSchema = z.object({
 	id: z.string(),
 	label: z.string(),
+	// file: z.instanceof(File),
 	type: z.nativeEnum(DocumentType),
 });
 

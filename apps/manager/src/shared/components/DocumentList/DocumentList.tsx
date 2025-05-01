@@ -24,12 +24,12 @@ const columns: SimpleTableColumn[] = [
 export function DocumentList() {
 	const module = useModule() as DocumentsModule;
 	console.log("module", module);
-	const libraries = module?.config?.groups || [];
+	const documents = module?.config?.groups || [];
 	const navigate = useNavigate();
 
 	const rows = useMemo(
 		() =>
-			libraries.map((group) => ({
+			documents.map((group) => ({
 				label: group.title,
 				groups: group.items.map((item) => item.label).join(", "),
 				actions: (
@@ -51,7 +51,7 @@ export function DocumentList() {
 					</ButtonStrip>
 				),
 			})),
-		[libraries],
+		[documents],
 	);
 
 	return (

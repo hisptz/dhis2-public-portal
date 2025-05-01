@@ -1,12 +1,12 @@
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useLibrary } from "../../LibraryProvider";
-import { librarySchema, LibraryData } from "@packages/shared/schemas";
+import { DocumentItem, documentItemSchema } from "@packages/shared/schemas";
 
 export function useLibraryForm() {
 	const library = useLibrary();
-	return useForm<LibraryData>({
-		resolver: zodResolver(librarySchema),
+	return useForm<DocumentItem>({
+		resolver: zodResolver(documentItemSchema),
 		defaultValues: library,
 	});
 }

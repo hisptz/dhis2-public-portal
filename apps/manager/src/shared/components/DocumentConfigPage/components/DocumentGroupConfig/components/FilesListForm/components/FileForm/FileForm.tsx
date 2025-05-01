@@ -18,7 +18,6 @@ import { CustomFile, useGetFile, useUploadFile } from "./hooks/file";
 import { RHFFileInputField } from "../../../../../../../Fields/RHFFileInputField";
 
 const libraryFileFormSchema = documentItemSchema.extend({
-	id: z.string().optional(),
 	file: z.instanceof(File),
 });
 
