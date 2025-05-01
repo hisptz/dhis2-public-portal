@@ -3,9 +3,9 @@ import i18n from "@dhis2/d2-i18n";
 import { AppAppearanceConfig } from "@packages/shared/schemas";
 import { ConfigurationTitle } from "./ConfigurationTitle";
 import { ConfigurationDetails } from "./ConfigurationDetails";
-import { RichTextView } from "@packages/ui/visualizations";
 import { Button, IconEdit16 } from "@dhis2/ui";
-import { FooterConfigForm } from "../../appearance-config-forms/FooterConfigForm";
+import { FooterConfigForm } from "../../appearance-config-forms/FooterConfig/FooterConfigForm";
+import { RichTextView } from "@packages/ui/visualizations";
 
 type Props = {
 	config: AppAppearanceConfig;
@@ -14,9 +14,8 @@ type Props = {
 
 export function FooterConfig({ config, refetchConfig }: Props) {
 	const [showFooterConfig, setShowFooterConfig] = useState(false);
-
 	const { footer } = config;
-	const { copyright, footerLinks, address } = footer;
+	const { copyright, footerItems } = footer;
 
 	return (
 		<>
@@ -29,45 +28,40 @@ export function FooterConfig({ config, refetchConfig }: Props) {
 							value={copyright}
 						/>
 					)}
-					{footerLinks && (
-						<ConfigurationDetails title={i18n.t("Footer links")}>
-							<div className="ml-2 flex flex-col gap-1">
-								<ConfigurationDetails
-									title={i18n.t("Label")}
-									value={footerLinks.title}
-								/>
-								<ConfigurationDetails title={i18n.t("Links")}>
-									<div className="ml-2 flex flex-col gap-1">
-										<ul className="list-disc list-inside">
-											{(footerLinks.links ?? []).map(
-												(link, index) => (
-													<li
-														key={`${index}-${link.url}`}
-													>
-														<a
-															key={`link-${index}-${link.url}`}
-															href={link.url}
-															target="_blank"
-															className="text-primary-500 hover:underline"
-															rel="noreferrer"
-														>
-															{link.name}
-														</a>
-													</li>
-												),
-											)}
-										</ul>
-									</div>
-								</ConfigurationDetails>
-							</div>
+					{(footerItems ?? []).map((item, index) => (
+						<ConfigurationDetails
+							key={`${index}-${item.title}`}
+							title={item.title}
+						>
+							{item.type === "links" ? (
+								<ul className="list-disc list-inside mx-2">
+									{(item.links ?? []).map(
+										(link, linkIndex) => (
+											<li
+												className="decoration-none"
+												key={`${index}-${linkIndex}-${link.url}`}
+											>
+												<a
+													href={link.url}
+													target="_blank"
+													className="text-primary-500 hover:underline cursor-pointer"
+													rel="noreferrer"
+												>
+													{link.name}
+												</a>
+											</li>
+										),
+									)}
+								</ul>
+							) : (
+								<div className="mx-2">
+									<RichTextView
+										content={item.staticContent ?? ""}
+									/>
+								</div>
+							)}
 						</ConfigurationDetails>
-					)}
-
-					{address && (
-						<ConfigurationDetails title={i18n.t("Address")}>
-							<RichTextView content={address.content} />
-						</ConfigurationDetails>
-					)}
+					))}
 				</div>
 
 				<div className="mt-2">

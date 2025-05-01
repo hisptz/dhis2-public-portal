@@ -1,10 +1,10 @@
 "use client";
 
-import { AddressConfig } from "@packages/shared/schemas";
+import { ReachTextConfig } from "@packages/shared/schemas";
 import { Box, Title } from "@mantine/core";
 import JsxParser from "react-jsx-parser";
 
-export function FooterAddress({ config }: { config: AddressConfig }) {
+export function FooterAddress({ config }: { config: ReachTextConfig }) {
 	const content = config?.content;
 
 	return (
