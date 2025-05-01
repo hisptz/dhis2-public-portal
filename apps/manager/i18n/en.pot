@@ -5,8 +5,8 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
-"POT-Creation-Date: 2025-05-01T11:49:04.608Z\n"
-"PO-Revision-Date: 2025-05-01T11:49:04.609Z\n"
+"POT-Creation-Date: 2025-05-01T13:14:21.818Z\n"
+"PO-Revision-Date: 2025-05-01T13:14:21.818Z\n"
 
 msgid "Could not get Appearance configurations"
 msgstr "Could not get Appearance configurations"
@@ -68,15 +68,18 @@ msgstr "Application URL"
 msgid "Where your portal can be found"
 msgstr "Where your portal can be found"
 
+msgid "Application Icon"
+msgstr "Application Icon"
+
+msgid "Upload Icon"
+msgstr "Upload Icon"
+
 msgid ""
 "512px x 512px clear image. This will be used as favicon and application "
 "icon on mobile devices"
 msgstr ""
 "512px x 512px clear image. This will be used as favicon and application "
 "icon on mobile devices"
-
-msgid "Application Icon"
-msgstr "Application Icon"
 
 msgid "Error saving changes"
 msgstr "Error saving changes"
