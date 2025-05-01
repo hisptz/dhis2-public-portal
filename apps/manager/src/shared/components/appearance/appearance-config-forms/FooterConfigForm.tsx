@@ -2,6 +2,7 @@ import React, { useMemo } from "react";
 import {
 	AppAppearanceConfig,
 	AppColorConfig,
+	footerConfig,
 	FooterConfig,
 } from "@packages/shared/schemas";
 import { useAlert } from "@dhis2/app-runtime";
@@ -28,6 +29,7 @@ import {
 import { RHFTextInputField } from "@hisptz/dhis2-ui";
 import { FooterLinksInput } from "./components/FooterLink/FooterLinksInput";
 import { RHFRichTextAreaField } from "../../Fields/RHFRichTextAreaField";
+import { zodResolver } from "@hookform/resolvers/zod";
 
 type props = {
 	configurations: AppAppearanceConfig;
@@ -88,6 +90,7 @@ export function FooterConfigForm({
 
 	const form = useForm<FooterConfig>({
 		defaultValues: { ...configurations.footer },
+		resolver: zodResolver(footerConfig), // Add your resolver here if needed
 		mode: "onBlur",
 	});
 
@@ -140,6 +143,7 @@ export function FooterConfigForm({
 							{i18n.t("Cancel")}
 						</Button>
 						<Button
+							disabled={!form.formState.isValid}
 							loading={loading || form.formState.isSubmitting}
 							onClick={(_, e) => {
 								form.handleSubmit(
