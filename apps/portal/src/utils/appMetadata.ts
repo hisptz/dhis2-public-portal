@@ -58,6 +58,7 @@ export async function getAppMetadata(): Promise<Metadata> {
 		}
 		//We need to save the generated references back to the config
 		try {
+			//we are not waiting for this as it is a side effect
 			updateAppConfigWithNamespace({
 				namespace: DatastoreNamespaces.MAIN_CONFIG,
 				key: "metadata",
