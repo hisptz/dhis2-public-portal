@@ -5,6 +5,7 @@ import { footerLinksConfig } from "./links";
 export const appMeta = z.object({
 	name: z.string(),
 	description: z.string(),
+	icon: z.string(),
 	icons: z.array(
 		z.object({
 			url: z.string().url(),
@@ -25,51 +26,43 @@ export const appColorConfig = z.object({
 
 export type AppColorConfig = z.infer<typeof appColorConfig>;
 
+export const styleConfig = z.object({
+	align: z.enum(["left", "center", "right"]).optional(),
+	textColor: z.string().optional(),
+	textSize: z.number().optional(),
+});
+
+export type StyleConfig = z.infer<typeof styleConfig>;
+
+export const logoConfig = z.object({
+	url: z.string().url(),
+	width: z.number().optional(),
+	height: z.number().optional(),
+});
+
+export type LogoConfig = z.infer<typeof logoConfig>;
+
+export const headerStyleConfig = z.object({
+	coloredBackground: z.boolean(),
+	headerBackgroundColor: z.string().optional(),
+	containerHeight: z.number().optional(),
+	trailingLogo: logoConfig.optional(),
+	leadingLogo: logoConfig.optional(),
+});
+
+export type HeaderStyleConfig = z.infer<typeof headerStyleConfig>;
+
 export const headerConfig = z.object({
 	logo: z.object({
 		enabled: z.boolean(),
 	}),
 	subtitle: z.object({
-		style: z
-			.object({
-				center: z.boolean(),
-				textColor: z.string().optional(),
-				textSize: z.number().optional(),
-			})
-			.optional(),
+		style: styleConfig.optional(),
 	}),
 	title: z.object({
-		style: z
-			.object({
-				center: z.boolean(),
-				textColor: z.string().optional(),
-				textSize: z.number().optional(),
-				align: z.enum(["left", "center", "right"]).optional(),
-
-			})
-			.optional(),
+		style: styleConfig.optional(),
 	}),
-	trailingLogo: z.string().url().optional(),
-	hasMenu: z.boolean().optional(),
-	style: z
-		.object({
-			coloredBackground: z.boolean(),
-			headerBackgroundColor: z.string().optional(),
-			containerHeight: z.number().optional(),
-			trailingLogoSize: z
-				.object({
-					width: z.number().optional(),
-					height: z.number().optional(),
-				})
-				.optional(),
-			leadingLogoSize: z
-				.object({
-					width: z.number().optional(),
-					height: z.number().optional(),
-				})
-				.optional(),
-		})
-		.optional(),
+	style: headerStyleConfig.optional(),
 });
 
 export const appTitleConfig = z.object({

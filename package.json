@@ -14,7 +14,8 @@
     "lint": "turbo run lint",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
     "check-types": "turbo run check-types",
-    "release": "semantic-release"
+    "release": "semantic-release",
+    "clean": "find . -name 'node_modules' -type d -prune -exec rm -rf '{}' +"
   },
   "devDependencies": {
     "@semantic-release/changelog": "^6.0.3",
@@ -33,10 +34,15 @@
     "node": ">=20"
   },
   "packageManager": "yarn@1.22.22",
-  "workspaces": [
-    "apps/*",
-    "packages/*"
-  ],
+  "workspaces": {
+    "nohoist": [
+      "sharp"
+    ],
+    "packages": [
+      "apps/*",
+      "packages/*"
+    ]
+  },
   "repository": {
     "url": "git@github.com:hisptz/dhis2-public-portal.git"
   }

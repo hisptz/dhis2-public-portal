@@ -1,0 +1,47 @@
+import React from "react";
+import i18n from "@dhis2/d2-i18n";
+import { Field, FileInput } from "@dhis2/ui";
+import { useController } from "react-hook-form";
+import { AppIconFile, MetadataForm } from "@packages/shared/schemas";
+import { useConfig } from "@dhis2/app-runtime";
+
+export function IconInput() {
+	const config = useConfig();
+	const { field } = useController<MetadataForm, "icon">({
+		name: "icon",
+	});
+
+	return (
+		<Field required label={i18n.t("Application Icon")}>
+			{field.value && (
+				<div className="aspect-square w-[100px] p-2">
+					<img
+						alt={"icon"}
+						src={
+							field.value.id
+								? `${config.baseUrl}/api/documents/${field.value.id}/data`
+								: `${window.URL.createObjectURL(field.value)}`
+						}
+					/>
+				</div>
+			)}
+			<FileInput
+				/*
+      // @ts-expect-error @dhis2/ui errors */
+				files={[field.value]}
+				buttonLabel={i18n.t("Upload Icon")}
+				onChange={async ({ files }) => {
+					const file = files.item(0);
+					if (file) {
+						field.onChange(await AppIconFile.fromFile(file));
+					}
+				}}
+				helpText={i18n.t(
+					"512px x 512px clear image. This will be used as favicon and application icon on mobile devices",
+				)}
+				accept="png"
+				name="icon"
+			/>
+		</Field>
+	);
+}

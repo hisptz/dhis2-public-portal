@@ -58,18 +58,16 @@ export function MainLayout({
 		>
 			<AppHeader
 				menuConfig={menuConfig}
-				logo={appearanceConfig.logo}
-				title={appearanceConfig!.title}
 				opened={opened}
 				toggle={toggle}
-				config={appearanceConfig!.header}
+				config={appearanceConfig!}
 			/>
 			<SideAppMenu
 				menuConfig={menuConfig}
 				isOpen={isLargerThanSm ? isOpen : opened}
 				setOpen={setOpen}
 			/>
-			<AppShell.Main style={{ background: "#F9F9FA" }}>
+			<AppShell.Main style={{ background: "#F9F9FA", paddingBottom: 16 }}>
 				<Suspense
 					fallback={
 						<Center>

@@ -5,8 +5,8 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
-"POT-Creation-Date: 2025-04-30T14:31:48.080Z\n"
-"PO-Revision-Date: 2025-04-30T14:31:48.080Z\n"
+"POT-Creation-Date: 2025-05-01T14:51:56.260Z\n"
+"PO-Revision-Date: 2025-05-01T14:51:56.261Z\n"
 
 msgid "Could not get Appearance configurations"
 msgstr "Could not get Appearance configurations"
@@ -16,18 +16,6 @@ msgstr "Error"
 
 msgid "General configuration"
 msgstr "General configuration"
-
-msgid "Application name"
-msgstr "Application name"
-
-msgid "Description"
-msgstr "Description"
-
-msgid "Application URL"
-msgstr "Application URL"
-
-msgid "Where your portal can be found"
-msgstr "Where your portal can be found"
 
 msgid "Saving..."
 msgstr "Saving..."
@@ -71,14 +59,14 @@ msgstr "Size"
 msgid "Create a new library"
 msgstr "Create a new library"
 
-msgid "Add visualizations"
-msgstr "Add visualizations"
-
-msgid "Library created successfully"
-msgstr "Library created successfully"
+msgid "Add Document"
+msgstr "Add Document"
 
 msgid "Could not create new library"
 msgstr "Could not create new library"
+
+msgid "Library created successfully"
+msgstr "Library created successfully"
 
 msgid "Create Item"
 msgstr "Create Item"
@@ -110,8 +98,8 @@ msgstr "This will be a part of the url. It should not contain spaces"
 msgid "ID"
 msgstr "ID"
 
-msgid "Delete library"
-msgstr "Delete library"
+msgid "Delete document"
+msgstr "Delete document"
 
 msgid "Deleting..."
 msgstr "Deleting..."
@@ -119,14 +107,14 @@ msgstr "Deleting..."
 msgid "Delete"
 msgstr "Delete"
 
-msgid "Library deleted successfully"
-msgstr "Library deleted successfully"
+msgid "Document deleted successfully"
+msgstr "Document deleted successfully"
 
-msgid "Could not delete library"
-msgstr "Could not delete library"
+msgid "Could not delete document"
+msgstr "Could not delete document"
 
-msgid "Are you sure you want to delete the library "
-msgstr "Are you sure you want to delete the library "
+msgid "Are you sure you want to delete the document "
+msgstr "Are you sure you want to delete the document "
 
 msgid "This action is irreversible"
 msgstr "This action is irreversible"
@@ -149,8 +137,8 @@ msgstr "N/A"
 msgid "Groups"
 msgstr "Groups"
 
-msgid "There are no library configuration present"
-msgstr "There are no library configuration present"
+msgid "There are no document configuration present"
+msgstr "There are no document configuration present"
 
 msgid "Add group"
 msgstr "Add group"
@@ -227,11 +215,11 @@ msgstr "There are no sub groups present"
 msgid "Remove"
 msgstr "Remove"
 
-msgid "Visualizations"
-msgstr "Visualizations"
+msgid "Document Group"
+msgstr "Document Group"
 
-msgid "Configure layout"
-msgstr "Configure layout"
+msgid "Documents"
+msgstr "Documents"
 
 msgid "Caption"
 msgstr "Caption"
@@ -263,11 +251,39 @@ msgstr "Name"
 msgid "View"
 msgstr "View"
 
+msgid "There are no library configuration present"
+msgstr "There are no library configuration present"
+
 msgid "Something went wrong"
 msgstr "Something went wrong"
 
 msgid "Reload"
 msgstr "Reload"
+
+msgid "Application name"
+msgstr "Application name"
+
+msgid "Description"
+msgstr "Description"
+
+msgid "Application URL"
+msgstr "Application URL"
+
+msgid "Where your portal can be found"
+msgstr "Where your portal can be found"
+
+msgid "Application Icon"
+msgstr "Application Icon"
+
+msgid "Upload Icon"
+msgstr "Upload Icon"
+
+msgid ""
+"512px x 512px clear image. This will be used as favicon and application "
+"icon on mobile devices"
+msgstr ""
+"512px x 512px clear image. This will be used as favicon and application "
+"icon on mobile devices"
 
 msgid "Error saving changes"
 msgstr "Error saving changes"
@@ -280,6 +296,12 @@ msgstr "Back to dashboard "
 
 msgid "Short description"
 msgstr "Short description"
+
+msgid "Visualizations"
+msgstr "Visualizations"
+
+msgid "Configure layout"
+msgstr "Configure layout"
 
 msgid "Add menu item"
 msgstr "Add menu item"
@@ -440,6 +462,9 @@ msgstr "Short Name"
 msgid "Create group"
 msgstr "Create group"
 
+msgid "Add visualizations"
+msgstr "Add visualizations"
+
 msgid "{{action}} visualization"
 msgstr "{{action}} visualization"
 
@@ -473,20 +498,14 @@ msgstr "Application colors"
 msgid "Header configuration"
 msgstr "Header configuration"
 
-msgid "Title enabled"
-msgstr "Title enabled"
+msgid "Background color"
+msgstr "Background color"
 
-msgid "Title label"
-msgstr "Title label"
+msgid "Header height"
+msgstr "Header height"
 
-msgid "Subtitle label"
-msgstr "Subtitle label"
-
-msgid "Title style"
-msgstr "Title style"
-
-msgid "Has menu"
-msgstr "Has menu"
+msgid "Leading logo"
+msgstr "Leading logo"
 
 msgid "Trailing logo"
 msgstr "Trailing logo"
@@ -510,11 +529,11 @@ msgid "Missing Appearance configurations"
 msgstr "Missing Appearance configurations"
 
 msgid ""
-"There are no appearance configurations yet. Click the below button to "
-"create one."
+"There are no appearance configurations yet. Refresh the browser to import "
+"the default configurations."
 msgstr ""
-"There are no appearance configurations yet. Click the below button to "
-"create one."
+"There are no appearance configurations yet. Refresh the browser to import "
+"the default configurations."
 
 msgid "Color configurations updated successfully"
 msgstr "Color configurations updated successfully"
@@ -534,9 +553,6 @@ msgstr "Application Color Configurations"
 msgid "Primary color"
 msgstr "Primary color"
 
-msgid "Background color"
-msgstr "Background color"
-
 msgid "Chart colors"
 msgstr "Chart colors"
 
@@ -551,6 +567,63 @@ msgstr "Footer configurations"
 
 msgid "Footer links label"
 msgstr "Footer links label"
+
+msgid "Header configurations updated successfully"
+msgstr "Header configurations updated successfully"
+
+msgid "Error updating header configurations"
+msgstr "Error updating header configurations"
+
+msgid "Header configurations"
+msgstr "Header configurations"
+
+msgid "Title styles"
+msgstr "Title styles"
+
+msgid "Subtitle styles"
+msgstr "Subtitle styles"
+
+msgid "Hide advanced options"
+msgstr "Hide advanced options"
+
+msgid "Show advanced options"
+msgstr "Show advanced options"
+
+msgid "Header styles"
+msgstr "Header styles"
+
+msgid "Show colored background"
+msgstr "Show colored background"
+
+msgid "Background Color"
+msgstr "Background Color"
+
+msgid "Logo url"
+msgstr "Logo url"
+
+msgid "Width"
+msgstr "Width"
+
+msgid "Height"
+msgstr "Height"
+
+msgid "Center"
+msgstr "Center"
+
+msgid "Left"
+msgstr "Left"
+
+msgid "Right"
+msgstr "Right"
+
+msgid "Alignment"
+msgstr "Alignment"
+
+msgid "Text size"
+msgstr "Text size"
+
+msgid "Text color"
+msgstr "Text color"
 
 msgid "Add"
 msgstr "Add"
@@ -622,6 +695,12 @@ msgstr "Configure different modules of the web portal application"
 
 msgid "Configure modules"
 msgstr "Configure modules"
+
+msgid "Error uploading file"
+msgstr "Error uploading file"
+
+msgid "Error deleting file"
+msgstr "Error deleting file"
 
 msgctxt "Follows either create or update"
 msgid " menu item"

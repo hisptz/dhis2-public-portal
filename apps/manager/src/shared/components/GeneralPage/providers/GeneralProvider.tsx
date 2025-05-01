@@ -19,7 +19,7 @@ export function useRefreshMetadata() {
 }
 
 export function MetadataProvider({ children }: { children: React.ReactNode }) {
-	const { loading, error, form, refetch } = useMetadataQuery();
+	const { loading, error, form, refetch, config } = useMetadataQuery();
 
 	if (loading) {
 		return <FullLoader />;
@@ -31,13 +31,15 @@ export function MetadataProvider({ children }: { children: React.ReactNode }) {
 
 	return (
 		<FormProvider {...form}>
-			<MetadataRefreshContext.Provider
-				value={async () => {
-					await refetch();
-				}}
-			>
-				{children}
-			</MetadataRefreshContext.Provider>
+			<MetadataContext.Provider value={config ?? null}>
+				<MetadataRefreshContext.Provider
+					value={async () => {
+						await refetch();
+					}}
+				>
+					{children}
+				</MetadataRefreshContext.Provider>
+			</MetadataContext.Provider>
 		</FormProvider>
 	);
 }

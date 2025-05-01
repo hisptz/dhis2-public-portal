@@ -1,0 +1,37 @@
+name: Build and Push Docker Image (Develop)
+
+on:
+  push:
+    paths:
+      - apps/portal/**
+      - packages/**
+    branches:
+      - develop
+
+jobs:
+  build-and-push:
+    name: Build and Push Docker Image
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Login to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ vars.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: Build and push
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          file: ./apps/portal/Dockerfile
+          push: true
+          tags: hisptanzania/dhis2-public-portal:develop
+          cache-from: type=gha
+          cache-to: type=gha,mode=max

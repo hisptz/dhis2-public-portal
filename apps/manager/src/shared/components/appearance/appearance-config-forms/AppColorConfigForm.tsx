@@ -105,7 +105,7 @@ export function AppColorConfigForm({
 
 	return (
 		<FormProvider {...form}>
-			<Modal position="middle" onClose={onClose}>
+			<Modal position="middle" onClose={onClose} large>
 				<ModalTitle>
 					{i18n.t("Application Color Configurations")}
 				</ModalTitle>

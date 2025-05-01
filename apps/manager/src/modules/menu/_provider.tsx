@@ -1,15 +1,19 @@
-import { createFileRoute, Outlet } from "@tanstack/react-router"
+import { createFileRoute, Outlet } from "@tanstack/react-router";
 import { MenuProvider } from "../../shared/components/MenuPage/providers/MenuProvider";
 import React from "react";
+import { ConfigProvider } from "../../shared/components/ConfigProvider";
+import { DatastoreKeys } from "@packages/shared/constants";
 
 export const Route = createFileRoute("/menu/_provider")({
-  component: RouteComponent,
-})
+	component: RouteComponent,
+});
 
 function RouteComponent() {
-  return (
-        <MenuProvider>
-            <Outlet />
-        </MenuProvider>
-        );
+	return (
+		<ConfigProvider dataStoreKey={DatastoreKeys.MENU} defaultConfig={[]}>
+			<MenuProvider>
+				<Outlet />
+			</MenuProvider>
+		</ConfigProvider>
+	);
 }
