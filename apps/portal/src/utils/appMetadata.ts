@@ -12,7 +12,7 @@ import * as path from "node:path";
 import { isEmpty, last } from "lodash";
 
 export async function getAppMetadata(): Promise<Metadata> {
-	const config = await getAppConfigWithNamespace<AppMeta>({
+	let config = await getAppConfigWithNamespace<AppMeta>({
 		namespace: DatastoreNamespaces.MAIN_CONFIG,
 		key: "metadata",
 	});
@@ -46,7 +46,9 @@ export async function getAppMetadata(): Promise<Metadata> {
 		const dest = "./public";
 		const icons: Metadata["icons"] = [];
 		//Save the images in the public folder
-		console.info(`Saving generated icons to ${process.cwd()}/${dest}...`);
+		console.info(
+			`Saving generated icons to ${process.cwd()}/${dest.replace("./", "")}...`,
+		);
 		try {
 			for (const icon of generatedIcons.images) {
 				fs.writeFileSync(path.join(dest, icon.name), icon.contents);
@@ -68,13 +70,17 @@ export async function getAppMetadata(): Promise<Metadata> {
 		if (!isEmpty(icons)) {
 			try {
 				//we are not waiting for this as it is a side effect
-				updateAppConfigWithNamespace({
+				await updateAppConfigWithNamespace({
 					namespace: DatastoreNamespaces.MAIN_CONFIG,
 					key: "metadata",
 					data: {
 						...config,
 						icons,
 					},
+				});
+				config = await getAppConfigWithNamespace<AppMeta>({
+					namespace: DatastoreNamespaces.MAIN_CONFIG,
+					key: "metadata",
 				});
 			} catch (e) {
 				console.warn(`Could not save icons to config`);

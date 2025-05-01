@@ -51,7 +51,6 @@ docker run -d \
 You can also use `docker compose` with this docker-compose.yml file:
 
 ```yaml
-version: '3'
 services:
   portal:
     image: hisptanzania/dhis2-public-portal:latest

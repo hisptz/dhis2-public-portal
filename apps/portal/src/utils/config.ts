@@ -30,14 +30,13 @@ export async function updateAppConfigWithNamespace<T>({
 	const response = await dhis2HttpClient.put<
 		T,
 		{
-			response: {
-				httpStatusCode: number;
-				status: string;
-				message: string;
-			};
+			httpStatusCode: number;
+			status: string;
+			message: string;
 		}
 	>(url, data);
-	return response.response.httpStatusCode === 200;
+	console.log(response);
+	return response.httpStatusCode === 200;
 }
 
 export async function getAppConfigsFromNamespace<T>(

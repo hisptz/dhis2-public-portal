@@ -180,10 +180,6 @@ export class HttpClient {
 			body: JSON.stringify(body),
 		});
 
-		console.log({
-			response,
-		});
-
 		const status = response.status;
 		if (status >= 400) {
 			throw `Request failed with status code ${status}`;
