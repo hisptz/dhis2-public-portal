@@ -2,6 +2,9 @@ name: Build and Push Docker Image (Develop)
 
 on:
   push:
+    paths:
+      - apps/portal/**
+      - packages/**
     branches:
       - develop
 

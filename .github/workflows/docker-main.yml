@@ -2,6 +2,9 @@ name: Build and Push Docker Image (Main)
 
 on:
   push:
+    paths:
+      - apps/portal/**
+      - packages/**
     branches:
       - main
 
