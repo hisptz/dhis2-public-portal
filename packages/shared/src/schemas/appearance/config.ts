@@ -6,6 +6,7 @@ import { styleConfig } from "./style";
 export const appMeta = z.object({
 	name: z.string(),
 	description: z.string(),
+	icon: z.string(),
 	icons: z.array(
 		z.object({
 			url: z.string().url(),

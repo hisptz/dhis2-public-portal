@@ -5,8 +5,8 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
-"POT-Creation-Date: 2025-05-01T13:03:40.998Z\n"
-"PO-Revision-Date: 2025-05-01T13:03:40.998Z\n"
+"POT-Creation-Date: 2025-05-01T14:06:35.108Z\n"
+"PO-Revision-Date: 2025-05-01T14:06:35.109Z\n"
 
 msgid "Could not get Appearance configurations"
 msgstr "Could not get Appearance configurations"
@@ -16,18 +16,6 @@ msgstr "Error"
 
 msgid "General configuration"
 msgstr "General configuration"
-
-msgid "Application name"
-msgstr "Application name"
-
-msgid "Description"
-msgstr "Description"
-
-msgid "Application URL"
-msgstr "Application URL"
-
-msgid "Where your portal can be found"
-msgstr "Where your portal can be found"
 
 msgid "Saving..."
 msgstr "Saving..."
@@ -67,6 +55,31 @@ msgstr "Reload"
 
 msgid "This will be a part of the url. It should not contain spaces"
 msgstr "This will be a part of the url. It should not contain spaces"
+
+msgid "Application name"
+msgstr "Application name"
+
+msgid "Description"
+msgstr "Description"
+
+msgid "Application URL"
+msgstr "Application URL"
+
+msgid "Where your portal can be found"
+msgstr "Where your portal can be found"
+
+msgid "Application Icon"
+msgstr "Application Icon"
+
+msgid "Upload Icon"
+msgstr "Upload Icon"
+
+msgid ""
+"512px x 512px clear image. This will be used as favicon and application "
+"icon on mobile devices"
+msgstr ""
+"512px x 512px clear image. This will be used as favicon and application "
+"icon on mobile devices"
 
 msgid "Error saving changes"
 msgstr "Error saving changes"
@@ -399,11 +412,23 @@ msgstr "Error updating footer configurations"
 msgid "Footer configurations"
 msgstr "Footer configurations"
 
+msgid "General"
+msgstr "General"
+
+msgid "Show title"
+msgstr "Show title"
+
+msgid "Footer items"
+msgstr "Footer items"
+
 msgid "Footer Items"
 msgstr "Footer Items"
 
 msgid "Add footer item"
 msgstr "Add footer item"
+
+msgid "Links"
+msgstr "Links"
 
 msgid "Static Content"
 msgstr "Static Content"
@@ -507,9 +532,6 @@ msgstr "Add color"
 msgid "Color Selector"
 msgstr "Color Selector"
 
-msgid "General"
-msgstr "General"
-
 msgid "Setup application name and related information"
 msgstr "Setup application name and related information"
 
@@ -544,6 +566,12 @@ msgstr ""
 
 msgid "Configure app menu"
 msgstr "Configure app menu"
+
+msgid "Error uploading file"
+msgstr "Error uploading file"
+
+msgid "Error deleting file"
+msgstr "Error deleting file"
 
 msgctxt "Follows either create or update"
 msgid " menu item"
