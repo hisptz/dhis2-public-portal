@@ -56,6 +56,10 @@ export async function getAppearanceConfig() {
 			key: "appearance",
 		});
 
+	console.log({
+		appearanceConfig,
+	});
+
 	const menuConfig = await getAppConfigWithNamespace<AppMenuConfig>({
 		namespace: DatastoreNamespaces.MAIN_CONFIG,
 		key: "menu",

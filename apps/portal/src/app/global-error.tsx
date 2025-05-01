@@ -1,8 +1,11 @@
 "use client";
+import "./globals.css";
+import "@mantine/core/styles.css";
 
 import {
 	Box,
 	Button,
+	ColorSchemeScript,
 	Container,
 	Group,
 	mantineHtmlProps,
@@ -15,8 +18,11 @@ import {
 export default function GlobalError() {
 	return (
 		<html {...mantineHtmlProps}>
-			<MantineProvider>
-				<body>
+			<head>
+				<ColorSchemeScript />
+			</head>
+			<body>
+				<MantineProvider>
 					<Container
 						fluid
 						className="h-screen flex flex-col justify-center items-center"
@@ -56,8 +62,8 @@ export default function GlobalError() {
 							</Stack>
 						</Box>
 					</Container>
-				</body>
-			</MantineProvider>
+				</MantineProvider>
+			</body>
 		</html>
 	);
 }

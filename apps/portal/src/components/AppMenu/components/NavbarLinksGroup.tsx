@@ -49,7 +49,7 @@ export function LinksGroup({
 				return (
 					<Link
 						key={subMenu.label}
-						href={`/${subMenu.path}`}
+						href={`/modules/${subMenu.path}`}
 						prefetch
 					>
 						<Text
@@ -156,7 +156,7 @@ export function LinksGroup({
 			{hasLinks ? (
 				mainContent
 			) : (
-				<Link href={`/${path}`} prefetch>
+				<Link href={`/modules/${path}`} prefetch>
 					{mainContent}
 				</Link>
 			)}

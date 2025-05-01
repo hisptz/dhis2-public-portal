@@ -24,14 +24,14 @@ export function DHIS2AppProvider({
 	contextPath,
 }: {
 	children: ReactNode;
-	systemInfo: D2SystemInfo;
+	systemInfo?: D2SystemInfo;
 	contextPath: string;
 }) {
 	if (typeof window === "undefined") {
 		return null;
 	}
 
-	const [, minor] = systemInfo.version.split(".") ?? [];
+	const [, minor] = systemInfo?.version.split(".") ?? [];
 	return (
 		<QueryClientProvider client={queryClient}>
 			<NoSsrAppProvider

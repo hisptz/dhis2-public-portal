@@ -19,7 +19,6 @@ export class HttpClient {
 
 		const status = response.status;
 		if (status >= 400) {
-			console.error(await response.json());
 			throw `Request failed with status code ${status}`;
 		}
 
@@ -67,6 +66,9 @@ export class HttpClient {
 		const details = await this.get<{ name: string; url: string }>(
 			detailsUrl,
 		);
+		if (details == null) {
+			return;
+		}
 		const fileDetails = await this.get<{ name: string }>(
 			`fileResources/${details.url}`,
 		);
@@ -90,7 +92,7 @@ export class HttpClient {
 		return new Response(blob, {
 			headers: {
 				...response.headers,
-				"content-disposition": `attachment; filename="${fileDetails.name}"`,
+				"content-disposition": `attachment; filename="${fileDetails?.name}"`,
 			},
 		});
 	}
@@ -116,13 +118,14 @@ export class HttpClient {
 				Authorization: `ApiToken ${this.pat}`,
 			},
 		});
-
 		const status = response.status;
 
 		if (status >= 400) {
-			throw `Request failed with status code ${status}`;
+			console.error(
+				`API call to ${url} failed with status code ${status}`,
+			);
+			return null;
 		}
-
 		return (await response.json()) as T;
 		//
 	}
