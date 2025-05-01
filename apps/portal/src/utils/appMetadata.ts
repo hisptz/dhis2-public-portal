@@ -46,29 +46,36 @@ export async function getAppMetadata(): Promise<Metadata> {
 		const dest = "./public";
 		const icons: Metadata["icons"] = [];
 		//Save the images in the public folder
-		for (const icon of generatedIcons.images) {
-			fs.writeFileSync(path.join(dest, icon.name), icon.contents);
-			if (icon.name.includes("ico")) {
+		try {
+			for (const icon of generatedIcons.images) {
+				fs.writeFileSync(path.join(dest, icon.name), icon.contents);
 				icons.push({
 					rel: "icon",
-					url: `./${icon.name}`,
+					url: `${icon.name}`,
 					type: `image/${last(icon.name.split("."))}`,
 				});
 			}
+		} catch (e) {
+			if (e instanceof Error) {
+				console.error(`Could not generate icons: ${e.message}`);
+				console.error(e);
+			}
 		}
 		//We need to save the generated references back to the config
-		try {
-			//we are not waiting for this as it is a side effect
-			updateAppConfigWithNamespace({
-				namespace: DatastoreNamespaces.MAIN_CONFIG,
-				key: "metadata",
-				data: {
-					...config,
-					icons,
-				},
-			});
-		} catch (e) {
-			console.warn(`Could not save icons to config`);
+		if (!isEmpty(icons)) {
+			try {
+				//we are not waiting for this as it is a side effect
+				updateAppConfigWithNamespace({
+					namespace: DatastoreNamespaces.MAIN_CONFIG,
+					key: "metadata",
+					data: {
+						...config,
+						icons,
+					},
+				});
+			} catch (e) {
+				console.warn(`Could not save icons to config`);
+			}
 		}
 
 		return {
