@@ -39,13 +39,13 @@ export function DocumentGroupItemConfig() {
 		keyName: "fieldId" as unknown as "id",
 	});
 
-	const onAddVisualization = useCallback(
-		(visualization: DocumentGroup) => {
+	const onAddDocumentGroup = useCallback(
+		(document: DocumentGroup) => {
 			// const displayItem: DisplayItem = {
 			// 	type: DisplayItemType.VISUALIZATION,
 			// 	item: visualization,
 			// };
-			append(visualization);
+			append(document);
 			
 		},
 		[append, getValues, setValue],
@@ -88,7 +88,7 @@ export function DocumentGroupItemConfig() {
 	return (
 		<div className="flex-1 w-full flex flex-col gap-2">
 			<div className="flex items-center justify-between">
-				<h3 className="text-2xl">{i18n.t("Visualizations")}</h3>
+				<h3 className="text-2xl">{i18n.t("Document Group")}</h3>
 				<ButtonStrip end>
 					
 					{/* <AddLibrary  onAdd={onAddVisualization} /> */}
