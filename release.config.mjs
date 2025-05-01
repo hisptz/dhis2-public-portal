@@ -5,14 +5,15 @@ export default {
 	branches: [
 		"main",
 		{
-			name: "develop",
-			prerelease: true,
-		},
-		{
 			name: "beta",
 			prerelease: true,
 		},
+		{
+			name: "alpha",
+			prerelease: true,
+		},
 	],
+	branch: "main",
 	plugins: [
 		"@semantic-release/commit-analyzer",
 		"@semantic-release/release-notes-generator",

@@ -37,9 +37,6 @@ export async function updateAppConfigWithNamespace<T>({
 			};
 		}
 	>(url, data);
-	console.log({
-		response,
-	});
 	return response.response.httpStatusCode === 200;
 }
 
