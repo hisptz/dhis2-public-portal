@@ -1,12 +1,12 @@
 import { useDataEngine } from "@dhis2/app-runtime";
 import { useCallback } from "react";
 import { DatastoreNamespaces } from "@packages/shared/constants";
-import { LibraryData } from "@packages/shared/schemas";
+import { DocumentItem } from "@packages/shared/schemas";
 
 const getMutation = (id: string) => ({
 	type: "create",
 	resource: `dataStore/${DatastoreNamespaces.MODULES}/${id}`,
-	data: ({ data }: { data: LibraryData }) => data,
+	data: ({ data }: { data: DocumentItem }) => data,
 });
 
 export function useCreateLibrary() {
