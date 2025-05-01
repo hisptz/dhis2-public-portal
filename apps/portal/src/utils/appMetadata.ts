@@ -46,6 +46,7 @@ export async function getAppMetadata(): Promise<Metadata> {
 		const dest = "./public";
 		const icons: Metadata["icons"] = [];
 		//Save the images in the public folder
+		console.info(`Saving generated icons to ${process.cwd()}/${dest}...`);
 		try {
 			for (const icon of generatedIcons.images) {
 				fs.writeFileSync(path.join(dest, icon.name), icon.contents);
@@ -55,12 +56,14 @@ export async function getAppMetadata(): Promise<Metadata> {
 					type: `image/${last(icon.name.split("."))}`,
 				});
 			}
+			console.info(`Done!`);
 		} catch (e) {
 			if (e instanceof Error) {
 				console.error(`Could not generate icons: ${e.message}`);
 				console.error(e);
 			}
 		}
+
 		//We need to save the generated references back to the config
 		if (!isEmpty(icons)) {
 			try {
