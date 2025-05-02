@@ -3,6 +3,8 @@ import { z } from "zod";
 
 export const feedbackSchema = z.object({
     email: z.string().email(),
+    name: z.string().optional(),
+	message: z.string().optional(),
 });
 
 export type FeedbackConfig = z.infer<typeof feedbackSchema>;
