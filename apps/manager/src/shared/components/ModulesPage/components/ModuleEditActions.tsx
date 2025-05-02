@@ -6,17 +6,19 @@ import { useNavigate, useParams } from "@tanstack/react-router";
 import { useAlert } from "@dhis2/app-runtime";
 import { AppModule } from "@packages/shared/schemas";
 import { useSaveModule } from "../hooks/save";
+import { useRefreshModules } from "../providers/ModulesProvider";
 
-export function ModuleEditActions() {
+export function ModuleEditActions({ onComplete }: { onComplete: () => void }) {
 	const { moduleId } = useParams({ from: "/modules/_provider/$moduleId" });
 	const { save } = useSaveModule(moduleId);
-	const { handleSubmit, formState, getValues } = useFormContext<AppModule>();
+	const { handleSubmit, formState } = useFormContext<AppModule>();
 	const navigate = useNavigate();
+	const refresh = useRefreshModules();
 	const { show } = useAlert(
 		({ message }) => message,
 		({ type }) => ({ ...type, duration: 3000 }),
 	);
-	const values = getValues();
+
 	const onError = (e) => {
 		console.log(e);
 		show({
@@ -28,6 +30,7 @@ export function ModuleEditActions() {
 	const onSubmit = async (data: AppModule) => {
 		try {
 			await save(data);
+			await refresh();
 		} catch (error) {
 			show({
 				message: i18n.t("Failed to save module", error),
@@ -47,6 +50,7 @@ export function ModuleEditActions() {
 				disabled={!formState.isDirty || formState.isSubmitting}
 				onClick={() => {
 					handleSubmit(onSubmit, onError)();
+					onComplete();
 				}}
 			>
 				{i18n.t("Save changes")}
