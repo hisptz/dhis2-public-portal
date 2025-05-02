@@ -31,23 +31,26 @@ export const defaultAppearanceConfig: AppAppearanceConfig = {
 				links: [
 					{
 						url: "https://dhis2.org",
-						name: "DHIS2",
+						name: "DHIS2 website",
+					},
+					{
+						url: "https://docs.dhis2.org",
+						name: "DHIS2 Documentations",
 					},
 				],
 			},
 		],
 	},
 	header: {
-		logo: {
-			enabled: true,
-		},
 		style: {
 			leadingLogo: {
+				show: true,
 				url: "https://avatars.githubusercontent.com/u/1089987?s=200&v=4",
 				width: 60,
 				height: 60,
 			},
 			trailingLogo: {
+				show: true,
 				url: "https://avatars.githubusercontent.com/u/1089987?s=200&v=4",
 				width: 60,
 				height: 60,

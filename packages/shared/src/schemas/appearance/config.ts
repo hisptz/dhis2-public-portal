@@ -33,9 +33,6 @@ export const headerStyleConfig = z.object({
 });
 
 export const headerConfig = z.object({
-	logo: z.object({
-		enabled: z.boolean().optional(),
-	}),
 	subtitle: z.object({
 		text: z
 			.string()
