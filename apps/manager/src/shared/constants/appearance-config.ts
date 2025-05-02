@@ -2,10 +2,6 @@ import { AppAppearanceConfig } from "@packages/shared/schemas";
 
 export const defaultAppearanceConfig: AppAppearanceConfig = {
 	logo: "https://avatars.githubusercontent.com/u/1089987?s=200&v=4",
-	title: {
-		main: "DHIS2 Public Portal",
-		subtitle: "A customizable public portal for a DHIS2 implementation",
-	},
 	colors: {
 		primary: "#2C6693",
 		background: "#F3F5F7",
@@ -61,6 +57,7 @@ export const defaultAppearanceConfig: AppAppearanceConfig = {
 			headerBackgroundColor: "blue",
 		},
 		title: {
+			text: "DHIS2 Public Portal",
 			style: {
 				align: "left",
 				textSize: 30,
@@ -68,6 +65,7 @@ export const defaultAppearanceConfig: AppAppearanceConfig = {
 			},
 		},
 		subtitle: {
+			text: "A customizable public portal for a DHIS2 implementation",
 			style: {
 				textSize: 14,
 				textColor: "#ffffff",

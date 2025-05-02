@@ -29,9 +29,9 @@ import {
 } from "@dhis2/ui";
 import { StyleConfig } from "./components/AdvancedHeaderConfig/components/StyleConfig";
 import { LogoConfig } from "./components/AdvancedHeaderConfig/components/LogoConfig";
-import { HeaderStyleConfig } from "./components/AdvancedHeaderConfig/components/HeaderStyleConfig";
 import { TitleConfig } from "./components/AdvancedHeaderConfig/components/TitleConfig";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { HeaderStyleConfig } from "./components/AdvancedHeaderConfig/components/HeaderStyleConfig";
 
 type props = {
 	configurations: AppAppearanceConfig;
@@ -124,10 +124,6 @@ export function HeaderConfigForm({
 						<TitleConfig />
 						<hr className="border-gray-200 my-2" />
 
-						{/*Header style config*/}
-						<HeaderStyleConfig />
-						<hr className="border-gray-200 my-2" />
-
 						{/*Leading logo*/}
 						<LogoConfig
 							logoType="leadingLogo"
@@ -143,6 +139,10 @@ export function HeaderConfigForm({
 									logoType="trailingLogo"
 									label={i18n.t("Trailing logo")}
 								/>
+								<hr className="border-gray-200 my-2" />
+
+								{/*Header style config*/}
+								<HeaderStyleConfig />
 								<hr className="border-gray-200 my-2" />
 
 								{/*	title style*/}

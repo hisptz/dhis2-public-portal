@@ -15,7 +15,9 @@ type Props = {
 export function HeaderConfig({ appearanceConfig, refetchConfig }: Props) {
 	const [showHeaderConfig, setShowHeaderConfig] = useState(false);
 
-	const { header, title } = appearanceConfig;
+	const { header } = appearanceConfig;
+	const title = header.title.text;
+	const subtitle = header.subtitle.text;
 	const { style } = header;
 
 	return (
@@ -23,17 +25,17 @@ export function HeaderConfig({ appearanceConfig, refetchConfig }: Props) {
 			<section>
 				<ConfigurationTitle title={i18n.t("Header configuration")} />
 				<div className="mx-2 flex flex-col gap-2">
-					{title?.main && (
+					{title && (
 						<ConfigurationDetails
 							title={i18n.t("Title")}
-							value={title?.main}
+							value={title}
 						/>
 					)}
 
-					{title?.subtitle && (
+					{subtitle && (
 						<ConfigurationDetails
 							title={i18n.t("Subtitle")}
-							value={title?.subtitle}
+							value={subtitle}
 						/>
 					)}
 
