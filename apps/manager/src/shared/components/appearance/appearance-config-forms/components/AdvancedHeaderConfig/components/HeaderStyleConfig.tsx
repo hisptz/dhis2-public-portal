@@ -5,7 +5,7 @@ import { ColorPicker } from "../../ColorPicker";
 import { RHFNumberField } from "../../../../../Fields/RHFNumberField";
 
 export function HeaderStyleConfig() {
-	const STYLE_KEY = "style";
+	const STYLE_KEY = "header.style";
 	return (
 		<div className="my-4 flex flex-col gap-2">
 			<h3 className="text-md font-medium">{i18n.t("Header styles")}</h3>
@@ -20,7 +20,7 @@ export function HeaderStyleConfig() {
 				/>
 				<div className="w-[35%]">
 					<RHFNumberField
-						name="style.containerHeight"
+						name={`${STYLE_KEY}.containerHeight`}
 						label={i18n.t("Header height")}
 					/>
 				</div>

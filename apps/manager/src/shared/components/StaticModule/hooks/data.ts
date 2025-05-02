@@ -62,7 +62,7 @@ type SingleResponse = {
 export function useItemById(key: string) {
 	if (!key) throw new Error("moduleId and key are required");
 	const module = useModule() as StaticModule;
-	const namespace = module?.config.namespace;
+	const namespace = module?.config?.namespace;
 	const {
 		data,
 		loading: itemLoading,

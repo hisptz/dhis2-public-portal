@@ -1,11 +1,11 @@
 import React from "react";
-import { SimpleTable, SimpleTableColumn } from "@hisptz/dhis2-ui";
 import i18n from "@dhis2/d2-i18n";
-import { DisplayItem, DisplayItemType } from "@packages/shared/schemas";
+import { SimpleTable, SimpleTableColumn } from "@hisptz/dhis2-ui";
+import { VisualizationItem } from "@packages/shared/schemas";
 
 const columns: SimpleTableColumn[] = [
 	{
-		label: i18n.t("ID"),
+		label: i18n.t("Label"),
 		key: "id",
 	},
 	{
@@ -22,28 +22,22 @@ const columns: SimpleTableColumn[] = [
 	},
 ];
 
+type VisualizationRow = VisualizationItem & {
+	id: string;
+	actions: React.ReactNode;
+};
+
 export function GroupVisualizations({
 	visualizations,
 }: {
-	visualizations: Array<DisplayItem & { actions: React.ReactNode }>;
+	visualizations: VisualizationRow[];
 }) {
-	const rows = visualizations.map((vis) => {
-		if (vis.type === DisplayItemType.VISUALIZATION) {
-			return {
-				id: vis.item.id,
-				type: vis.item.type,
-				caption: vis.item.caption || "N/A",
-				actions: vis.actions,
-			};
-		} else{
-			return {
-				id: vis.item.id,
-				type: DisplayItemType.SINGLE_VALUE,
-				caption: "Single Value",
-				actions: vis.actions,
-			};
-		}
-	});
+	const rows = visualizations.map((vis) => ({
+		id: vis.id,
+		type: vis.type,
+		caption: vis.caption || "N/A",
+		actions: vis.actions,
+	}));
 
 	return <SimpleTable columns={columns} rows={rows} />;
 }

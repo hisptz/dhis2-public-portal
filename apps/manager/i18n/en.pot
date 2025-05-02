@@ -5,8 +5,8 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
-"POT-Creation-Date: 2025-05-02T07:15:01.947Z\n"
-"PO-Revision-Date: 2025-05-02T07:15:01.947Z\n"
+"POT-Creation-Date: 2025-05-02T09:41:08.535Z\n"
+"PO-Revision-Date: 2025-05-02T09:41:08.535Z\n"
 
 msgid "Could not get Appearance configurations"
 msgstr "Could not get Appearance configurations"
@@ -108,8 +108,8 @@ msgstr "Visualizations"
 msgid "Configure layout"
 msgstr "Configure layout"
 
-msgid "ID"
-msgstr "ID"
+msgid "Label"
+msgstr "Label"
 
 msgid "Type"
 msgstr "Type"
@@ -119,6 +119,30 @@ msgstr "Caption"
 
 msgid "Actions"
 msgstr "Actions"
+
+msgid "Created successfully"
+msgstr "Created successfully"
+
+msgid "Configuration exists"
+msgstr "Configuration exists"
+
+msgid "Welcome to DHIS2 Public Portal Manager!"
+msgstr "Welcome to DHIS2 Public Portal Manager!"
+
+msgid "Please wait as we setup for first time use..."
+msgstr "Please wait as we setup for first time use..."
+
+msgid "There were some issues setting up some configurations"
+msgstr "There were some issues setting up some configurations"
+
+msgid "Setup complete!"
+msgstr "Setup complete!"
+
+msgid "Continue to application"
+msgstr "Continue to application"
+
+msgid "Try again"
+msgstr "Try again"
 
 msgid "Add menu item"
 msgstr "Add menu item"
@@ -134,9 +158,6 @@ msgstr "Delete"
 
 msgid "Add sub item"
 msgstr "Add sub item"
-
-msgid "Label"
-msgstr "Label"
 
 msgid "Path"
 msgstr "Path"
@@ -213,6 +234,9 @@ msgstr "Creating..."
 msgid "Create module"
 msgstr "Create module"
 
+msgid "ID"
+msgstr "ID"
+
 msgid "Module deleted successfully"
 msgstr "Module deleted successfully"
 
@@ -251,6 +275,27 @@ msgstr "There are no modules configuration present"
 
 msgid "Could not save changes"
 msgstr "Could not save changes"
+
+msgid "Add Feedback"
+msgstr "Add Feedback"
+
+msgid "{{action}} feedback"
+msgstr "{{action}} feedback"
+
+msgid "Full Name"
+msgstr "Full Name"
+
+msgid "Email"
+msgstr "Email"
+
+msgid "Message"
+msgstr "Message"
+
+msgid "Edit feedback"
+msgstr "Edit feedback"
+
+msgid "No feedback items configured"
+msgstr "No feedback items configured"
 
 msgid "Add Item"
 msgstr "Add Item"
@@ -548,6 +593,12 @@ msgstr ""
 
 msgid "Configure app menu"
 msgstr "Configure app menu"
+
+msgid "Menu"
+msgstr "Menu"
+
+msgid "Home Module"
+msgstr "Home Module"
 
 msgid "Error uploading file"
 msgstr "Error uploading file"
