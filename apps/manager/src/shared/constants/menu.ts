@@ -24,19 +24,19 @@ export const appMenus: Array<AppMenuItem> = [
 		action: i18n.t("Configure appearance"),
 	},
 	{
-		label: i18n.t("App Menu"),
-		href: "/menu",
-		description: i18n.t(
-			"Configure the position and contents of the app menu of the web portal application",
-		),
-		action: i18n.t("Configure app menu"),
-	},
-	{
 		label: i18n.t("Modules"),
 		href: "/modules",
 		description: i18n.t(
 			"Configure different modules of the web portal application",
 		),
 		action: i18n.t("Configure modules"),
+	},
+	{
+		label: i18n.t("App Menu"),
+		href: "/menu",
+		description: i18n.t(
+			"Configure the position and contents of the app menu of the web portal application",
+		),
+		action: i18n.t("Configure app menu"),
 	},
 ];

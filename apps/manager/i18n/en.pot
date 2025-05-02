@@ -5,8 +5,8 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
-"POT-Creation-Date: 2025-05-02T05:04:17.139Z\n"
-"PO-Revision-Date: 2025-05-02T05:04:17.140Z\n"
+"POT-Creation-Date: 2025-05-02T07:15:01.947Z\n"
+"PO-Revision-Date: 2025-05-02T07:15:01.947Z\n"
 
 msgid "Could not get Appearance configurations"
 msgstr "Could not get Appearance configurations"
@@ -530,6 +530,12 @@ msgstr ""
 msgid "Configure appearance"
 msgstr "Configure appearance"
 
+msgid "Configure different modules of the web portal application"
+msgstr "Configure different modules of the web portal application"
+
+msgid "Configure modules"
+msgstr "Configure modules"
+
 msgid "App Menu"
 msgstr "App Menu"
 
@@ -542,12 +548,6 @@ msgstr ""
 
 msgid "Configure app menu"
 msgstr "Configure app menu"
-
-msgid "Configure different modules of the web portal application"
-msgstr "Configure different modules of the web portal application"
-
-msgid "Configure modules"
-msgstr "Configure modules"
 
 msgid "Error uploading file"
 msgstr "Error uploading file"
