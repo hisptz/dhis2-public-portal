@@ -26,7 +26,7 @@ export function AppHeader({
 	opened: boolean;
 	toggle: () => void;
 }) {
-	const { header: headerConfig, title } = config;
+	const { header: headerConfig } = config;
 	const theme = getAppTheme(config);
 	const backgroundColor = headerConfig.style?.coloredBackground
 		? theme.primaryColor
@@ -34,8 +34,9 @@ export function AppHeader({
 	const foregroundColor = backgroundColor
 		? getForeground(backgroundColor)
 		: undefined;
-	const headerBackgroundColor =
-		headerConfig.style?.headerBackgroundColor ?? foregroundColor;
+	const headerBackgroundColor = backgroundColor ?? foregroundColor;
+	const title = headerConfig.title.text;
+	const subtitle = headerConfig.subtitle.text;
 	const titleTextColor =
 		headerConfig.title.style?.textColor ?? foregroundColor;
 	const titleTextSize = headerConfig.title.style?.textSize ?? 20;
@@ -66,7 +67,7 @@ export function AppHeader({
 					size="sm"
 				/>
 
-				{headerConfig.logo.enabled && (
+				{headerConfig.style?.leadingLogo?.show && (
 					<Box
 						style={{
 							width:
@@ -106,9 +107,9 @@ export function AppHeader({
 							}}
 							order={2}
 						>
-							{title.main}
+							{title}
 						</Title>
-						{title.subtitle && (
+						{subtitle && (
 							<Title
 								c={subtitleTextColor}
 								order={4}
@@ -117,7 +118,7 @@ export function AppHeader({
 									alignSelf: headerSubtitleStackAlign,
 								}}
 							>
-								{title.subtitle}
+								{subtitle}
 							</Title>
 						)}
 					</Stack>
@@ -127,7 +128,7 @@ export function AppHeader({
 						)}
 					</Container>
 				</Stack>
-				{headerConfig.style?.trailingLogo?.url && (
+				{headerConfig.style?.trailingLogo?.show && (
 					<Box
 						style={{
 							height:

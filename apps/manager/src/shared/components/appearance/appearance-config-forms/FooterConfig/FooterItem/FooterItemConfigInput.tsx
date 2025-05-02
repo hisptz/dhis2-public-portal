@@ -3,35 +3,35 @@ import { Button, Field, FieldProps, IconAdd24, Label } from "@dhis2/ui";
 import { useBoolean } from "usehooks-ts";
 import { useFieldArray } from "react-hook-form";
 import i18n from "@dhis2/d2-i18n";
-import { FooterLinkForm } from "./FooterLinkForm";
-import { FooterLink } from "@packages/shared/schemas";
-import { FooterLinkTable } from "./FooterLinkTable";
+import { FooterItemConfig } from "@packages/shared/schemas";
+import { FooterItemTable } from "./FooterItemTable";
+import { FooterItemForm } from "./FooterItemForm";
 
 export interface InputFieldProps
 	extends Omit<FieldProps, "warning" | "error" | "validationText"> {}
 
-export function FooterLinksInput(props: InputFieldProps) {
+export function FooterItemConfigInput(props: InputFieldProps) {
 	const [activeIndex, setActiveIndex] = useState<number | undefined>(
 		undefined,
 	);
 	const { fields, append, remove, update } = useFieldArray({
-		name: "footerLinks.links",
+		name: "footerItems",
 	});
 
 	const { value: hide, setTrue: onHide, setFalse: onShow } = useBoolean(true);
 
-	const getSanitizedLinks = (fields: any[]): FooterLink[] => {
+	const getSanitizedItems = (fields: any[]): FooterItemConfig[] => {
 		return fields.map((field) => ({
-			name: field.name,
-			url: field.url,
+			title: field.title,
+			type: field.type,
 		}));
 	};
 
 	return (
 		<Field {...props}>
-			<Label>{i18n.t("Footer links")}</Label>
+			<Label>{i18n.t("Footer Items")}</Label>
 			{!hide && (
-				<FooterLinkForm
+				<FooterItemForm
 					onAdd={(data) => {
 						if (activeIndex !== undefined) {
 							update(activeIndex, data);
@@ -45,8 +45,12 @@ export function FooterLinksInput(props: InputFieldProps) {
 					config={
 						activeIndex !== undefined
 							? {
-									name: fields[activeIndex]["name"] ?? "",
-									url: fields[activeIndex]["url"] ?? "",
+									title: fields[activeIndex]["title"] ?? "",
+									type: fields[activeIndex]["type"] ?? "",
+									links: fields[activeIndex]["links"] ?? [],
+									staticContent:
+										fields[activeIndex]["staticContent"] ??
+										"",
 								}
 							: undefined
 					}
@@ -55,8 +59,8 @@ export function FooterLinksInput(props: InputFieldProps) {
 
 			<div className="flex flex-col gap-2 ">
 				<div className="flex-1 ml-2">
-					<FooterLinkTable
-						fields={getSanitizedLinks(fields)}
+					<FooterItemTable
+						fields={getSanitizedItems(fields)}
 						update={(index, config) => {
 							setActiveIndex(index);
 							onShow();
@@ -67,7 +71,7 @@ export function FooterLinksInput(props: InputFieldProps) {
 
 				<div className="w-auto">
 					<Button small onClick={onShow} icon={<IconAdd24 />}>
-						{i18n.t("Add footer link")}
+						{i18n.t("Add footer item")}
 					</Button>
 				</div>
 			</div>

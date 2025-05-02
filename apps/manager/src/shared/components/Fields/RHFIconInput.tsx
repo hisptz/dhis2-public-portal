@@ -1,18 +1,28 @@
 import React from "react";
 import i18n from "@dhis2/d2-i18n";
-import { Field, FileInput } from "@dhis2/ui";
+import { Field, FieldProps, FileInput } from "@dhis2/ui";
 import { useController } from "react-hook-form";
-import { AppIconFile, MetadataForm } from "@packages/shared/schemas";
+import { AppIconFile } from "@packages/shared/schemas";
 import { useConfig } from "@dhis2/app-runtime";
 
-export function IconInput() {
+export function RHFIconInput({
+	name,
+	label,
+	...props
+}: { name: string; label: string } & FieldProps) {
 	const config = useConfig();
-	const { field } = useController<MetadataForm, "icon">({
-		name: "icon",
+	const { field, fieldState } = useController({
+		name,
 	});
 
 	return (
-		<Field required label={i18n.t("Application Icon")}>
+		<Field
+			{...props}
+			error={!!fieldState.error}
+			validationText={fieldState.error?.message}
+			required
+			label={label}
+		>
 			{field.value && (
 				<div className="aspect-square w-[100px] p-2">
 					<img

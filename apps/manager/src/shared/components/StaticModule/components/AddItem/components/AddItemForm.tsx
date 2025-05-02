@@ -12,9 +12,15 @@ import React from "react";
 import i18n from "@dhis2/d2-i18n";
 import { RHFTextInputField } from "@hisptz/dhis2-ui";
 import { FetchError, useAlert } from "@dhis2/app-runtime";
-import { StaticItemConfig, staticItemSchema } from "@packages/shared/schemas";
+import {
+	StaticItemConfig,
+	staticItemSchema,
+	StaticModule,
+} from "@packages/shared/schemas";
 import { RHFIDField } from "../../../../Fields/IDField";
 import { useCreateItem } from "../hooks/create";
+import { useModule } from "../../../../ModulesPage/providers/ModuleProvider";
+import { useSaveModule } from "../../../hooks/namespace";
 
 export function AddItemForm({
 	hide,
@@ -26,6 +32,8 @@ export function AddItemForm({
 	onComplete: (item: StaticItemConfig) => void;
 }) {
 	const { createItem } = useCreateItem();
+	const module = useModule() as StaticModule;
+	const { save } = useSaveModule(module.id);
 	const { show } = useAlert(
 		({ message }) => message,
 		({ type }) => ({ ...type, duration: 3000 }),
@@ -42,6 +50,13 @@ export function AddItemForm({
 
 	const onSave = async (data: StaticItemConfig) => {
 		try {
+			if (!module?.config?.namespace) {
+				module.config = {
+					...module.config,
+					namespace: `hisptz-public-portal-${module?.id}`,
+				};
+				await save(module);
+			}
 			await createItem(data);
 			show({
 				message: i18n.t("Module created successfully"),

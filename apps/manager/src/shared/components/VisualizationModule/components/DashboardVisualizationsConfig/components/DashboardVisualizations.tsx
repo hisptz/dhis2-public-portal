@@ -5,7 +5,7 @@ import { VisualizationItem } from "@packages/shared/schemas";
 
 const columns: SimpleTableColumn[] = [
 	{
-		label: i18n.t("ID"),
+		label: i18n.t("Label"),
 		key: "id",
 	},
 	{

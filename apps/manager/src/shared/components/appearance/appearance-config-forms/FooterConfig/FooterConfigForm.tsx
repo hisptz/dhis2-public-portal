@@ -2,14 +2,15 @@ import React, { useMemo } from "react";
 import {
 	AppAppearanceConfig,
 	AppColorConfig,
+	footerConfig,
 	FooterConfig,
 } from "@packages/shared/schemas";
 import { useAlert } from "@dhis2/app-runtime";
-import { useUpdateDatastoreEntry } from "../../../hooks/datastore";
+import { useUpdateDatastoreEntry } from "../../../../hooks/datastore";
 import {
 	APP_NAMESPACE,
 	APPEARANCE_CONFIG_KEY,
-} from "../../../constants/datastore";
+} from "../../../../constants/datastore";
 import i18n from "@dhis2/d2-i18n";
 import {
 	Button,
@@ -25,9 +26,9 @@ import {
 	SubmitErrorHandler,
 	useForm,
 } from "react-hook-form";
-import { RHFTextInputField } from "@hisptz/dhis2-ui";
-import { FooterLinksInput } from "./components/FooterLink/FooterLinksInput";
-import { RHFRichTextAreaField } from "../../Fields/RHFRichTextAreaField";
+import { RHFCheckboxField, RHFTextInputField } from "@hisptz/dhis2-ui";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { FooterItemConfigInput } from "./FooterItem/FooterItemConfigInput";
 
 type props = {
 	configurations: AppAppearanceConfig;
@@ -88,6 +89,7 @@ export function FooterConfigForm({
 
 	const form = useForm<FooterConfig>({
 		defaultValues: { ...configurations.footer },
+		resolver: zodResolver(footerConfig), // Add your resolver here if needed
 		mode: "onBlur",
 	});
 
@@ -116,22 +118,29 @@ export function FooterConfigForm({
 			<Modal position="middle" onClose={onClose} large>
 				<ModalTitle>{i18n.t("Footer configurations")}</ModalTitle>
 				<ModalContent>
-					<form className="flex flex-col gap-2">
-						<RHFRichTextAreaField
-							name="address.content"
-							label={i18n.t("Address")}
-						/>
-						<RHFTextInputField
-							type="text"
-							name="copyright"
-							label={i18n.t("Copyright")}
-						/>
-						<RHFTextInputField
-							type="text"
-							name="footerLinks.title"
-							label={i18n.t("Footer links label")}
-						/>
-						<FooterLinksInput name="Links" />
+					<form className="flex flex-col gap-1">
+						<div className="my-2 flex flex-col gap-2">
+							<h3 className="text-md font-medium">
+								{i18n.t("General")}
+							</h3>
+							<RHFTextInputField
+								type="text"
+								name="copyright"
+								label={i18n.t("Copyright")}
+							/>
+							<RHFCheckboxField
+								name="showTitle"
+								label={i18n.t("Show title")}
+							/>
+							<hr className="border-gray-200 my-2" />
+						</div>
+
+						<div className="my-4 flex flex-col gap-2">
+							<h3 className="text-md font-medium">
+								{i18n.t("Footer items")}
+							</h3>
+							<FooterItemConfigInput name="FooterItems" />
+						</div>
 					</form>
 				</ModalContent>
 				<ModalActions>
@@ -140,6 +149,7 @@ export function FooterConfigForm({
 							{i18n.t("Cancel")}
 						</Button>
 						<Button
+							disabled={!form.formState.isValid}
 							loading={loading || form.formState.isSubmitting}
 							onClick={(_, e) => {
 								form.handleSubmit(

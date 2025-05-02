@@ -1,13 +1,28 @@
-import React, { useCallback } from "react";
+import React, { useCallback, useMemo } from "react";
 import i18n from "@dhis2/d2-i18n";
-import { Button, ButtonStrip, Divider, IconDelete16, IconLayoutColumns24 } from "@dhis2/ui";
+import {
+	Button,
+	ButtonStrip,
+	Divider,
+	IconDelete16,
+	IconLayoutColumns24,
+} from "@dhis2/ui";
 import { DashboardVisualizations } from "./components/DashboardVisualizations";
 import { useFieldArray, useFormContext, useWatch } from "react-hook-form";
 import { AddVisualization } from "../AddVisualization/AddVisualization";
 import { mapValues } from "lodash";
 import { EditVisualization } from "../AddVisualization/componets/EditVisualization";
-import { DisplayItem, FlexibleLayoutConfig, VisualizationItem, DisplayItemType, VisualizationModule } from "@packages/shared/schemas";
+import {
+	DisplayItem,
+	DisplayItemType,
+	FlexibleLayoutConfig,
+	VisualizationItem,
+	VisualizationModule,
+} from "@packages/shared/schemas";
 import { useNavigate, useParams } from "@tanstack/react-router";
+import { useVisualizationNames } from "../../hooks/data";
+import { FullLoader } from "../../../FullLoader";
+import ErrorPage from "../../../ErrorPage/ErrorPage";
 
 export function DashboardVisualizationsConfig() {
 	const { moduleId } = useParams({
@@ -27,6 +42,15 @@ export function DashboardVisualizationsConfig() {
 		keyName: "fieldId" as unknown as "id",
 	});
 
+	const visualizationIds = useMemo(
+		() =>
+			fields
+				.filter((field) => field.type === DisplayItemType.VISUALIZATION)
+				.map((field) => (field.item as VisualizationItem).id),
+		[fields],
+	);
+	const { visualizationNames, loading, error } =
+		useVisualizationNames(visualizationIds);
 	const onAddVisualization = useCallback(
 		(visualization: VisualizationItem) => {
 			const displayItem: DisplayItem = {
@@ -100,33 +124,51 @@ export function DashboardVisualizationsConfig() {
 	}
 
 	const rows = fields
-    .filter((field) => field.type === DisplayItemType.VISUALIZATION)
-    .map((field, index) => {
-        const visualizationField = field as DisplayItem & { 
-            type: DisplayItemType.VISUALIZATION;
-            item: VisualizationItem;
-        };
+		.filter((field) => field.type === DisplayItemType.VISUALIZATION)
+		.map((field, index) => {
+			const visualizationField = field as DisplayItem & {
+				type: DisplayItemType.VISUALIZATION;
+				item: VisualizationItem;
+			};
+			const visId = visualizationField.item.id;
+			return {
+				...visualizationField.item,
+				id: visualizationNames.get(visId) || visId,
+				actions: (
+					<ButtonStrip key={field.id}>
+						<EditVisualization
+							visualization={visualizationField.item}
+							onUpdate={(data) =>
+								update(index, {
+									...visualizationField,
+									item: data,
+								})
+							}
+						/>
+						<Button
+							onClick={() => remove(index)}
+							title={i18n.t("Remove")}
+							icon={<IconDelete16 />}
+						/>
+					</ButtonStrip>
+				),
+			};
+		});
 
-        return {
-            ...visualizationField.item,
-            actions: (
-                <ButtonStrip key={field.id}>
-                    <EditVisualization
-                        visualization={visualizationField.item}
-                        onUpdate={(data) => update(index, { 
-                            ...visualizationField,
-                            item: data 
-                        })}
-                    />
-                    <Button
-                        onClick={() => remove(index)}
-                        title={i18n.t("Remove")}
-                        icon={<IconDelete16 />}
-                    />
-                </ButtonStrip>
-            ),
-        };
-    });
+	if (loading) {
+		return (
+			<div>
+				<FullLoader />
+			</div>
+		);
+	}
+	if (error) {
+		return (
+			<div>
+				<ErrorPage error={i18n.t("Error loading visualizations: ")} />
+			</div>
+		);
+	}
 
 	return (
 		<div className="flex-1 w-full flex flex-col gap-2">

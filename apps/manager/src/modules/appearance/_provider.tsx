@@ -2,7 +2,7 @@ import { createFileRoute, Outlet } from "@tanstack/react-router";
 import React from "react";
 import { ConfigProvider } from "../../shared/components/ConfigProvider";
 import { DatastoreKeys } from "@packages/shared/constants";
-import { defaultAppearanceConfig } from "../../shared/constants/appearance-config";
+import { defaultAppearanceConfig } from "../../shared/constants/defaults/appearance";
 
 export const Route = createFileRoute("/appearance/_provider")({
 	component: RouteComponent,

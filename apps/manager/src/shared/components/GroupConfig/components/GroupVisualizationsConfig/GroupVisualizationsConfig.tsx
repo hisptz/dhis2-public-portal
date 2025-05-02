@@ -19,6 +19,9 @@ import {
 } from "@packages/shared/schemas";
 import { EditVisualization } from "../../../VisualizationModule/components/AddVisualization/componets/EditVisualization";
 import { AddVisualization } from "../../../VisualizationModule/components/AddVisualization/AddVisualization";
+import { useVisualizationNames } from "../../../VisualizationModule/hooks/data";
+import { FullLoader } from "../../../FullLoader";
+import ErrorPage from "../../../ErrorPage/ErrorPage";
 
 export function GroupVisualizationsConfig() {
 	const { moduleId, groupIndex } = useParams({
@@ -35,37 +38,67 @@ export function GroupVisualizationsConfig() {
 		keyName: "fieldId" as unknown as "id",
 	});
 
-	const rows = fields.map((field, index) => ({
-		...field,
-		actions: (
-			<ButtonStrip key={field.id}>
-				{field.type === DisplayItemType.VISUALIZATION && (
-					<EditVisualization
-						visualization={field.item}
-						onUpdate={(data) =>
-							update(index, {
-								type: DisplayItemType.VISUALIZATION,
-								item: data,
-							})
-						}
-					/>
-				)}
-				<Button
-					onClick={() => remove(index)}
-					title={i18n.t("Remove")}
-					icon={<IconDelete16 />}
-				/>
-			</ButtonStrip>
-		),
-	}));
+	const visualizationIds = fields
+		.filter((field) => field.type === DisplayItemType.VISUALIZATION)
+		.map((field) => (field.item as VisualizationItem).id);
 
-	const onAddVisualization = (visualization: VisualizationItem) => {
+	const { visualizationNames, loading, error } =
+		useVisualizationNames(visualizationIds);
+
+	const rows = fields
+		.filter((field) => field.type === DisplayItemType.VISUALIZATION)
+		.map((field, index) => {
+			const visField = field as DisplayItem & {
+				type: DisplayItemType.VISUALIZATION;
+				item: VisualizationItem;
+			};
+			const visId = visField.item.id;
+			return {
+				...visField.item,
+				id: visualizationNames.get(visId) || visId,
+				actions: (
+					<ButtonStrip key={field.id}>
+						<EditVisualization
+							visualization={visField.item}
+							onUpdate={(data) =>
+								update(index, {
+									type: DisplayItemType.VISUALIZATION,
+									item: data,
+								})
+							}
+						/>
+						<Button
+							onClick={() => remove(index)}
+							title={i18n.t("Remove")}
+							icon={<IconDelete16 />}
+						/>
+					</ButtonStrip>
+				),
+			};
+		});
+
+	if (loading) {
+		return (
+			<div>
+				<FullLoader />
+			</div>
+		);
+	}
+	if (error) {
+		return (
+			<div>
+				<ErrorPage error={i18n.t("Error loading visualizations: ")} />
+			</div>
+		);
+	}
+
+	function onAddVisualization(visualization: VisualizationItem) {
 		const displayItem: DisplayItem = {
 			type: DisplayItemType.VISUALIZATION,
 			item: visualization,
 		};
 		append(displayItem);
-	};
+	}
 
 	return (
 		<div className="flex-1 w-full flex flex-col gap-2">
