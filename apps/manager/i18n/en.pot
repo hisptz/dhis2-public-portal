@@ -5,8 +5,8 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
-"POT-Creation-Date: 2025-05-02T05:04:17.139Z\n"
-"PO-Revision-Date: 2025-05-02T05:04:17.140Z\n"
+"POT-Creation-Date: 2025-05-02T09:27:45.937Z\n"
+"PO-Revision-Date: 2025-05-02T09:27:45.937Z\n"
 
 msgid "Could not get Appearance configurations"
 msgstr "Could not get Appearance configurations"
@@ -119,6 +119,24 @@ msgstr "Caption"
 
 msgid "Actions"
 msgstr "Actions"
+
+msgid "Welcome to DHIS2 Public Portal Manager!"
+msgstr "Welcome to DHIS2 Public Portal Manager!"
+
+msgid "Please wait as we setup for first time use..."
+msgstr "Please wait as we setup for first time use..."
+
+msgid "There were some issues setting up"
+msgstr "There were some issues setting up"
+
+msgid "Setup complete!"
+msgstr "Setup complete!"
+
+msgid "Continue to application"
+msgstr "Continue to application"
+
+msgid "Try again"
+msgstr "Try again"
 
 msgid "Add menu item"
 msgstr "Add menu item"
