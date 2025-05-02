@@ -1,12 +1,23 @@
 import React, { useState } from "react";
-import { Button, Modal, ModalTitle, ModalContent, ModalActions, ButtonStrip } from "@dhis2/ui";
+import {
+	Button,
+	ButtonStrip,
+	Modal,
+	ModalActions,
+	ModalContent,
+	ModalTitle,
+} from "@dhis2/ui";
 import i18n from "@dhis2/d2-i18n";
-import { FetchError, useAlert, useDataMutation, } from "@dhis2/app-runtime";
+import { FetchError, useAlert, useDataMutation } from "@dhis2/app-runtime";
 import { useNavigate } from "@tanstack/react-router";
 import { DatastoreNamespaces } from "@packages/shared/constants";
 import { useModule } from "../providers/ModuleProvider";
 import { useRefreshModules } from "../providers/ModulesProvider";
-import { AppModule, ModuleType, StaticModuleConfig } from "@packages/shared/schemas";
+import {
+	AppModule,
+	ModuleType,
+	StaticModuleConfig,
+} from "@packages/shared/schemas";
 
 const deleteMutation: any = {
 	type: "delete",
@@ -27,9 +38,12 @@ export function DeleteModule() {
 	const module = useModule() as AppModule;
 	const [onDelete, { loading }] = useDataMutation(deleteMutation);
 	const [deleteNamespace] = useDataMutation(
-		module.type === ModuleType.STATIC && (module?.config as StaticModuleConfig)?.namespace
-			? deleteNamespaceMutation((module?.config as StaticModuleConfig)?.namespace)
-			: { type: "delete", resource: "" }
+		module.type === ModuleType.STATIC &&
+			(module?.config as StaticModuleConfig)?.namespace
+			? deleteNamespaceMutation(
+					(module?.config as StaticModuleConfig)?.namespace,
+				)
+			: { type: "delete", resource: "" },
 	);
 	const { show } = useAlert(
 		({ message }) => message,
@@ -48,7 +62,8 @@ export function DeleteModule() {
 				module.type === ModuleType.STATIC &&
 				(module?.config as StaticModuleConfig)?.namespace
 			) {
-				const namespace = (module?.config as StaticModuleConfig)?.namespace;
+				const namespace = (module?.config as StaticModuleConfig)
+					?.namespace;
 				await deleteNamespace({ namespace });
 			}
 			await refreshModules();
@@ -81,14 +96,23 @@ export function DeleteModule() {
 					<ModalTitle>{i18n.t("Delete module")}</ModalTitle>
 					<ModalContent>
 						<span>
-							{i18n.t("Are you sure you want to delete the module ")}
-							<b>{module?.config?.title}</b>? {i18n.t("This action is irreversible")}
+							{i18n.t(
+								"Are you sure you want to delete the module ",
+							)}
+							<b>{module?.label}</b>?{" "}
+							{i18n.t("This action is irreversible")}
 						</span>
 					</ModalContent>
 					<ModalActions>
 						<ButtonStrip>
-							<Button onClick={onCancel}>{i18n.t("Cancel")}</Button>
-							<Button destructive onClick={onConfirm} loading={loading}>
+							<Button onClick={onCancel}>
+								{i18n.t("Cancel")}
+							</Button>
+							<Button
+								destructive
+								onClick={onConfirm}
+								loading={loading}
+							>
 								{i18n.t("Delete")}
 							</Button>
 						</ButtonStrip>

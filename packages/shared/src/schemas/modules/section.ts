@@ -53,7 +53,6 @@ export type Section = z.infer<typeof sectionSchema>;
 export const sectionModuleConfigSchema = baseModuleSchema.extend({
 	type: z.literal(ModuleType.SECTION),
 	config: z.object({
-		title: z.string(),
 		sections: z.array(sectionSchema),
 	}),
 });

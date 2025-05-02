@@ -4,36 +4,46 @@ export const defaultAppearanceConfig: AppAppearanceConfig = {
 	logo: "https://avatars.githubusercontent.com/u/1089987?s=200&v=4",
 	title: {
 		main: "DHIS2 Public Portal",
-		subtitle: "A customizable public portal for a DHIS2 implementation",
+		subtitle: "A customizable public portal for your DHIS2",
 	},
 	colors: {
 		primary: "#2C6693",
 		background: "#F3F5F7",
 		chartColors: [
-			"#339af0",
-			"#8992f6",
-			"#c984ea",
-			"#fa75cd",
-			"#ff6ca5",
-			"#ff7376",
-			"#ff8a46",
-			"#ffcd75",
+			"#2c6693",
+			"#5a6aaa",
+			"#9069b3",
+			"#c563ac",
+			"#f05f94",
+			"#ff6970",
+			"#ff8345",
+			"#ffa600",
 		],
 	},
 	footer: {
-		address: {
-			content: "<p>This is the test address</p>",
-		},
 		copyright: `All rights reserved. @ ${new Date().getFullYear()}`,
-		footerLinks: {
-			links: [
-				{
-					url: "https://dhis2.org",
-					name: "DHIS2",
-				},
-			],
-			title: "Useful Links",
-		},
+		showTitle: true,
+		footerItems: [
+			{
+				title: "Address",
+				type: "static",
+				staticContent: "<p>An example address will be shown here</p>",
+			},
+			{
+				title: "Useful Links",
+				type: "links",
+				links: [
+					{
+						url: "https://dhis2.org",
+						name: "DHIS2",
+					},
+					{
+						url: "https://hisp.tz",
+						name: "HISP Tanzania",
+					},
+				],
+			},
+		],
 	},
 	header: {
 		logo: {
@@ -58,13 +68,13 @@ export const defaultAppearanceConfig: AppAppearanceConfig = {
 			style: {
 				align: "left",
 				textSize: 30,
-				textColor: "white",
+				textColor: "#ffffff",
 			},
 		},
 		subtitle: {
 			style: {
 				textSize: 14,
-				textColor: "white",
+				textColor: "#ffffff",
 			},
 		},
 	},
