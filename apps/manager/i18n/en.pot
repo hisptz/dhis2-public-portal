@@ -5,8 +5,8 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
-"POT-Creation-Date: 2025-05-02T07:15:01.947Z\n"
-"PO-Revision-Date: 2025-05-02T07:15:01.947Z\n"
+"POT-Creation-Date: 2025-05-02T14:39:30.498Z\n"
+"PO-Revision-Date: 2025-05-02T14:39:30.499Z\n"
 
 msgid "Could not get Appearance configurations"
 msgstr "Could not get Appearance configurations"
@@ -321,9 +321,6 @@ msgstr "Item Type"
 msgid "Add Section"
 msgstr "Add Section"
 
-msgid "Section created successfully"
-msgstr "Section created successfully"
-
 msgid "Could not create new item"
 msgstr "Could not create new item"
 
@@ -459,9 +456,6 @@ msgstr "Background color"
 msgid "Header height"
 msgstr "Header height"
 
-msgid "Leading logo"
-msgstr "Leading logo"
-
 msgid "Trailing logo"
 msgstr "Trailing logo"
 
@@ -561,6 +555,9 @@ msgstr "Error updating header configurations"
 
 msgid "Header configurations"
 msgstr "Header configurations"
+
+msgid "Leading logo"
+msgstr "Leading logo"
 
 msgid "Title styles"
 msgstr "Title styles"
