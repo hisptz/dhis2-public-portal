@@ -3,7 +3,6 @@ import {
   Divider,
 } from "@dhis2/ui";
 import { useFieldArray, useFormContext, useWatch } from "react-hook-form";
-import { useParams } from "@tanstack/react-router";
 import { useSectionNamePrefix } from "../../hooks/route";
 import {
   DisplayItem,
@@ -14,18 +13,16 @@ import {
 import { FeedBackList } from "./components/feeedbackList";
 import { AddFeedback } from "./components/AddFeedback/AddFeedback";
 
-export function FeedbackConfigPage() {
-  const { sectionIndex } = useParams({
-    from: "/modules/_provider/$moduleId/_formProvider/edit/section/$sectionIndex/",
-  });
+export function FeedbackConfigPage() { 
   const namePrefix = useSectionNamePrefix();
 
   const { setValue, control } = useFormContext<SectionModuleConfig>();
-
+ 
   const singleItemValue = useWatch({
-    name: `config.sections.${sectionIndex}.item`,
-  }) as { type: DisplayItemType.FEEDBACK; item: FeedbackConfig[] } | undefined;
+    name: `${namePrefix}.item`,
+  }) as { type: DisplayItemType.FEEDBACK; items: FeedbackConfig[] } | undefined;
 
+ 
   const { fields, append, update, remove } = useFieldArray({
     control,
     name: `${namePrefix}.item.items`,
@@ -36,27 +33,27 @@ export function FeedbackConfigPage() {
     update: (index: number, value: FeedbackConfig) => void;
     remove: (index: number) => void;
   };
-
+  
   const onAddFeedback = (feedback: FeedbackConfig) => {
-    if (!singleItemValue) {
-      setValue(`config.sections.${sectionIndex}.item`, {
+     if (!singleItemValue || !singleItemValue.type) {
+       setValue(`${namePrefix}.item`, {
         type: DisplayItemType.FEEDBACK,
         items: [feedback],
       });
     } else {
-      append(feedback);
+       append(feedback);
     }
-  };
+   };
 
-  const rows: Array<DisplayItem> = fields.length > 0
+  const rows: Array<DisplayItem> = (singleItemValue?.items ?? []).length > 0
     ? [
       {
         type: DisplayItemType.FEEDBACK,
-        items: fields,
+        items: (singleItemValue?.items ?? []),
       },
     ]
     : [];
-
+ 
   return (
     <div className="flex-1 w-full flex flex-col gap-2">
       <div className="flex items-center justify-end">

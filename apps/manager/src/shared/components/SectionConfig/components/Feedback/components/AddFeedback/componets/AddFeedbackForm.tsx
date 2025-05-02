@@ -31,8 +31,6 @@ export function AddFeedbackForm({
     resolver: zodResolver(feedbackSchema),
     defaultValues: feedback || {
       email: "",
-      name: "",
-      message: "",
     },
   });
 

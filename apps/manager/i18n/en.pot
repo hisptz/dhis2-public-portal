@@ -5,8 +5,8 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
-"POT-Creation-Date: 2025-04-30T12:50:22.992Z\n"
-"PO-Revision-Date: 2025-04-30T12:50:22.993Z\n"
+"POT-Creation-Date: 2025-05-02T12:37:32.544Z\n"
+"PO-Revision-Date: 2025-05-02T12:37:32.544Z\n"
 
 msgid "Could not get Appearance configurations"
 msgstr "Could not get Appearance configurations"
@@ -40,6 +40,12 @@ msgstr "Back to all modules"
 
 msgid "Module"
 msgstr "Module"
+
+msgid "Please fix the validation errors before saving"
+msgstr "Please fix the validation errors before saving"
+
+msgid "Failed to save section"
+msgstr "Failed to save section"
 
 msgid "Modules"
 msgstr "Modules"
@@ -237,9 +243,6 @@ msgstr "Filter by Type"
 msgid "Select type"
 msgstr "Select type"
 
-msgid "Please fix the validation errors before saving"
-msgstr "Please fix the validation errors before saving"
-
 msgid "Failed to save module"
 msgstr "Failed to save module"
 
@@ -258,14 +261,44 @@ msgstr "Section"
 msgid "Back to Module"
 msgstr "Back to Module"
 
+msgid "Add Feedback"
+msgstr "Add Feedback"
+
+msgid "{{action}} feedback"
+msgstr "{{action}} feedback"
+
+msgid "Email"
+msgstr "Email"
+
+msgid "Edit feedback"
+msgstr "Edit feedback"
+
+msgid "No feedback items configured"
+msgstr "No feedback items configured"
+
+msgid "Full Name"
+msgstr "Full Name"
+
+msgid "Message"
+msgstr "Message"
+
+msgid "Items"
+msgstr "Items"
+
+msgid "Item"
+msgstr "Item"
+
 msgid "Item Type"
 msgstr "Item Type"
 
-msgid "Select Item type"
-msgstr "Select Item type"
-
 msgid "Add Section"
 msgstr "Add Section"
+
+msgid "Section created successfully"
+msgstr "Section created successfully"
+
+msgid "Could not create new item"
+msgstr "Could not create new item"
 
 msgid "Create Section"
 msgstr "Create Section"
@@ -293,9 +326,6 @@ msgstr "Sections"
 
 msgid "Add Item"
 msgstr "Add Item"
-
-msgid "Could not create new item"
-msgstr "Could not create new item"
 
 msgid "Create an item"
 msgstr "Create an item"
@@ -332,9 +362,6 @@ msgstr "Icon"
 
 msgid "Short Description"
 msgstr "Short Description"
-
-msgid "Items"
-msgstr "Items"
 
 msgid "Add group"
 msgstr "Add group"
