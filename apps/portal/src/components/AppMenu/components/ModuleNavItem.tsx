@@ -15,7 +15,7 @@ export function ModuleNavItem({ config }: { config: ModuleMenuItem }) {
 			active={active}
 			variant="filled"
 			component={Link}
-			href={`/${config.path}`}
+			href={`/modules/${config.path}`}
 			label={config.label}
 		/>
 	);

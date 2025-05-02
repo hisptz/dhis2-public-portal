@@ -5,8 +5,8 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
-"POT-Creation-Date: 2025-04-30T10:03:09.699Z\n"
-"PO-Revision-Date: 2025-04-30T10:03:09.700Z\n"
+"POT-Creation-Date: 2025-05-02T07:15:01.947Z\n"
+"PO-Revision-Date: 2025-05-02T07:15:01.947Z\n"
 
 msgid "Could not get Appearance configurations"
 msgstr "Could not get Appearance configurations"
@@ -16,18 +16,6 @@ msgstr "Error"
 
 msgid "General configuration"
 msgstr "General configuration"
-
-msgid "Application name"
-msgstr "Application name"
-
-msgid "Description"
-msgstr "Description"
-
-msgid "Application URL"
-msgstr "Application URL"
-
-msgid "Where your portal can be found"
-msgstr "Where your portal can be found"
 
 msgid "Saving..."
 msgstr "Saving..."
@@ -67,6 +55,31 @@ msgstr "Reload"
 
 msgid "This will be a part of the url. It should not contain spaces"
 msgstr "This will be a part of the url. It should not contain spaces"
+
+msgid "Application name"
+msgstr "Application name"
+
+msgid "Description"
+msgstr "Description"
+
+msgid "Application URL"
+msgstr "Application URL"
+
+msgid "Where your portal can be found"
+msgstr "Where your portal can be found"
+
+msgid "Application Icon"
+msgstr "Application Icon"
+
+msgid "Upload Icon"
+msgstr "Upload Icon"
+
+msgid ""
+"512px x 512px clear image. This will be used as favicon and application "
+"icon on mobile devices"
+msgstr ""
+"512px x 512px clear image. This will be used as favicon and application "
+"icon on mobile devices"
 
 msgid "Error saving changes"
 msgstr "Error saving changes"
@@ -517,6 +530,12 @@ msgstr ""
 msgid "Configure appearance"
 msgstr "Configure appearance"
 
+msgid "Configure different modules of the web portal application"
+msgstr "Configure different modules of the web portal application"
+
+msgid "Configure modules"
+msgstr "Configure modules"
+
 msgid "App Menu"
 msgstr "App Menu"
 
@@ -530,11 +549,11 @@ msgstr ""
 msgid "Configure app menu"
 msgstr "Configure app menu"
 
-msgid "Configure different modules of the web portal application"
-msgstr "Configure different modules of the web portal application"
+msgid "Error uploading file"
+msgstr "Error uploading file"
 
-msgid "Configure modules"
-msgstr "Configure modules"
+msgid "Error deleting file"
+msgstr "Error deleting file"
 
 msgctxt "Follows either create or update"
 msgid " menu item"

@@ -14,10 +14,10 @@ export function HeaderMenu({ config }: { config: AppMenuConfig }) {
 		<Tabs
 			onChange={(value) => {
 				if (value !== "#") {
-					router.replace(`/${value}`);
+					router.replace(`/modules/${value}`);
 				}
 			}}
-			value={pathname.replace("/", "")}
+			value={pathname.replace("/modules/", "")}
 		>
 			<Tabs.List>
 				{config.items.map((item) =>

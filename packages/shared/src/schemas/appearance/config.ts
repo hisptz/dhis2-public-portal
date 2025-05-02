@@ -5,6 +5,7 @@ import { footerLinksConfig } from "./links";
 export const appMeta = z.object({
 	name: z.string(),
 	description: z.string(),
+	icon: z.string(),
 	icons: z.array(
 		z.object({
 			url: z.string().url(),
@@ -26,7 +27,6 @@ export const appColorConfig = z.object({
 export type AppColorConfig = z.infer<typeof appColorConfig>;
 
 export const styleConfig = z.object({
-	center: z.boolean(),
 	align: z.enum(["left", "center", "right"]).optional(),
 	textColor: z.string().optional(),
 	textSize: z.number().optional(),

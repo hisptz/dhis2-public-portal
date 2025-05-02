@@ -11,11 +11,15 @@ export async function GET() {
 		key: "menu",
 	});
 
+	if (!menuConfig) {
+		return redirect(`${env.CONTEXT_PATH}/no-config`);
+	}
+
 	const firstMenu = sortBy(menuConfig?.items, "sortOrder")[0];
 
 	if (firstMenu.type === "module") {
-		return redirect(`${env.CONTEXT_PATH}/${firstMenu.path}`);
+		return redirect(`${env.CONTEXT_PATH}/modules/${firstMenu.path}`);
 	}
-	const url = `${env.CONTEXT_PATH}/${firstMenu.path}/${firstMenu.items[0].path}`;
+	const url = `${env.CONTEXT_PATH}/modules/${firstMenu.path}/${firstMenu.items[0].path}`;
 	return redirect(url);
 }

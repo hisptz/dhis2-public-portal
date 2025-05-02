@@ -45,22 +45,26 @@ docker run -d \
   -e DHIS2_BASE_PAT_TOKEN=your-personal-access-token \
   -e CONTEXT_PATH="" \
   --name dhis2-public-portal \
-  hisptz/dhis2-public-portal:latest
+  hisptanzania/dhis2-public-portal:latest
 ```
 
 You can also use `docker compose` with this docker-compose.yml file:
 
 ```yaml
-version: '3'
 services:
   portal:
-    image: hisptz/dhis2-public-portal:latest
+    image: hisptanzania/dhis2-public-portal:latest
     ports:
       - "3000:3000"
     environment:
       - DHIS2_BASE_URL=https://your-dhis2-instance.org
       - DHIS2_BASE_PAT_TOKEN=your-personal-access-token
       - CONTEXT_PATH=""
+    volumes:
+      - public:/app/apps/portal/public
+  
+volumes:
+  public:
 ```
 
 Save this to a file named `docker-compose.yml` and run:

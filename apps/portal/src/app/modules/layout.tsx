@@ -1,6 +1,7 @@
 import { MainLayout } from "@/components/MainLayout";
-import { getAppearanceConfig } from "@/utils/theme";
 import { NoConfigLandingPage } from "@/components/NoConfigLandingPage";
+import { getAppearanceConfig } from "@/utils/config/appConfig";
+import React from "react";
 
 export default async function AppLayout({
 	children,

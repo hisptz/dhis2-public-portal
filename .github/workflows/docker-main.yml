@@ -2,6 +2,9 @@ name: Build and Push Docker Image (Main)
 
 on:
   push:
+    paths:
+      - apps/portal/**
+      - packages/**
     branches:
       - main
 
@@ -36,7 +39,7 @@ jobs:
           file: ./apps/portal/Dockerfile
           push: true
           tags: |
-            hisptz/dhis2-public-portal:latest
-            hisptz/dhis2-public-portal:${{ steps.package-version.outputs.VERSION }}
+            hisptanzania/dhis2-public-portal:latest
+            hisptanzania/dhis2-public-portal:${{ steps.package-version.outputs.VERSION }}
           cache-from: type=gha
           cache-to: type=gha,mode=max

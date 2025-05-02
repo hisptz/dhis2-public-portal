@@ -58,11 +58,9 @@ export function MainLayout({
 		>
 			<AppHeader
 				menuConfig={menuConfig}
-				logo={appearanceConfig.logo}
-				title={appearanceConfig!.title}
 				opened={opened}
 				toggle={toggle}
-				config={appearanceConfig!.header}
+				config={appearanceConfig!}
 			/>
 			<SideAppMenu
 				menuConfig={menuConfig}

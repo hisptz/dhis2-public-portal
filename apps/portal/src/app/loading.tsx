@@ -1,16 +1,8 @@
-import {
-	Center,
-	Flex,
-	Image,
-	Loader,
-	MantineProvider,
-	Stack,
-	Text,
-	Title,
-} from "@mantine/core";
-import { getAppearanceConfig } from "@/utils/theme";
+import { Center, Flex, Image, Loader, Stack, Text, Title } from "@mantine/core";
 import NextImage from "next/image";
 import { NoConfigLandingPage } from "@/components/NoConfigLandingPage";
+import { getAppearanceConfig } from "@/utils/config/appConfig";
+import { Providers } from "@/components/Providers";
 
 export default async function MainLoadingScreen() {
 	const config = await getAppearanceConfig();
@@ -19,10 +11,10 @@ export default async function MainLoadingScreen() {
 		return <NoConfigLandingPage />;
 	}
 
-	const { appearanceConfig, theme } = config;
+	const { appearanceConfig } = config;
 
 	return (
-		<MantineProvider theme={theme}>
+		<Providers config={appearanceConfig}>
 			<div className="h-screen w-screen">
 				<Flex h="100%" direction="column" justify="space-between">
 					<Center flex={1}>
@@ -61,6 +53,6 @@ export default async function MainLoadingScreen() {
 					</Text>
 				</Flex>
 			</div>
-		</MantineProvider>
+		</Providers>
 	);
 }

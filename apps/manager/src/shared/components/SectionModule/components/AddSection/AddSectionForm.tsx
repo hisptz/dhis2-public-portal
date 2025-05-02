@@ -20,7 +20,6 @@ import {
 import { startCase } from "lodash";
 import { SectionIDField } from "./SectionIDField";
 import { FetchError, useAlert } from "@dhis2/app-runtime";
-import { useUpdateModule } from "../../hooks/save";
 
 export function AddSectionForm({
 	sortOrder,
@@ -33,7 +32,6 @@ export function AddSectionForm({
 	onClose: () => void;
 	onAdd: (section: BaseSectionConfig) => void;
 }) {
-	const { updateModule } = useUpdateModule();
 	const { show } = useAlert(
 		({ message }) => message,
 		({ type }) => ({ ...type, duration: 3000 }),

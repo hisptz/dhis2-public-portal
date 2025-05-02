@@ -12,7 +12,7 @@ export function GroupTab({ config }: { config: GroupMenuItem }) {
 	const pathname = usePathname();
 
 	const selected = config.items.reduce((acc, item) => {
-		return acc || pathname.replace("/", "") === item.path;
+		return acc || pathname.replace("/modules/", "") === item.path;
 	}, false);
 
 	const theme = useMantineTheme();
@@ -61,7 +61,7 @@ export function GroupTab({ config }: { config: GroupMenuItem }) {
 				<Menu.Label>{config.label}</Menu.Label>
 				{config.items.map((item) => (
 					<Menu.Item
-						href={`/${item.path}`}
+						href={`/modules/${item.path}`}
 						component={Link}
 						key={item.path}
 						color={

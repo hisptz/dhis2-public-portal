@@ -11,18 +11,24 @@ import { Sections } from "./components/Sections";
 import { useFieldArray } from "react-hook-form";
 import { useNavigate, useParams } from "@tanstack/react-router";
 import {
+	AppModule,
 	BaseSectionConfig,
 	Section,
 	SectionModuleConfig,
 	SectionType,
 } from "@packages/shared/schemas";
 import { AddSection } from "../AddSection/AddSection";
+import { useModule } from "../../../ModulesPage/providers/ModuleProvider";
+import { useAlert } from "@dhis2/app-runtime";
+import { useSaveModule } from "../../../ModulesPage/hooks/save";
 
 export function SectionsConfig() {
 	const { moduleId } = useParams({
 		from: "/modules/_provider/$moduleId",
 	});
+	const { save } = useSaveModule(moduleId);
 	const navigate = useNavigate();
+	const module = useModule() as AppModule;
 
 	const { fields, append, remove } = useFieldArray<
 		SectionModuleConfig,
@@ -30,6 +36,10 @@ export function SectionsConfig() {
 	>({
 		name: "config.sections",
 	});
+	const { show } = useAlert(
+		({ message }) => message,
+		({ type }) => ({ ...type, duration: 3000 }),
+	);
 
 	const normalizeSection = (data: BaseSectionConfig): Section => {
 		switch (data.type) {
@@ -41,6 +51,28 @@ export function SectionsConfig() {
 				return { ...data, item: {} } as Section;
 			default:
 				throw new Error("Unsupported section type");
+		}
+	};
+
+	const onSave = async (data: Section) => {
+		try {
+			const newModule = {
+				...module,
+				config: {
+					...(module as any).config,
+					sections: [
+						...((module as any).config?.sections || []),
+						data,
+					],
+				},
+			};
+			await save(newModule);
+		} catch (error) {
+			console.log(error);
+			show({
+				message: i18n.t("Failed to save module", error),
+				type: { critical: true },
+			});
 		}
 	};
 
@@ -76,6 +108,7 @@ export function SectionsConfig() {
 				<AddSection
 					onAdd={(data) => {
 						append(normalizeSection(data));
+
 						navigate({
 							to: "/modules/$moduleId/edit/section/$sectionIndex",
 							params: {
