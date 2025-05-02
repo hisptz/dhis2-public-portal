@@ -14,9 +14,9 @@ import { mapValues } from "lodash";
 import { EditVisualization } from "../AddVisualization/componets/EditVisualization";
 import {
 	DisplayItem,
+	DisplayItemType,
 	FlexibleLayoutConfig,
 	VisualizationItem,
-	DisplayItemType,
 	VisualizationModule,
 } from "@packages/shared/schemas";
 import { useNavigate, useParams } from "@tanstack/react-router";
@@ -47,9 +47,10 @@ export function DashboardVisualizationsConfig() {
 			fields
 				.filter((field) => field.type === DisplayItemType.VISUALIZATION)
 				.map((field) => (field.item as VisualizationItem).id),
-		[fields]
+		[fields],
 	);
-	const { visualizationNames, loading, error } = useVisualizationNames(visualizationIds);
+	const { visualizationNames, loading, error } =
+		useVisualizationNames(visualizationIds);
 	const onAddVisualization = useCallback(
 		(visualization: VisualizationItem) => {
 			const displayItem: DisplayItem = {
@@ -155,7 +156,11 @@ export function DashboardVisualizationsConfig() {
 		});
 
 	if (loading) {
-		return <div><FullLoader /></div>;
+		return (
+			<div>
+				<FullLoader />
+			</div>
+		);
 	}
 	if (error) {
 		return (

@@ -42,8 +42,8 @@ export function GroupVisualizationsConfig() {
 		.filter((field) => field.type === DisplayItemType.VISUALIZATION)
 		.map((field) => (field.item as VisualizationItem).id);
 
-
-	const { visualizationNames, loading, error } = useVisualizationNames(visualizationIds);
+	const { visualizationNames, loading, error } =
+		useVisualizationNames(visualizationIds);
 
 	const rows = fields
 		.filter((field) => field.type === DisplayItemType.VISUALIZATION)
@@ -61,7 +61,10 @@ export function GroupVisualizationsConfig() {
 						<EditVisualization
 							visualization={visField.item}
 							onUpdate={(data) =>
-								update(index, { type: DisplayItemType.VISUALIZATION, item: data })
+								update(index, {
+									type: DisplayItemType.VISUALIZATION,
+									item: data,
+								})
 							}
 						/>
 						<Button
@@ -74,9 +77,12 @@ export function GroupVisualizationsConfig() {
 			};
 		});
 
-
 	if (loading) {
-		return <div><FullLoader /></div>;
+		return (
+			<div>
+				<FullLoader />
+			</div>
+		);
 	}
 	if (error) {
 		return (

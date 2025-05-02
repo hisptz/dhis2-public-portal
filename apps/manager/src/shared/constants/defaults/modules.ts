@@ -2,15 +2,18 @@ import {
 	AppModule,
 	DisplayItemType,
 	ModuleType,
+	SectionDisplay,
 	SectionType,
 } from "@packages/shared/schemas";
 
 export const defaultHomeModule: AppModule = {
 	type: ModuleType.SECTION as const,
 	id: "home",
+	sectionDisplay: SectionDisplay.VERTICAL,
 	config: {
 		sections: [
 			{
+				sortOrder: 0,
 				type: SectionType.SINGLE_ITEM,
 				title: "Welcome to DHIS2 Public portal",
 				id: "welcome-note",

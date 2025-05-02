@@ -6,9 +6,7 @@ import { useModuleById } from "../hooks/data";
 import { useParams } from "@tanstack/react-router";
 
 const ModuleContext = createContext<AppModule | null>(null);
-const ModuleRefreshContext = createContext<() => Promise<void>>(
-	async () => { },
-);
+const ModuleRefreshContext = createContext<() => Promise<void>>(async () => {});
 
 export function useModule() {
 	return useContext(ModuleContext)!;
@@ -23,8 +21,7 @@ export function ModuleProvider({ children }: { children: React.ReactNode }) {
 		from: "/modules/_provider/$moduleId",
 	});
 
-	const { loading, error, module, refetch } =
-		useModuleById(moduleId);
+	const { loading, error, module, refetch } = useModuleById(moduleId);
 
 	if (loading) {
 		return <FullLoader />;

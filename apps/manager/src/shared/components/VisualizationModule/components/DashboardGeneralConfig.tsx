@@ -8,7 +8,11 @@ export function DashboardGeneralConfig() {
 	const { setValue, getValues } = useFormContext();
 	useEffect(() => {
 		const currentGrouped = getValues("config.grouped");
-		if (currentGrouped === undefined || currentGrouped === null || currentGrouped === "") {
+		if (
+			currentGrouped === undefined ||
+			currentGrouped === null ||
+			currentGrouped === ""
+		) {
 			setValue("config.grouped", false);
 		}
 	}, [setValue, getValues]);
