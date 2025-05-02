@@ -25,7 +25,7 @@ import { useSectionNamePrefix } from "../../../hooks/route";
 import { EditVisualization } from "../../../../VisualizationModule/components/AddVisualization/componets/EditVisualization";
 import { AddVisualization } from "../../../../VisualizationModule/components/AddVisualization/AddVisualization";
 import { SectionVisualizations } from "./SectionVisualizations";
-import { FeedbackConfig } from "../../Feedback/FeedbackConfig";
+import { FeedbackItemConfig } from "../../Feedback/FeedbackConfig";
 
 export function SectionSingleItemConfig() {
 	const namePrefix = useSectionNamePrefix();
@@ -142,7 +142,7 @@ export function SectionSingleItemConfig() {
 				);
 				case DisplayItemType.FEEDBACK:
 					return (
-						<FeedbackConfig />
+						<FeedbackItemConfig />
 					);
 			default:
 				return <></>;
