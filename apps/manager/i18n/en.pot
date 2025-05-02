@@ -5,8 +5,8 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
-"POT-Creation-Date: 2025-05-02T09:41:08.535Z\n"
-"PO-Revision-Date: 2025-05-02T09:41:08.535Z\n"
+"POT-Creation-Date: 2025-05-02T12:14:37.919Z\n"
+"PO-Revision-Date: 2025-05-02T12:14:37.919Z\n"
 
 msgid "Could not get Appearance configurations"
 msgstr "Could not get Appearance configurations"
@@ -56,6 +56,16 @@ msgstr "Reload"
 msgid "This will be a part of the url. It should not contain spaces"
 msgstr "This will be a part of the url. It should not contain spaces"
 
+msgid "Upload Icon"
+msgstr "Upload Icon"
+
+msgid ""
+"512px x 512px clear image. This will be used as favicon and application "
+"icon on mobile devices"
+msgstr ""
+"512px x 512px clear image. This will be used as favicon and application "
+"icon on mobile devices"
+
 msgid "Application name"
 msgstr "Application name"
 
@@ -68,18 +78,11 @@ msgstr "Application URL"
 msgid "Where your portal can be found"
 msgstr "Where your portal can be found"
 
+msgid "A 512px by 512px image is recommended"
+msgstr "A 512px by 512px image is recommended"
+
 msgid "Application Icon"
 msgstr "Application Icon"
-
-msgid "Upload Icon"
-msgstr "Upload Icon"
-
-msgid ""
-"512px x 512px clear image. This will be used as favicon and application "
-"icon on mobile devices"
-msgstr ""
-"512px x 512px clear image. This will be used as favicon and application "
-"icon on mobile devices"
 
 msgid "Error saving changes"
 msgstr "Error saving changes"
@@ -276,27 +279,6 @@ msgstr "There are no modules configuration present"
 msgid "Could not save changes"
 msgstr "Could not save changes"
 
-msgid "Add Feedback"
-msgstr "Add Feedback"
-
-msgid "{{action}} feedback"
-msgstr "{{action}} feedback"
-
-msgid "Full Name"
-msgstr "Full Name"
-
-msgid "Email"
-msgstr "Email"
-
-msgid "Message"
-msgstr "Message"
-
-msgid "Edit feedback"
-msgstr "Edit feedback"
-
-msgid "No feedback items configured"
-msgstr "No feedback items configured"
-
 msgid "Add Item"
 msgstr "Add Item"
 
@@ -393,8 +375,17 @@ msgstr "You can use this application to configure your public portal web applica
 msgid "Application colors"
 msgstr "Application colors"
 
+msgid "Footer configuration"
+msgstr "Footer configuration"
+
+msgid "Copyright"
+msgstr "Copyright"
+
 msgid "Header configuration"
 msgstr "Header configuration"
+
+msgid "Subtitle"
+msgstr "Subtitle"
 
 msgid "Background color"
 msgstr "Background color"
@@ -407,21 +398,6 @@ msgstr "Leading logo"
 
 msgid "Trailing logo"
 msgstr "Trailing logo"
-
-msgid "Footer configuration"
-msgstr "Footer configuration"
-
-msgid "Copyright"
-msgstr "Copyright"
-
-msgid "Footer links"
-msgstr "Footer links"
-
-msgid "Links"
-msgstr "Links"
-
-msgid "Address"
-msgstr "Address"
 
 msgid "Missing Appearance configurations"
 msgstr "Missing Appearance configurations"
@@ -463,8 +439,53 @@ msgstr "Error updating footer configurations"
 msgid "Footer configurations"
 msgstr "Footer configurations"
 
-msgid "Footer links label"
-msgstr "Footer links label"
+msgid "General"
+msgstr "General"
+
+msgid "Show title"
+msgstr "Show title"
+
+msgid "Footer items"
+msgstr "Footer items"
+
+msgid "Footer Items"
+msgstr "Footer Items"
+
+msgid "Add footer item"
+msgstr "Add footer item"
+
+msgid "Links"
+msgstr "Links"
+
+msgid "Static Content"
+msgstr "Static Content"
+
+msgid "Add"
+msgstr "Add"
+
+msgid "S/N"
+msgstr "S/N"
+
+msgid "No footer items configured"
+msgstr "No footer items configured"
+
+msgid "Url"
+msgstr "Url"
+
+msgid "Remove Link"
+msgstr "Remove Link"
+
+msgid "Edit link"
+msgstr "Edit link"
+
+msgid "There are no Footer links defined"
+msgstr "There are no Footer links defined"
+
+msgid "Footer links"
+msgstr "Footer links"
+
+msgid "Add footer link"
+msgstr "Add footer link"
 
 msgid "Header configurations updated successfully"
 msgstr "Header configurations updated successfully"
@@ -496,8 +517,11 @@ msgstr "Show colored background"
 msgid "Background Color"
 msgstr "Background Color"
 
-msgid "Logo url"
-msgstr "Logo url"
+msgid "Show logo"
+msgstr "Show logo"
+
+msgid "Logo"
+msgstr "Logo"
 
 msgid "Width"
 msgstr "Width"
@@ -523,26 +547,8 @@ msgstr "Text size"
 msgid "Text color"
 msgstr "Text color"
 
-msgid "Add"
-msgstr "Add"
-
-msgid "S/N"
-msgstr "S/N"
-
-msgid "Url"
-msgstr "Url"
-
-msgid "Remove Link"
-msgstr "Remove Link"
-
-msgid "Edit link"
-msgstr "Edit link"
-
-msgid "There are no Footer links defined"
-msgstr "There are no Footer links defined"
-
-msgid "Add footer link"
-msgstr "Add footer link"
+msgid "Header title"
+msgstr "Header title"
 
 msgid "Color"
 msgstr "Color"
@@ -555,9 +561,6 @@ msgstr "Add color"
 
 msgid "Color Selector"
 msgstr "Color Selector"
-
-msgid "General"
-msgstr "General"
 
 msgid "Setup application name and related information"
 msgstr "Setup application name and related information"

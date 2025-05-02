@@ -33,27 +33,21 @@ export const headerStyleConfig = z.object({
 });
 
 export const headerConfig = z.object({
-	logo: z.object({
-		enabled: z.boolean().optional(),
-	}),
 	subtitle: z.object({
+		text: z
+			.string()
+			.max(100, { message: "Subtitle must be less than 100 characters" })
+			.optional(),
 		style: styleConfig.optional(),
 	}),
 	title: z.object({
+		text: z
+			.string()
+			.min(1, { message: "Title is required" })
+			.max(50, { message: "Title must be less than 50 characters" }),
 		style: styleConfig.optional(),
 	}),
-	style: headerStyleConfig.optional(),
-});
-
-export const appTitleConfig = z.object({
-	main: z
-		.string()
-		.min(1, { message: "Title is required" })
-		.max(50, { message: "Title must be less than 50 characters" }),
-	subtitle: z
-		.string()
-		.max(100, { message: "Subtitle must be less than 100 characters" })
-		.optional(),
+	style: headerStyleConfig,
 });
 
 export const footerItemConfig = z.object({
@@ -71,7 +65,6 @@ export const footerConfig = z.object({
 
 export const appAppearanceConfig = z.object({
 	logo: z.string().url(),
-	title: appTitleConfig,
 	colors: appColorConfig,
 	header: headerConfig,
 	footer: footerConfig,
@@ -80,8 +73,6 @@ export const appAppearanceConfig = z.object({
 export type AppAppearanceConfig = z.infer<typeof appAppearanceConfig>;
 
 export type AppMeta = z.infer<typeof appMeta>;
-
-export type AppTitleConfig = z.infer<typeof appTitleConfig>;
 
 export type HeaderConfig = z.infer<typeof headerConfig>;
 
