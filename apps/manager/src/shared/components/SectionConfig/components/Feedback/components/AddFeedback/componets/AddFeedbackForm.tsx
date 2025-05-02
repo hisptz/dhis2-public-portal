@@ -31,6 +31,8 @@ export function AddFeedbackForm({
     resolver: zodResolver(feedbackSchema),
     defaultValues: feedback || {
       email: "",
+      name: "",
+      message: "",
     },
   });
 
@@ -38,7 +40,6 @@ export function AddFeedbackForm({
     onSubmit(feedback);
     onClose();
   };
-
 
   const action = feedback ? "Update" : "Add";
 

@@ -4,7 +4,7 @@ import i18n from "@dhis2/d2-i18n";
 import { DisplayItem, DisplayItemType } from "@packages/shared/schemas";
 import { FeedbackConfig } from "@packages/shared/schemas";
 import { Button, ButtonStrip, IconDelete16 } from "@dhis2/ui";
-import { EditFeedback } from "./AddVisualization/componets/EditFeedback";
+import { EditFeedback } from "./AddFeedback/componets/EditFeedback";
 
 const columns: SimpleTableColumn[] = [
   {

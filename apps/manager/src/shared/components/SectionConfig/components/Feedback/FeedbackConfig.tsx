@@ -12,7 +12,7 @@ import {
   SectionModuleConfig,
 } from "@packages/shared/schemas";
 import { FeedBackList } from "./components/feeedbackList";
-import { AddFeedback } from "./components/AddVisualization/AddFeedback";
+import { AddFeedback } from "./components/AddFeedback/AddFeedback";
 
 export function FeedbackConfigPage() {
   const { sectionIndex } = useParams({
@@ -48,7 +48,7 @@ export function FeedbackConfigPage() {
     }
   };
 
-  const rows: Array<DisplayItem> = singleItemValue?.type === DisplayItemType.FEEDBACK && fields.length > 0
+  const rows: Array<DisplayItem> = fields.length > 0
     ? [
       {
         type: DisplayItemType.FEEDBACK,
