@@ -37,6 +37,11 @@ export async function MapVisualization({
 		},
 	});
 
+	if (!mapConfig) {
+		console.error(`Could not get map details for map ${config.id}`);
+		throw Error("Could not get map details");
+	}
+
 	return (
 		<MapVisComponent
 			disableActions={disableActions}

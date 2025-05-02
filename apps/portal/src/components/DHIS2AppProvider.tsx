@@ -24,7 +24,7 @@ export function DHIS2AppProvider({
 	contextPath,
 }: {
 	children: ReactNode;
-	systemInfo?: D2SystemInfo;
+	systemInfo?: D2SystemInfo | null;
 	contextPath: string;
 }) {
 	if (typeof window === "undefined") {

@@ -46,7 +46,7 @@ export async function getAppConfigsFromNamespace<T>(
 			fields: ".",
 		},
 	});
-	return response.entries.map(({ value }) => value);
+	return response?.entries.map(({ value }) => value) ?? [];
 }
 
 export async function getAppearanceConfig() {
@@ -55,10 +55,6 @@ export async function getAppearanceConfig() {
 			namespace: DatastoreNamespaces.MAIN_CONFIG,
 			key: "appearance",
 		});
-
-	console.log({
-		appearanceConfig,
-	});
 
 	const menuConfig = await getAppConfigWithNamespace<AppMenuConfig>({
 		namespace: DatastoreNamespaces.MAIN_CONFIG,
