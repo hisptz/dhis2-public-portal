@@ -7,9 +7,10 @@ import { DatastoreNamespaces } from "@packages/shared/constants";
 import { FetchError, useDataEngine, useDataQuery } from "@dhis2/app-runtime";
 import { defaultGeneralConfig } from "../constants/defaults/general";
 import { defaultMenuConfig } from "../constants/defaults/menu";
-import { defaultModules } from "../constants/defaults/modules";
+import { defaultHomeModule } from "../constants/defaults/modules";
 import { useCallback, useEffect, useState } from "react";
 import i18n from "@dhis2/d2-i18n";
+import { defaultAppearanceConfig } from "../constants/defaults/appearance";
 
 const metaCheckQuery = {
 	main: {
@@ -127,14 +128,14 @@ const setupConfiguration = [
 	{
 		namespace: DatastoreNamespaces.MAIN_CONFIG,
 		key: "appearance",
-		data: defaultMenuConfig,
+		data: defaultAppearanceConfig,
 		label: i18n.t("Appearance"),
 	},
 	{
 		namespace: DatastoreNamespaces.MODULES,
-		key: "modules",
-		data: defaultModules,
-		label: i18n.t("Modules"),
+		key: "home",
+		data: defaultHomeModule,
+		label: i18n.t("Home Module"),
 	},
 ];
 

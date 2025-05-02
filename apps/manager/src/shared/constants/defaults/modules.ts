@@ -5,21 +5,21 @@ import {
 	SectionType,
 } from "@packages/shared/schemas";
 
-export const defaultModules: AppModule[] = [
-	{
-		type: ModuleType.SECTION as const,
-		id: "home",
-		config: {
-			sections: [
-				{
-					type: SectionType.SINGLE_ITEM,
-					title: "Welcome to DHIS2 Public portal",
-					id: "welcome-note",
+export const defaultHomeModule: AppModule = {
+	type: ModuleType.SECTION as const,
+	id: "home",
+	config: {
+		sections: [
+			{
+				type: SectionType.SINGLE_ITEM,
+				title: "Welcome to DHIS2 Public portal",
+				id: "welcome-note",
+				item: {
+					type: DisplayItemType.RICH_TEXT,
 					item: {
-						type: DisplayItemType.RICH_TEXT,
-						item: {
-							id: "welcome-note",
-							content: `<h1>Welcome to DHIS2 Public Portal</h1>
+						id: "welcome-note",
+						content: `<p>
+<h1>Welcome to DHIS2 Public Portal</h1>
 
 <p>Thank you for using the DHIS2 Public Portal! This platform is designed to transform how DHIS2 data is publicly shared, accessed, and understood.</p>
 
@@ -50,12 +50,12 @@ export const defaultModules: AppModule[] = [
 
 <p>For more detailed instructions, please refer to the documentation or contact your system administrator.</p>
 
-<p>Enjoy using the DHIS2 Public Portal!</p>`,
-						},
+<p>Enjoy using the DHIS2 Public Portal!</p>
+</p>`,
 					},
 				},
-			],
-		},
-		label: "Home",
+			},
+		],
 	},
-];
+	label: "Home",
+};
