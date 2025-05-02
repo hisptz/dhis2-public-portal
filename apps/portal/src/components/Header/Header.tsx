@@ -67,7 +67,7 @@ export function AppHeader({
 					size="sm"
 				/>
 
-				{headerConfig.logo.enabled && (
+				{headerConfig.style?.leadingLogo?.show && (
 					<Box
 						style={{
 							width:
@@ -128,7 +128,7 @@ export function AppHeader({
 						)}
 					</Container>
 				</Stack>
-				{headerConfig.style?.trailingLogo?.url && (
+				{headerConfig.style?.trailingLogo?.show && (
 					<Box
 						style={{
 							height:
