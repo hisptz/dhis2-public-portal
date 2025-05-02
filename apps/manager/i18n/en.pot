@@ -120,6 +120,30 @@ msgstr "Caption"
 msgid "Actions"
 msgstr "Actions"
 
+msgid "Created successfully"
+msgstr "Created successfully"
+
+msgid "Configuration exists"
+msgstr "Configuration exists"
+
+msgid "Welcome to DHIS2 Public Portal Manager!"
+msgstr "Welcome to DHIS2 Public Portal Manager!"
+
+msgid "Please wait as we setup for first time use..."
+msgstr "Please wait as we setup for first time use..."
+
+msgid "There were some issues setting up some configurations"
+msgstr "There were some issues setting up some configurations"
+
+msgid "Setup complete!"
+msgstr "Setup complete!"
+
+msgid "Continue to application"
+msgstr "Continue to application"
+
+msgid "Try again"
+msgstr "Try again"
+
 msgid "Add menu item"
 msgstr "Add menu item"
 
@@ -548,6 +572,12 @@ msgstr ""
 
 msgid "Configure app menu"
 msgstr "Configure app menu"
+
+msgid "Menu"
+msgstr "Menu"
+
+msgid "Home Module"
+msgstr "Home Module"
 
 msgid "Error uploading file"
 msgstr "Error uploading file"
