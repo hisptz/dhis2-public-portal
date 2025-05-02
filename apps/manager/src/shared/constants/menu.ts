@@ -31,7 +31,6 @@ export const appMenus: Array<AppMenuItem> = [
 		),
 		action: i18n.t("Configure modules"),
 	},
-
 	{
 		label: i18n.t("App Menu"),
 		href: "/menu",
