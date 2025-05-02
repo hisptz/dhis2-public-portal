@@ -19,7 +19,7 @@ export function useSaveModule(moduleId: string) {
 		({ message }) => message,
 		({ type }) => ({ ...type, duration: 3000 }),
 	);
- 	const [mutate, rest] = useDataMutation(mutation, {
+	const [mutate, rest] = useDataMutation(mutation, {
 		variables: {
 			id: moduleId,
 		},
@@ -29,9 +29,6 @@ export function useSaveModule(moduleId: string) {
 				type: { success: true },
 			});
 			await refresh();
-			navigate({
-				to: "/modules",
-			});
 		},
 		onError: (error) => {
 			show({

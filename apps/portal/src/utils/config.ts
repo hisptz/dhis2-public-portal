@@ -17,6 +17,27 @@ export async function getAppConfigWithNamespace<T>({
 	}
 }
 
+export async function updateAppConfigWithNamespace<T>({
+	namespace,
+	key,
+	data,
+}: {
+	namespace: DatastoreNamespaces;
+	key: string;
+	data: T;
+}) {
+	const url = `dataStore/${namespace}/${key}`;
+	const response = await dhis2HttpClient.put<
+		T,
+		{
+			httpStatusCode: number;
+			status: string;
+			message: string;
+		}
+	>(url, data);
+	return response.httpStatusCode === 200;
+}
+
 export async function getAppConfigsFromNamespace<T>(
 	namespace: DatastoreNamespaces,
 ): Promise<T[]> {
@@ -29,5 +50,5 @@ export async function getAppConfigsFromNamespace<T>(
 			fields: ".",
 		},
 	});
-	return response.entries.map(({ value }) => value);
+	return response?.entries.map(({ value }) => value) ?? [];
 }

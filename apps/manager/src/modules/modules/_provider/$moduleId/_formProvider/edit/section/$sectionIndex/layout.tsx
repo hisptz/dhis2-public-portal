@@ -10,6 +10,8 @@ import { useFormContext } from "react-hook-form";
 import { z } from "zod";
 import { AppModule } from "@packages/shared/schemas";
 import { SectionLayoutEditor } from "../../../../../../../../shared/components/SectionLayoutEditor";
+import { useSaveModule } from "../../../../../../../../shared/components/ModulesPage/hooks/save";
+import { useAlert } from "@dhis2/app-runtime";
 
 const searchSchema = z.object({
 	subGroupIndex: z.number().optional(),
@@ -50,6 +52,33 @@ function RouteComponent() {
 		});
 	};
 
+	const { save } = useSaveModule(moduleId);
+	const { handleSubmit, formState } = useFormContext<AppModule>();
+	const { show } = useAlert(
+		({ message }) => message,
+		({ type }) => ({ ...type, duration: 3000 }),
+	);
+
+	const onError = (e) => {
+		console.log(e);
+		show({
+			message: i18n.t("Please fix the validation errors before saving"),
+			type: { critical: true },
+		});
+	};
+
+	const onSubmit = async (data: AppModule) => {
+		try {
+			await save(data);
+			goBack();
+		} catch (error) {
+			show({
+				message: i18n.t("Failed to save section", error),
+				type: { critical: true },
+			});
+		}
+	};
+
 	return (
 		<div className="w-full h-full flex flex-col gap-4">
 			<div className="w-full flex flex-col ">
@@ -66,8 +95,12 @@ function RouteComponent() {
 						</Button>
 						<Button
 							primary
+							loading={formState.isSubmitting}
+							disabled={
+								!formState.isDirty || formState.isSubmitting
+							}
 							onClick={() => {
-								goBack();
+								handleSubmit(onSubmit, onError)();
 							}}
 						>
 							{i18n.t("Update layout")}
@@ -93,8 +126,10 @@ function RouteComponent() {
 					</Button>
 					<Button
 						primary
+						loading={formState.isSubmitting}
+						disabled={!formState.isDirty || formState.isSubmitting}
 						onClick={() => {
-							goBack();
+							handleSubmit(onSubmit, onError)();
 						}}
 					>
 						{i18n.t("Update layout")}

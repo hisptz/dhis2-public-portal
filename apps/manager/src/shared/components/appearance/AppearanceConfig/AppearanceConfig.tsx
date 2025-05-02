@@ -101,7 +101,7 @@ export function AppearanceConfig({ appearanceConfig, refetchConfig }: Props) {
 							/>
 						</ConfigurationDetails>
 					)}
-					{style?.trailingLogo && (
+					{style?.trailingLogo?.url && (
 						<ConfigurationDetails title={i18n.t("Trailing logo")}>
 							<img
 								src={style?.trailingLogo.url}

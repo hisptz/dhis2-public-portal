@@ -22,7 +22,7 @@ export async function sendEmail({
 		message,
 	};
 	try {
-		return await dhis2HttpClient.post<SendEmailResponse>(
+		return await dhis2HttpClient.postFeedback<SendEmailResponse>(
 			url,
 			{},
 			{ params: searchParams },

@@ -2,6 +2,7 @@
 import { AppAppearanceConfig, AppMenuConfig } from "@packages/shared/schemas";
 import {
 	AppShell,
+	Box,
 	Burger,
 	Container,
 	Flex,
@@ -66,15 +67,28 @@ export function AppHeader({
 				/>
 
 				{headerConfig.logo.enabled && (
-					<Image
-						component={NextImage}
-						width={headerConfig.style?.leadingLogo?.width ?? 100}
-						height={headerConfig.style?.leadingLogo?.height ?? 100}
-						alt="logo"
-						src={headerConfig.style?.leadingLogo?.url}
-						visibleFrom="sm"
-						fallbackSrc="https://avatars.githubusercontent.com/u/1089987?s=200&v=4"
-					/>
+					<Box
+						style={{
+							width:
+								headerConfig.style?.leadingLogo?.width ?? 100,
+							height:
+								headerConfig.style?.leadingLogo?.height ?? 100,
+						}}
+					>
+						<Image
+							component={NextImage}
+							width={
+								headerConfig.style?.leadingLogo?.width ?? 100
+							}
+							height={
+								headerConfig.style?.leadingLogo?.height ?? 100
+							}
+							alt="logo"
+							src={headerConfig.style?.leadingLogo?.url}
+							visibleFrom="sm"
+							fallbackSrc="https://avatars.githubusercontent.com/u/1089987?s=200&v=4"
+						/>
+					</Box>
 				)}
 				<Stack
 					align={headerTitleStackAlign}
@@ -113,16 +127,29 @@ export function AppHeader({
 						)}
 					</Container>
 				</Stack>
-				{headerConfig.style?.trailingLogo && (
-					<Image
-						component={NextImage}
-						width={headerConfig.style?.trailingLogo?.width ?? 100}
-						height={headerConfig.style?.trailingLogo?.height ?? 100}
-						alt="logo"
-						src={headerConfig.style?.trailingLogo?.url}
-						hiddenFrom="!xs"
-						fallbackSrc="https://avatars.githubusercontent.com/u/1089987?s=200&v=4"
-					/>
+				{headerConfig.style?.trailingLogo?.url && (
+					<Box
+						style={{
+							height:
+								headerConfig.style?.trailingLogo?.height ?? 100,
+							width:
+								headerConfig.style?.trailingLogo?.width ?? 100,
+						}}
+					>
+						<Image
+							component={NextImage}
+							width={
+								headerConfig.style?.trailingLogo?.width ?? 100
+							}
+							height={
+								headerConfig.style?.trailingLogo?.height ?? 100
+							}
+							alt="logo"
+							src={headerConfig.style?.trailingLogo?.url}
+							hiddenFrom="!xs"
+							fallbackSrc="https://avatars.githubusercontent.com/u/1089987?s=200&v=4"
+						/>
+					</Box>
 				)}
 			</Flex>
 		</AppShell.Header>

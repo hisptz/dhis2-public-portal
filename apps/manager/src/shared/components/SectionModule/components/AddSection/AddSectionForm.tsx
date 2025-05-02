@@ -19,6 +19,7 @@ import {
 } from "@packages/shared/schemas";
 import { startCase } from "lodash";
 import { SectionIDField } from "./SectionIDField";
+import { FetchError, useAlert } from "@dhis2/app-runtime";
 
 export function AddSectionForm({
 	sortOrder,
@@ -31,6 +32,10 @@ export function AddSectionForm({
 	onClose: () => void;
 	onAdd: (section: BaseSectionConfig) => void;
 }) {
+	const { show } = useAlert(
+		({ message }) => message,
+		({ type }) => ({ ...type, duration: 3000 }),
+	);
 	const form = useForm<BaseSectionConfig>({
 		resolver: zodResolver(baseSectionSchema),
 		defaultValues: {
@@ -38,9 +43,22 @@ export function AddSectionForm({
 		},
 	});
 
-	const onSubmit = (data: BaseSectionConfig) => {
-		onAdd(data);
-		onClose();
+	const onSubmit = async (data: BaseSectionConfig) => {
+		try {
+			onAdd(data);
+			show({
+				message: i18n.t("Section created successfully"),
+				type: { success: true },
+			});
+			onClose();
+		} catch (e) {
+			if (e instanceof FetchError || e instanceof Error) {
+				show({
+					message: `${i18n.t("Could not create new item")}: ${e.message ?? e.toString()}`,
+					type: { critical: true },
+				});
+			}
+		}
 	};
 
 	const displayType = useWatch({ name: "sectionDisplay" });

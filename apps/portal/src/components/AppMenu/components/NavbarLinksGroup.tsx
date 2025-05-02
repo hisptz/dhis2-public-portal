@@ -49,7 +49,7 @@ export function LinksGroup({
 				return (
 					<Link
 						key={subMenu.label}
-						href={`/${subMenu.path}`}
+						href={`/modules/${subMenu.path}`}
 						prefetch
 					>
 						<Text
@@ -111,11 +111,13 @@ export function LinksGroup({
 									"margin 300ms cubic-bezier(0.4, 0, 0.2, 1)",
 							}}
 						>
-							<ReactSVG
-								width={collapsed ? 20 : 18}
-								height={collapsed ? 20 : 18}
-								src={imageURL}
-							/>
+							{icon && (
+								<ReactSVG
+									width={collapsed ? 20 : 18}
+									height={collapsed ? 20 : 18}
+									src={imageURL}
+								/>
+							)}
 						</ThemeIcon>
 					</Tooltip>
 					<Box
@@ -154,7 +156,7 @@ export function LinksGroup({
 			{hasLinks ? (
 				mainContent
 			) : (
-				<Link href={`/${path}`} prefetch>
+				<Link href={`/modules/${path}`} prefetch>
 					{mainContent}
 				</Link>
 			)}

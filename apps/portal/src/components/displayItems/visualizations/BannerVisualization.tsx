@@ -1,6 +1,5 @@
 import {
 	AnalyticsData,
-	bannerVisualizationItem,
 	bannerVisualizationItem as BannerVisualizationType,
 } from "@packages/shared/schemas";
 import { dhis2HttpClient } from "@/utils/api/dhis2";
@@ -39,13 +38,13 @@ async function getData({
 			},
 		);
 
-		const valueIndex = findIndex(analytics.headers, ["name", "value"]);
+		const valueIndex = findIndex(analytics?.headers, ["name", "value"]);
 
 		return config.data.map(({ id, percentage }) => {
 			const meta = analytics?.metaData?.items[id];
 
 			const value =
-				find(analytics.rows, (row) => {
+				find(analytics?.rows, (row) => {
 					return row.includes(id);
 				}) ?? [];
 

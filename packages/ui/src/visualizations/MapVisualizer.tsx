@@ -8,6 +8,7 @@ import { MapConfig, MapLayerType } from "@packages/shared/schemas";
 import React, { useMemo } from "react";
 import { forEach, head, set } from "lodash";
 import { OrgUnitSelection } from "@hisptz/dhis2-utils";
+import "leaflet-easyprint";
 
 export interface MapViewProps {
 	setRef: (map: LeafletMap) => void;
@@ -53,18 +54,19 @@ export function MapVisualizer({
 				const dataItem = head(head(view.columns)!.items);
 				return {
 					id: view.id,
+					enabled: true,
 					type: view.thematicMapType.toLowerCase(),
 					dataItem: {
 						id: dataItem!.id,
 						type: dataItem!.dimensionItemType,
 						legendSet: view.legendSet?.id,
-						displayName: view.id,
+						displayName: view.name,
 						legendConfig: {
 							scale: view.classes,
 							colorClass: view.colorScale,
 						},
 					},
-					name: view.id,
+					name: view.name,
 					control: {
 						enabled: true,
 						position: "topright",

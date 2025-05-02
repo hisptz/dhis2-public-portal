@@ -57,14 +57,12 @@ export const defaultAppearanceConfig: AppAppearanceConfig = {
 		title: {
 			style: {
 				align: "left",
-				center: false,
 				textSize: 30,
 				textColor: "white",
 			},
 		},
 		subtitle: {
 			style: {
-				center: false,
 				textSize: 14,
 				textColor: "white",
 			},
