@@ -1,5 +1,4 @@
 import { useDataQuery } from "@dhis2/app-runtime";
-import { sortBy } from "lodash";
 import { StaticItemConfig, StaticModule } from "@packages/shared/schemas";
 import { useModule } from "../../ModulesPage/providers/ModuleProvider";
 import { Pagination } from "@hisptz/dhis2-utils";
@@ -62,7 +61,7 @@ type SingleResponse = {
 export function useItemById(key: string) {
     if (!key) throw new Error("moduleId and key are required");
     const module = useModule() as StaticModule;
-    const namespace = module?.config.namespace;
+    const namespace = module?.config?.namespace;
     const {
         data,
         loading: itemLoading,
