@@ -12,7 +12,6 @@ export async function GET() {
 	});
 
 	if (!menuConfig) {
-		console.log("huh?????");
 		return redirect(`${env.CONTEXT_PATH}/no-config`);
 	}
 
