@@ -2,7 +2,7 @@ import { RHFTextInputField } from "@hisptz/dhis2-ui";
 import i18n from "@dhis2/d2-i18n";
 import { RHFTextAreaField } from "../../Fields/RHFTextAreaField";
 import React from "react";
-import { IconInput } from "./IconInput";
+import { RHFIconInput } from "../../Fields/RHFIconInput";
 
 export function GeneralForm() {
 	return (
@@ -18,7 +18,11 @@ export function GeneralForm() {
 				helpText={i18n.t("Where your portal can be found")}
 				name="applicationURL"
 			/>
-			<IconInput />
+			<RHFIconInput
+				helpText={i18n.t("A 512px by 512px image is recommended")}
+				label={i18n.t("Application Icon")}
+				name="icon"
+			/>
 		</div>
 	);
 }
