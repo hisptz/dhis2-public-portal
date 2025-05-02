@@ -9,20 +9,21 @@ import {
 	Text,
 	Title,
 } from "@mantine/core";
-import { AppTitleConfig, FooterConfig } from "@packages/shared/schemas";
+import { FooterConfig, HeaderConfig } from "@packages/shared/schemas";
 import NextImage from "next/image";
 import { FooterLinks } from "@/components/Footer/components/FooterLinks";
 import { FooterStaticContent } from "@/components/Footer/components/FooterStaticContent";
 
 export function Footer({
 	config,
-	title,
+	header,
 	logo,
 }: {
 	config: FooterConfig;
-	title: AppTitleConfig;
+	header: HeaderConfig;
 	logo: string;
 }) {
+	const { title, subtitle } = header;
 	return (
 		<div>
 			<div
@@ -71,15 +72,15 @@ export function Footer({
 														/>
 													</Box>
 													<Title order={5} ta="left">
-														{title.main}
+														{title.text}
 													</Title>
-													{title.subtitle && (
+													{subtitle?.text && (
 														<Text
 															size="sm"
 															c="dimmed"
 															ta="center"
 														>
-															{title.subtitle}
+															{subtitle.text}
 														</Text>
 													)}
 												</Stack>

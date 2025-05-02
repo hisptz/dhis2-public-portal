@@ -35,7 +35,7 @@ export default async function MainLoadingScreen() {
 								c={appearanceConfig.colors.primary}
 								order={2}
 							>
-								{appearanceConfig.title.main}
+								{appearanceConfig?.header?.title?.text}
 							</Title>
 						</Stack>
 					</Center>

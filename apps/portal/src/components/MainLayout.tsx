@@ -80,7 +80,7 @@ export function MainLayout({
 			</AppShell.Main>
 			<Footer
 				logo={appearanceConfig.logo}
-				title={appearanceConfig!.title}
+				header={appearanceConfig!.header}
 				config={appearanceConfig!.footer}
 			/>
 		</AppShell>
