@@ -59,7 +59,13 @@ function RouteComponent() {
 				actions={
 					<div className="flex gap-4 items-center">
 						<DeleteModule />
-						<ModuleEditActions />
+						<ModuleEditActions
+							onComplete={() =>
+								navigate({
+									to: "/modules",
+								})
+							}
+						/>
 					</div>
 				}
 			/>
