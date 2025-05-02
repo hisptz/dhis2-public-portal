@@ -46,10 +46,6 @@ export function AddSectionForm({
 	const onSubmit = async (data: BaseSectionConfig) => {
 		try {
 			onAdd(data);
-			show({
-				message: i18n.t("Section created successfully"),
-				type: { success: true },
-			});
 			onClose();
 		} catch (e) {
 			if (e instanceof FetchError || e instanceof Error) {

@@ -8,7 +8,7 @@ import {
 	IconEdit16,
 } from "@dhis2/ui";
 import { Sections } from "./components/Sections";
-import { useFieldArray } from "react-hook-form";
+import { useFieldArray, useFormContext } from "react-hook-form";
 import { useNavigate, useParams } from "@tanstack/react-router";
 import {
 	AppModule,
@@ -18,7 +18,6 @@ import {
 	SectionType,
 } from "@packages/shared/schemas";
 import { AddSection } from "../AddSection/AddSection";
-import { useModule } from "../../../ModulesPage/providers/ModuleProvider";
 import { useAlert } from "@dhis2/app-runtime";
 import { useSaveModule } from "../../../ModulesPage/hooks/save";
 
@@ -28,7 +27,6 @@ export function SectionsConfig() {
 	});
 	const { save } = useSaveModule(moduleId);
 	const navigate = useNavigate();
-	const module = useModule() as AppModule;
 
 	const { fields, append, remove } = useFieldArray<
 		SectionModuleConfig,
@@ -54,23 +52,29 @@ export function SectionsConfig() {
 		}
 	};
 
-	const onSave = async (data: Section) => {
+	const { handleSubmit, formState } = useFormContext<AppModule>();
+
+	const onError = (e) => {
+		console.log(e);
+		show({
+			message: i18n.t("Please fix the validation errors before saving"),
+			type: { critical: true },
+		});
+	};
+
+	const onSubmit = async (data: AppModule) => {
 		try {
-			const newModule = {
-				...module,
-				config: {
-					...(module as any).config,
-					sections: [
-						...((module as any).config?.sections || []),
-						data,
-					],
+			await save(data);
+			navigate({
+				to: "/modules/$moduleId/edit/section/$sectionIndex",
+				params: {
+					moduleId,
+					sectionIndex: fields.length,
 				},
-			};
-			await save(newModule);
+			});
 		} catch (error) {
-			console.log(error);
 			show({
-				message: i18n.t("Failed to save module", error),
+				message: i18n.t("Failed to save section", error),
 				type: { critical: true },
 			});
 		}
@@ -108,14 +112,7 @@ export function SectionsConfig() {
 				<AddSection
 					onAdd={(data) => {
 						append(normalizeSection(data));
-
-						navigate({
-							to: "/modules/$moduleId/edit/section/$sectionIndex",
-							params: {
-								moduleId,
-								sectionIndex: fields.length,
-							},
-						});
+						handleSubmit(onSubmit, onError)();
 					}}
 				/>
 			</div>
