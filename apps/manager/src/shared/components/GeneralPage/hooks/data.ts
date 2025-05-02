@@ -129,7 +129,12 @@ export function useSaveMetadata() {
 				message: i18n.t("Changes saved successfully"),
 				type: { success: true },
 			});
-			reset();
+			reset(
+				{},
+				{
+					keepDirty: true,
+				},
+			);
 		} catch (e) {
 			//An error has already been printed out in use data mutation callbacks
 			console.error(e);
