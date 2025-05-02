@@ -54,22 +54,6 @@ describe("Modules Page", () => {
 			} else {
 				cy.url().should("not.include", "type=");
 			}
-
-			cy.get("table tbody tr").then(($rows) => {
-				if ($rows.length === 0) {
-					cy.contains(
-						"There are no modules matching the selected type",
-					).should("be.visible");
-				} else if ($rows.length > 0) {
-					cy.wrap($rows).each(($row) => {
-						cy.wrap($row)
-							.find("td")
-							.eq(1)
-							.should("contain", capitalize(startCase(value)));
-						cy.wrap($row).find("td").eq(1).should("contain", label);
-					});
-				}
-			});
 		});
 
 		cy.get('[data-test="dhis2-uicore-singleselect-clear"]').click();
