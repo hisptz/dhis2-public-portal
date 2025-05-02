@@ -9,10 +9,10 @@ export function Providers({
 	config,
 	children,
 }: {
-	config: AppAppearanceConfig;
+	config?: AppAppearanceConfig;
 	children: React.ReactNode;
 }) {
-	const theme = getAppTheme(config);
+	const theme = config ? getAppTheme(config) : undefined;
 
 	return (
 		<MantineProvider theme={theme}>

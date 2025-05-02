@@ -1,5 +1,5 @@
 import { LibraryFileData } from "@packages/shared/schemas";
-import { IconScan, IconCircleX, IconFileZip } from "@tabler/icons-react";
+import { IconCircleX, IconFileZip, IconScan } from "@tabler/icons-react";
 import { Text } from "@mantine/core";
 import { dhis2HttpClient } from "@/utils/api/dhis2";
 import Link from "next/link";
@@ -41,6 +41,17 @@ export async function FileVisualizer({ config }: PDFVisualizerProps) {
 
 	const href = `/api/documents/${config.id}/data`;
 	const path = `${process.env.CONTEXT_PATH}${href}`;
+
+	if (!data) {
+		return (
+			<div className="flex flex-col gap-4 justify-center items-center text-center h-full">
+				<IconCircleX color="error" fontSize="medium" />
+				<Text c="red.6" fz="sm">
+					Could not get data
+				</Text>
+			</div>
+		);
+	}
 
 	if ("status" in data) {
 		return (
