@@ -21,19 +21,25 @@ export const defaultAppearanceConfig: AppAppearanceConfig = {
 		],
 	},
 	footer: {
-		address: {
-			content: "<p>This is the test address</p>",
-		},
 		copyright: `All rights reserved. @ ${new Date().getFullYear()}`,
-		footerLinks: {
-			links: [
-				{
-					url: "https://dhis2.org",
-					name: "DHIS2",
-				},
-			],
-			title: "Useful Links",
-		},
+		showTitle: true,
+		footerItems: [
+			{
+				title: "Address",
+				type: "static",
+				staticContent: "<p>This is the test address</p>",
+			},
+			{
+				title: "Useful Links",
+				type: "links",
+				links: [
+					{
+						url: "https://dhis2.org",
+						name: "DHIS2",
+					},
+				],
+			},
+		],
 	},
 	header: {
 		logo: {
@@ -58,13 +64,13 @@ export const defaultAppearanceConfig: AppAppearanceConfig = {
 			style: {
 				align: "left",
 				textSize: 30,
-				textColor: "white",
+				textColor: "#ffffff",
 			},
 		},
 		subtitle: {
 			style: {
 				textSize: 14,
-				textColor: "white",
+				textColor: "#ffffff",
 			},
 		},
 	},
