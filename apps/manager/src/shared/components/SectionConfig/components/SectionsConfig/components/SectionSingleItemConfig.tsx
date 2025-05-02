@@ -25,7 +25,7 @@ import { useSectionNamePrefix } from "../../../hooks/route";
 import { EditVisualization } from "../../../../VisualizationModule/components/AddVisualization/componets/EditVisualization";
 import { AddVisualization } from "../../../../VisualizationModule/components/AddVisualization/AddVisualization";
 import { SectionVisualizations } from "./SectionVisualizations";
-import { FeedbackConfigPage } from "../../Feedback/FeedbackConfig";
+import { FeedbackConfig } from "../../Feedback/FeedbackConfig";
 
 export function SectionSingleItemConfig() {
 	const namePrefix = useSectionNamePrefix();
@@ -61,7 +61,7 @@ export function SectionSingleItemConfig() {
 
 	const DisplaySingleItemSelector = () => {
 		const singleItemVisualization =
-			field.value.type == DisplayItemType.RICH_TEXT
+			field.value.type == DisplayItemType.RICH_TEXT||field.value.type == DisplayItemType.FEEDBACK
 				? []
 				: ([field.value]?.map((item, index) => {
 						return {
@@ -142,7 +142,7 @@ export function SectionSingleItemConfig() {
 				);
 				case DisplayItemType.FEEDBACK:
 					return (
-						<FeedbackConfigPage />
+						<FeedbackConfig />
 					);
 			default:
 				return <></>;

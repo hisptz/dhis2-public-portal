@@ -13,7 +13,7 @@ import {
 import { FeedBackList } from "./components/feeedbackList";
 import { AddFeedback } from "./components/AddFeedback/AddFeedback";
 
-export function FeedbackConfigPage() { 
+export function FeedbackConfig() { 
   const namePrefix = useSectionNamePrefix();
 
   const { setValue, control } = useFormContext<SectionModuleConfig>();
