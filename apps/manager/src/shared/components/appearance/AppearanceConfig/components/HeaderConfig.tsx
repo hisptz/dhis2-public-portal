@@ -6,6 +6,7 @@ import { ConfigurationDetails } from "./ConfigurationDetails";
 import { ConfigurationColor } from "./ConfigurationColor";
 import { Button, IconEdit16 } from "@dhis2/ui";
 import { HeaderConfigForm } from "../../appearance-config-forms/HeaderConfigForm";
+import { useConfig } from "@dhis2/app-runtime";
 
 type Props = {
 	appearanceConfig: AppAppearanceConfig;
@@ -13,6 +14,7 @@ type Props = {
 };
 
 export function HeaderConfig({ appearanceConfig, refetchConfig }: Props) {
+	const config = useConfig();
 	const [showHeaderConfig, setShowHeaderConfig] = useState(false);
 
 	const { header } = appearanceConfig;
@@ -57,21 +59,13 @@ export function HeaderConfig({ appearanceConfig, refetchConfig }: Props) {
 						/>
 					)}
 
-					{style?.leadingLogo && (
-						<ConfigurationDetails title={i18n.t("Leading logo")}>
-							<img
-								src={style?.leadingLogo.url}
-								alt={i18n.t("Trailing logo")}
-								className="w-16 h-16 object-cover rounded-sm shadow-md border-gray-500"
-							/>
-						</ConfigurationDetails>
-					)}
-					{style?.trailingLogo && (
+					{style?.trailingLogo?.show && (
 						<ConfigurationDetails title={i18n.t("Trailing logo")}>
 							<img
-								src={style?.trailingLogo.url}
-								alt={i18n.t("Trailing logo")}
-								className="w-16 h-16 object-cover rounded-sm shadow-md border-gray-500"
+								height={50}
+								width={50}
+								alt={"icon"}
+								src={`${config.baseUrl}/api/documents/${style?.trailingLogo.url}/data`}
 							/>
 						</ConfigurationDetails>
 					)}

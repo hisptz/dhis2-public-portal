@@ -2,7 +2,9 @@ import React, { useMemo, useState } from "react";
 import {
 	appAppearanceConfig,
 	AppAppearanceConfig,
+	AppIconFile,
 	HeaderConfig,
+	logoConfig,
 } from "@packages/shared/schemas";
 import { useAlert } from "@dhis2/app-runtime";
 import { useUpdateDatastoreEntry } from "../../../hooks/datastore";
@@ -10,6 +12,7 @@ import {
 	APP_NAMESPACE,
 	APPEARANCE_CONFIG_KEY,
 } from "../../../constants/datastore";
+
 import {
 	FieldErrors,
 	FormProvider,
@@ -17,6 +20,7 @@ import {
 	useForm,
 } from "react-hook-form";
 import i18n from "@dhis2/d2-i18n";
+import { z } from "zod";
 import {
 	Button,
 	ButtonStrip,
@@ -32,12 +36,30 @@ import { LogoConfig } from "./components/AdvancedHeaderConfig/components/LogoCon
 import { TitleConfig } from "./components/AdvancedHeaderConfig/components/TitleConfig";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { HeaderStyleConfig } from "./components/AdvancedHeaderConfig/components/HeaderStyleConfig";
+import { useManageDocument } from "../../../hooks/document";
+import { set } from "lodash";
 
 type props = {
 	configurations: AppAppearanceConfig;
 	onClose: () => void;
 	onComplete: () => void;
 };
+
+const appearanceConfigFromData = appAppearanceConfig.extend({
+	header: appAppearanceConfig.shape.header.extend({
+		style: appAppearanceConfig.shape.header.shape.style.extend({
+			trailingLogo: logoConfig
+				.extend({
+					url: z.instanceof(AppIconFile),
+				})
+				.optional(),
+			leadingLogo:
+				appAppearanceConfig.shape.header.shape.style.shape.leadingLogo.optional(),
+		}),
+	}),
+});
+
+export type AppearanceConfigFormData = z.infer<typeof appearanceConfigFromData>;
 
 export function HeaderConfigForm({
 	configurations,
@@ -50,13 +72,33 @@ export function HeaderConfigForm({
 		({ type }) => ({ ...type, duration: 3000 }),
 	);
 
+	const { create: createIcon } = useManageDocument();
+
 	const { update, loading, error } = useUpdateDatastoreEntry({
 		namespace: APP_NAMESPACE,
 	});
 
-	const form = useForm<AppAppearanceConfig>({
-		defaultValues: configurations,
-		resolver: zodResolver(appAppearanceConfig),
+	const form = useForm<AppearanceConfigFormData>({
+		defaultValues: async () => {
+			const fileUrl = configurations.header.style.trailingLogo?.url;
+			if (!fileUrl) return configurations as AppearanceConfigFormData;
+			return {
+				...configurations,
+				header: {
+					...configurations.header,
+					style: {
+						...configurations.header.style,
+						trailingLogo: {
+							...configurations.header.style.trailingLogo,
+							url: new AppIconFile([], `${fileUrl}`).setId(
+								fileUrl,
+							),
+						},
+					},
+				},
+			};
+		},
+		resolver: zodResolver(appearanceConfigFromData),
 		mode: "onBlur",
 	});
 
@@ -79,13 +121,35 @@ export function HeaderConfigForm({
 		});
 	};
 
-	const onUpdateConfiguration = async (data: AppAppearanceConfig) => {
+	const onUpdateConfiguration = async (data: AppearanceConfigFormData) => {
 		try {
+			const updatedConfig = {
+				...configurations,
+				...data,
+			};
+			const trailingLogo = data.header.style.trailingLogo?.url;
+
+			if (trailingLogo) {
+				if ((data.header.style.trailingLogo?.url?.size ?? 0) > 0) {
+					const iconId = await createIcon(trailingLogo);
+					set(
+						updatedConfig,
+						["header", "style", "trailingLogo", "url"],
+						iconId,
+					);
+				} else {
+					set(
+						updatedConfig,
+						["header", "style", "trailingLogo", "url"],
+						data.header.style.trailingLogo?.url?.id,
+					);
+				}
+			}
+
 			await update({
 				key: APPEARANCE_CONFIG_KEY,
 				data: {
-					...configurations,
-					...data,
+					...updatedConfig,
 				},
 			});
 			if (error) {

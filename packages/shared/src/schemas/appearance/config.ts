@@ -47,7 +47,7 @@ export const headerConfig = z.object({
 			.max(50, { message: "Title must be less than 50 characters" }),
 		style: styleConfig.optional(),
 	}),
-	style: headerStyleConfig.optional(),
+	style: headerStyleConfig,
 });
 
 export const footerItemConfig = z.object({

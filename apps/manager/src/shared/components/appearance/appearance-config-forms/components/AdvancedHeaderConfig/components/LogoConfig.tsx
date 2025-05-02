@@ -1,8 +1,9 @@
 import React from "react";
 import i18n from "@dhis2/d2-i18n";
-import { RHFCheckboxField, RHFTextInputField } from "@hisptz/dhis2-ui";
+import { RHFCheckboxField } from "@hisptz/dhis2-ui";
 import { RHFNumberField } from "../../../../../Fields/RHFNumberField";
 import { useWatch } from "react-hook-form";
+import { RHFIconInput } from "../../../../../Fields/RHFIconInput";
 
 type Props = {
 	logoType: string;
@@ -27,10 +28,9 @@ export function LogoConfig({ logoType, label }: Props) {
 				{showLogo && (
 					<>
 						{logoType === "trailingLogo" && (
-							<RHFTextInputField
+							<RHFIconInput
 								name={`${STYLE_KEY}.${logoType}.url`}
-								type="url"
-								label={i18n.t("Logo url")}
+								label={i18n.t("Logo")}
 							/>
 						)}
 						<div className="flex flex-row gap-1">
