@@ -6,6 +6,7 @@ import {
 	Button,
 	ButtonStrip,
 	Modal,
+	ModalActions,
 	ModalContent,
 	ModalTitle,
 } from "@dhis2/ui";
@@ -27,36 +28,41 @@ export function FooterLinkForm({ onAdd, onClose, hide, config }: Props) {
 
 	return (
 		<FormProvider {...form}>
-			<Modal hide={hide} small position="middle">
-				<ModalTitle>
-					{config ? "Update Footer Link" : "Add Footer Link"}
-				</ModalTitle>
-				<ModalContent>
-					<form
-						className="flex flex-col gap-2"
-						onSubmit={form.handleSubmit((data) => {
-							onAdd(data);
-							onClose();
-						})}
-					>
+			<form className="flex flex-col gap-2">
+				<Modal hide={hide} small position="middle">
+					<ModalTitle>
+						{config ? "Update Footer Link" : "Add Footer Link"}
+					</ModalTitle>
+					<ModalContent>
 						<RHFTextInputField label="Name" name="name" required />
 						<RHFTextInputField
 							label="Link URL"
 							name="url"
 							required
 						/>
-
+					</ModalContent>
+					<ModalActions>
 						<ButtonStrip>
 							<Button secondary onClick={onClose}>
 								{i18n.t("Cancel")}
 							</Button>
-							<Button primary type="submit">
+							<Button
+								primary
+								type="submit"
+								disabled={!form.formState.isValid}
+								onClick={() => {
+									form.handleSubmit((data) => {
+										onAdd(data);
+										onClose();
+									})();
+								}}
+							>
 								{config ? i18n.t("Update") : i18n.t("Add")}
 							</Button>
 						</ButtonStrip>
-					</form>
-				</ModalContent>
-			</Modal>
+					</ModalActions>
+				</Modal>
+			</form>
 		</FormProvider>
 	);
 }

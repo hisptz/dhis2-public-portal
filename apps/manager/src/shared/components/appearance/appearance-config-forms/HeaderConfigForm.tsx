@@ -1,5 +1,9 @@
 import React, { useMemo, useState } from "react";
-import { AppAppearanceConfig, HeaderConfig } from "@packages/shared/schemas";
+import {
+	appAppearanceConfig,
+	AppAppearanceConfig,
+	HeaderConfig,
+} from "@packages/shared/schemas";
 import { useAlert } from "@dhis2/app-runtime";
 import { useUpdateDatastoreEntry } from "../../../hooks/datastore";
 import {
@@ -26,6 +30,8 @@ import {
 import { StyleConfig } from "./components/AdvancedHeaderConfig/components/StyleConfig";
 import { LogoConfig } from "./components/AdvancedHeaderConfig/components/LogoConfig";
 import { HeaderStyleConfig } from "./components/AdvancedHeaderConfig/components/HeaderStyleConfig";
+import { TitleConfig } from "./components/AdvancedHeaderConfig/components/TitleConfig";
+import { zodResolver } from "@hookform/resolvers/zod";
 
 type props = {
 	configurations: AppAppearanceConfig;
@@ -48,8 +54,9 @@ export function HeaderConfigForm({
 		namespace: APP_NAMESPACE,
 	});
 
-	const form = useForm<HeaderConfig>({
-		defaultValues: configurations.header,
+	const form = useForm<AppAppearanceConfig>({
+		defaultValues: configurations,
+		resolver: zodResolver(appAppearanceConfig),
 		mode: "onBlur",
 	});
 
@@ -72,16 +79,13 @@ export function HeaderConfigForm({
 		});
 	};
 
-	const onUpdateConfiguration = async (data: HeaderConfig) => {
+	const onUpdateConfiguration = async (data: AppAppearanceConfig) => {
 		try {
 			await update({
 				key: APPEARANCE_CONFIG_KEY,
 				data: {
 					...configurations,
-					header: {
-						...configurations.header,
-						...data,
-					},
+					...data,
 				},
 			});
 			if (error) {
@@ -116,6 +120,10 @@ export function HeaderConfigForm({
 				<ModalTitle>{i18n.t("Header configurations")}</ModalTitle>
 				<ModalContent>
 					<form className="flex flex-col gap-2">
+						{/*Title config*/}
+						<TitleConfig />
+						<hr className="border-gray-200 my-2" />
+
 						{/*Header style config*/}
 						<HeaderStyleConfig />
 						<hr className="border-gray-200 my-2" />
@@ -140,14 +148,14 @@ export function HeaderConfigForm({
 								{/*	title style*/}
 								<StyleConfig
 									label={i18n.t("Title styles")}
-									parentName={"title.style"}
+									parentName={"header.title.style"}
 								/>
 								<hr className="border-gray-200 my-2" />
 
 								{/*	subtitle style*/}
 								<StyleConfig
 									label={i18n.t("Subtitle styles")}
-									parentName={"subtitle.style"}
+									parentName={"header.subtitle.style"}
 								/>
 							</>
 						)}
@@ -181,6 +189,7 @@ export function HeaderConfigForm({
 							{i18n.t("Cancel")}
 						</Button>
 						<Button
+							disabled={!form.formState.isValid}
 							loading={loading || form.formState.isSubmitting}
 							onClick={(_, e) => {
 								form.handleSubmit(

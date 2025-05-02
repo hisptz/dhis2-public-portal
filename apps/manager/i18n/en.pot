@@ -348,8 +348,17 @@ msgstr "You can use this application to configure your public portal web applica
 msgid "Application colors"
 msgstr "Application colors"
 
+msgid "Footer configuration"
+msgstr "Footer configuration"
+
+msgid "Copyright"
+msgstr "Copyright"
+
 msgid "Header configuration"
 msgstr "Header configuration"
+
+msgid "Subtitle"
+msgstr "Subtitle"
 
 msgid "Background color"
 msgstr "Background color"
@@ -362,21 +371,6 @@ msgstr "Leading logo"
 
 msgid "Trailing logo"
 msgstr "Trailing logo"
-
-msgid "Footer configuration"
-msgstr "Footer configuration"
-
-msgid "Copyright"
-msgstr "Copyright"
-
-msgid "Footer links"
-msgstr "Footer links"
-
-msgid "Links"
-msgstr "Links"
-
-msgid "Address"
-msgstr "Address"
 
 msgid "Missing Appearance configurations"
 msgstr "Missing Appearance configurations"
@@ -418,8 +412,53 @@ msgstr "Error updating footer configurations"
 msgid "Footer configurations"
 msgstr "Footer configurations"
 
-msgid "Footer links label"
-msgstr "Footer links label"
+msgid "General"
+msgstr "General"
+
+msgid "Show title"
+msgstr "Show title"
+
+msgid "Footer items"
+msgstr "Footer items"
+
+msgid "Footer Items"
+msgstr "Footer Items"
+
+msgid "Add footer item"
+msgstr "Add footer item"
+
+msgid "Links"
+msgstr "Links"
+
+msgid "Static Content"
+msgstr "Static Content"
+
+msgid "Add"
+msgstr "Add"
+
+msgid "S/N"
+msgstr "S/N"
+
+msgid "No footer items configured"
+msgstr "No footer items configured"
+
+msgid "Url"
+msgstr "Url"
+
+msgid "Remove Link"
+msgstr "Remove Link"
+
+msgid "Edit link"
+msgstr "Edit link"
+
+msgid "There are no Footer links defined"
+msgstr "There are no Footer links defined"
+
+msgid "Footer links"
+msgstr "Footer links"
+
+msgid "Add footer link"
+msgstr "Add footer link"
 
 msgid "Header configurations updated successfully"
 msgstr "Header configurations updated successfully"
@@ -478,26 +517,8 @@ msgstr "Text size"
 msgid "Text color"
 msgstr "Text color"
 
-msgid "Add"
-msgstr "Add"
-
-msgid "S/N"
-msgstr "S/N"
-
-msgid "Url"
-msgstr "Url"
-
-msgid "Remove Link"
-msgstr "Remove Link"
-
-msgid "Edit link"
-msgstr "Edit link"
-
-msgid "There are no Footer links defined"
-msgstr "There are no Footer links defined"
-
-msgid "Add footer link"
-msgstr "Add footer link"
+msgid "Header title"
+msgstr "Header title"
 
 msgid "Color"
 msgstr "Color"
@@ -510,9 +531,6 @@ msgstr "Add color"
 
 msgid "Color Selector"
 msgstr "Color Selector"
-
-msgid "General"
-msgstr "General"
 
 msgid "Setup application name and related information"
 msgstr "Setup application name and related information"
@@ -530,6 +548,12 @@ msgstr ""
 msgid "Configure appearance"
 msgstr "Configure appearance"
 
+msgid "Configure different modules of the web portal application"
+msgstr "Configure different modules of the web portal application"
+
+msgid "Configure modules"
+msgstr "Configure modules"
+
 msgid "App Menu"
 msgstr "App Menu"
 
@@ -542,12 +566,6 @@ msgstr ""
 
 msgid "Configure app menu"
 msgstr "Configure app menu"
-
-msgid "Configure different modules of the web portal application"
-msgstr "Configure different modules of the web portal application"
-
-msgid "Configure modules"
-msgstr "Configure modules"
 
 msgid "Error uploading file"
 msgstr "Error uploading file"
