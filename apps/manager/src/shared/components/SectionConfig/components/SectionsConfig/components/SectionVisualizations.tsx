@@ -27,23 +27,29 @@ export function SectionVisualizations({
 }: {
 	visualizations: Array<DisplayItem & { actions: React.ReactNode }>;
 }) {
-	const rows = visualizations.map((vis) => {
-		if (vis.type === DisplayItemType.VISUALIZATION) {
-			return {
-				id: vis.item.id,
-				type: vis.item.type,
-				caption: vis.item.caption || "N/A",
-				actions: vis.actions,
-			};
-		} else {
-			return {
-				id: vis.item.id,
-				type: DisplayItemType.SINGLE_VALUE,
-				caption: "Single Value",
-				actions: vis.actions,
-			};
-		}
-	});
+	const rows = visualizations
+		.filter((vis) =>
+			vis.type === DisplayItemType.VISUALIZATION ||
+			vis.type === DisplayItemType.SINGLE_VALUE
+		)
+		.map((vis) => {
+			if (vis.type === DisplayItemType.VISUALIZATION) {
+				return {
+					id: vis.item.id,
+					type: vis.item.type,
+					caption: vis.item.caption || "N/A",
+					actions: vis.actions,
+				};
+			} else {
+				return {
+					id: vis.item.id,
+					type: DisplayItemType.SINGLE_VALUE,
+					caption: "Single Value",
+					actions: vis.actions,
+				};
+			}
+		});
+
 
 	return <SimpleTable columns={columns} rows={rows} />;
 }
