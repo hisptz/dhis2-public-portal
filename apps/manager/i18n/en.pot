@@ -5,8 +5,8 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
-"POT-Creation-Date: 2025-05-02T12:14:37.919Z\n"
-"PO-Revision-Date: 2025-05-02T12:14:37.919Z\n"
+"POT-Creation-Date: 2025-05-04T13:14:02.581Z\n"
+"PO-Revision-Date: 2025-05-04T13:14:02.581Z\n"
 
 msgid "Could not get Appearance configurations"
 msgstr "Could not get Appearance configurations"
@@ -40,6 +40,12 @@ msgstr "Back to all modules"
 
 msgid "Module"
 msgstr "Module"
+
+msgid "Please fix the validation errors before saving"
+msgstr "Please fix the validation errors before saving"
+
+msgid "Failed to save section"
+msgstr "Failed to save section"
 
 msgid "Modules"
 msgstr "Modules"
@@ -264,9 +270,6 @@ msgstr "Filter by Type"
 msgid "Select type"
 msgstr "Select type"
 
-msgid "Please fix the validation errors before saving"
-msgstr "Please fix the validation errors before saving"
-
 msgid "Failed to save module"
 msgstr "Failed to save module"
 
@@ -279,11 +282,53 @@ msgstr "There are no modules configuration present"
 msgid "Could not save changes"
 msgstr "Could not save changes"
 
-msgid "Add Item"
-msgstr "Add Item"
+msgid "Section"
+msgstr "Section"
+
+msgid "Back to Module"
+msgstr "Back to Module"
+
+msgid "Items"
+msgstr "Items"
+
+msgid "Item"
+msgstr "Item"
+
+msgid "Item Type"
+msgstr "Item Type"
+
+msgid "Add Section"
+msgstr "Add Section"
 
 msgid "Could not create new item"
 msgstr "Could not create new item"
+
+msgid "Create Section"
+msgstr "Create Section"
+
+msgid "Please select the display type of this section first"
+msgstr "Please select the display type of this section first"
+
+msgid "Create section"
+msgstr "Create section"
+
+msgid "Save section changes"
+msgstr "Save section changes"
+
+msgid "Display type"
+msgstr "Display type"
+
+msgid "Vertical"
+msgstr "Vertical"
+
+msgid "Horizontal"
+msgstr "Horizontal"
+
+msgid "Sections"
+msgstr "Sections"
+
+msgid "Add Item"
+msgstr "Add Item"
 
 msgid "Create an item"
 msgstr "Create an item"
@@ -320,9 +365,6 @@ msgstr "Icon"
 
 msgid "Short Description"
 msgstr "Short Description"
-
-msgid "Items"
-msgstr "Items"
 
 msgid "Add group"
 msgstr "Add group"
@@ -392,9 +434,6 @@ msgstr "Background color"
 
 msgid "Header height"
 msgstr "Header height"
-
-msgid "Leading logo"
-msgstr "Leading logo"
 
 msgid "Trailing logo"
 msgstr "Trailing logo"
@@ -495,6 +534,9 @@ msgstr "Error updating header configurations"
 
 msgid "Header configurations"
 msgstr "Header configurations"
+
+msgid "Leading logo"
+msgstr "Leading logo"
 
 msgid "Title styles"
 msgstr "Title styles"

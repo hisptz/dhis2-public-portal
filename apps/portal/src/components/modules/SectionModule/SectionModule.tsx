@@ -5,7 +5,7 @@ import { SectionDisplaySelector } from "@/components/modules/SectionModule/compo
 
 export function SectionModule({ config }: { config: SectionModuleConfig }) {
 	return (
-		<div className="w-full h-full flex flex-col gap-8">
+		<Stack gap="md">
 			{config.config.sections.map((section) => {
 				return (
 					<Stack gap="md" key={section.id}>
@@ -14,6 +14,6 @@ export function SectionModule({ config }: { config: SectionModuleConfig }) {
 					</Stack>
 				);
 			})}
-		</div>
+		</Stack>
 	);
 }

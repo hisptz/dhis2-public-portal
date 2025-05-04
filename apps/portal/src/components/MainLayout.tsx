@@ -3,6 +3,7 @@
 import {
 	AppAppearanceConfig,
 	AppMenuConfig,
+	AppMeta,
 	MenuPosition,
 } from "@packages/shared/schemas";
 import { AppShell, Center, Loader, useMantineTheme } from "@mantine/core";
@@ -19,13 +20,16 @@ export function MainLayout({
 	children,
 	appearanceConfig,
 	menuConfig,
+	metadata,
 }: {
 	children: React.ReactNode;
 	appearanceConfig: AppAppearanceConfig;
 	menuConfig: AppMenuConfig;
+	metadata: AppMeta;
 }) {
 	const [opened, { toggle }] = useDisclosure();
 	const hasMenuOnHeader = menuConfig.position === MenuPosition.HEADER;
+	const hasMenu = menuConfig.items.length > 1;
 	const headerHeight =
 		appearanceConfig.header.style?.containerHeight ?? DEFAULT_HEADER_HEIGHT;
 	const [isOpen, setOpen] = useState(true);
@@ -51,22 +55,25 @@ export function MainLayout({
 				breakpoint: "sm",
 				collapsed: {
 					mobile: !opened,
-					desktop: hasMenuOnHeader,
+					desktop: !hasMenu || hasMenuOnHeader,
 				},
 			}}
 			padding="md"
 		>
 			<AppHeader
+				metadata={metadata}
 				menuConfig={menuConfig}
 				opened={opened}
 				toggle={toggle}
 				config={appearanceConfig!}
 			/>
-			<SideAppMenu
-				menuConfig={menuConfig}
-				isOpen={isLargerThanSm ? isOpen : opened}
-				setOpen={setOpen}
-			/>
+			{hasMenu && (
+				<SideAppMenu
+					menuConfig={menuConfig}
+					isOpen={isLargerThanSm ? isOpen : opened}
+					setOpen={setOpen}
+				/>
+			)}
 			<AppShell.Main style={{ background: "#F9F9FA", paddingBottom: 16 }}>
 				<Suspense
 					fallback={
