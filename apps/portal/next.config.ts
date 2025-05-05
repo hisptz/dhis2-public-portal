@@ -9,6 +9,9 @@ const nextConfig: NextConfig = {
 			{
 				hostname: "avatars.githubusercontent.com",
 			},
+			{
+				hostname: "localhost",
+			},
 		],
 	},
 	output: "standalone",
