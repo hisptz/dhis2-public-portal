@@ -4,10 +4,7 @@ import { SectionTitle } from "@/components/modules/SectionModule/components/Sect
 import { SectionDisplaySelector } from "@/components/modules/SectionModule/components/SectionDisplaySelector";
 
 export function SectionModule({ config }: { config: SectionModuleConfig }) {
-	const displayType = config.sectionDisplay;
-
-	const isHorizontal = displayType === SectionDisplay.HORIZONTAL;
-
+	const isHorizontal = config.sectionDisplay === SectionDisplay.HORIZONTAL;
 	const sections = config.config.sections.map((section) => (
 		<Stack gap="md" key={section.id}>
 			<SectionTitle section={section} />
