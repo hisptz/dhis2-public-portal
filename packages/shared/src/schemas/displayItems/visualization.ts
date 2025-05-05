@@ -14,6 +14,7 @@ export const baseVisualizationItem = z.object({
 	periodConfig: periodConfigSchema.optional(),
 	orgUnitConfig: orgUnitConfigSchema.optional(),
 	caption: z.string().optional(),
+	icon: z.string().optional(),
 });
 
 export const chartVisualizationItem = baseVisualizationItem.extend({

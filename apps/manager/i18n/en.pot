@@ -5,8 +5,8 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
-"POT-Creation-Date: 2025-05-01T14:51:56.260Z\n"
-"PO-Revision-Date: 2025-05-01T14:51:56.261Z\n"
+"POT-Creation-Date: 2025-05-05T07:47:23.272Z\n"
+"PO-Revision-Date: 2025-05-05T07:47:23.273Z\n"
 
 msgid "Could not get Appearance configurations"
 msgstr "Could not get Appearance configurations"
@@ -49,6 +49,12 @@ msgstr "Back to all modules"
 
 msgid "Module"
 msgstr "Module"
+
+msgid "Please fix the validation errors before saving"
+msgstr "Please fix the validation errors before saving"
+
+msgid "Failed to save section"
+msgstr "Failed to save section"
 
 msgid "Modules"
 msgstr "Modules"
@@ -260,6 +266,16 @@ msgstr "Something went wrong"
 msgid "Reload"
 msgstr "Reload"
 
+msgid "Upload Icon"
+msgstr "Upload Icon"
+
+msgid ""
+"512px x 512px clear image. This will be used as favicon and application "
+"icon on mobile devices"
+msgstr ""
+"512px x 512px clear image. This will be used as favicon and application "
+"icon on mobile devices"
+
 msgid "Application name"
 msgstr "Application name"
 
@@ -272,18 +288,11 @@ msgstr "Application URL"
 msgid "Where your portal can be found"
 msgstr "Where your portal can be found"
 
+msgid "A 512px by 512px image is recommended"
+msgstr "A 512px by 512px image is recommended"
+
 msgid "Application Icon"
 msgstr "Application Icon"
-
-msgid "Upload Icon"
-msgstr "Upload Icon"
-
-msgid ""
-"512px x 512px clear image. This will be used as favicon and application "
-"icon on mobile devices"
-msgstr ""
-"512px x 512px clear image. This will be used as favicon and application "
-"icon on mobile devices"
 
 msgid "Error saving changes"
 msgstr "Error saving changes"
@@ -302,6 +311,30 @@ msgstr "Visualizations"
 
 msgid "Configure layout"
 msgstr "Configure layout"
+
+msgid "Created successfully"
+msgstr "Created successfully"
+
+msgid "Configuration exists"
+msgstr "Configuration exists"
+
+msgid "Welcome to DHIS2 Public Portal Manager!"
+msgstr "Welcome to DHIS2 Public Portal Manager!"
+
+msgid "Please wait as we setup for first time use..."
+msgstr "Please wait as we setup for first time use..."
+
+msgid "There were some issues setting up some configurations"
+msgstr "There were some issues setting up some configurations"
+
+msgid "Setup complete!"
+msgstr "Setup complete!"
+
+msgid "Continue to application"
+msgstr "Continue to application"
+
+msgid "Try again"
+msgstr "Try again"
 
 msgid "Add menu item"
 msgstr "Add menu item"
@@ -396,9 +429,6 @@ msgstr "Filter by Type"
 msgid "Select type"
 msgstr "Select type"
 
-msgid "Please fix the validation errors before saving"
-msgstr "Please fix the validation errors before saving"
-
 msgid "Failed to save module"
 msgstr "Failed to save module"
 
@@ -408,11 +438,53 @@ msgstr "There are no modules matching the selected type."
 msgid "There are no modules configuration present"
 msgstr "There are no modules configuration present"
 
-msgid "Add Item"
-msgstr "Add Item"
+msgid "Section"
+msgstr "Section"
+
+msgid "Back to Module"
+msgstr "Back to Module"
+
+msgid "Items"
+msgstr "Items"
+
+msgid "Item"
+msgstr "Item"
+
+msgid "Item Type"
+msgstr "Item Type"
+
+msgid "Add Section"
+msgstr "Add Section"
 
 msgid "Could not create new item"
 msgstr "Could not create new item"
+
+msgid "Create Section"
+msgstr "Create Section"
+
+msgid "Please select the display type of this section first"
+msgstr "Please select the display type of this section first"
+
+msgid "Create section"
+msgstr "Create section"
+
+msgid "Save section changes"
+msgstr "Save section changes"
+
+msgid "Display type"
+msgstr "Display type"
+
+msgid "Vertical"
+msgstr "Vertical"
+
+msgid "Horizontal"
+msgstr "Horizontal"
+
+msgid "Sections"
+msgstr "Sections"
+
+msgid "Add Item"
+msgstr "Add Item"
 
 msgid "Create an item"
 msgstr "Create an item"
@@ -449,9 +521,6 @@ msgstr "Icon"
 
 msgid "Short Description"
 msgstr "Short Description"
-
-msgid "Items"
-msgstr "Items"
 
 msgid "Create Dashboard Group"
 msgstr "Create Dashboard Group"
@@ -495,8 +564,17 @@ msgstr "You can use this application to configure your public portal web applica
 msgid "Application colors"
 msgstr "Application colors"
 
+msgid "Footer configuration"
+msgstr "Footer configuration"
+
+msgid "Copyright"
+msgstr "Copyright"
+
 msgid "Header configuration"
 msgstr "Header configuration"
+
+msgid "Subtitle"
+msgstr "Subtitle"
 
 msgid "Background color"
 msgstr "Background color"
@@ -504,26 +582,8 @@ msgstr "Background color"
 msgid "Header height"
 msgstr "Header height"
 
-msgid "Leading logo"
-msgstr "Leading logo"
-
 msgid "Trailing logo"
 msgstr "Trailing logo"
-
-msgid "Footer configuration"
-msgstr "Footer configuration"
-
-msgid "Copyright"
-msgstr "Copyright"
-
-msgid "Footer links"
-msgstr "Footer links"
-
-msgid "Links"
-msgstr "Links"
-
-msgid "Address"
-msgstr "Address"
 
 msgid "Missing Appearance configurations"
 msgstr "Missing Appearance configurations"
@@ -565,8 +625,53 @@ msgstr "Error updating footer configurations"
 msgid "Footer configurations"
 msgstr "Footer configurations"
 
-msgid "Footer links label"
-msgstr "Footer links label"
+msgid "General"
+msgstr "General"
+
+msgid "Show title"
+msgstr "Show title"
+
+msgid "Footer items"
+msgstr "Footer items"
+
+msgid "Footer Items"
+msgstr "Footer Items"
+
+msgid "Add footer item"
+msgstr "Add footer item"
+
+msgid "Links"
+msgstr "Links"
+
+msgid "Static Content"
+msgstr "Static Content"
+
+msgid "Add"
+msgstr "Add"
+
+msgid "S/N"
+msgstr "S/N"
+
+msgid "No footer items configured"
+msgstr "No footer items configured"
+
+msgid "Url"
+msgstr "Url"
+
+msgid "Remove Link"
+msgstr "Remove Link"
+
+msgid "Edit link"
+msgstr "Edit link"
+
+msgid "There are no Footer links defined"
+msgstr "There are no Footer links defined"
+
+msgid "Footer links"
+msgstr "Footer links"
+
+msgid "Add footer link"
+msgstr "Add footer link"
 
 msgid "Header configurations updated successfully"
 msgstr "Header configurations updated successfully"
@@ -576,6 +681,9 @@ msgstr "Error updating header configurations"
 
 msgid "Header configurations"
 msgstr "Header configurations"
+
+msgid "Leading logo"
+msgstr "Leading logo"
 
 msgid "Title styles"
 msgstr "Title styles"
@@ -598,8 +706,11 @@ msgstr "Show colored background"
 msgid "Background Color"
 msgstr "Background Color"
 
-msgid "Logo url"
-msgstr "Logo url"
+msgid "Show logo"
+msgstr "Show logo"
+
+msgid "Logo"
+msgstr "Logo"
 
 msgid "Width"
 msgstr "Width"
@@ -625,26 +736,8 @@ msgstr "Text size"
 msgid "Text color"
 msgstr "Text color"
 
-msgid "Add"
-msgstr "Add"
-
-msgid "S/N"
-msgstr "S/N"
-
-msgid "Url"
-msgstr "Url"
-
-msgid "Remove Link"
-msgstr "Remove Link"
-
-msgid "Edit link"
-msgstr "Edit link"
-
-msgid "There are no Footer links defined"
-msgstr "There are no Footer links defined"
-
-msgid "Add footer link"
-msgstr "Add footer link"
+msgid "Header title"
+msgstr "Header title"
 
 msgid "Color"
 msgstr "Color"
@@ -657,9 +750,6 @@ msgstr "Add color"
 
 msgid "Color Selector"
 msgstr "Color Selector"
-
-msgid "General"
-msgstr "General"
 
 msgid "Setup application name and related information"
 msgstr "Setup application name and related information"
@@ -677,6 +767,12 @@ msgstr ""
 msgid "Configure appearance"
 msgstr "Configure appearance"
 
+msgid "Configure different modules of the web portal application"
+msgstr "Configure different modules of the web portal application"
+
+msgid "Configure modules"
+msgstr "Configure modules"
+
 msgid "App Menu"
 msgstr "App Menu"
 
@@ -690,11 +786,11 @@ msgstr ""
 msgid "Configure app menu"
 msgstr "Configure app menu"
 
-msgid "Configure different modules of the web portal application"
-msgstr "Configure different modules of the web portal application"
+msgid "Menu"
+msgstr "Menu"
 
-msgid "Configure modules"
-msgstr "Configure modules"
+msgid "Home Module"
+msgstr "Home Module"
 
 msgid "Error uploading file"
 msgstr "Error uploading file"

@@ -38,6 +38,13 @@ export async function DataVisualization({
 	const { appearanceConfig } = (await getAppearanceConfig())!;
 	const colors = appearanceConfig.colors.chartColors;
 
+	if (!visualizationConfig) {
+		console.error(
+			`Could not get visualization details for visualization ${config.id}`,
+		);
+		throw Error("Could not get visualization details");
+	}
+
 	if (
 		[
 			VisualizationChartType.YEAR_OVER_YEAR_COLUMN,

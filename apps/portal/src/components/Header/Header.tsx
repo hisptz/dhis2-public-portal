@@ -1,7 +1,12 @@
 "use client";
-import { AppAppearanceConfig, AppMenuConfig } from "@packages/shared/schemas";
+import {
+	AppAppearanceConfig,
+	AppMenuConfig,
+	AppMeta,
+} from "@packages/shared/schemas";
 import {
 	AppShell,
+	Box,
 	Burger,
 	Container,
 	Flex,
@@ -13,19 +18,23 @@ import NextImage from "next/image";
 import { getForeground } from "@packages/shared/utils";
 import { HeaderMenu } from "@/components/AppMenu/HeaderMenu";
 import { getAppTheme } from "@/utils/theme";
+import { useGetImageUrl } from "@/utils/images";
 
 export function AppHeader({
 	config,
 	opened,
 	toggle,
 	menuConfig,
+	metadata,
 }: {
 	config: AppAppearanceConfig;
 	menuConfig: AppMenuConfig;
 	opened: boolean;
 	toggle: () => void;
+	metadata: AppMeta;
 }) {
-	const { header: headerConfig, title } = config;
+	const hasMenu = menuConfig.items.length > 1;
+	const { header: headerConfig } = config;
 	const theme = getAppTheme(config);
 	const backgroundColor = headerConfig.style?.coloredBackground
 		? theme.primaryColor
@@ -33,8 +42,9 @@ export function AppHeader({
 	const foregroundColor = backgroundColor
 		? getForeground(backgroundColor)
 		: undefined;
-	const headerBackgroundColor =
-		headerConfig.style?.headerBackgroundColor ?? foregroundColor;
+	const headerBackgroundColor = backgroundColor ?? foregroundColor;
+	const title = headerConfig.title.text;
+	const subtitle = headerConfig.subtitle.text;
 	const titleTextColor =
 		headerConfig.title.style?.textColor ?? foregroundColor;
 	const titleTextSize = headerConfig.title.style?.textSize ?? 20;
@@ -55,26 +65,46 @@ export function AppHeader({
 				? "flex-end"
 				: "flex-start";
 
+	const getImageUrl = useGetImageUrl();
+
+	const leadingImage = getImageUrl(metadata.icon);
+	const trailingImage = headerConfig.style.trailingLogo?.url
+		? getImageUrl(headerConfig.style.trailingLogo?.url)
+		: undefined;
+
 	return (
 		<AppShell.Header p={0} bg={headerBackgroundColor}>
 			<Flex px="sm" gap="lg" align="center" p={0}>
-				<Burger
-					opened={opened}
-					onClick={toggle}
-					hiddenFrom="sm"
-					size="sm"
-				/>
-
-				{headerConfig.logo.enabled && (
-					<Image
-						component={NextImage}
-						width={headerConfig.style?.leadingLogo?.width ?? 100}
-						height={headerConfig.style?.leadingLogo?.height ?? 100}
-						alt="logo"
-						src={headerConfig.style?.leadingLogo?.url}
-						visibleFrom="sm"
-						fallbackSrc="https://avatars.githubusercontent.com/u/1089987?s=200&v=4"
+				{hasMenu && (
+					<Burger
+						opened={opened}
+						onClick={toggle}
+						hiddenFrom="sm"
+						size="sm"
 					/>
+				)}
+				{headerConfig.style?.leadingLogo?.show && (
+					<Box
+						style={{
+							width:
+								headerConfig.style?.leadingLogo?.width ?? 100,
+							height:
+								headerConfig.style?.leadingLogo?.height ?? 100,
+						}}
+					>
+						<Image
+							component={NextImage}
+							width={
+								headerConfig.style?.leadingLogo?.width ?? 100
+							}
+							height={
+								headerConfig.style?.leadingLogo?.height ?? 100
+							}
+							alt="logo"
+							src={leadingImage}
+							visibleFrom="sm"
+						/>
+					</Box>
 				)}
 				<Stack
 					align={headerTitleStackAlign}
@@ -92,9 +122,9 @@ export function AppHeader({
 							}}
 							order={2}
 						>
-							{title.main}
+							{title}
 						</Title>
-						{title.subtitle && (
+						{subtitle && (
 							<Title
 								c={subtitleTextColor}
 								order={4}
@@ -103,26 +133,38 @@ export function AppHeader({
 									alignSelf: headerSubtitleStackAlign,
 								}}
 							>
-								{title.subtitle}
+								{subtitle}
 							</Title>
 						)}
 					</Stack>
 					<Container p={0} className="min-w-full">
-						{menuConfig.position === "header" && (
+						{menuConfig.position === "header" && hasMenu && (
 							<HeaderMenu config={menuConfig} />
 						)}
 					</Container>
 				</Stack>
-				{headerConfig.style?.trailingLogo && (
-					<Image
-						component={NextImage}
-						width={headerConfig.style?.trailingLogo?.width ?? 100}
-						height={headerConfig.style?.trailingLogo?.height ?? 100}
-						alt="logo"
-						src={headerConfig.style?.trailingLogo?.url}
-						hiddenFrom="!xs"
-						fallbackSrc="https://avatars.githubusercontent.com/u/1089987?s=200&v=4"
-					/>
+				{headerConfig.style?.trailingLogo?.show && (
+					<Box
+						style={{
+							height:
+								headerConfig.style?.trailingLogo?.height ?? 100,
+							width:
+								headerConfig.style?.trailingLogo?.width ?? 100,
+						}}
+					>
+						<Image
+							component={NextImage}
+							width={
+								headerConfig.style?.trailingLogo?.width ?? 100
+							}
+							height={
+								headerConfig.style?.trailingLogo?.height ?? 100
+							}
+							alt="logo"
+							src={trailingImage}
+							hiddenFrom="!xs"
+						/>
+					</Box>
 				)}
 			</Flex>
 		</AppShell.Header>

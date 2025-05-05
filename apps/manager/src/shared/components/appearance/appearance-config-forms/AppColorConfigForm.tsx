@@ -7,7 +7,11 @@ import {
 	ModalContent,
 	ModalTitle,
 } from "@dhis2/ui";
-import { AppAppearanceConfig, AppColorConfig } from "@packages/shared/schemas";
+import {
+	AppAppearanceConfig,
+	appColorConfig,
+	AppColorConfig,
+} from "@packages/shared/schemas";
 import { useAlert } from "@dhis2/app-runtime";
 import {
 	FieldErrors,
@@ -23,6 +27,7 @@ import {
 } from "../../../constants/datastore";
 import { ColorPicker } from "./components/ColorPicker";
 import { MultiColorPicker } from "./components/MultiColorPicker/MultiColorPicker";
+import { zodResolver } from "@hookform/resolvers/zod";
 
 type props = {
 	configurations: AppAppearanceConfig;
@@ -45,6 +50,7 @@ export function AppColorConfigForm({
 	);
 	const form = useForm<AppColorConfig>({
 		defaultValues: configurations.colors,
+		resolver: zodResolver(appColorConfig),
 		mode: "onBlur",
 	});
 
@@ -132,6 +138,7 @@ export function AppColorConfigForm({
 						</Button>
 						<Button
 							loading={loading || form.formState.isSubmitting}
+							disabled={!form.formState.isValid}
 							onClick={(_, e) => {
 								form.handleSubmit(
 									onUpdateConfiguration,

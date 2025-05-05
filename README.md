@@ -51,7 +51,6 @@ docker run -d \
 You can also use `docker compose` with this docker-compose.yml file:
 
 ```yaml
-version: '3'
 services:
   portal:
     image: hisptanzania/dhis2-public-portal:latest
@@ -61,6 +60,11 @@ services:
       - DHIS2_BASE_URL=https://your-dhis2-instance.org
       - DHIS2_BASE_PAT_TOKEN=your-personal-access-token
       - CONTEXT_PATH=""
+    volumes:
+      - public:/app/apps/portal/public
+  
+volumes:
+  public:
 ```
 
 Save this to a file named `docker-compose.yml` and run:

@@ -9,8 +9,8 @@ import { PageHeader } from "../../../../../../shared/components/PageHeader";
 import { DeleteModule } from "../../../../../../shared/components/ModulesPage/components/DeleteModule";
 import { ModuleEditActions } from "../../../../../../shared/components/ModulesPage/components/ModuleEditActions";
 import { ModuleType } from "@packages/shared/schemas";
-import { DocumentList } from "../../../../../../shared/components/DocumentList/DocumentList";
 import { StaticConfigPage } from "../../../../../../shared/components/StaticModule/StaticConfigPage";
+import { SectionConfigPage } from "../../../../../../shared/components/SectionModule/SectionConfigPage";
 import { DocumentConfigPage } from "../../../../../../shared/components/DocumentConfigPage/DocumentConfigPage";
 
 export const Route = createLazyFileRoute(
@@ -35,6 +35,8 @@ function RouteComponent() {
 				return <DocumentConfigPage />;
 			case ModuleType.STATIC:
 				return <StaticConfigPage />;
+			case ModuleType.SECTION:
+				return <SectionConfigPage />;
 			default:
 				return (
 					<ErrorPage
@@ -60,7 +62,13 @@ function RouteComponent() {
 				actions={
 					<div className="flex gap-4 items-center">
 						<DeleteModule />
-						<ModuleEditActions />
+						<ModuleEditActions
+							onComplete={() =>
+								navigate({
+									to: "/modules",
+								})
+							}
+						/>
 					</div>
 				}
 			/>

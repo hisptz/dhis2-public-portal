@@ -1,6 +1,7 @@
 import { z } from "zod";
-import { addressSchema } from "./address";
-import { footerLinksConfig } from "./links";
+import { footerLinkSchema } from "./links";
+import { logoConfig } from "./logo";
+import { styleConfig } from "./style";
 
 export const appMeta = z.object({
 	name: z.string(),
@@ -14,7 +15,6 @@ export const appMeta = z.object({
 		}),
 	),
 });
-export type AppMeta = z.infer<typeof appMeta>;
 
 export const appColorConfig = z.object({
 	primary: z.string(),
@@ -24,24 +24,6 @@ export const appColorConfig = z.object({
 		.min(8, { message: "Must have at least 8 colors" }),
 });
 
-export type AppColorConfig = z.infer<typeof appColorConfig>;
-
-export const styleConfig = z.object({
-	align: z.enum(["left", "center", "right"]).optional(),
-	textColor: z.string().optional(),
-	textSize: z.number().optional(),
-});
-
-export type StyleConfig = z.infer<typeof styleConfig>;
-
-export const logoConfig = z.object({
-	url: z.string().url(),
-	width: z.number().optional(),
-	height: z.number().optional(),
-});
-
-export type LogoConfig = z.infer<typeof logoConfig>;
-
 export const headerStyleConfig = z.object({
 	coloredBackground: z.boolean(),
 	headerBackgroundColor: z.string().optional(),
@@ -50,44 +32,54 @@ export const headerStyleConfig = z.object({
 	leadingLogo: logoConfig.optional(),
 });
 
-export type HeaderStyleConfig = z.infer<typeof headerStyleConfig>;
-
 export const headerConfig = z.object({
-	logo: z.object({
-		enabled: z.boolean(),
-	}),
 	subtitle: z.object({
+		text: z
+			.string()
+			.max(100, { message: "Subtitle must be less than 100 characters" })
+			.optional(),
 		style: styleConfig.optional(),
 	}),
 	title: z.object({
+		text: z
+			.string()
+			.min(1, { message: "Title is required" })
+			.max(50, { message: "Title must be less than 50 characters" }),
 		style: styleConfig.optional(),
 	}),
-	style: headerStyleConfig.optional(),
+	style: headerStyleConfig,
 });
 
-export const appTitleConfig = z.object({
-	main: z.string(),
-	subtitle: z.string().optional(),
+export const footerItemConfig = z.object({
+	title: z.string(),
+	type: z.enum(["links", "static"]),
+	links: z.array(footerLinkSchema).optional(),
+	staticContent: z.string().optional(),
 });
-
-export type AppTitleConfig = z.infer<typeof appTitleConfig>;
-
-export type HeaderConfig = z.infer<typeof headerConfig>;
 
 export const footerConfig = z.object({
 	copyright: z.string().optional(),
-	footerLinks: footerLinksConfig,
-	address: addressSchema,
+	showTitle: z.boolean().optional(),
+	footerItems: z.array(footerItemConfig),
 });
-
-export type FooterConfig = z.infer<typeof footerConfig>;
 
 export const appAppearanceConfig = z.object({
 	logo: z.string().url(),
-	title: appTitleConfig,
 	colors: appColorConfig,
 	header: headerConfig,
 	footer: footerConfig,
 });
 
 export type AppAppearanceConfig = z.infer<typeof appAppearanceConfig>;
+
+export type AppMeta = z.infer<typeof appMeta>;
+
+export type HeaderConfig = z.infer<typeof headerConfig>;
+
+export type AppColorConfig = z.infer<typeof appColorConfig>;
+
+export type FooterConfig = z.infer<typeof footerConfig>;
+
+export type FooterItemConfig = z.infer<typeof footerItemConfig>;
+
+export type HeaderStyleConfig = z.infer<typeof headerStyleConfig>;

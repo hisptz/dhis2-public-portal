@@ -46,7 +46,7 @@ export async function getAppConfigsFromNamespace<T>(
 			fields: ".",
 		},
 	});
-	return response.entries.map(({ value }) => value);
+	return response?.entries.map(({ value }) => value) ?? [];
 }
 
 export async function getAppearanceConfig() {
