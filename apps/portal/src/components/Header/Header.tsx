@@ -103,7 +103,6 @@ export function AppHeader({
 							alt="logo"
 							src={leadingImage}
 							visibleFrom="sm"
-							fallbackSrc="https://avatars.githubusercontent.com/u/1089987?s=200&v=4"
 						/>
 					</Box>
 				)}
@@ -164,7 +163,6 @@ export function AppHeader({
 							alt="logo"
 							src={trailingImage}
 							hiddenFrom="!xs"
-							fallbackSrc="https://avatars.githubusercontent.com/u/1089987?s=200&v=4"
 						/>
 					</Box>
 				)}
