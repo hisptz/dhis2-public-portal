@@ -28,8 +28,8 @@ export function VisualizationItemsContainer({
 			<FlexibleLayoutContainer layouts={config.layouts}>
 				{config.items.map((item) => (
 					<FlexibleLayoutItem
-						id={item.item.id}
-						key={`${item.item.id}`}
+						id={"item" in item ? item.item.id : ""}
+						key={"item" in item ? item.item.id : ""}
 					>
 						<DisplayItemContainer item={item}>
 							<DisplayItemSelector item={item} />
@@ -77,7 +77,7 @@ export function VisualizationItemsContainer({
 	return (
 		<FlexibleLayoutContainer layouts={group.layouts}>
 			{group.items.map((item) => (
-				<FlexibleLayoutItem id={item.item.id} key={`${item.item.id}`}>
+				<FlexibleLayoutItem id={"item" in item ? item.item.id : ""} key={"item" in item ? item.item.id : ""}>
 					<DisplayItemContainer item={item}>
 						<DisplayItemSelector item={item} />
 					</DisplayItemContainer>

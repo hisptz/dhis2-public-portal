@@ -1,8 +1,8 @@
 "use server";
 
 import { dhis2HttpClient } from "@/utils/api/dhis2";
-import { Feedback } from "@packages/shared/schemas";
 import { getAppConfig } from "@/utils/config/appConfig";
+import { FeedbackConfig } from "@packages/shared/schemas";
 
 interface SendEmailResponse {}
 
@@ -33,7 +33,7 @@ export async function sendEmail({
 	}
 }
 
-export async function sendFeedbackEmail({ data }: { data: Feedback }) {
+export async function sendFeedbackEmail({ data }: { data: FeedbackConfig }) {
 	const emailConfig = await getAppConfig<{ emails: string[] }>(
 		"feedback-emails",
 	);

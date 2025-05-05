@@ -5,8 +5,8 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
-"POT-Creation-Date: 2025-05-04T13:14:02.581Z\n"
-"PO-Revision-Date: 2025-05-04T13:14:02.581Z\n"
+"POT-Creation-Date: 2025-05-05T07:46:19.670Z\n"
+"PO-Revision-Date: 2025-05-05T07:46:19.670Z\n"
 
 msgid "Could not get Appearance configurations"
 msgstr "Could not get Appearance configurations"
@@ -287,6 +287,27 @@ msgstr "Section"
 
 msgid "Back to Module"
 msgstr "Back to Module"
+
+msgid "Add Feedback"
+msgstr "Add Feedback"
+
+msgid "{{action}} feedback"
+msgstr "{{action}} feedback"
+
+msgid "Email"
+msgstr "Email"
+
+msgid "Edit feedback"
+msgstr "Edit feedback"
+
+msgid "No feedback items configured"
+msgstr "No feedback items configured"
+
+msgid "Full Name"
+msgstr "Full Name"
+
+msgid "Message"
+msgstr "Message"
 
 msgid "Items"
 msgstr "Items"
