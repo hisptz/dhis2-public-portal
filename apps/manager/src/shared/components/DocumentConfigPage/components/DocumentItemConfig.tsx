@@ -1,26 +1,11 @@
 import React, { useCallback } from "react";
 import i18n from "@dhis2/d2-i18n";
-import {
-	Button,
-	ButtonStrip,
-	Divider,
-	IconDelete16,
-	IconLayoutColumns24,
-} from "@dhis2/ui";
+import { Button, ButtonStrip, Divider, IconDelete16 } from "@dhis2/ui";
 import { useFieldArray, useFormContext, useWatch } from "react-hook-form";
-import { mapValues } from "lodash";
-import {
-	DisplayItem,
-	FlexibleLayoutConfig,
-	DocumentItem,
-	DisplayItemType,
-	DocumentsModule,
-} from "@packages/shared/schemas";
+import { DocumentItem, DocumentsModule } from "@packages/shared/schemas";
 import { useNavigate, useParams } from "@tanstack/react-router";
-import { DashboardVisualizations } from "../../VisualizationModule/components/DashboardVisualizationsConfig/components/DashboardVisualizations";
 import { DocumentItemListConfig } from "./DocumentItemList";
-import { AddLibrary } from "./AddDocument/AddLibrary";
-import { AddVisualization } from "../../VisualizationModule/components/AddVisualization/AddVisualization";
+import { AddDocumentButton } from "./AddDocument/AddDocumentButton";
 
 export function DocumentItemConfig() {
 	const { moduleId } = useParams({
@@ -47,7 +32,6 @@ export function DocumentItemConfig() {
 			// 	item: visualization,
 			// };
 			append(Document);
-			
 		},
 		[append, getValues, setValue],
 	);
@@ -56,45 +40,29 @@ export function DocumentItemConfig() {
 		return null;
 	}
 
-	const rows = fields
-		.map((field, index) => {
-			// const visualizationField = field as DisplayItem & {
-			// 	type: DisplayItemType.VISUALIZATION;
-			// 	item: DocumentItem;
-			// };
-
-			return {
-				...field,
-				actions: (
-					<ButtonStrip key={field.id}>
-						{/* <EditVisualization
-							visualization={visualizationField.item}
-							onUpdate={(data) =>
-								update(index, {
-									...visualizationField,
-									item: data,
-								})
-							}
-						/> */}
-						<Button
-							onClick={() => remove(index)}
-							title={i18n.t("Remove")}
-							icon={<IconDelete16 />}
-						/>
-					</ButtonStrip>
-				),
-			};
-		});
+	const rows = fields.map((field, index) => {
+		return {
+			...field,
+			actions: (
+				<ButtonStrip key={field.id}>
+					<Button
+						onClick={() => remove(index)}
+						title={i18n.t("Remove")}
+						icon={<IconDelete16 />}
+					/>
+				</ButtonStrip>
+			),
+		};
+	});
 
 	return (
 		<div className="flex-1 w-full flex flex-col gap-2">
 			<div className="flex items-center justify-between">
 				<h3 className="text-2xl">{i18n.t("Documents")}</h3>
 				<ButtonStrip end>
-					<AddLibrary  onAdd={onAddDocument} />
-					{/* <AddVisualization onAdd={onAddVisualization} /> */}
+					<AddDocumentButton onAdd={onAddDocument} />
 				</ButtonStrip>
-			</div>	
+			</div>
 			<Divider />
 			<DocumentItemListConfig Documents={rows} />
 		</div>

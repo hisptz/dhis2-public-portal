@@ -5,8 +5,8 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
-"POT-Creation-Date: 2025-05-05T07:47:23.272Z\n"
-"PO-Revision-Date: 2025-05-05T07:47:23.273Z\n"
+"POT-Creation-Date: 2025-05-06T12:37:34.365Z\n"
+"PO-Revision-Date: 2025-05-06T12:37:34.365Z\n"
 
 msgid "Could not get Appearance configurations"
 msgstr "Could not get Appearance configurations"
@@ -22,15 +22,6 @@ msgstr "Saving..."
 
 msgid "Save changes"
 msgstr "Save changes"
-
-msgid "Back to all libraries"
-msgstr "Back to all libraries"
-
-msgid "Library"
-msgstr "Library"
-
-msgid "Libraries"
-msgstr "Libraries"
 
 msgid "Layout editor"
 msgstr "Layout editor"
@@ -62,23 +53,20 @@ msgstr "Modules"
 msgid "Size"
 msgstr "Size"
 
-msgid "Create a new library"
-msgstr "Create a new library"
-
 msgid "Add Document"
 msgstr "Add Document"
 
 msgid "Could not create new library"
 msgstr "Could not create new library"
 
-msgid "Library created successfully"
-msgstr "Library created successfully"
+msgid "File uploaded successfully"
+msgstr "File uploaded successfully"
+
+msgid "Could not save the file!"
+msgstr "Could not save the file!"
 
 msgid "Create Item"
 msgstr "Create Item"
-
-msgid "Title"
-msgstr "Title"
 
 msgid "Label"
 msgstr "Label"
@@ -176,6 +164,9 @@ msgstr "Update"
 msgid "Save"
 msgstr "Save"
 
+msgid "Title"
+msgstr "Title"
+
 msgid "Has sub groups"
 msgstr "Has sub groups"
 
@@ -233,9 +224,6 @@ msgstr "Caption"
 msgid "Has groups"
 msgstr "Has groups"
 
-msgid "Title description"
-msgstr "Title description"
-
 msgid "Item Display"
 msgstr "Item Display"
 
@@ -250,15 +238,6 @@ msgstr "Changes saved successfully"
 
 msgid "Could not save changes"
 msgstr "Could not save changes"
-
-msgid "Name"
-msgstr "Name"
-
-msgid "View"
-msgstr "View"
-
-msgid "There are no library configuration present"
-msgstr "There are no library configuration present"
 
 msgid "Something went wrong"
 msgstr "Something went wrong"
@@ -371,6 +350,9 @@ msgstr "There are no sub menus defined"
 
 msgid " sub menu item"
 msgstr " sub menu item"
+
+msgid "Name"
+msgstr "Name"
 
 msgid "Menu Position"
 msgstr "Menu Position"

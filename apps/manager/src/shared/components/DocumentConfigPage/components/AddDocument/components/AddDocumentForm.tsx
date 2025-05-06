@@ -11,42 +11,54 @@ import {
 import React from "react";
 import i18n from "@dhis2/d2-i18n";
 import { RHFSingleSelectField, RHFTextInputField } from "@hisptz/dhis2-ui";
-import { DocumentIDField } from "./DocumentIDField";
 import { useCreateLibrary } from "../hooks/document";
 import { FetchError, useAlert } from "@dhis2/app-runtime";
-import {
-	DocumentItem,
-	documentItemSchema,
-	DocumentsModule,
-	documentsModuleSchema,
-	VisualizationItem,
-} from "@packages/shared/schemas";
+import { DocumentItem, documentItemSchema } from "@packages/shared/schemas";
 import { RHFFileInputField } from "../../../../Fields/RHFFileInputField";
 import { RHFIDField } from "../../../../Fields/IDField";
+import { useManageDocument } from "../../../../../hooks/document";
+import { CustomFile } from "../../DocumentGroupConfig/components/FilesListForm/components/FileForm/hooks/file";
+import { z } from "zod";
+import { omit } from "lodash";
+
+type Props = {
+	hide: boolean;
+	onClose: () => void;
+	onSubmit: (visualization: DocumentItem) => void;
+	documentItem?: DocumentItem;
+};
+
+const documentPayloadSchema = documentItemSchema.extend({
+	file: z.instanceof(File),
+});
+
+type DocumentItemPayload = z.infer<typeof documentPayloadSchema>;
+
 export function AddDocumentForm({
 	hide,
 	onClose,
 	onSubmit,
+	documentItem,
 	// onComplete,
-}: {
- 	hide: boolean;
-	onClose: () => void;
-	onSubmit: (visualization: DocumentItem) => void;
-
-	// onComplete: (library: DocumentsModule) => void;
-}) {
+}: Props) {
 	const { createLibrary } = useCreateLibrary();
 	const { show } = useAlert(
 		({ message }) => message,
 		({ type }) => ({ ...type, duration: 3000 }),
 	);
-	const form = useForm<DocumentItem>({
-		resolver: zodResolver(documentItemSchema),
+
+	// TODO add default file when editing
+	const form = useForm<DocumentItemPayload>({
+		resolver: zodResolver(documentPayloadSchema),
 		mode: "onChange",
 		shouldFocusError: false,
 		defaultValues: {
+			...documentItem,
 		},
 	});
+
+	const { create: uploadDocument } = useManageDocument();
+
 	const onAdd = (visualization: DocumentItem) => {
 		onSubmit(visualization);
 		onClose();
@@ -61,25 +73,40 @@ export function AddDocumentForm({
 		}
 		console.error(error);
 	};
-	// const onSave = async (data: DocumentsModule) => {
-	// 	try {
-	// 		await createLibrary(data);
-	// 		show({
-	// 			message: i18n.t("Library created successfully"),
-	// 			type: { success: true },
-	// 		});
-	// 		onComplete(data);
-	// 		onClose();
-	// 	} catch (e) {
-	// 		if (e instanceof FetchError || e instanceof Error) {
-	// 			show({
-	// 				message: `${i18n.t("Could not create new library")}: ${e.message ?? e.toString()}`,
-	// 				type: { critical: true },
-	// 			});
-	// 		}
-	// 		console.error(e);
-	// 	}
-	// };
+
+	const onSave = async (data: DocumentItemPayload) => {
+		try {
+			if (!(data.file instanceof CustomFile)) {
+				const id = await uploadDocument(data.file);
+				data = {
+					...data,
+					id,
+				};
+			}
+
+			if (data.id) {
+				onAdd(omit(data, "file"));
+				show({
+					message: i18n.t("File uploaded successfully"),
+					type: { success: true },
+				});
+				onClose();
+			} else {
+				show({
+					message: i18n.t("Could not save the file!"),
+					type: { critical: true },
+				});
+			}
+		} catch (e) {
+			if (e instanceof FetchError || e instanceof Error) {
+				show({
+					message: `${i18n.t("Could not create new library")}: ${e.message ?? e.toString()}`,
+					type: { critical: true },
+				});
+			}
+			console.error(e);
+		}
+	};
 
 	return (
 		<FormProvider {...form}>
@@ -87,18 +114,12 @@ export function AddDocumentForm({
 				<ModalTitle>{i18n.t("Create Item")}</ModalTitle>
 				<ModalContent>
 					<form className="flex flex-col gap-4">
-						{/* <RHFTextInputField
-							required
-							name="label"
-							label={i18n.t("Title")}
-						/>
-						<DocumentIDField /> */}
 						<RHFTextInputField
 							required
 							name="label"
 							label={i18n.t("Label")}
 						/>
-						<RHFIDField  name="id" label="ID" dependsOn="label"/>
+						<RHFIDField name="id" label="ID" dependsOn="label" />
 						<RHFSingleSelectField
 							required
 							options={[
@@ -124,9 +145,9 @@ export function AddDocumentForm({
 						<Button
 							loading={form.formState.isSubmitting}
 							primary
-							// onClick={(_, e) => form.handleSubmit(onSave)(e)}
-							onClick={(_, e) => form.handleSubmit(onAdd,onError)(e)}
-
+							onClick={(_, e) =>
+								form.handleSubmit(onSave, onError)(e)
+							}
 						>
 							{form.formState.isSubmitting
 								? i18n.t("Creating...")

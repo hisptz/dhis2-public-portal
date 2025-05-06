@@ -1,25 +1,9 @@
 import React, { useCallback } from "react";
 import i18n from "@dhis2/d2-i18n";
-import {
-	Button,
-	ButtonStrip,
-	Divider,
-	IconDelete16,
-	IconLayoutColumns24,
-} from "@dhis2/ui";
+import { Button, ButtonStrip, Divider, IconDelete16 } from "@dhis2/ui";
 import { useFieldArray, useFormContext, useWatch } from "react-hook-form";
-import { mapValues } from "lodash";
-import {
-	DisplayItem,
-	FlexibleLayoutConfig,
-	DocumentGroup,
-	DisplayItemType,
-	DocumentsModule,
-} from "@packages/shared/schemas";
+import { DocumentGroup, DocumentsModule } from "@packages/shared/schemas";
 import { useNavigate, useParams } from "@tanstack/react-router";
-import { DashboardVisualizations } from "../../VisualizationModule/components/DashboardVisualizationsConfig/components/DashboardVisualizations";
-import { AddLibrary } from "./AddDocument/AddLibrary";
-import { AddVisualization } from "../../VisualizationModule/components/AddVisualization/AddVisualization";
 
 export function DocumentGroupItemConfig() {
 	const { moduleId } = useParams({
@@ -46,7 +30,6 @@ export function DocumentGroupItemConfig() {
 			// 	item: visualization,
 			// };
 			append(document);
-			
 		},
 		[append, getValues, setValue],
 	);
@@ -55,18 +38,17 @@ export function DocumentGroupItemConfig() {
 		return null;
 	}
 
-	const rows = fields
-		.map((field, index) => {
-			// const visualizationField = field as DisplayItem & {
-			// 	type: DisplayItemType.VISUALIZATION;
-			// 	item: DocumentGroup;
-			// };
+	const rows = fields.map((field, index) => {
+		// const visualizationField = field as DisplayItem & {
+		// 	type: DisplayItemType.VISUALIZATION;
+		// 	item: DocumentGroup;
+		// };
 
-			return {
-				...field,
-				actions: (
-					<ButtonStrip key={field.id}>
-						{/* <EditVisualization
+		return {
+			...field,
+			actions: (
+				<ButtonStrip key={field.id}>
+					{/* <EditVisualization
 							visualization={visualizationField.item}
 							onUpdate={(data) =>
 								update(index, {
@@ -75,22 +57,21 @@ export function DocumentGroupItemConfig() {
 								})
 							}
 						/> */}
-						<Button
-							onClick={() => remove(index)}
-							title={i18n.t("Remove")}
-							icon={<IconDelete16 />}
-						/>
-					</ButtonStrip>
-				),
-			};
-		});
+					<Button
+						onClick={() => remove(index)}
+						title={i18n.t("Remove")}
+						icon={<IconDelete16 />}
+					/>
+				</ButtonStrip>
+			),
+		};
+	});
 
 	return (
 		<div className="flex-1 w-full flex flex-col gap-2">
 			<div className="flex items-center justify-between">
 				<h3 className="text-2xl">{i18n.t("Document Group")}</h3>
 				<ButtonStrip end>
-					
 					{/* <AddLibrary  onAdd={onAddVisualization} /> */}
 					{/* <AddVisualization onAdd={onAddVisualization} /> */}
 				</ButtonStrip>
