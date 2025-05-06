@@ -42,6 +42,16 @@ export function VisualizationItemsContainer({
 
 	const groupId = searchParams.group;
 
+	if (isEmpty(config.groups) && config.grouped) {
+		return (
+			<Box className="w-full h-full flex flex-col items-center justify-center min-h-[400px]">
+				<Text size="lg" c="dimmed">
+					There no groups configured for this module
+				</Text>
+			</Box>
+		);
+	}
+
 	if (!groupId) {
 		return (
 			<Box className="w-full h-full flex flex-col items-center justify-center min-h-[400px]">
