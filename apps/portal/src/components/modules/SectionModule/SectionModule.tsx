@@ -16,7 +16,7 @@ export function SectionModule({ config }: { config: SectionModuleConfig }) {
 		<Stack gap="md">
 			{isHorizontal ? (
 				<SimpleGrid
-					cols={{ base: 2 }}
+					cols={{ sm: 1, md: 2, lg: 2 }}
 					spacing="md"
 					verticalSpacing="md"
 				>
