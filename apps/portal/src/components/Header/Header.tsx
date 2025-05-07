@@ -18,7 +18,7 @@ import NextImage from "next/image";
 import { getForeground } from "@packages/shared/utils";
 import { HeaderMenu } from "@/components/AppMenu/HeaderMenu";
 import { getAppTheme } from "@/utils/theme";
-import { useGetImageUrl } from "@/utils/images";
+import { useGetImageUrl } from "@/utils/client/images";
 
 export function AppHeader({
 	config,

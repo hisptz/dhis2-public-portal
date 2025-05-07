@@ -4,15 +4,13 @@ import { NoConfigLandingPage } from "@/components/NoConfigLandingPage";
 import { getAppearanceConfig } from "@/utils/config/appConfig";
 import { Providers } from "@/components/Providers";
 import { getAppMeta } from "@/utils/appMetadata";
-import { useGetImageUrl } from "@/utils/images";
+import { getServerImageUrl } from "@/utils/server/images";
 
 export default async function MainLoadingScreen() {
 	const config = await getAppearanceConfig();
 	const appMeta = await getAppMeta();
 
-	const getIconUrl = useGetImageUrl();
-
-	const logo = appMeta?.icon ? getIconUrl(appMeta?.icon) : undefined;
+	const logo = appMeta?.icon ? getServerImageUrl(appMeta?.icon) : undefined;
 
 	if (!config) {
 		return <NoConfigLandingPage />;
