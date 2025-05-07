@@ -23,24 +23,29 @@ import {
 } from "@packages/shared/schemas";
 import "react-grid-layout/css/styles.css";
 import "react-resizable/css/styles.css";
+import { MainVisualization } from "./ModulesPage/components/Visualizations/MainVisualization";
 
 function SectionItem({ item }: { item: VisualizationItem }) {
-	const { loading, config } = useDashboardItemConfig(item);
+	// const { loading, config } = useDashboardItemConfig(item);
 
-	if (loading) {
-		return (
-			<div className="flex justify-center items-center h-full w-full">
-				<CircularLoader small />
-			</div>
-		);
-	}
+	// if (loading) {
+	// 	return (
+	// 		<div className="flex justify-center items-center h-full w-full">
+	// 			<CircularLoader small />
+	// 		</div>
+	// 	);
+	// }
 
 	return (
 		<div className="flex flex-col justify-center items-center h-full w-full gap-2">
-			<h2 className="text-2xl text-center">
+			<MainVisualization
+				config={item}
+				disableActions
+				/>
+			{/* <h2 className="text-2xl text-center">
 				{config?.displayName ?? "Could not get name"}
 			</h2>
-			<span>{capitalize(item.type).replace("_", " ")}</span>
+			<span>{capitalize(item.type).replace("_", " ")}</span> */}
 		</div>
 	);
 }

@@ -2,6 +2,7 @@ import React, {
 	DetailedHTMLProps,
 	forwardRef,
 	HTMLAttributes,
+	useCallback,
 	useRef,
 	useState,
 } from "react";
@@ -14,29 +15,20 @@ import {
 
 import i18n from "@dhis2/d2-i18n";
 import { Responsive as ResponsiveGridLayout } from "react-grid-layout";
-import { capitalize } from "lodash";
-import { useDashboardItemConfig } from "../hooks/dashboardItem";
-import { DisplayItem, DisplayItemType, FlexibleLayoutConfig, VisualizationItem, VisualizationModule } from "@packages/shared/schemas";
+import { debounce } from "lodash";
+import { FlexibleLayoutConfig, VisualizationItem, VisualizationModule } from "@packages/shared/schemas";
 import "react-grid-layout/css/styles.css";
 import "react-resizable/css/styles.css";
+import { MainVisualization } from "./ModulesPage/components/Visualizations/MainVisualization";
 
 function DashboardItem({ item }: { item: VisualizationItem }) {
-	const { loading, config } = useDashboardItemConfig(item);
-
-	if (loading) {
-		return (
-			<div className="flex justify-center items-center h-full w-full">
-				<CircularLoader small />
-			</div>
-		);
-	}
-
+	
 	return (
-		<div className="flex flex-col justify-center items-center h-full w-full gap-2">
-			<h2 className="text-2xl text-center">
-				{config?.displayName ?? "Could not get name"}
-			</h2>
-			<span>{capitalize(item.type).replace("_", " ")}</span>
+		<div className="flex flex-col justify-center items-center h-full w-full overflow-y-auto gap-2">
+			<MainVisualization
+				config={item}
+				disableActions
+			/>
 		</div>
 	);
 }
@@ -110,13 +102,19 @@ export function DashboardLayoutEditor({
 	>({
 		name: !prefix ? "config.items" : `${prefix}.items`,
 	});
+	// const handleLayoutChange = useCallback(
+	// 	(updatedLayout, actualValue) => {
+	// 	  field.onChange(actualValue);
+	// 	},
+	// 	[field.onChange] 
+	//   );
 
-	const visualizationItems = visualizations?.filter(
-		(item): item is DisplayItem & { type: DisplayItemType.VISUALIZATION; item: VisualizationItem } =>
-			item.type === DisplayItemType.VISUALIZATION
-	) || [];
-
-
+	const handleLayoutChange = useCallback(
+		debounce((updatedLayout, actualValue) => {
+			field.onChange(actualValue);
+		}, 100),
+		[field]
+	);
 	return (
 		<div className="flex flex-col gap-2" ref={ref}>
 			<div className="p-4 max-w-[300px]">
@@ -161,11 +159,13 @@ export function DashboardLayoutEditor({
 						isDraggable
 						isDroppable
 						isResizable
-						onLayoutChange={(updatedLayout, actualValue) => {
-							field.onChange(actualValue);
-						}}
+						useCSSTransforms={true}
+						onLayoutChange={handleLayoutChange}
+					// onLayoutChange={(updatedLayout, actualValue) => {
+					// 	field.onChange(actualValue);
+					// }}
 					>
-						{visualizationItems?.map((item) => (
+						{visualizations?.map((item) => (
 							<GridItem key={item.item.id} item={item.item as VisualizationItem} />
 						))}
 					</ResponsiveGridLayout>
