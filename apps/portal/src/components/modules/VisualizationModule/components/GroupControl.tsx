@@ -39,7 +39,7 @@ export function GroupControl({
 		}
 	};
 
-	if (config.itemsDisplay == ItemsDisplay.DROPDOWN) {
+	if (config.groupDisplay == ItemsDisplay.DROPDOWN) {
 		return (
 			<Group>
 				<Select

@@ -32,7 +32,7 @@ export const baseVisualizationModuleSchema = z.object({
 	title: z.string(),
 	grouped: z.boolean(),
 	preamble: z.string().optional(),
-	itemsDisplay: z.nativeEnum(ItemsDisplay).optional(),
+	groupDisplay: z.nativeEnum(ItemsDisplay).optional(),
 });
 
 export const groupedVisualizationModuleSchema =
