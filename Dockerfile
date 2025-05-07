@@ -10,7 +10,7 @@ RUN apk update
 # Set working directory
 WORKDIR /app
 RUN yarn global add turbo
-COPY . .
+COPY apps/portal .
 RUN turbo prune portal --docker
 
 # Add lockfile and package.json's of isolated subworkspace
@@ -20,7 +20,7 @@ RUN apk update
 WORKDIR /app
 
 # First install the dependencies (as they change less often)
-COPY .gitignore .gitignore
+COPY apps/portal/.gitignore .gitignore
 COPY --from=builder /app/out/json/ .
 COPY --from=builder /app/out/yarn.lock ./yarn.lock
 RUN corepack enable
@@ -37,7 +37,7 @@ COPY --from=builder /app/out/full/ .
 # ARG TURBO_TOKEN
 # ENV TURBO_TOKEN=$TURBO_TOKEN
 
-RUN yarn run build --filter=portal...
+RUN yarn portal run build
 
 FROM base AS runner
 WORKDIR /app

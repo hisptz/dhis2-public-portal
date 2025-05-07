@@ -88,7 +88,26 @@ build the app yourself before deploying.
 Before building your application, make sure to set the `CONTEXT_PATH` to the desired subpath. For example, the URL https://example.org/some/path' the subpath is `/some/path`
 
 ### Docker
-To build and run the application as a docker container, clone this repository to your server. Then run;
+To build and run the application as a docker container, clone this repository to your server. 
+
+```bash 
+git clone --single-branch --branch main https://github.com/hisptz/dhis2-public-portal.git
+```
+
+Then download the dependencies
+
+```bash
+yarn install --frozen-lockfile
+```
+
+Then create the `.env` file in the `apps/portal/` folder. The file should have the following variables:
+
+- `DHIS2_BASE_URL`: The URL of your DHIS2 instance
+- `DHIS2_BASE_PAT_TOKEN`: A Personal Access Token for your DHIS2 instance
+- `CONTEXT_PATH`: A subpath where your application will be hosted
+
+
+Then run;
 
 ```bash
  docker compose -f apps/portal/docker-compose-build.yml up -d
