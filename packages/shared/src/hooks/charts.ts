@@ -59,7 +59,6 @@ export function useAnalytics({
 			}),
 		});
 	}, [refetch, searchParams, selectedOrgUnits, selectedPeriods]);
-
 	return {
 		loading,
 		analytics: data?.analytics,
