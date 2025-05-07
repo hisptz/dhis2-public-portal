@@ -1,6 +1,6 @@
 services:
   portal:
-    image: hisptanzania/dhis2-public-portal:latest
+    build: .
     user: "1001:1001"
     ports:
       - "3000:3000"
