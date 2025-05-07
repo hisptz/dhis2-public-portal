@@ -23,23 +23,16 @@ const columns: SimpleTableColumn[] = [
 ];
 
 export function FilesListForm({ nested }: { nested?: boolean }) {
-	const { fields, append, remove } = useFieldArray<DocumentGroup, "items">(
-		{
-			name: "items",
-			keyName: "key" as unknown as "id",
-		},
-	);
+	const { fields, append, remove } = useFieldArray<DocumentGroup, "items">({
+		name: "items",
+		keyName: "key" as unknown as "id",
+	});
 
 	const rows = useMemo(() => {
 		return fields.map((field, index) => ({
 			...field,
 			actions: (
 				<ButtonStrip>
-					{/*<EditFile*/}
-					{/*	nested={nested}*/}
-					{/*	onUpdate={(data) => update(index, data)}*/}
-					{/*	file={field}*/}
-					{/*/>*/}
 					<DeleteFile file={field} onRemove={() => remove(index)} />
 				</ButtonStrip>
 			),

@@ -1,5 +1,5 @@
 import React, { useMemo } from "react";
-import { useFieldArray } from "react-hook-form";
+import { useFieldArray, useWatch } from "react-hook-form";
 import { DocumentsModule } from "@packages/shared/schemas";
 import { SimpleTable, SimpleTableColumn } from "@hisptz/dhis2-ui";
 import i18n from "@dhis2/d2-i18n";
@@ -25,6 +25,9 @@ const columns: SimpleTableColumn[] = [
 ];
 
 export function DocumentGroupConfig() {
+	const hasGroups = useWatch<DocumentsModule, "config.grouped">({
+		name: "config.grouped",
+	});
 	const { fields, append, update, remove } = useFieldArray<
 		DocumentsModule,
 		"config.groups"
@@ -32,6 +35,7 @@ export function DocumentGroupConfig() {
 		name: "config.groups",
 		keyName: "key" as unknown as "id",
 	});
+
 	const rows = useMemo(
 		() =>
 			fields.map((field, index) => ({
@@ -57,6 +61,9 @@ export function DocumentGroupConfig() {
 			})),
 		[fields],
 	);
+	if (!hasGroups) {
+		return null;
+	}
 
 	return (
 		<Field label={i18n.t("Groups")}>

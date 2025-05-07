@@ -11,7 +11,6 @@ import {
 import React from "react";
 import i18n from "@dhis2/d2-i18n";
 import { RHFSingleSelectField, RHFTextInputField } from "@hisptz/dhis2-ui";
-import { useCreateLibrary } from "../hooks/document";
 import { FetchError, useAlert } from "@dhis2/app-runtime";
 import { DocumentItem, documentItemSchema } from "@packages/shared/schemas";
 import { RHFFileInputField } from "../../../../Fields/RHFFileInputField";
@@ -39,9 +38,7 @@ export function AddDocumentForm({
 	onClose,
 	onSubmit,
 	documentItem,
-	// onComplete,
 }: Props) {
-	const { createLibrary } = useCreateLibrary();
 	const { show } = useAlert(
 		({ message }) => message,
 		({ type }) => ({ ...type, duration: 3000 }),
@@ -150,8 +147,10 @@ export function AddDocumentForm({
 							}
 						>
 							{form.formState.isSubmitting
-								? i18n.t("Creating...")
-								: i18n.t("Create library")}
+								? i18n.t(
+										"Document is being uploaded, please wait...",
+									)
+								: i18n.t("Add Document")}
 						</Button>
 					</ButtonStrip>
 				</ModalActions>

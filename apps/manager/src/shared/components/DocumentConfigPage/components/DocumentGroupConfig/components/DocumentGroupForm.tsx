@@ -8,17 +8,12 @@ import {
 	ModalContent,
 	ModalTitle,
 } from "@dhis2/ui";
-import {
-	DocumentGroup,
-	documentGroupSchema,
-	GroupedDocumentModuleConfig,
-	groupedDocumentModuleConfigSchema,
-	VisualizationGroup,
-} from "@packages/shared/schemas";
+import { DocumentGroup, documentGroupSchema } from "@packages/shared/schemas";
 import i18n from "@dhis2/d2-i18n";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { RHFTextInputField } from "@hisptz/dhis2-ui";
 import { RHFIDField } from "../../../../Fields/IDField";
+import { DocumentGroupTypeSelector } from "../../DocumentGroupSelector";
 
 export function DocumentGroupForm({
 	hide,
@@ -72,8 +67,9 @@ export function DocumentGroupForm({
 						<RHFIDField
 							name="id"
 							label={i18n.t("ID")}
-							dependsOn="label"
+							dependsOn="title"
 						/>
+						<DocumentGroupTypeSelector />
 					</form>
 				</ModalContent>
 				<ModalActions>

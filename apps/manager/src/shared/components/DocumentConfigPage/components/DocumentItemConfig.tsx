@@ -8,11 +8,7 @@ import { DocumentItemListConfig } from "./DocumentItemList";
 import { AddDocumentButton } from "./AddDocument/AddDocumentButton";
 
 export function DocumentItemConfig() {
-	const { moduleId } = useParams({
-		from: "/modules/_provider/$moduleId",
-	});
 	const { setValue, getValues } = useFormContext<DocumentsModule>();
-	const navigate = useNavigate();
 	const hasGroups = useWatch<DocumentsModule, "config.grouped">({
 		name: "config.grouped",
 	});
@@ -27,10 +23,6 @@ export function DocumentItemConfig() {
 
 	const onAddDocument = useCallback(
 		(Document: DocumentItem) => {
-			// const displayItem: DisplayItem = {
-			// 	type: DisplayItemType.VISUALIZATION,
-			// 	item: visualization,
-			// };
 			append(Document);
 		},
 		[append, getValues, setValue],

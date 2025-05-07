@@ -21,9 +21,6 @@ export function AddDocumentGroup({
 
 	return (
 		<>
-			<Button onClick={onOpen} icon={<IconAdd24 />}>
-				{i18n.t("Add group")}
-			</Button>
 			{!hide && (
 				<DocumentGroupForm
 					nested={nested}
@@ -32,6 +29,9 @@ export function AddDocumentGroup({
 					onSave={onSave}
 				/>
 			)}
+			<Button onClick={onOpen} icon={<IconAdd24 />}>
+				{i18n.t("Add group")}
+			</Button>
 		</>
 	);
 }

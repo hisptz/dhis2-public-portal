@@ -14,8 +14,6 @@ export function DeleteDocumentGroup({
 	group: DocumentGroup;
 }) {
 	const { confirm } = useDialog();
-	// const { deleteFiles } = useDeleteDocuments();
-
 	const onDeleteClick = async () => {
 		confirm({
 			title: i18n.t("Confirm deleting group"),
@@ -23,15 +21,6 @@ export function DeleteDocumentGroup({
 				<span>{`${i18n.t("Are you sure you want to remove the group ")} ${group.title}? ${i18n.t("This will delete all files and sub groups in this group as well.")} ${i18n.t("This action is irreversible.")}`}</span>
 			),
 			onConfirm: async () => {
-				// const fileIds = compact(
-				// 	group.items?.map((file) => file.id) ??
-				// 		flatten(
-				// 			group.subGroups?.map((subGroup) =>
-				// 				subGroup.files?.map((file) => file.id),
-				// 			),
-				// 		),
-				// );
-				// await deleteFiles(fileIds);
 				onRemove();
 			},
 			loadingText: i18n.t("Deleting..."),

@@ -47,7 +47,9 @@ export function FileForm({
 						file: fileObject,
 					};
 				}
-			: {},
+			: {
+					id: "",
+				},
 	});
 	const { uploadFile } = useUploadFile();
 
@@ -72,7 +74,6 @@ export function FileForm({
 			}
 		}
 	};
-
 	return (
 		<FormProvider {...form}>
 			<Modal
