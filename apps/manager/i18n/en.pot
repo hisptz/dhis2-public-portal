@@ -5,8 +5,8 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
-"POT-Creation-Date: 2025-05-06T12:37:34.365Z\n"
-"PO-Revision-Date: 2025-05-06T12:37:34.365Z\n"
+"POT-Creation-Date: 2025-05-07T06:00:27.869Z\n"
+"PO-Revision-Date: 2025-05-07T06:00:27.869Z\n"
 
 msgid "Could not get Appearance configurations"
 msgstr "Could not get Appearance configurations"
@@ -92,27 +92,6 @@ msgstr "This will be a part of the url. It should not contain spaces"
 msgid "ID"
 msgstr "ID"
 
-msgid "Delete document"
-msgstr "Delete document"
-
-msgid "Deleting..."
-msgstr "Deleting..."
-
-msgid "Delete"
-msgstr "Delete"
-
-msgid "Document deleted successfully"
-msgstr "Document deleted successfully"
-
-msgid "Could not delete document"
-msgstr "Could not delete document"
-
-msgid "Are you sure you want to delete the document "
-msgstr "Are you sure you want to delete the document "
-
-msgid "This action is irreversible"
-msgstr "This action is irreversible"
-
 msgid "Could not save form, check the logs for more information"
 msgstr "Could not save form, check the logs for more information"
 
@@ -149,14 +128,20 @@ msgstr "This will delete all files and sub groups in this group as well."
 msgid "This action is irreversible."
 msgstr "This action is irreversible."
 
+msgid "Deleting..."
+msgstr "Deleting..."
+
+msgid "Delete"
+msgstr "Delete"
+
 msgid "Delete group"
 msgstr "Delete group"
 
-msgid "Edit Library Group"
-msgstr "Edit Library Group"
+msgid "Edit Document Group"
+msgstr "Edit Document Group"
 
-msgid "Add Library Group"
-msgstr "Add Library Group"
+msgid "Add Document Group"
+msgstr "Add Document Group"
 
 msgid "Update"
 msgstr "Update"
@@ -166,9 +151,6 @@ msgstr "Save"
 
 msgid "Title"
 msgstr "Title"
-
-msgid "Has sub groups"
-msgstr "Has sub groups"
 
 msgid "Edit group"
 msgstr "Edit group"
@@ -205,9 +187,6 @@ msgstr "Could not create document {{ errorMessage }}"
 
 msgid "Could not delete file {{ errorMessage }}"
 msgstr "Could not delete file {{ errorMessage }}"
-
-msgid "There are no sub groups present"
-msgstr "There are no sub groups present"
 
 msgid "Remove"
 msgstr "Remove"
@@ -404,6 +383,9 @@ msgstr "Delete module"
 
 msgid "Are you sure you want to delete the module "
 msgstr "Are you sure you want to delete the module "
+
+msgid "This action is irreversible"
+msgstr "This action is irreversible"
 
 msgid "Filter by Type"
 msgstr "Filter by Type"

@@ -8,11 +8,16 @@ import {
 	ModalContent,
 	ModalTitle,
 } from "@dhis2/ui";
-import { DocumentGroup, documentGroupSchema } from "@packages/shared/schemas";
+import {
+	DocumentGroup,
+	documentGroupSchema,
+	GroupedDocumentModuleConfig,
+	groupedDocumentModuleConfigSchema,
+	VisualizationGroup,
+} from "@packages/shared/schemas";
 import i18n from "@dhis2/d2-i18n";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { RHFTextInputField } from "@hisptz/dhis2-ui";
-import { DocumentGroupTypeSelector } from "./DocumentGroupTypeSelector";
 import { RHFIDField } from "../../../../Fields/IDField";
 
 export function DocumentGroupForm({
@@ -35,10 +40,14 @@ export function DocumentGroupForm({
 	});
 	const editMode = !!group;
 	const title = editMode
-		? i18n.t("Edit Library Group")
-		: i18n.t("Add Library Group");
+		? i18n.t("Edit Document Group")
+		: i18n.t("Add Document Group");
 	const buttonLabel = editMode ? i18n.t("Update") : i18n.t("Save");
 
+	const handleSave = (data: DocumentGroup) => {
+		onSave(data);
+		onClose();
+	};
 	return (
 		<FormProvider {...form}>
 			<Modal
@@ -60,7 +69,6 @@ export function DocumentGroupForm({
 							label={i18n.t("ID")}
 							dependsOn="label"
 						/>
-						<DocumentGroupTypeSelector nested={nested} />
 					</form>
 				</ModalContent>
 				<ModalActions>
@@ -68,7 +76,7 @@ export function DocumentGroupForm({
 						<Button onClick={onClose}>{i18n.t("Cancel")}</Button>
 						<Button
 							primary
-							onClick={(_, e) => form.handleSubmit(onSave)(e)}
+							onClick={(_, e) => form.handleSubmit(handleSave)(e)}
 						>
 							{buttonLabel}
 						</Button>
