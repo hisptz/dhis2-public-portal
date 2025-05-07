@@ -43,4 +43,4 @@ jobs:
 
       # Deploy to development DHIS2 instance
       - name: Deploy to Development DHIS2 Instance
-        run: yarn manager deploy --username ${{ env.D2_USERNAME }}
+        run: yarn manager deploy --username ${{ env.D2_USERNAME }} ${{env.DHIS2_BASE_URL}}
