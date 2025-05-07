@@ -70,7 +70,13 @@ export function MainLayout({
 			{hasMenu && (
 				<SideAppMenu
 					menuConfig={menuConfig}
-					isOpen={isLargerThanSm ? isOpen : opened}
+					isOpen={
+						menuConfig.collapsible
+							? isLargerThanSm
+								? isOpen
+								: opened
+							: true
+					}
 					setOpen={setOpen}
 				/>
 			)}
