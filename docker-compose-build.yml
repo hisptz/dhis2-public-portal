@@ -9,11 +9,14 @@ services:
         CONTEXT_PATH: ${CONTEXT_PATH}
     user: "1001:1001"
     ports:
-      - "3000:3000"
+      - "${PORTAL_PORT:-3000}:3000"
     env_file:
       - .env
     volumes:
       - public:/app/apps/portal/public
 volumes:
   public:
-
+networks:
+  default:
+    name: portal-network
+    driver: bridge

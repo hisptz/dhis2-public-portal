@@ -6,7 +6,8 @@ export async function GET(request: NextRequest) {
 
 	const urlToForward = url
 		.substring(url.lastIndexOf("/api/"))
-		.replace("/api/", "");
+		.replace("/api/", "")
+		.split("?")[0];
 
 	return await dhis2HttpClient.getFile(urlToForward);
 }

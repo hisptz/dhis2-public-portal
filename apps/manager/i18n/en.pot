@@ -5,8 +5,8 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
-"POT-Creation-Date: 2025-05-07T10:16:18.195Z\n"
-"PO-Revision-Date: 2025-05-07T10:16:18.195Z\n"
+"POT-Creation-Date: 2025-05-07T15:16:20.328Z\n"
+"PO-Revision-Date: 2025-05-07T15:16:20.328Z\n"
 
 msgid "Could not get Appearance configurations"
 msgstr "Could not get Appearance configurations"
@@ -586,14 +586,17 @@ msgstr "Hide advanced options"
 msgid "Show advanced options"
 msgstr "Show advanced options"
 
+msgid "Background Color"
+msgstr "Background Color"
+
+msgid "Use primary color as background color"
+msgstr "Use primary color as background color"
+
 msgid "Header styles"
 msgstr "Header styles"
 
 msgid "Show colored background"
 msgstr "Show colored background"
-
-msgid "Background Color"
-msgstr "Background Color"
 
 msgid "Show logo"
 msgstr "Show logo"
