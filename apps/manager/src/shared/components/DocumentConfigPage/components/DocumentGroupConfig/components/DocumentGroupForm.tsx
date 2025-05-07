@@ -34,7 +34,9 @@ export function DocumentGroupForm({
 	nested?: boolean;
 }) {
 	const form = useForm<DocumentGroup>({
-		defaultValues: group ?? {},
+		defaultValues: group ?? {
+			items: [],
+		},
 		mode: "onChange",
 		resolver: zodResolver(documentGroupSchema),
 	});
@@ -47,6 +49,9 @@ export function DocumentGroupForm({
 	const handleSave = (data: DocumentGroup) => {
 		onSave(data);
 		onClose();
+	};
+	const err = (err) => {
+		console.log(err);
 	};
 	return (
 		<FormProvider {...form}>
@@ -61,7 +66,7 @@ export function DocumentGroupForm({
 					<form className="flex flex-col gap-4">
 						<RHFTextInputField
 							required
-							name="label"
+							name="title"
 							label={i18n.t("Title")}
 						/>
 						<RHFIDField
@@ -76,7 +81,9 @@ export function DocumentGroupForm({
 						<Button onClick={onClose}>{i18n.t("Cancel")}</Button>
 						<Button
 							primary
-							onClick={(_, e) => form.handleSubmit(handleSave)(e)}
+							onClick={(_, e) =>
+								form.handleSubmit(handleSave, err)(e)
+							}
 						>
 							{buttonLabel}
 						</Button>

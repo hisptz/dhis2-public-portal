@@ -11,12 +11,9 @@ import { DeleteDocumentGroup } from "./components/DeleteDocumentGroup";
 const columns: SimpleTableColumn[] = [
 	{
 		label: i18n.t("Label"),
-		key: "label",
+		key: "title",
 	},
-	{
-		label: i18n.t("Sub groups"),
-		key: "groups",
-	},
+
 	{
 		label: i18n.t("Files"),
 		key: "files",
