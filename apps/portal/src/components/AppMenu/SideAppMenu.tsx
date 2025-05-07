@@ -88,7 +88,7 @@ export function SideAppMenu({
 				height: "100dvh",
 			}}
 		>
-			{isLargerThanSm && (
+			{isLargerThanSm && menuConfig.collapsible && (
 				<Group justify={isOpen ? "flex-end" : "center"} p="xs">
 					<Burger
 						opened={isOpen}
