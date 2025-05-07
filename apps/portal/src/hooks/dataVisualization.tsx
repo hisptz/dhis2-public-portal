@@ -21,7 +21,7 @@ import { isEmpty } from "lodash";
 import { useFullScreenHandle } from "react-full-screen";
 import { useDataQuery } from "@dhis2/app-runtime";
 import { LegendSet } from "@hisptz/dhis2-utils";
-import { ActionMenuGroup } from "@/components/displayItems/visualizations/ActionMenu";
+import { ActionMenuGroup } from "@packages/shared/components";
 
 export function useDimensionViewControls({
 	visualizationConfig,

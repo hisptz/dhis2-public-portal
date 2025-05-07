@@ -1,6 +1,6 @@
 import { ReadonlyURLSearchParams } from "next/navigation";
 import { dhis2HttpClient } from "@/utils/api/dhis2";
-import { DataVisComponent } from "@/components/displayItems/visualizations/DataVisComponent";
+import { DataVisComponent } from "@packages/shared/components";
 import {
 	ChartVisualizationItem,
 	VisualizationChartType,

@@ -9,20 +9,20 @@ import {
 	VisualizationItem,
 } from "@packages/shared/schemas";
 import { FullScreen } from "react-full-screen";
-import { CustomOrgUnitModal } from "./CustomOrgUnitModal";
-import { CustomPeriodModal } from "./CustomPeriodModal";
+import { CustomOrgUnitModal } from "@packages/shared/components";
+import { CustomPeriodModal } from "@packages/shared/components";
 import { useSearchParams } from "next/navigation";
 import { isEmpty } from "lodash";
-import { ActionMenu } from "@/components/displayItems/visualizations/ActionMenu";
+import { ActionMenu } from "@packages/shared/components";
 import { CaptionPopover } from "@/components/CaptionPopover";
-import { VisualizationTitle } from "@/components/displayItems/visualizations/VisualizationTitle";
+import { VisualizationTitle } from "@packages/shared/components";
 import {
 	useContainerSize,
 	useDimensionViewControls,
 	useVisualizationLegendSet,
 	useVisualizationRefs,
 } from "@/hooks/dataVisualization";
-import { ChartSelector } from "@/components/displayItems/visualizations/ChartSelector";
+import { ChartSelector } from "@packages/shared/components";
 import { useYearOverYearAnalytics } from "@packages/shared/hooks";
 import { TableVisualizer } from "@packages/ui/visualizations";
 

@@ -8,7 +8,7 @@ import i18n from "@dhis2/d2-i18n";
 import { useMemo, useTransition } from "react";
 import { useOrgUnit } from "@/utils/orgUnits";
 import { OrganisationUnit } from "@hisptz/dhis2-utils";
-import { CustomOrgUnitModal } from "@/components/displayItems/visualizations/CustomOrgUnitModal";
+import { CustomOrgUnitModal } from "@packages/shared/components";
 import { IconMapPin } from "@tabler/icons-react";
 import { useRouter } from "nextjs-toploader/app";
 

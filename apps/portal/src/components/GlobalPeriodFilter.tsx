@@ -7,7 +7,7 @@ import { useBoolean } from "usehooks-ts";
 import { useMemo, useTransition } from "react";
 import { useSearchParams } from "next/navigation";
 import { PeriodConfig } from "@packages/shared/schemas";
-import { CustomPeriodModal } from "@/components/displayItems/visualizations/CustomPeriodModal";
+import { CustomPeriodModal } from "@packages/shared/components";
 import { IconClock } from "@tabler/icons-react";
 import { PeriodTypeCategory, PeriodUtility } from "@hisptz/dhis2-utils";
 import { createFixedPeriodFromPeriodId } from "@dhis2/multi-calendar-dates";
