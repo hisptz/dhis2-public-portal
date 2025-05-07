@@ -1,3 +1,5 @@
+"use client";
+
 import { AnalyticsData, VisualizationConfig } from "@packages/shared/schemas";
 import React, { RefObject, useRef } from "react";
 import HighchartsReact from "highcharts-react-official";
