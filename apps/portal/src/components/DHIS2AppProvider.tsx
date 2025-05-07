@@ -3,9 +3,7 @@
 import { ComponentType, ReactNode } from "react";
 import dynamic from "next/dynamic";
 import { D2SystemInfo } from "@/types/d2SystemInfo";
-import { QueryClient, QueryClientProvider } from "react-query";
-
-const queryClient = new QueryClient();
+import { FullPageLoader } from "@/components/FullPageLoader";
 
 const NoSsrAppProvider: ComponentType<any> = dynamic(
 	async () => {
@@ -15,6 +13,7 @@ const NoSsrAppProvider: ComponentType<any> = dynamic(
 	},
 	{
 		ssr: false,
+		loading: FullPageLoader,
 	},
 );
 
@@ -28,24 +27,22 @@ export function DHIS2AppProvider({
 	contextPath: string;
 }) {
 	if (typeof window === "undefined") {
-		return null;
+		return children;
 	}
 
 	const [, minor] = systemInfo?.version.split(".") ?? [];
 	return (
-		<QueryClientProvider client={queryClient}>
-			<NoSsrAppProvider
-				config={{
-					baseUrl: `${window.location.protocol}//${window.location.host}${contextPath ?? ""}`,
-					apiVersion: minor,
-					systemInfo,
-				}}
-				plugin={{}}
-				parentAlertsAdd={{}}
-				showAlertsInPlugin={false}
-			>
-				{children}
-			</NoSsrAppProvider>
-		</QueryClientProvider>
+		<NoSsrAppProvider
+			config={{
+				baseUrl: `${window.location.protocol}//${window.location.host}${contextPath ?? ""}`,
+				apiVersion: minor,
+				systemInfo,
+			}}
+			plugin={{}}
+			parentAlertsAdd={{}}
+			showAlertsInPlugin={false}
+		>
+			{children}
+		</NoSsrAppProvider>
 	);
 }

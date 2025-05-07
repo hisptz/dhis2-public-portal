@@ -109,3 +109,14 @@ export async function getAppMetadata(): Promise<Metadata> {
 		};
 	}
 }
+
+export async function getAppMeta(): Promise<AppMeta | undefined> {
+	try {
+		return (await getAppConfigWithNamespace<AppMeta>({
+			namespace: DatastoreNamespaces.MAIN_CONFIG,
+			key: "metadata",
+		}))!;
+	} catch (e) {
+		return;
+	}
+}
