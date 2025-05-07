@@ -1,19 +1,30 @@
-import { SectionModuleConfig } from "@packages/shared/schemas";
-import { Stack } from "@mantine/core";
+import { SectionDisplay, SectionModuleConfig } from "@packages/shared/schemas";
+import { SimpleGrid, Stack } from "@mantine/core";
 import { SectionTitle } from "@/components/modules/SectionModule/components/SectionTitle";
 import { SectionDisplaySelector } from "@/components/modules/SectionModule/components/SectionDisplaySelector";
 
 export function SectionModule({ config }: { config: SectionModuleConfig }) {
+	const isHorizontal = config.sectionDisplay === SectionDisplay.HORIZONTAL;
+	const sections = config.config.sections.map((section) => (
+		<Stack gap="md" key={section.id}>
+			<SectionTitle section={section} />
+			<SectionDisplaySelector section={section} />
+		</Stack>
+	));
+
 	return (
 		<Stack gap="md">
-			{config.config.sections.map((section) => {
-				return (
-					<Stack gap="md" key={section.id}>
-						<SectionTitle section={section} />
-						<SectionDisplaySelector section={section} />
-					</Stack>
-				);
-			})}
+			{isHorizontal ? (
+				<SimpleGrid
+					cols={{ sm: 1, md: 2, lg: 2 }}
+					spacing="md"
+					verticalSpacing="md"
+				>
+					{sections}
+				</SimpleGrid>
+			) : (
+				<Stack gap="md">{sections}</Stack>
+			)}
 		</Stack>
 	);
 }

@@ -17,8 +17,8 @@ import { Responsive as ResponsiveGridLayout } from "react-grid-layout";
 import { capitalize } from "lodash";
 import { useDashboardItemConfig } from "../hooks/dashboardItem";
 import {
-	DisplayItem,
-	FlexibleLayoutConfig,
+ 	FlexibleLayoutConfig,
+	VisualizationDisplayItem,
 	VisualizationItem,
 } from "@packages/shared/schemas";
 import "react-grid-layout/css/styles.css";
@@ -114,7 +114,7 @@ export function SectionLayoutEditor({
 		name: `${prefix}.layouts`,
 	});
 
-	const visualizations: DisplayItem[] = useWatch({
+	const visualizations: VisualizationDisplayItem[] = useWatch({
 		name: `${prefix}.items`,
 	});
 

@@ -1,10 +1,8 @@
 import React, { useState } from "react";
 import i18n from "@dhis2/d2-i18n";
 import {
-	Button,
 	ButtonStrip,
 	Divider,
-	IconDelete16,
 	SingleSelectField,
 	SingleSelectOption,
 } from "@dhis2/ui";
@@ -25,6 +23,7 @@ import { useSectionNamePrefix } from "../../../hooks/route";
 import { EditVisualization } from "../../../../VisualizationModule/components/AddVisualization/componets/EditVisualization";
 import { AddVisualization } from "../../../../VisualizationModule/components/AddVisualization/AddVisualization";
 import { SectionVisualizations } from "./SectionVisualizations";
+import { FeedbackItemConfig } from "../../Feedback/FeedbackConfig";
 
 export function SectionSingleItemConfig() {
 	const namePrefix = useSectionNamePrefix();
@@ -55,12 +54,13 @@ export function SectionSingleItemConfig() {
 							...visualization,
 						},
 					};
+
 		field.onChange(displayItem);
 	};
 
 	const DisplaySingleItemSelector = () => {
 		const singleItemVisualization =
-			field.value.type == DisplayItemType.RICH_TEXT
+			field.value.type == DisplayItemType.RICH_TEXT||field.value.type == DisplayItemType.FEEDBACK
 				? []
 				: ([field.value]?.map((item, index) => {
 						return {
@@ -75,24 +75,30 @@ export function SectionSingleItemConfig() {
 													? {
 															type: VisualizationDisplayItemType.CHART,
 															id: item.item.id,
+															icon: item.item
+																.icon,
 														}
 													: item.item
 											}
 											onUpdate={(data) => {
 												field.onChange({
 													type: selectedSingleItemType,
-													item: {
-														...data,
-													},
+													item:
+														item.type ==
+														DisplayItemType.SINGLE_VALUE
+															? {
+																	...data,
+																	icon:
+																		data.icon ??
+																		"",
+																}
+															: {
+																	...data,
+																},
 												});
 											}}
 										/>
 									}
-									<Button
-										onClick={() => {}}
-										title={i18n.t("Remove")}
-										icon={<IconDelete16 />}
-									/>
 								</ButtonStrip>
 							),
 						};
@@ -139,6 +145,10 @@ export function SectionSingleItemConfig() {
 						name={""}
 					/>
 				);
+				case DisplayItemType.FEEDBACK:
+					return (
+						<FeedbackItemConfig />
+					);
 			default:
 				return <></>;
 		}

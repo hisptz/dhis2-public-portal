@@ -13,6 +13,7 @@ import { useNavigate, useParams } from "@tanstack/react-router";
 import {
 	AppModule,
 	BaseSectionConfig,
+	DisplayItemType,
 	Section,
 	SectionModuleConfig,
 	SectionType,
@@ -46,7 +47,13 @@ export function SectionsConfig() {
 			case SectionType.GRID_LAYOUT:
 				return { ...data, items: [] } as Section;
 			case SectionType.SINGLE_ITEM:
-				return { ...data, item: {} } as Section;
+				return {
+					...data,
+					item: {
+						type: DisplayItemType.RICH_TEXT,
+						item: { id: "", content: "" },
+					},
+				} as Section;
 			default:
 				throw new Error("Unsupported section type");
 		}

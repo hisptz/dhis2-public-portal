@@ -22,7 +22,7 @@ const columns: SimpleTableColumn[] = [
 export function Sections({ sections }: { sections: Section[] }) {
 	const rows = sections.map((section) => ({
 		...section,
-		type: startCase(section.type.toLowerCase()),
+		type: startCase(section?.type?.toLowerCase()),
 	}));
 
 	return <SimpleDataTable columns={columns} rows={rows} />;

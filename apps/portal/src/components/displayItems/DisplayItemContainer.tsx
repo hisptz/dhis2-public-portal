@@ -13,7 +13,7 @@ export function DisplayItemContainer({
 	children: React.ReactNode;
 }) {
 	return (
-		<Card key={`${item.item.id}-card`} className="w-full h-full">
+		<Card key={`${'id' in item ? item.id : ''}-card`} className="w-full h-full">
 			<ErrorBoundary FallbackComponent={CardError}>
 				<Suspense fallback={<CardLoading />}>{children}</Suspense>
 			</ErrorBoundary>

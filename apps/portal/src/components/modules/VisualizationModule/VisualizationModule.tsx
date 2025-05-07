@@ -4,6 +4,7 @@ import { GroupControl } from "@/components/modules/VisualizationModule/component
 import { Selectors } from "@/components/modules/VisualizationModule/components/Selectors/Selectors";
 import { VisualizationItemsContainer } from "@/components/modules/VisualizationModule/components/VisualizationItemsContainer";
 import { DescriptionArea } from "@/components/modules/VisualizationModule/components/DescriptionArea";
+import { isEmpty } from "lodash";
 
 export function VisualizationModule({
 	config,
@@ -15,7 +16,9 @@ export function VisualizationModule({
 	return (
 		<Stack className="w-full h-full">
 			<Title order={2}>{config.title}</Title>
-			{config.grouped && <GroupControl config={config} />}
+			{config.grouped && !isEmpty(config.groups) && (
+				<GroupControl config={config} />
+			)}
 			<Selectors config={config} />
 			<DescriptionArea searchParams={searchParams} config={config} />
 			<Box flex={1}>

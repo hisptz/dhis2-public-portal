@@ -84,6 +84,11 @@ export function VisSelector() {
 	const { data, loading, refetch } = useDataQuery<VisualizationQueryResponse>(
 		visQuery as any,
 	);
+
+	const visId = useWatch<VisualizationItem>({
+		name: "id",
+	});
+
 	const options = useMemo(
 		() =>
 			data?.vis?.visualizations.map(({ id, displayName, type }) => ({
@@ -91,6 +96,7 @@ export function VisSelector() {
 					? `${displayName}`
 					: `${displayName} (${capitalize(type)})`,
 				value: id,
+				type: type,
 			})) ?? [],
 		[data?.vis?.visualizations, visualizationType],
 	);
@@ -102,6 +108,15 @@ export function VisSelector() {
 			});
 		}
 	}, [refetch, visualizationType]);
+
+	useEffect(() => {
+		const selectedVisualization = options.find(
+			(option) => option.value === visId,
+		);
+		if (visualizationType !== selectedVisualization?.type && !loading) {
+			setVisualizationType(selectedVisualization?.type);
+		}
+	}, [loading]);
 
 	return (
 		<div className="flex flex-col gap-4 ">

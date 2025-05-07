@@ -11,17 +11,17 @@ import {
 	SingleSelectField,
 	SingleSelectOption,
 } from "@dhis2/ui";
- 
+
 import i18n from "@dhis2/d2-i18n";
 import { Responsive as ResponsiveGridLayout } from "react-grid-layout";
 import { capitalize } from "lodash";
 import { useDashboardItemConfig } from "../hooks/dashboardItem";
-import {   FlexibleLayoutConfig, VisualizationItem, VisualizationModule } from "@packages/shared/schemas";
+import { DisplayItem, DisplayItemType, FlexibleLayoutConfig, VisualizationItem, VisualizationModule } from "@packages/shared/schemas";
 import "react-grid-layout/css/styles.css";
 import "react-resizable/css/styles.css";
- 
-function DashboardItem({ item }: { item: VisualizationItem }) {  
- 	const { loading, config } = useDashboardItemConfig(item);
+
+function DashboardItem({ item }: { item: VisualizationItem }) {
+	const { loading, config } = useDashboardItemConfig(item);
 
 	if (loading) {
 		return (
@@ -36,12 +36,12 @@ function DashboardItem({ item }: { item: VisualizationItem }) {
 			<h2 className="text-2xl text-center">
 				{config?.displayName ?? "Could not get name"}
 			</h2>
- 			<span>{capitalize(item.type).replace("_", " ")}</span>
+			<span>{capitalize(item.type).replace("_", " ")}</span>
 		</div>
 	);
 }
 
- 
+
 const GridItem = forwardRef<
 	HTMLDivElement,
 	{
@@ -58,24 +58,24 @@ const GridItem = forwardRef<
 		item: VisualizationItem;
 	} & DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement>,
 	ref,
-)  {
+) {
 	return (
 		<div
 			ref={ref}
 			style={{ ...style }}
- 			data-prefix={item.id}
+			data-prefix={item.id}
 			prefix={item.id}
 			className={`border-2 border-gray-400 rounded-md p-2 flex flex-col ${className}`}
 			{...rest}
 		>
- 			<DashboardItem item={item} />
+			<DashboardItem item={item} />
 			{children}
 			{/* <span className="react-resizable-handle" /> */}
 		</div>
 	);
 });
 
- const widths = [
+const widths = [
 	{
 		name: "sm",
 		value: 996,
@@ -90,10 +90,10 @@ const GridItem = forwardRef<
 	},
 ];
 
- export function DashboardLayoutEditor({
+export function DashboardLayoutEditor({
 	prefix,
 }: {
-	prefix?:  `config.groups.${number}`;
+	prefix?: `config.groups.${number}`;
 }) {
 	const [size, setSize] = useState<number>(1200);
 	const ref = useRef<HTMLDivElement>(null);
@@ -104,12 +104,19 @@ const GridItem = forwardRef<
 	>({
 		name: !prefix ? "config.layouts" : `${prefix}.layouts`,
 	});
- 	const visualizations = useWatch<
+	const visualizations = useWatch<
 		VisualizationModule,
 		"config.items" | `config.groups.${number}.items`
 	>({
 		name: !prefix ? "config.items" : `${prefix}.items`,
 	});
+
+	const visualizationItems = visualizations?.filter(
+		(item): item is DisplayItem & { type: DisplayItemType.VISUALIZATION; item: VisualizationItem } =>
+			item.type === DisplayItemType.VISUALIZATION
+	) || [];
+
+
 	return (
 		<div className="flex flex-col gap-2" ref={ref}>
 			<div className="p-4 max-w-[300px]">
@@ -144,22 +151,22 @@ const GridItem = forwardRef<
 							xs: 4,
 							xxs: 1,
 						}}
- 						layouts={field.value as FlexibleLayoutConfig}
-						 margin={[8, 8]}
-						 className="layout"
-						 allowOverlap={false}
-						 rowHeight={80}
-						 width={size}
-						 autoSize
-						 isDraggable
-						 isDroppable
-						 isResizable
+						layouts={field.value as FlexibleLayoutConfig}
+						margin={[8, 8]}
+						className="layout"
+						allowOverlap={false}
+						rowHeight={80}
+						width={size}
+						autoSize
+						isDraggable
+						isDroppable
+						isResizable
 						onLayoutChange={(updatedLayout, actualValue) => {
 							field.onChange(actualValue);
 						}}
 					>
- 						{visualizations?.map((item) => (
- 							<GridItem key={item.item.id} item={item.item as VisualizationItem} />
+						{visualizationItems?.map((item) => (
+							<GridItem key={item.item.id} item={item.item as VisualizationItem} />
 						))}
 					</ResponsiveGridLayout>
 				</div>
