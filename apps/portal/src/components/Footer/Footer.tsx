@@ -51,38 +51,42 @@ export function Footer({
 											>
 												<Stack
 													align="flex-start"
-													gap={0}
+													gap="xs"
 												>
 													<Box
 														style={{
-															width: 80,
-															height: 80,
+															width: 60,
+															height: 60,
 														}}
 													>
 														<Image
 															component={
 																NextImage
 															}
-															width={80}
-															height={80}
+															width={60}
+															height={60}
 															alt="logo"
 															src={logo}
 															visibleFrom="sm"
-															fallbackSrc="https://avatars.githubusercontent.com/u/1089987?s=200&v=4"
 														/>
 													</Box>
-													<Title order={5} ta="left">
-														{title.text}
-													</Title>
-													{subtitle?.text && (
-														<Text
-															size="sm"
-															c="dimmed"
-															ta="center"
+													<Stack gap={0}>
+														<Title
+															order={5}
+															ta="left"
 														>
-															{subtitle.text}
-														</Text>
-													)}
+															{title.text}
+														</Title>
+														{subtitle?.text && (
+															<Text
+																size="sm"
+																c="dimmed"
+																ta="left"
+															>
+																{subtitle.text}
+															</Text>
+														)}
+													</Stack>
 												</Stack>
 											</Box>
 										)}
