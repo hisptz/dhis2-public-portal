@@ -1,7 +1,14 @@
 services:
   portal:
-    build: apps/portal
+    build:
+      context: .
+      args:
+        DHIS2_BASE_PAT_TOKEN: ${DHIS2_BASE_PAT_TOKEN}
+        DHIS2_BASE_URL: ${DHIS2_BASE_URL}
+        CONTEXT_PATH: ${CONTEXT_PATH}
+
     user: "1001:1001"
+
     ports:
       - "3000:3000"
     env_file:

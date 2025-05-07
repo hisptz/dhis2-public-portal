@@ -106,11 +106,10 @@ Then create the `.env` file in the `apps/portal/` folder. The file should have t
 - `DHIS2_BASE_PAT_TOKEN`: A Personal Access Token for your DHIS2 instance
 - `CONTEXT_PATH`: A subpath where your application will be hosted
 
-
 Then run;
 
 ```bash
- docker compose -f apps/portal/docker-compose-build.yml up -d
+ docker compose -f docker-compose-build.yml up -d --build 
 ```
 
 
