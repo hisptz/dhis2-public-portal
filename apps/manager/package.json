@@ -12,6 +12,7 @@
     "deploy": "d2-app-scripts deploy",
     "tsr:generate": "tsr generate",
     "tsr:watch": "tsr watch",
+    "publish:app-hub": "d2-app-scripts publish",
     "tailwind:watch": "npx @tailwindcss/cli -c tailwind.config.ts -i ./src/main.css -o ./src/output.css --watch",
     "tailwind:generate": "npx @tailwindcss/cli -i ./src/main.css -o ./src/output.css",
     "test:e2e": "concurrently --kill-others --success first -c blue,green --names app,cypress 'yarn start:app'  'cypress run'",
