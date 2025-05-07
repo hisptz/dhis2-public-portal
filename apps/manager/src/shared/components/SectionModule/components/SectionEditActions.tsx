@@ -6,8 +6,13 @@ import { useSaveModule } from "../../ModulesPage/hooks/save";
 import { useFormContext } from "react-hook-form";
 import { AppModule } from "@packages/shared/schemas";
 import { useAlert } from "@dhis2/app-runtime";
+import { useDialog } from "@hisptz/dhis2-ui";
+import { useSectionNamePrefix } from "../../SectionConfig/hooks/route";
 
 export function SectionEditActions() {
+	const { resetField, getFieldState } = useFormContext();
+	const namePrefix = useSectionNamePrefix();
+	const { confirm } = useDialog();
 	const navigate = useNavigate({
 		from: "/modules/$moduleId/edit/section/$sectionIndex",
 	});
@@ -43,9 +48,31 @@ export function SectionEditActions() {
 		<ButtonStrip end>
 			<Button
 				onClick={() => {
-					navigate({
-						to: "/modules/$moduleId/edit",
-					});
+					const fieldState = getFieldState(namePrefix);
+					if (fieldState.isDirty) {
+						confirm({
+							title: i18n.t("Confirm reset"),
+							message: i18n.t(
+								"There were changes made to this section. Would you like to reset them? Resetting will remove all changes made to this section. This action is not reversible.",
+							),
+							onCancel: () => {
+								navigate({
+									to: "/modules/$moduleId/edit",
+									params: { moduleId },
+								});
+							},
+							onConfirm: () => {
+								resetField(namePrefix);
+								navigate({
+									to: "/modules/$moduleId/edit",
+									params: { moduleId },
+								});
+							},
+							confirmButtonText: i18n.t("Reset changes"),
+							cancelButtonText: i18n.t("Keep changes"),
+							confirmButtonColor: "primary",
+						});
+					}
 				}}
 			>
 				{i18n.t("Cancel")}
