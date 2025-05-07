@@ -26,6 +26,7 @@ export const appColorConfig = z.object({
 
 export const headerStyleConfig = z.object({
 	coloredBackground: z.boolean(),
+	usePrimaryColorAsBackgroundColor: z.boolean().optional(),
 	headerBackgroundColor: z.string().optional(),
 	containerHeight: z.number().optional(),
 	trailingLogo: logoConfig.optional(),

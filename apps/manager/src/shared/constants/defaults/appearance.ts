@@ -61,7 +61,7 @@ export const defaultAppearanceConfig: AppAppearanceConfig = {
 			},
 			containerHeight: 138,
 			coloredBackground: true,
-			headerBackgroundColor: "blue",
+			usePrimaryColorAsBackgroundColor: true,
 		},
 		title: {
 			text: "DHIS2 Public Portal",
