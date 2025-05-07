@@ -3,9 +3,16 @@ import NextImage from "next/image";
 import { NoConfigLandingPage } from "@/components/NoConfigLandingPage";
 import { getAppearanceConfig } from "@/utils/config/appConfig";
 import { Providers } from "@/components/Providers";
+import { getAppMeta } from "@/utils/appMetadata";
+import { useGetImageUrl } from "@/utils/images";
 
 export default async function MainLoadingScreen() {
 	const config = await getAppearanceConfig();
+	const appMeta = await getAppMeta();
+
+	const getIconUrl = useGetImageUrl();
+
+	const logo = appMeta?.icon ? getIconUrl(appMeta?.icon) : undefined;
 
 	if (!config) {
 		return <NoConfigLandingPage />;
@@ -20,14 +27,15 @@ export default async function MainLoadingScreen() {
 					<Center flex={1}>
 						<Stack align="center">
 							<div className="w-[160px] h-[160px] items-center justify-center flex">
-								<Image
-									width={160}
-									height={160}
-									component={NextImage}
-									src={appearanceConfig.logo}
-									alt="logo"
-									fallbackSrc="https://avatars.githubusercontent.com/u/1089987?s=200&v=4"
-								/>
+								{logo && (
+									<Image
+										width={160}
+										height={160}
+										component={NextImage}
+										src={logo}
+										alt="logo"
+									/>
+								)}
 							</div>
 							<Loader />
 							<Title
