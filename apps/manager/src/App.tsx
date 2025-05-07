@@ -8,6 +8,7 @@ import {
 } from "@tanstack/react-router";
 import { routeTree } from "./routes.gen";
 import { DialogProvider } from "@hisptz/dhis2-ui";
+import { MantineProvider } from "@mantine/core";
 
 const hashHistory = createHashHistory();
 
@@ -21,8 +22,10 @@ declare module "@tanstack/react-router" {
 }
 
 const MyApp = () => (
-	<DialogProvider>
-		<RouterProvider router={router} />
-	</DialogProvider>
+	<MantineProvider>
+			<DialogProvider>
+				<RouterProvider router={router} />
+			</DialogProvider>
+	</MantineProvider>
 );
 export default MyApp;
