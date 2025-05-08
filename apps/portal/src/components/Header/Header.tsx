@@ -79,6 +79,7 @@ export function AppHeader({
 			<Flex px="sm" gap="lg" align="center" p={0}>
 				{hasMenu && (
 					<Burger
+						color={titleTextColor}
 						opened={opened}
 						onClick={toggle}
 						hiddenFrom="sm"
@@ -104,7 +105,6 @@ export function AppHeader({
 							}
 							alt="logo"
 							src={leadingImage}
-							visibleFrom="sm"
 						/>
 					</Box>
 				)}
