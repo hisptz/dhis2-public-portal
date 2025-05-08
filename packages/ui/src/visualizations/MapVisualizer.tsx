@@ -8,7 +8,6 @@ import { MapConfig, MapLayerType } from "@packages/shared/schemas";
 import React, { useMemo } from "react";
 import { forEach, head, set } from "lodash";
 import { OrgUnitSelection } from "@hisptz/dhis2-utils";
-import "leaflet-easyprint";
 
 export interface MapViewProps {
 	setRef: (map: LeafletMap) => void;
