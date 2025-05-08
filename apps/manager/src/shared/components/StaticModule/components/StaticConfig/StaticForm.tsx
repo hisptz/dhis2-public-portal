@@ -11,7 +11,7 @@ export function StaticForm() {
 			className="flex flex-col gap-2"
 		>
 			<RHFTextInputField required name="title" label={i18n.t("Title")} />
-			<RHFRichTextAreaField
+			<RHFTextAreaField
 				required
 				autoGrow
 				rows={2}
