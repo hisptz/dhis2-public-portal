@@ -24,25 +24,12 @@ import "react-resizable/css/styles.css";
 import { MainVisualization } from "./ModulesPage/components/Visualizations/MainVisualization";
 
 function SectionItem({ item }: { item: VisualizationItem }) {
-	// const { loading, config } = useDashboardItemConfig(item);
-
-	// if (loading) {
-	// 	return (
-	// 		<div className="flex justify-center items-center h-full w-full">
-	// 			<CircularLoader small />
-	// 		</div>
-	// 	);
-	// }
-
+ 
 	return (
 		<div className="flex flex-col justify-center items-center h-full w-full gap-2">
 			<MainVisualization
 				config={item}
 				/>
-			{/* <h2 className="text-2xl text-center">
-				{config?.displayName ?? "Could not get name"}
-			</h2>
-			<span>{capitalize(item.type).replace("_", " ")}</span> */}
 		</div>
 	);
 }

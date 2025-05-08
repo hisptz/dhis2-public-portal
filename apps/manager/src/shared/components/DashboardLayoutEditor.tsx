@@ -3,12 +3,12 @@ import React, {
 	forwardRef,
 	HTMLAttributes,
 	useCallback,
+	useMemo,
 	useRef,
 	useState,
 } from "react";
 import { useController, useWatch } from "react-hook-form";
 import {
-	CircularLoader,
 	SingleSelectField,
 	SingleSelectOption,
 } from "@dhis2/ui";
@@ -100,18 +100,20 @@ export function DashboardLayoutEditor({
 	>({
 		name: !prefix ? "config.items" : `${prefix}.items`,
 	});
-	// const handleLayoutChange = useCallback(
-	// 	(updatedLayout, actualValue) => {
-	// 	  field.onChange(actualValue);
-	// 	},
-	// 	[field.onChange] 
-	//   );
+
+	const debouncedLayoutChange = useMemo(
+		() =>
+			debounce((updatedLayout, actualValue) => {
+				field.onChange(actualValue);
+			}, 100),
+		[field]
+	);
 
 	const handleLayoutChange = useCallback(
-		debounce((updatedLayout, actualValue) => {
-			field.onChange(actualValue);
-		}, 100),
-		[field]
+		(updatedLayout, actualValue) => {
+			debouncedLayoutChange(updatedLayout, actualValue);
+		},
+		[debouncedLayoutChange]
 	);
 	return (
 		<div className="flex flex-col gap-2" ref={ref}>
@@ -159,9 +161,6 @@ export function DashboardLayoutEditor({
 						isResizable
 						useCSSTransforms={true}
 						onLayoutChange={handleLayoutChange}
-					// onLayoutChange={(updatedLayout, actualValue) => {
-					// 	field.onChange(actualValue);
-					// }}
 					>
 						{visualizations?.map((item) => (
 							<GridItem key={item.item.id} item={item.item as VisualizationItem} />
