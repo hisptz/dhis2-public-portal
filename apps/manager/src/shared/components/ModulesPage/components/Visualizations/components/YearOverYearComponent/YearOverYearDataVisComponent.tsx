@@ -10,7 +10,6 @@ import {
 import { FullScreen } from "react-full-screen";
 import { CustomOrgUnitModal } from "@packages/shared/components";
 import { CustomPeriodModal } from "@packages/shared/components";
-import { useSearchParams } from "next/navigation";
 import { isEmpty } from "lodash";
 import {
     useContainerSize,
@@ -38,7 +37,6 @@ export function YearOverYearDataVisComponent({
     disableActions?: boolean;
 }) {
     const { type, orgUnitConfig, periodConfig } = config;
-    console.log("type", type);
     const { chartRef, tableRef, setSingleValueRef } = useVisualizationRefs();
     const {
         onCloseOrgUnitSelector,
@@ -66,13 +64,11 @@ export function YearOverYearDataVisComponent({
         selectedPeriods,
         selectedOrgUnits,
     } = useYearOverYearAnalytics({ visualizationConfig });
-    console.log("analytics", analytics);
+
     const { loading: legendSetLoading, legendSet } =
         useVisualizationLegendSet(visualizationConfig);
 
     const loading = analyticsLoading || legendSetLoading;
-
-    const searchParams = useSearchParams();
 
     return (
         <>
@@ -132,19 +128,19 @@ export function YearOverYearDataVisComponent({
                             <div className="flex-1 h-full">
                                 {type ===
                                     VisualizationDisplayItemType.CHART && (
-                                    <ChartSelector
-                                        colors={colors}
-                                        setRef={chartRef}
-                                        analytics={analytics}
-                                        visualization={visualizationConfig}
-                                        config={config}
-                                        fullScreen={handler.active}
-                                        containerRef={containerRef}
-                                        legendSet={legendSet}
-                                        tableRef={tableRef}
-                                        setSingleValueRef={setSingleValueRef}
-                                    />
-                                )}
+                                        <ChartSelector
+                                            colors={colors}
+                                            setRef={chartRef}
+                                            analytics={analytics}
+                                            visualization={visualizationConfig}
+                                            config={config}
+                                            fullScreen={handler.active}
+                                            containerRef={containerRef}
+                                            legendSet={legendSet}
+                                            tableRef={tableRef}
+                                            setSingleValueRef={setSingleValueRef}
+                                        />
+                                    )}
                             </div>
                         )
                     ) : (
@@ -160,7 +156,7 @@ export function YearOverYearDataVisComponent({
                     orgUnitState={
                         !isEmpty(selectedOrgUnits)
                             ? selectedOrgUnits
-                            : (searchParams.get("ou")?.split(",") ?? [])
+                            : ([])
                     }
                     onUpdate={(val) => {
                         setSelectedOrgUnits(val ?? []);
@@ -183,7 +179,7 @@ export function YearOverYearDataVisComponent({
                     periodState={
                         !isEmpty(selectedPeriods)
                             ? selectedPeriods
-                            : (searchParams.get("pe")?.split(",") ?? [])
+                            : ([])
                     }
                     onUpdate={(val) => {
                         setSelectedPeriods(val);
