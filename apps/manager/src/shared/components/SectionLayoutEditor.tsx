@@ -14,8 +14,6 @@ import {
 
 import i18n from "@dhis2/d2-i18n";
 import { Responsive as ResponsiveGridLayout } from "react-grid-layout";
-import { capitalize } from "lodash";
-import { useDashboardItemConfig } from "../hooks/dashboardItem";
 import {
  	FlexibleLayoutConfig,
 	VisualizationDisplayItem,
@@ -40,7 +38,6 @@ function SectionItem({ item }: { item: VisualizationItem }) {
 		<div className="flex flex-col justify-center items-center h-full w-full gap-2">
 			<MainVisualization
 				config={item}
-				disableActions
 				/>
 			{/* <h2 className="text-2xl text-center">
 				{config?.displayName ?? "Could not get name"}

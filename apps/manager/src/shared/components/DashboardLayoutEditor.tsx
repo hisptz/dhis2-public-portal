@@ -22,12 +22,10 @@ import "react-resizable/css/styles.css";
 import { MainVisualization } from "./ModulesPage/components/Visualizations/MainVisualization";
 
 function DashboardItem({ item }: { item: VisualizationItem }) {
-	
 	return (
 		<div className="flex flex-col justify-center items-center h-full w-full overflow-y-auto gap-2">
 			<MainVisualization
 				config={item}
-				disableActions
 			/>
 		</div>
 	);

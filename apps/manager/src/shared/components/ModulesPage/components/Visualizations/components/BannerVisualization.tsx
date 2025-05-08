@@ -13,7 +13,6 @@ import { FullLoader } from "../../../../FullLoader";
 
 export interface BannerVisualizationProps {
 	config: BannerVisualizationType;
-	disableActions?: boolean;
 	periods?: string[];
 	orgUnits?: string[];
 }
@@ -31,7 +30,6 @@ const analyticsQuery: any = {
 
 export function BannerVisualization({
 	config,
-	disableActions = false,
 	periods = ["2023"],
 	orgUnits = ["USER_ORGUNIT"],
 }: BannerVisualizationProps) {
@@ -42,7 +40,6 @@ export function BannerVisualization({
 	}>(analyticsQuery, {
 		variables: { ids, periods, orgUnits },
 	});
-	console.log("Banner data", data);
 
 	const bannerData = useMemo<SingleValue[] | undefined>(() => {
 		if (!data?.analytics) {

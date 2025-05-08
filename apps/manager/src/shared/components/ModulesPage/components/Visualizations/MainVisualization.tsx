@@ -10,12 +10,10 @@ import { BaseCardError } from "@packages/shared/components";
 
 export interface MainVisualizationProps {
 	config: VisualizationItem;
-	disableActions?: boolean;
 }
 
 export function MainVisualization({
 	config,
-	disableActions,
 }: MainVisualizationProps) {
 	const { type } = config;
 
@@ -23,14 +21,12 @@ export function MainVisualization({
 		case VisualizationDisplayItemType.CHART:
 			return (
 				<DataVisualization
-					disableActions={disableActions}
 					config={config}
 				/>
 			);
 		case VisualizationDisplayItemType.MAP:
 			return (
 				<MapVisualization
-					disableActions={disableActions}
 					config={config}
 				/>
 			);
@@ -38,7 +34,6 @@ export function MainVisualization({
 			return (
 				<BannerVisualization
 					config={config}
-					disableActions={disableActions}
 				/>
 			);
 		default:

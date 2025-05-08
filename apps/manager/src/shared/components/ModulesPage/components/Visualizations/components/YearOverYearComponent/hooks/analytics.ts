@@ -93,7 +93,6 @@ export function useYearOverYearAnalytics({
             console.error("Error in fetchData:", error);
         });
     }, [visualizationConfig, selectedOrgUnits, selectedPeriods, refetch]);
-    console.log("data", data);
     return {
         loading,
         analytics: data,
