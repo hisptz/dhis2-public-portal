@@ -41,5 +41,9 @@ jobs:
           tags: |
             hisptanzania/dhis2-public-portal:latest
             hisptanzania/dhis2-public-portal:${{ steps.package-version.outputs.VERSION }}
+          build-args: |
+            DHIS2_BASE_URL=${{vars.DHIS2_BASE_URL}}
+            DHIS2_BASE_PAT_TOKEN: ${{secrets.DHIS2_BASE_PAT_TOKEN}}
+            CONTEXT_PATH: ""
           cache-from: type=gha
           cache-to: type=gha,mode=max
