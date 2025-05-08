@@ -42,13 +42,10 @@ ENV CONTEXT_PATH=$CONTEXT_PATH
 ARG DHIS2_BASE_URL
 ENV DHIS2_BASE_URL=$DHIS2_BASE_URL
 
-ARG DHIS2_BASE_PAT_TOKEN
-ENV DHIS2_BASE_PAT_TOKEN=$DHIS2_BASE_PAT_TOKEN
-
 RUN touch ./apps/portal/.env.local
 RUN echo CONTEXT_PATH=$CONTEXT_PATH >> ./apps/portal/.env.local
 RUN echo DHIS2_BASE_URL=$DHIS2_BASE_URL >> ./apps/portal/.env.local
-RUN echo DHIS2_BASE_PAT_TOKEN=$DHIS2_BASE_PAT_TOKEN >> ./apps/portal/.env.local
+RUN --mount=type=secret,id=DHIS2_BASE_PAT_TOKEN,env=DHIS2_BASE_PAT_TOKEN
 
 RUN yarn portal run build
 

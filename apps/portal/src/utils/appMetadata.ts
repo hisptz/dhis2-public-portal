@@ -43,7 +43,6 @@ export async function getAppMetadata(): Promise<Metadata> {
 				Buffer.from(iconBuffer),
 				faviconOptions,
 			);
-
 			const dest = "./public";
 			const icons: Metadata["icons"] = [];
 			//Save the images in the public folder
