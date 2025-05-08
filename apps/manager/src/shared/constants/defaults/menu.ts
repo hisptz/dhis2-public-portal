@@ -6,6 +6,7 @@ import {
 
 export const defaultMenuConfig: AppMenuConfig = {
 	position: MenuPosition.SIDEBAR,
+	collapsible: true,
 	items: [
 		{
 			type: MenuItemType.MODULE,
