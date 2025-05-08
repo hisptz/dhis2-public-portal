@@ -24,10 +24,9 @@ COPY .gitignore .gitignore
 COPY --from=builder /app/out/json/ .
 COPY --from=builder /app/out/yarn.lock ./yarn.lock
 RUN corepack enable
-RUN apk add --no-cache python3 make g++
-RUN apk add build-essential libcairo2-dev libpango1.0-dev libjpeg-dev libgif-dev librsvg2-dev
-RUN yarn install --frozen-lockfile
+RUN apk add --no-cache python3 make g++ build-base cairo-dev pango-dev giflib-dev py-setuptools
 
+RUN yarn install --frozen-lockfile
 
 # Build the project
 COPY --from=builder /app/out/full/ .
