@@ -5,8 +5,8 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
-"POT-Creation-Date: 2025-05-08T13:28:25.620Z\n"
-"PO-Revision-Date: 2025-05-08T13:28:25.621Z\n"
+"POT-Creation-Date: 2025-05-08T15:53:33.457Z\n"
+"PO-Revision-Date: 2025-05-08T15:53:33.457Z\n"
 
 msgid "Could not get Appearance configurations"
 msgstr "Could not get Appearance configurations"
@@ -306,6 +306,9 @@ msgstr "Are you sure you want to close this form?. All changes will be lost"
 msgid " menu item"
 msgstr " menu item"
 
+msgid "Icon"
+msgstr "Icon"
+
 msgid "Menu items"
 msgstr "Menu items"
 
@@ -443,9 +446,6 @@ msgstr "Item"
 
 msgid "Item Type"
 msgstr "Item Type"
-
-msgid "Icon"
-msgstr "Icon"
 
 msgid "Add Section"
 msgstr "Add Section"
