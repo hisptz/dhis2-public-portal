@@ -5,6 +5,7 @@ on:
     paths:
       - apps/portal/**
       - packages/**
+      - Dockerfile
     branches:
       - develop
 
