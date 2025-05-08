@@ -48,8 +48,6 @@
     "@hisptz/dhis2-ui": "^2.0.45",
     "@hisptz/dhis2-utils": "^2.0.18",
     "@hookform/resolvers": "^5.0.1",
-    "@mui/icons-material": "^7.0.2",
-    "@mui/material": "^7.0.2",
     "@packages/shared": "*",
     "@packages/ui": "*",
     "@react-pdf-viewer/core": "^3.12.0",
