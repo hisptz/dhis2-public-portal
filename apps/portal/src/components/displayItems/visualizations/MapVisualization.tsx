@@ -1,6 +1,6 @@
 import { dhis2HttpClient } from "@/utils/api/dhis2";
-import { MapVisComponent } from "@packages/shared/components";
 import { ChartVisualizationItem, MapConfig } from "@packages/shared/schemas";
+import { MapVisComponent } from "@/components/displayItems/visualizations/MapVisComponent";
 
 export interface MainVisualizationProps {
 	config: ChartVisualizationItem;

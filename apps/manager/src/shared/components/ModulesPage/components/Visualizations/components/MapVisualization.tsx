@@ -27,7 +27,6 @@ export function MapVisualization({
     return (
       <MapVisComponent
         mapConfig={mapConfig}
-        config={config}
       />
     );
   } catch (err) {

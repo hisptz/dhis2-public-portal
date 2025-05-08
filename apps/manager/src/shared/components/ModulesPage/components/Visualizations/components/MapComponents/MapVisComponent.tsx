@@ -3,16 +3,15 @@ import { FullScreen, useFullScreenHandle } from "react-full-screen";
 import { OrgUnitSelection } from "@hisptz/dhis2-utils";
 import L, { Map as LeafletMap } from "leaflet";
 import { useResizeObserver } from "usehooks-ts";
-import { MapConfig, VisualizationItem } from "@packages/shared/schemas";
+import { MapConfig } from "@packages/shared/schemas";
 import { VisualizationTitle } from "@packages/ui/visualizations";
-import { MapVisualizer } from "@packages/ui/visualizations";
+import { MapVisualizer } from "./MapVisualizer";
+// import { MapVisualizer } from "@packages/ui/visualizations";
 
 export function MapVisComponent({
   mapConfig,
-  config,
 }: {
   mapConfig: MapConfig;
-  config: VisualizationItem;
 }) {
   const handler = useFullScreenHandle();
   const mapContainer = useRef<HTMLDivElement | null>(null);
