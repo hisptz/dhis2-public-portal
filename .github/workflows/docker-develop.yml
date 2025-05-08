@@ -8,9 +8,6 @@ on:
     branches:
       - develop
 
-env:
-  DHIS2_BASE_PAT_TOKEN: ${{secrets.DHIS2_BASE_PAT_TOKEN}}
-
 jobs:
   build-and-push:
     name: Build and Push Docker Image
@@ -35,10 +32,8 @@ jobs:
           context: .
           file: ./Dockerfile
           push: true
-          secret-envs: key=DHIS2_BASE_PAT_TOKEN
           build-args: |
-            DHIS2_BASE_URL=${{vars.DHIS2_BASE_URL}}
-            CONTEXT_PATH: ""
+            CONTEXT_PATH: null
           tags: hisptanzania/dhis2-public-portal:develop
           cache-from: type=gha
           cache-to: type=gha,mode=max

@@ -36,16 +36,13 @@ COPY --from=builder /app/out/full/ .
 
 # ARG TURBO_TOKEN
 # ENV TURBO_TOKEN=$TURBO_TOKEN
+
+# Only the context path is required during build
 ARG CONTEXT_PATH
 ENV CONTEXT_PATH=$CONTEXT_PATH
 
-ARG DHIS2_BASE_URL
-ENV DHIS2_BASE_URL=$DHIS2_BASE_URL
-
 RUN touch ./apps/portal/.env.local
 RUN echo CONTEXT_PATH=$CONTEXT_PATH >> ./apps/portal/.env.local
-RUN echo DHIS2_BASE_URL=$DHIS2_BASE_URL >> ./apps/portal/.env.local
-RUN --mount=type=secret,id=DHIS2_BASE_PAT_TOKEN,env=DHIS2_BASE_PAT_TOKEN
 
 RUN yarn portal run build
 
@@ -53,8 +50,6 @@ FROM base AS runner
 WORKDIR /app
 
 ENV NODE_ENV production
-
-
 
 # Don't run production as root
 RUN addgroup --system --gid 1001 nodejs
