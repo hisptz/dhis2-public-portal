@@ -8,6 +8,9 @@ import { MapConfig, MapLayerType } from "@packages/shared/schemas";
 import React, { useMemo } from "react";
 import { forEach, head, set } from "lodash";
 import { OrgUnitSelection } from "@hisptz/dhis2-utils";
+import { ErrorBoundary } from "react-error-boundary";
+import ErrorPage from "../../../../../ErrorPage/ErrorPage";
+
 
 export interface MapViewProps {
 	setRef: (map: LeafletMap) => void;
@@ -119,6 +122,7 @@ export function MapVisualizer({
 	}, [mapConfig.mapViews, orgUnitSelection]);
 
 	return (
+		<ErrorBoundary FallbackComponent={ErrorPage}>
 		<DHIS2Map
 			mapOptions={{
 				trackResize: true,
@@ -166,5 +170,6 @@ export function MapVisualizer({
 				displayProperty: "SHORTNAME",
 			}}
 		/>
+		</ErrorBoundary>
 	);
 }
