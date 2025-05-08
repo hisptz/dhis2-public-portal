@@ -92,7 +92,6 @@ export function MapVisualizer({
 		if (periodSelection) {
 			return periodSelection;
 		}
-		//This is a hack for now as there may be differences in map view periods
 		const periods = head(
 			mapConfig.mapViews.filter((view) =>
 				view.layer.includes(MapLayerType.THEMATIC),
