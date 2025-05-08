@@ -32,7 +32,7 @@ export default async function RootLayout({
 			</head>
 			<body>
 				<Providers config={config?.appearanceConfig}>
-					<NavigationBar />
+					<NavigationBar config={config} />
 					<DHIS2AppProvider
 						contextPath={contextPath}
 						systemInfo={systemInfo}
