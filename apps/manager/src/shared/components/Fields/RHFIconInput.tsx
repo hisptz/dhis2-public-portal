@@ -8,8 +8,9 @@ import { useConfig } from "@dhis2/app-runtime";
 export function RHFIconInput({
 	name,
 	label,
+	accept,
 	...props
-}: { name: string; label: string } & FieldProps) {
+}: { name: string; label: string; accept?: "png" | "svg" } & FieldProps) {
 	const config = useConfig();
 	const { field, fieldState } = useController({
 		name,
@@ -24,7 +25,7 @@ export function RHFIconInput({
 			label={label}
 		>
 			{field.value && (
-				<div className="aspect-square w-[100px] p-2">
+				<div className="aspect-square w-[100px] p-2 flex justify-center items-center">
 					<img
 						alt={"icon"}
 						src={
@@ -46,11 +47,8 @@ export function RHFIconInput({
 						field.onChange(await AppIconFile.fromFile(file));
 					}
 				}}
-				helpText={i18n.t(
-					"512px x 512px clear image. This will be used as favicon and application icon on mobile devices",
-				)}
-				accept="png"
-				name="icon"
+				accept={accept ?? "png"}
+				name={name}
 			/>
 		</Field>
 	);
