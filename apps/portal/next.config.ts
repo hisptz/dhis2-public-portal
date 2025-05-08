@@ -7,10 +7,7 @@ const nextConfig: NextConfig = {
 	images: {
 		remotePatterns: [
 			{
-				hostname: "avatars.githubusercontent.com",
-			},
-			{
-				hostname: "localhost",
+				hostname: "*",
 			},
 		],
 	},
@@ -25,6 +22,7 @@ const nextConfig: NextConfig = {
 		},
 	},
 	experimental: {},
+	serverExternalPackages: ["canvas"],
 	webpack(config) {
 		// Grab the existing rule that handles SVG imports
 		const fileLoaderRule = config.module.rules.find((rule: any) =>
@@ -51,7 +49,7 @@ const nextConfig: NextConfig = {
 
 		// Modify the file loader rule to ignore *.svg, since we have it handled now.
 		fileLoaderRule.exclude = /\.svg$/i;
-
+		config.externals.push({ canvas: "commonjs canvas" });
 		return config;
 	},
 	transpilePackages: ["@packages/shared"],
