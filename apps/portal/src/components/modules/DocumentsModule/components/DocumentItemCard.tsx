@@ -1,15 +1,15 @@
 import { DocumentItem } from "@packages/shared/schemas";
-import { AspectRatio, Card, Stack } from "@mantine/core";
+import { Box, Card } from "@mantine/core";
 import { FileVisualizer } from "@/components/displayItems/visualizations/FileVisualizer";
 
-export function DocumentItemCard({ item }: { item: DocumentItem }) {
+export async function DocumentItemCard({ item }: { item: DocumentItem }) {
 	return (
-		<AspectRatio ratio={1}>
-			<Card className="w-full h-full">
-				<Stack>
-					<FileVisualizer config={item} />
-				</Stack>
+		<Box className="w-[224px] h-[256px]">
+			<Card
+				className={`w-full h-full border-1 border-transparent hover:border-(--mantine-color-anchor)`}
+			>
+				<FileVisualizer config={item} />
 			</Card>
-		</AspectRatio>
+		</Box>
 	);
 }
