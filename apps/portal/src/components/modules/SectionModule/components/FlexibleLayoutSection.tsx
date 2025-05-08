@@ -12,10 +12,7 @@ export function FlexibleLayoutSection({
 	return (
 		<FlexibleLayoutContainer layouts={config.layouts}>
 			{config.items.map((item) => (
-				<FlexibleLayoutItem
-					id={`${item.item.id}`}
-					key={`${item.item.id}`}
-				>
+				<FlexibleLayoutItem id={item.item.id} key={item.item.id}>
 					<DisplayItemContainer item={item}>
 						<DisplayItemSelector item={item} />
 					</DisplayItemContainer>

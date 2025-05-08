@@ -1,3 +1,5 @@
+"use client";
+
 import { useState } from "react";
 import { IconChevronRight } from "@tabler/icons-react";
 import {
@@ -14,6 +16,7 @@ import { usePathname } from "next/navigation";
 import Link from "next/link";
 import { ReactSVG } from "react-svg";
 import { getForeground } from "@packages/shared/utils";
+import { useGetImageUrl } from "@/utils/client/images";
 
 interface LinksGroupProps {
 	icon?: string;
@@ -37,15 +40,17 @@ export function LinksGroup({
 	const pathname = usePathname();
 	const hasLinks = Array.isArray(subMenus) && subMenus.length > 0;
 	const [opened, setOpened] = useState(initiallyOpened || false);
-	const imageURL = `/api/documents/${icon}/data`;
-	const isActive = path && pathname.includes(path);
+	const getImageUrl = useGetImageUrl();
+	const imageURL = icon ? getImageUrl(icon) : undefined;
+	const pathAfterModules = pathname.replace(/^\/modules\//, "");
+	const isActive = path && pathAfterModules === path;
 	const theme = useMantineTheme();
 	const color = theme.primaryColor;
 
 	const items = hasLinks
 		? subMenus.map((subMenu) => {
 				const isActiveSubMenu =
-					subMenu.path && pathname.includes(subMenu.path);
+					subMenu.path && pathAfterModules === subMenu.path;
 				return (
 					<Link
 						key={subMenu.label}
@@ -70,7 +75,7 @@ export function LinksGroup({
 		: null;
 
 	const hasActiveSubmenu = subMenus?.some(
-		(subMenu) => subMenu.path && pathname.includes(subMenu.path),
+		(subMenu) => subMenu.path && pathAfterModules === subMenu.path,
 	);
 
 	const mainContent = (
@@ -115,7 +120,7 @@ export function LinksGroup({
 								<ReactSVG
 									width={collapsed ? 20 : 18}
 									height={collapsed ? 20 : 18}
-									src={imageURL}
+									src={imageURL!}
 								/>
 							)}
 						</ThemeIcon>

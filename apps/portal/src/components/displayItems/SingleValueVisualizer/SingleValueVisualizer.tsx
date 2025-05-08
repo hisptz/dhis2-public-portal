@@ -2,13 +2,14 @@
 import { SingleValueConfig } from "@packages/shared/schemas";
 import { Box, Group, Image, Title } from "@mantine/core";
 import NextImage from "next/image";
+import { getServerIconUrl } from "@/utils/server/images";
 
 export function SingleValueVisualizer({
 	config,
 }: {
 	config: SingleValueConfig;
 }) {
-	const imageURL = `/api/icons/${config.icon}/icon`;
+	const imageURL = getServerIconUrl(config.icon);
 	return (
 		<Box className="w-full h-full">
 			<Group align="center" justify="space-between">

@@ -37,13 +37,19 @@ COPY --from=builder /app/out/full/ .
 # ARG TURBO_TOKEN
 # ENV TURBO_TOKEN=$TURBO_TOKEN
 
-RUN yarn run build --filter=portal...
+# Only the context path is required during build
+ARG CONTEXT_PATH
+ENV CONTEXT_PATH=$CONTEXT_PATH
+
+RUN touch ./apps/portal/.env.local
+RUN echo CONTEXT_PATH=$CONTEXT_PATH >> ./apps/portal/.env.local
+
+RUN yarn portal run build
 
 FROM base AS runner
 WORKDIR /app
 
 ENV NODE_ENV production
-
 
 # Don't run production as root
 RUN addgroup --system --gid 1001 nodejs

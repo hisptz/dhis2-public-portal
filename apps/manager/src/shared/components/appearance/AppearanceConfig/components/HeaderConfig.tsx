@@ -17,7 +17,7 @@ export function HeaderConfig({ appearanceConfig, refetchConfig }: Props) {
 	const config = useConfig();
 	const [showHeaderConfig, setShowHeaderConfig] = useState(false);
 
-	const { header } = appearanceConfig;
+	const { header, colors } = appearanceConfig;
 	const title = header.title.text;
 	const subtitle = header.subtitle.text;
 	const { style } = header;
@@ -41,16 +41,20 @@ export function HeaderConfig({ appearanceConfig, refetchConfig }: Props) {
 						/>
 					)}
 
-					{style?.headerBackgroundColor &&
-						style?.coloredBackground && (
-							<ConfigurationDetails
-								title={i18n.t("Background color")}
-							>
-								<ConfigurationColor
-									colorCode={style?.headerBackgroundColor}
-								/>
-							</ConfigurationDetails>
-						)}
+					{style?.coloredBackground && (
+						<ConfigurationDetails
+							title={i18n.t("Background color")}
+						>
+							<ConfigurationColor
+								colorCode={
+									style.usePrimaryColorAsBackgroundColor
+										? colors.primary
+										: (style!.headerBackgroundColor ??
+											"#FFF")
+								}
+							/>
+						</ConfigurationDetails>
+					)}
 
 					{style?.containerHeight && (
 						<ConfigurationDetails

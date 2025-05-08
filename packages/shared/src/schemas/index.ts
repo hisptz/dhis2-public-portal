@@ -1,7 +1,6 @@
 export * from "./analytics";
 export * from "./visualization";
 export * from "./faq";
-export * from "./feedback";
 export * from "./library";
 export * from "./map";
 export * from "./news";

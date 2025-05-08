@@ -1,5 +1,6 @@
 import { FooterLinksConfig } from "@packages/shared/schemas";
-import { Text, Title, useMantineTheme } from "@mantine/core";
+import { Group, List, Title, useMantineTheme } from "@mantine/core";
+import { IconExternalLink } from "@tabler/icons-react";
 
 export function FooterLinks({ config }: { config: FooterLinksConfig }) {
 	const { links, title } = config ?? {};
@@ -7,17 +8,18 @@ export function FooterLinks({ config }: { config: FooterLinksConfig }) {
 	return (
 		<div className="min-w-[200px]">
 			<Title order={5}>{title}</Title>
-			{links.map((link) => (
-				<Text
-					c={theme.primaryColor}
-					target="_blank"
-					key={link.url}
-					href={link.url}
-					component="a"
-				>
-					{link.name}
-				</Text>
-			))}
+			<List>
+				{links.map((link) => (
+					<List.Item c={theme.primaryColor} key={link.url}>
+						<a href={link.url} target="_blank">
+							<Group align="center" gap={4}>
+								{link.name}
+								<IconExternalLink size={14} />
+							</Group>
+						</a>
+					</List.Item>
+				))}
+			</List>
 		</div>
 	);
 }

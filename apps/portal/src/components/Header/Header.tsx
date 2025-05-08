@@ -18,7 +18,7 @@ import NextImage from "next/image";
 import { getForeground } from "@packages/shared/utils";
 import { HeaderMenu } from "@/components/AppMenu/HeaderMenu";
 import { getAppTheme } from "@/utils/theme";
-import { useGetImageUrl } from "@/utils/images";
+import { useGetImageUrl } from "@/utils/client/images";
 
 export function AppHeader({
 	config,
@@ -36,9 +36,11 @@ export function AppHeader({
 	const hasMenu = menuConfig.items.length > 1;
 	const { header: headerConfig } = config;
 	const theme = getAppTheme(config);
-	const backgroundColor = headerConfig.style?.coloredBackground
-		? theme.primaryColor
-		: undefined;
+	const backgroundColor = headerConfig?.style.usePrimaryColorAsBackgroundColor
+		? config.colors.primary
+		: headerConfig.style?.coloredBackground
+			? theme.primaryColor
+			: undefined;
 	const foregroundColor = backgroundColor
 		? getForeground(backgroundColor)
 		: undefined;

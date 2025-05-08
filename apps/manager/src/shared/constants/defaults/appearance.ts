@@ -49,19 +49,18 @@ export const defaultAppearanceConfig: AppAppearanceConfig = {
 		style: {
 			leadingLogo: {
 				show: true,
-				url: "https://avatars.githubusercontent.com/u/1089987?s=200&v=4",
 				width: 60,
 				height: 60,
 			},
 			trailingLogo: {
-				show: true,
-				url: "https://avatars.githubusercontent.com/u/1089987?s=200&v=4",
+				show: false,
+				url: "",
 				width: 60,
 				height: 60,
 			},
 			containerHeight: 138,
 			coloredBackground: true,
-			headerBackgroundColor: "blue",
+			usePrimaryColorAsBackgroundColor: true,
 		},
 		title: {
 			text: "DHIS2 Public Portal",

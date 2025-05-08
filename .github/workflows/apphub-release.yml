@@ -1,0 +1,50 @@
+name: App Hub Publish
+
+env:
+  D2_APP_HUB_API_KEY: ${{secrets.D2_APP_HUB_API_KEY}}
+
+# Controls when the action will run.
+on:
+  # Triggers the workflow when a new release is created
+  release:
+    types: [ created ]
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v3
+      # Sets up a Node.js environment, with yarn as the package manager
+      - uses: actions/setup-node@v3
+        with:
+          node-version: lts/*
+          cache: yarn
+      - name: Install JS dependencies
+        run: yarn install --frozen-lockfile
+      - name: Test
+        run: yarn test
+
+  publish:
+    # Wait for test to succeed before publishing
+    needs: [ test ]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: lts/*
+          cache: "yarn"
+
+      - name: Install JS dependencies
+        run: yarn install --frozen-lockfile
+
+      - name: Build
+        run: yarn build
+      # Publish to the App Hub
+      - name: Release to DHIS2 App Hub
+        run: yarn manager publish

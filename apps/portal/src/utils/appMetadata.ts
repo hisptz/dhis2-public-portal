@@ -43,7 +43,6 @@ export async function getAppMetadata(): Promise<Metadata> {
 				Buffer.from(iconBuffer),
 				faviconOptions,
 			);
-
 			const dest = "./public";
 			const icons: Metadata["icons"] = [];
 			//Save the images in the public folder
@@ -107,5 +106,16 @@ export async function getAppMetadata(): Promise<Metadata> {
 			title: "Public Portal",
 			description: "DHIS2 Public Portal",
 		};
+	}
+}
+
+export async function getAppMeta(): Promise<AppMeta | undefined> {
+	try {
+		return (await getAppConfigWithNamespace<AppMeta>({
+			namespace: DatastoreNamespaces.MAIN_CONFIG,
+			key: "metadata",
+		}))!;
+	} catch (e) {
+		return;
 	}
 }

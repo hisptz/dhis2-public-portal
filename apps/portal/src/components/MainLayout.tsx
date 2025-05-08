@@ -13,6 +13,7 @@ import { Suspense, useState } from "react";
 import { Footer } from "@/components/Footer/Footer";
 import { SideAppMenu } from "@/components/AppMenu/SideAppMenu";
 import { useMediaQuery } from "usehooks-ts";
+import { useGetImageUrl } from "@/utils/client/images";
 
 const DEFAULT_HEADER_HEIGHT = 138;
 
@@ -37,6 +38,10 @@ export function MainLayout({
 	const isLargerThanSm = useMediaQuery(
 		`(min-width: ${theme.breakpoints.sm})`,
 	);
+
+	const getImageUrl = useGetImageUrl();
+
+	const logo = getImageUrl(metadata.icon);
 
 	return (
 		<AppShell
@@ -86,7 +91,7 @@ export function MainLayout({
 				</Suspense>
 			</AppShell.Main>
 			<Footer
-				logo={appearanceConfig.logo}
+				logo={logo}
 				header={appearanceConfig!.header}
 				config={appearanceConfig!.footer}
 			/>

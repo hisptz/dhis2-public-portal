@@ -30,8 +30,10 @@ jobs:
         uses: docker/build-push-action@v5
         with:
           context: .
-          file: ./apps/portal/Dockerfile
+          file: ./Dockerfile
           push: true
+          build-args: |
+            CONTEXT_PATH: null
           tags: hisptanzania/dhis2-public-portal:develop
           cache-from: type=gha
           cache-to: type=gha,mode=max

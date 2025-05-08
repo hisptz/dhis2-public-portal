@@ -28,8 +28,8 @@ export function VisualizationItemsContainer({
 			<FlexibleLayoutContainer layouts={config.layouts}>
 				{config.items.map((item) => (
 					<FlexibleLayoutItem
-						id={item.item.id}
-						key={`${item.item.id}`}
+						id={"item" in item ? item.item.id : ""}
+						key={"item" in item ? item.item.id : ""}
 					>
 						<DisplayItemContainer item={item}>
 							<DisplayItemSelector item={item} />
@@ -41,6 +41,16 @@ export function VisualizationItemsContainer({
 	}
 
 	const groupId = searchParams.group;
+
+	if (isEmpty(config.groups) && config.grouped) {
+		return (
+			<Box className="w-full h-full flex flex-col items-center justify-center min-h-[400px]">
+				<Text size="lg" c="dimmed">
+					There no groups configured for this module
+				</Text>
+			</Box>
+		);
+	}
 
 	if (!groupId) {
 		return (
@@ -77,7 +87,7 @@ export function VisualizationItemsContainer({
 	return (
 		<FlexibleLayoutContainer layouts={group.layouts}>
 			{group.items.map((item) => (
-				<FlexibleLayoutItem id={item.item.id} key={`${item.item.id}`}>
+				<FlexibleLayoutItem id={"item" in item ? item.item.id : ""} key={"item" in item ? item.item.id : ""}>
 					<DisplayItemContainer item={item}>
 						<DisplayItemSelector item={item} />
 					</DisplayItemContainer>

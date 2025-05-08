@@ -1,9 +1,10 @@
 import { z } from "zod";
 
 export enum DisplayItemType {
-	VISUALIZATION = "VISUALIZATION",
 	RICH_TEXT = "RICH_TEXT",
+	VISUALIZATION = "VISUALIZATION",
 	SINGLE_VALUE = "SINGLE_VALUE",
+	FEEDBACK = "FEEDBACK",
 }
 
 export const displayItemTypeSchema = z.nativeEnum(DisplayItemType);

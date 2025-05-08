@@ -4,14 +4,10 @@ services:
     user: "1001:1001"
     ports:
       - "3000:3000"
-    environment:
-      - DHIS2_BASE_URL=https://your-dhis2-instance.org
-      - DHIS2_BASE_PAT_TOKEN=your-personal-access-token
-      - CONTEXT_PATH=
+    env_file:
+      - apps/portal/.env
     volumes:
       - public:/app/apps/portal/public
-
-
 volumes:
   public:
 

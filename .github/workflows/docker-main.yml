@@ -7,7 +7,6 @@ on:
       - packages/**
     branches:
       - main
-
 jobs:
   build-and-push:
     name: Build and Push Docker Image
@@ -36,10 +35,12 @@ jobs:
         uses: docker/build-push-action@v5
         with:
           context: .
-          file: ./apps/portal/Dockerfile
+          file: ./Dockerfile
           push: true
           tags: |
             hisptanzania/dhis2-public-portal:latest
             hisptanzania/dhis2-public-portal:${{ steps.package-version.outputs.VERSION }}
+          build-args: |
+            CONTEXT_PATH: null
           cache-from: type=gha
           cache-to: type=gha,mode=max
