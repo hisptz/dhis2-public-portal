@@ -17,7 +17,7 @@ export function SectionModule({ config }: { config: SectionModuleConfig }) {
 		return (
 			<Box className="w-full h-full flex flex-col items-center justify-center min-h-[400px]">
 				<Text size="lg" c="dimmed">
-					There no sections configured for this module
+					There are no sections configured for this module
 				</Text>
 			</Box>
 		);
