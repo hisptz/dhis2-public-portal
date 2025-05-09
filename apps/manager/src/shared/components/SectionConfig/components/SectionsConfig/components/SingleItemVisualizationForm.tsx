@@ -42,10 +42,14 @@ export function SingleItemVisualizationForm({
 							label: i18n.t("Visualization"),
 							value: VisualizationDisplayItemType.CHART,
 						},
-						{
-							label: i18n.t("Map"),
-							value: VisualizationDisplayItemType.MAP,
-						},
+						...(visType !== DisplayItemType.SINGLE_VALUE
+							? [
+									{
+										label: i18n.t("Map"),
+										value: VisualizationDisplayItemType.MAP,
+									},
+								]
+							: []),
 					]}
 					name={`${namePrefix}.item.type`}
 				/>
