@@ -3,7 +3,7 @@ import path from "path";
 
 const nextConfig: NextConfig = {
 	reactStrictMode: false,
-	basePath: process.env.CONTEXT_PATH || undefined,
+	basePath: process.env.CONTEXT_PATH ?? "",
 	images: {
 		remotePatterns: [
 			{
