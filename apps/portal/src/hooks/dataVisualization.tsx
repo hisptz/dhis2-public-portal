@@ -6,22 +6,22 @@ import {
 	IconChartBar,
 	IconClock,
 	IconDownload,
+	IconMapPin,
 	IconMaximize,
 	IconMinimize,
-	IconMapPin,
 	IconTable,
 } from "@tabler/icons-react";
 import { downloadExcelFromTable } from "@/utils/table";
 import {
-	VisualizationItem,
 	VisualizationConfig,
+	VisualizationItem,
 } from "@packages/shared/schemas";
 import Highcharts from "highcharts";
 import { isEmpty } from "lodash";
 import { useFullScreenHandle } from "react-full-screen";
 import { useDataQuery } from "@dhis2/app-runtime";
 import { LegendSet } from "@hisptz/dhis2-utils";
-import { ActionMenuGroup } from "@packages/shared/components";
+import { ActionMenuGroup } from "@/components/displayItems/visualizations/ActionMenu";
 
 export function useDimensionViewControls({
 	visualizationConfig,
