@@ -34,25 +34,27 @@ export function SingleItemVisualizationForm({
 	return (
 		<Box>
 			<form className="flex flex-col gap-4">
-				<RHFSingleSelectField
-					required
-					label={i18n.t("Type")}
-					options={[
-						{
-							label: i18n.t("Visualization"),
-							value: VisualizationDisplayItemType.CHART,
-						},
-						...(visType !== DisplayItemType.SINGLE_VALUE
-							? [
-									{
-										label: i18n.t("Map"),
-										value: VisualizationDisplayItemType.MAP,
-									},
-								]
-							: []),
-					]}
-					name={`${namePrefix}.item.type`}
-				/>
+				{visType !== DisplayItemType.SINGLE_VALUE && (
+					<RHFSingleSelectField
+						required
+						label={i18n.t("Type")}
+						options={[
+							{
+								label: i18n.t("Visualization"),
+								value: VisualizationDisplayItemType.CHART,
+							},
+							...(visType !== DisplayItemType.SINGLE_VALUE
+								? [
+										{
+											label: i18n.t("Map"),
+											value: VisualizationDisplayItemType.MAP,
+										},
+									]
+								: []),
+						]}
+						name={`${namePrefix}.item.type`}
+					/>
+				)}
 				<SingleItemVisualizationSelector namePrefix={namePrefix} />
 				<RHFTextAreaField
 					name={`${namePrefix}.item.caption`}
