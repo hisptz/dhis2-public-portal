@@ -8,10 +8,16 @@ import {
 } from "@dhis2/ui";
 import i18n from "@dhis2/d2-i18n";
 import { RHFSingleSelectField, RHFTextInputField } from "@hisptz/dhis2-ui";
-import { FormProvider, useForm, useWatch } from "react-hook-form";
+import {
+	FormProvider,
+	useForm,
+	useFormContext,
+	useWatch,
+} from "react-hook-form";
 import React from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
+	AppModule,
 	BaseSectionConfig,
 	baseSectionSchema,
 	SectionDisplay,
@@ -43,10 +49,11 @@ export function AddSectionForm({
 		},
 	});
 
+	const { formState } = useFormContext<AppModule>();
+
 	const onSubmit = async (data: BaseSectionConfig) => {
 		try {
 			onAdd(data);
-			onClose();
 		} catch (e) {
 			if (e instanceof FetchError || e instanceof Error) {
 				show({
@@ -74,7 +81,11 @@ export function AddSectionForm({
 
 	return (
 		<FormProvider {...form}>
-			<Modal position="middle" onClose={onClose} hide={hide}>
+			<Modal
+				position="middle"
+				onClose={formState.isSubmitting ? undefined : onClose}
+				hide={hide}
+			>
 				<ModalTitle>{i18n.t("Create Section")}</ModalTitle>
 				<ModalContent>
 					<form className="flex flex-col gap-4">
@@ -102,13 +113,19 @@ export function AddSectionForm({
 				</ModalContent>
 				<ModalActions>
 					<ButtonStrip>
-						<Button onClick={onClose}>{i18n.t("Cancel")}</Button>
+						<Button
+							disabled={formState.isSubmitting}
+							onClick={onClose}
+						>
+							{i18n.t("Cancel")}
+						</Button>
 						<Button
 							loading={form.formState.isSubmitting}
 							primary
 							onClick={(_, e) => form.handleSubmit(onSubmit)(e)}
 						>
-							{form.formState.isSubmitting
+							{form.formState.isSubmitting ||
+							formState.isSubmitting
 								? i18n.t("Creating...")
 								: i18n.t("Create section")}
 						</Button>
