@@ -14,8 +14,6 @@ import {
 
 import i18n from "@dhis2/d2-i18n";
 import { Responsive as ResponsiveGridLayout } from "react-grid-layout";
-import { capitalize } from "lodash";
-import { useDashboardItemConfig } from "../hooks/dashboardItem";
 import {
  	FlexibleLayoutConfig,
 	VisualizationDisplayItem,
@@ -23,24 +21,15 @@ import {
 } from "@packages/shared/schemas";
 import "react-grid-layout/css/styles.css";
 import "react-resizable/css/styles.css";
+import { MainVisualization } from "./ModulesPage/components/Visualizations/MainVisualization";
 
 function SectionItem({ item }: { item: VisualizationItem }) {
-	const { loading, config } = useDashboardItemConfig(item);
-
-	if (loading) {
-		return (
-			<div className="flex justify-center items-center h-full w-full">
-				<CircularLoader small />
-			</div>
-		);
-	}
-
+ 
 	return (
 		<div className="flex flex-col justify-center items-center h-full w-full gap-2">
-			<h2 className="text-2xl text-center">
-				{config?.displayName ?? "Could not get name"}
-			</h2>
-			<span>{capitalize(item.type).replace("_", " ")}</span>
+			<MainVisualization
+				config={item}
+				/>
 		</div>
 	);
 }

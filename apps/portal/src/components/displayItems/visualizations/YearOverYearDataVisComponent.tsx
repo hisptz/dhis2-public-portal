@@ -9,22 +9,25 @@ import {
 	VisualizationItem,
 } from "@packages/shared/schemas";
 import { FullScreen } from "react-full-screen";
-import { CustomOrgUnitModal } from "./CustomOrgUnitModal";
-import { CustomPeriodModal } from "./CustomPeriodModal";
+
 import { useSearchParams } from "next/navigation";
 import { isEmpty } from "lodash";
-import { ActionMenu } from "@/components/displayItems/visualizations/ActionMenu";
 import { CaptionPopover } from "@/components/CaptionPopover";
-import { VisualizationTitle } from "@/components/displayItems/visualizations/VisualizationTitle";
 import {
 	useContainerSize,
 	useDimensionViewControls,
 	useVisualizationLegendSet,
 	useVisualizationRefs,
 } from "@/hooks/dataVisualization";
-import { ChartSelector } from "@/components/displayItems/visualizations/ChartSelector";
 import { useYearOverYearAnalytics } from "@packages/shared/hooks";
-import { TableVisualizer } from "@packages/ui/visualizations";
+import {
+	ChartSelector,
+	TableVisualizer,
+	VisualizationTitle,
+} from "@packages/ui/visualizations";
+import { ActionMenu } from "./ActionMenu";
+import { CustomOrgUnitModal } from "./CustomOrgUnitModal";
+import { CustomPeriodModal } from "@/components/displayItems/visualizations/CustomPeriodModal";
 
 export function YearOverYearDataVisComponent({
 	visualizationConfig,
@@ -136,12 +139,8 @@ export function YearOverYearDataVisComponent({
 										setRef={chartRef}
 										analytics={analytics}
 										visualization={visualizationConfig}
-										config={config}
 										fullScreen={handler.active}
-										containerRef={containerRef}
-										legendSet={legendSet}
 										tableRef={tableRef}
-										setSingleValueRef={setSingleValueRef}
 									/>
 								)}
 							</div>

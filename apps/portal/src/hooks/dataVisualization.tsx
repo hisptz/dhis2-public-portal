@@ -6,15 +6,15 @@ import {
 	IconChartBar,
 	IconClock,
 	IconDownload,
+	IconMapPin,
 	IconMaximize,
 	IconMinimize,
-	IconMapPin,
 	IconTable,
 } from "@tabler/icons-react";
 import { downloadExcelFromTable } from "@/utils/table";
 import {
-	VisualizationItem,
 	VisualizationConfig,
+	VisualizationItem,
 } from "@packages/shared/schemas";
 import Highcharts from "highcharts";
 import { isEmpty } from "lodash";

@@ -5,8 +5,8 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
-"POT-Creation-Date: 2025-05-09T06:45:49.179Z\n"
-"PO-Revision-Date: 2025-05-09T06:45:49.179Z\n"
+"POT-Creation-Date: 2025-05-09T09:09:28.047Z\n"
+"PO-Revision-Date: 2025-05-09T09:09:28.048Z\n"
 
 msgid "Could not get Appearance configurations"
 msgstr "Could not get Appearance configurations"
@@ -22,6 +22,12 @@ msgstr "Saving..."
 
 msgid "Save changes"
 msgstr "Save changes"
+
+msgid "Please fix the validation errors before saving"
+msgstr "Please fix the validation errors before saving"
+
+msgid "Failed to save section"
+msgstr "Failed to save section"
 
 msgid "Layout editor"
 msgstr "Layout editor"
@@ -40,12 +46,6 @@ msgstr "Back to all modules"
 
 msgid "Module"
 msgstr "Module"
-
-msgid "Please fix the validation errors before saving"
-msgstr "Please fix the validation errors before saving"
-
-msgid "Failed to save section"
-msgstr "Failed to save section"
 
 msgid "Modules"
 msgstr "Modules"

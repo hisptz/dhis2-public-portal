@@ -8,6 +8,7 @@ import {
 } from "@tanstack/react-router";
 import { routeTree } from "./routes.gen";
 import { DialogProvider } from "@hisptz/dhis2-ui";
+import "leaflet/dist/leaflet.css";
 
 const hashHistory = createHashHistory();
 
