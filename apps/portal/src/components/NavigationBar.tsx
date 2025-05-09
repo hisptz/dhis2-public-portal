@@ -1,13 +1,15 @@
 "use client";
 
 import NextTopLoader from "nextjs-toploader";
-import { useMantineTheme } from "@mantine/core";
+import { AppAppearanceConfig } from "@packages/shared/schemas";
 
-export function NavigationBar() {
-	const theme = useMantineTheme();
-	return (
-		<NextTopLoader
-			color={theme!.colors![theme.primaryColor as string]![5]}
-		/>
-	);
+export function NavigationBar({
+	config,
+}: {
+	config?: { appearanceConfig: AppAppearanceConfig };
+}) {
+	const color = config?.appearanceConfig.header.style.coloredBackground
+		? (config.appearanceConfig.header.title.style?.textColor ?? "#FFFFFF")
+		: config?.appearanceConfig.colors.primary;
+	return <NextTopLoader color={color} />;
 }

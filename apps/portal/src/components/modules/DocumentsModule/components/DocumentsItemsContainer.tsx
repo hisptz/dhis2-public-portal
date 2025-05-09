@@ -1,5 +1,5 @@
 import { DocumentsModuleConfig } from "@packages/shared/schemas";
-import { Box, SimpleGrid, Text } from "@mantine/core";
+import { Box, Group, Text } from "@mantine/core";
 import { isEmpty } from "lodash";
 import { DocumentItemCard } from "@/components/modules/DocumentsModule/components/DocumentItemCard";
 
@@ -25,16 +25,11 @@ export function DocumentsItemsContainer({
 		}
 
 		return (
-			<SimpleGrid
-				flex={1}
-				cols={{
-					base: 6,
-				}}
-			>
+			<Group wrap="wrap" flex={1}>
 				{config.items.map((item) => (
 					<DocumentItemCard key={item.id} item={item} />
 				))}
-			</SimpleGrid>
+			</Group>
 		);
 	}
 
@@ -92,15 +87,10 @@ export function DocumentsItemsContainer({
 	}
 
 	return (
-		<SimpleGrid
-			flex={1}
-			cols={{
-				base: 6,
-			}}
-		>
+		<Group wrap="wrap" flex={1}>
 			{group.items.map((item) => (
 				<DocumentItemCard key={item.id} item={item} />
 			))}
-		</SimpleGrid>
+		</Group>
 	);
 }

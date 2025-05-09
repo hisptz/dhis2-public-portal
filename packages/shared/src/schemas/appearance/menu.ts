@@ -49,6 +49,7 @@ export type MenuItem = z.infer<typeof menuItemSchema>;
 
 export const menuConfig = z.object({
 	position: z.nativeEnum(MenuPosition),
+	collapsible: z.boolean(),
 	items: z.array(menuItemSchema),
 });
 

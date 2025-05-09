@@ -1,6 +1,5 @@
 import { ReadonlyURLSearchParams } from "next/navigation";
 import { dhis2HttpClient } from "@/utils/api/dhis2";
-import { DataVisComponent } from "@/components/displayItems/visualizations/DataVisComponent";
 import {
 	ChartVisualizationItem,
 	VisualizationChartType,
@@ -8,6 +7,7 @@ import {
 } from "@packages/shared/schemas";
 import { getAppearanceConfig } from "@/utils/config/appConfig";
 import { YearOverYearDataVisComponent } from "@/components/displayItems/visualizations/YearOverYearDataVisComponent";
+import { DataVisComponent } from "@/components/displayItems/visualizations/DataVisComponent";
 
 export interface MainVisualizationProps {
 	searchParams?: ReadonlyURLSearchParams;

@@ -5,6 +5,8 @@ import { SideMenu } from "../shared/components/SideMenu/SideMenu";
 import { CircularLoader } from "@dhis2/ui";
 import { useCheckConfig } from "../shared/hooks/config";
 import { InitialConfigurationSetup } from "../shared/components/InitialConfigurationSetup";
+import { ErrorBoundary } from "react-error-boundary";
+import ErrorPage from "../shared/components/ErrorPage/ErrorPage";
 
 export const Route = createRootRoute({
 	component: RootComponent,
@@ -34,7 +36,9 @@ function RootComponent() {
 							</div>
 						}
 					>
-						<Outlet />
+						<ErrorBoundary FallbackComponent={ErrorPage}>
+							<Outlet />
+						</ErrorBoundary>
 					</Suspense>
 				</main>
 			</div>

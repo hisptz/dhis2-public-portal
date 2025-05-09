@@ -1,6 +1,5 @@
 "use client";
 
-//TODO: Preamble should appear here
 import { VisualizationModuleConfig } from "@packages/shared/schemas";
 import { RichContent } from "@/components/RichContent";
 import { Button, Card, Group, Title } from "@mantine/core";
@@ -39,7 +38,7 @@ export function DescriptionArea({
 			return null;
 		}
 		return (
-			<Card className="w-full h-[200px]">
+			<Card className="w-full">
 				<Title order={4}>{group.title}</Title>
 				<RichContent content={group.shortDescription} />
 				<Group justify="flex-end">
@@ -66,7 +65,7 @@ export function DescriptionArea({
 	}
 
 	return (
-		<Card className="w-full h-[200px]">
+		<Card className="w-full">
 			<Title order={4}>{config.title}</Title>
 			<RichContent content={config.shortDescription} />
 			<Group justify="flex-end">

@@ -47,7 +47,7 @@ export function MainLayout({
 		<AppShell
 			header={{
 				height: {
-					base: hasMenuOnHeader ? headerHeight : headerHeight - 20,
+					base: hasMenuOnHeader ? headerHeight + 50 : headerHeight,
 				},
 			}}
 			footer={{ height: { base: 100, md: 100, lg: 240 } }}
@@ -75,7 +75,13 @@ export function MainLayout({
 			{hasMenu && (
 				<SideAppMenu
 					menuConfig={menuConfig}
-					isOpen={isLargerThanSm ? isOpen : opened}
+					isOpen={
+						menuConfig.collapsible
+							? isLargerThanSm
+								? isOpen
+								: opened
+							: true
+					}
 					setOpen={setOpen}
 				/>
 			)}

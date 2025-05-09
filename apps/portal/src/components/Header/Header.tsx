@@ -76,9 +76,10 @@ export function AppHeader({
 
 	return (
 		<AppShell.Header p={0} bg={headerBackgroundColor}>
-			<Flex px="sm" gap="lg" align="center" p={0}>
+			<Flex className="h-full" gap="lg" align="center" p="sm">
 				{hasMenu && (
 					<Burger
+						color={titleTextColor}
 						opened={opened}
 						onClick={toggle}
 						hiddenFrom="sm"
@@ -104,18 +105,19 @@ export function AppHeader({
 							}
 							alt="logo"
 							src={leadingImage}
-							visibleFrom="sm"
 						/>
 					</Box>
 				)}
 				<Stack
+					className="h-full"
 					align={headerTitleStackAlign}
+					gap="xs"
 					justify="space-between"
 					flex={1}
-					py={0}
+					p={0}
 					my={0}
 				>
-					<Stack p="sm" flex={1} justify="space-between" gap={0}>
+					<Stack p={0} flex={1} justify="center" gap={0}>
 						<Title
 							c={titleTextColor}
 							style={{
@@ -141,7 +143,13 @@ export function AppHeader({
 					</Stack>
 					<Container p={0} className="min-w-full">
 						{menuConfig.position === "header" && hasMenu && (
-							<HeaderMenu config={menuConfig} />
+							<HeaderMenu
+								backgroundColor={headerBackgroundColor}
+								foregroundColor={
+									headerConfig.title.style?.textColor
+								}
+								config={menuConfig}
+							/>
 						)}
 					</Container>
 				</Stack>

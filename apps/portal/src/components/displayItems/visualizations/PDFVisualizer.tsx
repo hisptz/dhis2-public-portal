@@ -1,58 +1,54 @@
 "use client";
 
-import type { Plugin, RenderViewer } from "@react-pdf-viewer/core";
-import { Viewer, Worker } from "@react-pdf-viewer/core";
-import { thumbnailPlugin } from "@react-pdf-viewer/thumbnail";
-import { Loader } from "@mantine/core";
-import { ReactElement } from "react";
+import React, { useEffect, useRef, useState } from "react";
+import * as pdfjsLib from "pdfjs-dist";
+import { Box, LoadingOverlay } from "@mantine/core";
+
+pdfjsLib.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@5.2.133/build/pdf.worker.min.mjs`;
 
 export interface PDFVisualizerProps {
 	path: string;
 }
 
-export interface PageThumbnailPluginProps {
-	PageThumbnail: ReactElement;
-}
-
-const pageThumbnailPlugin = (props: PageThumbnailPluginProps): Plugin => {
-	const { PageThumbnail } = props;
-
-	return {
-		renderViewer: (renderProps: RenderViewer) => {
-			const { slot } = renderProps;
-
-			slot.children = PageThumbnail;
-
-			// Reset the sub slot
-			slot!.subSlot!.attrs = {};
-			slot!.subSlot!.children = <></>;
-
-			return slot;
-		},
-	};
-};
-
 export function PDFVisualizer({ path }: PDFVisualizerProps) {
-	const thumbnailPluginInstance = thumbnailPlugin({
-		thumbnailWidth: 100,
-		renderSpinner: () => {
-			return (
-				<div className="w-full h-full flex items-center justify-center min-h-[100px]">
-					<Loader color="blue" />
-				</div>
-			);
-		},
-	});
-	const { Cover } = thumbnailPluginInstance;
-	const pageThumbnailPluginInstance = pageThumbnailPlugin({
-		PageThumbnail: <Cover getPageIndex={() => 0} />,
-	});
+	const [loading, setLoading] = useState(false);
+	const canvasRef = useRef<HTMLCanvasElement>(null);
+
+	const renderThumbnail = async () => {
+		if (canvasRef.current === null) return;
+		setLoading(true);
+		const loadingTask = pdfjsLib.getDocument(path);
+		const pdf = await loadingTask.promise;
+		const page = await pdf.getPage(1);
+		const viewport = page.getViewport({ scale: 1 });
+		const scale = 120 / viewport.width;
+		const scaledViewport = page.getViewport({ scale });
+		setLoading(false);
+		const canvas = canvasRef.current!;
+		const context = canvas.getContext("2d");
+		canvas.height = scaledViewport.height;
+		canvas.width = scaledViewport.width;
+		await page.render({
+			canvasContext: context!,
+			viewport: scaledViewport,
+		}).promise;
+	};
+
+	useEffect(() => {
+		renderThumbnail();
+	}, [path]);
+
 	return (
-		<Worker workerUrl="https://unpkg.com/pdfjs-dist@3.4.120/build/pdf.worker.min.js">
-			<Viewer
-				plugins={[pageThumbnailPluginInstance, thumbnailPluginInstance]}
-				fileUrl={path}
-			></Viewer>
-		</Worker>
+		<Box className="w-full flex items-center justify-center h-[160px]">
+			<LoadingOverlay
+				visible={loading}
+				zIndex={1000}
+				loaderProps={{
+					size: "sm",
+				}}
+				overlayProps={{ radius: "sm", blur: 2 }}
+			/>
+			<canvas ref={canvasRef} />
+		</Box>
 	);
 }

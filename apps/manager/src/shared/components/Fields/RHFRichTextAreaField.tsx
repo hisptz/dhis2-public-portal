@@ -19,6 +19,7 @@ export function RHFRichTextAreaField({
 
 	return (
 		<RichTextEditor
+			config={{}}
 			label={label}
 			error={!!fieldState.error}
 			validationText={fieldState.error?.message}

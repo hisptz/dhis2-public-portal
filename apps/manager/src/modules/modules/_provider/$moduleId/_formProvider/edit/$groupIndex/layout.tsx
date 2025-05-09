@@ -10,6 +10,8 @@ import { useFormContext } from "react-hook-form";
  import { z } from "zod";
 import { AppModule } from "@packages/shared/schemas";
 import { DashboardLayoutEditor } from "../../../../../../../shared/components/DashboardLayoutEditor";
+import { useSaveModule } from "../../../../../../../shared/components/ModulesPage/hooks/save";
+import { useAlert } from "@dhis2/app-runtime";
  
 const searchSchema = z.object({
 	subGroupIndex: z.number().optional(),
@@ -49,6 +51,32 @@ function RouteComponent() {
 			params: { moduleId },
 		});
 	};
+		const { save } = useSaveModule(moduleId);
+		const { handleSubmit, formState } = useFormContext<AppModule>();
+		const { show } = useAlert(
+			({ message }) => message,
+			({ type }) => ({ ...type, duration: 3000 }),
+		);
+	
+		const onError = (e) => {
+			console.log(e);
+			show({
+				message: i18n.t("Please fix the validation errors before saving"),
+				type: { critical: true },
+			});
+		};
+	
+		const onSubmit = async (data: AppModule) => {
+			try {
+				await save(data);
+				goBack();
+			} catch (error) {
+				show({
+					message: i18n.t("Failed to save section", error),
+					type: { critical: true },
+				});
+			}
+		};
 
 	return (
 		<div className="w-full h-full flex flex-col gap-4">
@@ -66,9 +94,14 @@ function RouteComponent() {
 						</Button>
 						<Button
 							primary
-							onClick={() => {
-								goBack();
-							}}
+							loading={formState.isSubmitting}
+								disabled={
+									!formState.isDirty || formState.isSubmitting
+								}
+								onClick={() => {
+									handleSubmit(onSubmit, onError)();
+									goBack();
+								}}
 						>
 							{i18n.t("Update layout")}
 						</Button>
@@ -95,9 +128,14 @@ function RouteComponent() {
 					</Button>
 					<Button
 						primary
-						onClick={() => {
-							goBack();
-						}}
+						loading={formState.isSubmitting}
+							disabled={
+								!formState.isDirty || formState.isSubmitting
+							}
+							onClick={() => {
+								handleSubmit(onSubmit, onError)();
+								goBack();
+							}}
 					>
 						{i18n.t("Update layout")}
 					</Button>

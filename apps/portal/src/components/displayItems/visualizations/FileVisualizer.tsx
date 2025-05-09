@@ -1,8 +1,9 @@
 import { LibraryFileData } from "@packages/shared/schemas";
 import { IconCircleX, IconFileZip, IconScan } from "@tabler/icons-react";
-import { Text } from "@mantine/core";
+import { Box, Text } from "@mantine/core";
 import { dhis2HttpClient } from "@/utils/api/dhis2";
 import Link from "next/link";
+import { getServerImageUrl } from "@/utils/server/images";
 import { PDFVisualizer } from "@/components/displayItems/visualizations/PDFVisualizer";
 
 export interface PDFVisualizerProps {
@@ -39,8 +40,7 @@ export async function FileVisualizer({ config }: PDFVisualizerProps) {
 		},
 	);
 
-	const href = `/api/documents/${config.id}/data`;
-	const path = `${process.env.CONTEXT_PATH}${href}`;
+	const href = getServerImageUrl(config.id);
 
 	if (!data) {
 		return (
@@ -75,11 +75,13 @@ export async function FileVisualizer({ config }: PDFVisualizerProps) {
 				cursor: "pointer",
 				textDecoration: "none",
 			}}
-			className="flex flex-col items-center justify-center gap-4 text-center h-full "
+			className="flex flex-col items-center justify-center gap-2 text-center h-full w-full"
 		>
-			{type === "PDF" && <PDFVisualizer path={path} />}
-			{type === "ZIP" && <IconFileZip {...iconProps} />}
-			{type === "DOC" && <IconScan {...iconProps} />}
+			<Box className="flex flex-col items-center justify-center" flex={1}>
+				{type === "PDF" && <PDFVisualizer path={href} />}
+				{type === "ZIP" && <IconFileZip {...iconProps} />}
+				{type === "DOC" && <IconScan {...iconProps} />}
+			</Box>
 			<b className="text-primary-500">{config?.label}</b>
 		</Link>
 	);

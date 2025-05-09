@@ -5,8 +5,8 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
-"POT-Creation-Date: 2025-05-07T15:26:49.461Z\n"
-"PO-Revision-Date: 2025-05-07T15:26:49.462Z\n"
+"POT-Creation-Date: 2025-05-09T09:09:28.047Z\n"
+"PO-Revision-Date: 2025-05-09T09:09:28.048Z\n"
 
 msgid "Could not get Appearance configurations"
 msgstr "Could not get Appearance configurations"
@@ -22,6 +22,12 @@ msgstr "Saving..."
 
 msgid "Save changes"
 msgstr "Save changes"
+
+msgid "Please fix the validation errors before saving"
+msgstr "Please fix the validation errors before saving"
+
+msgid "Failed to save section"
+msgstr "Failed to save section"
 
 msgid "Layout editor"
 msgstr "Layout editor"
@@ -41,17 +47,155 @@ msgstr "Back to all modules"
 msgid "Module"
 msgstr "Module"
 
-msgid "Please fix the validation errors before saving"
-msgstr "Please fix the validation errors before saving"
-
-msgid "Failed to save section"
-msgstr "Failed to save section"
-
 msgid "Modules"
 msgstr "Modules"
 
 msgid "Size"
 msgstr "Size"
+
+msgid "Add Document"
+msgstr "Add Document"
+
+msgid "Could not create new library"
+msgstr "Could not create new library"
+
+msgid "File uploaded successfully"
+msgstr "File uploaded successfully"
+
+msgid "Could not save the file!"
+msgstr "Could not save the file!"
+
+msgid "Create Item"
+msgstr "Create Item"
+
+msgid "Label"
+msgstr "Label"
+
+msgid "PDF"
+msgstr "PDF"
+
+msgid "File type"
+msgstr "File type"
+
+msgid "File"
+msgstr "File"
+
+msgid "Document is being uploaded, please wait..."
+msgstr "Document is being uploaded, please wait..."
+
+msgid "This will be a part of the url. It should not contain spaces"
+msgstr "This will be a part of the url. It should not contain spaces"
+
+msgid "ID"
+msgstr "ID"
+
+msgid "Files"
+msgstr "Files"
+
+msgid "Actions"
+msgstr "Actions"
+
+msgid "N/A"
+msgstr "N/A"
+
+msgid "Groups"
+msgstr "Groups"
+
+msgid "There are no document configuration present"
+msgstr "There are no document configuration present"
+
+msgid "Add group"
+msgstr "Add group"
+
+msgid "Confirm deleting group"
+msgstr "Confirm deleting group"
+
+msgid "Are you sure you want to remove the group "
+msgstr "Are you sure you want to remove the group "
+
+msgid "This will delete all files and sub groups in this group as well."
+msgstr "This will delete all files and sub groups in this group as well."
+
+msgid "This action is irreversible."
+msgstr "This action is irreversible."
+
+msgid "Deleting..."
+msgstr "Deleting..."
+
+msgid "Delete"
+msgstr "Delete"
+
+msgid "Delete group"
+msgstr "Delete group"
+
+msgid "Edit Document Group"
+msgstr "Edit Document Group"
+
+msgid "Add Document Group"
+msgstr "Add Document Group"
+
+msgid "Update"
+msgstr "Update"
+
+msgid "Save"
+msgstr "Save"
+
+msgid "Title"
+msgstr "Title"
+
+msgid "Edit group"
+msgstr "Edit group"
+
+msgid "Type"
+msgstr "Type"
+
+msgid "There are no files present"
+msgstr "There are no files present"
+
+msgid "Add file"
+msgstr "Add file"
+
+msgid "Confirm deleting file"
+msgstr "Confirm deleting file"
+
+msgid "Are you sure you want to remove the file "
+msgstr "Are you sure you want to remove the file "
+
+msgid "Delete icon"
+msgstr "Delete icon"
+
+msgid "Edit file"
+msgstr "Edit file"
+
+msgid "Uploading..."
+msgstr "Uploading..."
+
+msgid "Could not upload file {{ errorMessage }}"
+msgstr "Could not upload file {{ errorMessage }}"
+
+msgid "Could not create document {{ errorMessage }}"
+msgstr "Could not create document {{ errorMessage }}"
+
+msgid "Could not delete file {{ errorMessage }}"
+msgstr "Could not delete file {{ errorMessage }}"
+
+msgid "Remove"
+msgstr "Remove"
+
+msgid "Documents"
+msgstr "Documents"
+
+msgid "Has groups"
+msgstr "Has groups"
+
+msgid "Item Display"
+msgstr "Item Display"
+
+msgid "Segmented"
+msgstr "Segmented"
+
+msgid "DropDown"
+msgstr "DropDown"
 
 msgid "Something went wrong"
 msgstr "Something went wrong"
@@ -59,18 +203,8 @@ msgstr "Something went wrong"
 msgid "Reload"
 msgstr "Reload"
 
-msgid "This will be a part of the url. It should not contain spaces"
-msgstr "This will be a part of the url. It should not contain spaces"
-
 msgid "Upload Icon"
 msgstr "Upload Icon"
-
-msgid ""
-"512px x 512px clear image. This will be used as favicon and application "
-"icon on mobile devices"
-msgstr ""
-"512px x 512px clear image. This will be used as favicon and application "
-"icon on mobile devices"
 
 msgid "Application name"
 msgstr "Application name"
@@ -102,14 +236,8 @@ msgstr "Dashboard group"
 msgid "Back to dashboard "
 msgstr "Back to dashboard "
 
-msgid "Title"
-msgstr "Title"
-
 msgid "Short description"
 msgstr "Short description"
-
-msgid "Remove"
-msgstr "Remove"
 
 msgid "Visualizations"
 msgstr "Visualizations"
@@ -117,17 +245,8 @@ msgstr "Visualizations"
 msgid "Configure layout"
 msgstr "Configure layout"
 
-msgid "Label"
-msgstr "Label"
-
-msgid "Type"
-msgstr "Type"
-
 msgid "Caption"
 msgstr "Caption"
-
-msgid "Actions"
-msgstr "Actions"
 
 msgid "Created successfully"
 msgstr "Created successfully"
@@ -162,17 +281,11 @@ msgstr "Confirm delete"
 msgid "Are you sure you want to delete the menu item "
 msgstr "Are you sure you want to delete the menu item "
 
-msgid "Delete"
-msgstr "Delete"
-
 msgid "Add sub item"
 msgstr "Add sub item"
 
 msgid "Path"
 msgstr "Path"
-
-msgid "Update"
-msgstr "Update"
 
 msgid "Create"
 msgstr "Create"
@@ -186,6 +299,15 @@ msgstr "Are you sure you want to close this form?. All changes will be lost"
 msgid " menu item"
 msgstr " menu item"
 
+msgid "Only SVG icons are supported"
+msgstr "Only SVG icons are supported"
+
+msgid "Icon"
+msgstr "Icon"
+
+msgid "Uploading icon..."
+msgstr "Uploading icon..."
+
 msgid "Menu items"
 msgstr "Menu items"
 
@@ -198,9 +320,6 @@ msgstr " sub menu item"
 msgid "Name"
 msgstr "Name"
 
-msgid "N/A"
-msgstr "N/A"
-
 msgid "Menu Position"
 msgstr "Menu Position"
 
@@ -209,6 +328,9 @@ msgstr "Sidebar"
 
 msgid "Header"
 msgstr "Header"
+
+msgid "Collapsible"
+msgstr "Collapsible"
 
 msgid "The form has errors. Please fix them and try again"
 msgstr "The form has errors. Please fix them and try again"
@@ -243,17 +365,11 @@ msgstr "Creating..."
 msgid "Create module"
 msgstr "Create module"
 
-msgid "ID"
-msgstr "ID"
-
 msgid "Module deleted successfully"
 msgstr "Module deleted successfully"
 
 msgid "Could not delete module"
 msgstr "Could not delete module"
-
-msgid "Deleting..."
-msgstr "Deleting..."
 
 msgid "Delete module"
 msgstr "Delete module"
@@ -330,9 +446,6 @@ msgstr "Item"
 msgid "Item Type"
 msgstr "Item Type"
 
-msgid "Icon"
-msgstr "Icon"
-
 msgid "Add Section"
 msgstr "Add Section"
 
@@ -399,9 +512,6 @@ msgstr "Should be a valid svg string"
 msgid "Short Description"
 msgstr "Short Description"
 
-msgid "Add group"
-msgstr "Add group"
-
 msgid "Create Dashboard Group"
 msgstr "Create Dashboard Group"
 
@@ -432,17 +542,11 @@ msgstr "Visualization type"
 msgid "All"
 msgstr "All"
 
-msgid "Has groups"
-msgstr "Has groups"
-
 msgid "Group selector"
 msgstr "Group selector"
 
 msgid "Save group changes"
 msgstr "Save group changes"
-
-msgid "Groups"
-msgstr "Groups"
 
 msgid "Welcome to the public portal manager!"
 msgstr "Welcome to the public portal manager!"
