@@ -2488,12 +2488,12 @@
   resolved "https://registry.yarnpkg.com/@floating-ui/utils/-/utils-0.2.9.tgz#50dea3616bc8191fb8e112283b49eaff03e78429"
   integrity sha512-MDWhGtE+eHw5JW7lq4qhc5yRLS11ERl1c7Z6Xd0a58DozHES6EnNNwUWbMiG4J9Cgj053Bhk8zvlhFYKVhULwg==
 
-"@hisptz/dhis2-analytics@^2.0.67", "@hisptz/dhis2-analytics@^2.1.1":
-  version "2.1.1"
-  resolved "https://registry.yarnpkg.com/@hisptz/dhis2-analytics/-/dhis2-analytics-2.1.1.tgz#d3b9fac3f5251744621fb7cf7cbe9cf502929afd"
-  integrity sha512-4yTW9dKbGQFZzWuLcNhRA+tBI4GQV+5GT8HLg+MM9MuykV7j/Y3EEV5kx9lUxDio9MUOfpEU9inn4jSJCAco3g==
+"@hisptz/dhis2-analytics@^2.1.3":
+  version "2.1.3"
+  resolved "https://registry.yarnpkg.com/@hisptz/dhis2-analytics/-/dhis2-analytics-2.1.3.tgz#84948417ff7cef4ec1df1b36e3fc1b0e306b51c2"
+  integrity sha512-dprKzef7nq6Y0HhDZg1dMReR7RXyRzgyfNk8EKSjAYYCnaUE8kIo/eSSU1WTYNp18y+UZ4fGfistd7NlOOpasQ==
   dependencies:
-    "@hisptz/dhis2-ui" "2.0.43"
+    "@hisptz/dhis2-ui" "2.0.45"
     "@hisptz/dhis2-utils" "2.0.18"
     "@react-leaflet/core" "^2.1.0"
     "@react-pdf/renderer" "^4.0.0"
@@ -2524,21 +2524,21 @@
     xlsx "^0.18.5"
     zod "^3.23.8"
 
-"@hisptz/dhis2-ui@2.0.43", "@hisptz/dhis2-ui@^2.0.29", "@hisptz/dhis2-ui@^2.0.42":
-  version "2.0.43"
-  resolved "https://registry.yarnpkg.com/@hisptz/dhis2-ui/-/dhis2-ui-2.0.43.tgz#8781b50578707095ed676c1907300c2c65def02c"
-  integrity sha512-G20U6nnbAfB+6rtiDnLs9thHDoTePlr6eliAZTF3+tttl4HuEAbv0asotLnvUl1Ea9o7ouoDXMQ+a2LL3s24XA==
+"@hisptz/dhis2-ui@2.0.45", "@hisptz/dhis2-ui@^2.0.45":
+  version "2.0.45"
+  resolved "https://registry.yarnpkg.com/@hisptz/dhis2-ui/-/dhis2-ui-2.0.45.tgz#3bcd7bb72dd989e874a18d7706260fa4278e19f7"
+  integrity sha512-HXX0mqCIlWf4pYG3j0lJ7PyHIMPryfOEzyXjK5usXotyw6QmHy1v2LfSwqUhQMX3BLnPbXkYTKJjtx65GZlG7A==
   dependencies:
     "@hisptz/dhis2-utils" "2.0.18"
     classnames "^2.5.1"
     dexie "^3.2.3"
-    jodit-react "^1.3.39"
+    jodit-react "^5.2.19"
     lodash "^4.17.21"
     luxon "^3.4.4"
     react-circular-progressbar "^2.1.0"
     react-collapsible "^2.10.0"
     react-color "^2.19.3"
-    react-hook-form "^7.53.0"
+    react-hook-form "^7.56.2"
     recoil "^0.7.7"
     styled-components "^6.1.8"
     usehooks-ts "^2.9.2"
@@ -8566,11 +8566,6 @@ core-js@^2.4.0, core-js@^2.5.0:
   resolved "https://registry.yarnpkg.com/core-js/-/core-js-2.6.12.tgz#d9333dfa7b065e347cc5682219d6f690859cc2ec"
   integrity sha512-Kb2wC0fvsWfQrgk8HU5lW6U/Lcs8+9aaYcy4ZFc6DDlo4nZ7n70dEgE5rtR0oG6ufKDUnrwfWL1mXR5ljDatrQ==
 
-core-js@^3.28.0:
-  version "3.42.0"
-  resolved "https://registry.yarnpkg.com/core-js/-/core-js-3.42.0.tgz#edbe91f78ac8cfb6df8d997e74d368a68082fe37"
-  integrity sha512-Sz4PP4ZA+Rq4II21qkNqOEDTDrCvcANId3xpIgB34NDkWc3UduWj2dqEtN9yZIq8Dk3HyPI33x9sqqU5C8sr0g==
-
 core-util-is@1.0.2:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/core-util-is/-/core-util-is-1.0.2.tgz#b5fd54220aa2bc5ab57aab7140c940754503c1a7"
@@ -13409,20 +13404,19 @@ jiti@^2.4.2:
   resolved "https://registry.yarnpkg.com/jiti/-/jiti-2.4.2.tgz#d19b7732ebb6116b06e2038da74a55366faef560"
   integrity sha512-rg9zJN+G4n2nfJl5MW3BMygZX56zKPNVEYYqq7adpmMh4Jn2QNEwhvQlFy6jPVdcod7txZtKHWnyZiA3a0zP7A==
 
-jodit-react@^1.3.39:
-  version "1.3.39"
-  resolved "https://registry.yarnpkg.com/jodit-react/-/jodit-react-1.3.39.tgz#9a2e0518fb53d89884ec115e17b9f3e35f0de44a"
-  integrity sha512-uZSRadPlgvcB6Wn54RGZ6XQEN+JHj0dB1SI4OH42yTC5WTeoYavksUwzCgFuQF4+janjSCxn0CXNqzd0MJEhVw==
+jodit-react@^5.2.19:
+  version "5.2.19"
+  resolved "https://registry.yarnpkg.com/jodit-react/-/jodit-react-5.2.19.tgz#e270a934ad14f41ca7ce4321bf701c2beab351a0"
+  integrity sha512-vOHbHijZ2A8JOhIyHxaAW//MVA2jDSJC9U3eHzsX494wt4NTqjfEJJzZOiin2afmgL9RbfiGeh+1dn0ZR72zkA==
   dependencies:
-    jodit "^3.20.2"
+    jodit "^4.6.2"
 
-jodit@^3.20.2:
-  version "3.24.9"
-  resolved "https://registry.yarnpkg.com/jodit/-/jodit-3.24.9.tgz#575a0218996f31003c230f81db0f056132dea9b5"
-  integrity sha512-t2d73v7GFbGI08ZzdCTwrzi8ZtoOG4icGzD6IIN2e+ghlpUKYxcHZ/Rmy6/mc6055172z+tv7QSr9BcOz6IOFQ==
+jodit@^4.6.2:
+  version "4.6.2"
+  resolved "https://registry.yarnpkg.com/jodit/-/jodit-4.6.2.tgz#993a0e15fc6b998bd19fc1992aec8a2234dc250e"
+  integrity sha512-euIYTOBzZO04jroi79RvhRiXVs3ANCSg5JC8HOT/gf81dIdduxUKvkM4lVSdVP28aZBxs0u+nIdLC7OGXh1jhg==
   dependencies:
     autobind-decorator "^2.4.0"
-    core-js "^3.28.0"
 
 jotai-devtools@^0.10.1:
   version "0.10.1"
@@ -16970,6 +16964,13 @@ react-error-boundary@^5.0.0:
   dependencies:
     "@babel/runtime" "^7.12.5"
 
+react-error-boundary@^6.0.0:
+  version "6.0.0"
+  resolved "https://registry.yarnpkg.com/react-error-boundary/-/react-error-boundary-6.0.0.tgz#a9e552146958fa77d873b587aa6a5e97544ee954"
+  integrity sha512-gdlJjD7NWr0IfkPlaREN2d9uUZUlksrfOx7SX62VRerwXbMY6ftGCIZua1VG1aXFNOimhISsTq+Owp725b9SiA==
+  dependencies:
+    "@babel/runtime" "^7.12.5"
+
 react-error-overlay@^6.0.11:
   version "6.1.0"
   resolved "https://registry.yarnpkg.com/react-error-overlay/-/react-error-overlay-6.1.0.tgz#22b86256beb1c5856f08a9a228adb8121dd985f2"
@@ -17016,10 +17017,10 @@ react-helmet@^6.1.0:
     react-fast-compare "^3.1.1"
     react-side-effect "^2.1.0"
 
-react-hook-form@^7.53.0, react-hook-form@^7.56.1:
-  version "7.56.1"
-  resolved "https://registry.yarnpkg.com/react-hook-form/-/react-hook-form-7.56.1.tgz#45b2040fef997b873d656959d2e7f864f35bf95d"
-  integrity sha512-qWAVokhSpshhcEuQDSANHx3jiAEFzu2HAaaQIzi/r9FNPm1ioAvuJSD4EuZzWd7Al7nTRKcKPnBKO7sRn+zavQ==
+react-hook-form@^7.56.2, react-hook-form@^7.56.3:
+  version "7.56.3"
+  resolved "https://registry.yarnpkg.com/react-hook-form/-/react-hook-form-7.56.3.tgz#c459f59fead379db30113951152e13db386cc015"
+  integrity sha512-IK18V6GVbab4TAo1/cz3kqajxbDPGofdF0w7VHdCo0Nt8PrPlOZcuuDq9YYIV1BtjcX78x0XsldbQRQnQXWXmw==
 
 react-is@^16.13.1, react-is@^16.7.0:
   version "16.13.1"

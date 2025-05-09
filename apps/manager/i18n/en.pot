@@ -5,8 +5,8 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
-"POT-Creation-Date: 2025-05-08T15:53:33.457Z\n"
-"PO-Revision-Date: 2025-05-08T15:53:33.457Z\n"
+"POT-Creation-Date: 2025-05-09T06:45:49.179Z\n"
+"PO-Revision-Date: 2025-05-09T06:45:49.179Z\n"
 
 msgid "Could not get Appearance configurations"
 msgstr "Could not get Appearance configurations"
@@ -206,13 +206,6 @@ msgstr "Reload"
 msgid "Upload Icon"
 msgstr "Upload Icon"
 
-msgid ""
-"512px x 512px clear image. This will be used as favicon and application "
-"icon on mobile devices"
-msgstr ""
-"512px x 512px clear image. This will be used as favicon and application "
-"icon on mobile devices"
-
 msgid "Application name"
 msgstr "Application name"
 
@@ -306,8 +299,14 @@ msgstr "Are you sure you want to close this form?. All changes will be lost"
 msgid " menu item"
 msgstr " menu item"
 
+msgid "Only SVG icons are supported"
+msgstr "Only SVG icons are supported"
+
 msgid "Icon"
 msgstr "Icon"
+
+msgid "Uploading icon..."
+msgstr "Uploading icon..."
 
 msgid "Menu items"
 msgstr "Menu items"

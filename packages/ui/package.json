@@ -20,7 +20,8 @@
     "typescript": "5.8.2"
   },
   "dependencies": {
-    "@hisptz/dhis2-analytics": "^2.1.1",
+    "@hisptz/dhis2-analytics": "^2.1.3",
+    "@hisptz/dhis2-ui": "^2.0.45",
     "@hisptz/dhis2-utils": "^2.0.18",
     "@packages/shared": "*",
     "react": "^19.1.0",
