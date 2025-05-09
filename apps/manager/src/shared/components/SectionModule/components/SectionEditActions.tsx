@@ -19,7 +19,8 @@ export function SectionEditActions() {
 
 	const { moduleId } = useParams({ from: "/modules/_provider/$moduleId" });
 	const { save } = useSaveModule(moduleId);
-	const { handleSubmit, formState } = useFormContext<AppModule>();
+	const { handleSubmit, formState, reset, getValues } =
+		useFormContext<AppModule>();
 	const { show } = useAlert(
 		({ message }) => message,
 		({ type }) => ({ ...type, duration: 3000 }),
@@ -35,7 +36,9 @@ export function SectionEditActions() {
 
 	const onSubmit = async (data: AppModule) => {
 		try {
+			const newValues = getValues();
 			await save(data);
+			reset(newValues);
 		} catch (error) {
 			show({
 				message: i18n.t("Failed to save section", error),
@@ -71,6 +74,11 @@ export function SectionEditActions() {
 							confirmButtonText: i18n.t("Reset changes"),
 							cancelButtonText: i18n.t("Keep changes"),
 							confirmButtonColor: "primary",
+						});
+					} else {
+						navigate({
+							to: "/modules/$moduleId/edit",
+							params: { moduleId },
 						});
 					}
 				}}

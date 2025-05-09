@@ -46,7 +46,7 @@ export function VisualizationItemsContainer({
 		return (
 			<Box className="w-full h-full flex flex-col items-center justify-center min-h-[400px]">
 				<Text size="lg" c="dimmed">
-					There no groups configured for this module
+					There are no groups configured for this module
 				</Text>
 			</Box>
 		);
@@ -87,7 +87,10 @@ export function VisualizationItemsContainer({
 	return (
 		<FlexibleLayoutContainer layouts={group.layouts}>
 			{group.items.map((item) => (
-				<FlexibleLayoutItem id={"item" in item ? item.item.id : ""} key={"item" in item ? item.item.id : ""}>
+				<FlexibleLayoutItem
+					id={"item" in item ? item.item.id : ""}
+					key={"item" in item ? item.item.id : ""}
+				>
 					<DisplayItemContainer item={item}>
 						<DisplayItemSelector item={item} />
 					</DisplayItemContainer>

@@ -37,7 +37,7 @@ export function DocumentsItemsContainer({
 		return (
 			<Box className="w-full h-full flex flex-col items-center justify-center min-h-[400px]">
 				<Text size="lg" c="dimmed">
-					There no groups configured for this module
+					There are no groups configured for this module
 				</Text>
 			</Box>
 		);

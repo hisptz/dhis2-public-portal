@@ -53,7 +53,7 @@ function RouteComponent() {
 	};
 
 	const { save } = useSaveModule(moduleId);
-	const { handleSubmit, formState } = useFormContext<AppModule>();
+	const { handleSubmit, formState, reset } = useFormContext<AppModule>();
 	const { show } = useAlert(
 		({ message }) => message,
 		({ type }) => ({ ...type, duration: 3000 }),
@@ -70,6 +70,7 @@ function RouteComponent() {
 	const onSubmit = async (data: AppModule) => {
 		try {
 			await save(data);
+			reset(data);
 			goBack();
 		} catch (error) {
 			show({

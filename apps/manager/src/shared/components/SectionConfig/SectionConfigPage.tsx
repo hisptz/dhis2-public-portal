@@ -70,6 +70,11 @@ export function SectionConfigPage() {
 								cancelButtonText: i18n.t("Keep changes"),
 								confirmButtonColor: "primary",
 							});
+						} else {
+							navigate({
+								to: "/modules/$moduleId/edit",
+								params: { moduleId },
+							});
 						}
 					}}
 					icon={<IconArrowLeft24 />}
