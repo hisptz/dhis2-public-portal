@@ -139,12 +139,8 @@ export function YearOverYearDataVisComponent({
 										setRef={chartRef}
 										analytics={analytics}
 										visualization={visualizationConfig}
-										config={config}
 										fullScreen={handler.active}
-										containerRef={containerRef}
-										legendSet={legendSet}
 										tableRef={tableRef}
-										setSingleValueRef={setSingleValueRef}
 									/>
 								)}
 							</div>

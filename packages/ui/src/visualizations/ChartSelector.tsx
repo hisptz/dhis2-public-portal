@@ -1,17 +1,14 @@
-import React, { Dispatch, RefObject, SetStateAction } from "react";
+import React, { RefObject } from "react";
+
 import HighchartsReact from "highcharts-react-official";
 import {
 	AnalyticsData,
 	VisualizationChartType,
 	VisualizationConfig,
-	VisualizationItem,
 } from "@packages/shared/schemas";
-import { LegendSet } from "@hisptz/dhis2-utils";
-import {
-	ChartVisualizer,
-	SingleValueVisualizer,
-	TableVisualizer,
-} from "@packages/ui/visualizations";
+import { SingleValueVisualizer } from "./SingleValueVisualizer";
+import { TableVisualizer } from "./TableVisualizer";
+import { ChartVisualizer } from "./ChartVisualizer";
 
 export function ChartSelector({
 	analytics,
@@ -21,14 +18,10 @@ export function ChartSelector({
 	fullScreen,
 	colors,
 }: {
-	setSingleValueRef: Dispatch<SetStateAction<HTMLDivElement | null>>;
 	setRef: RefObject<HighchartsReact.RefObject | null>;
 	analytics: AnalyticsData;
 	visualization: VisualizationConfig;
-	legendSet?: LegendSet;
-	config: VisualizationItem;
 	tableRef: RefObject<HTMLTableElement | null>;
-	containerRef: RefObject<HTMLDivElement | null>;
 	fullScreen: boolean;
 	colors: string[];
 }) {

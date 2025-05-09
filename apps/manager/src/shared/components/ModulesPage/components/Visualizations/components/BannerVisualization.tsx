@@ -6,10 +6,8 @@ import { find, findIndex } from "lodash";
 import { SingleValue } from "@hisptz/dhis2-analytics";
 import { mainColors } from "@packages/shared/constants";
 import React, { useMemo } from "react";
-import { Banner } from "@packages/shared/components";
 import { useDataQuery } from "@dhis2/app-runtime";
 import { FullLoader } from "../../../../FullLoader";
-
 
 export interface BannerVisualizationProps {
 	config: BannerVisualizationType;
@@ -20,7 +18,15 @@ export interface BannerVisualizationProps {
 const analyticsQuery: any = {
 	analytics: {
 		resource: "analytics",
-		params: ({ ids, periods, orgUnits }: { ids: string[]; periods: string[]; orgUnits: string[] }) => ({
+		params: ({
+			ids,
+			periods,
+			orgUnits,
+		}: {
+			ids: string[];
+			periods: string[];
+			orgUnits: string[];
+		}) => ({
 			filter: `pe:${periods.join(";")},ou:${orgUnits.join(";")}`,
 			dimension: `dx:${ids.join(";")}`,
 			includeMetadataDetails: "true",
@@ -51,8 +57,7 @@ export function BannerVisualization({
 
 		return config.data.map(({ id, percentage }) => {
 			const meta = analytics?.metaData?.items[id];
-			const value =
-				find(analytics.rows, (row) => row.includes(id)) ?? [];
+			const value = find(analytics.rows, (row) => row.includes(id)) ?? [];
 			const indicatorValue = value
 				? parseFloat(value[valueIndex] ?? "0")
 				: 0;
@@ -72,7 +77,7 @@ export function BannerVisualization({
 	if (loading) {
 		return (
 			<div className="w-full h-full flex items-center justify-center min-h-[200px]">
-				<FullLoader/>
+				<FullLoader />
 			</div>
 		);
 	}
@@ -86,8 +91,6 @@ export function BannerVisualization({
 	}
 
 	return (
-		<div className="w-full min-h-[200px] p-4 flex flex-col justify-center items-stretch">
-			<Banner title={config.label} items={bannerData} />
-		</div>
+		<div className="w-full min-h-[200px] p-4 flex flex-col justify-center items-stretch"></div>
 	);
 }
