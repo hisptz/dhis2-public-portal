@@ -1,7 +1,5 @@
-"use client";
-
+import React, { Dispatch, RefObject, SetStateAction } from "react";
 import HighchartsReact from "highcharts-react-official";
-import { Dispatch, RefObject, SetStateAction } from "react";
 import {
 	AnalyticsData,
 	VisualizationChartType,

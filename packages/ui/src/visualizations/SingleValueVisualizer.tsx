@@ -1,5 +1,3 @@
-"use client";
-
 import React, { RefObject, useMemo, useRef } from "react";
 import { clamp, flatten, get, head, truncate } from "lodash";
 import { useResizeObserver } from "usehooks-ts";

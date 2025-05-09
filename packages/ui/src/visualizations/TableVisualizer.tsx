@@ -1,5 +1,3 @@
-"use client";
-
 import React, { RefObject } from "react";
 
 import { AnalyticsData, VisualizationConfig } from "@packages/shared/schemas";
