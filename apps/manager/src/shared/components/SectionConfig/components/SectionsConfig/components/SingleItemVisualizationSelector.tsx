@@ -114,12 +114,15 @@ export function VisSelector({
 	);
 
 	useEffect(() => {
-		if (visualizationType) {
+		if (visualizationType || visType) {
 			refetch({
-				type: visualizationType,
+				type:
+					visType == DisplayItemType.SINGLE_VALUE
+						? DisplayItemType.SINGLE_VALUE
+						: visualizationType,
 			});
 		}
-	}, [refetch, visualizationType]);
+	}, [refetch, visualizationType, visType]);
 
 	useEffect(() => {
 		const selectedVisualization = options.find(
@@ -131,27 +134,34 @@ export function VisSelector({
 	}, [loading]);
 
 	return (
-		<div className="flex flex-col gap-4 ">
-			<SingleSelectField
-				required
-				label={i18n.t("Visualization type")}
-				placeholder={i18n.t("All")}
-				onChange={({ selected }) => setVisualizationType(selected)}
-				selected={visualizationType}
-			>
-				{[
-					...Object.values(VisualizationChartType).map((type) => ({
-						label: capitalize(startCase(type)),
-						value: type,
-					})),
-				].map((option) => (
-					<SingleSelectOption
-						key={option.value}
-						label={option.label}
-						value={option.value}
-					/>
-				))}
-			</SingleSelectField>
+		<div
+			className={`flex flex-col ${visType === DisplayItemType.SINGLE_VALUE ? "gap-2" : "gap-4"}`}
+		>
+			{visType != DisplayItemType.SINGLE_VALUE && (
+				<SingleSelectField
+					required
+					label={i18n.t("Visualization type")}
+					placeholder={i18n.t("All")}
+					onChange={({ selected }) => setVisualizationType(selected)}
+					selected={visualizationType}
+				>
+					{[
+						...Object.values(VisualizationChartType).map(
+							(type) => ({
+								label: capitalize(startCase(type)),
+								value: type,
+							}),
+						),
+					].map((option) => (
+						<SingleSelectOption
+							key={option.value}
+							label={option.label}
+							value={option.value}
+						/>
+					))}
+				</SingleSelectField>
+			)}
+
 			<RHFSingleSelectField
 				required
 				disabled={loading}
