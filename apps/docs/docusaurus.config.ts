@@ -5,26 +5,19 @@ import type * as Preset from "@docusaurus/preset-classic";
 // This runs in Node.js - Don't use client-side code here (browser APIs, JSX...)
 
 const appName = "DHIS2 FlexiPortal";
+const repoURL = "https://github.com/hisptz/dhis2-public-portal";
 
 const config: Config = {
 	title: appName,
 	tagline: "DHIS2 powered public web portal",
 	favicon: "img/favicon.ico",
-	// Set the production url of your site here
 	url: "https://hisptz.github.io",
-	// Set the /<baseUrl>/ pathname under which your site is served
-	// For GitHub pages deployment, it is often '/<projectName>/'
 	baseUrl: "/dhis2-public-portal",
 	trailingSlash: false,
-	// GitHub pages deployment config.
-	// If you aren't using GitHub pages, you don't need these.
 	organizationName: "hisptz", // Usually your GitHub org/user name.
 	projectName: "dhis2-public-portal", // Usually your repo name.
 	onBrokenLinks: "throw",
 	onBrokenMarkdownLinks: "warn",
-	// Even if you don't use internationalization, you can use this field to set
-	// useful metadata like html lang. For example, if your site is Chinese, you
-	// may want to replace "en" with "zh-Hans".
 	i18n: {
 		defaultLocale: "en",
 		locales: ["en"],
@@ -37,23 +30,7 @@ const config: Config = {
 					sidebarPath: "./sidebars.ts",
 					// Please change this to your repo.
 					// Remove this to remove the "edit this page" links.
-					editUrl:
-						"https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/",
-				},
-				blog: {
-					showReadingTime: true,
-					feedOptions: {
-						type: ["rss", "atom"],
-						xslt: true,
-					},
-					// Please change this to your repo.
-					// Remove this to remove the "edit this page" links.
-					editUrl:
-						"https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/",
-					// Useful options to enforce blogging best practices
-					onInlineTags: "warn",
-					onInlineAuthors: "warn",
-					onUntruncatedBlogPosts: "warn",
+					editUrl: `${repoURL}/tree/main/apps/docs`,
 				},
 				theme: {
 					customCss: "./src/css/custom.css",
@@ -73,11 +50,22 @@ const config: Config = {
 			items: [
 				{
 					type: "docSidebar",
-					sidebarId: "tutorialSidebar",
+					sidebarId: "deploySidebar",
 					position: "left",
-					label: "Tutorial",
+					label: "Deployment",
 				},
-				{ to: "/blog", label: "Blog", position: "left" },
+				{
+					type: "docSidebar",
+					sidebarId: "configSidebar",
+					position: "left",
+					label: "Configuration",
+				},
+				{
+					type: "docSidebar",
+					sidebarId: "guidelinesSidebar",
+					position: "left",
+					label: "Guidelines",
+				},
 				{
 					href: "https://github.com/facebook/docusaurus",
 					label: "GitHub",
@@ -86,49 +74,40 @@ const config: Config = {
 			],
 		},
 		footer: {
-			style: "dark",
+			style: "light",
 			links: [
 				{
 					title: "Docs",
 					items: [
 						{
-							label: "Tutorial",
-							to: "/docs/intro",
+							label: "Deployment",
+							to: "/docs/deployment/intro",
+						},
+						{
+							label: "Configuration",
+							to: "/docs/configuration/intro",
+						},
+						{
+							label: "Guidelines",
+							to: "/docs/guidelines/intro",
 						},
 					],
 				},
 				{
 					title: "Community",
-					items: [
-						{
-							label: "Stack Overflow",
-							href: "https://stackoverflow.com/questions/tagged/docusaurus",
-						},
-						{
-							label: "Discord",
-							href: "https://discordapp.com/invite/docusaurus",
-						},
-						{
-							label: "X",
-							href: "https://x.com/docusaurus",
-						},
-					],
+					items: [],
 				},
 				{
 					title: "More",
 					items: [
 						{
-							label: "Blog",
-							to: "/blog",
-						},
-						{
 							label: "GitHub",
-							href: "https://github.com/facebook/docusaurus",
+							href: "https://github.com/hisptz/dhis2-public-portal",
 						},
 					],
 				},
 			],
-			copyright: `Copyright © ${new Date().getFullYear()} My Project, Inc. Built with Docusaurus.`,
+			copyright: `Copyright © ${new Date().getFullYear()} HISP Tanzania, Inc. Built with Docusaurus.`,
 		},
 		prism: {
 			theme: prismThemes.github,
