@@ -12,6 +12,7 @@
       <excludeFolder url="file://$MODULE_DIR$/tmp" />
       <excludeFolder url="file://$MODULE_DIR$/apps/portal/.turbo" />
       <excludeFolder url="file://$MODULE_DIR$/apps/manager/.turbo" />
+      <excludeFolder url="file://$MODULE_DIR$/apps/docs/.docusaurus" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

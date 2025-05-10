@@ -16,7 +16,7 @@
       "outputs": [
         ".next/**",
         "!.next/cache/**",
-        "build/bundle/**"
+        "build/**"
       ]
     },
     "lint": {
