@@ -4,24 +4,24 @@ import type * as Preset from "@docusaurus/preset-classic";
 
 // This runs in Node.js - Don't use client-side code here (browser APIs, JSX...)
 
+const appName = "DHIS2 FlexiPortal";
+
 const config: Config = {
-	title: "DHIS2 Public Portal",
-	tagline: "",
+	title: appName,
+	tagline: "DHIS2 powered public web portal",
 	favicon: "img/favicon.ico",
 	// Set the production url of your site here
-	url: "https://your-docusaurus-site.example.com",
+	url: "https://hisptz.github.io",
 	// Set the /<baseUrl>/ pathname under which your site is served
 	// For GitHub pages deployment, it is often '/<projectName>/'
-	baseUrl: "/",
-
+	baseUrl: "/dhis2-public-portal",
+	trailingSlash: false,
 	// GitHub pages deployment config.
 	// If you aren't using GitHub pages, you don't need these.
-	organizationName: "facebook", // Usually your GitHub org/user name.
-	projectName: "docusaurus", // Usually your repo name.
-
+	organizationName: "hisptz", // Usually your GitHub org/user name.
+	projectName: "dhis2-public-portal", // Usually your repo name.
 	onBrokenLinks: "throw",
 	onBrokenMarkdownLinks: "warn",
-
 	// Even if you don't use internationalization, you can use this field to set
 	// useful metadata like html lang. For example, if your site is Chinese, you
 	// may want to replace "en" with "zh-Hans".
@@ -29,7 +29,6 @@ const config: Config = {
 		defaultLocale: "en",
 		locales: ["en"],
 	},
-
 	presets: [
 		[
 			"classic",
@@ -62,15 +61,14 @@ const config: Config = {
 			} satisfies Preset.Options,
 		],
 	],
-
 	themeConfig: {
 		// Replace with your project's social card
-		image: "img/docusaurus-social-card.jpg",
+		image: "img/dhis2-app-icon.png",
 		navbar: {
-			title: "My Site",
+			title: appName,
 			logo: {
-				alt: "My Site Logo",
-				src: "img/logo.svg",
+				alt: "logo",
+				src: "img/dhis2-app-icon.png",
 			},
 			items: [
 				{
