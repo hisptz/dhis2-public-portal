@@ -60,14 +60,14 @@ const config: Config = {
 					position: "left",
 					label: "Configuration",
 				},
+				// {
+				// 	type: "docSidebar",
+				// 	sidebarId: "guidelinesSidebar",
+				// 	position: "left",
+				// 	label: "Guidelines",
+				// },
 				{
-					type: "docSidebar",
-					sidebarId: "guidelinesSidebar",
-					position: "left",
-					label: "Guidelines",
-				},
-				{
-					href: "https://github.com/facebook/docusaurus",
+					href: repoURL,
 					label: "GitHub",
 					position: "right",
 				},
@@ -87,10 +87,10 @@ const config: Config = {
 							label: "Configuration",
 							to: "/docs/configuration/intro",
 						},
-						{
-							label: "Guidelines",
-							to: "/docs/guidelines/intro",
-						},
+						// {
+						// 	label: "Guidelines",
+						// 	to: "/docs/guidelines/intro",
+						// },
 					],
 				},
 				{
@@ -103,6 +103,14 @@ const config: Config = {
 						{
 							label: "GitHub",
 							href: "https://github.com/hisptz/dhis2-public-portal",
+						},
+						{
+							label: "HISP Tanzania",
+							href: "https://hisp.tz",
+						},
+						{
+							label: "DHIS2",
+							href: "https://dhis2.org",
 						},
 					],
 				},

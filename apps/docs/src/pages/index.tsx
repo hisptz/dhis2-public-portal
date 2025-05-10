@@ -17,10 +17,23 @@ function HomepageHeader() {
 					{siteConfig.title}
 				</Heading>
 				<p className="hero__subtitle">{siteConfig.tagline}</p>
+				<p
+					style={{
+						fontSize: "1.2rem",
+						textAlign: "center",
+					}}
+				>
+					DHIS2 FlexiPortal is a customizable, deployment-ready
+					public-facing portal that enables easy, unauthenticated
+					access to data stored in a DHIS2 instance. It simplifies
+					sharing data with the public by allowing DHIS2
+					visualizations and resources to be published with minimal
+					effort, promoting data use.
+				</p>
 				<div className={styles.buttons}>
 					<Link
 						className="button button--secondary button--lg"
-						to="/docs/intro"
+						to="/docs/deployment/intro"
 					>
 						Get started
 					</Link>
@@ -34,8 +47,10 @@ export default function Home(): ReactNode {
 	const { siteConfig } = useDocusaurusContext();
 	return (
 		<Layout
-			title={`Hello from ${siteConfig.title}`}
-			description="Description will go into a meta tag in <head />"
+			title={`${siteConfig.title}`}
+			description="DHIS2 FlexiPortal is a customizable, deployment-ready
+					public-facing portal that enables easy, unauthenticated
+					access to data stored in a DHIS2 instance"
 		>
 			<HomepageHeader />
 			<main>
