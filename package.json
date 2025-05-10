@@ -4,6 +4,7 @@
   "scripts": {
     "portal": "yarn workspace portal",
     "manager": "yarn workspace manager",
+    "docs": "yarn workspace docs",
     "shared": "yarn workspace @packages/shared",
     "ui": "yarn workspace @packages/ui",
     "test": "vitest -c vitest.config.ts",
@@ -11,6 +12,7 @@
     "dev": "turbo run dev",
     "dev:portal": "turbo run dev --filter portal",
     "dev:manager": "turbo run dev --filter manager",
+    "dev:docs": "turbo run dev --filter docs",
     "lint": "turbo run lint",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
     "check-types": "turbo run check-types",
