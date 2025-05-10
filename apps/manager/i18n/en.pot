@@ -5,8 +5,8 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
-"POT-Creation-Date: 2025-05-09T09:09:28.047Z\n"
-"PO-Revision-Date: 2025-05-09T09:09:28.048Z\n"
+"POT-Creation-Date: 2025-05-09T09:52:08.264Z\n"
+"PO-Revision-Date: 2025-05-09T09:52:08.265Z\n"
 
 msgid "Could not get Appearance configurations"
 msgstr "Could not get Appearance configurations"
@@ -446,6 +446,18 @@ msgstr "Item"
 msgid "Item Type"
 msgstr "Item Type"
 
+msgid "Visualization"
+msgstr "Visualization"
+
+msgid "Map"
+msgstr "Map"
+
+msgid "Visualization type"
+msgstr "Visualization type"
+
+msgid "All"
+msgstr "All"
+
 msgid "Add Section"
 msgstr "Add Section"
 
@@ -527,20 +539,8 @@ msgstr "Add visualizations"
 msgid "{{action}} visualization"
 msgstr "{{action}} visualization"
 
-msgid "Visualization"
-msgstr "Visualization"
-
-msgid "Map"
-msgstr "Map"
-
 msgid "Edit visualization"
 msgstr "Edit visualization"
-
-msgid "Visualization type"
-msgstr "Visualization type"
-
-msgid "All"
-msgstr "All"
 
 msgid "Group selector"
 msgstr "Group selector"
