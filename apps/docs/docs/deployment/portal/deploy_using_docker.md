@@ -4,7 +4,8 @@ sidebar_position: 1
 
 # Deploying using Docker
 
-Docker is the recommended method for deploying the DHIS2 Public Portal in production environments. This guide will walk you through the process of deploying the Portal using Docker.
+Docker is the recommended method for deploying the DHIS2 Public Portal in production environments. This guide will walk
+you through the process of deploying the Portal using Docker.
 
 ## Prerequisites
 
@@ -81,15 +82,16 @@ If you need to customize the Portal, you can build your own Docker image.
 
 The Portal Docker container can be configured using the following environment variables:
 
-| Variable | Description | Default |
-|----------|-------------|---------|
-| DHIS2_BASE_URL | URL of your DHIS2 instance | - |
-| CONTEXT_PATH | Base path for the application (for non-root deployments) | / |
-| NODE_ENV | Node.js environment | production |
+| Variable             | Description                                              | Default | Required |
+|----------------------|----------------------------------------------------------|---------|----------|
+| DHIS2_BASE_URL       | URL of your DHIS2 instance                               | -       | Yes      |
+| DHIS2_BASE_PAT_TOKEN | DHIS2 PAT for authenticating your DHIS2 instance         | -       | Yes      |
+| CONTEXT_PATH         | Base path for the application (for non-root deployments) | /       | No       |
 
 ## Deploying Behind a Reverse Proxy
 
-For production deployments, it's recommended to run the Portal behind a reverse proxy like Nginx or Apache. This allows you to:
+For production deployments, it's recommended to run the Portal behind a reverse proxy like Nginx or Apache. This allows
+you to:
 
 - Terminate SSL/TLS
 - Handle multiple applications on the same server

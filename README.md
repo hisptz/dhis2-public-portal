@@ -94,12 +94,6 @@ To build and run the application as a docker container, clone this repository to
 git clone --single-branch --branch main https://github.com/hisptz/dhis2-public-portal.git
 ```
 
-Then download the dependencies
-
-```bash
-yarn install --frozen-lockfile
-```
-
 Then create the `.env` file in the `apps/portal/` folder. The file should have the following variables:
 
 - `DHIS2_BASE_URL`: The URL of your DHIS2 instance

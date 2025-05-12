@@ -18,9 +18,7 @@ Docker is the recommended method for production deployments. It provides a consi
 
 Vercel is a cloud platform for static sites and Serverless Functions that's optimized for Next.js applications. It provides a simple deployment process with automatic CI/CD.
 
-### [Non-Root Path Deployment](./deploying_on_non_root.md)
-
-If you need to deploy the Portal on a non-root path (e.g., example.com/portal instead of example.com), this guide provides instructions for configuring the application accordingly.
+If you need to deploy the Portal on a non-root path (e.g., example.com/portal instead of example.com), [this guide](./deploying_on_non_root.md)  provides instructions for configuring the application accordingly.
 
 ## Choosing a Deployment Method
 
@@ -36,7 +34,7 @@ When deciding how to deploy the Portal, consider the following factors:
 Regardless of the deployment method, the Portal requires:
 
 - A DHIS2 instance accessible from the Portal server
-- Node.js 18+ (for non-Docker deployments)
+- Node.js 20+ (for non-Docker deployments)
 - Proper configuration of environment variables
 
 ## Next Steps

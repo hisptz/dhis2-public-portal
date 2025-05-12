@@ -6,6 +6,13 @@ sidebar_position: 2
 
 Vercel is a cloud platform for static sites and Serverless Functions that's optimized for Next.js applications. This guide will walk you through deploying the DHIS2 Public Portal to Vercel.
 
+
+## Quick Deploy
+For quick deploy to vercel, you can use the button below:
+
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/hisptz/dhis2-public-portal&env=DHIS2_BASE_URL,DHIS2_BASE_PAT_TOKEN&envDescription=The%20DHIS2%20base%20URL%20and%20PAT%20token%20variables%20enable%20you%20to%20connect%20your%20deployed%20portal%20to%20a%20DHIS2%20instance&project-name=dhis2-public-portal&repository-name=dhis2-public-portal&root-directory=apps/portal&install-command=yarn%20install&build-command=turbo%20build%20--filter%20portal&skip-unaffected=true)
+
+This requires you to have a [vercel](https://vercel.com/) account.
 ## Prerequisites
 
 Before you begin, ensure you have the following:
@@ -57,7 +64,7 @@ Before you begin, ensure you have the following:
 2. **Clone the Repository**
 
    ```bash
-   git clone https://github.com/hisptz/dhis2-public-portal.git
+   git clone --single-branch --branch main https://github.com/hisptz/dhis2-public-portal.git
    cd dhis2-public-portal
    ```
 
@@ -80,10 +87,10 @@ Before you begin, ensure you have the following:
 
 Configure the following environment variables in your Vercel project settings:
 
-| Variable | Description | Required |
-|----------|-------------|----------|
-| DHIS2_BASE_URL | URL of your DHIS2 instance | Yes |
-| CONTEXT_PATH | Base path for the application (for non-root deployments) | No |
+| Variable             | Description                                              | Default | Required |
+|----------------------|----------------------------------------------------------|---------|----------|
+| DHIS2_BASE_URL       | URL of your DHIS2 instance                               | -       | Yes      |
+| DHIS2_BASE_PAT_TOKEN | DHIS2 PAT for authenticating your DHIS2 instance         | -       | Yes      |
 
 ## Custom Domains
 

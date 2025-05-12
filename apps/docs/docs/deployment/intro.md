@@ -24,8 +24,8 @@ The Portal application can be deployed using several methods:
 - Custom deployment on non-root paths
 
 ### Portal Manager Deployment
-The Portal Manager application can be deployed:
-- Directly to a DHIS2 instance as a standard DHIS2 app
-- As a standalone application with connection to a DHIS2 instance
+The Portal Manager application can be deployed directly to a DHIS2 instance as a standard DHIS2 app:
+ - Manually from github releases
+ - Through the app hub
 
 Choose the deployment method that best fits your infrastructure and requirements.
