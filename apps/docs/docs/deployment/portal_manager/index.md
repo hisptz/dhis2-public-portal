@@ -4,23 +4,33 @@ sidebar_position: 1
 
 # Portal Manager Deployment
 
-The DHIS2 Portal Manager is a DHIS2 application that allows administrators to configure and manage the Public Portal. This guide provides instructions for deploying the Portal Manager application.
+The FlexiPortal Manager is a DHIS2 application that allows administrators to configure and manage the Public Portal. This guide provides instructions for deploying the Portal Manager application.
 
 ## Deployment Options
 
 The Portal Manager can be deployed in two main ways:
 
-1. **As a DHIS2 App** - Installed directly on your DHIS2 instance (recommended)
-2. **Standalone** - Run as a standalone application connecting to a DHIS2 instance
+1. **From DHIS2 App Hub** - Installed directly on your DHIS2 instance through the app hub
+2. **Manual install** - Installed by downloading the app from the releases pabe
 
 ## Deploying as a DHIS2 App
 
 ### Prerequisites
 
 - Access to a DHIS2 instance with administrative privileges
-- DHIS2 version 2.38 or later
+- DHIS2 version 2.40 or later
 
-### Installation Steps
+### Installation from DHIS2 App Hub
+
+1. Log in to your DHIS2 instance as an administrator
+
+2. Navigate to App Management (Apps > App Management)
+3. Navigate to Custom apps
+4. Search for `FlexiPortal Manager` application
+5. Click on install
+6. After installation, the `FlexiPortal Manager` should appear in your DHIS2 app menu. Click on it to launch the application.
+
+### Manual Installation Steps
 
 1. **Download the App**
 
@@ -41,40 +51,6 @@ The Portal Manager can be deployed in two main ways:
 3. **Verify Installation**
 
    After installation, the Portal Manager should appear in your DHIS2 app menu. Click on it to launch the application.
-
-## Building from Source
-
-If you want to build the Portal Manager app from source:
-
-1. **Clone the Repository**
-
-   ```bash
-   git clone https://github.com/hisptz/dhis2-public-portal.git
-   cd dhis2-public-portal
-   ```
-
-2. **Install Dependencies**
-
-   ```bash
-   yarn install
-   ```
-
-3. **Build the App**
-
-   ```bash
-   yarn manager build
-   ```
-
-   This will create a build in the `apps/manager/build` directory.
-
-4. **Create a Deployable ZIP**
-
-   ```bash
-   cd apps/manager
-   yarn pack
-   ```
-
-   This will create a .zip file that can be uploaded to DHIS2.
 
 ## Deploying to Development DHIS2 Instance
 
@@ -97,29 +73,13 @@ For development purposes, you can deploy directly to a DHIS2 instance:
 
    You will be prompted for your password.
 
-## Standalone Deployment
-
-While not recommended for production, you can run the Portal Manager as a standalone application:
-
-1. **Start Development Server**
-
-   ```bash
-   yarn manager dev
-   ```
-
-   This will start the application on port 3001.
-
-2. **Configure DHIS2 Connection**
-
-   You'll need to configure the application to connect to your DHIS2 instance by setting the `DHIS2_BASE_URL` environment variable.
-
 ## Troubleshooting
 
 If you encounter issues with the Portal Manager deployment:
 
 1. **Check DHIS2 Version Compatibility**
 
-   Ensure your DHIS2 instance is version 2.38 or later.
+   Ensure your DHIS2 instance is version 2.40 or later.
 
 2. **Verify Permissions**
 
@@ -128,7 +88,3 @@ If you encounter issues with the Portal Manager deployment:
 3. **Check Browser Console**
 
    If the app loads but doesn't function correctly, check your browser's developer console for errors.
-
-4. **CORS Issues**
-
-   If running in standalone mode, you might encounter CORS issues. Ensure your DHIS2 instance is configured to allow requests from the Portal Manager's origin.
