@@ -16,6 +16,7 @@ import { BaseModule, baseModuleSchema } from "@packages/shared/schemas";
 import { DashboardIDField } from "./DashboardIDField";
 import { useCreateDashboard } from "../hooks/create";
 import { ModuleTypeSelector } from "../../ModuleTypeSelector";
+import { useValidateModuleId } from "../hooks/moduleID";
 
 export function AddModuleForm({
 	hide,
@@ -27,18 +28,30 @@ export function AddModuleForm({
 	onComplete: (dashboard: BaseModule) => void;
 }) {
 	const { createDashboard } = useCreateDashboard();
+	const { checkIdExists } = useValidateModuleId();
+	const moduleSchema = baseModuleSchema.refine(
+		async (data) => {
+			return !(await checkIdExists(data.id));
+		},
+		{
+			message: i18n.t('A module with this ID already exists. Please choose a different one.'),
+			path: ['id'],
+		},
+	);
+
 	const { show } = useAlert(
 		({ message }) => message,
 		({ type }) => ({ ...type, duration: 3000 }),
 	);
 	const form = useForm<BaseModule>({
-		resolver: zodResolver(baseModuleSchema),
+		resolver: zodResolver(moduleSchema),
 		shouldFocusError: false,
 		defaultValues: {},
 	});
 
 	const onSave = async (data: BaseModule) => {
 		try {
+			await moduleSchema.parseAsync(data);
 			await createDashboard(data);
 			show({
 				message: i18n.t("Module created successfully"),
