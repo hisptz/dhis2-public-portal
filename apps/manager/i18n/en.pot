@@ -5,8 +5,8 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
-"POT-Creation-Date: 2025-05-10T21:36:34.962Z\n"
-"PO-Revision-Date: 2025-05-10T21:36:34.962Z\n"
+"POT-Creation-Date: 2025-05-12T12:25:40.075Z\n"
+"PO-Revision-Date: 2025-05-12T12:25:40.075Z\n"
 
 msgid "Could not get Appearance configurations"
 msgstr "Could not get Appearance configurations"
@@ -349,6 +349,9 @@ msgstr "Reset"
 
 msgid "Create a new module"
 msgstr "Create a new module"
+
+msgid "A module with this ID already exists"
+msgstr "A module with this ID already exists"
 
 msgid "Module created successfully"
 msgstr "Module created successfully"
