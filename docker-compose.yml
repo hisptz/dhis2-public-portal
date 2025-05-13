@@ -1,0 +1,13 @@
+services:
+  portal:
+    image: hisptanzania/dhis2-public-portal:latest
+    user: "1001:1001"
+    ports:
+      - "3000:3000"
+    env_file:
+      - apps/portal/.env
+    volumes:
+      - public:/app/apps/portal/public
+volumes:
+  public:
+

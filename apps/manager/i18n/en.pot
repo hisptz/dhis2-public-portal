@@ -1,0 +1,810 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: i18next-conv\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1)\n"
+"POT-Creation-Date: 2025-05-13T07:18:20.475Z\n"
+"PO-Revision-Date: 2025-05-13T07:18:20.476Z\n"
+
+msgid "Could not get Appearance configurations"
+msgstr "Could not get Appearance configurations"
+
+msgid "Error"
+msgstr "Error"
+
+msgid "General configuration"
+msgstr "General configuration"
+
+msgid "Saving..."
+msgstr "Saving..."
+
+msgid "Save changes"
+msgstr "Save changes"
+
+msgid "Please fix the validation errors before saving"
+msgstr "Please fix the validation errors before saving"
+
+msgid "Failed to save section"
+msgstr "Failed to save section"
+
+msgid "Layout editor"
+msgstr "Layout editor"
+
+msgid "Cancel"
+msgstr "Cancel"
+
+msgid "Update layout"
+msgstr "Update layout"
+
+msgid "Unknown module type"
+msgstr "Unknown module type"
+
+msgid "Back to all modules"
+msgstr "Back to all modules"
+
+msgid "Module"
+msgstr "Module"
+
+msgid "Modules"
+msgstr "Modules"
+
+msgid "Size"
+msgstr "Size"
+
+msgid "Add Document"
+msgstr "Add Document"
+
+msgid "Could not create new library"
+msgstr "Could not create new library"
+
+msgid "File uploaded successfully"
+msgstr "File uploaded successfully"
+
+msgid "Could not save the file!"
+msgstr "Could not save the file!"
+
+msgid "Create Item"
+msgstr "Create Item"
+
+msgid "Label"
+msgstr "Label"
+
+msgid "PDF"
+msgstr "PDF"
+
+msgid "File type"
+msgstr "File type"
+
+msgid "File"
+msgstr "File"
+
+msgid "Document is being uploaded, please wait..."
+msgstr "Document is being uploaded, please wait..."
+
+msgid "This will be a part of the url. It should not contain spaces"
+msgstr "This will be a part of the url. It should not contain spaces"
+
+msgid "ID"
+msgstr "ID"
+
+msgid "Files"
+msgstr "Files"
+
+msgid "Actions"
+msgstr "Actions"
+
+msgid "N/A"
+msgstr "N/A"
+
+msgid "Groups"
+msgstr "Groups"
+
+msgid "There are no document configuration present"
+msgstr "There are no document configuration present"
+
+msgid "Add group"
+msgstr "Add group"
+
+msgid "Confirm deleting group"
+msgstr "Confirm deleting group"
+
+msgid "Are you sure you want to remove the group "
+msgstr "Are you sure you want to remove the group "
+
+msgid "This will delete all files and sub groups in this group as well."
+msgstr "This will delete all files and sub groups in this group as well."
+
+msgid "This action is irreversible."
+msgstr "This action is irreversible."
+
+msgid "Deleting..."
+msgstr "Deleting..."
+
+msgid "Delete"
+msgstr "Delete"
+
+msgid "Delete group"
+msgstr "Delete group"
+
+msgid "Edit Document Group"
+msgstr "Edit Document Group"
+
+msgid "Add Document Group"
+msgstr "Add Document Group"
+
+msgid "Update"
+msgstr "Update"
+
+msgid "Save"
+msgstr "Save"
+
+msgid "Title"
+msgstr "Title"
+
+msgid "Edit group"
+msgstr "Edit group"
+
+msgid "Type"
+msgstr "Type"
+
+msgid "There are no files present"
+msgstr "There are no files present"
+
+msgid "Add file"
+msgstr "Add file"
+
+msgid "Confirm deleting file"
+msgstr "Confirm deleting file"
+
+msgid "Are you sure you want to remove the file "
+msgstr "Are you sure you want to remove the file "
+
+msgid "Delete icon"
+msgstr "Delete icon"
+
+msgid "Edit file"
+msgstr "Edit file"
+
+msgid "Uploading..."
+msgstr "Uploading..."
+
+msgid "Could not upload file {{ errorMessage }}"
+msgstr "Could not upload file {{ errorMessage }}"
+
+msgid "Could not create document {{ errorMessage }}"
+msgstr "Could not create document {{ errorMessage }}"
+
+msgid "Could not delete file {{ errorMessage }}"
+msgstr "Could not delete file {{ errorMessage }}"
+
+msgid "Remove"
+msgstr "Remove"
+
+msgid "Documents"
+msgstr "Documents"
+
+msgid "Has groups"
+msgstr "Has groups"
+
+msgid "Item Display"
+msgstr "Item Display"
+
+msgid "Segmented"
+msgstr "Segmented"
+
+msgid "DropDown"
+msgstr "DropDown"
+
+msgid "Something went wrong"
+msgstr "Something went wrong"
+
+msgid "Reload"
+msgstr "Reload"
+
+msgid "Upload Icon"
+msgstr "Upload Icon"
+
+msgid "Application name"
+msgstr "Application name"
+
+msgid "Description"
+msgstr "Description"
+
+msgid "Application URL"
+msgstr "Application URL"
+
+msgid "Where your portal can be found"
+msgstr "Where your portal can be found"
+
+msgid "A 512px by 512px image is recommended"
+msgstr "A 512px by 512px image is recommended"
+
+msgid "Application Icon"
+msgstr "Application Icon"
+
+msgid "Error saving changes"
+msgstr "Error saving changes"
+
+msgid "Changes saved successfully"
+msgstr "Changes saved successfully"
+
+msgid "Dashboard group"
+msgstr "Dashboard group"
+
+msgid "Back to dashboard "
+msgstr "Back to dashboard "
+
+msgid "Short description"
+msgstr "Short description"
+
+msgid "Visualizations"
+msgstr "Visualizations"
+
+msgid "Configure layout"
+msgstr "Configure layout"
+
+msgid "Caption"
+msgstr "Caption"
+
+msgid "Created successfully"
+msgstr "Created successfully"
+
+msgid "Configuration exists"
+msgstr "Configuration exists"
+
+msgid "Welcome to DHIS2 FlexiPortal Manager!"
+msgstr "Welcome to DHIS2 FlexiPortal Manager!"
+
+msgid "Please wait as we setup for first time use..."
+msgstr "Please wait as we setup for first time use..."
+
+msgid "There were some issues setting up some configurations"
+msgstr "There were some issues setting up some configurations"
+
+msgid "Setup complete!"
+msgstr "Setup complete!"
+
+msgid "Continue to application"
+msgstr "Continue to application"
+
+msgid "Try again"
+msgstr "Try again"
+
+msgid "Add menu item"
+msgstr "Add menu item"
+
+msgid "Confirm delete"
+msgstr "Confirm delete"
+
+msgid "Are you sure you want to delete the menu item "
+msgstr "Are you sure you want to delete the menu item "
+
+msgid "Add sub item"
+msgstr "Add sub item"
+
+msgid "Path"
+msgstr "Path"
+
+msgid "Create"
+msgstr "Create"
+
+msgid "Confirm exit"
+msgstr "Confirm exit"
+
+msgid "Are you sure you want to close this form?. All changes will be lost"
+msgstr "Are you sure you want to close this form?. All changes will be lost"
+
+msgid " menu item"
+msgstr " menu item"
+
+msgid "Only SVG icons are supported"
+msgstr "Only SVG icons are supported"
+
+msgid "Icon"
+msgstr "Icon"
+
+msgid "Uploading icon..."
+msgstr "Uploading icon..."
+
+msgid "Menu items"
+msgstr "Menu items"
+
+msgid "There are no sub menus defined"
+msgstr "There are no sub menus defined"
+
+msgid " sub menu item"
+msgstr " sub menu item"
+
+msgid "Name"
+msgstr "Name"
+
+msgid "Menu Position"
+msgstr "Menu Position"
+
+msgid "Sidebar"
+msgstr "Sidebar"
+
+msgid "Header"
+msgstr "Header"
+
+msgid "Collapsible"
+msgstr "Collapsible"
+
+msgid "The form has errors. Please fix them and try again"
+msgstr "The form has errors. Please fix them and try again"
+
+msgid "Confirm reset"
+msgstr "Confirm reset"
+
+msgid "Are you sure you want to reset all changes? This action is not reversible."
+msgstr "Are you sure you want to reset all changes? This action is not reversible."
+
+msgid "Reset changes"
+msgstr "Reset changes"
+
+msgid "Reset"
+msgstr "Reset"
+
+msgid "Create a new module"
+msgstr "Create a new module"
+
+msgid "A module with this ID already exists. Please choose a different one."
+msgstr "A module with this ID already exists. Please choose a different one."
+
+msgid "Module created successfully"
+msgstr "Module created successfully"
+
+msgid "Could not create new module"
+msgstr "Could not create new module"
+
+msgid "Create Module"
+msgstr "Create Module"
+
+msgid "Creating..."
+msgstr "Creating..."
+
+msgid "Create module"
+msgstr "Create module"
+
+msgid "Module deleted successfully"
+msgstr "Module deleted successfully"
+
+msgid "Could not delete module"
+msgstr "Could not delete module"
+
+msgid "Delete module"
+msgstr "Delete module"
+
+msgid "Are you sure you want to delete the module "
+msgstr "Are you sure you want to delete the module "
+
+msgid "This action is irreversible"
+msgstr "This action is irreversible"
+
+msgid "Filter by Type"
+msgstr "Filter by Type"
+
+msgid "Select type"
+msgstr "Select type"
+
+msgid "Failed to save module"
+msgstr "Failed to save module"
+
+msgid "There are no modules matching the selected type."
+msgstr "There are no modules matching the selected type."
+
+msgid "There are no modules configuration present"
+msgstr "There are no modules configuration present"
+
+msgid "Could not save changes"
+msgstr "Could not save changes"
+
+msgid "Section"
+msgstr "Section"
+
+msgid ""
+"There were changes made to this section. Would you like to reset them? "
+"Resetting will remove all changes made to this section. This action is not "
+"reversible."
+msgstr ""
+"There were changes made to this section. Would you like to reset them? "
+"Resetting will remove all changes made to this section. This action is not "
+"reversible."
+
+msgid "Keep changes"
+msgstr "Keep changes"
+
+msgid "Back to Module"
+msgstr "Back to Module"
+
+msgid "Add Feedback Recipient"
+msgstr "Add Feedback Recipient"
+
+msgid "{{action}} feedback"
+msgstr "{{action}} feedback"
+
+msgid "Email"
+msgstr "Email"
+
+msgid "Edit feedback"
+msgstr "Edit feedback"
+
+msgid "No feedback items configured"
+msgstr "No feedback items configured"
+
+msgid "Full Name"
+msgstr "Full Name"
+
+msgid "Message"
+msgstr "Message"
+
+msgid "Items"
+msgstr "Items"
+
+msgid "Item"
+msgstr "Item"
+
+msgid "Item Type"
+msgstr "Item Type"
+
+msgid "Visualization"
+msgstr "Visualization"
+
+msgid "Map"
+msgstr "Map"
+
+msgid "Visualization type"
+msgstr "Visualization type"
+
+msgid "All"
+msgstr "All"
+
+msgid "Add Section"
+msgstr "Add Section"
+
+msgid "Could not create new item"
+msgstr "Could not create new item"
+
+msgid "Create Section"
+msgstr "Create Section"
+
+msgid "Please select the display type of this section first"
+msgstr "Please select the display type of this section first"
+
+msgid "Create section"
+msgstr "Create section"
+
+msgid "Save section changes"
+msgstr "Save section changes"
+
+msgid "Display type"
+msgstr "Display type"
+
+msgid "Vertical"
+msgstr "Vertical"
+
+msgid "Horizontal"
+msgstr "Horizontal"
+
+msgid "Sections"
+msgstr "Sections"
+
+msgid "Content"
+msgstr "Content"
+
+msgid "Add Item"
+msgstr "Add Item"
+
+msgid "Create an item"
+msgstr "Create an item"
+
+msgid "Create item"
+msgstr "Create item"
+
+msgid "Item deleted successfully"
+msgstr "Item deleted successfully"
+
+msgid "Could not delete item"
+msgstr "Could not delete item"
+
+msgid "Delete item"
+msgstr "Delete item"
+
+msgid "Are you sure you want to delete the item "
+msgstr "Are you sure you want to delete the item "
+
+msgid "Error loading item"
+msgstr "Error loading item"
+
+msgid "Back"
+msgstr "Back"
+
+msgid "Should be a valid svg string"
+msgstr "Should be a valid svg string"
+
+msgid "Short Description"
+msgstr "Short Description"
+
+msgid "Create Dashboard Group"
+msgstr "Create Dashboard Group"
+
+msgid "Short Name"
+msgstr "Short Name"
+
+msgid "Create group"
+msgstr "Create group"
+
+msgid "Add visualizations"
+msgstr "Add visualizations"
+
+msgid "{{action}} visualization"
+msgstr "{{action}} visualization"
+
+msgid "Edit visualization"
+msgstr "Edit visualization"
+
+msgid "Group selector"
+msgstr "Group selector"
+
+msgid "Save group changes"
+msgstr "Save group changes"
+
+msgid "Welcome to the public portal manager!"
+msgstr "Welcome to the public portal manager!"
+
+msgid "You can use this application to configure your public portal web application"
+msgstr "You can use this application to configure your public portal web application"
+
+msgid "Application colors"
+msgstr "Application colors"
+
+msgid "Footer configuration"
+msgstr "Footer configuration"
+
+msgid "Copyright"
+msgstr "Copyright"
+
+msgid "Header configuration"
+msgstr "Header configuration"
+
+msgid "Subtitle"
+msgstr "Subtitle"
+
+msgid "Background color"
+msgstr "Background color"
+
+msgid "Header height"
+msgstr "Header height"
+
+msgid "Trailing logo"
+msgstr "Trailing logo"
+
+msgid "Missing Appearance configurations"
+msgstr "Missing Appearance configurations"
+
+msgid ""
+"There are no appearance configurations yet. Refresh the browser to import "
+"the default configurations."
+msgstr ""
+"There are no appearance configurations yet. Refresh the browser to import "
+"the default configurations."
+
+msgid "Color configurations updated successfully"
+msgstr "Color configurations updated successfully"
+
+msgid "Error updating color configurations"
+msgstr "Error updating color configurations"
+
+msgid "Updating..."
+msgstr "Updating..."
+
+msgid "Could not save form. Fix the form errors fist and try again"
+msgstr "Could not save form. Fix the form errors fist and try again"
+
+msgid "Application Color Configurations"
+msgstr "Application Color Configurations"
+
+msgid "Primary color"
+msgstr "Primary color"
+
+msgid "Chart colors"
+msgstr "Chart colors"
+
+msgid "Footer configurations updated successfully"
+msgstr "Footer configurations updated successfully"
+
+msgid "Error updating footer configurations"
+msgstr "Error updating footer configurations"
+
+msgid "Footer configurations"
+msgstr "Footer configurations"
+
+msgid "General"
+msgstr "General"
+
+msgid "Show title"
+msgstr "Show title"
+
+msgid "Footer items"
+msgstr "Footer items"
+
+msgid "Footer Items"
+msgstr "Footer Items"
+
+msgid "Add footer item"
+msgstr "Add footer item"
+
+msgid "Links"
+msgstr "Links"
+
+msgid "Static Content"
+msgstr "Static Content"
+
+msgid "Add"
+msgstr "Add"
+
+msgid "S/N"
+msgstr "S/N"
+
+msgid "No footer items configured"
+msgstr "No footer items configured"
+
+msgid "Url"
+msgstr "Url"
+
+msgid "Remove Link"
+msgstr "Remove Link"
+
+msgid "Edit link"
+msgstr "Edit link"
+
+msgid "There are no Footer links defined"
+msgstr "There are no Footer links defined"
+
+msgid "Footer links"
+msgstr "Footer links"
+
+msgid "Add footer link"
+msgstr "Add footer link"
+
+msgid "Header configurations updated successfully"
+msgstr "Header configurations updated successfully"
+
+msgid "Error updating header configurations"
+msgstr "Error updating header configurations"
+
+msgid "Header configurations"
+msgstr "Header configurations"
+
+msgid "Leading logo"
+msgstr "Leading logo"
+
+msgid "Title styles"
+msgstr "Title styles"
+
+msgid "Subtitle styles"
+msgstr "Subtitle styles"
+
+msgid "Hide advanced options"
+msgstr "Hide advanced options"
+
+msgid "Show advanced options"
+msgstr "Show advanced options"
+
+msgid "Background Color"
+msgstr "Background Color"
+
+msgid "Use primary color as background color"
+msgstr "Use primary color as background color"
+
+msgid "Header styles"
+msgstr "Header styles"
+
+msgid "Show colored background"
+msgstr "Show colored background"
+
+msgid "Show logo"
+msgstr "Show logo"
+
+msgid "Logo"
+msgstr "Logo"
+
+msgid "Width"
+msgstr "Width"
+
+msgid "Height"
+msgstr "Height"
+
+msgid "Center"
+msgstr "Center"
+
+msgid "Left"
+msgstr "Left"
+
+msgid "Right"
+msgstr "Right"
+
+msgid "Alignment"
+msgstr "Alignment"
+
+msgid "Text size"
+msgstr "Text size"
+
+msgid "Text color"
+msgstr "Text color"
+
+msgid "Header title"
+msgstr "Header title"
+
+msgid "Color"
+msgstr "Color"
+
+msgid "There are colors selected. Click the add button to add one."
+msgstr "There are colors selected. Click the add button to add one."
+
+msgid "Add color"
+msgstr "Add color"
+
+msgid "Color Selector"
+msgstr "Color Selector"
+
+msgid "Setup application name and related information"
+msgstr "Setup application name and related information"
+
+msgid "Appearance"
+msgstr "Appearance"
+
+msgid ""
+"Configure the logo, different icons, colors, and layouts of the web portal "
+"application"
+msgstr ""
+"Configure the logo, different icons, colors, and layouts of the web portal "
+"application"
+
+msgid "Configure appearance"
+msgstr "Configure appearance"
+
+msgid "Configure different modules of the web portal application"
+msgstr "Configure different modules of the web portal application"
+
+msgid "Configure modules"
+msgstr "Configure modules"
+
+msgid "App Menu"
+msgstr "App Menu"
+
+msgid ""
+"Configure the position and contents of the app menu of the web portal "
+"application"
+msgstr ""
+"Configure the position and contents of the app menu of the web portal "
+"application"
+
+msgid "Configure app menu"
+msgstr "Configure app menu"
+
+msgid "Menu"
+msgstr "Menu"
+
+msgid "Home Module"
+msgstr "Home Module"
+
+msgid "Error uploading file"
+msgstr "Error uploading file"
+
+msgid "Error deleting file"
+msgstr "Error deleting file"
+
+msgctxt "Follows either create or update"
+msgid " menu item"
+msgstr " menu item"
+
+msgctxt "Application title"
+msgid "__MANIFEST_APP_TITLE"
+msgstr "Portal Manager"
+
+msgctxt "Application description"
+msgid "__MANIFEST_APP_DESCRIPTION"
+msgstr ""

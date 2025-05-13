@@ -39,3 +39,4 @@ yarn-error.log*
 /apps/manager/src/output.css
 /apps/manager/src/routes.gen.ts
 /apps/manager/.env
+/apps/manager/cypress.env.json

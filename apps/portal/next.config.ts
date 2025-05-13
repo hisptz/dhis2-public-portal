@@ -3,8 +3,14 @@ import path from "path";
 
 const nextConfig: NextConfig = {
 	reactStrictMode: false,
-	basePath: process.env.CONTEXT_PATH,
-	assetPrefix: process.env.CONTEXT_PATH,
+	basePath: process.env.CONTEXT_PATH ?? "",
+	images: {
+		remotePatterns: [
+			{
+				hostname: "*",
+			},
+		],
+	},
 	output: "standalone",
 	outputFileTracingRoot: path.join(path.resolve(), "../../"),
 	turbopack: {
@@ -16,6 +22,7 @@ const nextConfig: NextConfig = {
 		},
 	},
 	experimental: {},
+	serverExternalPackages: ["canvas"],
 	webpack(config) {
 		// Grab the existing rule that handles SVG imports
 		const fileLoaderRule = config.module.rules.find((rule: any) =>
@@ -42,9 +49,10 @@ const nextConfig: NextConfig = {
 
 		// Modify the file loader rule to ignore *.svg, since we have it handled now.
 		fileLoaderRule.exclude = /\.svg$/i;
-
+		config.externals.push({ canvas: "commonjs canvas" });
 		return config;
 	},
+	transpilePackages: ["@packages/shared"],
 };
 
 export default nextConfig;

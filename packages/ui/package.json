@@ -1,12 +1,11 @@
 {
-  "name": "@repo/ui",
+  "name": "@packages/ui",
   "version": "0.0.0",
   "private": true,
   "exports": {
-    "./*": "./src/*.tsx"
+    "./visualizations": "./src/visualizations/index.ts"
   },
   "scripts": {
-    "lint": "eslint . --max-warnings 0",
     "generate:component": "turbo gen react-component",
     "check-types": "tsc --noEmit"
   },
@@ -21,7 +20,11 @@
     "typescript": "5.8.2"
   },
   "dependencies": {
-    "react": "^19.1.0",
-    "react-dom": "^19.1.0"
+    "@hisptz/dhis2-analytics": "^2.1.4",
+    "@hisptz/dhis2-ui": "^2.0.45",
+    "@hisptz/dhis2-utils": "^2.0.18",
+    "@packages/shared": "*",
+    "react-jsx-parser": "^2.4.0",
+    "usehooks-ts": "^3.1.1"
   }
 }
