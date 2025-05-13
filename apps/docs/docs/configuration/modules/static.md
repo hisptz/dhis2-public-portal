@@ -8,7 +8,9 @@ sidebar_position: 3
 ## Overview
 The **Static Module** enables users to create and manage content-focused pages like **documentation articles**, **blog posts**, or **knowledge based entries**.
 
-This guide will walk you through how to **create**, **configure**, and **manage** a static module and its content items.
+Each static module can house multiple **items**, where each item represents an independent content entry such as an article or blog post.
+
+This guide will walk you through how to **create**, **configure**, and **manage** a static module and its content items effectively.
 
 ---
 
@@ -25,19 +27,24 @@ Click **Create module** to generate your static module and proceed to its config
 
 
 ### Module configuration
-After creation, configure:
-- **Label**: Module name (editable)
+After module creation, you’ll be directed to the **module page**, where you can customize:
+- **Label**: Module name 
 - **Title**: Page header title
+
+Changes here affect how the module appears within the portal and should reflect the purpose of your content.
 
 ---
 
 ## 2. Item Management
 
+### Adding a New Item
 
-Clicking **Add Item** opens a form to create a new content entry. You’ll need to provide:
+Inside the static module configuration screen:
 
-- **Title** – Name of the article or blog post.
-- **ID** – Auto-generated from the title.
+- Click **Add Item** to begin creating a content entry.
+- Fill in:
+  - **Title** – The headline of your content.
+  - **ID** – Automatically filled from the title (e.g., `getting-started` from "Getting Started").
 
 Click **Create Item** to proceed.
 
@@ -97,6 +104,7 @@ Each item functions like a standalone article inside a module.
 Coming soon:
 
 - Item reordering support
-- Item tagging and categorization
+
+> 💡 Got ideas or suggestions? Reach out to the team to request new features!
 
 ---
