@@ -5,75 +5,66 @@ sidebar_position: 2
 # Visualization Module
 
 ## Overview
-The Visualization Module allows users to create and manage data visualizations through a flexible interface. This guide covers module creation, configuration, and management for both simple visualizations and grouped visualization sets.
 
-## Table of Contents
-- Module Creation
-- Basic Configuration (Without Groups)
-- Grouped Configuration
+The **Visualization Module** allows users to create and manage data visualizations through a flexible interface.
+
+This guide covers **module creation**, **configuration**, and **management** for both simple visualizations and grouped visualization sets.
 
 ---
 
 ## 1. Visualization Module Creation
 
+To create a new visualization module, navigate to the Modules page.
 
 Click the **Create a new module** button to initiate the creation process. A form will appear prompting you to enter:
 
 - **Label** – User-friendly name for your module.
 - **Type** – Module type `"Visualization"`.
 - **ID** – Auto-filled from label.
-> **Note:**  **ID** is used in the URL and should have no spaces.
-
-
-
-![Module Creation Form](../../../static/img/visualization/visualization-module-creation.png)
+    > **Note:** **ID** is used in the URL and should have no spaces.
 
 Once filled, click **Create**. This opens the module configuration screen.
 
-
 ## 2. Basic Configuration
 
-### 2.1 Core Configuration
+### Core Configuration
+
 Configure in General configuration :
+
 - **Label**
 - **Title**
 - **Short Description**
 - **Description**
-- **Has Groups** (Checkbox – default: unchecked)
+- **Has Groups** (Checkbox – default: unchecked) Leave unchecked for flat/non-grouped layout.
 
-![Basic Configuration Interface](../../../static/img/visualization/visualization-display-form.png)
+### Adding Visualizations
 
-### 2.2 Adding Visualizations
 Click **Add Visualization** to add a new visualization. You must specify:
 
 - **Type** of visualization
 - **Name** of visualization
-- **Caption** detailing the visulization selected 
+- **Caption** detailing the visualization selected
 
 You can add as many visualizations as needed.
 
-### 2.3 Layout Configuration
-Click **Configure Layout** to resize and arrange visualizations for different screen sizes.
+### Layout Configuration
+
+Once you’ve added visualizations, click **Configure Layout** to adjust and arrange visualizations for different screen sizes.
 
 - Use the **Screen Size Dropdown** to configure layouts per device (e.g., mobile, tablet, desktop).
 - Use drag-and-drop interface to adjust and structure your visualizations for each screen size.
-
-Example:
-![Basic Configuration Interface](../../../static/img/visualization/medium-screen-layout.png)
-![Basic Configuration Interface](../../../static/img/visualization/small-screen-layout.png)
-![Basic Configuration Interface](../../../static/img/visualization/large-screen-layout.png)
-
 - click **Update Layout** to save the layouts.
 
-You will be navigated back to the module.
-
-![Layout Configuration Screen](../../../static/img/visualization/full-ungroup-visualization.png)
+After updating, You will be navigated back to the module.
 
 ---
 
 ## 3. Grouped Configuration
 
-### 3.1 Group Setup
+> Use this setup if you want to organize visualizations into categories or tabs.
+
+### Group Setup
+
 Enable **Has Groups** checkbox
 
 When **Has Groups** is **checked** additional UI elements will appear:
@@ -81,63 +72,67 @@ When **Has Groups** is **checked** additional UI elements will appear:
 #### Group Selector
 
 Choose between:
+
 - **Segmented** – Groups appear as segmented buttons
-- **Dropdown** – Groups appear in a dropdown
+- **Dropdown** – Groups appear in a dropdown menu
 
+### Creating Groups
 
-### 3.2 Creating Groups
-Click **+ Add Group**  to open a new group form
+Click **+ Add Group** to open a new group form
 
- Fill in:
-   - **Group Title**: Display name
-   - **Short Name**: Compact identifier
-   - **ID**: Auto-generated from title
-Click **Create Group**
+Fill in:
 
+- **Group Title**: Display name
+- **Short Name**: Compact identifier
+- **ID**: Auto-filled from title
+  Click **Create Group** to save it
 
-### 3.3 Group Configuration
+### Group Configuration
 
 After creating a group, configure the following:
 
 - **Short Description**
 - **Description**
 
-Visualizations can also be added within a group using the same process:
+You can then add visualizations to the group using the same process:
 
 1. **Add Visualization** – Select type, name, and caption.
 2. **Configure Layout** – Adjust for screen sizes.
 3. **Save Changes** – Ensure changes are applied.
 
 You can:
+
 - Add more groups
 - Edit existing ones
 - Delete unwanted groups
 
 ---
 
- ## Deleting a Module
+## 4. Deleting a Module
 
 Modules can be deleted entirely from the module overview screen.
 
-> ⚠️ **Note:** Deleting a module will remove all its visualizations and groups.
+> ⚠️ **Warning:** Deleting a module will remove all its visualizations and groups permanently.
 
+## 5. Summary
 
-## Summary
-
-| Feature | Description |
-|---------|-------------|
-| **Create Module** | Define label, type, and ID |
-| **Configure Layout** | Customize visualization layout for multiple screens |
-| **Has Groups** | Toggle between grouped and flat visualizations |
-| **Add/Edit/Delete** | Full CRUD control on visualizations and groups |
-| **Responsive Design** | Layouts optimized per screen size |
+| Feature               | Description                                         |
+| --------------------- | --------------------------------------------------- |
+| **Create Module**     | Define label, type, and ID                          |
+| **Configure Layout**  | Customize visualization layout for multiple screens |
+| **Has Groups**        | Toggle between grouped and flat visualizations      |
+| **Add/Edit/Delete**   | Full CRUD control on visualizations and groups      |
+| **Responsive Design** | Layouts optimized per screen size                   |
 
 ---
 
-## Best Practices
+## 6. Best Practices
+
 - Always use URL-safe IDs (no spaces or special characters).
 - Regularly save progress during configuration.
 - Organize groups meaningfully when using group mode.
 - Test layouts on multiple screen sizes to ensure optimal display
+
+> 💡 Got ideas or suggestions? Reach out to the team to request new features!
 
 ---
