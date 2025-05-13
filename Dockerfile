@@ -45,7 +45,7 @@ ENV CONTEXT_PATH=$CONTEXT_PATH
 RUN touch ./apps/portal/.env.local
 RUN echo CONTEXT_PATH=$CONTEXT_PATH >> ./apps/portal/.env.local
 
-RUN yarn portal run build
+RUN yarn portal run build:app
 
 FROM base AS runner
 WORKDIR /app
