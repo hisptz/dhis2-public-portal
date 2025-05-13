@@ -63,7 +63,7 @@ export const defaultAppearanceConfig: AppAppearanceConfig = {
 			usePrimaryColorAsBackgroundColor: true,
 		},
 		title: {
-			text: "DHIS2 Public Portal",
+			text: "DHIS2 FlexiPortal",
 			style: {
 				align: "left",
 				textSize: 30,

@@ -52,7 +52,7 @@ export function InitialConfigurationSetup() {
 			/>
 			<div className="flex flex-col justify-center items-center">
 				<h1 className="text-2xl font-bold !m-0">
-					{i18n.t("Welcome to DHIS2 Public Portal Manager!")}
+					{i18n.t("Welcome to DHIS2 FlexiPortal Manager!")}
 				</h1>
 				{loading && (
 					<p className="text-gray-500">
