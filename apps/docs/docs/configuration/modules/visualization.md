@@ -11,26 +11,24 @@ The Visualization Module allows users to create and manage data visualizations t
 - Module Creation
 - Basic Configuration (Without Groups)
 - Grouped Configuration
-- Layout Management
-- Editing & Maintenance
 
 ---
 
 ## 1. Visualization Module Creation
 
 
-Click the **Create New Module** button to initiate the creation process. A form will appear prompting you to enter:
+Click the **Create a new module** button to initiate the creation process. A form will appear prompting you to enter:
 
 - **Label** – User-friendly name for your module.
-- **Type** – Select module type "Visualization".
+- **Type** – module type "Visualization".
 - **ID** – Auto-filled from label.
 > **Note:**  **ID** is used in the URL and should have no spaces.
 
-Once filled, click **Create**. This opens the module configuration screen.
 
 
 ![Module Creation Form](../../../static/img/visualization/visualization-module-creation.png)
 
+Once filled, click **Create**. This opens the module configuration screen.
 
 
 ## 2. Basic Configuration
@@ -58,11 +56,18 @@ You can add as many visualizations as needed.
 Click **Configure Layout** to resize and arrange visualizations for different screen sizes.
 
 - Use the **Screen Size Dropdown** to configure layouts per device (e.g., mobile, tablet, desktop).
-- Use drag-and-drop interface to adjust and structure your visualizations for each screen size,
-- click **Update Layout** to save.
+- Use drag-and-drop interface to adjust and structure your visualizations for each screen size.
+
+Example:
+![Basic Configuration Interface](../../../static/img/visualization/medium-screen-layout.png)
+![Basic Configuration Interface](../../../static/img/visualization/small-screen-layout.png)
+![Basic Configuration Interface](../../../static/img/visualization/large-screen-layout.png)
+
+- click **Update Layout** to save the layouts.
 
 You will be navigated back to the module.
-![Layout Configuration Screen]
+
+![Layout Configuration Screen](../../../static/img/visualization/full-ungroup-visualization.png)
 
 ---
 
@@ -120,7 +125,7 @@ Modules can be deleted entirely from the module overview screen.
 ## Summary
 
 | Feature | Description |
-|--------|-------------|
+|---------|-------------|
 | **Create Module** | Define label, type, and ID |
 | **Configure Layout** | Customize visualization layout for multiple screens |
 | **Has Groups** | Toggle between grouped and flat visualizations |
@@ -134,7 +139,5 @@ Modules can be deleted entirely from the module overview screen.
 - Regularly save progress during configuration.
 - Organize groups meaningfully when using group mode.
 - Test layouts on multiple screen sizes to ensure optimal display
-
-> **Important:** Always click **Save Changes** after making modifications to preserve your work.
 
 ---
