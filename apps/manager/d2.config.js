@@ -1,8 +1,8 @@
 const config = {
 	id: "",
 	type: "app",
-	title: "Portal Manager",
-	name: "portal-manager",
+	title: "FlexiPortal Manager",
+	name: "hisptz-portal-manager",
 	entryPoints: {
 		app: "./src/App.tsx",
 	},

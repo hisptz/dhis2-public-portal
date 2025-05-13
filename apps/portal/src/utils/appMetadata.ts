@@ -21,7 +21,7 @@ export async function getAppMetadata(): Promise<Metadata> {
 		if (!config) {
 			return {
 				title: "Public Portal",
-				description: "DHIS2 Public Portal",
+				description: "DHIS2 FlexiPortal",
 			};
 		}
 		if (config.icon && isEmpty(config.icons)) {
@@ -104,7 +104,7 @@ export async function getAppMetadata(): Promise<Metadata> {
 	} catch (e) {
 		return {
 			title: "Public Portal",
-			description: "DHIS2 Public Portal",
+			description: "DHIS2 FlexiPortal",
 		};
 	}
 }

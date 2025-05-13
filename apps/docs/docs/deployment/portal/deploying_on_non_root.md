@@ -4,12 +4,12 @@ sidebar_position: 3
 
 # Deploying on Non-Root URLs
 
-This guide provides instructions for deploying the DHIS2 Public Portal on a non-root URL path (e.g., example.com/portal
+This guide provides instructions for deploying the DHIS2 FlexiPortal on a non-root URL path (e.g., example.com/portal
 instead of example.com).
 
 ## Overview
 
-By default, the DHIS2 Public Portal is configured to run at the root of a domain. However, in some environments, you may
+By default, the DHIS2 FlexiPortal is configured to run at the root of a domain. However, in some environments, you may
 need to deploy it under a specific path. This requires additional configuration to ensure all assets, links, and API
 calls work correctly. You will need to manually build the portal application before deployment
 

@@ -4,7 +4,7 @@ sidebar_position: 1
 
 # Portal Deployment
 
-The DHIS2 Public Portal is a Next.js application that can be deployed in various ways. This section provides documentation for different deployment methods.
+The DHIS2 FlexiPortal is a Next.js application that can be deployed in various ways. This section provides documentation for different deployment methods.
 
 ## Deployment Options
 
@@ -39,4 +39,4 @@ Regardless of the deployment method, the Portal requires:
 
 ## Next Steps
 
-Choose one of the deployment methods above to get started with deploying the DHIS2 Public Portal.
+Choose one of the deployment methods above to get started with deploying the DHIS2 FlexiPortal.

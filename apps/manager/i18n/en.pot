@@ -254,8 +254,8 @@ msgstr "Created successfully"
 msgid "Configuration exists"
 msgstr "Configuration exists"
 
-msgid "Welcome to DHIS2 Public Portal Manager!"
-msgstr "Welcome to DHIS2 Public Portal Manager!"
+msgid "Welcome to DHIS2 FlexiPortal Manager!"
+msgstr "Welcome to DHIS2 FlexiPortal Manager!"
 
 msgid "Please wait as we setup for first time use..."
 msgstr "Please wait as we setup for first time use..."
@@ -349,6 +349,9 @@ msgstr "Reset"
 
 msgid "Create a new module"
 msgstr "Create a new module"
+
+msgid "A module with this ID already exists. Please choose a different one."
+msgstr "A module with this ID already exists. Please choose a different one."
 
 msgid "Module created successfully"
 msgstr "Module created successfully"

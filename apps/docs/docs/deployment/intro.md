@@ -4,11 +4,11 @@ sidebar_position: 1
 
 # Introduction
 
-This section provides comprehensive documentation on how to deploy the DHIS2 Public Portal and Portal Manager applications in various environments.
+This section provides comprehensive documentation on how to deploy the DHIS2 FlexiPortal and Portal Manager applications in various environments.
 
 ## Overview
 
-The DHIS2 Public Portal project consists of two main applications:
+The DHIS2 FlexiPortal project consists of two main applications:
 
 1. **Portal** - The public-facing web application that displays DHIS2 data to users
 2. **Portal Manager** - The administrative application used to configure and manage the Portal

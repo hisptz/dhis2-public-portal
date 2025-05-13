@@ -4,7 +4,7 @@ sidebar_position: 2
 
 # Deploying to Vercel
 
-Vercel is a cloud platform for static sites and Serverless Functions that's optimized for Next.js applications. This guide will walk you through deploying the DHIS2 Public Portal to Vercel.
+Vercel is a cloud platform for static sites and Serverless Functions that's optimized for Next.js applications. This guide will walk you through deploying the DHIS2 FlexiPortal to Vercel.
 
 
 ## Quick Deploy

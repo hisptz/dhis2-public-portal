@@ -1,11 +1,11 @@
 {
   "name": "portal",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
-    "postbuild": "./package.sh",
+    "build": "./build.sh",
+    "build:app": "next build",
     "start": "next start",
     "lint": "next lint",
     "check-types": "tsc --noEmit",

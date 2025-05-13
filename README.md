@@ -1,4 +1,4 @@
-# Customizable DHIS2 Public Portal
+# DHIS2 FlexiPortal
 
 [![semantic-release: angular](https://img.shields.io/badge/semantic--release-angular-e10079?logo=semantic-release&style=for-the-badge)](https://github.com/semantic-release/semantic-release)
 [![DHIS2 Public Portal](https://img.shields.io/endpoint?url=https://cloud.cypress.io/badge/detailed/qufv5j&style=for-the-badge&logo=cypress&label=Portal)](https://cloud.cypress.io/projects/qufv5j/runs)
@@ -6,17 +6,14 @@
 
 ## Introduction
 
-Overview
-The Customizable Health Portal is a dynamic, publicly accessible web platform designed to transform how national health
-data is shared, accessed, and understood. At its core, it brings together up-to-date, visualized, and aggregated health
-data from DHIS2 systems and enhances it with a suite of essential resources, including strategic reports, guidelines,
-dashboards, and knowledge libraries, all in one unified, user-friendly space.
-But this portal does more than just display data. It solves a real and recurring challenge:
+DHIS2 FlexiPortal is a customizable, deployment-ready public-facing portal that enables easy, unauthenticated access to
+data stored in a DHIS2 instance. It simplifies the process of sharing data with the public by allowing DHIS2
+visualizations and resources to be published with minimal effort, promoting transparency and data use.
 
-> Public health data is often meant to be open, but accessing it requires permissions and technical know-how.
-
-This leaves researchers, media, civil society, development partners, and even some ministry departments struggling to
-engage with the very data that’s meant to drive progress.
+By lowering the technical barriers to public data sharing, FlexiPortal empowers ministries of health, NGOs, and other
+stakeholders to communicate insights more effectively, foster accountability, and support evidence-based
+decision-making. This enhances the overall impact of DHIS2 implementations and strengthens collaboration across the
+global DHIS2 community.
 
 ## Deployment
 
@@ -29,6 +26,50 @@ instance
 ### Portal
 
 There are several ways we support deploying your portal application
+
+#### PM2
+
+[PM2](https://pm2.keymetrics.io/) is a production process manager for Node.js applications that helps you keep your app
+alive forever and reload it without downtime.
+
+To deploy the portal app using PM2:
+
+This installation requires node > 20 already installed in your system
+
+1. Download the `portal` application from the [releases](https://github.com/hisptz/dhis2-public-portal/releases) page
+
+```bash
+# Make sure to replace `<app-version>` with the intended version of the app.
+   wget https://github.com/hisptz/dhis2-public-portal/releases/download/v<app-version>/portal-<app-version>.zip -O portal.zip
+```
+
+2. Unzip the portal app
+   ```bash
+   unzip portal.zip -d portal
+   ```
+3. Navigate to the portal folder
+
+```bash
+cd portal
+```
+
+5. Install PM2:
+   ```bash
+   corepack enable 
+   yarn global add pm2
+   ```
+6. Start the application using the provided PM2 configuration:
+   ```bash
+   pm2 start pm2.config.js
+   ```
+7. To ensure the application starts automatically after system reboot:
+   ```bash
+   pm2 save
+   pm2 startup
+   ```
+
+The PM2 configuration file (`pm2.config.js`) is already set up to run the portal app with the name "FlexiPortal" using
+the script at `apps/portal/server.js`.
 
 #### Vercel
 
@@ -83,12 +124,14 @@ The following environment variables are required in the `.env` file:
 ### Deploying on non root URLs
 
 In cases where your application will be available through a subpath (e.g https://example.org/some/path, you will need to
-build the app yourself before deploying. 
+build the app yourself before deploying.
 
-Before building your application, make sure to set the `CONTEXT_PATH` to the desired subpath. For example, the URL https://example.org/some/path' the subpath is `/some/path`
+Before building your application, make sure to set the `CONTEXT_PATH` to the desired subpath. For example, the
+URL https://example.org/some/path' the subpath is `/some/path`
 
 ### Docker
-To build and run the application as a docker container, clone this repository to your server. 
+
+To build and run the application as a docker container, clone this repository to your server.
 
 ```bash 
 git clone --single-branch --branch main https://github.com/hisptz/dhis2-public-portal.git
@@ -106,27 +149,22 @@ Then run;
  docker compose -f docker-compose-build.yml up -d --build 
 ```
 
-
-
-
-
-
 ## Development Guide
 
-This section provides guidance for developers who want to contribute to or modify the DHIS2 Public Portal.
+This section provides guidance for developers who want to contribute to or modify the DHIS2 FlexiPortal.
 
 ### Project Structure
 
 The project is organized as a monorepo using Yarn workspaces and Turborepo, with the following structure:
 
 - **apps/**
-  - **portal/**: The Next.js application that serves as the public-facing portal
-  - **manager/**: A DHIS2 custom application for managing portal content
+    - **portal/**: The Next.js application that serves as the public-facing portal
+    - **manager/**: A DHIS2 custom application for managing portal content
 - **packages/**
-  - **shared/**: Shared utilities and components used by both apps
-  - **ui/**: Reusable UI components
-  - **eslint-config/**: Shared ESLint configuration
-  - **typescript-config/**: Shared TypeScript configuration
+    - **shared/**: Shared utilities and components used by both apps
+    - **ui/**: Reusable UI components
+    - **eslint-config/**: Shared ESLint configuration
+    - **typescript-config/**: Shared TypeScript configuration
 
 ### Prerequisites
 
@@ -148,15 +186,15 @@ The project is organized as a monorepo using Yarn workspaces and Turborepo, with
    ```
 
 3. Set up environment variables:
-   - For the portal app, create a `.env` file in `apps/portal/` with:
-     ```
-     DHIS2_BASE_URL=https://your-dhis2-instance.org
-     DHIS2_BASE_PAT_TOKEN=your-personal-access-token
-     ```
-   - For the manager app, create a `.env` file in `apps/manager/` with:
-     ```
-     DHIS2_PROXY_URL=https://your-dhis2-instance.org
-     ```
+    - For the portal app, create a `.env` file in `apps/portal/` with:
+      ```
+      DHIS2_BASE_URL=https://your-dhis2-instance.org
+      DHIS2_BASE_PAT_TOKEN=your-personal-access-token
+      ```
+    - For the manager app, create a `.env` file in `apps/manager/` with:
+      ```
+      DHIS2_PROXY_URL=https://your-dhis2-instance.org
+      ```
 
 ### Development Workflow
 
@@ -232,4 +270,3 @@ yarn manager publish:app-hub
 4. Submit a pull request
 
 The project follows semantic versioning and uses conventional commits for automated releases.
-

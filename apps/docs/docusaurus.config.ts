@@ -118,6 +118,7 @@ const config: Config = {
 			copyright: `Copyright © ${new Date().getFullYear()} HISP Tanzania, Inc. Built with Docusaurus.`,
 		},
 		prism: {
+			additionalLanguages: ["json", "yaml", "bash", "nginx"],
 			theme: prismThemes.github,
 			darkTheme: prismThemes.dracula,
 		},
