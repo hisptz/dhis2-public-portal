@@ -2,7 +2,7 @@
 
 ### Personal Access Token (PAT) Authentication
 
-The DHIS2 Public Portal uses Personal Access Tokens (PAT) for secure authentication with DHIS2 instances. This approach offers several security advantages:
+The DHIS2 FlexiPortal uses Personal Access Tokens (PAT) for secure authentication with DHIS2 instances. This approach offers several security advantages:
 
 1. **Server-Side Authentication**: The PAT is stored and used exclusively on the server side, never exposed to client browsers.
 2. **Limited Scope**: PATs can be configured with specific permissions in DHIS2, following the principle of least privilege.

@@ -4,7 +4,7 @@ sidebar_position: 1
 
 # Deploying using Docker
 
-Docker is the recommended method for deploying the DHIS2 Public Portal in production environments. This guide will walk
+Docker is the recommended method for deploying the DHIS2 FlexiPortal in production environments. This guide will walk
 you through the process of deploying the Portal using Docker.
 
 ## Prerequisites

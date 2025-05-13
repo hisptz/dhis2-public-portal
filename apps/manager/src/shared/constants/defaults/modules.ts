@@ -15,20 +15,20 @@ export const defaultHomeModule: AppModule = {
 			{
 				sortOrder: 0,
 				type: SectionType.SINGLE_ITEM,
-				title: "Welcome to DHIS2 Public portal",
+				title: "Welcome to DHIS2 FlexiPortal",
 				id: "welcome-note",
 				item: {
 					type: DisplayItemType.RICH_TEXT,
 					item: {
 						id: "welcome-note",
 						content: `
-<h1><strong style="font-size: 24pt;">Welcome to DHIS2 Public Portal!</strong></h1>
+<h1><strong style="font-size: 24pt;">Welcome to DHIS2 FlexiPortal!</strong></h1>
 
-<p>Thank you for using the DHIS2 Public Portal! This platform is designed to transform how DHIS2 data is publicly shared, accessed, and understood.</p>
+<p>Thank you for using the DHIS2 FlexiPortal! This platform is designed to transform how DHIS2 data is publicly shared, accessed, and understood.</p>
 
 <p><br></p>
 <p><strong style="font-size: 18pt;">About the Application</strong></p>
-<p>The DHIS2 Public Portal brings together up-to-date, visualized, and aggregated health data from DHIS2 systems and enhances it with essential resources, including:</p>
+<p>The DHIS2 FlexiPortal brings together up-to-date, visualized, and aggregated health data from DHIS2 systems and enhances it with essential resources, including:</p>
 
 
 <ul>
@@ -67,7 +67,7 @@ export const defaultHomeModule: AppModule = {
 <p>For more detailed instructions, please refer to the documentation or contact your system administrator.</p>
 <p><br></p>
 
-<p><em>Enjoy using the DHIS2 Public Portal!</em></p>
+<p><em>Enjoy using the DHIS2 FlexiPortal!</em></p>
 `,
 					},
 				},
