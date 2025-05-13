@@ -20,7 +20,7 @@ The Visualization Module allows users to create and manage data visualizations t
 Click the **Create a new module** button to initiate the creation process. A form will appear prompting you to enter:
 
 - **Label** – User-friendly name for your module.
-- **Type** – module type "Visualization".
+- **Type** – Module type `"Visualization"`.
 - **ID** – Auto-filled from label.
 > **Note:**  **ID** is used in the URL and should have no spaces.
 
