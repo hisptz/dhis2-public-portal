@@ -15,6 +15,8 @@ mkdir "build/bundle"
 echo "Pruning portal app for building"
 turbo prune portal --out-dir apps/portal/build
 
+cp pm2.config.js build/app
+
 BUNDLE_NAME="$PKG_NAME-$PKG_VERSION.zip"
 cd build  || return
 yarn install --frozen-lockfile

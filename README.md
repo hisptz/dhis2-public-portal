@@ -27,6 +27,50 @@ instance
 
 There are several ways we support deploying your portal application
 
+#### PM2
+
+[PM2](https://pm2.keymetrics.io/) is a production process manager for Node.js applications that helps you keep your app
+alive forever and reload it without downtime.
+
+To deploy the portal app using PM2:
+
+This installation requires node > 20 already installed in your system
+
+1. Download the `portal` application from the [releases](https://github.com/hisptz/dhis2-public-portal/releases) page
+
+```bash
+# Make sure to replace `<app-version>` with the intended version of the app.
+   wget https://github.com/hisptz/dhis2-public-portal/releases/download/v<app-version>/portal-<app-version>.zip -O portal.zip
+```
+
+2. Unzip the portal app
+   ```bash
+   unzip portal.zip -d portal
+   ```
+3. Navigate to the portal folder
+
+```bash
+cd portal
+```
+
+5. Install PM2:
+   ```bash
+   corepack enable 
+   yarn global add pm2
+   ```
+6. Start the application using the provided PM2 configuration:
+   ```bash
+   pm2 start pm2.config.js
+   ```
+7. To ensure the application starts automatically after system reboot:
+   ```bash
+   pm2 save
+   pm2 startup
+   ```
+
+The PM2 configuration file (`pm2.config.js`) is already set up to run the portal app with the name "FlexiPortal" using
+the script at `apps/portal/server.js`.
+
 #### Vercel
 
 You can quickly deploy the application through vercel by clicking the button below.
@@ -226,4 +270,3 @@ yarn manager publish:app-hub
 4. Submit a pull request
 
 The project follows semantic versioning and uses conventional commits for automated releases.
-
