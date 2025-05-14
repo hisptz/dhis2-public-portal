@@ -1,4 +1,4 @@
- import {
+import {
 	MenuItem,
 } from "@packages/shared/schemas";
 import {
@@ -8,7 +8,7 @@ import {
 	ModalActions,
 	ModalContent,
 	ModalTitle,
- 	IconDragHandle16
+	IconDragHandle16
 } from "@dhis2/ui";
 import i18n from "@dhis2/d2-i18n";
 import React, { useState, useEffect } from "react";
@@ -18,7 +18,7 @@ import {
 	Droppable,
 	Draggable,
 	DropResult,
- } from "react-beautiful-dnd";
+} from "react-beautiful-dnd";
 
 export interface SortManualProps {
 	onClose(): void;
@@ -48,7 +48,7 @@ export function SortMenuItems({
 	const [isDirty, setIsDirty] = useState(false);
 
 	useEffect(() => {
- 		setCurrentItems(
+		setCurrentItems(
 			initialItems.map((item, index) => ({
 				...item,
 				draggableId: item.path || `initial-draggable-${index}`,
@@ -77,13 +77,14 @@ export function SortMenuItems({
 	const handleSave = async () => {
 		setIsSubmitting(true);
 		const itemsToSubmit = currentItems.map((item, index) => {
-			const {...menuItemWithoutDraggableId } = item;  
+			const { ...items } = item;
+			console.log("items", items);
 			return {
-				...menuItemWithoutDraggableId,
-				sortOrder: index + 1,  
+				...items,
+				sortOrder: index + 1,
 			};
 		});
-		onSubmit(itemsToSubmit as MenuItem[]);  
+		onSubmit(itemsToSubmit as MenuItem[]);
 		setIsSubmitting(false);
 		setIsDirty(false);
 		onClose();
@@ -106,8 +107,8 @@ export function SortMenuItems({
 		}
 	};
 
- 	const getDraggableId = (item: DraggableMenuItem): string => {
-		return item.draggableId;  
+	const getDraggableId = (item: DraggableMenuItem): string => {
+		return item.draggableId;
 	};
 
 	if (hide) {
