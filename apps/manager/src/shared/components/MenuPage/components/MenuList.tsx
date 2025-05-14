@@ -8,6 +8,7 @@ import { AddMenuItem } from "./AddMenuItem";
 import { ButtonStrip } from "@dhis2/ui";
 import { EditMenuItem } from "./EditMenuItem";
 import { DeleteMenuItem } from "./DeleteMenuItem";
+import { SortButton } from "./SortMenuItems/SortButton";
 
 const columns: SimpleTableColumn[] = [
 	{
@@ -35,6 +36,9 @@ export function MenuList() {
 	>({
 		name: "items",
 	});
+
+	console.log("fields", fields);
+
 
 	const rows = useMemo(() => {
 		return fields.map((item, index) => {
@@ -64,11 +68,15 @@ export function MenuList() {
 		});
 	}, [fields, remove, update]);
 
+
 	return (
 		<div className="w-full flex flex-col gap-2">
 			<div className="flex items-center justify-between">
 				<h4>{i18n.t("Menu items")}</h4>
+				<div className="flex items-center gap-2">
+				<SortButton onAdd={append} items={fields} />
 				<AddMenuItem onAdd={append} sortOrder={fields.length + 1} />
+				</div>
 			</div>
 			<SimpleTable columns={columns} rows={rows} />
 		</div>
