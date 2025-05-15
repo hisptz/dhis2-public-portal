@@ -1,22 +1,20 @@
-import {
-	MenuItem,
-} from "@packages/shared/schemas";
+import { MenuItem } from "@packages/shared/schemas";
 import {
 	Button,
 	ButtonStrip,
+	IconDragHandle16,
 	Modal,
 	ModalActions,
 	ModalContent,
 	ModalTitle,
-	IconDragHandle16
 } from "@dhis2/ui";
 import i18n from "@dhis2/d2-i18n";
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDialog } from "@hisptz/dhis2-ui";
 import {
 	DragDropContext,
-	Droppable,
 	Draggable,
+	Droppable,
 	DropResult,
 } from "react-beautiful-dnd";
 
@@ -27,7 +25,11 @@ export interface SortManualProps {
 	hide: boolean;
 }
 
-const reorder = (list: DraggableMenuItem[], startIndex: number, endIndex: number): DraggableMenuItem[] => {
+const reorder = (
+	list: DraggableMenuItem[],
+	startIndex: number,
+	endIndex: number,
+): DraggableMenuItem[] => {
 	const result = Array.from(list);
 	const [removed] = result.splice(startIndex, 1);
 	result.splice(endIndex, 0, removed);
@@ -52,7 +54,7 @@ export function SortMenuItems({
 			initialItems.map((item, index) => ({
 				...item,
 				draggableId: item.path || `initial-draggable-${index}`,
-			}))
+			})),
 		);
 		setIsDirty(false);
 	}, [initialItems, hide]);
@@ -68,7 +70,7 @@ export function SortMenuItems({
 		const newOrderedItems = reorder(
 			currentItems,
 			result.source.index,
-			result.destination.index
+			result.destination.index,
 		);
 		setCurrentItems(newOrderedItems);
 		setIsDirty(true);
@@ -95,7 +97,7 @@ export function SortMenuItems({
 			confirm({
 				title: i18n.t("Confirm exit"),
 				message: i18n.t(
-					"You have unsaved changes to the sort order. Are you sure you want to close?"
+					"You have unsaved changes to the sort order. Are you sure you want to close?",
 				),
 				onConfirm() {
 					setIsDirty(false);
@@ -126,10 +128,21 @@ export function SortMenuItems({
 								{...provided.droppableProps}
 								ref={provided.innerRef}
 								className="flex flex-col gap-2 py-1"
-								style={{ minHeight: currentItems.length > 0 ? "auto" : "100px" }}
+								style={{
+									minHeight:
+										currentItems.length > 0
+											? "auto"
+											: "100px",
+								}}
 							>
 								{currentItems.length === 0 && (
-									<div style={{ textAlign: 'center', color: '#555', padding: '20px 0' }}>
+									<div
+										style={{
+											textAlign: "center",
+											color: "#555",
+											padding: "20px 0",
+										}}
+									>
 										{i18n.t("No items to sort.")}
 									</div>
 								)}
@@ -145,12 +158,14 @@ export function SortMenuItems({
 												{...providedDraggable.draggableProps}
 												{...providedDraggable.dragHandleProps}
 												style={{
-													...providedDraggable.draggableProps.style,
+													...providedDraggable
+														.draggableProps.style,
 													border: "1px dotted #6c757d",
 													padding: "10px 12px",
-													backgroundColor: snapshot.isDragging
-														? "#e9ecef"
-														: "#ffffff",
+													backgroundColor:
+														snapshot.isDragging
+															? "#e9ecef"
+															: "#ffffff",
 													display: "flex",
 													alignItems: "center",
 													borderRadius: "4px",
@@ -158,8 +173,14 @@ export function SortMenuItems({
 												}}
 											>
 												<IconDragHandle16 color="#495057" />
-												<span style={{ marginLeft: "10px", flexGrow: 1 }}>
-													{item.label || `Item ${index + 1}`}
+												<span
+													style={{
+														marginLeft: "10px",
+														flexGrow: 1,
+													}}
+												>
+													{item.label ||
+														`Item ${index + 1}`}
 												</span>
 											</div>
 										)}
@@ -173,7 +194,11 @@ export function SortMenuItems({
 			</ModalContent>
 			<ModalActions>
 				<ButtonStrip>
-					<Button onClick={handleCloseClick} disabled={isSubmitting} secondary>
+					<Button
+						onClick={handleCloseClick}
+						disabled={isSubmitting}
+						secondary
+					>
 						{i18n.t("Cancel")}
 					</Button>
 					<Button
@@ -184,7 +209,7 @@ export function SortMenuItems({
 					>
 						{isSubmitting
 							? i18n.t("Saving...")
-							: i18n.t("Save Order")}
+							: i18n.t("Save order")}
 					</Button>
 				</ButtonStrip>
 			</ModalActions>
