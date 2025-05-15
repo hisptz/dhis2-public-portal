@@ -5,8 +5,10 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
-"POT-Creation-Date: 2025-05-14T11:58:19.384Z\n"
-"PO-Revision-Date: 2025-05-14T11:58:19.385Z\n"
+
+"POT-Creation-Date: 2025-05-13T08:50:02.557Z\n"
+"PO-Revision-Date: 2025-05-13T08:50:02.558Z\n"
+
 
 msgid "Could not get Appearance configurations"
 msgstr "Could not get Appearance configurations"
@@ -346,21 +348,6 @@ msgstr "Reset changes"
 
 msgid "Reset"
 msgstr "Reset"
-
-msgid "Sort menu items"
-msgstr "Sort menu items"
-
-msgid "You have unsaved changes to the sort order. Are you sure you want to close?"
-msgstr "You have unsaved changes to the sort order. Are you sure you want to close?"
-
-msgid "Sort Menu Items"
-msgstr "Sort Menu Items"
-
-msgid "No items to sort."
-msgstr "No items to sort."
-
-msgid "Save Order"
-msgstr "Save Order"
 
 msgid "Create a new module"
 msgstr "Create a new module"
