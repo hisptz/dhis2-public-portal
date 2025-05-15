@@ -1,13 +1,14 @@
 import React, { useMemo } from "react";
 import { SimpleTable, SimpleTableColumn } from "@hisptz/dhis2-ui";
 import i18n from "@dhis2/d2-i18n";
-import { AppMenuConfig, MenuItemType } from "@packages/shared/schemas";
+import { AppMenuConfig, MenuItem, MenuItemType } from "@packages/shared/schemas";
 import { capitalize, snakeCase } from "lodash";
 import { useFieldArray } from "react-hook-form";
 import { AddMenuItem } from "./AddMenuItem";
 import { ButtonStrip } from "@dhis2/ui";
 import { EditMenuItem } from "./EditMenuItem";
 import { DeleteMenuItem } from "./DeleteMenuItem";
+import { SortButton } from "./SortMenuItems/SortButton";
 
 const columns: SimpleTableColumn[] = [
 	{
@@ -29,12 +30,15 @@ const columns: SimpleTableColumn[] = [
 ];
 
 export function MenuList() {
-	const { fields, append, update, remove } = useFieldArray<
+	const { fields, append, update, remove, replace } = useFieldArray<
 		AppMenuConfig,
 		"items"
 	>({
 		name: "items",
 	});
+
+	console.log("fields", fields);
+
 
 	const rows = useMemo(() => {
 		return fields.map((item, index) => {
@@ -64,11 +68,21 @@ export function MenuList() {
 		});
 	}, [fields, remove, update]);
 
+	const handleSortSubmit = (sortedItems: MenuItem[]) => { 
+		replace(sortedItems);
+	};
+
 	return (
 		<div className="w-full flex flex-col gap-2">
 			<div className="flex items-center justify-between">
 				<h4>{i18n.t("Menu items")}</h4>
-				<AddMenuItem onAdd={append} sortOrder={fields.length + 1} />
+				<div className="flex items-center gap-2">
+					<SortButton 
+						items={fields}
+						onSortSubmit={handleSortSubmit}
+					/>
+					<AddMenuItem onAdd={append} sortOrder={fields.length + 1} />
+				</div>
 			</div>
 			<SimpleTable columns={columns} rows={rows} />
 		</div>
