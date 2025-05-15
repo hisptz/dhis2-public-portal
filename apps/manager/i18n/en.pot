@@ -5,8 +5,8 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
-"POT-Creation-Date: 2025-05-15T07:26:30.298Z\n"
-"PO-Revision-Date: 2025-05-15T07:26:30.299Z\n"
+"POT-Creation-Date: 2025-05-15T08:35:38.897Z\n"
+"PO-Revision-Date: 2025-05-15T08:35:38.898Z\n"
 
 msgid "Could not get Appearance configurations"
 msgstr "Could not get Appearance configurations"
@@ -88,6 +88,9 @@ msgstr "This will be a part of the url. It should not contain spaces"
 
 msgid "ID"
 msgstr "ID"
+
+msgid "Group"
+msgstr "Group"
 
 msgid "Files"
 msgstr "Files"
@@ -236,6 +239,9 @@ msgstr "Dashboard group"
 msgid "Back to dashboard "
 msgstr "Back to dashboard "
 
+msgid "Short name"
+msgstr "Short name"
+
 msgid "Short description"
 msgstr "Short description"
 
@@ -359,8 +365,8 @@ msgstr "Sort Menu Items"
 msgid "No items to sort."
 msgstr "No items to sort."
 
-msgid "Save Order"
-msgstr "Save Order"
+msgid "Save order"
+msgstr "Save order"
 
 msgid "Create a new module"
 msgstr "Create a new module"
