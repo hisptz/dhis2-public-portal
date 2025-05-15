@@ -15,7 +15,9 @@ mkdir "build/bundle"
 echo "Pruning portal app for building"
 turbo prune portal --out-dir apps/portal/build
 
+
 cp pm2.config.js build/app
+cp .env build/app || echo "You need to provide a .env file at apps/portal... Exiting"; return
 
 BUNDLE_NAME="$PKG_NAME-$PKG_VERSION.zip"
 cd build  || return
@@ -27,7 +29,7 @@ echo "Copying files"
 cp apps/portal/next.config.ts app/
 cp apps/portal/package.json app/
 
-cp -r apps/portal/.next/standalone/ app/
+cp -r apps/portal/.next/standalone/* app/
 cp -r apps/portal/.next/static/ app/apps/portal/static/
 cp -r apps/portal/public/ /app/apps/portal/public/
 
