@@ -1,7 +1,13 @@
-import React from "react";
+import React, { ReactElement } from "react";
 import { SimpleDataTable, SimpleTableColumn } from "@hisptz/dhis2-ui";
 import i18n from "@dhis2/d2-i18n";
 import { VisualizationGroup} from "@packages/shared/schemas";
+
+
+type VisualizationGroupWithUI = Omit<VisualizationGroup, 'description' | 'shortDescription'> & {
+  description?: ReactElement;
+  shortDescription?: ReactElement;
+};
 
 const columns: SimpleTableColumn[] = [
 	{
@@ -22,7 +28,7 @@ const columns: SimpleTableColumn[] = [
 	},
 ];
 
-export function DashboardGroups({ groups }: { groups: VisualizationGroup[] }) {
+export function DashboardGroups({ groups }: { groups: VisualizationGroupWithUI[] }) {
 	const rows = groups.map((group) => ({
 		...group,
 	}));

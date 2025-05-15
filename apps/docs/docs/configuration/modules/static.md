@@ -65,6 +65,11 @@ Each item can be edited or deleted. To apply your changes, always click:
 
 After saving, you will be redirected back to the module overview page.
 
+> Example view:
+> ![Static Display Example](../../../static/img/static/static.png)
+
+> Expected outcome:
+> ![Static Display Example](../../../static/img/static/articles.png)
 ---
 
 ## 4. Use Cases 

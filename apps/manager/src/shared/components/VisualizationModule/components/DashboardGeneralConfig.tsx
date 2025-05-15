@@ -38,18 +38,22 @@ export function DashboardGeneralConfig() {
 				name="config.title"
 				label={i18n.t("Title")}
 			/>
-			<RHFRichTextAreaField
-				required
-				autoGrow
-				rows={2}
-				name="config.shortDescription"
-				label={i18n.t("Short description")}
-			/>
-			<RHFRichTextAreaField
-				required
-				name="config.description"
-				label={i18n.t("Description")}
-			/>
+			{!isGrouped && (
+				<div>
+					<RHFRichTextAreaField
+						required
+						autoGrow
+						rows={2}
+						name="config.shortDescription"
+						label={i18n.t("Short description")}
+					/>
+					<RHFRichTextAreaField
+						required
+						name="config.description"
+						label={i18n.t("Description")}
+					/>
+				</div>
+			)}
 			<RHFCheckboxField
 				name="config.grouped"
 				label={i18n.t("Has groups")}

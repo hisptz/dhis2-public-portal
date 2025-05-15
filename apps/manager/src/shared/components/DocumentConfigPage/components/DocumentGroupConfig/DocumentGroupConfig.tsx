@@ -10,7 +10,7 @@ import { DeleteDocumentGroup } from "./components/DeleteDocumentGroup";
 
 const columns: SimpleTableColumn[] = [
 	{
-		label: i18n.t("Label"),
+		label: i18n.t("Group"),
 		key: "title",
 	},
 
@@ -66,11 +66,14 @@ export function DocumentGroupConfig() {
 	}
 
 	return (
-		<Field label={i18n.t("Groups")}>
-			<div className="flex flex-col gap-4">
-				<ButtonStrip end>
-					<AddDocumentGroup onAdd={append} />
-				</ButtonStrip>
+		<Field>
+			<div className="flex flex-col gap-4 pt-4">
+				<div className="flex flex-row gap-4 justify-between">
+					<h3 className="text-2xl">{i18n.t("Groups")}</h3>
+					<ButtonStrip end>
+						<AddDocumentGroup onAdd={append} />
+					</ButtonStrip>
+				</div>
 				<SimpleTable
 					emptyLabel={i18n.t(
 						"There are no document configuration present",
