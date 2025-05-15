@@ -17,7 +17,7 @@ turbo prune portal --out-dir apps/portal/build
 
 
 cp pm2.config.js build/app
-cp .env build/app || echo "You need to provide a .env file at apps/portal... Exiting"; return
+cp .env build/app || echo ".env file not found. Will assume the app will run at the root"
 
 BUNDLE_NAME="$PKG_NAME-$PKG_VERSION.zip"
 cd build  || return
