@@ -60,24 +60,53 @@ describe("Modules Page", () => {
 	});
 
 	it("should create a new module", () => {
+		const moduleName = "New Test Module";
+
 		cy.contains("a", modulesMenu.label).click();
+
+		const deleteIfExists = () => {
+			cy.get("body").then(($body) => {
+				if ($body.find(`td:contains('${moduleName}')`).length > 0) {
+					cy.log(`Module "${moduleName}" exists, deleting it first`);
+
+					cy.contains("td", moduleName)
+						.parent("tr")
+						.within(() => {
+							cy.get('[data-test="dhis2-uicore-button"]').click();
+						});
+
+					cy.contains("button", "Delete module").click();
+					cy.get(
+						'[data-test="dhis2-uicore-modalactions"] > [data-test="dhis2-uicore-buttonstrip"] > :nth-child(2) > [data-test="dhis2-uicore-button"]'
+					).click();
+
+					cy.contains("td", moduleName).should('not.exist');
+				} else {
+					cy.log(`Module "${moduleName}" does not exist, proceeding to create`);
+				}
+			});
+		};
+
+		deleteIfExists();
+		cy.wait(1000);
+		deleteIfExists();
 
 		cy.contains("button", "Create a new module").click();
 
 		cy.get('[data-test="dhis2-uicore-modal"]').should("be.visible");
 		cy.contains("Create Module").should("be.visible");
 
-		cy.get('input[name="label"]').type("New Test Module");
+		cy.get('input[name="label"]').type(moduleName);
 		cy.get(
-			'.gap-4 > .flex > [data-test="dhis2-uiwidgets-singleselectfield"] > [data-test="dhis2-uiwidgets-singleselectfield-content"] > [data-test="dhis2-uicore-box"] > [data-test="dhis2-uicore-singleselect"] > .jsx-114080822 > [data-test="dhis2-uicore-select"] > [data-test="dhis2-uicore-select-input"]',
+			'.gap-4 > .flex > [data-test="dhis2-uiwidgets-singleselectfield"] > [data-test="dhis2-uiwidgets-singleselectfield-content"] > [data-test="dhis2-uicore-box"] > [data-test="dhis2-uicore-singleselect"] > .jsx-114080822 > [data-test="dhis2-uicore-select"] > [data-test="dhis2-uicore-select-input"]'
 		).click();
 		cy.get('[data-value="VISUALIZATION"]').click();
 
 		cy.contains("button", "Create module").should("be.visible").click();
 
-		cy.contains("button", "Creating...").should("be.visible");
-
 		cy.contains("button", "Back to all modules").click();
+
+		cy.contains("td", moduleName).should('exist');
 	});
 
 	it("should navigate to module edit page and verify UI", () => {
@@ -91,7 +120,7 @@ describe("Modules Page", () => {
 
 		cy.url().should("match", /\/modules\/[^/]+\/edit/);
 
-		cy.contains("button", "Back to all modules").should("be.visible");
+		cy.contains("button", "Back to all modules").should("be.visible"); 
 
 		cy.contains("button", "Delete module").should("be.visible");
 		cy.contains("button", "Save changes").should("be.disabled");
