@@ -15,12 +15,16 @@ export const feedbackRecipientSchema = z.object({
 
 export type FeedbackRecipient = z.infer<typeof feedbackRecipientSchema>;
 
+export const feedbackItemSchema = z.object({
+	id: z.string(),
+	recipients: z.array(feedbackRecipientSchema),
+});
+
+export type FeedbackItem = z.infer<typeof feedbackItemSchema>;
+
 export const feedbackDisplayItemSchema = baseDisplayItemSchema.extend({
 	type: z.literal(DisplayItemType.FEEDBACK),
-	item: z.object({
-		id: z.string(),
-		recipients: z.array(feedbackRecipientSchema),
-	}),
+	item: feedbackItemSchema,
 });
 
 export type FeedbackDisplayItem = z.infer<typeof feedbackDisplayItemSchema>;
