@@ -89,6 +89,7 @@ export default function FeedbackVisualizer({ item }: { item: FeedbackItem }) {
                     <TextInput
                         {...form.register("name")}
                         type="text"
+                        required
                         label={i18n.t("Full name")}
                         size="md"
                         styles={{
