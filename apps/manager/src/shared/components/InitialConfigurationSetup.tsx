@@ -48,7 +48,7 @@ export function InitialConfigurationSetup() {
 				height={100}
 				width={100}
 				alt={"logo"}
-				src={"/dhis2-app-icon.png"}
+				src={"dhis2-app-icon.png"}
 			/>
 			<div className="flex flex-col justify-center items-center">
 				<h1 className="text-2xl font-bold !m-0">
