@@ -2,7 +2,7 @@
 sidebar_position: 4
 ---
 
-# Modules Configuration
+# Modules
 
 This document outlines the configuration and purpose of the four types of modules available within the system. Each module type is tailored to serve different content needs and layout styles in the portal.
 

@@ -54,7 +54,6 @@ export const defaultAppearanceConfig: AppAppearanceConfig = {
 			},
 			trailingLogo: {
 				show: false,
-				url: "",
 				width: 60,
 				height: 60,
 			},

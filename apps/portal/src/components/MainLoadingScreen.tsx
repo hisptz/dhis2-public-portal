@@ -23,23 +23,23 @@ export default async function MainLoadingScreen() {
 			<div className="h-screen w-screen">
 				<Flex h="100%" direction="column" justify="space-between">
 					<Center flex={1}>
-						<Stack align="center">
-							<div className="w-[160px] h-[160px] items-center justify-center flex">
+						<Stack p="sm" align="center">
+							<div className="w-[80px] h-[80px] items-center justify-center flex">
 								{logo && (
 									<Image
-										width={160}
-										height={160}
+										width={80}
+										height={80}
 										component={NextImage}
 										src={logo}
 										alt="logo"
 									/>
 								)}
 							</div>
-							<Loader />
+							<Loader size="sm" />
 							<Title
 								ta="center"
 								c={appearanceConfig.colors.primary}
-								order={2}
+								order={3}
 							>
 								{appearanceConfig?.header?.title?.text}
 							</Title>

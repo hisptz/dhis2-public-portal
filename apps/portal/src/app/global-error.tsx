@@ -14,6 +14,7 @@ import {
 	Text,
 	Title,
 } from "@mantine/core";
+import { Notifications } from '@mantine/notifications';
 
 export default function GlobalError() {
 	return (
@@ -23,6 +24,7 @@ export default function GlobalError() {
 			</head>
 			<body>
 				<MantineProvider>
+					<Notifications />
 					<Container
 						fluid
 						className="h-screen flex flex-col justify-center items-center"
