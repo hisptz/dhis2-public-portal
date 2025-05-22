@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="generator" content="Docusaurus v3.7.0">
 <title data-rh="true">Visualization Module | DHIS2 FlexiPortal</title><meta data-rh="true" name="viewport" content="width=device-width,initial-scale=1"><meta data-rh="true" name="twitter:card" content="summary_large_image"><meta data-rh="true" property="og:image" content="https://hisptz.github.io/dhis2-public-portal/img/dhis2-app-icon.png"><meta data-rh="true" name="twitter:image" content="https://hisptz.github.io/dhis2-public-portal/img/dhis2-app-icon.png"><meta data-rh="true" property="og:url" content="https://hisptz.github.io/dhis2-public-portal/docs/configuration/modules/visualization"><meta data-rh="true" property="og:locale" content="en"><meta data-rh="true" name="docusaurus_locale" content="en"><meta data-rh="true" name="docsearch:language" content="en"><meta data-rh="true" name="docusaurus_version" content="current"><meta data-rh="true" name="docusaurus_tag" content="docs-default-current"><meta data-rh="true" name="docsearch:version" content="current"><meta data-rh="true" name="docsearch:docusaurus_tag" content="docs-default-current"><meta data-rh="true" property="og:title" content="Visualization Module | DHIS2 FlexiPortal"><meta data-rh="true" name="description" content="Overview"><meta data-rh="true" property="og:description" content="Overview"><link data-rh="true" rel="icon" href="/dhis2-public-portal/img/favicon.ico"><link data-rh="true" rel="canonical" href="https://hisptz.github.io/dhis2-public-portal/docs/configuration/modules/visualization"><link data-rh="true" rel="alternate" href="https://hisptz.github.io/dhis2-public-portal/docs/configuration/modules/visualization" hreflang="en"><link data-rh="true" rel="alternate" href="https://hisptz.github.io/dhis2-public-portal/docs/configuration/modules/visualization" hreflang="x-default"><link rel="stylesheet" href="/dhis2-public-portal/assets/css/styles.9e8b226b.css">
-<script src="/dhis2-public-portal/assets/js/runtime~main.80443415.js" defer="defer"></script>
+<script src="/dhis2-public-portal/assets/js/runtime~main.fbc8ab3f.js" defer="defer"></script>
 <script src="/dhis2-public-portal/assets/js/main.49a41d37.js" defer="defer"></script>
 </head>
 <body class="navigation-with-keyboard">
@@ -19,12 +19,11 @@
 <ul>
 <li><strong>Label</strong> – User-friendly name for your module.</li>
 <li><strong>Type</strong> – Module type <code>&quot;Visualization&quot;</code>.</li>
-<li><strong>ID</strong> – Auto-filled from label.<!-- -->
-<blockquote>
-<p><strong>Note:</strong> <strong>ID</strong> is used in the URL and should have no spaces.</p>
-</blockquote>
-</li>
+<li><strong>ID</strong> – Auto-filled from label (used in URL paths; must contain no spaces).</li>
 </ul>
+<blockquote>
+<p><strong>Note:</strong> The <strong>Label</strong> can be a short display name, while the <strong>Title</strong> (configured later) is more descriptive.</p>
+</blockquote>
 <p>Once filled, click <strong>Create</strong>. This opens the module configuration screen.</p>
 <h2 class="anchor anchorWithStickyNavbar_fF9Z" id="2-basic-configuration">2. Basic Configuration<a href="#2-basic-configuration" class="hash-link" aria-label="Direct link to 2. Basic Configuration" title="Direct link to 2. Basic Configuration">​</a></h2>
 <h3 class="anchor anchorWithStickyNavbar_fF9Z" id="core-configuration">Core Configuration<a href="#core-configuration" class="hash-link" aria-label="Direct link to Core Configuration" title="Direct link to Core Configuration">​</a></h3>
@@ -44,14 +43,34 @@
 <li><strong>Caption</strong> detailing the visualization selected</li>
 </ul>
 <p>You can add as many visualizations as needed.</p>
+<blockquote>
+<p>Example view:
+<img decoding="async" loading="lazy" alt="Visualization Display Example" src="/dhis2-public-portal/assets/images/flat-visuals-11b813953caeb9b6ee670c030efc1de1.png" width="1566" height="907" class="img__Ss2"></p>
+</blockquote>
 <h3 class="anchor anchorWithStickyNavbar_fF9Z" id="layout-configuration">Layout Configuration<a href="#layout-configuration" class="hash-link" aria-label="Direct link to Layout Configuration" title="Direct link to Layout Configuration">​</a></h3>
 <p>Once you’ve added visualizations, click <strong>Configure Layout</strong> to adjust and arrange visualizations for different screen sizes.</p>
 <ul>
 <li>Use the <strong>Screen Size Dropdown</strong> to configure layouts per device (e.g., mobile, tablet, desktop).</li>
 <li>Use drag-and-drop interface to adjust and structure your visualizations for each screen size.</li>
+</ul>
+<blockquote>
+<p>Example layouts at different screen size:
+<img decoding="async" loading="lazy" alt="Small size Display Example" src="/dhis2-public-portal/assets/images/small-screen-0ac370e479bbfa2c041426029559dc6c.png" width="1566" height="903" class="img__Ss2"></p>
+</blockquote>
+<blockquote>
+<p><img decoding="async" loading="lazy" alt="Medium size Display Example" src="/dhis2-public-portal/assets/images/medium-sceen-fa85489b4e76842f36ffd132a233e55d.png" width="1566" height="903" class="img__Ss2"></p>
+</blockquote>
+<blockquote>
+<p><img decoding="async" loading="lazy" alt="Large size Display Example" src="/dhis2-public-portal/assets/images/large-screen-1b7bc402facc9a7aa8dbd59caf91bb43.png" width="1566" height="727" class="img__Ss2"></p>
+</blockquote>
+<ul>
 <li>click <strong>Update Layout</strong> to save the layouts.</li>
 </ul>
 <p>After updating, You will be navigated back to the module.</p>
+<blockquote>
+<p>Expected Outcome:
+<img decoding="async" loading="lazy" alt="Visualization Display Example" src="/dhis2-public-portal/assets/images/flat-portal-0b50c9efaaf60a1e5669a99bf1d13d02.png" width="1855" height="874" class="img__Ss2"></p>
+</blockquote>
 <hr>
 <h2 class="anchor anchorWithStickyNavbar_fF9Z" id="3-grouped-configuration">3. Grouped Configuration<a href="#3-grouped-configuration" class="hash-link" aria-label="Direct link to 3. Grouped Configuration" title="Direct link to 3. Grouped Configuration">​</a></h2>
 <blockquote>
@@ -93,6 +112,10 @@ Click <strong>Create Group</strong> to save it</li>
 <li>Edit existing ones</li>
 <li>Delete unwanted groups</li>
 </ul>
+<blockquote>
+<p>Expected Outcome:
+<img decoding="async" loading="lazy" alt="Visualization Display Example" src="/dhis2-public-portal/assets/images/grouped-portal-7b9a56a3b2d79c7729a9fdca3ee97f57.png" width="1855" height="874" class="img__Ss2"></p>
+</blockquote>
 <hr>
 <h2 class="anchor anchorWithStickyNavbar_fF9Z" id="4-deleting-a-module">4. Deleting a Module<a href="#4-deleting-a-module" class="hash-link" aria-label="Direct link to 4. Deleting a Module" title="Direct link to 4. Deleting a Module">​</a></h2>
 <p>Modules can be deleted entirely from the module overview screen.</p>
