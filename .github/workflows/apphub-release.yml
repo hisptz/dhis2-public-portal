@@ -44,7 +44,7 @@ jobs:
         run: yarn install --frozen-lockfile
 
       - name: Build
-        run: yarn build
+        run: yarn manager build
       # Publish to the App Hub
       - name: Release to DHIS2 App Hub
         run: yarn manager publish

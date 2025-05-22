@@ -4,8 +4,8 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "./build.sh",
-    "build:app": "next build",
+    "build": "next build",
+    "build:standalone": "./build.sh",
     "start": "next start",
     "lint": "next lint",
     "check-types": "tsc --noEmit",
