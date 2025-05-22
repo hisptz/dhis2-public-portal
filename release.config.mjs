@@ -11,7 +11,7 @@ export default {
 		[
 			"@semantic-release/exec",
 			{
-				prepareCmd: "yarn build",
+				prepareCmd: "yarn build && yarn portal build:standalone",
 			},
 		],
 		[

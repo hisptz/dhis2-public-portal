@@ -18,6 +18,8 @@ import {
 	FormProvider,
 	SubmitErrorHandler,
 	useForm,
+	useFormContext,
+	useFormState,
 } from "react-hook-form";
 import i18n from "@dhis2/d2-i18n";
 import { z } from "zod";
@@ -37,7 +39,7 @@ import { TitleConfig } from "./components/AdvancedHeaderConfig/components/TitleC
 import { zodResolver } from "@hookform/resolvers/zod";
 import { HeaderStyleConfig } from "./components/AdvancedHeaderConfig/components/HeaderStyleConfig";
 import { useManageDocument } from "../../../hooks/document";
-import { set } from "lodash";
+import { isEmpty, set } from "lodash";
 
 type props = {
 	configurations: AppAppearanceConfig;
@@ -50,7 +52,7 @@ const appearanceConfigFromData = appAppearanceConfig.extend({
 		style: appAppearanceConfig.shape.header.shape.style.extend({
 			trailingLogo: logoConfig
 				.extend({
-					url: z.instanceof(AppIconFile),
+					url: z.instanceof(AppIconFile).optional(),
 				})
 				.optional(),
 			leadingLogo:
@@ -61,12 +63,9 @@ const appearanceConfigFromData = appAppearanceConfig.extend({
 
 export type AppearanceConfigFormData = z.infer<typeof appearanceConfigFromData>;
 
-export function HeaderConfigForm({
-	configurations,
-	onClose,
-	onComplete,
-}: props) {
-	const [showAdvanced, setShowAdvances] = useState(false);
+function SaveButton({ onComplete, configurations, onClose }: props) {
+	const form = useFormState();
+	const { handleSubmit } = useFormContext();
 	const { show: showAlert } = useAlert(
 		({ message }) => message,
 		({ type }) => ({ ...type, duration: 3000 }),
@@ -74,40 +73,16 @@ export function HeaderConfigForm({
 
 	const { create: createIcon } = useManageDocument();
 
-	const { update, loading, error } = useUpdateDatastoreEntry({
+	const { update, error } = useUpdateDatastoreEntry({
 		namespace: APP_NAMESPACE,
 	});
 
-	const form = useForm<AppearanceConfigFormData>({
-		defaultValues: async () => {
-			const fileUrl = configurations.header.style.trailingLogo?.url;
-			if (!fileUrl) return configurations as AppearanceConfigFormData;
-			return {
-				...configurations,
-				header: {
-					...configurations.header,
-					style: {
-						...configurations.header.style,
-						trailingLogo: {
-							...configurations.header.style.trailingLogo,
-							url: new AppIconFile([], `${fileUrl}`).setId(
-								fileUrl,
-							),
-						},
-					},
-				},
-			};
-		},
-		resolver: zodResolver(appearanceConfigFromData),
-		mode: "onBlur",
-	});
-
 	const buttonLabel = useMemo(() => {
-		if (form.formState.isSubmitting) {
+		if (form.isSubmitting) {
 			return i18n.t("Updating...");
 		}
 		return i18n.t("Update");
-	}, [form.formState.isSubmitting]);
+	}, [form.isSubmitting]);
 
 	const onError: SubmitErrorHandler<HeaderConfig> = (
 		errors: FieldErrors<HeaderConfig>,
@@ -178,6 +153,52 @@ export function HeaderConfigForm({
 		}
 	};
 
+	return (
+		<Button
+			disabled={!form.isValid}
+			loading={form.isSubmitting}
+			onClick={(_, e) => {
+				handleSubmit(onUpdateConfiguration, onError)(e);
+			}}
+			primary
+		>
+			{buttonLabel}
+		</Button>
+	);
+}
+
+export function HeaderConfigForm({
+	configurations,
+	onClose,
+	onComplete,
+}: props) {
+	const [showAdvanced, setShowAdvances] = useState(false);
+
+	const form = useForm<AppearanceConfigFormData>({
+		defaultValues: async () => {
+			const fileUrl = configurations.header.style.trailingLogo?.url;
+			console.log(configurations.header);
+			if (isEmpty(fileUrl))
+				return configurations as AppearanceConfigFormData;
+			return {
+				...configurations,
+				header: {
+					...configurations.header,
+					style: {
+						...configurations.header.style,
+						trailingLogo: {
+							...configurations.header.style.trailingLogo,
+							url: new AppIconFile([], `${fileUrl}`).setId(
+								fileUrl!,
+							),
+						},
+					},
+				},
+			};
+		},
+		resolver: zodResolver(appearanceConfigFromData),
+		mode: "onChange",
+	});
 	return (
 		<FormProvider {...form}>
 			<Modal position="middle" onClose={onClose} large>
@@ -252,19 +273,11 @@ export function HeaderConfigForm({
 						<Button onClick={onClose} secondary>
 							{i18n.t("Cancel")}
 						</Button>
-						<Button
-							disabled={!form.formState.isValid}
-							loading={loading || form.formState.isSubmitting}
-							onClick={(_, e) => {
-								form.handleSubmit(
-									onUpdateConfiguration,
-									onError,
-								)(e);
-							}}
-							primary
-						>
-							{buttonLabel}
-						</Button>
+						<SaveButton
+							configurations={configurations}
+							onClose={onClose}
+							onComplete={onComplete}
+						/>
 					</ButtonStrip>
 				</ModalActions>
 			</Modal>
