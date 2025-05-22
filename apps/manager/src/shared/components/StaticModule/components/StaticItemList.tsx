@@ -10,6 +10,7 @@ import { AddItem } from "./AddItem/AddItem";
 import { useModule } from "../../ModulesPage/providers/ModuleProvider";
 import { FullLoader } from "../../FullLoader";
 import ErrorPage from "../../ErrorPage/ErrorPage";
+import { RichContent } from "../../RichContent";
 
 const columns: SimpleTableColumn[] = [
 	{
@@ -43,13 +44,13 @@ export function StaticItemList() {
 	const rows = itemList.map((item: StaticItemConfig) => ({
 		...item,
 		shortDescription:
-			item?.shortDescription.length > 100
-				? item?.shortDescription.slice(0, 100) + "..."
+			item?.shortDescription.length > 500
+				? item?.shortDescription.slice(0, 500) + "..."
 				: item?.shortDescription,
-		content:
-			item?.content.length > 100
-				? item?.content.slice(0, 100) + "..."
-				: item?.content,
+		content: RichContent({
+					content: item?.content ?? "",
+					maxLength: 500,
+				}),
 		icon: (
 			<div
 				style={{ borderRadius: "10%" }}
