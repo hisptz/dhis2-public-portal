@@ -7,20 +7,14 @@ export const feedbackSchema = z.object({
 	message: z.string().optional(),
 });
 
-export type FeedbackConfig = z.infer<typeof feedbackSchema>;
-
 export const feedbackRecipientSchema = z.object({
 	email: z.string().email(),
 });
-
-export type FeedbackRecipient = z.infer<typeof feedbackRecipientSchema>;
 
 export const feedbackItemSchema = z.object({
 	id: z.string(),
 	recipients: z.array(feedbackRecipientSchema),
 });
-
-export type FeedbackItem = z.infer<typeof feedbackItemSchema>;
 
 export const feedbackDisplayItemSchema = baseDisplayItemSchema.extend({
 	type: z.literal(DisplayItemType.FEEDBACK),
@@ -28,3 +22,6 @@ export const feedbackDisplayItemSchema = baseDisplayItemSchema.extend({
 });
 
 export type FeedbackDisplayItem = z.infer<typeof feedbackDisplayItemSchema>;
+export type FeedbackConfig = z.infer<typeof feedbackSchema>;
+export type FeedbackRecipient = z.infer<typeof feedbackRecipientSchema>;
+export type FeedbackItem = z.infer<typeof feedbackItemSchema>;
