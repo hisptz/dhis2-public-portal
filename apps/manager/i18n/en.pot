@@ -5,8 +5,8 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
-"POT-Creation-Date: 2025-05-21T11:33:13.898Z\n"
-"PO-Revision-Date: 2025-05-21T11:33:13.899Z\n"
+"POT-Creation-Date: 2025-05-23T10:03:49.206Z\n"
+"PO-Revision-Date: 2025-05-23T10:03:49.206Z\n"
 
 msgid "Could not get Appearance configurations"
 msgstr "Could not get Appearance configurations"
@@ -799,6 +799,15 @@ msgstr ""
 
 msgid "Configure app menu"
 msgstr "Configure app menu"
+
+msgid "Datastore Manager"
+msgstr "Datastore Manager"
+
+msgid "Export and import the datastore of the web portal application"
+msgstr "Export and import the datastore of the web portal application"
+
+msgid "Datastore manager"
+msgstr "Datastore manager"
 
 msgid "Menu"
 msgstr "Menu"
