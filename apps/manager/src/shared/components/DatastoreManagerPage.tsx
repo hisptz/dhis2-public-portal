@@ -12,6 +12,7 @@ import {
 import JSZip from 'jszip';
 import { DatastoreKeys, DatastoreNamespaces } from '@packages/shared/constants';
 import { AppModule, ModuleType, StaticModule, StaticModuleConfig } from '@packages/shared/schemas';
+import i18n from "@dhis2/d2-i18n";
 
 
 interface LogEntry {
@@ -37,7 +38,7 @@ export function DatastoreManagerPage() {
         setLogs(prevLogs => [{ message, type, timestamp: new Date().toISOString() }, ...prevLogs.slice(0, 29)]);
     }, []);
 
-    const getKeysInNamespace = async (namespace: string): Promise<string[]> => {
+    const getKeysInNamespace = useCallback(async (namespace: string): Promise<string[]> => {
         try {
             const { result } = await engine.query({
                 result: { resource: `dataStore/${namespace}` }
@@ -45,16 +46,16 @@ export function DatastoreManagerPage() {
             return Array.isArray(result) ? result.filter((k): k is string => typeof k === 'string') : [];
         } catch (error) {
             if (error.details?.httpStatusCode === 404) {
-                addLog(`Namespace '${namespace}' not found or is empty.`, 'warning');
+                addLog(`Namespace '${namespace}' not found or is empty.`, 'info-low');
                 return [];
             }
             addLog(`Error fetching keys for namespace ${namespace}: ${error.message}`, 'error');
             console.error(`Error fetching keys for ${namespace}:`, error);
             throw error;
         }
-    };
+    }, [engine, addLog]);
 
-    const getValue = async <T extends any>(namespace: string, key: string): Promise<T | undefined> => {
+    const getValue = useCallback(async <T,>(namespace: string, key: string): Promise<T | undefined> => {
         try {
             const { result } = await engine.query({
                 result: { resource: `dataStore/${namespace}/${key}` }
@@ -68,7 +69,7 @@ export function DatastoreManagerPage() {
             console.error(`Error fetching value for ${namespace}/${key}:`, error);
             throw error;
         }
-    };
+    }, [engine, addLog]);
 
     const setValue = useCallback(async (namespace: string, key: string, data: any): Promise<void> => {
         try {
@@ -85,7 +86,7 @@ export function DatastoreManagerPage() {
         }
     }, [engine, addLog]);
 
-    const deleteKeyInDS = async (namespace: string, key: string): Promise<void> => {
+    const deleteKeyInDatastore = useCallback(async (namespace: string, key: string): Promise<void> => {
         try {
             const mutation: any = {
                 resource: `dataStore/${namespace}/${key}`,
@@ -101,9 +102,9 @@ export function DatastoreManagerPage() {
             console.error(`Error deleting key ${namespace}/${key}:`, error);
             throw error;
         }
-    };
+    }, [engine, addLog]);
 
-    const clearNamespace = async (namespace: string): Promise<void> => {
+    const clearNamespace = useCallback(async (namespace: string): Promise<void> => {
         addLog(`Attempting to clear namespace: ${namespace}`, 'info');
         const keys = await getKeysInNamespace(namespace);
         if (!keys || keys.length === 0) {
@@ -112,10 +113,10 @@ export function DatastoreManagerPage() {
         }
         addLog(`Found ${keys.length} keys in ${namespace} to delete.`, 'info');
         for (const key of keys) {
-            await deleteKeyInDS(namespace, key);
+            await deleteKeyInDatastore(namespace, key);
         }
         addLog(`Namespace ${namespace} cleared successfully.`, 'success');
-    };
+    }, [addLog, getKeysInNamespace, deleteKeyInDatastore]);
 
     const handleExport = useCallback(async () => {
         setExportLoading(true);
@@ -186,7 +187,7 @@ export function DatastoreManagerPage() {
         } finally {
             setExportLoading(false);
         }
-    }, [engine, addLog]);
+    }, [addLog, getValue, getKeysInNamespace]);
 
     const handleImport = useCallback(async () => {
         if (!selectedFile) {
@@ -252,27 +253,34 @@ export function DatastoreManagerPage() {
         } finally {
             setImportLoading(false);
         }
-    }, [selectedFile, addLog, setValue]);
+    }, [selectedFile, addLog, setValue, clearNamespace]);
 
     const handleFileChange = ({ files }: { files: FileList | null }) => {
         if (files && files.length > 0) {
-            setSelectedFile(files[0]);
-            addLog(`File selected: ${files[0].name}`, 'info');
+            const file = files[0];
+            if (file.type === 'application/zip' || file.name.toLowerCase().endsWith('.zip')) {
+                setSelectedFile(file);
+                addLog(`File selected: ${file.name}`, 'info');
+            } else {
+                setSelectedFile(null);
+                addLog(`Invalid file type: ${file.name}. Only ZIP files are allowed.`, 'error');
+                setFileInputKey(Date.now());
+            }
         } else {
             setSelectedFile(null);
         }
     };
 
     return (
-        <div style={{ margin: '16px' }}>
+        <div className="m-4">
             <Card>
-                <div style={{ padding: '16px' }}>
-                    <h2 style={{ fontSize: '20px', fontWeight: '500', marginBottom: '16px' }}>
-                        Datastore Management
+                <div className="p-4">
+                    <h2 className="text-xl font-medium mb-4">
+                        {i18n.t("Datastore Management")}
                     </h2>
 
-                    <div style={{ marginBottom: '24px' }}>
-                        <h3 style={{ fontSize: '16px', marginBottom: '8px' }}>Export Data</h3>
+                    <div className="mb-6">
+                        <h3 className="text-base mb-2">{i18n.t("Export Data")}</h3>
                         <Button
                             primary
                             onClick={handleExport}
@@ -280,49 +288,51 @@ export function DatastoreManagerPage() {
                             disabled={exportLoading}
                             icon={<IconArrowDown16 />}
                         >
-                            Export All Data to ZIP
+                            {i18n.t("Export All Data to ZIP")}
                         </Button>
                     </div>
 
-                    <Divider margin="24px 0" />
+                    <Divider className="my-6" />
 
-                    <div style={{ marginBottom: '24px' }}>
-                        <h3 style={{ fontSize: '16px', marginBottom: '8px' }}>Import Data</h3>
+                    <div className="mb-6">
+                        <h3 className="text-base mb-2">{i18n.t("Import Data")}</h3>
                         <FileInputField
                             key={fileInputKey}
                             label="Select ZIP file"
                             onChange={handleFileChange}
+                            accept=".zip,application/zip"
+                            placeholder={selectedFile?.name || "No file uploaded yet"}
                             name="importFile"
                             helpText="Upload a ZIP file containing Datastore JSON configurations."
                             buttonLabel="Choose a file"
                         />
-                        {selectedFile && <NoticeBox title="Selected file" className="margin-top-small">{selectedFile.name}</NoticeBox>}
+                        {selectedFile && <NoticeBox title="Selected file" className="my-2">{selectedFile.name}</NoticeBox>}
                         <Button
                             primary
                             onClick={handleImport}
                             loading={importLoading}
                             disabled={importLoading || !selectedFile}
                             icon={<IconArrowUp16 />}
-                            style={{ marginTop: '16px' }}
+                            className="mt-4"
                         >
-                            Import Data from ZIP
+                            {i18n.t("Import Data from ZIP")}
+                            
                         </Button>
                     </div>
 
-
-                    <Divider margin="24px 0" />
+                    <Divider className="my-6" />
 
                     <div>
-                        <h3 style={{ fontSize: '16px', marginBottom: '8px' }}>Logs</h3>
-                        <div className="log-area" style={{ maxHeight: '300px', overflowY: 'auto', border: '1px solid var(--colors-grey400)', padding: '8px', borderRadius: '4px', background: 'var(--colors-grey100)' }}>
-                            {logs.length === 0 && <p style={{ color: 'var(--colors-grey700)', fontStyle: 'italic' }}>No logs yet. Perform an action to see logs here.</p>}
+                        <h3 className="text-base mb-2">{i18n.t("Logs")}</h3>
+                        <div className="max-h-[300px] overflow-y-auto border border-gray-300 p-2 rounded bg-gray-50">
+                            {logs.length === 0 && <p className="text-gray-600 italic">{i18n.t("No logs yet. Perform an action to see logs here.")}</p>}
                             {logs.map((log, index) => (
                                 <NoticeBox
                                     key={log.timestamp + index.toString()}
                                     error={log.type === 'error'}
                                     warning={log.type === 'warning'}
                                     title={log.type === 'info-low' ? 'Detail' : (log.type.charAt(0).toUpperCase() + log.type.slice(1))}
-                                    className={index > 0 ? "margin-top-small" : ""}
+                                    className={index > 0 ? "mt-2" : ""}
                                 >
                                     {`[${new Date(log.timestamp).toLocaleTimeString()}] ${log.message}`}
                                 </NoticeBox>
