@@ -37,9 +37,6 @@ export function MenuList() {
 		name: "items",
 	});
 
-	console.log("fields", fields);
-
-
 	const rows = useMemo(() => {
 		return fields.map((item, index) => {
 			return {

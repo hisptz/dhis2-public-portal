@@ -80,8 +80,7 @@ export function SortMenuItems({
 		setIsSubmitting(true);
 		const itemsToSubmit = currentItems.map((item, index) => {
 			const { ...items } = item;
-			console.log("items", items);
-			return {
+ 			return {
 				...items,
 				sortOrder: index + 1,
 			};
