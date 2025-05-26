@@ -12,7 +12,6 @@ import { useFieldArray, useWatch } from "react-hook-form";
 import { AddGroup } from "../AddGroup/AddGroup";
 import { useNavigate, useParams } from "@tanstack/react-router";
 import { VisualizationModule } from "@packages/shared/schemas";
-import { RichContent } from "../../../RichContent";
 
 export function DashboardGroupsConfig() {
 	const { moduleId } = useParams({
@@ -34,14 +33,6 @@ export function DashboardGroupsConfig() {
 	}
 	const groups = fields.map((field, index) => ({
 		...field,
-		shortDescription: RichContent({
-			content: field.shortDescription ?? "",
-			maxLength: 500,
-		}),
-		description: RichContent({
-			content: field.description ?? "",
-			maxLength: 500,
-		}),
 		actions: (
 			<ButtonStrip>
 				<Button

@@ -13,11 +13,6 @@ export function GroupGeneralConfig() {
 				name={`${namePrefix}.title`}
 				label={i18n.t("Title")}
 			/>
-			<RHFTextInputField
-				required
-				name={`${namePrefix}.shortName`}
-				label={i18n.t("Short name")}
-			/>
 			<RHFRichTextAreaField
 				required
 				autoGrow

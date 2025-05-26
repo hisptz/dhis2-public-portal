@@ -69,15 +69,15 @@ const GridItem = forwardRef<
 
 const widths = [
 	{
-		name: "small screen",
+		name: "sm",
 		value: 996,
 	},
 	{
-		name: "medium screen",
+		name: "md",
 		value: 1200,
 	},
 	{
-		name: "large screen",
+		name: "lg",
 		value: 1500,
 	},
 ];

@@ -1,6 +1,5 @@
 import "./globals.css";
 import "@mantine/core/styles.css";
-import '@mantine/notifications/styles.css';
 import { ColorSchemeScript, mantineHtmlProps } from "@mantine/core";
 import { getAppMetadata } from "@/utils/appMetadata";
 import { DHIS2AppProvider } from "@/components/DHIS2AppProvider";

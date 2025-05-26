@@ -20,8 +20,8 @@ Click the **Create a new module** button to initiate the creation process. A for
 
 - **Label** – User-friendly name for your module.
 - **Type** – Module type `"Visualization"`.
-- **ID** – Auto-filled from label (used in URL paths; must contain no spaces).
- > **Note:** The **Label** can be a short display name, while the **Title** (configured later) is more descriptive.
+- **ID** – Auto-filled from label.
+    > **Note:** **ID** is used in the URL and should have no spaces.
 
 Once filled, click **Create**. This opens the module configuration screen.
 
@@ -47,29 +47,16 @@ Click **Add Visualization** to add a new visualization. You must specify:
 
 You can add as many visualizations as needed.
 
-> Example view:
-> ![Visualization Display Example](../../../static/img/visualization/flat-visuals.png)
-
 ### Layout Configuration
 
 Once you’ve added visualizations, click **Configure Layout** to adjust and arrange visualizations for different screen sizes.
 
 - Use the **Screen Size Dropdown** to configure layouts per device (e.g., mobile, tablet, desktop).
 - Use drag-and-drop interface to adjust and structure your visualizations for each screen size.
-> Example layouts at different screen size:
-> ![Small size Display Example](../../../static/img/visualization/small-screen.png)
-
-> ![Medium size Display Example](../../../static/img/visualization/medium-sceen.png)
-
-> ![Large size Display Example](../../../static/img/visualization/large-screen.png)
-
 - click **Update Layout** to save the layouts.
 
 After updating, You will be navigated back to the module.
 
-
-> Expected Outcome:
-> ![Visualization Display Example](../../../static/img/visualization/flat-portal.png)
 ---
 
 ## 3. Grouped Configuration
@@ -119,8 +106,6 @@ You can:
 - Edit existing ones
 - Delete unwanted groups
 
-> Expected Outcome:
-> ![Visualization Display Example](../../../static/img/visualization/grouped-portal.png)
 ---
 
 ## 4. Deleting a Module

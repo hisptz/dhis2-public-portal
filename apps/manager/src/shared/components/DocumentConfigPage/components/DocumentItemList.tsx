@@ -13,6 +13,10 @@ const columns: SimpleTableColumn[] = [
 		key: "label",
 	},
 	{
+		label: i18n.t("File"),
+		key: "file",
+	},
+	{
 		label: i18n.t("Actions"),
 		key: "actions",
 	},
