@@ -272,7 +272,7 @@ export function DatastoreManagerPage() {
     };
 
     return (
-        <div className="m-4">
+        <div>
             <Card>
                 <div className="p-4">
                     <h2 className="text-xl font-medium mb-4">
