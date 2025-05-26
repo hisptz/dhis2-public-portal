@@ -1,10 +1,9 @@
 "use server";
 
 import { dhis2HttpClient } from "@/utils/api/dhis2";
-import { getAppConfig } from "@/utils/config/appConfig";
-import { FeedbackConfig } from "@packages/shared/schemas";
+import {  FeedbackConfig, FeedbackItem } from "@packages/shared/schemas";
 
-interface SendEmailResponse {}
+interface SendEmailResponse { }
 
 export async function sendEmail({
 	subject,
@@ -33,18 +32,24 @@ export async function sendEmail({
 	}
 }
 
-export async function sendFeedbackEmail({ data }: { data: FeedbackConfig }) {
-	const emailConfig = await getAppConfig<{ emails: string[] }>(
-		"feedback-emails",
-	);
-	const recipients = emailConfig?.emails;
+export async function sendFeedbackEmail({ data, item }: { data: FeedbackConfig, item: FeedbackItem }) {
+
+	const recipients = Array.isArray(item?.recipients) && item.recipients.length > 0
+		? item.recipients.map((recipient) => recipient.email).filter((email) => typeof email === "string")
+		: [];
+
+
+	if (recipients.length === 0) {
+		throw new Error("No valid feedback email recipients configured");
+	}
+
+
 	const subject = `Feedback from ${data.name}`;
-	const message = `A feedback from ${data.name} has been submitted at the Tanzania Health Portal. 
-	
-	Name: ${data.name}
-	Email: ${data.email}
-	Message: ${data.message}
-	`;
+	const message = `A feedback from ${data.name} has been submitted.
+  					Name: ${data.name}
+  					Email: ${data.email}
+  					Message: ${data.message}
+  					`;
 
 	return await sendEmail({ subject, message, recipients });
 }

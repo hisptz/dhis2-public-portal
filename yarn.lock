@@ -13759,6 +13759,11 @@ html-tags@^3.3.1:
   resolved "https://registry.npmjs.org/html-tags/-/html-tags-3.3.1.tgz"
   integrity sha512-ztqyC3kLto0e9WbNp0aeP+M3kTt+nbaIveGmUxAtZa+8iFgKLUOD4YKM5j+f3QD89bra7UeumolZHKuOXnTmeQ==
 
+html-truncate@^1.2.2:
+  version "1.2.2"
+  resolved "https://registry.yarnpkg.com/html-truncate/-/html-truncate-1.2.2.tgz#db2e331dcf1cba0bd432a507d16e988609f2575f"
+  integrity sha512-oiXb65RDxSYY8eXJKJiKHHpI7LyQbMG8LbSuvvWLLxAKNywJ7aaq0M1ynj2QJs0odQNggEEg/dTFVtH3lG0ClQ==
+
 html-void-elements@^3.0.0:
   version "3.0.0"
   resolved "https://registry.npmjs.org/html-void-elements/-/html-void-elements-3.0.0.tgz"
@@ -20497,10 +20502,15 @@ react-helmet@^6.1.0:
     react-fast-compare "^3.1.1"
     react-side-effect "^2.1.0"
 
-react-hook-form@^7.56.2, react-hook-form@^7.56.3:
+react-hook-form@^7.56.2:
   version "7.56.3"
   resolved "https://registry.npmjs.org/react-hook-form/-/react-hook-form-7.56.3.tgz"
   integrity sha512-IK18V6GVbab4TAo1/cz3kqajxbDPGofdF0w7VHdCo0Nt8PrPlOZcuuDq9YYIV1BtjcX78x0XsldbQRQnQXWXmw==
+
+react-hook-form@^7.56.4:
+  version "7.56.4"
+  resolved "https://registry.yarnpkg.com/react-hook-form/-/react-hook-form-7.56.4.tgz#273f55d43fb24ace3e2b9409d0d5326306d7905e"
+  integrity sha512-Rob7Ftz2vyZ/ZGsQZPaRdIefkgOSrQSPXfqBdvOPwJfoGnjwRJUs7EM7Kc1mcoDv3NOtqBzPGbcMB8CGn9CKgw==
 
 react-is@^16.13.1, react-is@^16.6.0, react-is@^16.7.0:
   version "16.13.1"
@@ -25511,7 +25521,12 @@ zod-to-json-schema@^3.24.1:
   resolved "https://registry.npmjs.org/zod-to-json-schema/-/zod-to-json-schema-3.24.5.tgz"
   integrity sha512-/AuWwMP+YqiPbsJx5D6TfgRTc4kTLjsh5SOcd4bLsfUg2RcEXrFMJl1DGgdHy2aCfsIA/cr/1JM0xcB2GZji8g==
 
-zod@^3.22.4, zod@^3.23.8, zod@^3.24.2, zod@^3.24.3:
+zod@3, zod@^3.24.4:
+  version "3.25.20"
+  resolved "https://registry.yarnpkg.com/zod/-/zod-3.25.20.tgz#c36739c52f6d01cf04c53bf56d99f2f5488739ee"
+  integrity sha512-z03fqpTMDF1G02VLKUMt6vyACE7rNWkh3gpXVHgPTw28NPtDFRGvcpTtPwn2kMKtQ0idtYJUTxchytmnqYswcw==
+
+zod@^3.23.8, zod@^3.24.2, zod@^3.24.3:
   version "3.24.4"
   resolved "https://registry.npmjs.org/zod/-/zod-3.24.4.tgz"
   integrity sha512-OdqJE9UDRPwWsrHjLN2F8bPxvwJBK22EHLWtanu0LSYr5YqzsaaW3RMgmjwr8Rypg5k+meEJdSPXJZXE/yqOMg==
