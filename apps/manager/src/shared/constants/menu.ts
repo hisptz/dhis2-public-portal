@@ -24,6 +24,14 @@ export const appMenus: Array<AppMenuItem> = [
 		action: i18n.t("Configure appearance"),
 	},
 	{
+		label: i18n.t("Configuration"),
+		href: "/configuration",
+		description: i18n.t(
+			"Export and import configurations from the datastore of the web portal application",
+		),
+		action: i18n.t("Configure Configuration"),
+	},
+	{
 		label: i18n.t("Modules"),
 		href: "/modules",
 		description: i18n.t(
@@ -38,13 +46,5 @@ export const appMenus: Array<AppMenuItem> = [
 			"Configure the position and contents of the app menu of the web portal application",
 		),
 		action: i18n.t("Configure app menu"),
-	},
-	{
-		label: i18n.t("Datastore Manager"),
-		href: "/datastore",
-		description: i18n.t(
-			"Export and import the datastore of the web portal application",
-		),
-		action: i18n.t("Datastore manager"),
 	},
 ];

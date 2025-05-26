@@ -26,7 +26,7 @@ interface DatastoreItem {
     [key: string]: unknown;
 }
 
-export function DatastoreManagerPage() {
+export function ConfigurationPage() {
     const engine = useDataEngine();
     const [exportLoading, setExportLoading] = useState<boolean>(false);
     const [importLoading, setImportLoading] = useState<boolean>(false);
@@ -273,29 +273,28 @@ export function DatastoreManagerPage() {
 
     return (
         <div>
-            <Card>
-                <div className="p-4">
+                 <div className="p-4">
                     <h2 className="text-xl font-medium mb-4">
-                        {i18n.t("Datastore Management")}
+                        {i18n.t("Configuration Management")}
                     </h2>
 
                     <div className="mb-6">
-                        <h3 className="text-base mb-2">{i18n.t("Export Data")}</h3>
+                        <h3 className="text-base mb-2">{i18n.t("Export Configuration")}</h3>
                         <Button
-                            primary
+                            secondary
                             onClick={handleExport}
                             loading={exportLoading}
                             disabled={exportLoading}
                             icon={<IconArrowDown16 />}
                         >
-                            {i18n.t("Export All Data to ZIP")}
+                            {i18n.t("Export configurations to ZIP")}
                         </Button>
                     </div>
 
                     <Divider className="my-6" />
 
                     <div className="mb-6">
-                        <h3 className="text-base mb-2">{i18n.t("Import Data")}</h3>
+                        <h3 className="text-base mb-2">{i18n.t("Import Configuration")}</h3>
                         <FileInputField
                             key={fileInputKey}
                             label="Select ZIP file"
@@ -305,17 +304,17 @@ export function DatastoreManagerPage() {
                             name="importFile"
                             helpText="Upload a ZIP file containing Datastore JSON configurations."
                             buttonLabel="Choose a file"
+                            className='mb-2'
                         />
                         {selectedFile && <NoticeBox title="Selected file" className="my-2">{selectedFile.name}</NoticeBox>}
                         <Button
-                            primary
+                            secondary
                             onClick={handleImport}
                             loading={importLoading}
                             disabled={importLoading || !selectedFile}
                             icon={<IconArrowUp16 />}
-                            className="mt-4"
-                        >
-                            {i18n.t("Import Data from ZIP")}
+                         >
+                            {i18n.t("Import configurations from ZIP")}
                             
                         </Button>
                     </div>
@@ -340,7 +339,7 @@ export function DatastoreManagerPage() {
                         </div>
                     </div>
                 </div>
-            </Card>
+             
         </div>
     );
 };
