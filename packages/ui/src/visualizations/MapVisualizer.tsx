@@ -5,7 +5,7 @@ import {
 } from "@hisptz/dhis2-analytics";
 import { Map as LeafletMap } from "leaflet";
 import { MapConfig, MapLayerType } from "@packages/shared/schemas";
-import React, { useMemo } from "react";
+import React, { memo, useMemo } from "react";
 import { forEach, head, set } from "lodash";
 import { OrgUnitSelection } from "@hisptz/dhis2-utils";
 
@@ -40,7 +40,7 @@ export function getOrgUnitSelectionFromIds(ous: string[]) {
 	return orgUnitSelection;
 }
 
-export function MapVisualizer({
+export const MapVisualizer = memo(function MapVisualizer({
 	mapConfig,
 	setRef,
 	periodSelection,
@@ -168,4 +168,4 @@ export function MapVisualizer({
 			}}
 		/>
 	);
-}
+});
