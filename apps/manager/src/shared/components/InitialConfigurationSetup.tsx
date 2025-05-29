@@ -8,6 +8,7 @@ import {
 	colors,
 	IconCheckmark16,
 	IconCross16,
+	IconImportItems24,
 	IconLaunch24,
 	IconSubtract16,
 	LinearLoader,
@@ -70,12 +71,13 @@ export function InitialConfigurationSetup() {
 						</p>
 					) : (
 						<p className="text-gray-500">
-							{i18n.t("Setup complete!")}
+							{i18n.t(
+								"Please choose how you would like to initially setup your portal",
+							)}
 						</p>
 					))}
 			</div>
 			{loading && <LinearLoader amount={progress} width={"400px"} />}
-
 			{!loading && (
 				<div className="flex flex-col gap-2">
 					{status.map(({ message, label, status }) => (
@@ -95,20 +97,24 @@ export function InitialConfigurationSetup() {
 					))}
 				</div>
 			)}
-
-			{!loading ? (
-				!hasErrors ? (
-					<Button
-						onClick={() => {
+			<ButtonStrip>
+				<Button
+					loading={loading}
+					onClick={() => {
+						setup().then(() => {
 							window.location.reload();
-						}}
-						primary
-						icon={<IconLaunch24 />}
-						initialFocus
-					>
-						{i18n.t("Continue to application")}
-					</Button>
-				) : (
+						});
+					}}
+					icon={<IconLaunch24 />}
+				>
+					{i18n.t("Setup default configuration")}
+				</Button>
+				<Button disabled={loading} icon={<IconImportItems24 />}>
+					{i18n.t("Import configuration")}
+				</Button>
+			</ButtonStrip>
+			{!loading ? (
+				!hasErrors ? null : (
 					<ButtonStrip>
 						<Button icon={<IconLaunch24 />}>
 							{i18n.t("Continue to application")}

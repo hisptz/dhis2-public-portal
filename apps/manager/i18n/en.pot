@@ -5,14 +5,17 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
-"POT-Creation-Date: 2025-05-29T08:40:53.498Z\n"
-"PO-Revision-Date: 2025-05-29T08:40:53.499Z\n"
+"POT-Creation-Date: 2025-05-29T09:10:54.732Z\n"
+"PO-Revision-Date: 2025-05-29T09:10:54.732Z\n"
 
 msgid "Could not get Appearance configurations"
 msgstr "Could not get Appearance configurations"
 
 msgid "Error"
 msgstr "Error"
+
+msgid "Configuration Management"
+msgstr "Configuration Management"
 
 msgid "General configuration"
 msgstr "General configuration"
@@ -49,9 +52,6 @@ msgstr "Module"
 
 msgid "Modules"
 msgstr "Modules"
-
-msgid "Configuration Management"
-msgstr "Configuration Management"
 
 msgid "Export Configuration"
 msgstr "Export Configuration"
@@ -802,19 +802,6 @@ msgstr ""
 msgid "Configure appearance"
 msgstr "Configure appearance"
 
-msgid "Configuration"
-msgstr "Configuration"
-
-msgid ""
-"Export and import configurations from the datastore of the web portal "
-"application"
-msgstr ""
-"Export and import configurations from the datastore of the web portal "
-"application"
-
-msgid "Configure Configuration"
-msgstr "Configure Configuration"
-
 msgid "Configure different modules of the web portal application"
 msgstr "Configure different modules of the web portal application"
 
@@ -833,6 +820,16 @@ msgstr ""
 
 msgid "Configure app menu"
 msgstr "Configure app menu"
+
+msgid ""
+"Export and import configurations from the datastore of the web portal "
+"application"
+msgstr ""
+"Export and import configurations from the datastore of the web portal "
+"application"
+
+msgid "Configure Configuration"
+msgstr "Configure Configuration"
 
 msgid "Menu"
 msgstr "Menu"
