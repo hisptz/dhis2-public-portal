@@ -1,11 +1,17 @@
-import { createFileRoute } from "@tanstack/react-router"
-import React from "react"
-import { ConfigurationPage } from "../../shared/components/ConfigurationPage/ConfigurationPage"
+import { createFileRoute } from "@tanstack/react-router";
+import React from "react";
+import { ConfigurationPage } from "../../shared/components/ConfigurationPage/ConfigurationPage";
+import { ModuleContainer } from "../../shared/components/ModuleContainer";
+import i18n from "@dhis2/d2-i18n";
 
 export const Route = createFileRoute("/configuration/")({
-  component: RouteComponent,
-})
+	component: RouteComponent,
+});
 
 function RouteComponent() {
-  return <ConfigurationPage />
+	return (
+		<ModuleContainer title={i18n.t("Configuration Management")}>
+			<ConfigurationPage />
+		</ModuleContainer>
+	);
 }
