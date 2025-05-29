@@ -3468,6 +3468,23 @@
     styled-components "^6.1.8"
     usehooks-ts "^2.9.2"
 
+"@hisptz/dhis2-ui@^2.0.48":
+  version "2.0.48"
+  resolved "https://registry.yarnpkg.com/@hisptz/dhis2-ui/-/dhis2-ui-2.0.48.tgz#d1373bd43e68254454d2602d254e9425d8407c58"
+  integrity sha512-EVuHHDpt0X+KDiEQZ5LNPqcKjy5gmP9RpV1BYg8h4gBy2qv1f9wsHSTYyJapcfQ/ILnX665rnuswfnCwmCAKuQ==
+  dependencies:
+    "@hisptz/dhis2-utils" "2.0.18"
+    classnames "^2.5.1"
+    dexie "^3.2.3"
+    jodit-react "^5.2.19"
+    lodash "^4.17.21"
+    luxon "^3.4.4"
+    react-circular-progressbar "^2.1.0"
+    react-collapsible "^2.10.0"
+    react-color "^2.19.3"
+    recoil "^0.7.7"
+    styled-components "^6.1.8"
+
 "@hisptz/dhis2-utils@2.0.18", "@hisptz/dhis2-utils@^2.0.17", "@hisptz/dhis2-utils@^2.0.18":
   version "2.0.18"
   resolved "https://registry.npmjs.org/@hisptz/dhis2-utils/-/dhis2-utils-2.0.18.tgz"

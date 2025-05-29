@@ -5,8 +5,8 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
-"POT-Creation-Date: 2025-05-26T11:45:31.337Z\n"
-"PO-Revision-Date: 2025-05-26T11:45:31.337Z\n"
+"POT-Creation-Date: 2025-05-29T08:35:10.577Z\n"
+"PO-Revision-Date: 2025-05-29T08:35:10.577Z\n"
 
 msgid "Could not get Appearance configurations"
 msgstr "Could not get Appearance configurations"
@@ -49,27 +49,6 @@ msgstr "Module"
 
 msgid "Modules"
 msgstr "Modules"
-
-msgid "Configuration Management"
-msgstr "Configuration Management"
-
-msgid "Export Configuration"
-msgstr "Export Configuration"
-
-msgid "Export configurations to ZIP"
-msgstr "Export configurations to ZIP"
-
-msgid "Import Configuration"
-msgstr "Import Configuration"
-
-msgid "Import configurations from ZIP"
-msgstr "Import configurations from ZIP"
-
-msgid "Logs"
-msgstr "Logs"
-
-msgid "No logs yet. Perform an action to see logs here."
-msgstr "No logs yet. Perform an action to see logs here."
 
 msgid "Size"
 msgstr "Size"
@@ -807,19 +786,6 @@ msgstr ""
 
 msgid "Configure appearance"
 msgstr "Configure appearance"
-
-msgid "Configuration"
-msgstr "Configuration"
-
-msgid ""
-"Export and import configurations from the datastore of the web portal "
-"application"
-msgstr ""
-"Export and import configurations from the datastore of the web portal "
-"application"
-
-msgid "Configure Configuration"
-msgstr "Configure Configuration"
 
 msgid "Configure different modules of the web portal application"
 msgstr "Configure different modules of the web portal application"

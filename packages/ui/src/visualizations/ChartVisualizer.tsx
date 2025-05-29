@@ -1,5 +1,5 @@
 import { AnalyticsData, VisualizationConfig } from "@packages/shared/schemas";
-import React, { RefObject, useRef } from "react";
+import React, { memo, RefObject, useRef } from "react";
 import HighchartsReact from "highcharts-react-official";
 import { DHIS2Chart } from "@hisptz/dhis2-analytics";
 import { getChartLayout, getChartType } from "@packages/shared/utils";
@@ -12,7 +12,7 @@ export interface ChartVisualizerProps {
 	setRef: RefObject<HighchartsReact.RefObject | null>;
 }
 
-export function ChartVisualizer({
+export const ChartVisualizer = memo(function ChartVisualizer({
 	analytics,
 	visualization,
 	colors,
@@ -52,4 +52,4 @@ export function ChartVisualizer({
 			/>
 		</div>
 	);
-}
+});
