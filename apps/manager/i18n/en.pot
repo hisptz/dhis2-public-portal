@@ -5,8 +5,8 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
-"POT-Creation-Date: 2025-05-29T09:10:54.732Z\n"
-"PO-Revision-Date: 2025-05-29T09:10:54.732Z\n"
+"POT-Creation-Date: 2025-05-29T12:50:47.550Z\n"
+"PO-Revision-Date: 2025-05-29T12:50:47.550Z\n"
 
 msgid "Could not get Appearance configurations"
 msgstr "Could not get Appearance configurations"
@@ -53,14 +53,32 @@ msgstr "Module"
 msgid "Modules"
 msgstr "Modules"
 
+msgid "Import Configuration"
+msgstr "Import Configuration"
+
+msgid "Select ZIP file"
+msgstr "Select ZIP file"
+
+msgid "No file uploaded yet"
+msgstr "No file uploaded yet"
+
+msgid "Upload a ZIP file containing Datastore JSON configurations."
+msgstr "Upload a ZIP file containing Datastore JSON configurations."
+
+msgid "Choose a file"
+msgstr "Choose a file"
+
+msgid "Importing..."
+msgstr "Importing..."
+
+msgid "Import"
+msgstr "Import"
+
 msgid "Export Configuration"
 msgstr "Export Configuration"
 
 msgid "Export configurations to ZIP"
 msgstr "Export configurations to ZIP"
-
-msgid "Import Configuration"
-msgstr "Import Configuration"
 
 msgid "Import configurations from ZIP"
 msgstr "Import configurations from ZIP"
@@ -284,8 +302,14 @@ msgstr "Please wait as we setup for first time use..."
 msgid "There were some issues setting up some configurations"
 msgstr "There were some issues setting up some configurations"
 
-msgid "Setup complete!"
-msgstr "Setup complete!"
+msgid "Please choose how you would like to initially setup your portal"
+msgstr "Please choose how you would like to initially setup your portal"
+
+msgid "Setup default configuration"
+msgstr "Setup default configuration"
+
+msgid "Import configuration"
+msgstr "Import configuration"
 
 msgid "Continue to application"
 msgstr "Continue to application"
