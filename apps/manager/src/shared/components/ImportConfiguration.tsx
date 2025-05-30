@@ -21,7 +21,7 @@ interface ConfigurationProps {
     setImportLoading: React.Dispatch<React.SetStateAction<boolean>>;
     onStatusChange: (statuses: CreateStatus[]) => void;
     onProgressChange: (progress: number) => void;
- }
+}
 
 export function ImportConfiguration({ setImportLoading, onStatusChange, onProgressChange }: ConfigurationProps) {
     const { value: hideModal, setTrue: closeModal, setFalse: openModal } = useBoolean(true);
@@ -40,14 +40,19 @@ export function ImportConfiguration({ setImportLoading, onStatusChange, onProgre
     };
 
     const handleImport = useCallback(async () => {
+        const statuses: CreateStatus[] = [];
+
         if (!selectedFile) {
-            return;
+            return statuses.push({
+                status: 'error',
+                label: 'Import',
+                message: i18n.t('No file selected for import'),
+            });
         }
         closeModal();
         setLoading(true);
         setImportLoading(true);
 
-        const statuses: CreateStatus[] = [];
         try {
             const zip = new JSZip();
             const loadedZip = await zip.loadAsync(selectedFile);
@@ -96,7 +101,8 @@ export function ImportConfiguration({ setImportLoading, onStatusChange, onProgre
             onStatusChange(statuses);
             setSelectedFile(null);
             setFileInputKey(Date.now());
-            closeModal();
+            window.location.reload();
+
         } catch (error) {
             console.error('Error importing configuration:', error);
             statuses.push({
@@ -109,7 +115,6 @@ export function ImportConfiguration({ setImportLoading, onStatusChange, onProgre
             setLoading(false);
             setImportLoading(false);
             onProgressChange(0);
-            window.location.reload();
         }
     }, [selectedFile, setImportLoading, onStatusChange, closeModal, onProgressChange, setValue]);
 
