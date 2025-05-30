@@ -43,7 +43,7 @@ export const useConfiguration = () => {
         }
     };
 
-    const setValue = async (namespace: string, key: string, data: Record<string, any>, addLog: (message: string, type: LogEntry['type']) => void) => {
+    const setValue = async (namespace: string, key: string, data: Record<string, any>, addLog?: (message: string, type: LogEntry['type']) => void) => {
         try {
             const mutation: any = {
                 resource: `dataStore/${namespace}/${key}`,
@@ -51,10 +51,14 @@ export const useConfiguration = () => {
                 data: data,
             };
             await engine.mutate(mutation);
-            addLog(`Successfully set value for ${namespace}/${key}`, 'success');
+            if (addLog) {
+                addLog(`Successfully set value for ${namespace}/${key}`, 'success');
+            }
         } catch (error) {
-            addLog(`Error setting value for ${namespace}/${key}: ${error.message}`, 'error');
-            throw error;
+            if (addLog) {
+                addLog(`Error setting value for ${namespace}/${key}: ${error.message}`, 'error');
+            }
+           throw error;
         }
     };
 
