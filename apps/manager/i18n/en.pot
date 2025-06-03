@@ -5,8 +5,8 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
-"POT-Creation-Date: 2025-05-29T12:50:47.550Z\n"
-"PO-Revision-Date: 2025-05-29T12:50:47.550Z\n"
+"POT-Creation-Date: 2025-06-03T07:58:52.786Z\n"
+"PO-Revision-Date: 2025-06-03T07:58:52.787Z\n"
 
 msgid "Could not get Appearance configurations"
 msgstr "Could not get Appearance configurations"
@@ -53,32 +53,14 @@ msgstr "Module"
 msgid "Modules"
 msgstr "Modules"
 
-msgid "Import Configuration"
-msgstr "Import Configuration"
-
-msgid "Select ZIP file"
-msgstr "Select ZIP file"
-
-msgid "No file uploaded yet"
-msgstr "No file uploaded yet"
-
-msgid "Upload a ZIP file containing Datastore JSON configurations."
-msgstr "Upload a ZIP file containing Datastore JSON configurations."
-
-msgid "Choose a file"
-msgstr "Choose a file"
-
-msgid "Importing..."
-msgstr "Importing..."
-
-msgid "Import"
-msgstr "Import"
-
 msgid "Export Configuration"
 msgstr "Export Configuration"
 
 msgid "Export configurations to ZIP"
 msgstr "Export configurations to ZIP"
+
+msgid "Import Configuration"
+msgstr "Import Configuration"
 
 msgid "Import configurations from ZIP"
 msgstr "Import configurations from ZIP"
@@ -127,6 +109,9 @@ msgstr "This will be a part of the url. It should not contain spaces"
 
 msgid "ID"
 msgstr "ID"
+
+msgid "Group"
+msgstr "Group"
 
 msgid "Files"
 msgstr "Files"
@@ -275,6 +260,9 @@ msgstr "Dashboard group"
 msgid "Back to dashboard "
 msgstr "Back to dashboard "
 
+msgid "Short name"
+msgstr "Short name"
+
 msgid "Short description"
 msgstr "Short description"
 
@@ -286,6 +274,27 @@ msgstr "Configure layout"
 
 msgid "Caption"
 msgstr "Caption"
+
+msgid "No file selected for import"
+msgstr "No file selected for import"
+
+msgid "Select ZIP file"
+msgstr "Select ZIP file"
+
+msgid "No file uploaded yet"
+msgstr "No file uploaded yet"
+
+msgid "Upload a ZIP file containing Datastore JSON configurations."
+msgstr "Upload a ZIP file containing Datastore JSON configurations."
+
+msgid "Choose a file"
+msgstr "Choose a file"
+
+msgid "Importing..."
+msgstr "Importing..."
+
+msgid "Import"
+msgstr "Import"
 
 msgid "Created successfully"
 msgstr "Created successfully"
@@ -304,12 +313,6 @@ msgstr "There were some issues setting up some configurations"
 
 msgid "Please choose how you would like to initially setup your portal"
 msgstr "Please choose how you would like to initially setup your portal"
-
-msgid "Setup default configuration"
-msgstr "Setup default configuration"
-
-msgid "Import configuration"
-msgstr "Import configuration"
 
 msgid "Continue to application"
 msgstr "Continue to application"

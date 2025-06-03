@@ -17,7 +17,7 @@
     "tailwind:generate": "npx @tailwindcss/cli -i ./src/main.css -o ./src/output.css",
     "test:e2e": "concurrently --kill-others --success first -c blue,green --names app,cypress 'yarn start:app'  'cypress run'",
     "test:e2e-open": "concurrently -c blue,green --names app,cypress 'yarn start:app'  'cypress open'",
-    "check-types": "tsc --noEmit"
+    "check-types": "yarn run tailwind:generate && yarn run tsr:generate && tsc --noEmit"
   },
   "devDependencies": {
     "@dhis2/cli-app-scripts": "^12.5.1",
