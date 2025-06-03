@@ -5,14 +5,17 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
-"POT-Creation-Date: 2025-05-29T08:35:10.577Z\n"
-"PO-Revision-Date: 2025-05-29T08:35:10.577Z\n"
+"POT-Creation-Date: 2025-06-03T07:58:52.786Z\n"
+"PO-Revision-Date: 2025-06-03T07:58:52.787Z\n"
 
 msgid "Could not get Appearance configurations"
 msgstr "Could not get Appearance configurations"
 
 msgid "Error"
 msgstr "Error"
+
+msgid "Configuration Management"
+msgstr "Configuration Management"
 
 msgid "General configuration"
 msgstr "General configuration"
@@ -49,6 +52,24 @@ msgstr "Module"
 
 msgid "Modules"
 msgstr "Modules"
+
+msgid "Export Configuration"
+msgstr "Export Configuration"
+
+msgid "Export configurations to ZIP"
+msgstr "Export configurations to ZIP"
+
+msgid "Import Configuration"
+msgstr "Import Configuration"
+
+msgid "Import configurations from ZIP"
+msgstr "Import configurations from ZIP"
+
+msgid "Logs"
+msgstr "Logs"
+
+msgid "No logs yet. Perform an action to see logs here."
+msgstr "No logs yet. Perform an action to see logs here."
 
 msgid "Size"
 msgstr "Size"
@@ -254,6 +275,27 @@ msgstr "Configure layout"
 msgid "Caption"
 msgstr "Caption"
 
+msgid "No file selected for import"
+msgstr "No file selected for import"
+
+msgid "Select ZIP file"
+msgstr "Select ZIP file"
+
+msgid "No file uploaded yet"
+msgstr "No file uploaded yet"
+
+msgid "Upload a ZIP file containing Datastore JSON configurations."
+msgstr "Upload a ZIP file containing Datastore JSON configurations."
+
+msgid "Choose a file"
+msgstr "Choose a file"
+
+msgid "Importing..."
+msgstr "Importing..."
+
+msgid "Import"
+msgstr "Import"
+
 msgid "Created successfully"
 msgstr "Created successfully"
 
@@ -269,8 +311,8 @@ msgstr "Please wait as we setup for first time use..."
 msgid "There were some issues setting up some configurations"
 msgstr "There were some issues setting up some configurations"
 
-msgid "Setup complete!"
-msgstr "Setup complete!"
+msgid "Please choose how you would like to initially setup your portal"
+msgstr "Please choose how you would like to initially setup your portal"
 
 msgid "Continue to application"
 msgstr "Continue to application"
@@ -805,6 +847,16 @@ msgstr ""
 
 msgid "Configure app menu"
 msgstr "Configure app menu"
+
+msgid ""
+"Export and import configurations from the datastore of the web portal "
+"application"
+msgstr ""
+"Export and import configurations from the datastore of the web portal "
+"application"
+
+msgid "Configure Configuration"
+msgstr "Configure Configuration"
 
 msgid "Menu"
 msgstr "Menu"
