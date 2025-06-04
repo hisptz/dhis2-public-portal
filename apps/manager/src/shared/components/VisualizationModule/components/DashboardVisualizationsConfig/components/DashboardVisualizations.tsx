@@ -15,11 +15,7 @@ const columns: SimpleTableColumn[] = [
 	{
 		label: i18n.t("Caption"),
 		key: "caption",
-	},
-	{
-		label: i18n.t("Actions"),
-		key: "actions",
-	},
+	} 
 ];
 
 export function DashboardVisualizations({
