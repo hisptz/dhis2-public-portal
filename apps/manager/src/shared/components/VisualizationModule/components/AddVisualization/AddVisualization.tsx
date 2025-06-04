@@ -22,7 +22,7 @@ export function AddVisualization({
 				/>
 			)}
 			<Button onClick={onShow} icon={<IconAdd24 />}>
-				{i18n.t("Add visualizations")}
+				{i18n.t("Add a new visualization")}
 			</Button>
 		</>
 	);

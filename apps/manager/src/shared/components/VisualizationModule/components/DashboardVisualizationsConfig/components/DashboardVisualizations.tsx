@@ -22,14 +22,10 @@ const columns: SimpleTableColumn[] = [
 	},
 ];
 
-type VisualizationRow = VisualizationItem & {
-	actions: React.ReactNode;
-};
-
 export function DashboardVisualizations({
 	visualizations,
 }: {
-	visualizations: VisualizationRow[];
+	visualizations: VisualizationItem[];
 }) {
 	return <SimpleTable columns={columns} rows={visualizations} />;
 }
