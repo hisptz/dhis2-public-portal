@@ -5,15 +5,9 @@ import React, {
 	useCallback,
 	useMemo,
 	useRef,
-	useState,
 } from "react";
 import { useController, useWatch } from "react-hook-form";
-import {
-	SingleSelectField,
-	SingleSelectOption,
-} from "@dhis2/ui";
-
-import i18n from "@dhis2/d2-i18n";
+import { IconCross24 } from "@dhis2/ui";
 import { Responsive as ResponsiveGridLayout } from "react-grid-layout";
 import { debounce } from "lodash";
 import { FlexibleLayoutConfig, VisualizationItem, VisualizationModule } from "@packages/shared/schemas";
@@ -31,61 +25,72 @@ function DashboardItem({ item }: { item: VisualizationItem }) {
 	);
 }
 
-
 const GridItem = forwardRef<
 	HTMLDivElement,
 	{
 		item: VisualizationItem;
+		onDelete: (id: string) => void;
 	} & DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement>
 >(function GridItem(
 	{
 		item,
+		onDelete,
 		style,
 		className,
 		children,
 		...rest
 	}: {
 		item: VisualizationItem;
+		onDelete: (id: string) => void;
 	} & DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement>,
 	ref,
 ) {
+	const handleDeleteClick = () => {
+		onDelete(item.id);
+	};
+
+	const stopPropagation = (event: React.MouseEvent) => {
+		event.stopPropagation();
+	};
+
+	const stopPropagationTouch = (event: React.TouchEvent) => {
+		event.stopPropagation();
+	};
+
 	return (
 		<div
 			ref={ref}
 			style={{ ...style }}
 			data-prefix={item.id}
 			prefix={item.id}
-			className={`border-2 border-gray-400 rounded-md p-2 flex flex-col ${className}`}
+			className={`border-2 border-gray-400 rounded-md p-2 flex flex-col relative ${className}`}
 			{...rest}
 		>
+			<button
+				onMouseDown={stopPropagation}
+				onTouchStart={stopPropagationTouch}
+				onClick={handleDeleteClick}
+				className="absolute top-1 right-1 bg-amber-500"
+				style={{ background: "transparent", border: "none", padding: 0 }}
+				title="Remove visualization">
+				<IconCross24 />
+			</button>
 			<DashboardItem item={item} />
 			{children}
-			{/* <span className="react-resizable-handle" /> */}
 		</div>
 	);
 });
 
-const widths = [
-	{
-		name: "small screen",
-		value: 996,
-	},
-	{
-		name: "medium screen",
-		value: 1200,
-	},
-	{
-		name: "large screen",
-		value: 1500,
-	},
-];
-
 export function DashboardLayoutEditor({
 	prefix,
+	size,
+	onDelete,
 }: {
 	prefix?: `config.groups.${number}`;
+	size?: number;
+	onDelete: (id: string) => void;
+
 }) {
-	const [size, setSize] = useState<number>(1200);
 	const ref = useRef<HTMLDivElement>(null);
 
 	const { field } = useController<
@@ -94,6 +99,9 @@ export function DashboardLayoutEditor({
 	>({
 		name: !prefix ? "config.layouts" : `${prefix}.layouts`,
 	});
+	console.log("field value:", field.value);
+
+
 	const visualizations = useWatch<
 		VisualizationModule,
 		"config.items" | `config.groups.${number}.items`
@@ -115,26 +123,13 @@ export function DashboardLayoutEditor({
 		},
 		[debouncedLayoutChange]
 	);
+
 	return (
 		<div className="flex flex-col gap-2" ref={ref}>
-			<div className="p-4 max-w-[300px]">
-				<SingleSelectField
-					selected={size.toString()}
-					onChange={({ selected }) => setSize(parseInt(selected))}
-					label={i18n.t("Size")}
-				>
-					{widths.map(({ name, value }) => (
-						<SingleSelectOption
-							key={value.toString()}
-							label={name}
-							value={value.toString()}
-						/>
-					))}
-				</SingleSelectField>
-			</div>
 			<div className="flex-1 flex justify-center w-full">
 				<div className="bg-white w-full" style={{ width: size }}>
 					<ResponsiveGridLayout
+						key={visualizations?.map(v => v.item.id).join(",") || "empty"}
 						breakpoints={{
 							lg: 1200,
 							md: 996,
@@ -160,10 +155,15 @@ export function DashboardLayoutEditor({
 						isDroppable
 						isResizable
 						useCSSTransforms={true}
+						compactType={null}
 						onLayoutChange={handleLayoutChange}
 					>
 						{visualizations?.map((item) => (
-							<GridItem key={item.item.id} item={item.item as VisualizationItem} />
+							<GridItem
+								key={item.item.id}
+								item={item.item as VisualizationItem}
+								onDelete={onDelete}
+							/>
 						))}
 					</ResponsiveGridLayout>
 				</div>
