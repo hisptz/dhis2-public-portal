@@ -35,7 +35,7 @@ export function GroupConfigPage() {
 	});
 
 	return (
-		<div className="flex flex-col gap-6 w-full h-full">
+		<div className="flex flex-col gap-6 w-full h-full pb-4">
 			<div>
 				<Button
 					onClick={() => {
