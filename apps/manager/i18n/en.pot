@@ -5,8 +5,8 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
-"POT-Creation-Date: 2025-05-29T08:35:10.577Z\n"
-"PO-Revision-Date: 2025-05-29T08:35:10.577Z\n"
+"POT-Creation-Date: 2025-06-03T12:44:20.632Z\n"
+"PO-Revision-Date: 2025-06-03T12:44:20.633Z\n"
 
 msgid "Could not get Appearance configurations"
 msgstr "Could not get Appearance configurations"
@@ -47,11 +47,29 @@ msgstr "Back to all modules"
 msgid "Module"
 msgstr "Module"
 
+msgid "small screen"
+msgstr "small screen"
+
+msgid "medium screen"
+msgstr "medium screen"
+
+msgid "large screen"
+msgstr "large screen"
+
+msgid "Failed to save visualization"
+msgstr "Failed to save visualization"
+
+msgid "Manage visualization"
+msgstr "Manage visualization"
+
+msgid "Select screen size"
+msgstr "Select screen size"
+
+msgid "Add visualization"
+msgstr "Add visualization"
+
 msgid "Modules"
 msgstr "Modules"
-
-msgid "Size"
-msgstr "Size"
 
 msgid "Add Document"
 msgstr "Add Document"
@@ -482,6 +500,9 @@ msgstr "Visualization type"
 msgid "All"
 msgstr "All"
 
+msgid "Size"
+msgstr "Size"
+
 msgid "Add Section"
 msgstr "Add Section"
 
@@ -557,8 +578,8 @@ msgstr "Short Name"
 msgid "Create group"
 msgstr "Create group"
 
-msgid "Add visualizations"
-msgstr "Add visualizations"
+msgid "Add a new visualization"
+msgstr "Add a new visualization"
 
 msgid "{{action}} visualization"
 msgstr "{{action}} visualization"
