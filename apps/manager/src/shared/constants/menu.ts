@@ -39,4 +39,12 @@ export const appMenus: Array<AppMenuItem> = [
 		),
 		action: i18n.t("Configure app menu"),
 	},
+	{
+		label: i18n.t("Configuration Management"),
+		href: "/configuration",
+		description: i18n.t(
+			"Export and import configurations from the datastore of the web portal application",
+		),
+		action: i18n.t("Configure Configuration"),
+	},
 ];
