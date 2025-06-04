@@ -6,6 +6,7 @@ import React, {
 	useMemo,
 	useRef,
 } from "react";
+import i18n from "@dhis2/d2-i18n";
 import { useController, useWatch } from "react-hook-form";
 import { IconCross24 } from "@dhis2/ui";
 import { Responsive as ResponsiveGridLayout } from "react-grid-layout";
@@ -72,7 +73,7 @@ const GridItem = forwardRef<
 				onClick={handleDeleteClick}
 				className="absolute top-1 right-1 bg-amber-500"
 				style={{ background: "transparent", border: "none", padding: 0 }}
-				title="Remove visualization">
+				title={i18n.t("Remove visualization")}>
 				<IconCross24 />
 			</button>
 			<DashboardItem item={item} />
@@ -99,8 +100,6 @@ export function DashboardLayoutEditor({
 	>({
 		name: !prefix ? "config.layouts" : `${prefix}.layouts`,
 	});
-	console.log("field value:", field.value);
-
 
 	const visualizations = useWatch<
 		VisualizationModule,
