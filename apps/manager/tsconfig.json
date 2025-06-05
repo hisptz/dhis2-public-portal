@@ -22,5 +22,11 @@
     "tailwind.config.ts",
     "cypress",
     "cypress.config.ts"
+  ],
+  "exclude": [                 
+    "**/node_modules",
+    "**/dist",
+    "**/test",
+    "**/*.spec.ts"
   ]
 }
