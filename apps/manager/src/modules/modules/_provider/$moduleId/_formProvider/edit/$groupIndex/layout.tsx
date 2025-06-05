@@ -41,7 +41,6 @@ function RouteComponent() {
 	});
 	const { resetField } = useFormContext<AppModule>();
 	const navigate = useNavigate();
-	const { save } = useSaveModule(moduleId);
 
 	const goBack = () => {
 		navigate({
@@ -56,15 +55,10 @@ function RouteComponent() {
 		goBack();
 	};
 
-	const onSubmit = async (data: AppModule) => {
-		await save(data);
-	};
-
 	return (
 		<VisualizationManager
 			prefix={`config.groups.${groupIndex}`}
 			onCancel={onCancel}
-			onSubmit={onSubmit}
 		/>
 	);
 }

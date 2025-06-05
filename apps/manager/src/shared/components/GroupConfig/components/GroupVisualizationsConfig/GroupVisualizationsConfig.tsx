@@ -85,7 +85,7 @@ export function GroupVisualizationsConfig() {
 						}
 						icon={<IconLayoutColumns24 />}
 					>
-						{i18n.t("Manage visualization")}
+						{i18n.t("Manage visualizations")}
 					</Button>
 				</ButtonStrip>
 			</div>

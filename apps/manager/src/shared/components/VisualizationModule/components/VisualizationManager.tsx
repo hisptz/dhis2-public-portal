@@ -1,12 +1,15 @@
 import React, { useCallback, useMemo, useState } from "react";
 import i18n from "@dhis2/d2-i18n";
-import { Button, ButtonStrip, Card, Divider, SingleSelectField, SingleSelectOption } from "@dhis2/ui";
+import { Button, ButtonStrip, Card, Divider, IconArrowLeft24, SingleSelectField, SingleSelectOption } from "@dhis2/ui";
 import { useFieldArray, useFormContext } from "react-hook-form";
 import { DisplayItem, DisplayItemType, FlexibleLayoutConfig, VisualizationItem, VisualizationModule } from "@packages/shared/schemas";
 import { mapValues } from "lodash";
 import { useAlert } from "@dhis2/app-runtime";
 import { AddVisualization } from "./AddVisualization/AddVisualization";
 import { DashboardLayoutEditor } from "../../DashboardLayoutEditor";
+import { useRouter } from "@tanstack/react-router";
+import { useModule } from "../../ModulesPage/providers/ModuleProvider";
+import { useSaveModule } from "../../ModulesPage/hooks/save";
 
 type ItemsFieldPath = "config.items" | `config.groups.${number}.items`;
 type LayoutsFieldPath = "config.layouts" | `config.groups.${number}.layouts`;
@@ -14,20 +17,22 @@ type LayoutsFieldPath = "config.layouts" | `config.groups.${number}.layouts`;
 interface VisualizationLayoutEditorProps {
     prefix?: `config.groups.${number}`;
     onCancel: () => void;
-    onSubmit: (data: VisualizationModule) => Promise<void>;
 }
 
 export function VisualizationManager({
     prefix,
     onCancel,
-    onSubmit,
 }: VisualizationLayoutEditorProps) {
     const { setValue, getValues, handleSubmit, formState, reset } = useFormContext<VisualizationModule>();
     const { show } = useAlert(
         ({ message }) => message,
         ({ type }) => ({ ...type, duration: 3000 })
     );
+    const router = useRouter()
     const [size, setSize] = useState<number>(1200);
+    const module = useModule();
+    const moduleId = module?.id;
+    const { save } = useSaveModule(moduleId);
 
     const widths = useMemo(
         () => [
@@ -120,16 +125,16 @@ export function VisualizationManager({
                 ])
             );
             setValue(layoutsFieldPath, updatedLayouts);
-            reset(getValues(), { keepDirty: true, keepTouched: true });
         },
-        [fields, remove, getValues, setValue, reset, layoutsFieldPath]
+        [fields, remove, getValues, setValue, layoutsFieldPath]
     );
 
     const handleFormSubmit = useCallback(
         async (data: VisualizationModule) => {
             try {
-                await onSubmit(data);
+                await save(data);
                 reset(data, { keepDirty: false, keepTouched: true });
+                router.history.back()
             } catch (error) {
                 show({
                     message: i18n.t("Failed to save visualization", { error }),
@@ -137,7 +142,7 @@ export function VisualizationManager({
                 });
             }
         },
-        [onSubmit, reset, show]
+        [reset, router.history, save, show]
     );
 
     const handleFormError = useCallback(
@@ -155,6 +160,16 @@ export function VisualizationManager({
     return (
         <div className="w-full h-full flex flex-col gap-4">
             <div className="w-full flex flex-col">
+                <div className="mb-2">
+                    <Button
+                        onClick={() => {
+                            router.history.back()
+                        }}
+                        icon={<IconArrowLeft24 />}
+                    >
+                        {i18n.t("Back")}
+                    </Button>
+                </div>
                 <div className="flex justify-between gap-8">
                     <h2 className="text-2xl">{i18n.t("Manage visualization")}</h2>
                     <ButtonStrip end>

@@ -80,8 +80,8 @@ function RouteComponent() {
 		keyName: "fieldId" as unknown as "id",
 	});
 
-	const onError = (e) => {
-		console.log(e);
+	const onError = (error) => {
+		console.error("Form validation errors:", error);
 		show({
 			message: i18n.t("Please fix the validation errors before saving"),
 			type: { critical: true },

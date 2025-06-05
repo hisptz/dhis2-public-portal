@@ -1,21 +1,16 @@
-import React, { useCallback, useMemo } from "react";
+import React, { useMemo } from "react";
 import i18n from "@dhis2/d2-i18n";
 import {
 	Button,
 	ButtonStrip,
 	Divider,
-	IconDelete16,
 	IconLayoutColumns24,
 } from "@dhis2/ui";
 import { DashboardVisualizations } from "./components/DashboardVisualizations";
-import { useFieldArray, useFormContext, useWatch } from "react-hook-form";
-import { AddVisualization } from "../AddVisualization/AddVisualization";
-import { mapValues } from "lodash";
-import { EditVisualization } from "../AddVisualization/componets/EditVisualization";
+import { useFieldArray, useWatch } from "react-hook-form";
 import {
 	DisplayItem,
 	DisplayItemType,
-	FlexibleLayoutConfig,
 	VisualizationItem,
 	VisualizationModule,
 } from "@packages/shared/schemas";
@@ -33,7 +28,7 @@ export function DashboardVisualizationsConfig() {
 		name: "config.grouped",
 	});
 
-	const { fields} = useFieldArray<
+	const { fields } = useFieldArray<
 		VisualizationModule,
 		"config.items"
 	>({
@@ -57,7 +52,7 @@ export function DashboardVisualizationsConfig() {
 
 	const rows = fields
 		.filter((field) => field.type === DisplayItemType.VISUALIZATION)
-		.map((field, index) => {
+		.map((field) => {
 			const visualizationField = field as DisplayItem & {
 				type: DisplayItemType.VISUALIZATION;
 				item: VisualizationItem;
@@ -98,7 +93,7 @@ export function DashboardVisualizationsConfig() {
 						}
 						icon={<IconLayoutColumns24 />}
 					>
-						{i18n.t("Manage visualization")}
+						{i18n.t("Manage visualizations")}
 					</Button>
 				</ButtonStrip>
 			</div>

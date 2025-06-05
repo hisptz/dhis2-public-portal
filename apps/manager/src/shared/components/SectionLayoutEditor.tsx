@@ -67,14 +67,14 @@ const GridItem = forwardRef<
 			style={{ ...style }}
 			data-prefix={item.id}
 			prefix={item.id}
-			className={`border-2 border-gray-400 rounded-md p-2 flex flex-col relative ${className}`}
+			className={`border-2 border-gray-400 rounded-md p-2 flex flex-col relative cursor-all-scroll ${className}`}
 			{...rest}
 		>
 			<button
 				onMouseDown={stopPropagation}
 				onTouchStart={stopPropagationTouch}
 				onClick={handleDeleteClick}
-				className="absolute top-1 right-1 bg-amber-500"
+				className="absolute top-1 right-1 cursor-pointer"
 				style={{ background: "transparent", border: "none", padding: 0 }}
 				title={i18n.t("Remove visualization")}>
 				<IconCross24 />

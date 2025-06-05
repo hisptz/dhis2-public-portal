@@ -108,7 +108,7 @@ export function SectionItemsConfig() {
 								}
 								icon={<IconLayoutColumns24 />}
 							>
-								{i18n.t("Manage visualization")}
+								{i18n.t("Manage visualizations")}
 							</Button>
 						)}
 					{(sectionType != SectionType.SINGLE_ITEM) && (sectionType != SectionType.FLEXIBLE_LAYOUT) && (

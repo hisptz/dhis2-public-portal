@@ -3,10 +3,9 @@ import {
 	useNavigate,
 	useParams,
 } from "@tanstack/react-router";
-import React, { useEffect } from "react";
+import React from "react";
 import { useFormContext } from "react-hook-form";
 import { AppModule } from "@packages/shared/schemas";
-import { useSaveModule } from "../../../../../../shared/components/ModulesPage/hooks/save";
 import { VisualizationManager } from "../../../../../../shared/components/VisualizationModule/components/VisualizationManager";
 
 export const Route = createFileRoute(
@@ -21,7 +20,6 @@ function RouteComponent() {
 	});
 	const { resetField } = useFormContext<AppModule>();
 	const navigate = useNavigate();
-	const { save } = useSaveModule(moduleId);
 
 	const goBack = () => {
 		navigate({
@@ -36,9 +34,5 @@ function RouteComponent() {
 		goBack();
 	};
 
-	const onSubmit = async (data: AppModule) => {
-		await save(data);
-	};
-
-	return <VisualizationManager onCancel={onCancel} onSubmit={onSubmit} />;
+	return <VisualizationManager onCancel={onCancel} />;
 }
