@@ -5,8 +5,8 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
-"POT-Creation-Date: 2025-06-03T12:44:20.632Z\n"
-"PO-Revision-Date: 2025-06-03T12:44:20.633Z\n"
+"POT-Creation-Date: 2025-06-05T08:07:02.554Z\n"
+"PO-Revision-Date: 2025-06-05T08:07:02.554Z\n"
 
 msgid "Could not get Appearance configurations"
 msgstr "Could not get Appearance configurations"
@@ -26,21 +26,6 @@ msgstr "Saving..."
 msgid "Save changes"
 msgstr "Save changes"
 
-msgid "Please fix the validation errors before saving"
-msgstr "Please fix the validation errors before saving"
-
-msgid "Failed to save section"
-msgstr "Failed to save section"
-
-msgid "Layout editor"
-msgstr "Layout editor"
-
-msgid "Cancel"
-msgstr "Cancel"
-
-msgid "Update layout"
-msgstr "Update layout"
-
 msgid "Unknown module type"
 msgstr "Unknown module type"
 
@@ -59,23 +44,50 @@ msgstr "medium screen"
 msgid "large screen"
 msgstr "large screen"
 
-msgid "Failed to save visualization"
-msgstr "Failed to save visualization"
+msgid "Please fix the validation errors before saving"
+msgstr "Please fix the validation errors before saving"
+
+msgid "Failed to save section"
+msgstr "Failed to save section"
+
+msgid "This visualization is already added"
+msgstr "This visualization is already added"
+
+msgid "Back"
+msgstr "Back"
 
 msgid "Manage visualization"
 msgstr "Manage visualization"
 
+msgid "Cancel"
+msgstr "Cancel"
+
 msgid "Select screen size"
 msgstr "Select screen size"
-
-msgid "Add visualization"
-msgstr "Add visualization"
 
 msgid "Modules"
 msgstr "Modules"
 
-msgid "Size"
-msgstr "Size"
+msgid "Export Configuration"
+msgstr "Export Configuration"
+
+msgid "Export configurations to ZIP"
+msgstr "Export configurations to ZIP"
+
+msgid "Import Configuration"
+msgstr "Import Configuration"
+
+msgid "Import configurations from ZIP"
+msgstr "Import configurations from ZIP"
+
+msgid "Logs"
+msgstr "Logs"
+
+msgid "No logs yet. Perform an action to see logs here."
+msgstr "No logs yet. Perform an action to see logs here."
+
+msgid "Remove visualization"
+msgstr "Remove visualization"
 
 msgid "Add Document"
 msgstr "Add Document"
@@ -272,8 +284,8 @@ msgstr "Short description"
 msgid "Visualizations"
 msgstr "Visualizations"
 
-msgid "Configure layout"
-msgstr "Configure layout"
+msgid "Manage visualizations"
+msgstr "Manage visualizations"
 
 msgid "Caption"
 msgstr "Caption"
@@ -527,9 +539,6 @@ msgstr "Visualization type"
 msgid "All"
 msgstr "All"
 
-msgid "Size"
-msgstr "Size"
-
 msgid "Add Section"
 msgstr "Add Section"
 
@@ -587,9 +596,6 @@ msgstr "Are you sure you want to delete the item "
 msgid "Error loading item"
 msgstr "Error loading item"
 
-msgid "Back"
-msgstr "Back"
-
 msgid "Should be a valid svg string"
 msgstr "Should be a valid svg string"
 
@@ -619,6 +625,9 @@ msgstr "Group selector"
 
 msgid "Save group changes"
 msgstr "Save group changes"
+
+msgid "Failed to save visualization"
+msgstr "Failed to save visualization"
 
 msgid "Welcome to the public portal manager!"
 msgstr "Welcome to the public portal manager!"
