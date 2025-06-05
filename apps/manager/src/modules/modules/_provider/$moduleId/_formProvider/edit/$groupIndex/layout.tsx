@@ -7,7 +7,6 @@ import React from "react";
 import { useFormContext } from "react-hook-form";
 import { z } from "zod";
 import { AppModule } from "@packages/shared/schemas";
-import { useSaveModule } from "../../../../../../../shared/components/ModulesPage/hooks/save";
 import { VisualizationManager } from "../../../../../../../shared/components/VisualizationModule/components/VisualizationManager";
 
 const searchSchema = z.object({
