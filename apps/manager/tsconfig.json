@@ -9,6 +9,8 @@
     "module": "esnext",
     "moduleResolution": "bundler",
     "strictNullChecks": true,
+     "incremental": true,        
+    "tsBuildInfoFile": ".tsbuildinfo" ,
     "types": [
       "cypress",
       "node"
