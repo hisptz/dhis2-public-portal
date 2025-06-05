@@ -58,7 +58,6 @@ function RouteComponent() {
 
 	const onSubmit = async (data: AppModule) => {
 		await save(data);
-		goBack();
 	};
 
 	return (

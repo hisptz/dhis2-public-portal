@@ -5,7 +5,7 @@ import {
 } from "@tanstack/react-router";
 import React, { useCallback, useMemo, useState } from "react";
 import i18n from "@dhis2/d2-i18n";
-import { Button, ButtonStrip, Card, Divider, SingleSelectField, SingleSelectOption } from "@dhis2/ui";
+import { Button, ButtonStrip, Card, Divider, IconArrowLeft24, SingleSelectField, SingleSelectOption } from "@dhis2/ui";
 import { useFieldArray, useFormContext } from "react-hook-form";
 import { z } from "zod";
 import { AppModule, DisplayItem, DisplayItemType, FlexibleLayoutConfig, SectionModuleConfig, VisualizationItem, VisualizationModule } from "@packages/shared/schemas";
@@ -152,7 +152,7 @@ function RouteComponent() {
 				});
 			}
 		},
-		[append, getValues, sectionIndex, setValue],
+		[append, fields, getValues, sectionIndex, setValue, show],
 	);
 
 	const handleDelete = useCallback(
@@ -176,7 +176,17 @@ function RouteComponent() {
 
 	return (
 		<div className="w-full h-full flex flex-col gap-4">
-			<div className="w-full flex flex-col ">
+			<div className="w-full flex flex-col">
+				<div className="mb-2">
+					<Button
+						onClick={() => {
+							goBack();
+						}}
+						icon={<IconArrowLeft24 />}
+					>
+						{i18n.t("Back")}
+					</Button>
+				</div>
 				<div className="flex justify-between gap-8">
 					<h2 className="text-2xl">{i18n.t("Manage visualization")}</h2>
 					<ButtonStrip end>
