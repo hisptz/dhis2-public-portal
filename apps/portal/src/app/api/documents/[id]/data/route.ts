@@ -8,6 +8,5 @@ export async function GET(request: NextRequest) {
 		.substring(url.lastIndexOf("/api/"))
 		.replace("/api/", "")
 		.split("?")[0];
-
 	return await dhis2HttpClient.getFile(urlToForward);
 }

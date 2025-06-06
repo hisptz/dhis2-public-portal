@@ -142,7 +142,7 @@ export class HttpClient {
 		);
 
 		const response = await fetch(url, {
-			cache: "no-store",
+			cache: "force-cache",
 			headers: {
 				Authorization: `ApiToken ${this.pat}`,
 				Accept: "application/octet-stream;charset=utf-8",

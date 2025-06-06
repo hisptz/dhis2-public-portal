@@ -5,5 +5,11 @@ import { getImageUrl } from "@/utils/images";
 
 export function useGetImageUrl() {
 	const dhis2Config = useConfig();
-	return (documentId: string) => getImageUrl(documentId, dhis2Config);
+	const baseUrl = dhis2Config.baseUrl;
+	const contextPath = new URL(baseUrl).pathname;
+
+	return (documentId: string) =>
+		getImageUrl(documentId, {
+			baseUrl: `${contextPath}`,
+		});
 }
