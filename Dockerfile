@@ -64,6 +64,5 @@ COPY --from=installer /app/apps/portal/package.json .
 # https://nextjs.org/docs/advanced-features/output-file-tracing
 COPY --from=installer --chown=nextjs:nodejs /app/apps/portal/.next/standalone ./
 COPY --from=installer --chown=nextjs:nodejs /app/apps/portal/.next/static ./apps/portal/.next/static
-COPY --from=installer --chown=nextjs:nodejs /app/apps/portal/public ./apps/portal/public
 
 CMD node apps/portal/server.js

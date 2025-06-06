@@ -11,11 +11,7 @@ services:
     ports:
       - "${PORTAL_PORT:-3000}:3000"
     env_file:
-      - .env
-    volumes:
-      - public:/app/apps/portal/public
-volumes:
-  public:
+      - apps/portal/.env
 networks:
   default:
     name: portal-network
