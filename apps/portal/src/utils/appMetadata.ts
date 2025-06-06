@@ -54,7 +54,7 @@ export async function getAppMetadata(): Promise<Metadata> {
 					fs.writeFileSync(path.join(dest, icon.name), icon.contents);
 					icons.push({
 						rel: "icon",
-						url: `${icon.name}`,
+						url: `/${icon.name}`,
 						type: `image/${last(icon.name.split("."))}`,
 					});
 				}
@@ -89,7 +89,10 @@ export async function getAppMetadata(): Promise<Metadata> {
 
 			return {
 				applicationName: config?.name,
-				title: config?.name,
+				title: {
+					default: config?.name,
+					template: `%s | ${config?.name}`,
+				},
 				description: config?.description,
 				icons,
 			} as Metadata;
@@ -97,7 +100,10 @@ export async function getAppMetadata(): Promise<Metadata> {
 
 		return {
 			applicationName: config?.name,
-			title: config?.name,
+			title: {
+				default: config?.name,
+				template: `%s | ${config?.name}`,
+			},
 			description: config?.description,
 			icons: [...config.icons],
 		} as Metadata;

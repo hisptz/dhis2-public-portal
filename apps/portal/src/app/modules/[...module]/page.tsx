@@ -8,6 +8,12 @@ import { DetailsPage } from "@/components/modules/StaticModule/components/Detail
 import { Box } from "@mantine/core";
 import { BaseCardError } from "@/components/CardError";
 import { DocumentsModule } from "@/components/modules/DocumentsModule/DocumentsModule";
+import { ModuleMetaProps } from "@/types/appMetadata";
+import { getModuleMetadata } from "@/utils/moduleMetadata";
+
+export async function generateMetadata(props: ModuleMetaProps) {
+	return await getModuleMetadata({ props });
+}
 
 export default async function ModuleLandingPage({
 	params,
@@ -25,7 +31,6 @@ export default async function ModuleLandingPage({
 		const moduleConfig = module.slice(-3, -2)[0];
 		return <DetailsPage moduleId={moduleConfig} id={resourceId} />;
 	}
-
 	const moduleId = last(module);
 	if (!moduleId) {
 		return (
