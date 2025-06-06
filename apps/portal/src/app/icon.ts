@@ -23,7 +23,6 @@ export const size = {
 export const contentType = "image/png";
 
 export default async function iconGenerator() {
-	console.log("Generating icon");
 	let config = await getAppConfigWithNamespace<AppMeta>({
 		namespace: DatastoreNamespaces.MAIN_CONFIG,
 		key: "metadata",
