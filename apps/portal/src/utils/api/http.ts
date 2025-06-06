@@ -35,7 +35,7 @@ export class HttpClient {
 	async getRaw(path: string) {
 		const url = new URL(`${path}`, this.baseURL);
 		const response = await fetch(url, {
-			cache: "no-store",
+			cache: "default",
 			headers: {
 				Authorization: `ApiToken ${this.pat}`,
 			},
