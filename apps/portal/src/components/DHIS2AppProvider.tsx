@@ -38,7 +38,7 @@ export function DHIS2AppProvider({
 				apiVersion: minor,
 				systemInfo,
 			}}
-			plugin={{}}
+			plugin={false}
 			parentAlertsAdd={{}}
 			showAlertsInPlugin={false}
 		>

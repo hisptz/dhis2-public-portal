@@ -1,7 +1,3 @@
-"use client";
-import "./globals.css";
-import "@mantine/core/styles.css";
-
 import {
 	Box,
 	Button,
@@ -15,16 +11,14 @@ import {
 	Title,
 } from "@mantine/core";
 import { Notifications } from "@mantine/notifications";
+import Link from "next/link";
+import { ConnectionErrorStatus } from "@/types/connection";
 
-export default function GlobalError({
+export function DHIS2ConnectionError({
 	error,
-	reset,
 }: {
-	error: Error & { digest?: string };
-	reset: () => void;
+	error: ConnectionErrorStatus;
 }) {
-	console.error(error);
-
 	return (
 		<html {...mantineHtmlProps}>
 			<head>
@@ -37,33 +31,16 @@ export default function GlobalError({
 						fluid
 						className="h-screen flex flex-col justify-center items-center"
 					>
-						<Box>
-							<Text
-								fw={700}
-								c="blue"
-								style={{
-									fontSize: "16rem",
-									margin: 0,
-								}}
-								className="opacity-40"
-							>
-								500
-							</Text>
-						</Box>
 						<Box className="w-[40%] z-10">
 							<Stack align="center">
-								<Title>Unexpected Application Error</Title>
+								<Title>{error.title}</Title>
 								<Text c="dimmed" size="lg" ta="center">
-									We apologize, but something went wrong with
-									the application. Please try again later. If
-									the problem persists, contact your system
-									administrator.
+									{error.message}
 								</Text>
 								<Group justify="center">
 									<Button
-										onClick={() => {
-											window.location.reload();
-										}}
+										component={Link}
+										href={"/"}
 										size="md"
 									>
 										Refresh
