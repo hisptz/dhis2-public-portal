@@ -50,7 +50,7 @@ export const nonGroupedVisualizationModuleSchema =
 	baseVisualizationModuleSchema.extend({
 		grouped: z.literal(false),
 		items: z.array(displayItemSchema),
-		layouts: layoutSchema,
+		layouts: layoutSchema.optional(),
 		description: z.string().optional(),
 		shortDescription: z.string().optional(),
 		highlights: displayItemSchema.array().optional(),
