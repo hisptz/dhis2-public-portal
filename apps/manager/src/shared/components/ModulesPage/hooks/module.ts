@@ -7,6 +7,7 @@ export function useModuleForm() {
 	const module = useModule();
 	return useForm<AppModule>({
 		resolver: zodResolver(moduleSchema),
+		shouldFocusError: false,
 		defaultValues: {
 			...module,
 			config: (module?.config as any) ?? {},
