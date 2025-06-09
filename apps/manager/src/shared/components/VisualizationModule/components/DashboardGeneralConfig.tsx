@@ -41,19 +41,20 @@ export function DashboardGeneralConfig() {
 			{!isGrouped && (
 				<div>
 					<RHFRichTextAreaField
- 						autoGrow
+						autoGrow
 						rows={2}
 						name="config.shortDescription"
 						label={i18n.t("Short description")}
 					/>
 					<RHFRichTextAreaField
- 						name="config.description"
+						name="config.description"
 						label={i18n.t("Description")}
 					/>
 				</div>
 			)}
 			<RHFCheckboxField
 				name="config.grouped"
+				helpText={i18n.t("Enable to organize visualizations into group like dashboards. Useful for separating different sets of visualizations.")}
 				label={i18n.t("Has groups")}
 			/>
 			{isGrouped && (
