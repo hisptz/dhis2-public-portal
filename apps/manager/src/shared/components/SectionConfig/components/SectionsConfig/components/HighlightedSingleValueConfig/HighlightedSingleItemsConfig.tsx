@@ -1,8 +1,8 @@
 import React from "react";
 import i18n from "@dhis2/d2-i18n";
-import { Button, ButtonStrip, Divider, IconDelete16 } from "@dhis2/ui";
+import { Button, ButtonStrip, Divider, Field, IconDelete16 } from "@dhis2/ui";
 
-import { useFieldArray } from "react-hook-form";
+import { useController, useFieldArray } from "react-hook-form";
 
 import {
 	DisplayItemType,
@@ -36,6 +36,17 @@ const columns: SimpleTableColumn[] = [
 export function HighlightedSingleItemsConfig() {
 	const { baseUrl } = useConfig();
 	const namePrefix = useSectionNamePrefix();
+
+	const { fieldState } = useController<
+		{
+			config: {
+				sections: GridLayoutSectionConfig[];
+			};
+		},
+		`config.sections.${number}.items`
+	>({
+		name: `${namePrefix}.items`,
+	});
 
 	const { fields, remove, update, append } = useFieldArray<
 		{
@@ -103,7 +114,12 @@ export function HighlightedSingleItemsConfig() {
 				</ButtonStrip>
 			</div>
 			<Divider />
-			<SimpleTable rows={rows} columns={columns} />
+			<Field
+				validationText={fieldState.error?.message}
+				error={!!fieldState.error}
+			>
+				<SimpleTable rows={rows} columns={columns} />
+			</Field>
 		</div>
 	);
 }
