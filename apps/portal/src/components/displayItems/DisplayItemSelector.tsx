@@ -1,6 +1,6 @@
 import { DisplayItem, DisplayItemType } from "@packages/shared/schemas";
 import { MainVisualization } from "@/components/displayItems/visualizations/MainVisualization";
-import { SingleValueVisualizer } from "@/components/displayItems/SingleValueVisualizer/SingleValueVisualizer";
+import { HighlightedSingleValueVisualizer } from "@/components/displayItems/HighlightedSingleValueVisualizer/HighlightedSingleValueVisualizer";
 import { RichTextVisualizer } from "@/components/displayItems/RichTextVisualizer";
 import FeedbackVisualizer from "./Feedback/FeedbackVisualizer";
 
@@ -14,7 +14,7 @@ export function DisplayItemSelector({ item }: { item: DisplayItem }) {
 				/>
 			);
 		case DisplayItemType.HIGHLIGHTED_SINGLE_VALUE:
-			return <SingleValueVisualizer config={item.item} />;
+			return <HighlightedSingleValueVisualizer config={item.item} />;
 		case DisplayItemType.RICH_TEXT:
 			return <RichTextVisualizer item={item.item} />;
 		case DisplayItemType.FEEDBACK:

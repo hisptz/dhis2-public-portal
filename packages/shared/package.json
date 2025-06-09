@@ -18,6 +18,7 @@
   "dependencies": {
     "@dhis2/multi-calendar-dates": "^2.1.0",
     "@hisptz/dhis2-utils": "^2.0.17",
+    "@hisptz/dhis2-analytics": "^2.1.9",
     "lodash": "^4.17.21"
   },
   "devDependencies": {
