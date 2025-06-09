@@ -19,14 +19,12 @@ export function GroupGeneralConfig() {
 				label={i18n.t("Short name")}
 			/>
 			<RHFRichTextAreaField
-				required
 				autoGrow
 				rows={2}
 				name={`${namePrefix}.shortDescription`}
 				label={i18n.t("Short description")}
 			/>
 			<RHFRichTextAreaField
-				required
 				name={`${namePrefix}.description`}
 				label={i18n.t("Description")}
 			/>

@@ -41,15 +41,13 @@ export function DashboardGeneralConfig() {
 			{!isGrouped && (
 				<div>
 					<RHFRichTextAreaField
-						required
-						autoGrow
+ 						autoGrow
 						rows={2}
 						name="config.shortDescription"
 						label={i18n.t("Short description")}
 					/>
 					<RHFRichTextAreaField
-						required
-						name="config.description"
+ 						name="config.description"
 						label={i18n.t("Description")}
 					/>
 				</div>
