@@ -1,11 +1,9 @@
-import {
-	HighlightedSingleValueConfig,
-	VisualizationConfig,
-} from "@packages/shared/schemas";
+import { VisualizationConfig } from "@packages/shared/schemas";
 import { dhis2HttpClient } from "@/utils/api/dhis2";
 import { findIndex, head } from "lodash";
 import { getPeriods } from "@packages/shared/utils";
-import { Title } from "@mantine/core";
+import { NumberFormatter, Title } from "@mantine/core";
+import { getAppearanceConfig } from "@/utils/config/appConfig";
 
 async function getVisualizationData(visualization: VisualizationConfig) {
 	const dataItem = head(head(visualization.columns)?.items ?? [])?.id;
@@ -36,15 +34,17 @@ async function getVisualizationData(visualization: VisualizationConfig) {
 }
 
 export async function HighlightedValueDisplay({
-	config,
+	visualizationConfig,
 }: {
-	config: HighlightedSingleValueConfig;
+	visualizationConfig: VisualizationConfig;
 }) {
-	const {} = config ?? {};
-	const visualizationConfig = await dhis2HttpClient.get<VisualizationConfig>(
-		`visualizations/${config.id}`,
-	);
 	const data = await getVisualizationData(visualizationConfig);
+	const appearanceConfig = await getAppearanceConfig();
+	const color = appearanceConfig?.appearanceConfig.colors.chartColors[1];
 
-	return <Title order={2}>{data}</Title>;
+	return (
+		<Title style={{ color }} className={`!text-5xl`} order={1}>
+			<NumberFormatter thousandSeparator value={data} decimalScale={2} />
+		</Title>
+	);
 }
