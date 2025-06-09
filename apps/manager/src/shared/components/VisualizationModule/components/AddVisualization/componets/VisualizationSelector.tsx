@@ -148,7 +148,7 @@ export function VisSelector() {
 				options={options}
 				name={"id"}
 			/>
-			{visualizationType == DisplayItemType.SINGLE_VALUE && (
+			{visualizationType == DisplayItemType.HIGHLIGHTED_SINGLE_VALUE && (
 				<RHFTextInputField name="icon" label={i18n.t("Icon")} />
 			)}
 		</div>

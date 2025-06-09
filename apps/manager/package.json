@@ -48,7 +48,7 @@
     "@hisptz/dhis2-analytics": "^2.1.4",
     "@hisptz/dhis2-ui": "^2.0.48",
     "@hisptz/dhis2-utils": "^2.0.18",
-    "@hookform/resolvers": "^5.0.1",
+    "@hookform/resolvers": "5.1.0",
     "@packages/shared": "*",
     "@packages/ui": "*",
     "@react-pdf-viewer/core": "^3.12.0",
@@ -66,11 +66,11 @@
     "react-beautiful-dnd": "^13.1.1",
     "react-error-boundary": "^6.0.0",
     "react-grid-layout": "^1.5.1",
-    "react-hook-form": "^7.56.4",
+    "react-hook-form": "^7.57.0",
     "react-jsx-parser": "^2.4.0",
     "react-resizable": "^3.0.5",
     "usehooks-ts": "^3.1.1",
-    "zod": "^3.24.3"
+    "zod": "^3.25.56"
   },
   "packageManager": "yarn@1.22.22"
 }

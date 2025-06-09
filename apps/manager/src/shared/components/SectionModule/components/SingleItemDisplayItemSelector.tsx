@@ -20,7 +20,7 @@ export function SingleItemDisplayItemSelector({
 
 	switch (selectedSingleItemType) {
 		case DisplayItemType.VISUALIZATION:
-		case DisplayItemType.SINGLE_VALUE:
+		case DisplayItemType.HIGHLIGHTED_SINGLE_VALUE:
 			return <SingleItemVisualizationForm namePrefix={namePrefix} />;
 		case DisplayItemType.RICH_TEXT:
 			return (
