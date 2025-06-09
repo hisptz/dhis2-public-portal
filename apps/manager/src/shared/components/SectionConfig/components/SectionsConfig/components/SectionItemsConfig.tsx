@@ -43,11 +43,15 @@ export function SectionItemsConfig() {
 		keyName: "fieldId" as unknown as "id",
 	});
 
+	const sectionType = useWatch({
+		name: `config.sections.${sectionIndex}.type`,
+	});
+
 	const rows = fields.map((field, index) => ({
 		...field,
 		actions: (
 			<ButtonStrip key={field.id}>
-				{field.type === DisplayItemType.VISUALIZATION && (
+				{field.type === DisplayItemType.VISUALIZATION && sectionType != SectionType.FLEXIBLE_LAYOUT && (
 					<EditVisualization
 						visualization={field.item}
 						onUpdate={(data) =>
@@ -66,26 +70,23 @@ export function SectionItemsConfig() {
 			</ButtonStrip>
 		),
 	}));
-	const sectionType = useWatch({
-		name: `config.sections.${sectionIndex}.type`,
-	});
-
+	
 	const onAddVisualization = (visualization: VisualizationItem) => {
 		const displayItem: DisplayItem =
 			sectionType === SectionType.GRID_LAYOUT
 				? {
-						type: DisplayItemType.SINGLE_VALUE,
-						item: {
-							...visualization,
-							icon: visualization.icon ?? "",
-						},
-					}
+					type: DisplayItemType.SINGLE_VALUE,
+					item: {
+						...visualization,
+						icon: visualization.icon ?? "",
+					},
+				}
 				: {
-						type: DisplayItemType.VISUALIZATION,
-						item: {
-							...visualization,
-						},
-					};
+					type: DisplayItemType.VISUALIZATION,
+					item: {
+						...visualization,
+					},
+				};
 		append(displayItem);
 	};
 
@@ -98,19 +99,19 @@ export function SectionItemsConfig() {
 						SectionType.GRID_LAYOUT,
 						SectionType.SINGLE_ITEM,
 					].includes(sectionType) && (
-						<Button
-							onClick={() =>
-								navigate({
-									to: "/modules/$moduleId/edit/section/$sectionIndex/layout",
-									params: { moduleId, sectionIndex },
-								})
-							}
-							icon={<IconLayoutColumns24 />}
-						>
-							{i18n.t("Configure layout")}
-						</Button>
-					)}
-					{sectionType != SectionType.SINGLE_ITEM && (
+							<Button
+								onClick={() =>
+									navigate({
+										to: "/modules/$moduleId/edit/section/$sectionIndex/layout",
+										params: { moduleId, sectionIndex },
+									})
+								}
+								icon={<IconLayoutColumns24 />}
+							>
+								{i18n.t("Manage visualizations")}
+							</Button>
+						)}
+					{(sectionType != SectionType.SINGLE_ITEM) && (sectionType != SectionType.FLEXIBLE_LAYOUT) && (
 						<AddVisualization onAdd={onAddVisualization} />
 					)}
 				</ButtonStrip>

@@ -1,21 +1,16 @@
-import React, { useCallback, useMemo } from "react";
+import React, { useMemo } from "react";
 import i18n from "@dhis2/d2-i18n";
 import {
 	Button,
 	ButtonStrip,
 	Divider,
-	IconDelete16,
 	IconLayoutColumns24,
 } from "@dhis2/ui";
 import { DashboardVisualizations } from "./components/DashboardVisualizations";
-import { useFieldArray, useFormContext, useWatch } from "react-hook-form";
-import { AddVisualization } from "../AddVisualization/AddVisualization";
-import { mapValues } from "lodash";
-import { EditVisualization } from "../AddVisualization/componets/EditVisualization";
+import { useFieldArray, useWatch } from "react-hook-form";
 import {
 	DisplayItem,
 	DisplayItemType,
-	FlexibleLayoutConfig,
 	VisualizationItem,
 	VisualizationModule,
 } from "@packages/shared/schemas";
@@ -28,13 +23,12 @@ export function DashboardVisualizationsConfig() {
 	const { moduleId } = useParams({
 		from: "/modules/_provider/$moduleId",
 	});
-	const { setValue, getValues } = useFormContext<VisualizationModule>();
 	const navigate = useNavigate();
 	const hasGroups = useWatch<VisualizationModule, "config.grouped">({
 		name: "config.grouped",
 	});
 
-	const { fields, append, update, remove } = useFieldArray<
+	const { fields } = useFieldArray<
 		VisualizationModule,
 		"config.items"
 	>({
@@ -51,73 +45,6 @@ export function DashboardVisualizationsConfig() {
 	);
 	const { visualizationNames, loading, error } =
 		useVisualizationNames(visualizationIds);
-	const onAddVisualization = useCallback(
-		(visualization: VisualizationItem) => {
-			const displayItem: DisplayItem = {
-				type: DisplayItemType.VISUALIZATION,
-				item: visualization,
-			};
-			append(displayItem);
-			const layouts = getValues("config.layouts") as FlexibleLayoutConfig;
-			if (layouts) {
-				const updatedLayouts = mapValues(layouts, (value) => {
-					if (value) {
-						return [
-							...value,
-							{
-								i: visualization.id,
-								x: 0,
-								y: 0,
-								w: 4,
-								h: 4,
-							},
-						];
-					}
-				});
-				setValue("config.layouts", updatedLayouts);
-			} else {
-				setValue("config.layouts", {
-					lg: [
-						{
-							i: visualization.id,
-							x: 0,
-							y: 0,
-							w: 4,
-							h: 4,
-						},
-					],
-					md: [
-						{
-							i: visualization.id,
-							x: 0,
-							y: 0,
-							w: 4,
-							h: 4,
-						},
-					],
-					sm: [
-						{
-							i: visualization.id,
-							x: 0,
-							y: 0,
-							w: 4,
-							h: 4,
-						},
-					],
-					xs: [
-						{
-							i: visualization.id,
-							x: 0,
-							y: 0,
-							w: 4,
-							h: 4,
-						},
-					],
-				});
-			}
-		},
-		[append, getValues, setValue],
-	);
 
 	if (hasGroups) {
 		return null;
@@ -125,7 +52,7 @@ export function DashboardVisualizationsConfig() {
 
 	const rows = fields
 		.filter((field) => field.type === DisplayItemType.VISUALIZATION)
-		.map((field, index) => {
+		.map((field) => {
 			const visualizationField = field as DisplayItem & {
 				type: DisplayItemType.VISUALIZATION;
 				item: VisualizationItem;
@@ -134,24 +61,6 @@ export function DashboardVisualizationsConfig() {
 			return {
 				...visualizationField.item,
 				id: visualizationNames.get(visId) || visId,
-				actions: (
-					<ButtonStrip key={field.id}>
-						<EditVisualization
-							visualization={visualizationField.item}
-							onUpdate={(data) =>
-								update(index, {
-									...visualizationField,
-									item: data,
-								})
-							}
-						/>
-						<Button
-							onClick={() => remove(index)}
-							title={i18n.t("Remove")}
-							icon={<IconDelete16 />}
-						/>
-					</ButtonStrip>
-				),
 			};
 		});
 
@@ -184,9 +93,8 @@ export function DashboardVisualizationsConfig() {
 						}
 						icon={<IconLayoutColumns24 />}
 					>
-						{i18n.t("Configure layout")}
+						{i18n.t("Manage visualizations")}
 					</Button>
-					<AddVisualization onAdd={onAddVisualization} />
 				</ButtonStrip>
 			</div>
 			<Divider />

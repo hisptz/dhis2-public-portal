@@ -15,28 +15,18 @@ const columns: SimpleTableColumn[] = [
 	{
 		label: i18n.t("Caption"),
 		key: "caption",
-	},
-	{
-		label: i18n.t("Actions"),
-		key: "actions",
-	},
+	}
 ];
-
-type VisualizationRow = VisualizationItem & {
-	id: string;
-	actions: React.ReactNode;
-};
 
 export function GroupVisualizations({
 	visualizations,
 }: {
-	visualizations: VisualizationRow[];
+	visualizations: VisualizationItem[];
 }) {
 	const rows = visualizations.map((vis) => ({
 		id: vis.id,
 		type: vis.type,
 		caption: vis.caption || "N/A",
-		actions: vis.actions,
 	}));
 
 	return <SimpleTable columns={columns} rows={rows} />;

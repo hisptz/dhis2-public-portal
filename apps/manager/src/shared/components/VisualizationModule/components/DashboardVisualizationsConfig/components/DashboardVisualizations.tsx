@@ -15,21 +15,13 @@ const columns: SimpleTableColumn[] = [
 	{
 		label: i18n.t("Caption"),
 		key: "caption",
-	},
-	{
-		label: i18n.t("Actions"),
-		key: "actions",
-	},
+	} 
 ];
-
-type VisualizationRow = VisualizationItem & {
-	actions: React.ReactNode;
-};
 
 export function DashboardVisualizations({
 	visualizations,
 }: {
-	visualizations: VisualizationRow[];
+	visualizations: VisualizationItem[];
 }) {
 	return <SimpleTable columns={columns} rows={visualizations} />;
 }

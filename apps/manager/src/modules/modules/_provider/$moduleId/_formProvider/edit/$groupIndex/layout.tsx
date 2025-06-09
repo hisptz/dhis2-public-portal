@@ -4,15 +4,11 @@ import {
 	useParams,
 } from "@tanstack/react-router";
 import React from "react";
-import i18n from "@dhis2/d2-i18n";
-import { Button, ButtonStrip, Divider } from "@dhis2/ui";
 import { useFormContext } from "react-hook-form";
- import { z } from "zod";
+import { z } from "zod";
 import { AppModule } from "@packages/shared/schemas";
-import { DashboardLayoutEditor } from "../../../../../../../shared/components/DashboardLayoutEditor";
-import { useSaveModule } from "../../../../../../../shared/components/ModulesPage/hooks/save";
-import { useAlert } from "@dhis2/app-runtime";
- 
+import { VisualizationManager } from "../../../../../../../shared/components/VisualizationModule/components/VisualizationManager";
+
 const searchSchema = z.object({
 	subGroupIndex: z.number().optional(),
 });
@@ -47,100 +43,21 @@ function RouteComponent() {
 
 	const goBack = () => {
 		navigate({
-			to: "/modules/$moduleId/edit",
-			params: { moduleId },
+			to: "/modules/$moduleId/edit/$groupIndex",
+			params: { moduleId, groupIndex },
 		});
 	};
-		const { save } = useSaveModule(moduleId);
-		const { handleSubmit, formState } = useFormContext<AppModule>();
-		const { show } = useAlert(
-			({ message }) => message,
-			({ type }) => ({ ...type, duration: 3000 }),
-		);
-	
-		const onError = (e) => {
-			console.log(e);
-			show({
-				message: i18n.t("Please fix the validation errors before saving"),
-				type: { critical: true },
-			});
-		};
-	
-		const onSubmit = async (data: AppModule) => {
-			try {
-				await save(data);
-				goBack();
-			} catch (error) {
-				show({
-					message: i18n.t("Failed to save section", error),
-					type: { critical: true },
-				});
-			}
-		};
+
+	const onCancel = () => {
+		resetField(`config.groups.${groupIndex}.items`);
+		resetField(`config.groups.${groupIndex}.layouts`);
+		goBack();
+	};
 
 	return (
-		<div className="w-full h-full flex flex-col gap-4">
-			<div className="w-full flex flex-col ">
-				<div className="flex justify-between gap-8">
-					<h2 className="text-2xl">{i18n.t("Layout editor")}</h2>
-					<ButtonStrip end>
-						<Button
-							onClick={() => {
-								resetField("config.layouts");
-								goBack();
-							}}
-						>
-							{i18n.t("Cancel")}
-						</Button>
-						<Button
-							primary
-							loading={formState.isSubmitting}
-								disabled={
-									!formState.isDirty || formState.isSubmitting
-								}
-								onClick={() => {
-									handleSubmit(onSubmit, onError)();
-									goBack();
-								}}
-						>
-							{i18n.t("Update layout")}
-						</Button>
-					</ButtonStrip>
-				</div>
-				<Divider />
-			</div>
-			<div className="w-full flex-1">
-				<DashboardLayoutEditor
-					prefix={
-						`config.groups.${groupIndex}`
-					}
-				/>
-			</div>
-			<div>
-				<ButtonStrip end>
-					<Button
-						onClick={() => {
-							resetField("config.layouts");
-							goBack();
-						}}
-					>
-						{i18n.t("Cancel")}
-					</Button>
-					<Button
-						primary
-						loading={formState.isSubmitting}
-							disabled={
-								!formState.isDirty || formState.isSubmitting
-							}
-							onClick={() => {
-								handleSubmit(onSubmit, onError)();
-								goBack();
-							}}
-					>
-						{i18n.t("Update layout")}
-					</Button>
-				</ButtonStrip>
-			</div>
-		</div>
+		<VisualizationManager
+			prefix={`config.groups.${groupIndex}`}
+			onCancel={onCancel}
+		/>
 	);
 }
