@@ -19,11 +19,15 @@ import {
 import "react-grid-layout/css/styles.css";
 import "react-resizable/css/styles.css";
 import { MainVisualization } from "./ModulesPage/components/Visualizations/MainVisualization";
+import { ErrorBoundary } from "react-error-boundary";
+import { VisualizationError } from "./ModulesPage/components/Visualizations/components/VisualizationError";
 
 function DashboardItem({ item }: { item: VisualizationItem }) {
 	return (
 		<div className="flex flex-col justify-center items-center h-full w-full overflow-y-auto gap-2">
-			<MainVisualization config={item} />
+			<ErrorBoundary FallbackComponent={VisualizationError}>
+				<MainVisualization config={item} />
+			</ErrorBoundary>
 		</div>
 	);
 }
