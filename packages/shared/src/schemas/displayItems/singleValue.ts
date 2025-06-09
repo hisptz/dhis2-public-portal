@@ -6,7 +6,9 @@ export const highlightedSingleValue = z.object({
 	icon: z.string(),
 });
 
-export type SingleValueConfig = z.infer<typeof highlightedSingleValue>;
+export type HighlightedSingleValueConfig = z.infer<
+	typeof highlightedSingleValue
+>;
 
 export const highlightedSingleValueDisplayItemSchema =
 	baseDisplayItemSchema.extend({

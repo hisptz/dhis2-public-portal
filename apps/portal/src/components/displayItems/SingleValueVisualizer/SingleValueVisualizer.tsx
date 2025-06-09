@@ -1,5 +1,5 @@
 //TODO: this is the national key indicators card replace it when migrating
-import { SingleValueConfig } from "@packages/shared/schemas";
+import { HighlightedSingleValueConfig } from "@packages/shared/schemas";
 import { Box, Group, Image, Title } from "@mantine/core";
 import NextImage from "next/image";
 import { getServerIconUrl } from "@/utils/server/images";
@@ -7,7 +7,7 @@ import { getServerIconUrl } from "@/utils/server/images";
 export function SingleValueVisualizer({
 	config,
 }: {
-	config: SingleValueConfig;
+	config: HighlightedSingleValueConfig;
 }) {
 	const imageURL = getServerIconUrl(config.icon);
 	return (

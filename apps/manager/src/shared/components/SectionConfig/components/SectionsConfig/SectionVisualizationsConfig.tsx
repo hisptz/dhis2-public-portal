@@ -4,6 +4,7 @@ import { useParams } from "@tanstack/react-router";
 import { SectionType } from "@packages/shared/schemas";
 import { SectionSingleItemConfig } from "./components/SectionSingleItemConfig";
 import { SectionItemsConfig } from "./components/SectionItemsConfig";
+import { HighlightedSingleItemsConfig } from "./components/HighlightedSingleValueConfig/HighlightedSingleItemsConfig";
 
 export function SectionVisualizationsConfig() {
 	const { sectionIndex } = useParams({
@@ -14,9 +15,12 @@ export function SectionVisualizationsConfig() {
 		name: `config.sections.${sectionIndex}.type`,
 	});
 
-	return sectionType === SectionType.SINGLE_ITEM ? (
-		<SectionSingleItemConfig />
-	) : (
-		<SectionItemsConfig />
-	);
+	switch (sectionType) {
+		case SectionType.SINGLE_ITEM:
+			return <SectionSingleItemConfig />;
+		case SectionType.GRID_LAYOUT:
+			return <HighlightedSingleItemsConfig />;
+		default:
+			return <SectionItemsConfig />;
+	}
 }
