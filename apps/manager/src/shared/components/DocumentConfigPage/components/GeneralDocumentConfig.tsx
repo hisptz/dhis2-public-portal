@@ -36,6 +36,9 @@ export function GeneralDocumentConfig() {
 			<ItemDisplayConfig />
 			<RHFCheckboxField
 				name="config.grouped"
+				helpText={i18n.t(
+					"Enable to organize documents into categories or collections. Each group can contain multiple related files."
+				)}
 				label={i18n.t("Has groups")}
 			/>
 		</div>
