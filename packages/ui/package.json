@@ -17,10 +17,10 @@
     "@types/react": "19.1.0",
     "@types/react-dom": "19.1.1",
     "eslint": "^9.24.0",
-    "typescript": "5.8.2"
+    "typescript": "5.6.3"
   },
   "dependencies": {
-    "@hisptz/dhis2-analytics": "^2.1.4",
+    "@hisptz/dhis2-analytics": "^2.1.9",
     "@hisptz/dhis2-ui": "^2.0.45",
     "@hisptz/dhis2-utils": "^2.0.18",
     "@packages/shared": "*",
