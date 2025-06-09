@@ -11,7 +11,11 @@ import { useController, useWatch } from "react-hook-form";
 import { IconCross24 } from "@dhis2/ui";
 import { Responsive as ResponsiveGridLayout } from "react-grid-layout";
 import { debounce } from "lodash";
-import { FlexibleLayoutConfig, VisualizationItem, VisualizationModule } from "@packages/shared/schemas";
+import {
+	FlexibleLayoutConfig,
+	VisualizationItem,
+	VisualizationModule,
+} from "@packages/shared/schemas";
 import "react-grid-layout/css/styles.css";
 import "react-resizable/css/styles.css";
 import { MainVisualization } from "./ModulesPage/components/Visualizations/MainVisualization";
@@ -19,9 +23,7 @@ import { MainVisualization } from "./ModulesPage/components/Visualizations/MainV
 function DashboardItem({ item }: { item: VisualizationItem }) {
 	return (
 		<div className="flex flex-col justify-center items-center h-full w-full overflow-y-auto gap-2">
-			<MainVisualization
-				config={item}
-			/>
+			<MainVisualization config={item} />
 		</div>
 	);
 }
@@ -72,8 +74,13 @@ const GridItem = forwardRef<
 				onTouchStart={stopPropagationTouch}
 				onClick={handleDeleteClick}
 				className="absolute top-1 right-1 cursor-pointer"
-				style={{ background: "transparent", border: "none", padding: 0 }}
-				title={i18n.t("Remove visualization")}>
+				style={{
+					background: "transparent",
+					border: "none",
+					padding: 0,
+				}}
+				title={i18n.t("Remove visualization")}
+			>
 				<IconCross24 />
 			</button>
 			<DashboardItem item={item} />
@@ -90,7 +97,6 @@ export function DashboardLayoutEditor({
 	prefix?: `config.groups.${number}`;
 	size?: number;
 	onDelete: (id: string) => void;
-
 }) {
 	const ref = useRef<HTMLDivElement>(null);
 
@@ -113,14 +119,14 @@ export function DashboardLayoutEditor({
 			debounce((updatedLayout, actualValue) => {
 				field.onChange(actualValue);
 			}, 100),
-		[field]
+		[field],
 	);
 
 	const handleLayoutChange = useCallback(
 		(updatedLayout, actualValue) => {
 			debouncedLayoutChange(updatedLayout, actualValue);
 		},
-		[debouncedLayoutChange]
+		[debouncedLayoutChange],
 	);
 
 	return (
@@ -128,7 +134,10 @@ export function DashboardLayoutEditor({
 			<div className="flex-1 flex justify-center w-full">
 				<div className="bg-white w-full" style={{ width: size }}>
 					<ResponsiveGridLayout
-						key={visualizations?.map(v => v.item.id).join(",") || "empty"}
+						key={
+							visualizations?.map((v) => v.item.id).join(",") ||
+							"empty"
+						}
 						breakpoints={{
 							lg: 1200,
 							md: 996,
