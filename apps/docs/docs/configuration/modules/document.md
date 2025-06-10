@@ -42,15 +42,15 @@ In the **General Configuration** section, you can set:
 > Example of Dropdown display
 > ![Dropdown Display Example](../../../static/img/documents/dropdown-files.png)
 
-- **Has Groups** – Toggle for grouping documents.
+- **Categorize documents into groups** – Toggle for grouping documents.
   - Unchecked (Flat Mode): Documents are listed directly.
   - Checked (Grouped Mode): Documents are organized into groups.
 
 ---
 
-## 3. Flat Configuration (When Has Groups is Unchecked)
+## 3. Flat Configuration (When 'Categorize documents into groups' is Unchecked)
 
-When **Has Groups** is **unchecked**, the module behaves in a flat mode. You will see:
+When **Categorize documents into groups** is **unchecked**, the module behaves in a flat mode. You will see:
 
 - A button labeled **Add Document**  
 - A list of documents added to the module if any
@@ -71,9 +71,9 @@ You can add multiple documents. Each added document will appear in the list belo
 
 ---
 
-## 4. Grouped Configuration (When Has Groups is Checked)
+## 4. Grouped Configuration (When 'Categorize documents into groups' is Checked)
 
-When **Has Groups** is **checked**, the module allows organizing documents into user-defined groups.
+When **Categorize documents into groups** is **checked**, the module allows organizing documents into user-defined groups.
 
 ###  Adding a Group
 
