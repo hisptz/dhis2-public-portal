@@ -23,7 +23,7 @@ export function DHIS2AppProvider({
 }: {
 	children: ReactNode;
 	contextPath: string;
-	apiVersion: number;
+	apiVersion: string;
 }) {
 	if (typeof window === "undefined") {
 		return children;

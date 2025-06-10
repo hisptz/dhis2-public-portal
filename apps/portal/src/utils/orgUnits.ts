@@ -1,4 +1,3 @@
-// @ts-ignore
 import { useDataQuery } from "@dhis2/app-runtime";
 import { type OrganisationUnit, OrgUnitSelection } from "@hisptz/dhis2-utils";
 import { useEffect, useMemo } from "react";
