@@ -28,11 +28,11 @@ export default {
 				assets: [
 					{
 						path: "apps/portal/build/bundle/*.zip",
-						label: "Web Portal",
+						label: "FlexiPortal",
 					},
 					{
 						path: "apps/manager/build/bundle/*.zip",
-						label: "DHIS2 Portal Manager App",
+						label: "FlexiPortal Manager",
 					},
 				],
 			},
