@@ -18867,10 +18867,10 @@ pathval@^2.0.0:
   resolved "https://registry.yarnpkg.com/pathval/-/pathval-2.0.0.tgz#7e2550b422601d4f6b8e26f1301bc8f15a741a25"
   integrity sha512-vE7JKRyES09KiunauX7nd2Q9/L7lhok4smP9RZTDeD4MVs72Dp2qNFVz39Nz5a0FVEW0BJR6C0DYrq6unoziZA==
 
-pdfjs-dist@^5.2.133:
-  version "5.3.31"
-  resolved "https://registry.yarnpkg.com/pdfjs-dist/-/pdfjs-dist-5.3.31.tgz#0c429f3bc43c57ec1a95fa2874f2f93189d2d40e"
-  integrity sha512-EhPdIjNX0fcdwYQO+e3BAAJPXt+XI29TZWC7COhIXs/K0JHcUt1Gdz1ITpebTwVMFiLsukdUZ3u0oTO7jij+VA==
+pdfjs-dist@5.2.133:
+  version "5.2.133"
+  resolved "https://registry.yarnpkg.com/pdfjs-dist/-/pdfjs-dist-5.2.133.tgz#1d0383bddf65f488671f3279de78d0db12200300"
+  integrity sha512-abE6ZWDxztt+gGFzfm4bX2ggfxUk9wsDEoFzIJm9LozaY3JdXR7jyLK4Bjs+XLXplCduuWS1wGhPC4tgTn/kzg==
   optionalDependencies:
     "@napi-rs/canvas" "^0.1.67"
 
