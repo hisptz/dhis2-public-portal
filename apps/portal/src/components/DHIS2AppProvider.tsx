@@ -2,7 +2,6 @@
 
 import { ComponentType, ReactNode } from "react";
 import dynamic from "next/dynamic";
-import { D2SystemInfo } from "@/types/d2SystemInfo";
 import { FullPageLoader } from "@/components/FullPageLoader";
 
 const NoSsrAppProvider: ComponentType<any> = dynamic(
@@ -19,24 +18,21 @@ const NoSsrAppProvider: ComponentType<any> = dynamic(
 
 export function DHIS2AppProvider({
 	children,
-	systemInfo,
 	contextPath,
+	apiVersion,
 }: {
 	children: ReactNode;
-	systemInfo?: D2SystemInfo | null;
 	contextPath: string;
+	apiVersion: string;
 }) {
 	if (typeof window === "undefined") {
 		return children;
 	}
-
-	const [, minor] = systemInfo?.version.split(".") ?? [];
 	return (
 		<NoSsrAppProvider
 			config={{
 				baseUrl: `${window.location.protocol}//${window.location.host}${contextPath ?? ""}`,
-				apiVersion: minor,
-				systemInfo,
+				apiVersion,
 			}}
 			plugin={false}
 			parentAlertsAdd={{}}
