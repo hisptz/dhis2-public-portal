@@ -6,6 +6,7 @@ import { useController, useFormContext, useWatch } from "react-hook-form";
 import { Field, Radio } from "@dhis2/ui";
 import { ItemsDisplay, VisualizationModule } from "@packages/shared/schemas";
 import { startCase } from "lodash";
+import { RHFTextAreaField } from "../../Fields/RHFTextAreaField";
 
 export function DashboardGeneralConfig() {
 	const { field, fieldState } = useController<
@@ -40,9 +41,9 @@ export function DashboardGeneralConfig() {
 			/>
 			{!isGrouped && (
 				<div>
-					<RHFRichTextAreaField
+					<RHFTextAreaField
 						autoGrow
-						rows={2}
+						rows={4}
 						name="config.shortDescription"
 						label={i18n.t("Short description")}
 					/>
