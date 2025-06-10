@@ -43,21 +43,26 @@ export function SectionItemsConfig() {
 		keyName: "fieldId" as unknown as "id",
 	});
 
+	const sectionType = useWatch({
+		name: `config.sections.${sectionIndex}.type`,
+	});
+
 	const rows = fields.map((field, index) => ({
 		...field,
 		actions: (
 			<ButtonStrip key={field.id}>
-				{field.type === DisplayItemType.VISUALIZATION && (
-					<EditVisualization
-						visualization={field.item}
-						onUpdate={(data) =>
-							update(index, {
-								type: DisplayItemType.VISUALIZATION,
-								item: data,
-							})
-						}
-					/>
-				)}
+				{field.type === DisplayItemType.VISUALIZATION &&
+					sectionType != SectionType.FLEXIBLE_LAYOUT && (
+						<EditVisualization
+							visualization={field.item}
+							onUpdate={(data) =>
+								update(index, {
+									type: DisplayItemType.VISUALIZATION,
+									item: data,
+								})
+							}
+						/>
+					)}
 				<Button
 					onClick={() => remove(index)}
 					title={i18n.t("Remove")}
@@ -66,15 +71,12 @@ export function SectionItemsConfig() {
 			</ButtonStrip>
 		),
 	}));
-	const sectionType = useWatch({
-		name: `config.sections.${sectionIndex}.type`,
-	});
 
 	const onAddVisualization = (visualization: VisualizationItem) => {
 		const displayItem: DisplayItem =
 			sectionType === SectionType.GRID_LAYOUT
 				? {
-						type: DisplayItemType.SINGLE_VALUE,
+						type: DisplayItemType.HIGHLIGHTED_SINGLE_VALUE,
 						item: {
 							...visualization,
 							icon: visualization.icon ?? "",
@@ -107,12 +109,13 @@ export function SectionItemsConfig() {
 							}
 							icon={<IconLayoutColumns24 />}
 						>
-							{i18n.t("Configure layout")}
+							{i18n.t("Manage visualizations")}
 						</Button>
 					)}
-					{sectionType != SectionType.SINGLE_ITEM && (
-						<AddVisualization onAdd={onAddVisualization} />
-					)}
+					{sectionType != SectionType.SINGLE_ITEM &&
+						sectionType != SectionType.FLEXIBLE_LAYOUT && (
+							<AddVisualization onAdd={onAddVisualization} />
+						)}
 				</ButtonStrip>
 			</div>
 			<Divider />

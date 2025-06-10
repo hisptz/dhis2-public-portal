@@ -9,7 +9,7 @@ const getMutation = (id: string) => ({
 	data: ({ data }: { data: BaseModule }) => data,
 });
 
-export function useCreateDashboard() {
+export function useCreateModule() {
 	const engine = useDataEngine();
 	const createDashboard = useCallback(
 		async (data: BaseModule) => {
@@ -23,6 +23,6 @@ export function useCreateDashboard() {
 	);
 
 	return {
-		createDashboard,
+		createModule: createDashboard,
 	};
 }

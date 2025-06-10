@@ -18,8 +18,11 @@ export function MapVisComponent({ mapConfig }: { mapConfig: MapConfig }) {
 	const updateMap = useCallback(() => {
 		if (map) {
 			map.invalidateSize();
-			map.fitBounds(map.getBounds());
-			map.panInsideBounds(map.getBounds());
+			const bounds = map.getBounds();
+			if (bounds) {
+				map.fitBounds(bounds);
+				map.panInsideBounds(bounds);
+			}
 		}
 	}, [map]);
 

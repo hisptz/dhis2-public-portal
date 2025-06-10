@@ -6,6 +6,7 @@ import { useController, useFormContext, useWatch } from "react-hook-form";
 import { Field, Radio } from "@dhis2/ui";
 import { ItemsDisplay, VisualizationModule } from "@packages/shared/schemas";
 import { startCase } from "lodash";
+import { RHFTextAreaField } from "../../Fields/RHFTextAreaField";
 
 export function DashboardGeneralConfig() {
 	const { field, fieldState } = useController<
@@ -38,21 +39,26 @@ export function DashboardGeneralConfig() {
 				name="config.title"
 				label={i18n.t("Title")}
 			/>
-			<RHFRichTextAreaField
-				required
-				autoGrow
-				rows={2}
-				name="config.shortDescription"
-				label={i18n.t("Short description")}
-			/>
-			<RHFRichTextAreaField
-				required
-				name="config.description"
-				label={i18n.t("Description")}
-			/>
+			{!isGrouped && (
+				<div>
+					<RHFTextAreaField
+						autoGrow
+						rows={4}
+						name="config.shortDescription"
+						label={i18n.t("Short description")}
+					/>
+					<RHFRichTextAreaField
+						name="config.description"
+						label={i18n.t("Description")}
+					/>
+				</div>
+			)}
 			<RHFCheckboxField
 				name="config.grouped"
-				label={i18n.t("Has groups")}
+				helpText={i18n.t(
+					"Enable to organize visualizations into group like dashboards. Useful for separating different sets of visualizations.",
+				)}
+				label={i18n.t("Categorize visualizations into groups")}
 			/>
 			{isGrouped && (
 				<div className="my-2">

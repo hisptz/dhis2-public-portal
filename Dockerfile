@@ -45,7 +45,7 @@ ENV CONTEXT_PATH=$CONTEXT_PATH
 RUN touch ./apps/portal/.env.local
 RUN echo CONTEXT_PATH=$CONTEXT_PATH >> ./apps/portal/.env.local
 
-RUN yarn portal run build:app
+RUN yarn portal run build
 
 FROM base AS runner
 WORKDIR /app
@@ -64,6 +64,5 @@ COPY --from=installer /app/apps/portal/package.json .
 # https://nextjs.org/docs/advanced-features/output-file-tracing
 COPY --from=installer --chown=nextjs:nodejs /app/apps/portal/.next/standalone ./
 COPY --from=installer --chown=nextjs:nodejs /app/apps/portal/.next/static ./apps/portal/.next/static
-COPY --from=installer --chown=nextjs:nodejs /app/apps/portal/public ./apps/portal/public
 
 CMD node apps/portal/server.js

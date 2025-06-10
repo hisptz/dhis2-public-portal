@@ -12,11 +12,16 @@ import React from "react";
 import i18n from "@dhis2/d2-i18n";
 import { RHFTextInputField } from "@hisptz/dhis2-ui";
 import { FetchError, useAlert } from "@dhis2/app-runtime";
-import { BaseModule, baseModuleSchema } from "@packages/shared/schemas";
+import {
+	BaseModule,
+	baseModuleSchema,
+	ModuleType,
+} from "@packages/shared/schemas";
 import { DashboardIDField } from "./DashboardIDField";
-import { useCreateDashboard } from "../hooks/create";
+import { useCreateModule } from "../hooks/create";
 import { ModuleTypeSelector } from "../../ModuleTypeSelector";
 import { useValidateModuleId } from "../hooks/moduleID";
+import { set } from "lodash";
 
 export function AddModuleForm({
 	hide,
@@ -27,15 +32,17 @@ export function AddModuleForm({
 	onClose: () => void;
 	onComplete: (dashboard: BaseModule) => void;
 }) {
-	const { createDashboard } = useCreateDashboard();
+	const { createModule } = useCreateModule();
 	const { checkIdExists } = useValidateModuleId();
 	const moduleSchema = baseModuleSchema.refine(
 		async (data) => {
 			return !(await checkIdExists(data.id));
 		},
 		{
-			message: i18n.t('A module with this ID already exists. Please choose a different one.'),
-			path: ['id'],
+			message: i18n.t(
+				"A module with this ID already exists. Please choose a different one.",
+			),
+			path: ["id"],
 		},
 	);
 
@@ -51,8 +58,24 @@ export function AddModuleForm({
 
 	const onSave = async (data: BaseModule) => {
 		try {
+			if (
+				[ModuleType.VISUALIZATION, ModuleType.DOCUMENTS].includes(
+					data.type,
+				)
+			) {
+				set(data, ["config", "grouped"], false);
+			}
+			if (data.type === ModuleType.VISUALIZATION) {
+				set(data, ["config", "layouts"], {
+					lg: [],
+					md: [],
+					sm: [],
+					xs: [],
+				});
+			}
+
 			await moduleSchema.parseAsync(data);
-			await createDashboard(data);
+			await createModule(data);
 			show({
 				message: i18n.t("Module created successfully"),
 				type: { success: true },

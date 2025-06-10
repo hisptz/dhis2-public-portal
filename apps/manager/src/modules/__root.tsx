@@ -28,7 +28,7 @@ function RootComponent() {
 		<React.Fragment>
 			<div className="h-full w-full flex">
 				<SideMenu />
-				<main className="flex-1 h-full p-[16px]">
+				<main className="flex-1 h-full p-[16px] overflow-y-auto">
 					<Suspense
 						fallback={
 							<div className="h-full w-full flex justify-center items-center">

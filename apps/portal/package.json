@@ -1,11 +1,11 @@
 {
   "name": "portal",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "./build.sh",
-    "build:app": "next build",
+    "build": "next build",
+    "build:standalone": "./build.sh",
     "start": "next start",
     "lint": "next lint",
     "check-types": "tsc --noEmit",
@@ -16,10 +16,10 @@
     "@dhis2/app-runtime": "^3.14.1",
     "@dhis2/multi-calendar-dates": "^2.1.0",
     "@dhis2/ui": "^10.5.1",
-    "@hisptz/dhis2-analytics": "^2.1.4",
-    "@hisptz/dhis2-ui": "^2.0.45",
+    "@hisptz/dhis2-analytics": "^2.1.9",
+    "@hisptz/dhis2-ui": "^2.0.48",
     "@hisptz/dhis2-utils": "^2.0.18",
-    "@hookform/resolvers": "^5.0.1",
+    "@hookform/resolvers": "5.1.0",
     "@mantine/colors-generator": "^7.17.5",
     "@mantine/core": "^7.17.4",
     "@mantine/dates": "^7.17.4",
@@ -34,20 +34,21 @@
     "canvas": "^3.1.0",
     "chroma-js": "^3.1.2",
     "cypress": "^14.3.0",
-    "favicons": "7.1.4",
     "leaflet": "^1.9.4",
     "lodash": "^4.17.21",
     "next": "^15.3.2",
     "nextjs-toploader": "^3.8.16",
-    "pdfjs-dist": "^5.2.133",
+    "pdfjs-dist": "5.2.133",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-error-boundary": "^5.0.0",
     "react-full-screen": "^1.1.1",
     "react-grid-layout": "^1.5.1",
+    "react-hook-form": "^7.57.0",
     "react-jsx-parser": "^2.4.0",
     "react-svg": "^16.3.0",
-    "usehooks-ts": "^3.1.1"
+    "usehooks-ts": "^3.1.1",
+    "zod": "^3.25.56"
   },
   "devDependencies": {
     "@cypress/code-coverage": "^3.14.0",
@@ -69,7 +70,7 @@
     "postcss-preset-mantine": "^1.17.0",
     "postcss-simple-vars": "^7.0.1",
     "tailwindcss": "^4",
-    "typescript": "^5"
+    "typescript": "5.6.3"
   },
   "packageManager": "yarn@1.22.22"
 }

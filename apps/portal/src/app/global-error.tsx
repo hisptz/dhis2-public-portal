@@ -14,8 +14,21 @@ import {
 	Text,
 	Title,
 } from "@mantine/core";
+import { Notifications } from "@mantine/notifications";
+import { useEffect } from "react";
+import Link from "next/link";
 
-export default function GlobalError() {
+export default function GlobalError({
+	error,
+	reset,
+}: {
+	error: Error & { digest?: string };
+	reset: () => void;
+}) {
+	useEffect(() => {
+		console.error(error);
+	}, []);
+
 	return (
 		<html {...mantineHtmlProps}>
 			<head>
@@ -23,6 +36,7 @@ export default function GlobalError() {
 			</head>
 			<body>
 				<MantineProvider>
+					<Notifications />
 					<Container
 						fluid
 						className="h-screen flex flex-col justify-center items-center"
@@ -30,7 +44,6 @@ export default function GlobalError() {
 						<Box>
 							<Text
 								fw={700}
-								c="blue"
 								style={{
 									fontSize: "16rem",
 									margin: 0,
@@ -51,9 +64,8 @@ export default function GlobalError() {
 								</Text>
 								<Group justify="center">
 									<Button
-										onClick={() => {
-											window.location.reload();
-										}}
+										component={Link}
+										href={"/"}
 										size="md"
 									>
 										Refresh

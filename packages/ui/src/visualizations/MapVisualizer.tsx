@@ -5,7 +5,7 @@ import {
 } from "@hisptz/dhis2-analytics";
 import { Map as LeafletMap } from "leaflet";
 import { MapConfig, MapLayerType } from "@packages/shared/schemas";
-import React, { useMemo } from "react";
+import React, { memo, useMemo } from "react";
 import { forEach, head, set } from "lodash";
 import { OrgUnitSelection } from "@hisptz/dhis2-utils";
 
@@ -18,7 +18,12 @@ export interface MapViewProps {
 
 export function getOrgUnitSelectionFromIds(ous: string[]) {
 	const orgUnitSelection: OrgUnitSelection = {
+		userOrgUnit: false,
+		userSubUnit: false,
+		userSubX2Unit: false,
 		orgUnits: [],
+		levels: [],
+		groups: [],
 	};
 	forEach(ous, (ou) => {
 		if (ou === "USER_ORGUNIT") {
@@ -28,19 +33,25 @@ export function getOrgUnitSelectionFromIds(ous: string[]) {
 		} else if (ou === "USER_ORGUNIT_GRANDCHILDREN") {
 			set(orgUnitSelection, ["userSubX2Unit"], true);
 		} else {
-			const orgUnits = [...(orgUnitSelection.orgUnits ?? [])];
-			orgUnits.push({
+			if (ou.includes("LEVEL-")) {
+				orgUnitSelection.levels!.push(ou.replace("LEVEL-", ""));
+				return;
+			}
+			if (ou.includes("GROUP-")) {
+				orgUnitSelection.groups!.push(ou.replace("GROUP-", ""));
+				return;
+			}
+			orgUnitSelection.orgUnits!.push({
 				id: ou,
 				children: [],
 				path: "",
 			});
-			set(orgUnitSelection, ["orgUnits"], orgUnits);
 		}
 	});
 	return orgUnitSelection;
 }
 
-export function MapVisualizer({
+export const MapVisualizer = memo(function MapVisualizer({
 	mapConfig,
 	setRef,
 	periodSelection,
@@ -54,7 +65,7 @@ export function MapVisualizer({
 				return {
 					id: view.id,
 					enabled: true,
-					type: view.thematicMapType.toLowerCase(),
+					type: view.thematicMapType?.toLowerCase() ?? "choropleth",
 					dataItem: {
 						id: dataItem!.id,
 						type: dataItem!.dimensionItemType,
@@ -168,4 +179,4 @@ export function MapVisualizer({
 			}}
 		/>
 	);
-}
+});

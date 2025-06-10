@@ -37,6 +37,40 @@ type Response = {
 	metadata: MetadataConfig;
 };
 
+export async function getMetadataFormDefaultValues({
+	getMeta,
+	engine,
+}: {
+	getMeta: () => Promise<unknown>;
+	engine: ReturnType<typeof useDataEngine>;
+}) {
+	const response = (await getMeta()) as { metadata: MetadataConfig };
+	const file = response.metadata.icon
+		? ((await engine
+				.query(fileQuery, {
+					variables: {
+						icon: response.metadata.icon,
+					},
+				})
+				.catch((e) => {
+					console.error(`Could not get the app icon`);
+				})) as { icon: { displayName: string; id: string } })
+		: undefined;
+
+	return {
+		...response.metadata,
+		icon: file
+			? new AppIconFile(
+					[],
+					`${file?.icon?.displayName.replace(`[public-portal] `, ``)}`,
+					{
+						type: "image/png",
+					},
+				).setId(file.icon.id)
+			: undefined,
+	} as MetadataForm;
+}
+
 export function useMetadataQuery() {
 	const engine = useDataEngine();
 	const { refetch, data, ...rest } = useDataQuery<Response>(query, {
@@ -44,27 +78,7 @@ export function useMetadataQuery() {
 	});
 	const form = useForm<MetadataForm>({
 		defaultValues: async () => {
-			const response = (await refetch()) as { metadata: MetadataConfig };
-			const file = response.metadata.icon
-				? ((await engine.query(fileQuery, {
-						variables: {
-							icon: response.metadata.icon,
-						},
-					})) as { icon: { displayName: string; id: string } })
-				: undefined;
-
-			return {
-				...response.metadata,
-				icon: file
-					? new AppIconFile(
-							[],
-							`${file?.icon?.displayName.replace(`[public-portal] `, ``)}`,
-							{
-								type: "image/png",
-							},
-						).setId(file.icon.id)
-					: undefined,
-			} as MetadataForm;
+			return getMetadataFormDefaultValues({ getMeta: refetch, engine });
 		},
 		resolver: zodResolver(metadataFormSchema),
 	});
@@ -87,8 +101,12 @@ const dataMutation = {
 
 export function useSaveMetadata() {
 	const config = useMetadata();
+	const engine = useDataEngine();
+	const { refetch } = useDataQuery<Response>(query, {
+		lazy: true,
+	});
+	const { reset } = useFormContext();
 	const { create: createIcon } = useManageDocument();
-	const { reset } = useFormContext<MetadataForm>();
 	const [mutate, rest] = useDataMutation(dataMutation, {
 		onError: (error) => {
 			show({
@@ -125,16 +143,15 @@ export function useSaveMetadata() {
 				set(updatedData, "icons", icons);
 			}
 			await mutate({ data: updatedData });
+			const defaultValues = await getMetadataFormDefaultValues({
+				getMeta: refetch,
+				engine,
+			});
+			reset(defaultValues);
 			show({
 				message: i18n.t("Changes saved successfully"),
 				type: { success: true },
 			});
-			reset(
-				{},
-				{
-					keepDirty: true,
-				},
-			);
 		} catch (e) {
 			//An error has already been printed out in use data mutation callbacks
 			console.error(e);

@@ -11,7 +11,7 @@ export default {
 		[
 			"@semantic-release/exec",
 			{
-				prepareCmd: "yarn build",
+				prepareCmd: "yarn build && yarn portal build:standalone",
 			},
 		],
 		[
@@ -28,11 +28,11 @@ export default {
 				assets: [
 					{
 						path: "apps/portal/build/bundle/*.zip",
-						label: "Web Portal",
+						label: "FlexiPortal",
 					},
 					{
 						path: "apps/manager/build/bundle/*.zip",
-						label: "DHIS2 Portal Manager App",
+						label: "FlexiPortal Manager",
 					},
 				],
 			},

@@ -6,7 +6,6 @@ import { createLink } from "@tanstack/react-router";
 export const SideMenuItem = createLink(
 	forwardRef<HTMLAnchorElement, MenuItemProps>(function SideMenuItemComponent(
 		props: MenuItemProps,
-		ref,
 	) {
 		return (
 			<MenuItem

@@ -4,7 +4,6 @@ import {
 	Button,
 	ButtonStrip,
 	Divider,
-	IconDelete16,
 	IconLayoutColumns24,
 } from "@dhis2/ui";
 import { GroupVisualizations } from "./components/GroupVisualizations";
@@ -17,8 +16,6 @@ import {
 	VisualizationItem,
 	VisualizationModule,
 } from "@packages/shared/schemas";
-import { EditVisualization } from "../../../VisualizationModule/components/AddVisualization/componets/EditVisualization";
-import { AddVisualization } from "../../../VisualizationModule/components/AddVisualization/AddVisualization";
 import { useVisualizationNames } from "../../../VisualizationModule/hooks/data";
 import { FullLoader } from "../../../FullLoader";
 import ErrorPage from "../../../ErrorPage/ErrorPage";
@@ -30,7 +27,7 @@ export function GroupVisualizationsConfig() {
 	const namePrefix = useGroupNamePrefix();
 	const navigate = useNavigate();
 
-	const { fields, remove, update, append } = useFieldArray<
+	const { fields } = useFieldArray<
 		VisualizationModule,
 		`config.groups.${number}.items`
 	>({
@@ -47,7 +44,7 @@ export function GroupVisualizationsConfig() {
 
 	const rows = fields
 		.filter((field) => field.type === DisplayItemType.VISUALIZATION)
-		.map((field, index) => {
+		.map((field) => {
 			const visField = field as DisplayItem & {
 				type: DisplayItemType.VISUALIZATION;
 				item: VisualizationItem;
@@ -56,24 +53,6 @@ export function GroupVisualizationsConfig() {
 			return {
 				...visField.item,
 				id: visualizationNames.get(visId) || visId,
-				actions: (
-					<ButtonStrip key={field.id}>
-						<EditVisualization
-							visualization={visField.item}
-							onUpdate={(data) =>
-								update(index, {
-									type: DisplayItemType.VISUALIZATION,
-									item: data,
-								})
-							}
-						/>
-						<Button
-							onClick={() => remove(index)}
-							title={i18n.t("Remove")}
-							icon={<IconDelete16 />}
-						/>
-					</ButtonStrip>
-				),
 			};
 		});
 
@@ -92,14 +71,6 @@ export function GroupVisualizationsConfig() {
 		);
 	}
 
-	function onAddVisualization(visualization: VisualizationItem) {
-		const displayItem: DisplayItem = {
-			type: DisplayItemType.VISUALIZATION,
-			item: visualization,
-		};
-		append(displayItem);
-	}
-
 	return (
 		<div className="flex-1 w-full flex flex-col gap-2">
 			<div className="flex items-center justify-between">
@@ -114,9 +85,8 @@ export function GroupVisualizationsConfig() {
 						}
 						icon={<IconLayoutColumns24 />}
 					>
-						{i18n.t("Configure layout")}
+						{i18n.t("Manage visualizations")}
 					</Button>
-					<AddVisualization onAdd={onAddVisualization} />
 				</ButtonStrip>
 			</div>
 			<Divider />

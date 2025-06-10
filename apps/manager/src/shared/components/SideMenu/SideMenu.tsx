@@ -7,7 +7,7 @@ export function SideMenu() {
 	return (
 		<aside
 			style={{ background: colors.grey200 }}
-			className="h-full w-[240px]"
+			className="h-full w-[240px] min-w-[240px]"
 		>
 			<Menu className="h-full">
 				{appMenus.map((menu) => (
@@ -15,6 +15,8 @@ export function SideMenu() {
 						label={menu.label}
 						key={menu.href}
 						to={menu.href}
+						preload="intent"
+						target="_self"
 					/>
 				))}
 			</Menu>

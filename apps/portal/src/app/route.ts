@@ -4,8 +4,15 @@ import { DatastoreNamespaces } from "@packages/shared/constants";
 import { sortBy } from "lodash";
 import { redirect } from "next/navigation";
 import { env } from "@/utils/env";
+import { dhis2HttpClient } from "@/utils/api/dhis2";
 
 export async function GET() {
+	const clientVerificationStatus = await dhis2HttpClient.verifyClient();
+
+	if (clientVerificationStatus.status === "ERROR") {
+		return redirect(`${env.CONTEXT_PATH ?? ""}/connection-error`);
+	}
+
 	const menuConfig = await getAppConfigWithNamespace<AppMenuConfig>({
 		namespace: DatastoreNamespaces.MAIN_CONFIG,
 		key: "menu",

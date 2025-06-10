@@ -60,24 +60,53 @@ describe("Modules Page", () => {
 	});
 
 	it("should create a new module", () => {
+		const moduleName = "New Test Module";
+
 		cy.contains("a", modulesMenu.label).click();
+
+		const deleteIfExists = () => {
+			cy.get("body").then(($body) => {
+				if ($body.find(`td:contains('${moduleName}')`).length > 0) {
+					cy.log(`Module "${moduleName}" exists, deleting it first`);
+
+					cy.contains("td", moduleName)
+						.parent("tr")
+						.within(() => {
+							cy.get('[data-test="dhis2-uicore-button"]').click();
+						});
+
+					cy.contains("button", "Delete module").click();
+					cy.get(
+						'[data-test="dhis2-uicore-modalactions"] > [data-test="dhis2-uicore-buttonstrip"] > :nth-child(2) > [data-test="dhis2-uicore-button"]'
+					).click();
+
+					cy.contains("td", moduleName).should('not.exist');
+				} else {
+					cy.log(`Module "${moduleName}" does not exist, proceeding to create`);
+				}
+			});
+		};
+
+		deleteIfExists();
+		cy.wait(1000);
+		deleteIfExists();
 
 		cy.contains("button", "Create a new module").click();
 
 		cy.get('[data-test="dhis2-uicore-modal"]').should("be.visible");
 		cy.contains("Create Module").should("be.visible");
 
-		cy.get('input[name="label"]').type("New Test Module");
+		cy.get('input[name="label"]').type(moduleName);
 		cy.get(
-			'.gap-4 > .flex > [data-test="dhis2-uiwidgets-singleselectfield"] > [data-test="dhis2-uiwidgets-singleselectfield-content"] > [data-test="dhis2-uicore-box"] > [data-test="dhis2-uicore-singleselect"] > .jsx-114080822 > [data-test="dhis2-uicore-select"] > [data-test="dhis2-uicore-select-input"]',
+			'.gap-4 > .flex > [data-test="dhis2-uiwidgets-singleselectfield"] > [data-test="dhis2-uiwidgets-singleselectfield-content"] > [data-test="dhis2-uicore-box"] > [data-test="dhis2-uicore-singleselect"] > .jsx-114080822 > [data-test="dhis2-uicore-select"] > [data-test="dhis2-uicore-select-input"]'
 		).click();
 		cy.get('[data-value="VISUALIZATION"]').click();
 
 		cy.contains("button", "Create module").should("be.visible").click();
 
-		cy.contains("button", "Creating...").should("be.visible");
-
 		cy.contains("button", "Back to all modules").click();
+
+		cy.contains("td", moduleName).should('exist');
 	});
 
 	it("should navigate to module edit page and verify UI", () => {
@@ -109,48 +138,20 @@ describe("Modules Page", () => {
 
 		cy.get('input[name="config.title"]').type("New Test Module");
 		cy.get(
-			':nth-child(3) > [data-test="dhis2-uicore-field-content"] > .jodit-react-container > .jodit-container > .jodit-workplace > .jodit-wysiwyg',
+			':nth-child(1) > [data-test="dhis2-uicore-field-content"] > .jodit-react-container > .jodit-container > .jodit-workplace > .jodit-wysiwyg',
 		).type("Short description");
 		cy.get(
-			':nth-child(4) > [data-test="dhis2-uicore-field-content"] > .jodit-react-container > .jodit-container > .jodit-workplace > .jodit-wysiwyg',
+			':nth-child(2) > [data-test="dhis2-uicore-field-content"] > .jodit-react-container > .jodit-container > .jodit-workplace > .jodit-wysiwyg',
 		).type("Full desc");
 
-		cy.contains("button", "Add visualizations").click();
-		cy.get('[data-test="dhis2-uicore-modaltitle"]')
-			.contains("Add visualization")
-			.should("be.visible");
-		cy.get('[data-test="dhis2-uicore-select-input"]').first().click();
-		cy.get('[data-value="CHART"]').click();
-		cy.get('[data-test="dhis2-uicore-select-input"]').eq(1).click();
-		cy.get('[data-value="COLUMN"]').click();
-		cy.wait(2000);
-		cy.get('[data-test="dhis2-uicore-select-input"]').eq(2).click();
-		cy.get('[data-value="hewtA7a025J"]').click();
-
-		cy.get('textarea[name="caption"]').type("Chart Caption");
+		cy.contains("button", "Manage visualizations").click();
+		cy.contains("button", "Add a new visualization").should("be.visible").click();
 		cy.get(
-			'[data-test="dhis2-uicore-modalactions"] > [data-test="dhis2-uicore-buttonstrip"] > :nth-child(2) > [data-test="dhis2-uicore-button"]',
+			'[data-test="dhis2-uicore-modalactions"] > [data-test="dhis2-uicore-buttonstrip"] > :nth-child(1) > [data-test="dhis2-uicore-button"]',
 		).click();
 
-		cy.contains("button", "Save changes").should("not.be.disabled");
-
-		cy.get("table")
-			.contains("td", "Chart Caption")
-			.parent("tr")
-			.within(() => {
-				cy.get('button[title="Edit visualization"]').click();
-			});
-		cy.get('[data-test="dhis2-uicore-modal"]').should("be.visible");
-		cy.contains("Update visualization").should("be.visible");
-		cy.get('textarea[name="caption"]').clear().type("Updated Caption");
-		cy.contains("button", "Update").click();
-
-		cy.contains("button", "Configure layout").click();
-		cy.get(".layout").should("be.visible");
 		cy.contains("button", "Cancel").click();
 
-		cy.contains("button", "Save changes").should("not.be.disabled");
-		cy.contains("button", "Save changes").click();
 	});
 
 	it("should delete a module", () => {

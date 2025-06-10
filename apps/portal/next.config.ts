@@ -5,6 +5,8 @@ const nextConfig: NextConfig = {
 	reactStrictMode: false,
 	basePath: process.env.CONTEXT_PATH ?? "",
 	images: {
+		dangerouslyAllowSVG: true,
+		contentDispositionType: "inline",
 		remotePatterns: [
 			{
 				hostname: "*",

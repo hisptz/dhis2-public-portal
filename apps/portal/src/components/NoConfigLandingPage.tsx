@@ -1,6 +1,7 @@
 "use client";
 
 import { Button, Center, Container, Stack, Text, Title } from "@mantine/core";
+import Link from "next/link";
 
 export function NoConfigLandingPage() {
 	return (
@@ -14,11 +15,7 @@ export function NoConfigLandingPage() {
 						<br />
 						Please contact your administrator.
 					</Text>
-					<Button
-						onClick={() => {
-							window.location.reload();
-						}}
-					>
+					<Button component={Link} href={"/"}>
 						Refresh
 					</Button>
 				</Stack>
