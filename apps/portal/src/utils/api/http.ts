@@ -6,7 +6,6 @@ export class D2HttpClient {
 
 	constructor(baseURL: string, pat: string) {
 		this.baseURL = D2HttpClient.sanitizeURL(baseURL);
-		console.log(this.baseURL.toString());
 		this.pat = pat;
 	}
 
