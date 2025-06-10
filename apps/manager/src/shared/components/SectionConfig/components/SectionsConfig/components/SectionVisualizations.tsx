@@ -18,7 +18,8 @@ export function SectionVisualizations({
 			label: i18n.t("Type"),
 			key: "type",
 		},
-		...(first(visualizations)?.type === DisplayItemType.SINGLE_VALUE
+		...(first(visualizations)?.type ===
+		DisplayItemType.HIGHLIGHTED_SINGLE_VALUE
 			? [{ label: i18n.t("Icon"), key: "icon" }]
 			: []),
 		{
@@ -31,9 +32,10 @@ export function SectionVisualizations({
 		},
 	];
 	const rows = visualizations
-		.filter((vis) =>
-			vis.type === DisplayItemType.VISUALIZATION ||
-			vis.type === DisplayItemType.SINGLE_VALUE
+		.filter(
+			(vis) =>
+				vis.type === DisplayItemType.VISUALIZATION ||
+				vis.type === DisplayItemType.HIGHLIGHTED_SINGLE_VALUE,
 		)
 		.map((vis) => {
 			if (vis.type === DisplayItemType.VISUALIZATION) {
@@ -46,17 +48,16 @@ export function SectionVisualizations({
 			} else {
 				return {
 					id: vis.item.id,
-					type: DisplayItemType.SINGLE_VALUE,
-				icon:
-					vis.type === DisplayItemType.SINGLE_VALUE
-						? (vis.item.icon ?? "")
-						: "",
+					type: DisplayItemType.HIGHLIGHTED_SINGLE_VALUE,
+					icon:
+						vis.type === DisplayItemType.HIGHLIGHTED_SINGLE_VALUE
+							? (vis.item.icon ?? "")
+							: "",
 					caption: "Single Value",
 					actions: vis.actions,
 				};
 			}
 		});
-
 
 	return <SimpleTable columns={columns} rows={rows} />;
 }

@@ -117,8 +117,8 @@ export function VisSelector({
 		if (visualizationType || visType) {
 			refetch({
 				type:
-					visType == DisplayItemType.SINGLE_VALUE
-						? DisplayItemType.SINGLE_VALUE
+					visType == DisplayItemType.HIGHLIGHTED_SINGLE_VALUE
+						? DisplayItemType.HIGHLIGHTED_SINGLE_VALUE
 						: visualizationType,
 			});
 		}
@@ -135,9 +135,9 @@ export function VisSelector({
 
 	return (
 		<div
-			className={`flex flex-col ${visType === DisplayItemType.SINGLE_VALUE ? "gap-2" : "gap-4"}`}
+			className={`flex flex-col ${visType === DisplayItemType.HIGHLIGHTED_SINGLE_VALUE ? "gap-2" : "gap-4"}`}
 		>
-			{visType != DisplayItemType.SINGLE_VALUE && (
+			{visType != DisplayItemType.HIGHLIGHTED_SINGLE_VALUE && (
 				<SingleSelectField
 					required
 					label={i18n.t("Visualization type")}
@@ -170,7 +170,7 @@ export function VisSelector({
 				options={options}
 				name={`${namePrefix}.item.id`}
 			/>
-			{visType == DisplayItemType.SINGLE_VALUE && (
+			{visType == DisplayItemType.HIGHLIGHTED_SINGLE_VALUE && (
 				<RHFTextInputField
 					name={`${namePrefix}.item.icon`}
 					label={i18n.t("Icon")}

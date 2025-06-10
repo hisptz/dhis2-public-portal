@@ -2,7 +2,7 @@ import { baseModuleSchema, ModuleType } from "./base";
 import { z } from "zod";
 import {
 	displayItemSchema,
-	singleValueDisplayItemSchema,
+	highlightedSingleValueDisplayItemSchema,
 } from "../displayItems";
 import { layoutSchema } from "../layout";
 
@@ -29,7 +29,7 @@ export type BaseSectionConfig = z.infer<typeof baseSectionSchema>;
 
 export const gridLayoutSectionSchema = baseSectionSchema.extend({
 	type: z.literal("GRID_LAYOUT"),
-	items: z.array(singleValueDisplayItemSchema),
+	items: z.array(highlightedSingleValueDisplayItemSchema),
 });
 
 export type GridLayoutSectionConfig = z.infer<typeof gridLayoutSectionSchema>;

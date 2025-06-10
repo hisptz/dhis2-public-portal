@@ -26,7 +26,6 @@ export default function FeedbackVisualizer({ item }: { item: FeedbackItem }) {
 
 	const form = useForm({
 		shouldFocusError: false,
-		// @ts-expect-error zod issues
 		resolver: zodResolver(feedbackSchema),
 		reValidateMode: "onChange",
 	});

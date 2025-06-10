@@ -5,8 +5,8 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
-"POT-Creation-Date: 2025-06-09T06:59:43.985Z\n"
-"PO-Revision-Date: 2025-06-09T06:59:43.986Z\n"
+"POT-Creation-Date: 2025-06-10T03:46:55.997Z\n"
+"PO-Revision-Date: 2025-06-10T03:46:55.998Z\n"
 
 msgid "Could not get Appearance configurations"
 msgstr "Could not get Appearance configurations"
@@ -223,6 +223,13 @@ msgstr "Remove"
 
 msgid "Documents"
 msgstr "Documents"
+
+msgid ""
+"Enable to organize documents into categories or collections. Each group can "
+"contain multiple related files."
+msgstr ""
+"Enable to organize documents into categories or collections. Each group can "
+"contain multiple related files."
 
 msgid "Has groups"
 msgstr "Has groups"
@@ -518,8 +525,26 @@ msgstr "Full Name"
 msgid "Message"
 msgstr "Message"
 
+msgid "icon"
+msgstr "icon"
+
 msgid "Items"
 msgstr "Items"
+
+msgid "Add item"
+msgstr "Add item"
+
+msgid "Icon is required"
+msgstr "Icon is required"
+
+msgid "{{action}} highlighted item"
+msgstr "{{action}} highlighted item"
+
+msgid "Edit item"
+msgstr "Edit item"
+
+msgid "Single value visualization"
+msgstr "Single value visualization"
 
 msgid "Item"
 msgstr "Item"
@@ -619,6 +644,13 @@ msgstr "{{action}} visualization"
 
 msgid "Edit visualization"
 msgstr "Edit visualization"
+
+msgid ""
+"Enable to organize visualizations into group like dashboards. Useful for "
+"separating different sets of visualizations."
+msgstr ""
+"Enable to organize visualizations into group like dashboards. Useful for "
+"separating different sets of visualizations."
 
 msgid "Group selector"
 msgstr "Group selector"

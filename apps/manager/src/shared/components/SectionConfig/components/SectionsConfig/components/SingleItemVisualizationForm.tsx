@@ -23,7 +23,7 @@ export function SingleItemVisualizationForm({
 	const { setValue } = useFormContext();
 
 	useEffect(() => {
-		if (visType === DisplayItemType.SINGLE_VALUE) {
+		if (visType === DisplayItemType.HIGHLIGHTED_SINGLE_VALUE) {
 			setValue(
 				`${namePrefix}.item.type`,
 				VisualizationDisplayItemType.CHART,
@@ -34,7 +34,7 @@ export function SingleItemVisualizationForm({
 	return (
 		<Box>
 			<form className="flex flex-col gap-4">
-				{visType !== DisplayItemType.SINGLE_VALUE && (
+				{visType !== DisplayItemType.HIGHLIGHTED_SINGLE_VALUE && (
 					<RHFSingleSelectField
 						required
 						label={i18n.t("Type")}
@@ -43,7 +43,8 @@ export function SingleItemVisualizationForm({
 								label: i18n.t("Visualization"),
 								value: VisualizationDisplayItemType.CHART,
 							},
-							...(visType !== DisplayItemType.SINGLE_VALUE
+							...(visType !==
+							DisplayItemType.HIGHLIGHTED_SINGLE_VALUE
 								? [
 										{
 											label: i18n.t("Map"),

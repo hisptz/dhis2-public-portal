@@ -2,7 +2,7 @@
 import { Responsive as ResponsiveGridLayout } from "react-grid-layout";
 import { FlexibleLayoutConfig } from "@packages/shared/schemas";
 import { Container } from "@mantine/core";
-import { RefObject, useRef } from "react";
+import React, { RefObject, useRef } from "react";
 import { useResizeObserver } from "usehooks-ts";
 
 export function FlexibleLayoutContainer({

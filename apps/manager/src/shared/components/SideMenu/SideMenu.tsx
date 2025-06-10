@@ -15,6 +15,8 @@ export function SideMenu() {
 						label={menu.label}
 						key={menu.href}
 						to={menu.href}
+						preload="intent"
+						target="_self"
 					/>
 				))}
 			</Menu>
