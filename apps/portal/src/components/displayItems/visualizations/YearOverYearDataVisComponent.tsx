@@ -32,11 +32,13 @@ import { CustomPeriodModal } from "@/components/displayItems/visualizations/Cust
 export function YearOverYearDataVisComponent({
 	visualizationConfig,
 	config,
+	showFilter = true,
 	disableActions,
 	colors,
 }: {
 	visualizationConfig: VisualizationConfig;
 	config: VisualizationItem;
+	showFilter?: boolean;
 	colors: string[];
 	disableActions?: boolean;
 }) {
@@ -54,6 +56,7 @@ export function YearOverYearDataVisComponent({
 	} = useDimensionViewControls({
 		chartRef,
 		tableRef,
+		showFilter,
 		visualizationConfig,
 		config,
 	});

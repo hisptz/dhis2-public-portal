@@ -23,7 +23,6 @@ export function VisualizationItemsContainer({
 				</Box>
 			);
 		}
-
 		return (
 			<FlexibleLayoutContainer layouts={config.layouts}>
 				{config.items.map((item) => (
@@ -32,7 +31,7 @@ export function VisualizationItemsContainer({
 						key={"item" in item ? item.item.id : ""}
 					>
 						<DisplayItemContainer item={item}>
-							<DisplayItemSelector item={item} />
+							<DisplayItemSelector item={item} showFilter={config.showFilter} />
 						</DisplayItemContainer>
 					</FlexibleLayoutItem>
 				))}

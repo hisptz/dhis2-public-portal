@@ -5,8 +5,8 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
-"POT-Creation-Date: 2025-06-10T06:54:31.497Z\n"
-"PO-Revision-Date: 2025-06-10T06:54:31.498Z\n"
+"POT-Creation-Date: 2025-06-12T06:31:22.985Z\n"
+"PO-Revision-Date: 2025-06-12T06:31:22.985Z\n"
 
 msgid "Could not get Appearance configurations"
 msgstr "Could not get Appearance configurations"
@@ -644,6 +644,12 @@ msgstr "{{action}} visualization"
 
 msgid "Edit visualization"
 msgstr "Edit visualization"
+
+msgid "Enable to show filters for visualizations."
+msgstr "Enable to show filters for visualizations."
+
+msgid "Display filters"
+msgstr "Display filters"
 
 msgid ""
 "Enable to organize visualizations into group like dashboards. Useful for "
