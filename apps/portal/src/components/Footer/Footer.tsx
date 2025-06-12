@@ -1,5 +1,4 @@
 import {
-	AppShell,
 	Box,
 	Container,
 	Divider,
@@ -25,114 +24,87 @@ export function Footer({
 }) {
 	const { title, subtitle } = header;
 	return (
-		<div>
-			<div
-				className="relative"
+		<>
+			<Flex
+				align="center"
+				direction="column"
+				justify="space-between"
+				w="100%"
 				style={{
-					clipPath: "polygon(0% 0, 100% 0%, 100% 100%, 0% 100%)",
+					background: "#fff",
+					borderTop: "1px solid #e9ecef",
 				}}
 			>
-				<div className="sticky bottom-[calc(100vh)] h-[240px]">
-					<AppShell.Footer>
-						<Flex align="center" direction="column" gap="xs">
-							<Container
-								className="min-w-full"
-								size="lg"
-								flex={1}
-							>
-								<Container size="lg">
-									<Flex p="md" gap="lg" direction="row">
-										{config.showTitle && (
-											<Box
-												style={{
-													width: "50%",
-													flex: 1,
-												}}
-											>
-												<Stack
-													align="flex-start"
-													gap="xs"
+				<Container className="min-w-full" size="lg">
+					<Container size="lg">
+						<Flex p="md" gap="lg" direction="row" wrap="wrap">
+							{config.showTitle && (
+								<Box style={{ flex: 1, minWidth: 200 }}>
+									<Stack align="flex-start" gap="xs">
+										<Box style={{ width: 60, height: 60 }}>
+											<Image
+												component={NextImage}
+												width={60}
+												height={60}
+												alt="logo"
+												src={logo}
+											/>
+										</Box>
+										<Stack gap={0}>
+											<Title order={5} ta="left">
+												{title.text}
+											</Title>
+											{subtitle?.text && (
+												<Text
+													size="sm"
+													c="dimmed"
+													ta="left"
 												>
-													<Box
-														style={{
-															width: 60,
-															height: 60,
-														}}
-													>
-														<Image
-															component={
-																NextImage
-															}
-															width={60}
-															height={60}
-															alt="logo"
-															src={logo}
-															visibleFrom="sm"
-														/>
-													</Box>
-													<Stack gap={0}>
-														<Title
-															order={5}
-															ta="left"
-														>
-															{title.text}
-														</Title>
-														{subtitle?.text && (
-															<Text
-																size="sm"
-																c="dimmed"
-																ta="left"
-															>
-																{subtitle.text}
-															</Text>
-														)}
-													</Stack>
-												</Stack>
-											</Box>
-										)}
-										{config.footerItems.map(
-											(item, index) => (
-												<Flex
-													flex={1}
-													gap="lg"
-													justify="space-between"
-													direction="row"
-												>
-													{item.type === "links" ? (
-														<FooterLinks
-															config={{
-																links:
-																	item.links ??
-																	[],
-																title: item.title,
-															}}
-														/>
-													) : (
-														<FooterStaticContent
-															config={{
-																title: item.title,
-																staticContent:
-																	item.staticContent ??
-																	"",
-															}}
-														/>
-													)}
-												</Flex>
-											),
-										)}
-									</Flex>
-									<Divider my="md" />
-								</Container>
-							</Container>
-							<Container size="lg">
-								<Text c="dimmed" ta="center">
-									{config.copyright}
-								</Text>
-							</Container>
+													{subtitle.text}
+												</Text>
+											)}
+										</Stack>
+									</Stack>
+								</Box>
+							)}
+
+							{config.footerItems.map((item, index) => (
+								<Flex
+									key={index}
+									flex={1}
+									gap="lg"
+									justify="space-between"
+									direction="row"
+									style={{ minWidth: 200 }}
+								>
+									{item.type === "links" ? (
+										<FooterLinks
+											config={{
+												links: item.links ?? [],
+												title: item.title,
+											}}
+										/>
+									) : (
+										<FooterStaticContent
+											config={{
+												title: item.title,
+												staticContent:
+													item.staticContent ?? "",
+											}}
+										/>
+									)}
+								</Flex>
+							))}
 						</Flex>
-					</AppShell.Footer>
-				</div>
-			</div>
-		</div>
+					</Container>
+				</Container>
+			</Flex>
+			<Divider my="md" mx="xl" />
+			<Container size="lg" pb="xs">
+				<Text c="dimmed" ta="center">
+					{config.copyright}
+				</Text>
+			</Container>
+		</>
 	);
 }
