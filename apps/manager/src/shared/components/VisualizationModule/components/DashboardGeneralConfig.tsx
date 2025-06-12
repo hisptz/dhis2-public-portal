@@ -53,6 +53,11 @@ export function DashboardGeneralConfig() {
 				</div>
 			)}
 			<RHFCheckboxField
+				name="config.showFilter"
+				helpText={i18n.t("Enable to show filters(i.e period selector & location selector) for visualizations.")}
+				label={i18n.t("Display filters")}
+			/>
+			<RHFCheckboxField
 				name="config.grouped"
 				helpText={i18n.t("Enable to organize visualizations into group like dashboards. Useful for separating different sets of visualizations.")}
 				label={i18n.t("Has groups")}
