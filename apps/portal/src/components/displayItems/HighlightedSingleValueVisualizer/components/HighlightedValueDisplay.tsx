@@ -1,7 +1,5 @@
-import { VisualizationConfig } from "@packages/shared/schemas";
 import { dhis2HttpClient } from "@/utils/api/dhis2";
 import { findIndex, head } from "lodash";
-import { getPeriods } from "@packages/shared/utils";
 import { NumberFormatter, Title } from "@mantine/core";
 import { getAppearanceConfig } from "@/utils/config/appConfig";
 
@@ -40,7 +38,7 @@ export async function HighlightedValueDisplay({
 }) {
 	const data = await getVisualizationData(visualizationConfig);
 	const appearanceConfig = await getAppearanceConfig();
-	const color = appearanceConfig?.appearanceConfig.colors.chartColors[1];
+	const color = appearanceConfig?.appearanceConfig.colors.chartColors[0];
 
 	return (
 		<Title style={{ color }} className={`!text-5xl`} order={1}>
