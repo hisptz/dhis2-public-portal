@@ -6,6 +6,14 @@ export interface LogEntry {
     timestamp: string;
 }
 
+export interface DocumentDetails {
+    id: string;
+    name: string;
+    url: string;
+    external: boolean;
+    attachment: string;
+}
+
 export const useConfiguration = () => {
     const engine = useDataEngine();
 
@@ -58,7 +66,7 @@ export const useConfiguration = () => {
             if (addLog) {
                 addLog(`Error setting value for ${namespace}/${key}: ${error.message}`, 'error');
             }
-           throw error;
+            throw error;
         }
     };
 
@@ -90,5 +98,65 @@ export const useConfiguration = () => {
         addLog(`Namespace ${namespace} cleared successfully.`, 'success');
     };
 
-    return { getKeysInNamespace, getValue, setValue, deleteKey, clearNamespace, addLog };
+
+    const fetchDocumentDetails = async (
+        documentId: string,
+        addLog: (message: string, type: LogEntry['type']) => void
+    ): Promise<DocumentDetails | null> => {
+        try {
+            const { result } = await engine.query({
+                result: {
+                    resource: `documents/${documentId}`,
+                    params: {
+                        fields: 'id,name,url,external,attachment',
+                    },
+                },
+            });
+            if (!result || typeof result !== 'object' || Array.isArray(result)) {
+                addLog(`No valid details found for document ID: ${documentId}`, 'warning');
+                return null;
+            }
+            const { id, name, url, external, attachment } = result as {
+                id: string;
+                name: string;
+                url?: string;
+                external?: boolean;
+                attachment?: string;
+            };
+            if (!id || !name) {
+                addLog(`Incomplete document details for ID: ${documentId}`, 'warning');
+                return null;
+            }
+            return { id, name, url: url || '', external: !!external, attachment: attachment || '' };
+        } catch (error) {
+            addLog(`Error fetching details for document ID: ${documentId}: ${error.message}`, 'error');
+            return null;
+        }
+    };
+
+    const fetchDocumentData = async (
+        documentId: string,
+        documentName: string,
+        addLog: (message: string, type: LogEntry['type']) => void
+    ): Promise<{ data: Blob; filename: string } | null> => {
+        try {
+            const { result } = await engine.query({
+                result: {
+                    resource: `documents/${documentId}/data`,
+                },
+            });
+            if (!(result instanceof Blob)) {
+                addLog(`Invalid data format for document ID: ${documentId} - expected Blob`, 'warning');
+                return null;
+            }
+            return { data: result, filename: documentName };
+        } catch (error) {
+            addLog(`Error fetching data for document ID: ${documentId}: ${error.message}`, 'error');
+            return null;
+        }
+    };
+
+
+
+    return { getKeysInNamespace, getValue, setValue, deleteKey, clearNamespace, addLog, fetchDocumentDetails, fetchDocumentData };
 };
