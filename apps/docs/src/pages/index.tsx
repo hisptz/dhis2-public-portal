@@ -24,11 +24,11 @@ function HomepageHeader() {
 					}}
 				>
 					DHIS2 FlexiPortal is a customizable, deployment-ready
-					public-facing portal that enables easy, unauthenticated
-					access to data stored in a DHIS2 instance. It simplifies
-					sharing data with the public by allowing DHIS2
-					visualizations and resources to be published with minimal
-					effort, promoting data use.
+					public-facing portal that enables easy, secure access to
+					data stored in a DHIS2 instance. It simplifies sharing data
+					with the public by allowing DHIS2 visualizations and
+					resources to be published with minimal effort, promoting
+					data use.
 				</p>
 				<div className={styles.buttons}>
 					<Link
