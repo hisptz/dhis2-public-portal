@@ -5,6 +5,7 @@ import { dhis2HttpClient } from "@/utils/api/dhis2";
 import Link from "next/link";
 import { getServerImageUrl } from "@/utils/server/images";
 import { PDFVisualizer } from "@/components/displayItems/visualizations/PDFVisualizer";
+import { env } from "@/utils/env";
 
 export interface PDFVisualizerProps {
 	config: LibraryFileData;
@@ -66,7 +67,7 @@ export async function FileVisualizer({ config }: PDFVisualizerProps) {
 
 	return (
 		<Link
-			href={href}
+			href={href.replace(env.CONTEXT_PATH ?? "", "")}
 			target="_blank"
 			referrerPolicy="no-referrer"
 			style={{
