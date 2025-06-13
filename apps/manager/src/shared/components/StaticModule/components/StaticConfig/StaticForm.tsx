@@ -23,14 +23,14 @@ export function StaticForm() {
 				name="content"
 				label={i18n.t("Content")}
 			/>
-			<RHFTextAreaField
+			{/* <RHFTextAreaField
 				required
 				autoGrow
 				rows={2}
 				name="icon"
 				helpText={i18n.t("Should be a valid svg string")}
 				label={i18n.t("Icon")}
-			/>
+			/> */}
 		</form>
 	);
 }

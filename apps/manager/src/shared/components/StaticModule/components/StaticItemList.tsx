@@ -25,10 +25,10 @@ const columns: SimpleTableColumn[] = [
 		label: i18n.t("Content"),
 		key: "content",
 	},
-	{
-		label: i18n.t("Icon"),
-		key: "icon",
-	},
+	// {
+	// 	label: i18n.t("Icon"),
+	// 	key: "icon",
+	// },
 	{
 		label: i18n.t("Actions"),
 		key: "actions",
@@ -47,18 +47,15 @@ export function StaticItemList() {
 			item?.shortDescription.length > 500
 				? item?.shortDescription.slice(0, 500) + "..."
 				: item?.shortDescription,
-		content: RichContent({
-					content: item?.content ?? "",
-					maxLength: 500,
-				}),
-		icon: (
-			<div
-				style={{ borderRadius: "10%" }}
-				className="p-4 flex items-center justify-center"
-			>
-				<StyledIcon height={48} width={48} icon={item.icon} />
-			</div>
-		),
+		content: (<RichContent content={item?.content ?? ""}  />),
+		// icon: (
+		// 	<div
+		// 		style={{ borderRadius: "10%" }}
+		// 		className="p-4 flex items-center justify-center"
+		// 	>
+		// 		<StyledIcon height={48} width={48} icon={item.icon} />
+		// 	</div>
+		// ),
 		actions: (
 			<Button
 				icon={<IconView16 />}
