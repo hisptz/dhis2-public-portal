@@ -35,7 +35,7 @@ Configure in General configuration :
 - **Title**
 - **Short Description**
 - **Description**
-- **Has Groups** (Checkbox – default: unchecked) Leave unchecked for flat/non-grouped layout.
+- **Categorize visualization into groups** (Checkbox – default: unchecked) Leave unchecked for flat/non-grouped layout.
 
 ### Adding Visualizations
 
@@ -78,9 +78,9 @@ After updating, You will be navigated back to the module.
 
 ### Group Setup
 
-Enable **Has Groups** checkbox
+Enable **Categorize visualization into groups** checkbox
 
-When **Has Groups** is **checked** additional UI elements will appear:
+When **Categorize visualization into groups** is **checked** additional UI elements will appear:
 
 #### Group Selector
 
@@ -135,7 +135,7 @@ Modules can be deleted entirely from the module overview screen.
 | --------------------- | --------------------------------------------------- |
 | **Create Module**     | Define label, type, and ID                          |
 | **Configure Layout**  | Customize visualization layout for multiple screens |
-| **Has Groups**        | Toggle between grouped and flat visualizations      |
+| **Categorize visualization into groups**        | Toggle between grouped and flat visualizations      |
 | **Add/Edit/Delete**   | Full CRUD control on visualizations and groups      |
 | **Responsive Design** | Layouts optimized per screen size                   |
 

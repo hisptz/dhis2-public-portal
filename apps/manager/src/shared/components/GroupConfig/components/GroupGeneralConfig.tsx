@@ -3,6 +3,7 @@ import { RHFTextInputField } from "@hisptz/dhis2-ui";
 import i18n from "@dhis2/d2-i18n";
 import { useGroupNamePrefix } from "../hooks/route";
 import { RHFRichTextAreaField } from "../../Fields/RHFRichTextAreaField";
+import { RHFTextAreaField } from "../../Fields/RHFTextAreaField";
 
 export function GroupGeneralConfig() {
 	const namePrefix = useGroupNamePrefix();
@@ -18,9 +19,9 @@ export function GroupGeneralConfig() {
 				name={`${namePrefix}.shortName`}
 				label={i18n.t("Short name")}
 			/>
-			<RHFRichTextAreaField
+			<RHFTextAreaField
 				autoGrow
-				rows={2}
+				rows={4}
 				name={`${namePrefix}.shortDescription`}
 				label={i18n.t("Short description")}
 			/>

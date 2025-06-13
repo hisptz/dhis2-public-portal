@@ -235,14 +235,14 @@ export function MapVisComponent({
 							<div className="flex-1 h-full">
 								<MapTableComponent
 									fullScreen={handler.active}
-									orgUnitSelection={
-										orgUnitSelectionState ?? {
-											orgUnits: [],
-										}
+									orgUnitSelection={orgUnitSelectionState}
+									periodSelection={
+										periodState
+											? {
+													periods: periodState,
+												}
+											: undefined
 									}
-									periodSelection={{
-										periods: periodState ?? [],
-									}}
 									setRef={tableRef}
 									mapConfig={mapConfig}
 								/>

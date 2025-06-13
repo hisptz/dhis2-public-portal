@@ -1,12 +1,25 @@
 import { ConnectionStatus } from "@/types/connection";
 
-export class HttpClient {
-	baseURL: string;
+export class D2HttpClient {
+	baseURL: URL;
 	pat: string;
 
 	constructor(baseURL: string, pat: string) {
-		this.baseURL = baseURL;
+		this.baseURL = D2HttpClient.sanitizeURL(baseURL);
 		this.pat = pat;
+	}
+
+	static sanitizeURL(baseURL: string): URL {
+		if (baseURL.endsWith("/api") || baseURL.endsWith("/api/")) {
+			if (baseURL.endsWith("/")) {
+				return new URL(baseURL);
+			}
+			return new URL(`${baseURL}/`);
+		}
+		if (baseURL.endsWith("/")) {
+			return new URL("api/", baseURL);
+		}
+		return new URL("api/", `${baseURL}/`);
 	}
 
 	async getIcon(path: string) {

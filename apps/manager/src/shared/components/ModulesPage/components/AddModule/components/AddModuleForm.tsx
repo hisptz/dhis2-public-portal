@@ -65,6 +65,14 @@ export function AddModuleForm({
 			) {
 				set(data, ["config", "grouped"], false);
 			}
+			if (data.type === ModuleType.VISUALIZATION) {
+				set(data, ["config", "layouts"], {
+					lg: [],
+					md: [],
+					sm: [],
+					xs: [],
+				});
+			}
 
 			await moduleSchema.parseAsync(data);
 			await createModule(data);

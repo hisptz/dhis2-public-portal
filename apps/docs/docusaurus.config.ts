@@ -60,6 +60,12 @@ const config: Config = {
 					position: "left",
 					label: "Configuration",
 				},
+				{
+					type: "docSidebar",
+					sidebarId: "developmentSidebar",
+					position: "left",
+					label: "Development guide",
+				},
 				// {
 				// 	type: "docSidebar",
 				// 	sidebarId: "guidelinesSidebar",
@@ -86,6 +92,10 @@ const config: Config = {
 						{
 							label: "Configuration",
 							to: "/docs/configuration/intro",
+						},
+						{
+							label: "Development guide",
+							to: "/docs/development/intro",
 						},
 						// {
 						// 	label: "Guidelines",

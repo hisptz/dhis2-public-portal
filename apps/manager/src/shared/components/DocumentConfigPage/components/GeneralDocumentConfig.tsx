@@ -3,7 +3,6 @@ import i18n from "@dhis2/d2-i18n";
 import React, { useEffect } from "react";
 import { ItemDisplayConfig } from "./ItemDisplay";
 import { useFormContext, useWatch } from "react-hook-form";
-import { DocumentsModule } from "@packages/shared/schemas";
 
 export function GeneralDocumentConfig() {
 	const { setValue, getValues } = useFormContext();
@@ -37,9 +36,9 @@ export function GeneralDocumentConfig() {
 			<RHFCheckboxField
 				name="config.grouped"
 				helpText={i18n.t(
-					"Enable to organize documents into categories or collections. Each group can contain multiple related files."
+					"Enable to organize documents into categories or collections. Each group can contain multiple related files.",
 				)}
-				label={i18n.t("Has groups")}
+				label={i18n.t("Categorize documents into groups")}
 			/>
 		</div>
 	);
