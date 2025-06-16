@@ -1,6 +1,6 @@
 import { SimpleTable, SimpleTableColumn } from "@hisptz/dhis2-ui";
 import i18n from "@dhis2/d2-i18n";
-import React, { use, useMemo } from "react";
+import React, {useMemo } from "react";
 import { Button, ButtonStrip, IconView16 } from "@dhis2/ui";
 import { useNavigate } from "@tanstack/react-router";
 import { useModules } from "../providers/ModulesProvider";
