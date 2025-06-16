@@ -37,7 +37,6 @@ export async function DataVisualization({
 	const { visualizationConfig } = await getDataVisualization(config);
 	const { appearanceConfig } = (await getAppearanceConfig())!;
 	const colors = appearanceConfig.colors.chartColors;
-	const loaderColor = appearanceConfig.colors.primary;
 
 	if (!visualizationConfig) {
 		console.error(
@@ -64,7 +63,6 @@ export async function DataVisualization({
 
 	return (
 		<DataVisComponent
-			loaderColor = {loaderColor}
 			colors={colors}
 			disableActions={disableActions}
 			config={config}

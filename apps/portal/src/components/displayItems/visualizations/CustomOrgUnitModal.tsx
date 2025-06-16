@@ -71,7 +71,7 @@ export function CustomOrgUnitModal({
 
 				{orgUnitLoading ? (
 					<div className="flex justify-center items-center h-full">
-						<Loader size={30} color="blue" />
+						<Loader size="md" />
 					</div>
 				) : (
 					<div className="flex justify-center items-center h-full pb-2">

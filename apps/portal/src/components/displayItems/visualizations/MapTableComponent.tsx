@@ -27,7 +27,7 @@ const NoSSRDHIS2Table = dynamic(
 		loading: () => {
 			return (
 				<div className="w-full h-full flex items-center justify-center min-h-[400px]">
-					<Loader size={30} color="blue" />
+					<Loader size="md" />
 				</div>
 			);
 		},
@@ -125,7 +125,7 @@ export function MapTableComponent({
 	if (loading) {
 		return (
 			<div className="flex justify-center items-center h-full">
-				<Loader color="blue" size={30} />{" "}
+				<Loader size="md" />{" "}
 			</div>
 		);
 	}
