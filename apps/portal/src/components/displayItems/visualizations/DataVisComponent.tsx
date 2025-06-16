@@ -31,11 +31,13 @@ export function DataVisComponent({
 	config,
 	disableActions,
 	colors,
+	loaderColor
 }: {
 	visualizationConfig: VisualizationConfig;
 	config: VisualizationItem;
 	colors: string[];
 	disableActions?: boolean;
+	loaderColor : string
 }) {
 	const { type, orgUnitConfig, periodConfig } = config;
 	const { chartRef, tableRef, setSingleValueRef } = useVisualizationRefs();
@@ -115,7 +117,7 @@ export function DataVisComponent({
 					</div>
 					{loading ? (
 						<div className="flex justify-center items-center h-full">
-							<Loader color="blue" size={30} />{" "}
+							<Loader color={loaderColor} size={30} />{" "}
 						</div>
 					) : analytics ? (
 						showTable ? (
