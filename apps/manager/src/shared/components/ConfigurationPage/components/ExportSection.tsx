@@ -12,7 +12,6 @@ import {
 	DocumentsModuleConfig,
 	MenuItem,
 	ModuleType,
-	StaticModule,
 	StaticModuleConfig,
 } from "@packages/shared/schemas";
 import i18n from "@dhis2/d2-i18n";
@@ -117,7 +116,6 @@ export const ExportSection = ({ setLogs }: ExportSectionProps) => {
 										});
 									}
 								}
-								// Handle static namespaces
 								if (
 									module.type === ModuleType.STATIC &&
 									(module.config as StaticModuleConfig)?.namespace &&
@@ -143,24 +141,20 @@ export const ExportSection = ({ setLogs }: ExportSectionProps) => {
 					);
 				}
 			}
-			// Step 2: Fetch document details and data for each ID
-			const uniqueIds = [...new Set(extractedIds.documents)]; // Remove duplicates
+			const uniqueIds = [...new Set(extractedIds.documents)];
 			for (const id of uniqueIds) {
-				// Fetch document details
 				const details = await fetchDocumentDetails(id, addLog(setLogs));
 				if (details) {
 					documentDetails.push(details);
 				}
 
-				// Fetch document data
-            const docData = await fetchDocumentData(id, details!.name, addLog(setLogs));
+				const docData = await fetchDocumentData(id, details!.name, addLog(setLogs));
 				if (docData && assetsFolder) {
 					assetsFolder.file(docData.filename, docData.data);
 				}
 			}
 
-			// Step 3: Save extracted IDs and document details
-			zip.file("documents_info.json", JSON.stringify({ documents: documentDetails }, null, 2));
+			zip.file("documents.json", JSON.stringify({ documents: documentDetails }, null, 2));
 
 			const blob = await zip.generateAsync({ type: "blob" });
 			const link = document.createElement("a");
