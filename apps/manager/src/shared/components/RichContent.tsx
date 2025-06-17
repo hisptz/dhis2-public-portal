@@ -1,35 +1,23 @@
 import React from "react";
-import JsxParser from "react-jsx-parser";
 import DOMPurify from "dompurify";
-import truncate from "html-truncate";
-
 interface RichContentProps {
   content: string;
-  maxLength?: number; 
+  maxLength?: number;
 }
 
 export function RichContent({ content, maxLength = 200 }: RichContentProps) {
-  const sanitizedContent = DOMPurify.sanitize(content, {
-    FORBID_TAGS: [],
-    FORBID_ATTR: ['ng-version', '_nghost-ng-c*', 'data-sourcepos'],
+  const preprocessedContent = content.replace(/<\/?root>/gi, "");
+
+  const sanitizedContent = DOMPurify.sanitize(preprocessedContent, {
+    FORBID_TAGS: ["script", "style", "root"],
+    FORBID_ATTR: ["ng-version", "_nghost-ng-c*", "data-sourcepos"],
+    RETURN_DOM: false,
   });
 
-  const truncatedContent = maxLength
-    ? truncate(sanitizedContent, maxLength, { ellipsis: '...' })
-    : sanitizedContent;
+  const plainText = sanitizedContent.replace(/<[^>]+>/g, "");
+  const truncatedText = maxLength
+    ? plainText.slice(0, maxLength) + (plainText.length > maxLength ? "..." : "")
+    : plainText;
 
-  return (
-    <>
-      <JsxParser
-        autoCloseVoidElements
-        components={{
-          SourceFootnote: ({ children, ...props }: { children: React.ReactNode }) => <sup {...props}>{children}</sup>,
-          SourcesCarouselInline: () => <span>[Sources]</span>,
-        }}
-        renderError={({ error }) => <div>{error}</div>}
-        onError={(error) => console.error("JsxParser error:", error)}
-        jsx={truncatedContent}
-      />
-    </>
-  );
+  return <p>{truncatedText}</p>;
 }
