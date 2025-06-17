@@ -5,8 +5,8 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
-"POT-Creation-Date: 2025-06-17T07:18:18.876Z\n"
-"PO-Revision-Date: 2025-06-17T07:18:18.876Z\n"
+"POT-Creation-Date: 2025-06-17T08:55:30.404Z\n"
+"PO-Revision-Date: 2025-06-17T08:55:30.404Z\n"
 
 msgid "Could not get Appearance configurations"
 msgstr "Could not get Appearance configurations"
@@ -312,6 +312,9 @@ msgstr "Asset file {{path}} not found in ZIP"
 msgid "Failed to upload document {{name}}"
 msgstr "Failed to upload document {{name}}"
 
+msgid "Document"
+msgstr "Document"
+
 msgid "Invalid or empty documents.json"
 msgstr "Invalid or empty documents.json"
 
@@ -323,6 +326,9 @@ msgstr "Select ZIP file"
 
 msgid "No file uploaded yet"
 msgstr "No file uploaded yet"
+
+msgid "importFile"
+msgstr "importFile"
 
 msgid "Upload a ZIP file containing Datastore JSON configurations."
 msgstr "Upload a ZIP file containing Datastore JSON configurations."
@@ -375,14 +381,11 @@ msgstr "Add sub item"
 msgid "Path"
 msgstr "Path"
 
-msgid "Update  s"
-msgstr "Update  s"
-
 msgid "Create"
 msgstr "Create"
 
-msgid "Confirm exitss"
-msgstr "Confirm exitss"
+msgid "Confirm exit"
+msgstr "Confirm exit"
 
 msgid "Are you sure you want to close this form?. All changes will be lost"
 msgstr "Are you sure you want to close this form?. All changes will be lost"
@@ -390,8 +393,8 @@ msgstr "Are you sure you want to close this form?. All changes will be lost"
 msgid " menu item"
 msgstr " menu item"
 
-msgid "Only SVG icons are supported sssssss"
-msgstr "Only SVG icons are supported sssssss"
+msgid "Only SVG icons are supported"
+msgstr "Only SVG icons are supported"
 
 msgid "Icon"
 msgstr "Icon"
@@ -440,9 +443,6 @@ msgstr "Reset"
 
 msgid "Sort menu items"
 msgstr "Sort menu items"
-
-msgid "Confirm exit"
-msgstr "Confirm exit"
 
 msgid "You have unsaved changes to the sort order. Are you sure you want to close?"
 msgstr "You have unsaved changes to the sort order. Are you sure you want to close?"

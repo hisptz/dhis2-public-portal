@@ -46,8 +46,6 @@ export const ExportSection = ({ setLogs }: ExportSectionProps) => {
 							key,
 							addLog(setLogs),
 						);
-						console.log(
-							`Exporting key: ${key} with value: ${value}`,)
 						if (value) {
 							data[key] = value;
 							if (key === DatastoreKeys.APPEARANCE) {
