@@ -39,8 +39,6 @@ export function WelcomePage() {
 			<div className="w-full text-right mt-auto text-sm text-gray-400">
 				<a
 					href={Links.DOCUMENTATION}
-					target="_blank"
-					rel="noopener noreferrer"
 				>
 					{i18n.t("Read the")}{" "}
 					<strong className="text-gray-500">
