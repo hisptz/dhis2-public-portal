@@ -36,9 +36,11 @@ export const LogSection = ({ logs }: LogSectionProps) => {
 						warning={log.type === "warning"}
 						title={
 							log.type === "info-low"
-								? "Detail"
-								: log.type.charAt(0).toUpperCase() +
-									log.type.slice(1)
+								? i18n.t("Detail")
+								: i18n.t(
+										log.type.charAt(0).toUpperCase() +
+											log.type.slice(1),
+								  )
 						}
 						className={index > 0 ? "mt-2" : ""}
 					>
