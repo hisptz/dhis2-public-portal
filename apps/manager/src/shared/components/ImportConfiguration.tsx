@@ -84,7 +84,7 @@ export function ImportConfiguration({ setImportLoading, onStatusChange, onProgre
                                 const fileResourceId = await uploadFile(fileObject, doc.name, (message, type) => {
                                     statuses.push({
                                         status: type === 'error' ? 'error' : 'created',
-                                        label: `File Resource: ${doc.name}`,
+                                        label: i18n.t('File Resource: {{name}}', { name: doc.name }),
                                         message: i18n.t(message),
                                     });
                                 });
@@ -93,7 +93,7 @@ export function ImportConfiguration({ setImportLoading, onStatusChange, onProgre
                                 } else {
                                     statuses.push({
                                         status: 'error',
-                                        label: `File Resource: ${doc.name}`,
+                                        label: i18n.t('File Resource: {{name}}', { name: doc.name }),
                                         message: i18n.t('Failed to upload file resource for {{name}}', { name: doc.name }),
                                     });
                                     onStatusChange(statuses);
@@ -102,7 +102,7 @@ export function ImportConfiguration({ setImportLoading, onStatusChange, onProgre
                             } else {
                                 statuses.push({
                                     status: 'error',
-                                    label: `File Resource: ${doc.name}`,
+                                    label: i18n.t('File Resource: {{name}}', { name: doc.name }),
                                     message: i18n.t('Asset file {{path}} not found in ZIP', { path: assetFilePath }),
                                 });
                                 onStatusChange(statuses);
@@ -112,14 +112,14 @@ export function ImportConfiguration({ setImportLoading, onStatusChange, onProgre
                             const success = await uploadDocument(doc, (message, type) => {
                                 statuses.push({
                                     status: type === 'error' ? 'error' : 'created',
-                                    label: `Document: ${doc.name}`,
+                                    label: i18n.t('Document: {{name}}', { name: doc.name }),
                                     message: i18n.t(message),
                                 });
                             });
                             if (!success) {
                                 statuses.push({
                                     status: 'error',
-                                    label: `Document: ${doc.name}`,
+                                    label: i18n.t('Document: {{name}}', { name: doc.name }),
                                     message: i18n.t('Failed to upload document {{name}}', { name: doc.name }),
                                 });
                                 onStatusChange(statuses);
@@ -129,7 +129,7 @@ export function ImportConfiguration({ setImportLoading, onStatusChange, onProgre
                 } else {
                     statuses.push({
                         status: 'error',
-                        label: 'Documents',
+                        label: i18n.t('Document'),
                         message: i18n.t('Invalid or empty documents.json'),
                     });
                     onStatusChange(statuses);
@@ -137,7 +137,7 @@ export function ImportConfiguration({ setImportLoading, onStatusChange, onProgre
             } else {
                 statuses.push({
                     status: 'error',
-                    label: 'Documents',
+                    label: i18n.t('Document'),
                     message: i18n.t('documents.json not found in ZIP'),
                 });
                 onStatusChange(statuses);
@@ -192,7 +192,7 @@ export function ImportConfiguration({ setImportLoading, onStatusChange, onProgre
             setImportLoading(false);
             onProgressChange(0);
         }
-    }, [selectedFile, setImportLoading, onStatusChange, closeModal, onProgressChange, setValue]);
+    }, [selectedFile, closeModal, setImportLoading, onStatusChange, onProgressChange, deleteDocument, uploadDocument, uploadFile, setValue]);
 
     return (
         <>
@@ -206,7 +206,7 @@ export function ImportConfiguration({ setImportLoading, onStatusChange, onProgre
                             onChange={handleFileChange}
                             accept=".zip,application/zip"
                             placeholder={selectedFile?.name || i18n.t('No file uploaded yet')}
-                            name="importFile"
+                            name={i18n.t("importFile")}
                             helpText={i18n.t('Upload a ZIP file containing Datastore JSON configurations.')}
                             buttonLabel={i18n.t('Choose a file')}
                             className="mb-2"
