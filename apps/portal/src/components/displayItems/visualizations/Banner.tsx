@@ -1,9 +1,8 @@
 "use client";
 
-import {SingleValue, SingleValueVisualizer,} from "@hisptz/dhis2-analytics";
+import { SingleValue, SingleValueVisualizer } from "@hisptz/dhis2-analytics";
 import dynamic from "next/dynamic";
-import { Loader } from '@mantine/core';
-
+import { Loader } from "@mantine/core";
 
 export interface BannerProps {
 	title: string;
@@ -20,7 +19,7 @@ const NoSSRSingleValue = dynamic(
 		loading: () => {
 			return (
 				<div className="w-full h-full flex items-center justify-center min-h-[400px]">
-					<Loader color="blue" />
+					<Loader size="md" />
 				</div>
 			);
 		},
@@ -28,6 +27,5 @@ const NoSSRSingleValue = dynamic(
 );
 
 export function Banner({ title, items }: BannerProps) {
-
 	return <NoSSRSingleValue title={title} singleValueItems={items} />;
 }
