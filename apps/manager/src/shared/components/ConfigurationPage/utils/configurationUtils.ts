@@ -14,6 +14,25 @@ export interface DocumentDetails {
     attachment: string;
 }
 
+export const getContentTypeFromExtension = (filename: string): string => {
+  const extension = filename.split('.').pop()?.toLowerCase();
+  const mimeTypes: Record<string, string> = {
+    svg: 'image/svg+xml',
+    pdf: 'application/pdf',
+    png: 'image/png',
+    jpg: 'image/jpeg',
+    jpeg: 'image/jpeg',
+    gif: 'image/gif',
+    doc: 'application/msword',
+    docx: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+    xls: 'application/vnd.ms-excel',
+    xlsx: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+    txt: 'text/plain',
+  };
+  return extension && mimeTypes[extension] ? mimeTypes[extension] : 'application/octet-stream';
+};
+
+
 export const useConfiguration = () => {
     const engine = useDataEngine();
 
@@ -156,7 +175,48 @@ export const useConfiguration = () => {
         }
     };
 
+    const deleteDocument = async (
+        document: DocumentDetails,
+        addLog?: (message: string, type: LogEntry['type']) => void
+    ): Promise<boolean> => {
+        try {
+            await engine.mutate({
+                resource: `documents`,
+                type: 'delete',
+                id: document.id,
+            });
+            return true;
+        } catch (error) {
+            if (error.details?.httpStatusCode === 404) {
+                if (addLog) {
+                    addLog(`Document '${document.name}' not found. No action taken.`, 'info-low');
+                }
+                return true;
+            }
+            if (addLog) {
+                addLog(`Error deleting document ${document.id} (${document.name}): ${error.message}`, 'error');
+            }
+            return false;
+        }
+    };
 
+    const uploadDocument = async (
+        document: DocumentDetails,
+        addLog: (message: string, type: LogEntry['type']) => void
+    ): Promise<boolean> => {
+        try {
+            await engine.mutate({
+                resource: `documents`,
+                type: 'create',
+                data: document,
+            });
+            addLog(`Successfully uploaded document ${document.name}`, 'info-low');
+            return true;
+        } catch (error) {
+            addLog(`Error uploading document ${document.id} (${document.name}): ${error.message}`, 'error');
+            return false;
+        }
+    };
 
-    return { getKeysInNamespace, getValue, setValue, deleteKey, clearNamespace, addLog, fetchDocumentDetails, fetchDocumentData };
+    return { getKeysInNamespace, getValue, setValue, deleteKey, clearNamespace, addLog, fetchDocumentDetails, fetchDocumentData, uploadDocument, deleteDocument };
 };
