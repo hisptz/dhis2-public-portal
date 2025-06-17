@@ -137,12 +137,6 @@ describe("Modules Page", () => {
 			});
 
 		cy.get('input[name="config.title"]').type("New Test Module");
-		cy.get(
-			':nth-child(1) > [data-test="dhis2-uicore-field-content"] > .jodit-react-container > .jodit-container > .jodit-workplace > .jodit-wysiwyg',
-		).type("Short description");
-		cy.get(
-			':nth-child(2) > [data-test="dhis2-uicore-field-content"] > .jodit-react-container > .jodit-container > .jodit-workplace > .jodit-wysiwyg',
-		).type("Full desc");
 
 		cy.contains("button", "Manage visualizations").click();
 		cy.contains("button", "Add a new visualization").should("be.visible").click();
