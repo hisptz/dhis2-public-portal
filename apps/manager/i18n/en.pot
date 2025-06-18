@@ -5,8 +5,8 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
-"POT-Creation-Date: 2025-06-17T05:49:25.523Z\n"
-"PO-Revision-Date: 2025-06-17T05:49:25.524Z\n"
+"POT-Creation-Date: 2025-06-18T08:16:08.387Z\n"
+"PO-Revision-Date: 2025-06-18T08:16:08.387Z\n"
 
 msgid "Could not get Appearance configurations"
 msgstr "Could not get Appearance configurations"
@@ -342,6 +342,15 @@ msgstr "Continue to application"
 msgid "Try again"
 msgstr "Try again"
 
+msgid "Read the"
+msgstr "Read the"
+
+msgid "Documentation"
+msgstr "Documentation"
+
+msgid "to get started"
+msgstr "to get started"
+
 msgid "Add menu item"
 msgstr "Add menu item"
 
@@ -485,9 +494,6 @@ msgstr "There are no modules configuration present"
 
 msgid "Only the default module is currently configured"
 msgstr "Only the default module is currently configured"
-
-msgid "Read the"
-msgstr "Read the"
 
 msgid "documentation"
 msgstr "documentation"
