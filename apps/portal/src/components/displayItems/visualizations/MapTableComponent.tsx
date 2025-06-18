@@ -1,7 +1,11 @@
 "use client";
 
-import { AnalyticsData, MapConfig } from "@packages/shared/schemas";
-import { flattenDeep } from "lodash";
+import {
+	AnalyticsData,
+	MapConfig,
+	MapLayerType,
+} from "@packages/shared/schemas";
+import { flattenDeep, head } from "lodash";
 import { OrgUnitSelection } from "@hisptz/dhis2-utils";
 import { getOrgUnitsSelection } from "@/utils/orgUnits";
 
@@ -10,7 +14,8 @@ import { useDataQuery } from "@dhis2/app-runtime";
 import { Loader } from "@mantine/core";
 import i18n from "@dhis2/d2-i18n";
 import dynamic from "next/dynamic";
-import { RefObject } from "react";
+import { RefObject, useMemo } from "react";
+import { getOrgUnitSelectionFromIds } from "@packages/ui/visualizations";
 
 const NoSSRDHIS2Table = dynamic(
 	() =>
@@ -22,7 +27,7 @@ const NoSSRDHIS2Table = dynamic(
 		loading: () => {
 			return (
 				<div className="w-full h-full flex items-center justify-center min-h-[400px]">
-					<Loader size={30} color="blue" />
+					<Loader size="md" />
 				</div>
 			);
 		},
@@ -63,19 +68,52 @@ export function MapTableComponent({
 }: {
 	mapConfig: MapConfig;
 	setRef: RefObject<HTMLTableElement | null>;
-	orgUnitSelection: OrgUnitSelection;
+	orgUnitSelection?: OrgUnitSelection;
 	fullScreen: boolean;
-	periodSelection: {
+	periodSelection?: {
 		periods: string[];
 	};
 }) {
+	const activePeriodSelection = useMemo(() => {
+		if (periodSelection) {
+			return periodSelection;
+		}
+		//This is a hack for now as there may be differences in map view periods
+		const periods = head(
+			mapConfig.mapViews.filter((view) =>
+				view.layer.includes(MapLayerType.THEMATIC),
+			),
+		)!
+			.filters.map(({ items }) => items.map(({ id }) => id))
+			.flat();
+		return {
+			periods,
+		};
+	}, [mapConfig.mapViews, periodSelection]);
+
+	const activeOrgUnitSelection = useMemo(() => {
+		if (orgUnitSelection) {
+			return orgUnitSelection;
+		}
+		const orgUnitConfig = head(
+			mapConfig.mapViews.filter((view) =>
+				view.layer.includes(MapLayerType.THEMATIC),
+			),
+		)!
+			.rows.map(({ items }) => items.map(({ id }) => id))
+			.flat();
+
+		return getOrgUnitSelectionFromIds(orgUnitConfig);
+	}, [mapConfig.mapViews, orgUnitSelection]);
+
 	const dx = flattenDeep(
 		mapConfig.mapViews.map((view) =>
 			view.columns.map(({ items }) => items.map(({ id }) => id)),
 		),
 	);
-	const ou = getOrgUnitsSelection(orgUnitSelection);
-	const pe = periodSelection.periods;
+
+	const ou = getOrgUnitsSelection(activeOrgUnitSelection);
+	const pe = activePeriodSelection.periods;
 	const { loading, data, error } = useDataQuery<ResponseType>(query, {
 		variables: {
 			ou,
@@ -87,7 +125,7 @@ export function MapTableComponent({
 	if (loading) {
 		return (
 			<div className="flex justify-center items-center h-full">
-				<Loader color="blue" size={30} />{" "}
+				<Loader size="md" />{" "}
 			</div>
 		);
 	}

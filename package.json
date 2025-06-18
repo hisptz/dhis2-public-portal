@@ -47,5 +47,8 @@
   },
   "repository": {
     "url": "git@github.com:hisptz/dhis2-public-portal.git"
+  },
+  "dependencies": {
+    "@semantic-release/npm": "^12.0.1"
   }
 }
