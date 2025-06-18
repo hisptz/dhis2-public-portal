@@ -118,7 +118,7 @@ export function DataVisComponent({
 					</div>
 					{loading ? (
 						<div className="flex justify-center items-center h-full">
-							<Loader color="blue" size={30} />{" "}
+							<Loader size="md" />{" "}
 						</div>
 					) : analytics ? (
 						showTable ? (

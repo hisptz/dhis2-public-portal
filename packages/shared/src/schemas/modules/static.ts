@@ -4,7 +4,7 @@ import { z } from "zod";
 export const staticItemSchema = z.object({
 	id: z.string(),
 	title: z.string(),
-	icon: z.string(),
+	icon: z.string().optional(),
 	shortDescription: z.string(),
 	content: z.string(),
 });

@@ -17,7 +17,6 @@ export function FooterStaticContent({
 		<Box
 			style={{
 				width: "100%",
-				maxHeight: 180,
 			}}
 		>
 			<Title order={5}>{title}</Title>

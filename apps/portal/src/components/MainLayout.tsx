@@ -1,19 +1,14 @@
 "use client";
 
-import {
-	AppAppearanceConfig,
-	AppMenuConfig,
-	AppMeta,
-	MenuPosition,
-} from "@packages/shared/schemas";
-import { AppShell, Center, Loader, useMantineTheme } from "@mantine/core";
-import { AppHeader } from "@/components/Header/Header";
-import { useDisclosure } from "@mantine/hooks";
-import { Suspense, useState } from "react";
-import { Footer } from "@/components/Footer/Footer";
-import { SideAppMenu } from "@/components/AppMenu/SideAppMenu";
-import { useMediaQuery } from "usehooks-ts";
-import { useGetImageUrl } from "@/utils/client/images";
+import {AppAppearanceConfig, AppMenuConfig, AppMeta, MenuPosition,} from "@packages/shared/schemas";
+import {AppShell, Center, Loader, useMantineTheme} from "@mantine/core";
+import {AppHeader} from "@/components/Header/Header";
+import {useDisclosure} from "@mantine/hooks";
+import {Suspense, useCallback, useEffect, useRef, useState} from "react";
+import {Footer} from "@/components/Footer/Footer";
+import {SideAppMenu} from "@/components/AppMenu/SideAppMenu";
+import {useMediaQuery} from "usehooks-ts";
+import {useGetImageUrl} from "@/utils/client/images";
 
 const DEFAULT_HEADER_HEIGHT = 138;
 
@@ -38,69 +33,132 @@ export function MainLayout({
 	const isLargerThanSm = useMediaQuery(
 		`(min-width: ${theme.breakpoints.sm})`,
 	);
-
+	const [navbarWidth, setNavbarWidth] = useState(0);
 	const getImageUrl = useGetImageUrl();
 
 	const logo = getImageUrl(metadata.icon);
 
+	const footerRef = useRef<HTMLDivElement>(null);
+	const [footerHeight, setFooterHeight] = useState(0);
+
+	const remToPx = (rem: string) => parseFloat(rem) * 16;
+
+	const getNavbarWidth = () => {
+		if (!hasMenu || hasMenuOnHeader) return 0;
+		if (isLargerThanSm) {
+			if (window.innerWidth >= remToPx(theme.breakpoints.lg)) {
+				return isOpen ? 300 : 70;
+			} else if (window.innerWidth >= remToPx(theme.breakpoints.md)) {
+				return isOpen ? 240 : 70;
+			} else {
+				return isOpen ? 200 : 70;
+			}
+		}
+		return 0;
+	};
+
+	useEffect(() => {
+		if (footerRef.current) {
+			const observer = new ResizeObserver(() => {
+				setFooterHeight(footerRef.current?.offsetHeight ?? 0);
+			});
+			observer.observe(footerRef.current);
+			return () => observer.disconnect();
+		}
+	}, []);
+
+	const updateNavbarWidth = useCallback(() => {
+		const width = getNavbarWidth();
+		setNavbarWidth(width);
+	}, [isOpen, isLargerThanSm, hasMenu, hasMenuOnHeader]);
+
+	useEffect(() => {
+		updateNavbarWidth();
+		window.addEventListener("resize", updateNavbarWidth);
+		return () => window.removeEventListener("resize", updateNavbarWidth);
+	}, [updateNavbarWidth]);
+
 	return (
-		<AppShell
-			header={{
-				height: {
-					base: hasMenuOnHeader ? headerHeight + 50 : headerHeight,
-				},
-			}}
-			footer={{ height: { base: 100, md: 100, lg: 240 } }}
-			navbar={{
-				width: {
-					base: isOpen ? 200 : 70,
-					md: isOpen ? 240 : 70,
-					lg: isOpen ? 300 : 70,
-				},
-				breakpoint: "sm",
-				collapsed: {
-					mobile: !opened,
-					desktop: !hasMenu || hasMenuOnHeader,
-				},
-			}}
-			padding="md"
-		>
-			<AppHeader
-				metadata={metadata}
-				menuConfig={menuConfig}
-				opened={opened}
-				toggle={toggle}
-				config={appearanceConfig!}
-			/>
-			{hasMenu && (
-				<SideAppMenu
+		<div className="relative min-h-screen bg-[#F9F9FA]">
+			<AppShell
+				header={{
+					height: {
+						base: hasMenuOnHeader
+							? headerHeight + 50
+							: headerHeight,
+					},
+				}}
+				navbar={{
+					width: {
+						base: isOpen ? 200 : 70,
+						md: isOpen ? 240 : 70,
+						lg: isOpen ? 300 : 70,
+					},
+					breakpoint: "sm",
+					collapsed: {
+						mobile: !opened,
+						desktop: !hasMenu || hasMenuOnHeader,
+					},
+				}}
+				padding="md"
+			>
+				<AppHeader
+					metadata={metadata}
 					menuConfig={menuConfig}
-					isOpen={
-						menuConfig.collapsible
-							? isLargerThanSm
-								? isOpen
-								: opened
-							: true
-					}
-					setOpen={setOpen}
+					opened={opened}
+					toggle={toggle}
+					config={appearanceConfig!}
 				/>
-			)}
-			<AppShell.Main style={{ background: "#F9F9FA", paddingBottom: 16 }}>
-				<Suspense
-					fallback={
-						<Center>
-							<Loader />
-						</Center>
-					}
+				{hasMenu && (
+					<SideAppMenu
+						menuConfig={menuConfig}
+						isOpen={
+							menuConfig.collapsible
+								? isLargerThanSm
+									? isOpen
+									: opened
+								: true
+						}
+						setOpen={setOpen}
+					/>
+				)}
+
+				<AppShell.Main
+					style={{
+						background: "#F9F9FA",
+						marginBottom: footerHeight,
+						position: "relative",
+						zIndex: 10,
+					}}
 				>
-					{children}
-				</Suspense>
-			</AppShell.Main>
-			<Footer
-				logo={logo}
-				header={appearanceConfig!.header}
-				config={appearanceConfig!.footer}
-			/>
-		</AppShell>
+					<Suspense
+						fallback={
+							<Center>
+								<Loader />
+							</Center>
+						}
+					>
+						{children}
+					</Suspense>
+				</AppShell.Main>
+			</AppShell>
+
+			<div
+				ref={footerRef}
+				style={{
+					position: "fixed",
+					bottom: 0,
+					left: navbarWidth,
+					width: `calc(100% - ${navbarWidth}px)`,
+					zIndex: 0,
+				}}
+			>
+				<Footer
+					logo={logo}
+					header={appearanceConfig!.header}
+					config={appearanceConfig!.footer}
+				/>
+			</div>
+		</div>
 	);
 }
