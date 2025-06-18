@@ -13,7 +13,6 @@ import { getAppearanceConfig } from "@/utils/config/appConfig";
 import { env } from "@/utils/env";
 import { dhis2HttpClient } from "@/utils/api/dhis2";
 import { DHIS2ConnectionError } from "@/components/DHIS2ConnectionError";
-import { getSystemInfo } from "@/utils/systemInfo";
 
 export async function generateMetadata() {
 	return await getAppMetadata();
@@ -29,10 +28,7 @@ export default async function RootLayout({
 	if (connectionStatus.status !== "OK") {
 		return <DHIS2ConnectionError error={connectionStatus} />;
 	}
-
 	const config = await getAppearanceConfig();
-	const systemInfo = await getSystemInfo();
-	const [, minor] = systemInfo?.version.split(".") ?? [];
 	const contextPath = env.CONTEXT_PATH ?? "";
 
 	return (
@@ -43,10 +39,7 @@ export default async function RootLayout({
 			<body>
 				<Providers config={config?.appearanceConfig}>
 					<NavigationBar config={config} />
-					<DHIS2AppProvider
-						apiVersion={minor}
-						contextPath={contextPath}
-					>
+					<DHIS2AppProvider contextPath={contextPath}>
 						{children}
 					</DHIS2AppProvider>
 				</Providers>
