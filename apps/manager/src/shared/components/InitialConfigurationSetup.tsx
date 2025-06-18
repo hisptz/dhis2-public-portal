@@ -15,6 +15,7 @@ import {
 } from "@dhis2/ui";
 import { ImportConfiguration } from "./ImportConfiguration";
 import TemplateCard from "./TemplateCard";
+import { Links } from "../constants/links";
 
 function IconSelector(status: { status: CreateStatus["status"] }) {
 	switch (status.status) {
@@ -122,6 +123,17 @@ export function InitialConfigurationSetup() {
 					onProgressChange={handleProgressChange}
 				/>
 			</div>}
+			<div className="w-full text-right mt-auto text-sm text-gray-400">
+				<a
+					href={Links.DOCUMENTATION}
+				>
+					{i18n.t("Read the")}{" "}
+					<strong className="text-gray-500">
+						{i18n.t("Documentation")}
+					</strong>{" "}
+					{i18n.t("to get started")}
+				</a>		
+				</div>
 		</div>
 	);
 }

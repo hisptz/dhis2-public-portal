@@ -5,8 +5,8 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
-"POT-Creation-Date: 2025-06-13T07:14:13.610Z\n"
-"PO-Revision-Date: 2025-06-13T07:14:13.610Z\n"
+"POT-Creation-Date: 2025-06-17T05:49:25.523Z\n"
+"PO-Revision-Date: 2025-06-17T05:49:25.524Z\n"
 
 msgid "Could not get Appearance configurations"
 msgstr "Could not get Appearance configurations"
@@ -482,6 +482,18 @@ msgstr "There are no modules matching the selected type."
 
 msgid "There are no modules configuration present"
 msgstr "There are no modules configuration present"
+
+msgid "Only the default module is currently configured"
+msgstr "Only the default module is currently configured"
+
+msgid "Read the"
+msgstr "Read the"
+
+msgid "documentation"
+msgstr "documentation"
+
+msgid "to add more modules"
+msgstr "to add more modules"
 
 msgid "Could not save changes"
 msgstr "Could not save changes"

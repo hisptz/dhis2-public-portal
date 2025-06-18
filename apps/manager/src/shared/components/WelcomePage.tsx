@@ -3,6 +3,7 @@ import React from "react";
 import { appMenus } from "../constants/menu";
 import { Card, colors, Divider, IconLaunch16 } from "@dhis2/ui";
 import { Link } from "@tanstack/react-router";
+import { Links } from "../constants/links";
 
 export function WelcomePage() {
 	return (
@@ -34,6 +35,17 @@ export function WelcomePage() {
 						</div>
 					</Card>
 				))}
+			</div>
+			<div className="w-full text-right mt-auto text-sm text-gray-400">
+				<a
+					href={Links.DOCUMENTATION}
+				>
+					{i18n.t("Read the")}{" "}
+					<strong className="text-gray-500">
+						{i18n.t("Documentation")}
+					</strong>{" "}
+					{i18n.t("to get started")}
+				</a>
 			</div>
 		</div>
 	);
