@@ -1,3 +1,11 @@
+## [1.1.2](https://github.com/hisptz/dhis2-public-portal/compare/v1.1.1...v1.1.2) (2025-06-19)
+
+
+### Bug Fixes
+
+* bump app versions to 1.1.1 and update i18n & workflows ([1dcac5e](https://github.com/hisptz/dhis2-public-portal/commit/1dcac5ec0ddfac565a7b343b7adea98fc6d81ddc))
+* improve layout structure and formatting of initial configuration page ([fbf8d82](https://github.com/hisptz/dhis2-public-portal/commit/fbf8d82008a74d5d735f4c32bec8ac491bc81a6c))
+
 ## [1.1.1](https://github.com/hisptz/dhis2-public-portal/compare/v1.1.0...v1.1.1) (2025-06-18)
 
 
