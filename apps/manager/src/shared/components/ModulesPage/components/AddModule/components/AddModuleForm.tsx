@@ -102,6 +102,7 @@ export function AddModuleForm({
 							required
 							name="label"
 							label={i18n.t("Label")}
+							dataTest={"add-module-label"}
 						/>
 						<ModuleTypeSelector />
 						<DashboardIDField />
