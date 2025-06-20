@@ -11,9 +11,11 @@ describe("home", () => {
 	appMenus.forEach((menu) => {
 		it(`should have a nav card with title ${menu.label} page, description, and link to ${menu.href}`, () => {
 			// Click on the menu item
-			cy.contains("h3", menu.label).should("be.visible");
-			cy.contains("p", menu.description).should("be.visible");
-			cy.contains("a", menu.action).should("be.visible");
+			cy.get(`[data-test="${menu.label}-nav-card"]`).within(() => {
+				cy.contains("h3", menu.label).should("be.visible");
+				cy.contains("p", menu.description).should("be.visible");
+				cy.contains("a", menu.action).should("be.visible");
+			});
 			// Verify the page has an h2 header with the menu item label
 		});
 	});
