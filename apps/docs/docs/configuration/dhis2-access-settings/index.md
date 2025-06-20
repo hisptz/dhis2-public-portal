@@ -51,7 +51,11 @@ via the DHIS2 API.
 
 ![App authorities](../../../static/img/dhis2-access-settings/user_role_authorities.png)
 
-> ⚠️ Do **NOT** assign any metadata authorities, tracker, import/export or system authorities.
+:::warning
+
+Do **NOT** assign any metadata authorities, tracker, import/export or system authorities.
+
+:::
 
 4. Scroll all the way down and Click **Create role**.
 
