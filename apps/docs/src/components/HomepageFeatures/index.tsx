@@ -62,7 +62,7 @@ export default function HomepageFeatures(): ReactNode {
 				<div className="text--center margin-bottom--xl">
 						<div>
 							<IconTrophy color="#047260" size={72} />
-							<p className="text-lg font-bold italic">
+							<p>
 								DHIS2 App Winner 2025
 							</p>
 						</div>
