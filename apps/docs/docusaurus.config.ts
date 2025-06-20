@@ -105,7 +105,13 @@ const config: Config = {
 				},
 				{
 					title: "Community",
-					items: [],
+					items: [
+						{
+							label : "DHIS2 Community of Practice",
+							href: "https://community.dhis2.org/t/dhis2-flexiportal-apps/66048",
+
+						}
+					],
 				},
 				{
 					title: "More",

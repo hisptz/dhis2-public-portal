@@ -12,3 +12,16 @@ The DHIS2 Public Portal can be configured through the Manager App. This section 
 - **Modules**: Configure the different modules available in the portal, such as visualizations, documents, and more.
 
 The following sections provide detailed instructions on how to configure each aspect of the portal app.
+
+## Initial configuration Setup
+
+Explain the landing page and the 2 options available
+
+### Setup default configuration
+Predefined configuration
+ - Appearance
+ - General
+ - Menu
+ - Modules
+
+### Import configuration 

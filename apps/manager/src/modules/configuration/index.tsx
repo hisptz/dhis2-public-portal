@@ -10,7 +10,7 @@ export const Route = createFileRoute("/configuration/")({
 
 function RouteComponent() {
 	return (
-		<ModuleContainer title={i18n.t("Configuration Management")}>
+		<ModuleContainer title={i18n.t("Import/Export Configuration")}>
 			<ConfigurationPage />
 		</ModuleContainer>
 	);
