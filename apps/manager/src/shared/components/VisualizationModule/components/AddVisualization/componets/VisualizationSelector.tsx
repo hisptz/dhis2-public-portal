@@ -142,6 +142,7 @@ export function VisSelector() {
 			</SingleSelectField>
 			<RHFSingleSelectField
 				required
+				dataTest="visualization-select"				
 				disabled={loading}
 				label={i18n.t("Visualization")}
 				loading={loading}
