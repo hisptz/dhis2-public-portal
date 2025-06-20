@@ -1,3 +1,31 @@
+## [1.1.2](https://github.com/hisptz/dhis2-public-portal/compare/v1.1.1...v1.1.2) (2025-06-19)
+
+
+### Bug Fixes
+
+* bump app versions to 1.1.1 and update i18n & workflows ([1dcac5e](https://github.com/hisptz/dhis2-public-portal/commit/1dcac5ec0ddfac565a7b343b7adea98fc6d81ddc))
+* improve layout structure and formatting of initial configuration page ([fbf8d82](https://github.com/hisptz/dhis2-public-portal/commit/fbf8d82008a74d5d735f4c32bec8ac491bc81a6c))
+
+## [1.1.1](https://github.com/hisptz/dhis2-public-portal/compare/v1.1.0...v1.1.1) (2025-06-18)
+
+
+### Bug Fixes
+
+*  add documentation link to WelcomePage ([cbb7078](https://github.com/hisptz/dhis2-public-portal/commit/cbb707868c3d63b070aeba0fea165f0cebdad0df))
+* add documentation link to InitialConfigurationSetup component ([def3bb1](https://github.com/hisptz/dhis2-public-portal/commit/def3bb17ac842df29d2b085603cfa5533d175163))
+* Adding condition for displaying documentation link incase no modules created ([ac13ec6](https://github.com/hisptz/dhis2-public-portal/commit/ac13ec69d94de76f5e5b25b409470209eb85473d))
+* adjust FileVisualizer hyperlink to exclude context path ([7235a8d](https://github.com/hisptz/dhis2-public-portal/commit/7235a8d0320a9362858a8e7f11518f3a90766433))
+* fixed issues with map table component not working due to dimension props ([601c1c9](https://github.com/hisptz/dhis2-public-portal/commit/601c1c91893350d0aaa7ab1db08d9f40e20bb5fb))
+* remove legacy browser configuration and icons ([4fc3fa3](https://github.com/hisptz/dhis2-public-portal/commit/4fc3fa3761eb50f4096a4cd8c5cb92ce02fbb3c2)), closes [#175](https://github.com/hisptz/dhis2-public-portal/issues/175)
+* remove target and rel attributes from documentation link in WelcomePage ([5cab6e2](https://github.com/hisptz/dhis2-public-portal/commit/5cab6e2f4888bf3ce74671e0e02a6f7019087260))
+* remove unused 'use' import from React in ModuleList component ([24331c5](https://github.com/hisptz/dhis2-public-portal/commit/24331c572a6e680ed8758b553430549bbe214182))
+* remove unused `apiVersion` logic from DHIS2AppProvider ([87876d3](https://github.com/hisptz/dhis2-public-portal/commit/87876d3c210ffc02eaf03c9a29ce3f2378599366)), closes [#174](https://github.com/hisptz/dhis2-public-portal/issues/174)
+* standardize Loader component usage across visualizations ([4f5921c](https://github.com/hisptz/dhis2-public-portal/commit/4f5921c2e4ec4d6d2cf45b8b12b4358706b2de26))
+* **StaticForm:** comment out RHFTextAreaField for icon in StaticForm component ([6df2b3f](https://github.com/hisptz/dhis2-public-portal/commit/6df2b3f489f58223ddd41fe2db385d88b3e411b5))
+* **StaticItemList:** comment out icon column and related rendering logic in StaticItemList component ([e0ca7e0](https://github.com/hisptz/dhis2-public-portal/commit/e0ca7e036f786ccdb09bb464bfd32d2bb9505878))
+* **staticItemSchema:** make icon field optional in staticItemSchema ([db5a7e0](https://github.com/hisptz/dhis2-public-portal/commit/db5a7e033a80679d935476d029a671eb7a5dac66))
+* update loader color in DataVisComponent based on appearance configuration ([66edae6](https://github.com/hisptz/dhis2-public-portal/commit/66edae67b7b5631ad18f1961322530a43f2009c2))
+
 # [1.1.0](https://github.com/hisptz/dhis2-public-portal/compare/v1.0.0...v1.1.0) (2025-06-10)
 
 

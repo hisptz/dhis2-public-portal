@@ -50,6 +50,7 @@ export function DashboardGeneralConfig() {
 					<RHFRichTextAreaField
 						name="config.description"
 						label={i18n.t("Description")}
+						dataTest="module-description"
 					/>
 				</div>
 			)}

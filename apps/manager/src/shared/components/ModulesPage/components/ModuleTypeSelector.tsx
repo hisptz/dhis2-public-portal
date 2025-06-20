@@ -8,6 +8,7 @@ export function ModuleTypeSelector() {
 	return (
 		<div className="flex flex-col gap-2">
 			<RHFSingleSelectField
+				dataTest={"add-module-type"}
 				label={i18n.t("Type")}
 				required
 				defaultValue={ModuleType.VISUALIZATION}

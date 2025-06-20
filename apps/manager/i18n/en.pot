@@ -5,8 +5,8 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
-"POT-Creation-Date: 2025-06-17T10:11:55.217Z\n"
-"PO-Revision-Date: 2025-06-17T10:11:55.217Z\n"
+"POT-Creation-Date: 2025-06-18T12:40:02.240Z\n"
+"PO-Revision-Date: 2025-06-18T12:40:02.241Z\n"
 
 msgid "Could not get Appearance configurations"
 msgstr "Could not get Appearance configurations"
@@ -85,9 +85,6 @@ msgstr "Logs"
 
 msgid "No logs yet. Perform an action to see logs here."
 msgstr "No logs yet. Perform an action to see logs here."
-
-msgid "Detail"
-msgstr "Detail"
 
 msgid "Remove visualization"
 msgstr "Remove visualization"
@@ -303,32 +300,11 @@ msgstr "Caption"
 msgid "No file selected for import"
 msgstr "No file selected for import"
 
-msgid "Failed to upload file resource for {{name}}"
-msgstr "Failed to upload file resource for {{name}}"
-
-msgid "Asset file {{path}} not found in ZIP"
-msgstr "Asset file {{path}} not found in ZIP"
-
-msgid "Failed to upload document {{name}}"
-msgstr "Failed to upload document {{name}}"
-
-msgid "Document"
-msgstr "Document"
-
-msgid "Invalid or empty documents.json"
-msgstr "Invalid or empty documents.json"
-
-msgid "documents.json not found in ZIP"
-msgstr "documents.json not found in ZIP"
-
 msgid "Select ZIP file"
 msgstr "Select ZIP file"
 
 msgid "No file uploaded yet"
 msgstr "No file uploaded yet"
-
-msgid "importFile"
-msgstr "importFile"
 
 msgid "Upload a ZIP file containing Datastore JSON configurations."
 msgstr "Upload a ZIP file containing Datastore JSON configurations."
@@ -365,6 +341,15 @@ msgstr "Continue to application"
 
 msgid "Try again"
 msgstr "Try again"
+
+msgid "Read the"
+msgstr "Read the"
+
+msgid "Documentation"
+msgstr "Documentation"
+
+msgid "to get started"
+msgstr "to get started"
 
 msgid "Add menu item"
 msgstr "Add menu item"
@@ -506,6 +491,15 @@ msgstr "There are no modules matching the selected type."
 
 msgid "There are no modules configuration present"
 msgstr "There are no modules configuration present"
+
+msgid "Only the default module is currently configured"
+msgstr "Only the default module is currently configured"
+
+msgid "documentation"
+msgstr "documentation"
+
+msgid "to add more modules"
+msgstr "to add more modules"
 
 msgid "Could not save changes"
 msgstr "Could not save changes"

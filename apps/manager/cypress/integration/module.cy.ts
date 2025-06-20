@@ -60,13 +60,18 @@ describe("Modules Page", () => {
 	});
 
 	it("should create a new module", () => {
+		const moduleConfig = {
+			name: "New Test Module",
+			type: "VISUALIZATION",
+		};
+
 		const moduleName = "New Test Module";
 
 		cy.contains("a", modulesMenu.label).click();
 
 		const deleteIfExists = () => {
-			cy.get("body").then(($body) => {
-				if ($body.find(`td:contains('${moduleName}')`).length > 0) {
+			cy.get("table").then(($table) => {
+				if ($table.find(`td:contains('${moduleName}')`).length > 0) {
 					cy.log(`Module "${moduleName}" exists, deleting it first`);
 
 					cy.contains("td", moduleName)
@@ -77,12 +82,14 @@ describe("Modules Page", () => {
 
 					cy.contains("button", "Delete module").click();
 					cy.get(
-						'[data-test="dhis2-uicore-modalactions"] > [data-test="dhis2-uicore-buttonstrip"] > :nth-child(2) > [data-test="dhis2-uicore-button"]'
+						'[data-test="dhis2-uicore-modalactions"] > [data-test="dhis2-uicore-buttonstrip"] > :nth-child(2) > [data-test="dhis2-uicore-button"]',
 					).click();
 
-					cy.contains("td", moduleName).should('not.exist');
+					cy.contains("td", moduleName).should("not.exist");
 				} else {
-					cy.log(`Module "${moduleName}" does not exist, proceeding to create`);
+					cy.log(
+						`Module "${moduleName}" does not exist, proceeding to create`,
+					);
 				}
 			});
 		};
@@ -96,17 +103,18 @@ describe("Modules Page", () => {
 		cy.get('[data-test="dhis2-uicore-modal"]').should("be.visible");
 		cy.contains("Create Module").should("be.visible");
 
-		cy.get('input[name="label"]').type(moduleName);
-		cy.get(
-			'.gap-4 > .flex > [data-test="dhis2-uiwidgets-singleselectfield"] > [data-test="dhis2-uiwidgets-singleselectfield-content"] > [data-test="dhis2-uicore-box"] > [data-test="dhis2-uicore-singleselect"] > .jsx-114080822 > [data-test="dhis2-uicore-select"] > [data-test="dhis2-uicore-select-input"]'
-		).click();
-		cy.get('[data-value="VISUALIZATION"]').click();
+		cy.get('[data-test="add-module-label"]').within(($inputContainer) => {
+			cy.get("input").type(moduleConfig.name);
+		});
 
-		cy.contains("button", "Create module").should("be.visible").click();
+		cy.get('[data-test="add-module-type-content"]').click();
+		cy.get(`[data-value="${moduleConfig.type}"]`).click();
+
+		cy.contains("button", "Create module").click();
 
 		cy.contains("button", "Back to all modules").click();
 
-		cy.contains("td", moduleName).should('exist');
+		cy.contains("td", moduleName).should("exist");
 	});
 
 	it("should navigate to module edit page and verify UI", () => {
@@ -137,15 +145,20 @@ describe("Modules Page", () => {
 			});
 
 		cy.get('input[name="config.title"]').type("New Test Module");
+		cy.get('textarea[name="config.shortDescription"]').type(
+			"Short description",
+		);
+		cy.get(".jodit-wysiwyg").type("Full desc");
 
 		cy.contains("button", "Manage visualizations").click();
-		cy.contains("button", "Add a new visualization").should("be.visible").click();
+		cy.contains("button", "Add a new visualization")
+			.should("be.visible")
+			.click();
 		cy.get(
 			'[data-test="dhis2-uicore-modalactions"] > [data-test="dhis2-uicore-buttonstrip"] > :nth-child(1) > [data-test="dhis2-uicore-button"]',
 		).click();
 
 		cy.contains("button", "Cancel").click();
-
 	});
 
 	it("should delete a module", () => {

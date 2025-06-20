@@ -66,9 +66,6 @@ Click **Add Document** to open the document form. Fill in the following fields:
 
 You can add multiple documents. Each added document will appear in the list below.
 
-> Example View:
-> ![Flat Document Module View](../../../static/img/documents/flat-files.png)
-
 ---
 
 ## 4. Grouped Configuration (When 'Categorize documents into groups' is Checked)
@@ -99,9 +96,6 @@ You can add multiple files before saving the group.
 > ![Add Group Modal](../../../static/img/documents/add-group.png)
 
 Once saved, the group and its files will appear below.
-
-> Example Grouped Display:
-> ![Grouped Document Module View](../../../static/img/documents/grouped-files.png)
 
 ---
 

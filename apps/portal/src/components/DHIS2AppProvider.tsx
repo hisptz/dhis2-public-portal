@@ -19,11 +19,9 @@ const NoSsrAppProvider: ComponentType<any> = dynamic(
 export function DHIS2AppProvider({
 	children,
 	contextPath,
-	apiVersion,
 }: {
 	children: ReactNode;
 	contextPath: string;
-	apiVersion: string;
 }) {
 	if (typeof window === "undefined") {
 		return children;
@@ -32,7 +30,7 @@ export function DHIS2AppProvider({
 		<NoSsrAppProvider
 			config={{
 				baseUrl: `${window.location.protocol}//${window.location.host}${contextPath ?? ""}`,
-				apiVersion,
+				apiVersion: "",
 			}}
 			plugin={false}
 			parentAlertsAdd={{}}

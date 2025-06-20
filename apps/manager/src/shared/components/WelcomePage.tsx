@@ -3,6 +3,7 @@ import React from "react";
 import { appMenus } from "../constants/menu";
 import { Card, colors, Divider, IconLaunch16 } from "@dhis2/ui";
 import { Link } from "@tanstack/react-router";
+import { Links } from "../constants/links";
 
 export function WelcomePage() {
 	return (
@@ -17,14 +18,20 @@ export function WelcomePage() {
 			</p>
 			<div className=" grid grid-cols-1 sm:grid-cols-2  lg:grid-cols-4 gap-4 align-top py-8 justify-items-start">
 				{appMenus.map((menu) => (
-					<Card key={menu.href}>
+					<Card dataTest={`${menu.label}-nav-card`} key={menu.href}>
 						<div className="p-4 flex flex-col gap-2 h-full w-full">
-							<h3 className="text-lg">{menu.label}</h3>
-							<p className="text-gray-400 text-sm flex-1">
+							<h3 data-test="nav-card-header" className="text-lg">
+								{menu.label}
+							</h3>
+							<p
+								data-test="nav-card-description"
+								className="text-gray-400 text-sm flex-1"
+							>
 								{menu.description}
 							</p>
 							<Divider />
 							<Link
+								data-test="nav-card-link"
 								className="text-blue-900 text-sm text-center flex items-center justify-center gap-2"
 								to={menu.href}
 							>
@@ -34,6 +41,15 @@ export function WelcomePage() {
 						</div>
 					</Card>
 				))}
+			</div>
+			<div className="w-full text-right mt-auto text-sm text-gray-400">
+				<a href={Links.DOCUMENTATION}>
+					{i18n.t("Read the")}{" "}
+					<strong className="text-gray-500">
+						{i18n.t("Documentation")}
+					</strong>{" "}
+					{i18n.t("to get started")}
+				</a>
 			</div>
 		</div>
 	);
