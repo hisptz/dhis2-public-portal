@@ -13,14 +13,13 @@ export function VisualizationModule({
 	config: VisualizationModuleConfig;
 	searchParams: { group?: string };
 }) {
-	console.log("VisualizationModule config:", config.showFilter);
 	return (
 		<Stack className="w-full h-full">
 			<Title order={2}>{config.title}</Title>
 			{config.grouped && !isEmpty(config.groups) && (
 				<GroupControl config={config} />
 			)}
-			{config.showFilter ?? true ? <Selectors config={config} /> : null}
+			{config.showFilter ? <Selectors config={config} /> : null}
 			<DescriptionArea searchParams={searchParams} config={config} />
 			<Box flex={1}>
 				<VisualizationItemsContainer

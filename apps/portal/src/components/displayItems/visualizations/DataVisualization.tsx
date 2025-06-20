@@ -34,7 +34,7 @@ export async function getDataVisualization(config: ChartVisualizationItem) {
 export async function DataVisualization({
 	config,
 	disableActions,
-	showFilter = true,
+	showFilter,
 }: MainVisualizationProps) {
 	const { visualizationConfig } = await getDataVisualization(config);
 	const { appearanceConfig } = (await getAppearanceConfig())!;
