@@ -3,12 +3,14 @@ import { ChartVisualizationItem, MapConfig } from "@packages/shared/schemas";
 import { MapVisComponent } from "@/components/displayItems/visualizations/MapVisComponent";
 
 export interface MainVisualizationProps {
+	showFilter?: boolean;
 	config: ChartVisualizationItem;
 	disableActions?: boolean;
 }
 
 export async function MapVisualization({
 	config,
+	showFilter,
 	disableActions,
 }: MainVisualizationProps) {
 	const { id } = config;
@@ -44,6 +46,7 @@ export async function MapVisualization({
 
 	return (
 		<MapVisComponent
+			showFilter={showFilter}
 			disableActions={disableActions}
 			mapConfig={mapConfig}
 			config={config}
