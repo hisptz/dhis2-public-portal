@@ -6,6 +6,8 @@ import {
 	IconChartBarPopular,
 	IconFolders,
 	IconSettingsCheck,
+	IconTrophy,
+	
 } from "@tabler/icons-react";
 
 type FeatureItem = {
@@ -58,6 +60,12 @@ export default function HomepageFeatures(): ReactNode {
 		<section className={styles.features}>
 			<div className="container">
 				<div className="text--center margin-bottom--xl">
+						<div>
+							<IconTrophy color="#047260" size={72} />
+							<p className="text-lg font-bold italic">
+								DHIS2 App Winner 2025
+							</p>
+						</div>
 					<Heading as="h2">Key Features of DHIS2 FlexiPortal</Heading>
 					<p>
 						Explore the powerful modules that make DHIS2 FlexiPortal
