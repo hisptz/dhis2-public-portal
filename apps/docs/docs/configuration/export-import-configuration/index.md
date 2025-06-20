@@ -1,6 +1,8 @@
 # Export/Import Configuration
 
 The **Export/Import configuration** section in **FlexiPortal Manager** allows you to exports or imports your configurations.
+![Configuration Management UI](../../../static/img/configuration-management/ex-impo.jpg)
+
 
 ###  Export Configuration
 
@@ -26,9 +28,8 @@ For example, the configuration may reference specific document IDs (such as icon
 
 :::
 
-
-![Configuration Management UI](../../../static/img/configuration-management/configuration-croped.png)
-:::note
+### Logs
+:::tip  
 
 You can refer to the log information to verify the success or failure of the export/import process.
 
