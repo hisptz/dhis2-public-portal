@@ -63,7 +63,7 @@ export default function HomepageFeatures(): ReactNode {
 						<div>
 							<IconTrophy color="#047260" size={72} />
 							<p>
-								DHIS2 App Winner 2025
+								DHIS2 App Winner 2025!
 							</p>
 						</div>
 					<Heading as="h2">Key Features of DHIS2 FlexiPortal</Heading>
