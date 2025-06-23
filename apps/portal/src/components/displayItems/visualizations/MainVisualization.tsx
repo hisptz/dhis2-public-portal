@@ -9,10 +9,12 @@ import { BaseCardError } from "@/components/CardError";
 
 export interface MainVisualizationProps {
 	config: VisualizationItem;
+	showFilter?: boolean;
 	disableActions?: boolean;
 }
 
 export async function MainVisualization({
+	showFilter,
 	config,
 	disableActions,
 }: MainVisualizationProps) {
@@ -22,6 +24,7 @@ export async function MainVisualization({
 		case VisualizationDisplayItemType.CHART:
 			return (
 				<DataVisualization
+					showFilter={showFilter}
 					disableActions={disableActions}
 					config={config}
 				/>
@@ -29,6 +32,7 @@ export async function MainVisualization({
 		case VisualizationDisplayItemType.MAP:
 			return (
 				<MapVisualization
+					showFilter={showFilter}
 					disableActions={disableActions}
 					config={config}
 				/>
