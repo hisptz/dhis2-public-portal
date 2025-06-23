@@ -56,6 +56,6 @@ Use this option if you already have a configuration `.zip` file to apply.
 
 When importing a configuration into a new instance, ensure that all referenced metadata required by the configuration is already present in the target instance.
 
-For example, the configuration may reference specific document IDs (such as icons, SVGs, or other assets). If these referenced items are missing, it may result in errors.
+For example, the configuration may reference specific visualizations. If these referenced items are missing, it may result in errors.
 
 :::
