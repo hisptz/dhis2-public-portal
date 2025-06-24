@@ -22,7 +22,7 @@ export function AddFeedback({
 				/>
 			)}
 			<Button onClick={onShow} icon={<IconAdd24 />}>
-				{i18n.t("Add Feedback Recipient")}
+				{i18n.t("Add feedback recipient")}
 			</Button>
 		</>
 	);

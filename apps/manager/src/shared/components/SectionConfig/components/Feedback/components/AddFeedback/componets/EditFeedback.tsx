@@ -25,6 +25,7 @@ export function EditFeedback({
 				/>
 			)}
 			<Button
+				dataTest="edit-feedback-button"
 				title={i18n.t("Edit feedback")}
 				onClick={onShow}
 				icon={<IconEdit16 />}

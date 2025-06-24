@@ -5,8 +5,8 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
-"POT-Creation-Date: 2025-06-18T12:40:02.240Z\n"
-"PO-Revision-Date: 2025-06-18T12:40:02.241Z\n"
+"POT-Creation-Date: 2025-06-24T09:38:52.224Z\n"
+"PO-Revision-Date: 2025-06-24T09:38:52.224Z\n"
 
 msgid "Could not get Appearance configurations"
 msgstr "Could not get Appearance configurations"
@@ -89,8 +89,8 @@ msgstr "No logs yet. Perform an action to see logs here."
 msgid "Remove visualization"
 msgstr "Remove visualization"
 
-msgid "Add Document"
-msgstr "Add Document"
+msgid "Add document"
+msgstr "Add document"
 
 msgid "Could not create new library"
 msgstr "Could not create new library"
@@ -167,11 +167,11 @@ msgstr "Delete"
 msgid "Delete group"
 msgstr "Delete group"
 
-msgid "Edit Document Group"
-msgstr "Edit Document Group"
+msgid "Edit document group"
+msgstr "Edit document group"
 
-msgid "Add Document Group"
-msgstr "Add Document Group"
+msgid "Add document group"
+msgstr "Add document group"
 
 msgid "Update"
 msgstr "Update"
@@ -519,11 +519,11 @@ msgstr ""
 msgid "Keep changes"
 msgstr "Keep changes"
 
-msgid "Back to Module"
-msgstr "Back to Module"
+msgid "Back to module"
+msgstr "Back to module"
 
-msgid "Add Feedback Recipient"
-msgstr "Add Feedback Recipient"
+msgid "Add feedback recipient"
+msgstr "Add feedback recipient"
 
 msgid "{{action}} feedback"
 msgstr "{{action}} feedback"
@@ -557,6 +557,9 @@ msgstr "Icon is required"
 
 msgid "{{action}} highlighted item"
 msgstr "{{action}} highlighted item"
+
+msgid "Uploading ..."
+msgstr "Uploading ..."
 
 msgid "Edit item"
 msgstr "Edit item"
@@ -614,9 +617,6 @@ msgstr "Sections"
 
 msgid "Content"
 msgstr "Content"
-
-msgid "Add Item"
-msgstr "Add Item"
 
 msgid "Create an item"
 msgstr "Create an item"

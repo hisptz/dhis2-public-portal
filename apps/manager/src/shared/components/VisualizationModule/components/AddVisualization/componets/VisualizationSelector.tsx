@@ -122,6 +122,7 @@ export function VisSelector() {
 		<div className="flex flex-col gap-4 ">
 			<SingleSelectField
 				required
+				dataTest={"visualization-type-select"}
 				label={i18n.t("Visualization type")}
 				placeholder={i18n.t("All")}
 				onChange={({ selected }) => setVisualizationType(selected)}

@@ -45,6 +45,7 @@ export function DashboardGroupsConfig() {
 		actions: (
 			<ButtonStrip>
 				<Button
+					dataTest={`edit-group-${index}`}
 					onClick={() =>
 						navigate({
 							to: "/modules/$moduleId/edit/$groupIndex",
@@ -57,6 +58,7 @@ export function DashboardGroupsConfig() {
 					icon={<IconEdit16 />}
 				/>
 				<Button
+					dataTest={`remove-group-${index}`}
 					onClick={() => remove(index)}
 					title={i18n.t("Remove")}
 					icon={<IconDelete16 />}
