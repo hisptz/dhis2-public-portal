@@ -3428,6 +3428,40 @@
   dependencies:
     "@hapi/hoek" "^9.0.0"
 
+"@hisptz/dhis2-analytics@^2.1.10":
+  version "2.1.10"
+  resolved "https://registry.yarnpkg.com/@hisptz/dhis2-analytics/-/dhis2-analytics-2.1.10.tgz#631d0ec959e3b9b59cd5e9d1d210ee4a983caa43"
+  integrity sha512-Pgq4PfDrPw6S5hR3U0wgTxHDJjqFilLRM9UFRoP7SqqBJsh7LQoRgXbcthLeDqPDBcpquf2dSI3EhXO8sGM54w==
+  dependencies:
+    "@hisptz/dhis2-ui" "2.0.48"
+    "@hisptz/dhis2-utils" "2.0.18"
+    "@react-leaflet/core" "^2.1.0"
+    "@react-pdf/renderer" "^4.0.0"
+    "@tanstack/react-table" "^8.19.3"
+    async-es "^3.2.5"
+    d3-color "^3.1.0"
+    d3-scale "^4.0.2"
+    file-saver "^2.0.5"
+    highcharts "^12.2.0"
+    highcharts-react-official "^3.2.1"
+    jotai-devtools "^0.10.1"
+    leaflet "^1.9.4"
+    leaflet-easyprint "^2.1.9"
+    leaflet.fullscreen "^4.0.0"
+    luxon "^3.4.4"
+    react-circular-progressbar "^2.1.0"
+    react-dnd "^16.0.1"
+    react-dnd-html5-backend "^16.0.1"
+    react-error-boundary "^4.0.12"
+    react-helmet "^6.1.0"
+    react-leaflet "^4.2.1"
+    react-leaflet-custom-control "^1.4.0"
+    react-query "^3.39.3"
+    react-spring "^9.6.1"
+    react-to-print "^3.0.1"
+    screenfull "^6.0.2"
+    xlsx "^0.18.5"
+
 "@hisptz/dhis2-analytics@^2.1.9":
   version "2.1.9"
   resolved "https://registry.yarnpkg.com/@hisptz/dhis2-analytics/-/dhis2-analytics-2.1.9.tgz#4b5efb708fce22c8f2b17f4962a3ab1cf9604ab6"
