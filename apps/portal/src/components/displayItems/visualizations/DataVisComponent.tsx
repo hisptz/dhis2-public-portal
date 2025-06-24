@@ -29,11 +29,13 @@ import { TableVisualizer } from "@packages/ui/visualizations";
 export function DataVisComponent({
 	visualizationConfig,
 	config,
+	showFilter,
 	disableActions,
 	colors,
 }: {
 	visualizationConfig: VisualizationConfig;
 	config: VisualizationItem;
+	showFilter?: boolean;
 	colors: string[];
 	disableActions?: boolean;
 }) {
@@ -53,6 +55,7 @@ export function DataVisComponent({
 		tableRef,
 		visualizationConfig,
 		config,
+		showFilter,
 	});
 
 	const { containerRef } = useContainerSize(chartRef);
@@ -131,19 +134,19 @@ export function DataVisComponent({
 							<div className="flex-1 h-full">
 								{type ===
 									VisualizationDisplayItemType.CHART && (
-									<ChartSelector
-										colors={colors}
-										setRef={chartRef}
-										analytics={analytics}
-										visualization={visualizationConfig}
-										config={config}
-										fullScreen={handler.active}
-										containerRef={containerRef}
-										legendSet={legendSet}
-										tableRef={tableRef}
-										setSingleValueRef={setSingleValueRef}
-									/>
-								)}
+										<ChartSelector
+											colors={colors}
+											setRef={chartRef}
+											analytics={analytics}
+											visualization={visualizationConfig}
+											config={config}
+											fullScreen={handler.active}
+											containerRef={containerRef}
+											legendSet={legendSet}
+											tableRef={tableRef}
+											setSingleValueRef={setSingleValueRef}
+										/>
+									)}
 							</div>
 						)
 					) : (

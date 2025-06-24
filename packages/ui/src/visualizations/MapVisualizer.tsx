@@ -1,5 +1,6 @@
 import {
 	DHIS2Map,
+	getColorScale,
 	MapProps,
 	ThematicLayerConfig,
 } from "@hisptz/dhis2-analytics";
@@ -73,7 +74,9 @@ export const MapVisualizer = memo(function MapVisualizer({
 						displayName: view.name,
 						legendConfig: {
 							scale: view.classes,
-							colorClass: view.colorScale,
+							colorClass: view.colorScale
+								? getColorScale(view.colorScale)
+								: undefined,
 						},
 					},
 					name: view.name,

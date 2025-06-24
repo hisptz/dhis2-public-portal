@@ -3,14 +3,18 @@ import React, { useCallback, useState } from "react";
 import JSZip from "jszip";
 import { DatastoreKeys, DatastoreNamespaces } from "@packages/shared/constants";
 import i18n from "@dhis2/d2-i18n";
-import { LogEntry, useConfiguration } from "../utils/configurationUtils";
+import { DocumentDetails, getContentTypeFromExtension, LogEntry, useConfiguration } from "../utils/configurationUtils";
+import { useFile } from "../hooks/file";
+
 
 interface ImportSectionProps {
 	setLogs: React.Dispatch<React.SetStateAction<LogEntry[]>>;
 }
 
+
 export const ImportSection = ({ setLogs }: ImportSectionProps) => {
-	const { setValue, addLog } = useConfiguration();
+	const { setValue, addLog, uploadDocument, deleteDocument } = useConfiguration();
+	const { uploadFile } = useFile();
 	const [loading, setLoading] = useState(false);
 	const [selectedFile, setSelectedFile] = useState<File | null>(null);
 	const [fileInputKey, setFileInputKey] = useState(Date.now());
@@ -45,6 +49,46 @@ export const ImportSection = ({ setLogs }: ImportSectionProps) => {
 
 		try {
 			const loadedZip = await zip.loadAsync(selectedFile);
+			const documentsInfoFile = loadedZip.files['documents.json'];
+			if (documentsInfoFile) {
+				addLog(setLogs)("Processing documents.json...", "info");
+				const documentsData = JSON.parse(await documentsInfoFile.async("string"));
+				if (documentsData?.documents && Array.isArray(documentsData.documents)) {
+					const documents: DocumentDetails[] = documentsData.documents;
+					for (const doc of documents) {
+						if (doc.attachment && doc.name) {
+							const assetFilePath = `assets/${doc.name}`;
+							const assetFile = loadedZip.files[assetFilePath];
+							if (assetFile) {
+								addLog(setLogs)(`Uploading file resource for ${doc.name}...`, "info-low");
+								const fileData = await assetFile.async('blob');
+								const contentType = getContentTypeFromExtension(doc.name);
+								const fileObject = new File([fileData], doc.name, { type: contentType });
+								const fileResourceId = await uploadFile(fileObject, doc.name, addLog(setLogs));
+								if (fileResourceId) {
+									doc.url = fileResourceId;
+								} else {
+									addLog(setLogs)(`Failed to upload file resource for ${doc.name}`, "warning");
+									continue;
+								}
+							} else {
+								addLog(setLogs)(`Asset file ${assetFilePath} not found in ZIP`, "warning");
+								continue;
+							}
+							await deleteDocument(doc, addLog(setLogs));
+							const success = await uploadDocument(doc, addLog(setLogs));
+							if (!success) {
+								addLog(setLogs)(`Skipping document ${doc.name} due to upload failure`, "warning");
+							}
+						}
+					}
+				} else {
+					addLog(setLogs)("Invalid or empty documents.json", "warning");
+				}
+			} else {
+				addLog(setLogs)("documents.json not found in ZIP", "warning");
+			}
+
 			for (const filename in loadedZip.files) {
 				if (
 					filename.endsWith(".json") &&
@@ -104,7 +148,7 @@ export const ImportSection = ({ setLogs }: ImportSectionProps) => {
 		} finally {
 			setLoading(false);
 		}
-	}, [selectedFile, setValue, setLogs, addLog]);
+	}, [selectedFile, addLog, setLogs, deleteDocument, uploadDocument, uploadFile, setValue]);
 
 	return (
 		<div className="mb-6">

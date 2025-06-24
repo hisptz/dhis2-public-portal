@@ -33,10 +33,12 @@ import { MapVisualizer } from "@packages/ui/visualizations";
 export function MapVisComponent({
 	mapConfig,
 	config,
+	showFilter = true,
 	disableActions,
 }: {
 	mapConfig: MapConfig;
 	config: VisualizationItem;
+	showFilter?: boolean;
 	disableActions?: boolean;
 }) {
 	const { orgUnitConfig, periodConfig } = config;
@@ -129,41 +131,21 @@ export function MapVisComponent({
 		() => (showTable ? i18n.t("Map") : i18n.t("Table")),
 		[showTable],
 	);
+	
 	const actionMenuGroups: ActionMenuGroup[] = useMemo(() => {
-		const menus = [
+		const menus: ActionMenuGroup[] = [
 			{
 				label: i18n.t("View"),
 				actions: [
 					{
-						label: i18n.t("Show {{vis}}", {
-							vis: vis,
-						}),
+						label: i18n.t("Show {{vis}}", { vis }),
 						icon: showTable ? <IconMap /> : <IconTable />,
 						onClick: toggleShowTable,
 					},
 					{
 						label: i18n.t("Full page"),
-						icon: handler.active ? (
-							<IconMinimize />
-						) : (
-							<IconMaximize />
-						),
+						icon: handler.active ? <IconMinimize /> : <IconMaximize />,
 						onClick: onFullScreen,
-					},
-				],
-			},
-			{
-				label: i18n.t("Filters"),
-				actions: [
-					{
-						label: i18n.t("Location"),
-						icon: <IconMapPin />,
-						onClick: showOrgUnits,
-					},
-					{
-						label: i18n.t("Period"),
-						icon: <IconClock />,
-						onClick: showPeriods,
 					},
 				],
 			},
@@ -178,7 +160,25 @@ export function MapVisComponent({
 			},
 		];
 
-		return [...menus];
+		if (showFilter) {
+			menus.splice(1, 0, {
+				label: i18n.t("Filters"),
+				actions: [
+					{
+						label: i18n.t("Location"),
+						icon: <IconMapPin />,
+						onClick: showOrgUnits,
+					},
+					{
+						label: i18n.t("Period"),
+						icon: <IconClock />,
+						onClick: showPeriods,
+					},
+				],
+			});
+		}
+
+		return menus;
 	}, [
 		vis,
 		showTable,
@@ -188,6 +188,7 @@ export function MapVisComponent({
 		showOrgUnits,
 		showPeriods,
 		onDownload,
+		showFilter,
 	]);
 
 	return (
@@ -254,8 +255,8 @@ export function MapVisComponent({
 								periodSelection={
 									periodState
 										? {
-												periods: periodState,
-											}
+											periods: periodState,
+										}
 										: undefined
 								}
 							/>

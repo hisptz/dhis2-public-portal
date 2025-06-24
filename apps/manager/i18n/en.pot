@@ -14,8 +14,8 @@ msgstr "Could not get Appearance configurations"
 msgid "Error"
 msgstr "Error"
 
-msgid "Configuration Management"
-msgstr "Configuration Management"
+msgid "Import/Export Configuration"
+msgstr "Import/Export Configuration"
 
 msgid "General configuration"
 msgstr "General configuration"
@@ -923,8 +923,8 @@ msgstr ""
 "Export and import configurations from the datastore of the web portal "
 "application"
 
-msgid "Configure Configuration"
-msgstr "Configure Configuration"
+msgid "Import or export configuration"
+msgstr "Import or export configuration"
 
 msgid "Menu"
 msgstr "Menu"

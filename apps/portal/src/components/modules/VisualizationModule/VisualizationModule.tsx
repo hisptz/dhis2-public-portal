@@ -19,7 +19,7 @@ export function VisualizationModule({
 			{config.grouped && !isEmpty(config.groups) && (
 				<GroupControl config={config} />
 			)}
-			<Selectors config={config} />
+			{config.showFilter ? <Selectors config={config} /> : null}
 			<DescriptionArea searchParams={searchParams} config={config} />
 			<Box flex={1}>
 				<VisualizationItemsContainer
