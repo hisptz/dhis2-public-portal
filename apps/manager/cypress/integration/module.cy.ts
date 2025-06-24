@@ -14,10 +14,10 @@ describe("Modules Page", () => {
 		type: item,
 	}));
 	const visualizations = [
-			"UlfTKWZWV4u",
-			"LW0O27b7TdD",
-			"mYMnDl5Z9oD",
-		]
+		"UlfTKWZWV4u",
+		"LW0O27b7TdD",
+		"mYMnDl5Z9oD",
+	]
 
 	if (!modulesMenu) {
 		throw new Error("Modules menu item not found in appMenus");
@@ -130,7 +130,7 @@ describe("Modules Page", () => {
 		cy.contains("button", "Add a new visualization").click();
 		cy.get('[data-test="visualization-type-select-content"]').click();
 		cy.get('[data-value="CHART"]').click();
-		cy.wait(2000); 
+		cy.wait(2000);
 		cy.get('[data-test="visualization-select-content"]').click();
 		cy.get(`[data-value="${visualizations[0]}"]`).click();
 		cy.get('textarea[name="caption"]').type("This is a test visualization caption");
@@ -139,7 +139,7 @@ describe("Modules Page", () => {
 		cy.contains("button", "Add a new visualization").click();
 		cy.get('[data-test="visualization-type-select-content"]').click();
 		cy.get('[data-value="CHART"]').click();
-		cy.wait(2000); 
+		cy.wait(2000);
 		cy.get('[data-test="visualization-select-content"]').click();
 		cy.get(`[data-value="${visualizations[1]}"]`).click();
 		cy.get('textarea[name="caption"]').type("This is a test visualization caption");
@@ -200,7 +200,7 @@ describe("Modules Page", () => {
 		cy.contains("button", "Add a new visualization").click();
 		cy.get('[data-test="visualization-type-select-content"]').click();
 		cy.get('[data-value="CHART"]').click();
-		cy.wait(2000);  
+		cy.wait(2000);
 		cy.get('[data-test="visualization-select-content"]').click();
 		cy.get(`[data-value="${visualizations[0]}"]`).click();
 		cy.get('textarea[name="caption"]').type("This is a test visualization caption");
@@ -209,7 +209,7 @@ describe("Modules Page", () => {
 		cy.contains("button", "Add a new visualization").click();
 		cy.get('[data-test="visualization-type-select-content"]').click();
 		cy.get('[data-value="CHART"]').click();
-		cy.wait(2000); 
+		cy.wait(2000);
 		cy.get('[data-test="visualization-select-content"]').click();
 		cy.get(`[data-value="${visualizations[1]}"]`).click();
 		cy.get('textarea[name="caption"]').type("This is a test visualization caption");
@@ -357,6 +357,7 @@ describe("Modules Page", () => {
 
 			switch (value) {
 				case SectionType.GRID_LAYOUT:
+					cy.contains("button", "Save section changes").click();
 					cy.contains("button", "Add item").click();
 					cy.wait(2000);
 					cy.get('[data-test="single-value-visualization-select-content"]').click();
@@ -369,10 +370,11 @@ describe("Modules Page", () => {
 					cy.get('[data-test="add-highlighted-item-button"]').click();
 					cy.wait(2000);
 					cy.contains("button", "Save section changes").click();
+					cy.wait(2000);
 					cy.contains("button", "Back to module").click();
 					break;
 				case SectionType.SINGLE_ITEM:
-					cy.get(".jodit-wysiwyg").type("This is a test section content");
+					cy.get('.jodit-wysiwyg').type("This is a test section content");
 					cy.contains("button", "Save section changes").click();
 					cy.get('[data-test="section-single-item-type"]').click();
 					cy.get(`[data-value="${DisplayItemType.VISUALIZATION}"]`).click();
@@ -400,6 +402,8 @@ describe("Modules Page", () => {
 					cy.contains("button", "Back to module").click();
 					break;
 				case SectionType.FLEXIBLE_LAYOUT:
+					cy.contains("button", "Save section changes").click();
+					cy.wait(2000);
 					cy.contains("button", "Manage visualizations").click();
 					cy.contains("button", "Add a new visualization").click();
 					cy.get('[data-test="visualization-type-select-content"]').click();
@@ -418,7 +422,6 @@ describe("Modules Page", () => {
 							.trigger('mouseup');
 					});
 					cy.contains("button", "Save changes").click();
-					cy.contains("button", "Save section changes").click();
 					cy.contains("button", "Back to module").click();
 					break;
 				default:
@@ -457,13 +460,14 @@ describe("Modules Page", () => {
 		cy.wait(2000);
 		cy.get('[data-test="remove-feedback-button"]').click();
 		cy.contains("button", "Save section changes").click();
+		cy.wait(2000);
 		cy.contains("button", "Back to module").click();
 
-		sectionTypes.forEach((_, index) => {
+		for (let index = sectionTypes.length - 1; index >= 0; index--) {
 			cy.get(`[data-test="edit-section-${index}"]`).click();
 			cy.contains("button", "Back to module").click();
 			cy.get(`[data-test="remove-section-${index}"]`).click();
-		});
+		};
 		cy.contains("button", "Save changes").click();
 	});
 
