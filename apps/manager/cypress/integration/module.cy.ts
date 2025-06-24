@@ -13,6 +13,11 @@ describe("Modules Page", () => {
 		label: `New Test ${capitalize(startCase(item))} Module`,
 		type: item,
 	}));
+	const visualizations = [
+			"UlfTKWZWV4u",
+			"LW0O27b7TdD",
+			"mYMnDl5Z9oD",
+		]
 
 	if (!modulesMenu) {
 		throw new Error("Modules menu item not found in appMenus");
@@ -90,7 +95,7 @@ describe("Modules Page", () => {
 			cy.get('[data-test="dhis2-uicore-modal"]').should("be.visible");
 			cy.contains("Create Module").should("be.visible");
 
-			cy.get('[data-test="add-module-label"]').within(($inputContainer) => {
+			cy.get('[data-test="add-module-label"]').within(() => {
 				cy.get("input").type(label);
 			});
 
@@ -108,10 +113,6 @@ describe("Modules Page", () => {
 
 	// Test for Visualization Module
 	it("should add and edit visualization Module", () => {
-		const visualizations = [
-			"UlfTKWZWV4u",
-			"LW0O27b7TdD",
-		]
 		cy.contains("a", modulesMenu.label).click();
 		cy.get("table tbody tr")
 			.contains("td", "New Test Visualization Module")
@@ -129,7 +130,7 @@ describe("Modules Page", () => {
 		cy.contains("button", "Add a new visualization").click();
 		cy.get('[data-test="visualization-type-select-content"]').click();
 		cy.get('[data-value="CHART"]').click();
-		cy.wait(2000); // Wait for visualizations to load
+		cy.wait(2000); 
 		cy.get('[data-test="visualization-select-content"]').click();
 		cy.get(`[data-value="${visualizations[0]}"]`).click();
 		cy.get('textarea[name="caption"]').type("This is a test visualization caption");
@@ -138,7 +139,7 @@ describe("Modules Page", () => {
 		cy.contains("button", "Add a new visualization").click();
 		cy.get('[data-test="visualization-type-select-content"]').click();
 		cy.get('[data-value="CHART"]').click();
-		cy.wait(2000); // Wait for visualizations to load
+		cy.wait(2000); 
 		cy.get('[data-test="visualization-select-content"]').click();
 		cy.get(`[data-value="${visualizations[1]}"]`).click();
 		cy.get('textarea[name="caption"]').type("This is a test visualization caption");
@@ -199,7 +200,7 @@ describe("Modules Page", () => {
 		cy.contains("button", "Add a new visualization").click();
 		cy.get('[data-test="visualization-type-select-content"]').click();
 		cy.get('[data-value="CHART"]').click();
-		cy.wait(2000); // Wait for visualizations to load
+		cy.wait(2000);  
 		cy.get('[data-test="visualization-select-content"]').click();
 		cy.get(`[data-value="${visualizations[0]}"]`).click();
 		cy.get('textarea[name="caption"]').type("This is a test visualization caption");
@@ -208,7 +209,7 @@ describe("Modules Page", () => {
 		cy.contains("button", "Add a new visualization").click();
 		cy.get('[data-test="visualization-type-select-content"]').click();
 		cy.get('[data-value="CHART"]').click();
-		cy.wait(2000); // Wait for visualizations to load
+		cy.wait(2000); 
 		cy.get('[data-test="visualization-select-content"]').click();
 		cy.get(`[data-value="${visualizations[1]}"]`).click();
 		cy.get('textarea[name="caption"]').type("This is a test visualization caption");
@@ -333,10 +334,6 @@ describe("Modules Page", () => {
 	});
 
 	it("should add and edit section Module", () => {
-		const visualizations = [
-			"UlfTKWZWV4u",
-			"mYMnDl5Z9oD",
-		]
 		const sectionTypes = Object.values(SectionType).map((types) => ({
 			label: startCase(types.toLowerCase()),
 			value: types,
@@ -361,9 +358,9 @@ describe("Modules Page", () => {
 			switch (value) {
 				case SectionType.GRID_LAYOUT:
 					cy.contains("button", "Add item").click();
-					cy.wait(1000);
+					cy.wait(2000);
 					cy.get('[data-test="single-value-visualization-select-content"]').click();
-					cy.get(`[data-value="${visualizations[1]}"]`).click();
+					cy.get(`[data-value="${visualizations[2]}"]`).click();
 					cy.get('input[type="file"]').attachFile({
 						filePath: 'hisp-tz.svg',
 						fileName: 'hisp-tz.svg',
