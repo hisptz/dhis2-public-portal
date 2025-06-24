@@ -74,7 +74,9 @@ export const MapVisualizer = memo(function MapVisualizer({
 						displayName: view.name,
 						legendConfig: {
 							scale: view.classes,
-							colorClass: getColorScale(view.colorScale),
+							colorClass: view.colorScale
+								? getColorScale(view.colorScale)
+								: undefined,
 						},
 					},
 					name: view.name,
