@@ -399,6 +399,7 @@ describe("Modules Page", () => {
 					cy.wait(2000);
 					cy.get('[data-test="remove-feedback-button"]').click();
 					cy.contains("button", "Save section changes").click();
+					cy.wait(2000);
 					cy.contains("button", "Back to module").click();
 					break;
 				case SectionType.FLEXIBLE_LAYOUT:
@@ -419,7 +420,7 @@ describe("Modules Page", () => {
 						cy.get(`[data-prefix="${visualizations[0]}"] > .react-resizable-handle`)
 							.trigger('mousedown', { button: 0 })
 							.trigger('mousemove', { clientX: 200, clientY: 800 })
-							.trigger('mouseup');
+							.trigger('mouseup', { force: true });
 					});
 					cy.contains("button", "Save changes").click();
 					cy.contains("button", "Back to module").click();
