@@ -1,19 +1,6 @@
 "use client";
-import {
-	AppAppearanceConfig,
-	AppMenuConfig,
-	AppMeta,
-} from "@packages/shared/schemas";
-import {
-	AppShell,
-	Box,
-	Burger,
-	Container,
-	Flex,
-	Image,
-	Stack,
-	Title,
-} from "@mantine/core";
+import { AppAppearanceConfig, AppMenuConfig, AppMeta } from "@packages/shared/schemas";
+import { AppShell, Box, Burger, Container, Flex, Image, Stack, Title } from "@mantine/core";
 import NextImage from "next/image";
 import { getForeground } from "@packages/shared/utils";
 import { HeaderMenu } from "@/components/AppMenu/HeaderMenu";
@@ -39,7 +26,7 @@ export function AppHeader({
 	const backgroundColor = headerConfig?.style.usePrimaryColorAsBackgroundColor
 		? config.colors.primary
 		: headerConfig.style?.coloredBackground
-			? theme.primaryColor
+			? headerConfig.style?.headerBackgroundColor
 			: undefined;
 	const foregroundColor = backgroundColor
 		? getForeground(backgroundColor)
