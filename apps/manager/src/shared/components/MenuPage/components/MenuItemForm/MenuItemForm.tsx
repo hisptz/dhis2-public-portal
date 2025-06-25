@@ -164,6 +164,7 @@ export function MenuItemForm({
 							{i18n.t("Cancel")}
 						</Button>
 						<Button
+							dataTest="save-menu-item-button"
 							loading={form.formState.isSubmitting}
 							onClick={() => form.handleSubmit(onSave)()}
 							primary

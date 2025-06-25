@@ -28,7 +28,7 @@ export function AddMenuItem({
 					onSubmit={onAdd}
 				/>
 			)}
-			<Button onClick={onOpen} icon={<IconAdd16 />}>
+			<Button onClick={onOpen} icon={<IconAdd16 />} dataTest="add-menu-item-button">
 				{i18n.t("Add menu item")}
 			</Button>
 		</>

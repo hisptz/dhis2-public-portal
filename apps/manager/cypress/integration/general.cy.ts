@@ -17,7 +17,7 @@ describe("General Section", () => {
     cy.contains("a", generalMenu.label).click();
     cy.get('#name').should("be.visible");
     cy.get('#description').should("be.visible");
-    cy.get('#applicationURL').should("be.visible");
+    cy.get('#applicationUrl').should("be.visible");
     cy.get('[name="icon"]').should("exist");
   });
 
