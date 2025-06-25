@@ -5,8 +5,8 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
-"POT-Creation-Date: 2025-06-20T11:23:14.657Z\n"
-"PO-Revision-Date: 2025-06-20T11:23:14.658Z\n"
+"POT-Creation-Date: 2025-06-25T06:32:06.992Z\n"
+"PO-Revision-Date: 2025-06-25T06:32:06.993Z\n"
 
 msgid "Could not get Appearance configurations"
 msgstr "Could not get Appearance configurations"
@@ -85,6 +85,9 @@ msgstr "Logs"
 
 msgid "No logs yet. Perform an action to see logs here."
 msgstr "No logs yet. Perform an action to see logs here."
+
+msgid "Detail"
+msgstr "Detail"
 
 msgid "Remove visualization"
 msgstr "Remove visualization"
@@ -300,11 +303,32 @@ msgstr "Caption"
 msgid "No file selected for import"
 msgstr "No file selected for import"
 
+msgid "Failed to upload file resource for {{name}}"
+msgstr "Failed to upload file resource for {{name}}"
+
+msgid "Asset file {{path}} not found in ZIP"
+msgstr "Asset file {{path}} not found in ZIP"
+
+msgid "Failed to upload document {{name}}"
+msgstr "Failed to upload document {{name}}"
+
+msgid "Document"
+msgstr "Document"
+
+msgid "Invalid or empty documents.json"
+msgstr "Invalid or empty documents.json"
+
+msgid "documents.json not found in ZIP"
+msgstr "documents.json not found in ZIP"
+
 msgid "Select ZIP file"
 msgstr "Select ZIP file"
 
 msgid "No file uploaded yet"
 msgstr "No file uploaded yet"
+
+msgid "importFile"
+msgstr "importFile"
 
 msgid "Upload a ZIP file containing Datastore JSON configurations."
 msgstr "Upload a ZIP file containing Datastore JSON configurations."
@@ -662,6 +686,16 @@ msgstr "{{action}} visualization"
 
 msgid "Edit visualization"
 msgstr "Edit visualization"
+
+msgid ""
+"Enable to show filters(i.e period selector & location selector) for "
+"visualizations."
+msgstr ""
+"Enable to show filters(i.e period selector & location selector) for "
+"visualizations."
+
+msgid "Display filters"
+msgstr "Display filters"
 
 msgid ""
 "Enable to organize visualizations into group like dashboards. Useful for "
