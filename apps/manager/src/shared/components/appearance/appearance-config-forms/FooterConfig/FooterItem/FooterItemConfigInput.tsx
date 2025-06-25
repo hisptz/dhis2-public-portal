@@ -70,7 +70,7 @@ export function FooterItemConfigInput(props: InputFieldProps) {
 				</div>
 
 				<div className="w-auto">
-					<Button small onClick={onShow} icon={<IconAdd24 />}>
+					<Button small onClick={onShow} icon={<IconAdd24 />} data-test="add-footer-item-button">
 						{i18n.t("Add footer item")}
 					</Button>
 				</div>

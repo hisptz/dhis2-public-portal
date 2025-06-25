@@ -35,10 +35,12 @@ export function LogoConfig({ logoType, label }: Props) {
 						)}
 						<div className="flex flex-row gap-1">
 							<RHFNumberField
+								data-test="header-logo-width-input"
 								name={`${STYLE_KEY}.${logoType}.width`}
 								label={i18n.t("Width")}
 							/>
 							<RHFNumberField
+								data-test="header-logo-height-input"
 								name={`${STYLE_KEY}.${logoType}.height`}
 								label={i18n.t("Height")}
 							/>

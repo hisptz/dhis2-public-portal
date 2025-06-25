@@ -34,17 +34,20 @@ export function StyleConfig({ label, parentName }: Props) {
 							]}
 							name={`${parentName}.align`}
 							label={i18n.t("Alignment")}
+							dataTest={`header-style-align-input-${parentName}`}
 						/>
 					}
 					<RHFNumberField
 						small
 						name={`${parentName}.textSize`}
 						label={i18n.t("Text size")}
+						data-test="header-style-text-size-input"
 					/>
 
 					<ColorPicker
 						name={`${parentName}.textColor`}
 						label={i18n.t("Text color")}
+						data-test="header-style-text-color-input"
 					/>
 				</div>
 			</div>

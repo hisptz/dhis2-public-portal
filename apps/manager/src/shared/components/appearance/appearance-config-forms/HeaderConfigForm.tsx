@@ -202,7 +202,7 @@ export function HeaderConfigForm({
 	return (
 		<FormProvider {...form}>
 			<Modal position="middle" onClose={onClose} large>
-				<ModalTitle>{i18n.t("Header configurations")}</ModalTitle>
+				<ModalTitle data-test = "model-header-title" >{i18n.t("Header configurations")}</ModalTitle>
 				<ModalContent>
 					<form className="flex flex-col gap-2">
 						{/*Title config*/}
@@ -277,6 +277,8 @@ export function HeaderConfigForm({
 							configurations={configurations}
 							onClose={onClose}
 							onComplete={onComplete}
+							data-test="save-button"
+							
 						/>
 					</ButtonStrip>
 				</ModalActions>

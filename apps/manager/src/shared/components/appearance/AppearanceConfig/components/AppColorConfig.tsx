@@ -21,7 +21,7 @@ export function AppColorConfig({ config, refetchConfig }: Props) {
 	return (
 		<>
 			<section>
-				<ConfigurationTitle title={i18n.t("Application colors")} />
+				<ConfigurationTitle data-test="configuration-title-Application colors" title={i18n.t("Application colors")} />
 				<div className="mx-2 flex flex-col gap-2">
 					<ConfigurationDetails title={"Primary color"}>
 						<ConfigurationColor colorCode={primary} />

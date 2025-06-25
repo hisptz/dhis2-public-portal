@@ -34,7 +34,7 @@ export function FooterItemForm({ onAdd, onClose, hide, config }: Props) {
 		<FormProvider {...form}>
 			<form className="flex flex-col gap-2">
 				<Modal hide={hide} position="middle">
-					<ModalTitle>
+					<ModalTitle data-test="footer-item-modal-title">
 						{config ? "Update Footer Item" : "Add Footer Item"}
 					</ModalTitle>
 					<ModalContent>
@@ -43,6 +43,7 @@ export function FooterItemForm({ onAdd, onClose, hide, config }: Props) {
 								name="title"
 								label={i18n.t("Title")}
 								required
+								data-test="footer-item-title-input"
 							/>
 							<RHFSingleSelectField
 								options={
@@ -60,6 +61,7 @@ export function FooterItemForm({ onAdd, onClose, hide, config }: Props) {
 								name="type"
 								label={i18n.t("Type")}
 								required
+								data-test="footer-item-type-select"
 							/>
 
 							{type === "links" && (
@@ -69,6 +71,7 @@ export function FooterItemForm({ onAdd, onClose, hide, config }: Props) {
 								<RHFRichTextAreaField
 									name="staticContent"
 									label={i18n.t("Static Content")}
+									data-test="footer-item-static-content"
 								/>
 							)}
 						</div>
@@ -76,7 +79,7 @@ export function FooterItemForm({ onAdd, onClose, hide, config }: Props) {
 
 					<ModalActions>
 						<ButtonStrip>
-							<Button secondary onClick={onClose}>
+							<Button secondary onClick={onClose} data-test="footer-item-cancel-button">
 								{i18n.t("Cancel")}
 							</Button>
 							<Button
@@ -89,6 +92,7 @@ export function FooterItemForm({ onAdd, onClose, hide, config }: Props) {
 										onClose();
 									})();
 								}}
+								data-test="footer-item-add-button"
 							>
 								{config ? i18n.t("Update") : i18n.t("Add")}
 							</Button>
