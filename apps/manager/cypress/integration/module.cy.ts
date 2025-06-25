@@ -358,6 +358,7 @@ describe("Modules Page", () => {
 			switch (value) {
 				case SectionType.GRID_LAYOUT:
 					cy.contains("button", "Save section changes").click();
+					cy.wait(1000);
 					cy.contains("button", "Add item").click();
 					cy.wait(2000);
 					cy.get('[data-test="single-value-visualization-select-content"]').click();
@@ -387,6 +388,7 @@ describe("Modules Page", () => {
 					cy.get(`[data-value="${visualizations[0]}"]`).click();
 					cy.get(`textarea[name='config.sections.${index}.item.item.caption']`).type("This is a test caption");
 					cy.contains("button", "Save section changes").click();
+					cy.wait(2000);
 					cy.get('[data-test="section-single-item-type"]').click();
 					cy.get(`[data-value="${DisplayItemType.FEEDBACK}"]`).click();
 					cy.contains("button", "Add feedback recipient").click();
@@ -439,6 +441,7 @@ describe("Modules Page", () => {
 
 		cy.get(".jodit-wysiwyg").type("This is a test section content");
 		cy.contains("button", "Save section changes").click();
+		cy.wait(2000);
 		cy.get('[data-test="section-single-item-type"]').click();
 		cy.get(`[data-value="${DisplayItemType.VISUALIZATION}"]`).click();
 		cy.get('[data-test="section-single-item-visualization-type"]').click();
@@ -449,6 +452,7 @@ describe("Modules Page", () => {
 		cy.get('[data-test="section-single-item-visualization-content"]').click();
 		cy.get(`[data-value="${visualizations[0]}"]`).click();
 		cy.contains("button", "Save section changes").click();
+		cy.wait(2000);
 		cy.get('[data-test="section-single-item-type"]').click();
 		cy.get(`[data-value="${DisplayItemType.FEEDBACK}"]`).click();
 		cy.contains("button", "Add feedback recipient").click();
