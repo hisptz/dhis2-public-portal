@@ -77,7 +77,7 @@ describe("Modules Page", () => {
 						cy.get(
 							'[data-test="dhis2-uicore-modalactions"] > [data-test="dhis2-uicore-buttonstrip"] > :nth-child(2) > [data-test="dhis2-uicore-button"]',
 						).click();
-
+						cy.wait(1000);
 						cy.contains("td", label).should("not.exist");
 					} else {
 						cy.log(
@@ -87,7 +87,6 @@ describe("Modules Page", () => {
 				});
 			};
 
-			cy.wait(1000);
 			deleteIfExists();
 
 			cy.contains("button", "Create a new module").click();
