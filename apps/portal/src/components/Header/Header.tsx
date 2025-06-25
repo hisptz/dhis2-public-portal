@@ -23,11 +23,11 @@ export function AppHeader({
 	const hasMenu = menuConfig.items.length > 1;
 	const { header: headerConfig } = config;
 	const theme = getAppTheme(config);
-	const backgroundColor = headerConfig?.style.usePrimaryColorAsBackgroundColor
-		? config.colors.primary
-		: headerConfig.style?.coloredBackground
-			? headerConfig.style?.headerBackgroundColor
-			: undefined;
+	const backgroundColor = headerConfig.style?.coloredBackground
+		? headerConfig?.style.usePrimaryColorAsBackgroundColor
+			? config.colors.primary
+			: headerConfig.style?.headerBackgroundColor
+		: undefined;
 	const foregroundColor = backgroundColor
 		? getForeground(backgroundColor)
 		: undefined;
