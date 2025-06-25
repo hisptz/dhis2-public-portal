@@ -35,6 +35,7 @@ export function FeedbackList({
 					onUpdate={(data) => onEdit(data, index)}
 				/>
 				<Button
+					dataTest={"remove-feedback-button"}
 					onClick={() => onRemove(index)}
 					title={i18n.t("Remove")}
 					icon={<IconDelete16 />}

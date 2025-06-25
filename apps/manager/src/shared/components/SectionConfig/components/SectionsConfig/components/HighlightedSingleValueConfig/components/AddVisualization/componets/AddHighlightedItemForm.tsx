@@ -124,12 +124,13 @@ export function AddHighlightedItemForm({
 					<ButtonStrip>
 						<Button onClick={onClose}>{i18n.t("Cancel")}</Button>
 						<Button
+							dataTest={"add-highlighted-item-button"}
 							loading={form.formState.isSubmitting}
 							primary
 							onClick={(_, e) => form.handleSubmit(onAdd)(e)}
 						>
 							{form.formState.isSubmitting
-								? i18n.t("Uploading icon...")
+								? i18n.t("Uploading ...")
 								: action}
 						</Button>
 					</ButtonStrip>
