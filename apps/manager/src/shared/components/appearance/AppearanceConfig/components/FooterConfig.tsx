@@ -20,7 +20,7 @@ export function FooterConfig({ config, refetchConfig }: Props) {
 	return (
 		<>
 			<section>
-				<ConfigurationTitle title={i18n.t("Footer configuration")} />
+				<ConfigurationTitle data-test="configuration-title-Footer configuration" title={i18n.t("Footer configuration")} />
 				<div className="mx-2 flex flex-col gap-2">
 					{copyright && (
 						<ConfigurationDetails

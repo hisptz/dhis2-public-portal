@@ -137,6 +137,7 @@ export function AppColorConfigForm({
 							{i18n.t("Cancel")}
 						</Button>
 						<Button
+						 data-test="update-appearance-button"
 							loading={loading || form.formState.isSubmitting}
 							disabled={!form.formState.isValid}
 							onClick={(_, e) => {

@@ -127,10 +127,12 @@ export function FooterConfigForm({
 								type="text"
 								name="copyright"
 								label={i18n.t("Copyright")}
+								data-test="footer-copyright-input"
 							/>
 							<RHFCheckboxField
 								name="showTitle"
 								label={i18n.t("Show title")}
+								data-test="footer-show-title-checkbox"
 							/>
 							<hr className="border-gray-200 my-2" />
 						</div>
@@ -145,7 +147,7 @@ export function FooterConfigForm({
 				</ModalContent>
 				<ModalActions>
 					<ButtonStrip end>
-						<Button onClick={onClose} secondary>
+						<Button onClick={onClose} secondary data-test="footer-config-cancel-button">
 							{i18n.t("Cancel")}
 						</Button>
 						<Button
@@ -158,6 +160,7 @@ export function FooterConfigForm({
 								)(e);
 							}}
 							primary
+							data-test="footer-config-update-button"
 						>
 							{buttonLabel}
 						</Button>

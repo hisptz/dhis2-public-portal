@@ -39,11 +39,13 @@ export function FooterItemTable({ fields, update, remove }: Props) {
 		action: (
 			<ButtonStrip>
 				<Button
+					data-test="delete-footer-item-button"
 					icon={<IconDelete16 />}
 					small
 					onClick={() => remove(index)}
 				/>
 				<Button
+					data-test="edit-footer-item-button"
 					icon={<IconEdit16 />}
 					small
 					onClick={() => update(index, field)}
