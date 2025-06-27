@@ -11,57 +11,87 @@ describe("App Menu Section", () => {
 		cy.visit("/");
 	});
 
-	//   it("should display App Menu configuration UI", () => {
-	//     cy.contains("a", appMenu.label).click();
-	//     cy.get('[data-test="dhis2-uicore-field-content"] > .flex > :nth-child(1)').should("exist");
-	//     cy.get('[data-test="dhis2-uicore-field-content"] > .flex > :nth-child(2)').should("exist");
-	//     cy.get('input[type="checkbox"][name="collapsible"]').should("exist");
-	//     cy.contains("h4", /Menu items/i).should("exist");
-	//     cy.contains("button", /Add menu item/i).should("exist");
-	//     cy.contains("button", /Save changes/i).should("exist");
-	//     cy.contains("button", /Reset/i).should("exist");
-	//     cy.get("table").should("exist");
-	//   });
 
-	//   it("Should sort items",()=>{
-	//     cy.contains("a", appMenu.label).click();
-	//     //i should check if the sort button is present
-	//     cy.get('[data-test="sort-menu-items-button"]').should("exist");
-	//     //i should click button for sorting
-	//     cy.get('[data-test="sort-menu-items-button"]').click();
-	//     // if modal open is should drag items and save
+	// Done for  showing ui of the app menu configuration
+	  it("should display App Menu configuration UI", () => {
 
-	//   })
+		const home = "Home";
+	    cy.contains("a", appMenu.label).click();
+		//showing app menu title is showing
+		cy.get('.text-2xl').should('be.visible');
 
-	// it("should add a new module item", () => {
-	// 	cy.contains("a", appMenu.label).click();
-	// 	// click add menu item button
-	// 	cy.get('[data-test="add-menu-item-button"]').click();
-	// 	// i should check if the modal is open
-	// 	cy.get('[data-test="dhis2-uicore-modaltitle"]').should("exist");
-	// 	cy.get('[data-test="dhis2-uicore-select-input"]').click();
-	// 	cy.get("#filter").type("Home (Section)");
-	// 	cy.get('[data-test="dhis2-uicore-singleselectoption"]').click();
-	// 	//clicking button to update
-	// 	cy.get('[data-test="save-menu-item-button"]').click();
-	// 	// i should check if the item is added
+		cy.get('[data-test="menu-position-config"]').should('be.visible');
+		// showing app menu title is showing
 
-	// 	// i should save the changes
-	// 	cy.get('[data-test="save-menu-config-changes-button"]').click();
+		// collapse button should be visible
+		cy.get('[data-test="dhis2-uicore-checkbox"]').should('be.visible');
+        //  menu items should be visible
+		cy.get('h4').should('be.visible');
 
-	// });
+		//sort items button should be visible
+		cy.get('[data-test="sort-menu-items-button"]').should('be.visible');
 
-    
-	// it("should add the group of items", () => {
-    //     cy.contains("a", appMenu.label).click();
-    // });
+		//add item button should be visible
+		cy.get('[data-test="add-menu-item-button"]').should('be.visible');
 
-	it("should edit a menu item", () => {
-        cy.contains("a", appMenu.label).click();
-    });
+		// should observe is table is shown
+		cy.get('table').should('be.visible');
+
+		// should observe if table body is shown
+		cy.get('table tbody').should('be.visible');
+
+		// should observe if table header is shown
+		cy.get('table thead').should('be.visible');
+		// should observe if table row is shown
+		cy.get('table tbody tr').should('be.visible');
+		// should observe if table column is shown
+		cy.get('table tbody tr td').should('be.visible');
+		// should observe if the edit and delete button is shown on the table
+		cy.get('table tbody ').contains("td", home).parent("tr").within(() => {
+			cy.get('[data-test="edit-menu-item-button"]').should('be.visible');
+			cy.get('[data-test="delete-menu-item-button"]').should('be.visible');
+		});
 
 
-	// it("should delete a menu item", () => {
-    //     cy.contains("a", appMenu.label).click();
-    // });
+     // This is done for switching sidebar to header and header to sidebar
+	// should observe if sidebar is clicked and switched 
+	it("should observe if sidebar is clicked and switched", () => {
+		cy.contains("a", appMenu.label).click();
+
+		// should check if the sidebar visible
+		cy.get('[data-test="menu-position-sidebar"]').should('be.visible');
+
+		// should check if the header visible
+		cy.get('[data-test="menu-position-header"]').should('be.visible');
+
+		// should switch  to the header
+		cy.get('[data-test="menu-position-header"]').click();
+
+
+			// should return to the sidebar
+	    cy.get('[data-test="menu-position-sidebar"]').click();
+
+		// should save changes
+		cy.get('[data-test="save-menu-config-changes-button"]').click();
+
+	
+
+	
+	})
+
+	// should add new item to the menu
+	it("should add new item to the menu", () => {
+		const modules  = appMenus.find((menu) => menu.label === "Modules");
+		const moduleConfiguration = {
+			label : "Test Module For App Menu",
+			type : "Section",
+
+		}
+		cy.contains("a", modules.label ).click();
+		cy.get('.pl-4 > [data-test="dhis2-uicore-button"]').click();
+		// type on the label input
+	
+
+	  });
+	});
 });

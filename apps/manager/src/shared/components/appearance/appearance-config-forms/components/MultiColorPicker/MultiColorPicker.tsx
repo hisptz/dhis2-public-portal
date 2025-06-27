@@ -51,6 +51,7 @@ export function MultiColorPicker({ label, name, onColorChange }: Props) {
 
 			<div className="w-auto">
 				<Button
+					data-test="add-color-button"
 					small
 					secondary
 					onClick={() => setShowColorModal(true)}

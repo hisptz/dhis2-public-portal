@@ -77,7 +77,7 @@
       {
         "title": "Contact Us",
         "type": "static",
-        "staticContent": "<p>Email: test@example.com<br>Phone: +1 234 567 8900</p>"
+        "staticContent": "Email: test@example.com<br>Phone: +1 234 567 8900"
       }
     ]
   }

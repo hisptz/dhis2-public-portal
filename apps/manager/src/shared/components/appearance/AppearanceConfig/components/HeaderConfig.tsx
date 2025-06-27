@@ -77,6 +77,7 @@ export function HeaderConfig({ appearanceConfig, refetchConfig }: Props) {
 
 				<div className="mt-2">
 					<Button
+						data-test="update-header-button"
 						onClick={() => setShowHeaderConfig(true)}
 						small
 						secondary

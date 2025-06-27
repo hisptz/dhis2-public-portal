@@ -44,6 +44,7 @@ export function AppColorConfig({ config, refetchConfig }: Props) {
 				</div>
 				<div className="mt-2">
 					<Button
+						data-test="update-app-color-button"
 						onClick={() => setShowAppColor(true)}
 						small
 						secondary

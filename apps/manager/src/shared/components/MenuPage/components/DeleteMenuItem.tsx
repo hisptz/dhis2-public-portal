@@ -17,6 +17,7 @@ export function DeleteMenuItem({
 		<>
 			<Button
 				small
+				data-test="delete-menu-item-button"
 				onClick={() => {
 					confirm({
 						title: i18n.t("Confirm delete"),

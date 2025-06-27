@@ -14,6 +14,7 @@ export function MenuPositionConfig() {
 			<Field
 				{...field}
 				required
+				dataTest={"menu-position-config"}
 				validationText={fieldState?.error?.message}
 				name="position"
 				error={!!fieldState.error}
@@ -28,6 +29,7 @@ export function MenuPositionConfig() {
 						}}
 						checked={field.value === MenuPosition.SIDEBAR}
 						label={i18n.t("Sidebar")}
+						dataTest={"menu-position-sidebar"}
 						value={MenuPosition.SIDEBAR}
 					/>
 					<Radio
@@ -38,6 +40,7 @@ export function MenuPositionConfig() {
 						}}
 						checked={field.value === MenuPosition.HEADER}
 						label={i18n.t("Header")}
+						dataTest={"menu-position-header"}
 						value={MenuPosition.HEADER}
 					/>
 				</div>

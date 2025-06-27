@@ -22,6 +22,7 @@ export function LogoConfig({ logoType, label }: Props) {
 			<h3 className="text-md font-medium">{label}</h3>
 			<div className="mx-2 flex flex-col gap-2">
 				<RHFCheckboxField
+				    dataTest = {"toggle-logo-checkbox"}
 					name={`${STYLE_KEY}.${logoType}.show`}
 					label={i18n.t("Show logo")}
 				/>
