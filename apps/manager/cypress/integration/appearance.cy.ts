@@ -278,7 +278,6 @@ describe("Appearance Page", () => {	let appColorConfig: any;
 				.click();
 			cy.get('[data-value="links"]').click();
 
-			// Add each link from the array
 			linkItem.links.forEach(({ name, url }) => {
 				cy.get('[data-test="add-footer-link-button"]').click();
 				cy.get("#name").should("be.visible").clear().type(name);
@@ -287,7 +286,6 @@ describe("Appearance Page", () => {	let appColorConfig: any;
 			});
 
 			cy.get('[data-test="footer-item-add-button"]');
-			// Save footer item and update the config
 			cy.get('[data-test="footer-item-add-button"]')
 				.should("be.visible")
 				.click();
@@ -308,9 +306,7 @@ describe("Appearance Page", () => {	let appColorConfig: any;
 		cy.get('[data-test="configuration-title-Footer configuration"]')
 			.should("be.visible")
 			.click();
-		// 	// should click update button
 		cy.get('[data-test="dhis2-uicore-button"]').click();
-		//should click edit footer item button
 		cy.get("table tbody ")
 			.contains("td", footerLinks)
 			.parent("tr")
@@ -318,9 +314,7 @@ describe("Appearance Page", () => {	let appColorConfig: any;
 				cy.get('[data-test="edit-footer-item-button"]').click();
 			});
 		cy.get("#title").clear().type(updatedFooterLinks);
-		//should click add footer link button
 
-		// 	// should click edit footer link button on the table
 		cy.get("table tbody ")
 			.contains("td", previousFooterLinkTitle)
 			.parent("tr")
@@ -336,7 +330,6 @@ describe("Appearance Page", () => {	let appColorConfig: any;
 		cy.get('[data-test="footer-config-update-button"]').click();
 	});
 
-	//Done for delete footer links items
 	it("should delete footer links items", () => {
 		const updatedFooterLinks = "Important Links For Testing Updated";
 		cy.contains("a", appearanceMenu.label).click();
