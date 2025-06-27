@@ -31,10 +31,8 @@ describe("General Section", () => {
 		cy.get("#description").clear().type("Test portal description");
 		cy.get("#applicationURL").clear().type("https://test-portal.org");
 
-		//This is specifically if we want to test the application URL and icon
 		// cy.get('input[type="file"][name="icon"]').selectFile('cypress/fixtures/sample-icon.png', { force: true });
 
-    // I prevent to save to avoid changes to be saved on datastore  
 		// cy.contains("button", "Save changes").should("not.be.disabled").click();
 		// cy.contains("button", "Save changes").should("be.disabled");
 	});

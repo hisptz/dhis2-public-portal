@@ -213,7 +213,6 @@ describe("Appearance Page", () => {	let appColorConfig: any;
 		}
 	});
 
-	//this is done
 	it("It should update the static content configuration", () => {
 		cy.contains("a", appearanceMenu.label).click();
 		cy.get('[data-test="configuration-title-Footer configuration"]')
@@ -235,7 +234,6 @@ describe("Appearance Page", () => {	let appColorConfig: any;
 		cy.get('[data-test="footer-config-update-button"]').click();
 	});
 
-	// this is done for deleting static content
 	it("should delete the footer  static content", () => {
 		const updatedTitle = "Company Address For Testing Updated";
 		cy.contains("a", appearanceMenu.label).click();
