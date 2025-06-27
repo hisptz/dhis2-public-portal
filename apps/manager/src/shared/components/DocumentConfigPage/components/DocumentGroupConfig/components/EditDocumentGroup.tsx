@@ -22,6 +22,7 @@ export function EditDocumentGroup({
 	return (
 		<>
 			<Button
+				dataTest={"edit-document-group-button"}
 				small
 				title={i18n.t("Edit group")}
 				onClick={onOpen}
