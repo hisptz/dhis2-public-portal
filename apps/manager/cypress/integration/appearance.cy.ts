@@ -1,8 +1,6 @@
 import { appMenus } from "../../src/shared/constants/menu";
 
-describe("Appearance Page", () => {
-	// Load fixtures
-	let appColorConfig: any;
+describe("Appearance Page", () => {	let appColorConfig: any;
 	let headerConfig: any;
 	let footerConfig: any;
 	let appearanceConfig: any;
@@ -44,17 +42,14 @@ describe("Appearance Page", () => {
 		cy.get('[data-test="configuration-title-Application colors"]').should(
 			"be.visible",
 		);
-		//should observe the header config is shown
 		cy.get('[data-test="configuration-title-Header configuration"]').should(
 			"be.visible",
 		);
-		//should observe the footer config is shown
 		cy.get('[data-test="configuration-title-Footer configuration"]').should(
 			"be.visible",
 		);
 	});
 
-	//This is done it test  modal open and closed
 	it("It should open the color configuration modal and close it", () => {
 		cy.contains("a", appearanceMenu.label).click();
 		cy.get('[data-test="configuration-title-Application colors"]')
@@ -64,15 +59,11 @@ describe("Appearance Page", () => {
 			.should("be.visible")
 			.click();
 
-		// 	//should observe the modal is open
 		cy.get('[data-test="dhis2-uicore-modaltitle"]').should("be.visible");
-		//should click cancel button to close the modal
 		cy.get('[data-test="dhis2-uicore-button"]').contains("Cancel").click();
-		//should observe the modal is closed
 		cy.get('[data-test="dhis2-uicore-modaltitle"]').should("not.exist");
 	});
 
-	//This is done it test if primary color and background color is added and updated
 	it("It should add primary color and background color and update the colors", () => {
 		cy.contains("a", appearanceMenu.label).click();
 		cy.get('[data-test="configuration-title-Application colors"]')
@@ -92,7 +83,6 @@ describe("Appearance Page", () => {
 			.click();
 	});
 
-	//This is done it test it ensure  chart colors are added and updated
 	it("It should add chart colors and update the colors", () => {
 		cy.contains("a", appearanceMenu.label).click();
 		cy.get('[data-test="configuration-title-Application colors"]')
@@ -110,7 +100,6 @@ describe("Appearance Page", () => {
 			.click();
 	});
 
-	//This test for opening and closing of header configuration modal
 	it("It should ensure the modal for header configuration is open and closed", () => {
 		cy.contains("a", appearanceMenu.label).click();
 		cy.get('[data-test="configuration-title-Header configuration"]')
@@ -124,56 +113,41 @@ describe("Appearance Page", () => {
 		cy.get('[data-test="dhis2-uicore-modaltitle"]').should("not.exist");
 	});
 
-	//This test for updating the header configuration
 	it("It should update the header configuration", () => {
 		cy.contains("a", appearanceMenu.label).click();
 		cy.get('[data-test="configuration-title-Header configuration"]')
 			.should("be.visible")
 			.click();
 		cy.get('[data-test="update-header-button"]');
-		// i should click update button
 		cy.get('[data-test="update-header-button"]').click();
-		// i should observe the modal is open
 		cy.get('[data-test="dhis2-uicore-modaltitle"]').should("be.visible");
-		// i should fill the title text
 		cy.get('input[name="header.title.text"]')
 			.clear()
 			.type(headerConfig.title.text);
-		// i should fill the subtitle text
 		cy.get('input[name="header.subtitle.text"]')
 			.clear()
 			.type(headerConfig.subtitle.text);
-		// i should toggle the checkbox
 		cy.get('[data-test="toggle-logo-checkbox"]').click();
-		// i should untoggle button
 		cy.get('[data-test="toggle-logo-checkbox"]').click();
-		// i should fill the width and height of the logo
 		cy.get('input[name="header.style.leadingLogo.width"]')
 			.clear()
 			.type(headerConfig.style.leadingLogo.width.toString());
 		cy.get('input[name="header.style.leadingLogo.height"]')
 			.clear()
 			.type(headerConfig.style.leadingLogo.height.toString());
-		//should untoggle the dropdown button
 		cy.get(".flex > span").click();
-		//should scroll to the bottom of the page
-		// should toggle the trailing showing button
 		cy.get('input[name="header.style.trailingLogo.show"]').click();
 
-		// 	// i should fill the width and height of the trailing logo
 		cy.get('input[name="header.style.trailingLogo.width"]')
 			.clear()
 			.type(headerConfig.style.trailingLogo.width.toString());
 		cy.get('input[name="header.style.trailingLogo.height"]')
 			.clear()
 			.type(headerConfig.style.trailingLogo.height.toString());
-		// i should toggle the colored background
 
-		// 	//should fill the height of the container
 		cy.get('input[name="header.style.containerHeight"]')
 			.clear()
 			.type(headerConfig.style.containerHeight.toString());
-		//to change syle for title style
 		cy.get('input[name="header.title.style.textSize"]')
 			.clear()
 			.type(headerConfig.title.style.textSize.toString());
@@ -188,7 +162,6 @@ describe("Appearance Page", () => {
 			.contains("Right")
 			.click();
 
-		//to change syle for subtitle style
 		cy.get('input[name="header.subtitle.style.textSize"]')
 			.clear()
 			.type(headerConfig.subtitle.style.textSize.toString());
@@ -204,28 +177,23 @@ describe("Appearance Page", () => {
 			.click();
 	});
 
-	// Done this should add new static content
 	it("should edit footer configurations for static content", () => {
 		cy.contains("a", appearanceMenu.label).click();
 
-		// Open footer configuration modal
 		cy.get('[data-test="configuration-title-Footer configuration"]')
 			.parent()
 			.within(() => {
 				cy.contains("button", "Update").click();
 			});
 
-		// 	cy.contains("Footer configurations").should("be.visible");
 		const staticItem = footerConfig.footerItems.find(
 			(item) => item.type === "static",
 		);
 		if (staticItem) {
-			// Click "Add Footer Item" button
 			cy.get('[data-test="add-footer-item-button"]')
 				.should("exist")
 				.click();
 
-			// 		// Fill in title
 			cy.get('[name="title"]')
 				.should("be.visible")
 				.type(staticItem.title);
@@ -284,11 +252,9 @@ describe("Appearance Page", () => {
 		cy.get('[data-test="footer-config-update-button"]').click();
 	});
 
-	// This is done for adding footer links items
 	it("should edit footer configurations for links", () => {
 		cy.contains("a", appearanceMenu.label).click();
 
-		// 	// Open footer configuration modal
 		cy.get('[data-test="configuration-title-Footer configuration"]')
 			.parent()
 			.within(() => {
@@ -302,12 +268,10 @@ describe("Appearance Page", () => {
 		);
 
 		if (linkItem) {
-			// Click "Add Footer Item" button
 			cy.get('[data-test="add-footer-item-button"]')
 				.should("exist")
 				.click();
 
-			// Fill in title and type
 			cy.get('[name="title"]').should("be.visible").type(linkItem.title);
 			cy.get('[data-test="dhis2-uicore-select-input"]')
 				.should("be.visible")

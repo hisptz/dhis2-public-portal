@@ -3,6 +3,10 @@ import { appMenus } from "../../src/shared/constants/menu";
 describe("General Section", () => {
 	const generalMenu = appMenus.find((menu) => menu.label === "General");
 
+	if (!generalMenu) {
+		throw new Error("General menu item not found in appMenus");
+	}
+
 	beforeEach(() => {
 		cy.visit("/");
 	});
