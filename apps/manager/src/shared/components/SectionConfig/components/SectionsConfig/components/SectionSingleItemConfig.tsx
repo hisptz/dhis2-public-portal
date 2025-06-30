@@ -20,12 +20,13 @@ export function SectionSingleItemConfig() {
 			<Divider />
 			<>
 				<RHFSingleSelectField
-					options={Object.values(DisplayItemType).map((type) => {
-						return {
+					dataTest={"section-single-item-type"}
+					options={Object.values(DisplayItemType)
+						.filter((type) => type !== DisplayItemType.HIGHLIGHTED_SINGLE_VALUE)
+						.map((type) => ({
 							label: i18n.t(startCase(type.toLowerCase())),
 							value: type,
-						};
-					})}
+						}))}
 					required
 					label={i18n.t("Item Type")}
 					name={`${namePrefix}.item.type`}

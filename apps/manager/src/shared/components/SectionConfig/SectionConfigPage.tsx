@@ -79,7 +79,7 @@ export function SectionConfigPage() {
 					}}
 					icon={<IconArrowLeft24 />}
 				>
-					{i18n.t("Back to Module")}
+					{i18n.t("Back to module")}
 				</Button>
 			</div>
 			<SectionPageHeader />

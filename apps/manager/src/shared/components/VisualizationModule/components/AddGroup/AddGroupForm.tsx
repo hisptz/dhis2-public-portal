@@ -73,6 +73,7 @@ export function AddGroupForm({
                     <ButtonStrip>
                         <Button onClick={onClose}>{i18n.t("Cancel")}</Button>
                         <Button
+                            dataTest={"button-create-group"}
                             loading={form.formState.isSubmitting}
                             primary
                             onClick={(_, e) => form.handleSubmit(onSubmit)(e)}

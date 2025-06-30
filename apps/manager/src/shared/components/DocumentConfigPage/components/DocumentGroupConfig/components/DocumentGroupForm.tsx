@@ -37,8 +37,8 @@ export function DocumentGroupForm({
 	});
 	const editMode = !!group;
 	const title = editMode
-		? i18n.t("Edit Document Group")
-		: i18n.t("Add Document Group");
+		? i18n.t("Edit document group")
+		: i18n.t("Add document group");
 	const buttonLabel = editMode ? i18n.t("Update") : i18n.t("Save");
 
 	const handleSave = (data: DocumentGroup) => {
@@ -60,6 +60,7 @@ export function DocumentGroupForm({
 				<ModalContent>
 					<form className="flex flex-col gap-4">
 						<RHFTextInputField
+							dataTest={"document-group-title-input"}
 							required
 							name="title"
 							label={i18n.t("Title")}
@@ -76,6 +77,7 @@ export function DocumentGroupForm({
 					<ButtonStrip>
 						<Button onClick={onClose}>{i18n.t("Cancel")}</Button>
 						<Button
+							dataTest={"save-document-group-button"}
 							primary
 							onClick={(_, e) =>
 								form.handleSubmit(handleSave, err)(e)

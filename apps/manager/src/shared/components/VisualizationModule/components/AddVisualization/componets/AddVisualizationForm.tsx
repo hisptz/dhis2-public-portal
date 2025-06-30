@@ -53,6 +53,7 @@ export function AddVisualizationForm({
 					<form className="flex flex-col gap-4">
 						<RHFSingleSelectField
 							required
+							dataTest={"visualization-type-select"}
 							label={i18n.t("Type")}
 							options={[
 								{
@@ -77,6 +78,7 @@ export function AddVisualizationForm({
 					<ButtonStrip>
 						<Button onClick={onClose}>{i18n.t("Cancel")}</Button>
 						<Button
+							dataTest={"button-add-visualization"}
 							primary
 							onClick={(_, e) => form.handleSubmit(onAdd)(e)}
 						>
