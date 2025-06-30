@@ -5,6 +5,7 @@ export enum DisplayItemType {
 	VISUALIZATION = "VISUALIZATION",
 	HIGHLIGHTED_SINGLE_VALUE = "HIGHLIGHTED_SINGLE_VALUE",
 	FEEDBACK = "FEEDBACK",
+	VISUALIZATIONS_SLIDESHOW = "VISUALIZATIONS_SLIDESHOW",
 }
 
 export const displayItemTypeSchema = z.nativeEnum(DisplayItemType);
