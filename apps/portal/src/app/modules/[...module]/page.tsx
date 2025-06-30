@@ -74,6 +74,7 @@ export default async function ModuleLandingPage({
 				<VisualizationModule
 					searchParams={searchParamsValue}
 					config={moduleConfig.config}
+					headingColor={titlesColor ?? "#120d0c"}
 				/>
 			);
 		case ModuleType.STATIC:
@@ -81,7 +82,7 @@ export default async function ModuleLandingPage({
 				<StaticModule
 					moduleId={moduleId}
 					config={moduleConfig.config}
-					headingColor={titlesColor ?? "#2c6693"}
+					headingColor={titlesColor ?? "#120d0c"}
 				/>
 			);
 		case ModuleType.DOCUMENTS:
@@ -89,10 +90,9 @@ export default async function ModuleLandingPage({
 				<DocumentsModule
 					config={moduleConfig.config}
 					searchParams={searchParamsValue}
-					headingColor={titlesColor || "#2c6693"}
+					headingColor={titlesColor ?? "#120d0c"}
 				/>
 			);
-			console.log(titlesColor);
 		default:
 			return (
 				<Box className="h-min-[500px] w-full h-full flex items-center justify-center">
