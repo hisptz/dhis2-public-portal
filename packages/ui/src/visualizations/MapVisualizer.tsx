@@ -1,5 +1,6 @@
 import {
 	DHIS2Map,
+	EarthEngineLayerConfig,
 	getColorScale,
 	MapProps,
 	ThematicLayerConfig,
@@ -60,8 +61,9 @@ export const MapVisualizer = memo(function MapVisualizer({
 }: MapViewProps) {
 	const thematicLayers = useMemo(() => {
 		return mapConfig.mapViews
-			.filter((view) => view.layer.includes(MapLayerType.THEMATIC))
-			.map((view) => {
+			?.filter((view) => view.layer.includes(MapLayerType.THEMATIC))
+			?.map((view) => {
+				console.log({ view });
 				const dataItem = head(head(view.columns)!.items);
 				return {
 					id: view.id,
@@ -71,7 +73,7 @@ export const MapVisualizer = memo(function MapVisualizer({
 						id: dataItem!.id,
 						type: dataItem!.dimensionItemType,
 						legendSet: view.legendSet?.id,
-						displayName: view.name,
+						displayName: view.displayName ?? dataItem?.name,
 						legendConfig: {
 							scale: view.classes,
 							colorClass: view.colorScale
@@ -79,7 +81,7 @@ export const MapVisualizer = memo(function MapVisualizer({
 								: undefined,
 						},
 					},
-					name: view.name,
+					name: view.displayName ?? dataItem?.name,
 					control: {
 						enabled: true,
 						position: "topright",
@@ -91,7 +93,7 @@ export const MapVisualizer = memo(function MapVisualizer({
 	const boundaryLayer = useMemo(() => {
 		return head(
 			mapConfig.mapViews
-				.filter((view) => view.layer === MapLayerType.ORG_UNIT)
+				?.filter((view) => view.layer === MapLayerType.ORG_UNIT)
 				.map((view) => {
 					return {
 						id: view.id,
@@ -99,6 +101,29 @@ export const MapVisualizer = memo(function MapVisualizer({
 					} as MapProps["boundaryLayer"];
 				}),
 		);
+	}, [mapConfig]);
+
+	const earthEngineLayers: EarthEngineLayerConfig[] = useMemo(() => {
+		return mapConfig.mapViews
+			.filter((mapView) => mapView.layer === MapLayerType.EARTH_ENGINE)
+			.map((view) => {
+				const config = JSON.parse(view.config!);
+
+				return {
+					id: config.band,
+					enabled: true,
+					type: config.band,
+					aggregations: config.aggregationType,
+					name: view.displayName,
+					params: {
+						...config.style,
+						palette: config.style.palette.join(","),
+					},
+					filters: {
+						period: config.period.id,
+					},
+				} as EarthEngineLayerConfig;
+			});
 	}, [mapConfig]);
 
 	const activePeriodSelection = useMemo(() => {
@@ -110,8 +135,8 @@ export const MapVisualizer = memo(function MapVisualizer({
 			mapConfig.mapViews.filter((view) =>
 				view.layer.includes(MapLayerType.THEMATIC),
 			),
-		)!
-			.filters.map(({ items }) => items.map(({ id }) => id))
+		)
+			?.filters?.map(({ items }) => items.map(({ id }) => id))
 			.flat();
 		return {
 			periods,
@@ -123,14 +148,14 @@ export const MapVisualizer = memo(function MapVisualizer({
 			return orgUnitSelection;
 		}
 		const orgUnitConfig = head(
-			mapConfig.mapViews.filter((view) =>
-				view.layer.includes(MapLayerType.THEMATIC),
+			mapConfig.mapViews.filter(
+				(view) => !view.layer.includes(MapLayerType.ORG_UNIT),
 			),
-		)!
-			.rows.map(({ items }) => items.map(({ id }) => id))
+		)
+			?.rows?.map(({ items }) => items.map(({ id }) => id))
 			.flat();
 
-		return getOrgUnitSelectionFromIds(orgUnitConfig);
+		return getOrgUnitSelectionFromIds(orgUnitConfig ?? []);
 	}, [mapConfig.mapViews, orgUnitSelection]);
 
 	return (
@@ -148,6 +173,7 @@ export const MapVisualizer = memo(function MapVisualizer({
 					background: "#FFFFFF",
 				},
 			}}
+			earthEngineLayers={earthEngineLayers}
 			base={{
 				enabled: false,
 				url: "",
@@ -168,7 +194,7 @@ export const MapVisualizer = memo(function MapVisualizer({
 				},
 			]}
 			legends={{
-				collapsible: false,
+				collapsible: true,
 				enabled: true,
 				position: "topright",
 			}}

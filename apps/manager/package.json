@@ -45,7 +45,7 @@
     "@dhis2/app-runtime": "^3.14.1",
     "@dhis2/d2-i18n": "^1.1.3",
     "@dhis2/ui": "^10.5.1",
-    "@hisptz/dhis2-analytics": "^2.1.9",
+    "@hisptz/dhis2-analytics": "^2.1.11",
     "@hisptz/dhis2-ui": "^2.0.48",
     "@hisptz/dhis2-utils": "^2.0.18",
     "@hookform/resolvers": "5.1.0",
