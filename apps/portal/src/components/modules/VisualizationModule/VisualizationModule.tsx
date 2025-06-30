@@ -9,15 +9,15 @@ import { isEmpty } from "lodash";
 export function VisualizationModule({
 	config,
 	searchParams,
-	headingColor,
+	titlesColor,
 }: {
 	config: VisualizationModuleConfig;
 	searchParams: { group?: string };
-	headingColor: string;
+	titlesColor: string;
 }) {
 	return (
 		<Stack className="w-full h-full">
-			<Title order={2} style={{ color: headingColor }}>
+			<Title order={2} style={{ color: titlesColor }}>
 				{config.title}
 			</Title>
 			{config.grouped && !isEmpty(config.groups) && (
