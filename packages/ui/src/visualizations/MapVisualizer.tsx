@@ -63,7 +63,6 @@ export const MapVisualizer = memo(function MapVisualizer({
 		return mapConfig.mapViews
 			?.filter((view) => view.layer.includes(MapLayerType.THEMATIC))
 			?.map((view) => {
-				console.log({ view });
 				const dataItem = head(head(view.columns)!.items);
 				return {
 					id: view.id,
