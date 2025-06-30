@@ -29,7 +29,7 @@ describe("General Section", () => {
 		cy.contains("a", generalMenu.label).click();
 		cy.get("#name").clear().type("Test Portal Name");
 		cy.get("#description").clear().type("Test portal description");
-		cy.get("#applicationURL").clear().type("https://test-portal.org");
+		cy.get('#applicationURL').clear().type("https://test-portal.org");
 
 		// cy.get('input[type="file"][name="icon"]').selectFile('cypress/fixtures/sample-icon.png', { force: true });
 
