@@ -52,6 +52,7 @@ const nextConfig: NextConfig = {
 		// Modify the file loader rule to ignore *.svg, since we have it handled now.
 		fileLoaderRule.exclude = /\.svg$/i;
 		config.externals.push({ canvas: "commonjs canvas" });
+		config.externals.push("@google/earthengine");
 		return config;
 	},
 	transpilePackages: ["@packages/shared"],
