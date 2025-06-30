@@ -92,6 +92,7 @@ export function SectionsConfig() {
 		actions: (
 			<ButtonStrip>
 				<Button
+					dataTest={`edit-section-${index}`}
 					onClick={() =>
 						navigate({
 							to: "/modules/$moduleId/edit/section/$sectionIndex",
@@ -104,6 +105,7 @@ export function SectionsConfig() {
 					icon={<IconEdit16 />}
 				/>
 				<Button
+					dataTest={`remove-section-${index}`}
 					onClick={() => remove(index)}
 					title={i18n.t("Remove")}
 					icon={<IconDelete16 />}

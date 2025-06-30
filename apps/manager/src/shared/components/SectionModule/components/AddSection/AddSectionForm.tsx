@@ -97,6 +97,7 @@ export function AddSectionForm({
 						/>
 						<RHFSingleSelectField
 							required
+							dataTest={"section-display-select"}
 							disabled={displayType == undefined}
 							label={i18n.t("Type")}
 							placeholder={i18n.t("Select type")}
@@ -120,6 +121,7 @@ export function AddSectionForm({
 							{i18n.t("Cancel")}
 						</Button>
 						<Button
+							dataTest={"add-section-button"}
 							loading={form.formState.isSubmitting}
 							primary
 							onClick={(_, e) => form.handleSubmit(onSubmit)(e)}

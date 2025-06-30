@@ -112,6 +112,7 @@ export function AddDocumentForm({
 				<ModalContent>
 					<form className="flex flex-col gap-4">
 						<RHFTextInputField
+							dataTest={"document-label-input"}
 							required
 							name="label"
 							label={i18n.t("Label")}
@@ -119,6 +120,7 @@ export function AddDocumentForm({
 						<RHFIDField name="id" label="ID" dependsOn="label" />
 						<RHFSingleSelectField
 							required
+							dataTest={"document-type-select"}
 							options={[
 								{
 									label: i18n.t("PDF"),
@@ -130,6 +132,7 @@ export function AddDocumentForm({
 						/>
 						<RHFFileInputField
 							required
+							dataTest={"file-input"}
 							name={"file"}
 							accept="application/pdf"
 							label={i18n.t("File")}
@@ -140,6 +143,7 @@ export function AddDocumentForm({
 					<ButtonStrip>
 						<Button onClick={onClose}>{i18n.t("Cancel")}</Button>
 						<Button
+							dataTest={"add-document-button"}
 							loading={form.formState.isSubmitting}
 							primary
 							onClick={(_, e) =>
@@ -148,9 +152,9 @@ export function AddDocumentForm({
 						>
 							{form.formState.isSubmitting
 								? i18n.t(
-										"Document is being uploaded, please wait...",
-									)
-								: i18n.t("Add Document")}
+									"Document is being uploaded, please wait...",
+								)
+								: i18n.t("Add document")}
 						</Button>
 					</ButtonStrip>
 				</ModalActions>

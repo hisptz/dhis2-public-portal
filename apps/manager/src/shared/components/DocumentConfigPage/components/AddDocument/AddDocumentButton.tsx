@@ -22,7 +22,7 @@ export function AddDocumentButton({
 				/>
 			)}
 			<Button onClick={onShow} icon={<IconAdd24 />}>
-				{i18n.t("Add Document")}
+				{i18n.t("Add document")}
 			</Button>
 		</>
 	);

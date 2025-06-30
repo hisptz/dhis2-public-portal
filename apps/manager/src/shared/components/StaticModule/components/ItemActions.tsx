@@ -141,6 +141,7 @@ export function ItemActions() {
 								{i18n.t("Cancel")}
 							</Button>
 							<Button
+								dataTest={"confirm-delete-button"}
 								destructive
 								onClick={onConfirm}
 								loading={loading}
