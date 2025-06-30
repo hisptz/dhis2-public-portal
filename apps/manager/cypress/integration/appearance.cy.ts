@@ -207,7 +207,9 @@ describe("Appearance Page", () => {	let appColorConfig: any;
 			cy.get('[data-test="footer-item-add-button"]')
 				.should("be.visible")
 				.click();
-				cy.get('[data-test="footer-config-update-button"]').click();
+			cy.get('[data-test="footer-config-update-button"]')
+				.should("be.visible")
+				.click();
 		}
 	});
 
