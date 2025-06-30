@@ -140,6 +140,7 @@ export function VisSelector({
 			{visType != DisplayItemType.HIGHLIGHTED_SINGLE_VALUE && (
 				<SingleSelectField
 					required
+					dataTest={"visualization-type-select"}
 					label={i18n.t("Visualization type")}
 					placeholder={i18n.t("All")}
 					onChange={({ selected }) => setVisualizationType(selected)}
@@ -164,6 +165,7 @@ export function VisSelector({
 
 			<RHFSingleSelectField
 				required
+				dataTest={"section-single-item-visualization"}
 				disabled={loading}
 				label={i18n.t("Visualization")}
 				loading={loading}

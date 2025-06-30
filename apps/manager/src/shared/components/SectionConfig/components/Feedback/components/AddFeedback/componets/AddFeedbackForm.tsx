@@ -61,6 +61,7 @@ export function AddFeedbackForm({
 					<ButtonStrip>
 						<Button onClick={onClose}>{i18n.t("Cancel")}</Button>
 						<Button
+							dataTest={"add-feedback-submit-button"}
 							primary
 							onClick={(_, e) => form.handleSubmit(onAdd)(e)}
 						>

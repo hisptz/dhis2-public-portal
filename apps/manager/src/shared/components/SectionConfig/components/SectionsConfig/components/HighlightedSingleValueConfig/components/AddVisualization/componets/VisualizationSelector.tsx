@@ -45,6 +45,7 @@ export function VisSelector() {
 		<div className="flex flex-col gap-4 ">
 			<RHFSingleSelectField
 				required
+				dataTest={"single-value-visualization-select"}
 				disabled={loading}
 				label={i18n.t("Single value visualization")}
 				loading={loading}

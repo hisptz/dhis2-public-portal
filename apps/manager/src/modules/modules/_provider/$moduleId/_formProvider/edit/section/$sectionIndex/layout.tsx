@@ -219,6 +219,7 @@ function RouteComponent() {
 					<div className="flex flex-row gap-8">
 						<div className="max-w-[300px] min-w-[300px]">
 							<SingleSelectField
+								dataTest={"screen-size-select"}
 								selected={size.toString()}
 								onChange={({ selected }) => setSize(parseInt(selected))}
 								label={i18n.t("Select screen size")}>

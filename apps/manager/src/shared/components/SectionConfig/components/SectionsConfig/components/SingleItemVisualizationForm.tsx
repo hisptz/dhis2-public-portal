@@ -37,6 +37,7 @@ export function SingleItemVisualizationForm({
 				{visType !== DisplayItemType.HIGHLIGHTED_SINGLE_VALUE && (
 					<RHFSingleSelectField
 						required
+						dataTest={"section-single-item-visualization-type"}
 						label={i18n.t("Type")}
 						options={[
 							{
