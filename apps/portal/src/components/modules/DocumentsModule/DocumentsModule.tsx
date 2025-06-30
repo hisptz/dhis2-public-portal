@@ -7,13 +7,15 @@ import { isEmpty } from "lodash";
 export function DocumentsModule({
 	config,
 	searchParams,
+	headingColor,
 }: {
 	config: DocumentsModuleConfig;
 	searchParams: { group?: string };
+	headingColor: string;
 }) {
 	return (
 		<Stack className="w-full h-full">
-			<Title order={2}>{config.title}</Title>
+			<Title order={2} style={{ color: headingColor }}>{config.title}</Title>
 			{config.grouped && !isEmpty(config.groups) && (
 				<DocumentsGroupControl config={config} />
 			)}
