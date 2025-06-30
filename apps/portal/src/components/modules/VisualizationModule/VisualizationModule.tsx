@@ -20,7 +20,6 @@ export function VisualizationModule({
 			<Title order={2} style={{ color: titlesColor }}>
 				{config.title}
 			</Title>
-			
 			{config.grouped && !isEmpty(config.groups) && (
 				<GroupControl config={config} />
 			)}
