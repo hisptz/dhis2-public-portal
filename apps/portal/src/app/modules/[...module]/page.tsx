@@ -93,7 +93,6 @@ export default async function ModuleLandingPage({
 					titlesColor={titlesColor ?? "#120d0c"}
 				/>
 			);
-			
 		default:
 			return (
 				<Box className="h-min-[500px] w-full h-full flex items-center justify-center">
