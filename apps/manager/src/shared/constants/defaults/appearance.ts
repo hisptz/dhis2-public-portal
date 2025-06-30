@@ -19,6 +19,8 @@ export const defaultAppearanceConfig: AppAppearanceConfig = {
 	footer: {
 		copyright: `All rights reserved. @ ${new Date().getFullYear()}`,
 		showTitle: true,
+		coloredBackground: false,
+		usePrimaryColorAsBackgroundColor: false,
 		footerItems: [
 			{
 				title: "Address",
