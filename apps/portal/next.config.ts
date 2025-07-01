@@ -24,7 +24,7 @@ const nextConfig: NextConfig = {
 		},
 	},
 	experimental: {},
-	serverExternalPackages: ["canvas"],
+	serverExternalPackages: ["canvas", "@google/earthengine"],
 	webpack(config) {
 		// Grab the existing rule that handles SVG imports
 		const fileLoaderRule = config.module.rules.find((rule: any) =>

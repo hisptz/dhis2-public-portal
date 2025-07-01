@@ -31,7 +31,7 @@ export function AddItem() {
 					onClose={onHide}
 				/>
 			)}
-			<Button onClick={onShow}>{i18n.t("Add Item")}</Button>
+			<Button onClick={onShow}>{i18n.t("Add item")}</Button>
 		</>
 	);
 }

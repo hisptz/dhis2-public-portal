@@ -12,6 +12,7 @@ import { DataVisComponent } from "@/components/displayItems/visualizations/DataV
 export interface MainVisualizationProps {
 	searchParams?: ReadonlyURLSearchParams;
 	config: ChartVisualizationItem;
+	showFilter?: boolean;
 	disableActions?: boolean;
 }
 
@@ -33,6 +34,7 @@ export async function getDataVisualization(config: ChartVisualizationItem) {
 export async function DataVisualization({
 	config,
 	disableActions,
+	showFilter,
 }: MainVisualizationProps) {
 	const { visualizationConfig } = await getDataVisualization(config);
 	const { appearanceConfig } = (await getAppearanceConfig())!;
@@ -56,6 +58,7 @@ export async function DataVisualization({
 				colors={colors}
 				disableActions={disableActions}
 				config={config}
+				showFilter={showFilter}
 				visualizationConfig={visualizationConfig}
 			/>
 		);
@@ -63,6 +66,7 @@ export async function DataVisualization({
 
 	return (
 		<DataVisComponent
+			showFilter={showFilter}
 			colors={colors}
 			disableActions={disableActions}
 			config={config}

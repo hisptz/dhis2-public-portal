@@ -92,11 +92,13 @@ export function FileForm({
 						<form className="flex flex-col gap-4">
 							<RHFTextInputField
 								required
+								dataTest={"document-group-label-input"}
 								name="label"
 								label={i18n.t("Label")}
 							/>
 							<RHFSingleSelectField
 								required
+								dataTest={"document-type-select"}
 								options={[
 									{
 										label: i18n.t("PDF"),
@@ -108,6 +110,7 @@ export function FileForm({
 							/>
 							<RHFFileInputField
 								required
+								dataTest={"file-input"}
 								name={"file"}
 								accept="application/pdf"
 								label={i18n.t("File")}
@@ -119,6 +122,7 @@ export function FileForm({
 					<ButtonStrip>
 						<Button onClick={onClose}>{i18n.t("Cancel")}</Button>
 						<Button
+							dataTest={"save-file-button"}
 							primary
 							loading={form.formState.isSubmitting}
 							onClick={(_, e) =>

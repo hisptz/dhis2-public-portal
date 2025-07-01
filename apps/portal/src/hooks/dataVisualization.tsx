@@ -28,13 +28,16 @@ export function useDimensionViewControls({
 	chartRef,
 	tableRef,
 	config,
+	showFilter,
 }: {
 	visualizationConfig: VisualizationConfig;
 	config: VisualizationItem;
 	chartRef: RefObject<HighchartsReact.RefObject | null>;
 	tableRef: RefObject<HTMLTableElement | null>;
+	showFilter?: boolean;
 }) {
 	const { type } = config ?? {};
+	//
 	const handler = useFullScreenHandle();
 	const {
 		value: showOrgUnitSelector,
@@ -58,11 +61,11 @@ export function useDimensionViewControls({
 			(
 				chartRef.current
 					?.chart as unknown as HighchartsReact.RefObject & {
-					exportChart: (
-						options: Highcharts.ExportingOptions,
-						chartOptions: Highcharts.Options,
-					) => void;
-				}
+						exportChart: (
+							options: Highcharts.ExportingOptions,
+							chartOptions: Highcharts.Options,
+						) => void;
+					}
 			)?.exportChart(
 				{
 					filename: label,
@@ -99,8 +102,20 @@ export function useDimensionViewControls({
 	};
 
 	const actionMenuGroups: ActionMenuGroup[] = useMemo(() => {
-		const menus = [
+		const menus: ActionMenuGroup[] = [
 			{
+				actions: [
+					{
+						label: i18n.t("Download"),
+						onClick: onDownload,
+						icon: <IconDownload />,
+					},
+				],
+			},
+		];
+
+		if (showFilter) {
+			menus.unshift({
 				label: i18n.t("Filters"),
 				actions: [
 					{
@@ -114,61 +129,37 @@ export function useDimensionViewControls({
 						onClick: onShowPeriodSelector,
 					},
 				],
-			},
-			{
+			});
+		}
+
+		const viewMenu: ActionMenuGroup = canShowTable
+			? {
+				label: i18n.t("View"),
 				actions: [
 					{
-						label: i18n.t("Download"),
-						onClick: onDownload,
-						icon: <IconDownload />,
+						label: i18n.t("Show {{vis}}", { vis }),
+						icon: showTable ? <IconChartBar /> : <IconTable />,
+						onClick: toggleShowTable,
+					},
+					{
+						label: i18n.t("Full page"),
+						icon: handler.active ? <IconMinimize /> : <IconMaximize />,
+						onClick: onFullScreen,
 					},
 				],
-			},
-		];
-
-		return [
-			canShowTable
-				? {
-						label: i18n.t("View"),
-						actions: [
-							{
-								label: i18n.t("Show {{vis}}", {
-									vis: vis,
-								}),
-								icon: showTable ? (
-									<IconChartBar />
-								) : (
-									<IconTable />
-								),
-								onClick: toggleShowTable,
-							},
-							{
-								label: i18n.t("Full page"),
-								icon: handler.active ? (
-									<IconMinimize />
-								) : (
-									<IconMaximize />
-								),
-								onClick: onFullScreen,
-							},
-						],
-					}
-				: {
-						label: i18n.t("View"),
-						actions: [
-							{
-								label: i18n.t("Full page"),
-								icon: handler.active ? (
-									<IconMinimize />
-								) : (
-									<IconMaximize />
-								),
-								onClick: onFullScreen,
-							},
-						],
+			}
+			: {
+				label: i18n.t("View"),
+				actions: [
+					{
+						label: i18n.t("Full page"),
+						icon: handler.active ? <IconMinimize /> : <IconMaximize />,
+						onClick: onFullScreen,
 					},
-			...menus,
-		];
+				],
+			};
+
+		return [viewMenu, ...menus];
 	}, [
 		onShowOrgUnitSelector,
 		onShowPeriodSelector,
@@ -179,6 +170,7 @@ export function useDimensionViewControls({
 		toggleShowTable,
 		handler.active,
 		onFullScreen,
+		showFilter, 
 	]);
 
 	return {

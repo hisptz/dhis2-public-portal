@@ -31,6 +31,7 @@ export const visualizationGroupSchema = z.object({
 export const baseVisualizationModuleSchema = z.object({
 	title: z.string(),
 	grouped: z.boolean(),
+	showFilter: z.boolean().optional(),
 	preamble: z.string().optional(),
 	groupDisplay: z.nativeEnum(ItemsDisplay).optional(),
 });

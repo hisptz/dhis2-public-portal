@@ -1,4 +1,5 @@
 import "./commands";
+import "cypress-real-events/support";
 
 Cypress.on("uncaught:exception", (err) => {
 	// This prevents a benign error:

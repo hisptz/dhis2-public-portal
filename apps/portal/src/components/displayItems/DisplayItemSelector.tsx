@@ -4,12 +4,19 @@ import { HighlightedSingleValueVisualizer } from "@/components/displayItems/High
 import { RichTextVisualizer } from "@/components/displayItems/RichTextVisualizer";
 import FeedbackVisualizer from "./Feedback/FeedbackVisualizer";
 
-export function DisplayItemSelector({ item }: { item: DisplayItem }) {
+export function DisplayItemSelector({
+	item,
+	showFilter = false,
+}: {
+	item: DisplayItem;
+	showFilter?: boolean;
+}) {
 	switch (item.type) {
 		case DisplayItemType.VISUALIZATION:
 			return (
 				<MainVisualization
 					key={`${item.item.id}-vis`}
+					showFilter={showFilter}
 					config={item.item}
 				/>
 			);
