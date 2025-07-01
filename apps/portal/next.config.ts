@@ -24,7 +24,7 @@ const nextConfig: NextConfig = {
 		},
 	},
 	experimental: {},
-	serverExternalPackages: ["canvas"],
+	serverExternalPackages: ["canvas", "@google/earthengine"],
 	webpack(config) {
 		// Grab the existing rule that handles SVG imports
 		const fileLoaderRule = config.module.rules.find((rule: any) =>
@@ -52,7 +52,6 @@ const nextConfig: NextConfig = {
 		// Modify the file loader rule to ignore *.svg, since we have it handled now.
 		fileLoaderRule.exclude = /\.svg$/i;
 		config.externals.push({ canvas: "commonjs canvas" });
-		config.externals.push("@google/earthengine");
 		return config;
 	},
 	transpilePackages: ["@packages/shared"],
