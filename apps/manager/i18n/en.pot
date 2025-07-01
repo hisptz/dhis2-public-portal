@@ -5,8 +5,8 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
-"POT-Creation-Date: 2025-06-27T07:29:19.492Z\n"
-"PO-Revision-Date: 2025-06-27T07:29:19.492Z\n"
+"POT-Creation-Date: 2025-07-01T11:28:52.430Z\n"
+"PO-Revision-Date: 2025-07-01T11:28:52.430Z\n"
 
 msgid "Could not get Appearance configurations"
 msgstr "Could not get Appearance configurations"
@@ -642,6 +642,9 @@ msgstr "Sections"
 msgid "Content"
 msgstr "Content"
 
+msgid "Item created successfully"
+msgstr "Item created successfully"
+
 msgid "Create an item"
 msgstr "Create an item"
 
@@ -662,6 +665,9 @@ msgstr "Are you sure you want to delete the item "
 
 msgid "Sort items"
 msgstr "Sort items"
+
+msgid "Sort Items"
+msgstr "Sort Items"
 
 msgid "Error loading item"
 msgstr "Error loading item"
