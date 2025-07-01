@@ -260,7 +260,27 @@ describe("Modules Page", () => {
 			cy.get('[data-test="dhis2-uicore-button"]').click();
 		});
 		cy.contains("button", "Back").click();
-		cy.contains("td", "Blog Test").parent("tr").within(() => {
+
+		cy.contains("button", "Add item").click();
+		cy.get('input[name="title"]').type("Blog Test 2");
+		cy.contains("button", "Create item").click();
+		cy.get('textarea[name="shortDescription"]').type("This is a short description for the blog test item.");
+		cy.get(".jodit-wysiwyg").type("This is a full description for the blog test item.");
+		cy.contains("button", "Save changes").click();
+		cy.wait(5000);
+		cy.contains("button", "Sort items").click();
+
+
+		cy.get('[data-rbd-draggable-id="blog-test"]')
+			.focus().trigger('keydown', { keyCode: 32 });
+		cy.get('[data-rbd-draggable-id="blog-test"]')
+			.trigger('keydown', { keyCode: 40, force: true });
+		cy.get('[data-rbd-draggable-id="blog-test"]')
+			.trigger('keydown', { keyCode: 32, force: true });
+		cy.wait(1000);
+		cy.contains("button", "Save order").click();
+		cy.wait(1000);
+		cy.contains("td", "Blog Test 2").parent("tr").within(() => {
 			cy.get('[data-test="dhis2-uicore-button"]').click();
 		});
 		cy.contains("button", "Delete item").click();
