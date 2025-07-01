@@ -3436,10 +3436,10 @@
   dependencies:
     "@hapi/hoek" "^9.0.0"
 
-"@hisptz/dhis2-analytics@^2.1.11":
-  version "2.1.11"
-  resolved "https://registry.yarnpkg.com/@hisptz/dhis2-analytics/-/dhis2-analytics-2.1.11.tgz#8fa5a02d847b5d30e235d22bb0a9c70a5f88d709"
-  integrity sha512-EJuErtnjBMBXPzBEVSHIAls1cIM0o/pVNCsLfao6O6QQD9c3P5fCDPhilm6J3bo8jQds8OswzjY01hocR1yeaQ==
+"@hisptz/dhis2-analytics@^2.1.12":
+  version "2.1.12"
+  resolved "https://registry.yarnpkg.com/@hisptz/dhis2-analytics/-/dhis2-analytics-2.1.12.tgz#c3f946519e2c0e327f36de3e4d7f969d4a71883b"
+  integrity sha512-y8m0ju3/bh5VKoqEMklSAJ5aip5OQopP/bxqfSOzZ/wfeR7VAD4cQJehhkC7ErtrRtMadam8LnO2G5VoQUlbUA==
   dependencies:
     "@google/earthengine" "^1.5.21"
     "@hisptz/dhis2-ui" "2.0.48"
