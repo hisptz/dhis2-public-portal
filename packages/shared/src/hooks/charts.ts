@@ -2,7 +2,7 @@ import { AnalyticsData, VisualizationConfig } from "@packages/shared/schemas";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useDataQuery } from "@dhis2/app-runtime";
-import { useQuery } from "react-query";
+import { useQuery } from "@tanstack/react-query";
 import { getVisualizationDimensions, getVisualizationFilters } from "../utils";
 import { PeriodUtility } from "@hisptz/dhis2-utils";
 import { head } from "lodash";
