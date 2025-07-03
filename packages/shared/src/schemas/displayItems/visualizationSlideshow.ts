@@ -2,13 +2,17 @@ import { z } from "zod";
 import { DisplayItemType } from "./base";
 import { VisualizationDisplayItemType } from "./visualization";
 
+export const slideshowVisualizationSchema = z.object({
+	id: z.string(),
+	type: z.nativeEnum(VisualizationDisplayItemType),
+});
+
+export type SlideshowVisualization = z.infer<
+	typeof slideshowVisualizationSchema
+>;
+
 export const visualizationSlideshowItemConfig = z.object({
-	visualizations: z.array(
-		z.object({
-			id: z.string(),
-			type: z.nativeEnum(VisualizationDisplayItemType),
-		}),
-	),
+	visualizations: z.array(slideshowVisualizationSchema),
 });
 
 export type VisualizationSlideshowItemConfig = z.infer<

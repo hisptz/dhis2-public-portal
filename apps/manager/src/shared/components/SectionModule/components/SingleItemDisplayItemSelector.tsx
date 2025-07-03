@@ -5,6 +5,7 @@ import i18n from "@dhis2/d2-i18n";
 import { RHFRichTextAreaField } from "../../Fields/RHFRichTextAreaField";
 import { FeedbackItemConfig } from "../../SectionConfig/components/Feedback/FeedbackConfig";
 import { SingleItemVisualizationForm } from "../../SectionConfig/components/SectionsConfig/components/SingleItemVisualizationForm";
+import { VisualizationSlideshowConfig } from "../../SectionConfig/components/VisualizationSlideshow/VisualizationSlideshowConfig";
 
 export function SingleItemDisplayItemSelector({
 	namePrefix,
@@ -31,6 +32,8 @@ export function SingleItemDisplayItemSelector({
 			);
 		case DisplayItemType.FEEDBACK:
 			return <FeedbackItemConfig namePrefix={namePrefix} />;
+		case DisplayItemType.VISUALIZATIONS_SLIDESHOW:
+			return <VisualizationSlideshowConfig namePrefix={namePrefix} />;
 		default:
 			return <></>;
 	}

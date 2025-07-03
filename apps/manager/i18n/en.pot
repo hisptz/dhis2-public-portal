@@ -5,8 +5,8 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
-"POT-Creation-Date: 2025-06-30T09:00:31.365Z\n"
-"PO-Revision-Date: 2025-06-30T09:00:31.366Z\n"
+"POT-Creation-Date: 2025-07-03T09:57:45.747Z\n"
+"PO-Revision-Date: 2025-07-03T09:57:45.748Z\n"
 
 msgid "Could not get Appearance configurations"
 msgstr "Could not get Appearance configurations"
@@ -390,6 +390,12 @@ msgstr "Add sub item"
 msgid "Path"
 msgstr "Path"
 
+msgid "A menu item with this path already exists. Please choose a different one."
+msgstr "A menu item with this path already exists. Please choose a different one."
+
+msgid "A menu item with this module ID already exists."
+msgstr "A menu item with this module ID already exists."
+
 msgid "Create"
 msgstr "Create"
 
@@ -407,9 +413,6 @@ msgstr "Only SVG icons are supported"
 
 msgid "Icon"
 msgstr "Icon"
-
-msgid "Uploading icon..."
-msgstr "Uploading icon..."
 
 msgid "Menu items"
 msgstr "Menu items"
@@ -609,6 +612,21 @@ msgstr "Visualization type"
 msgid "All"
 msgstr "All"
 
+msgid "Add slideshow visualization"
+msgstr "Add slideshow visualization"
+
+msgid "{{action}} slideshow visualization"
+msgstr "{{action}} slideshow visualization"
+
+msgid "Edit slideshow visualization"
+msgstr "Edit slideshow visualization"
+
+msgid "Edit"
+msgstr "Edit"
+
+msgid "No slideshow visualization items configured"
+msgstr "No slideshow visualization items configured"
+
 msgid "Add Section"
 msgstr "Add Section"
 
@@ -731,14 +749,14 @@ msgstr "Footer configuration"
 msgid "Copyright"
 msgstr "Copyright"
 
+msgid "Background color"
+msgstr "Background color"
+
 msgid "Header configuration"
 msgstr "Header configuration"
 
 msgid "Subtitle"
 msgstr "Subtitle"
-
-msgid "Background color"
-msgstr "Background color"
 
 msgid "Header height"
 msgstr "Header height"
@@ -834,6 +852,18 @@ msgstr "Footer links"
 msgid "Add footer link"
 msgstr "Add footer link"
 
+msgid "Background Color"
+msgstr "Background Color"
+
+msgid "Use primary color as background color"
+msgstr "Use primary color as background color"
+
+msgid "Footer styles"
+msgstr "Footer styles"
+
+msgid "Show colored background"
+msgstr "Show colored background"
+
 msgid "Header configurations updated successfully"
 msgstr "Header configurations updated successfully"
 
@@ -858,17 +888,8 @@ msgstr "Hide advanced options"
 msgid "Show advanced options"
 msgstr "Show advanced options"
 
-msgid "Background Color"
-msgstr "Background Color"
-
-msgid "Use primary color as background color"
-msgstr "Use primary color as background color"
-
 msgid "Header styles"
 msgstr "Header styles"
-
-msgid "Show colored background"
-msgstr "Show colored background"
 
 msgid "Show logo"
 msgstr "Show logo"
@@ -906,8 +927,8 @@ msgstr "Header title"
 msgid "Color"
 msgstr "Color"
 
-msgid "There are colors selected. Click the add button to add one."
-msgstr "There are colors selected. Click the add button to add one."
+msgid "There are no colors selected. Click the add button to add one."
+msgstr "There are no colors selected. Click the add button to add one."
 
 msgid "Add color"
 msgstr "Add color"
