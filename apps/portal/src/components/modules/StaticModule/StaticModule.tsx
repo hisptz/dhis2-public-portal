@@ -5,13 +5,15 @@ import { StaticItemsList } from "@/components/modules/StaticModule/components/St
 export function StaticModule({
 	config,
 	moduleId,
+	titlesColor,
 }: {
 	config: StaticModuleConfig;
 	moduleId: string;
+	titlesColor: string;
 }) {
 	return (
 		<Stack>
-			<Title order={2}>{config.title}</Title>
+			<Title order={2} style={{ color: titlesColor }}>{config.title}</Title>
 			<StaticItemsList moduleId={moduleId} config={config} />
 		</Stack>
 	);
