@@ -21,16 +21,19 @@ export function DocumentGroupForm({
 	group,
 	onSave,
 	nested,
+	sortOrder,
 }: {
 	hide: boolean;
 	onClose: () => void;
 	group?: DocumentGroup;
 	onSave: (group: DocumentGroup) => void;
 	nested?: boolean;
+	sortOrder?: number;
 }) {
 	const form = useForm<DocumentGroup>({
 		defaultValues: group ?? {
 			items: [],
+			sortOrder: sortOrder ?? 1,
 		},
 		mode: "onChange",
 		resolver: zodResolver(documentGroupSchema),

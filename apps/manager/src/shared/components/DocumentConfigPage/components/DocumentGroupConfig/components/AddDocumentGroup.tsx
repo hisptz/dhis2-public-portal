@@ -8,9 +8,11 @@ import { DocumentGroupForm } from "./DocumentGroupForm";
 export function AddDocumentGroup({
 	onAdd,
 	nested,
+	sortOrder,
 }: {
 	onAdd: (group: DocumentGroup) => void;
 	nested?: boolean;
+	sortOrder?: number;
 }) {
 	const { value: hide, setTrue: onHide, setFalse: onOpen } = useBoolean(true);
 
@@ -27,6 +29,7 @@ export function AddDocumentGroup({
 					hide={hide}
 					onClose={onHide}
 					onSave={onSave}
+					sortOrder={sortOrder}
 				/>
 			)}
 			<Button onClick={onOpen} icon={<IconAdd24 />}>
