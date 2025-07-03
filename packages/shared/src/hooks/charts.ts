@@ -79,13 +79,53 @@ export function useYearOverYearAnalytics({
 	const searchParams = useSearchParams();
 	const [selectedOrgUnits, setSelectedOrgUnits] = useState<string[]>([]);
 	const [selectedPeriods, setSelectedPeriods] = useState<string[]>([]);
+	const { refetch, loading, data } = useDataQuery<{
+		analytics: AnalyticsData;
+	}>(analyticsQuery, { lazy: true });
 
 	//Get the selected relative period
+	const selectedRelativePeriods = Object.entries(
+		visualizationConfig.relativePeriods || {},
+	)
+		.filter(([_, value]) => value === true)
+		.map(([key]) => key);
+	console.log(selectedRelativePeriods);
 	// get the dx and ou
+	const yearlySeries = visualizationConfig.yearlySeries || [];
+	const orgUnitFilter = (visualizationConfig.filters || []).find(
+		(filter: any) => filter.dimension === "ou",
+	);
+	const orgUnits = orgUnitFilter
+		? orgUnitFilter.items.map((item: any) => item.id)
+		: [];
+
+
 	// Prepare analytics query per each yearly series available
-	//
+	useEffect(() => {
+		async function fetchYearlyAnalytics() {
+			const filters = getVisualizationFilters(
+				visualizationConfig as VisualizationConfig,
+				{
+					selectedOrgUnits: orgUnits,
+					selectedPeriods: selectedRelativePeriods,
+				},
+			);
+
+			for (const yearId of yearlySeries) {
+				await refetch({
+					filters,
+					dimensions: {
+						ou: orgUnits,
+						pe: [yearId],
+					},
+				});
+			}
+		}
+	}, [visualizationConfig, orgUnits, selectedRelativePeriods, yearlySeries, refetch]);
 
 	return {
+		analytics: data?.analytics,	
+		loading,
 		setSelectedPeriods,
 		setSelectedOrgUnits,
 		selectedPeriods,
