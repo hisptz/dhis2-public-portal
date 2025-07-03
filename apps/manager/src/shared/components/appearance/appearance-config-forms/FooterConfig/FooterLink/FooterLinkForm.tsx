@@ -34,16 +34,17 @@ export function FooterLinkForm({ onAdd, onClose, hide, config }: Props) {
 						{config ? "Update Footer Link" : "Add Footer Link"}
 					</ModalTitle>
 					<ModalContent>
-						<RHFTextInputField label="Name" name="name" required />
+						<RHFTextInputField label="Name" name="name" required data-test="footer-link-name-input" />
 						<RHFTextInputField
 							label="Link URL"
 							name="url"
 							required
+							data-test="footer-link-url-input"
 						/>
 					</ModalContent>
 					<ModalActions>
 						<ButtonStrip>
-							<Button secondary onClick={onClose}>
+							<Button secondary onClick={onClose} data-test="footer-link-cancel-button">
 								{i18n.t("Cancel")}
 							</Button>
 							<Button
@@ -56,6 +57,7 @@ export function FooterLinkForm({ onAdd, onClose, hide, config }: Props) {
 										onClose();
 									})();
 								}}
+								data-test="footer-link-add-button"
 							>
 								{config ? i18n.t("Update") : i18n.t("Add")}
 							</Button>
