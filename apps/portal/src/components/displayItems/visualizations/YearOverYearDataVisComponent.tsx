@@ -63,7 +63,7 @@ export function YearOverYearDataVisComponent({
 		setSelectedOrgUnits,
 		selectedPeriods,
 		selectedOrgUnits,
-	} = useYearOverYearAnalytics({ visualizationConfig });
+	} = useYearOverYearAnalytics({ visualizationConfig: visualizationConfig });
 
 	const { loading: legendSetLoading, legendSet } =
 		useVisualizationLegendSet(visualizationConfig);

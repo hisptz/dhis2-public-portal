@@ -336,6 +336,7 @@ export type SupportedVisualization = (typeof supportedVisualizations)[number];
 export const yearOverYearVisualizationSchema = visualizationSchema.extend({
 	type: z.enum(["YEAR_OVER_YEAR_COLUMN", "YEAR_OVER_YEAR_LINE"]),
 	yearlySeries: z.array(z.string()),
+	relativePeriods: z.record(z.string(), z.boolean()),
 });
 
 export type VisualizationConfig = z.infer<typeof visualizationSchema>;
