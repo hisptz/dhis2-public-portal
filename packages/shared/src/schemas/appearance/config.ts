@@ -59,7 +59,10 @@ export const footerItemConfig = z.object({
 });
 
 export const footerConfig = z.object({
+	coloredBackground: z.boolean(),
 	copyright: z.string().optional(),
+	usePrimaryColorAsBackgroundColor: z.boolean().optional(),
+	footerBackgroundColor: z.string().optional(),
 	showTitle: z.boolean().optional(),
 	footerItems: z.array(footerItemConfig),
 });
