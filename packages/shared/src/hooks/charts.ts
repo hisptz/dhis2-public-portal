@@ -132,6 +132,7 @@ export function useYearOverYearAnalytics({
 				})) as { analytics: AnalyticsData };
 
 				yearData.set(yearId, response.analytics);
+				console.log(yearData);
 			}
 			setData(yearData);
 		}
