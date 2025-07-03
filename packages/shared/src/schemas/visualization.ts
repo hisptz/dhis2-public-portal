@@ -333,4 +333,12 @@ const supportedVisualizations = ["MAP", "chart", "table"] as const;
 
 export type SupportedVisualization = (typeof supportedVisualizations)[number];
 
+export const yearOverYearVisualizationSchema = visualizationSchema.extend({
+	type: z.enum(["YEAR_OVER_YEAR_COLUMN", "YEAR_OVER_YEAR_LINE"]),
+	yearlySeries: z.array(z.string()),
+});
+
 export type VisualizationConfig = z.infer<typeof visualizationSchema>;
+export type YearOverYearVisualizationConfig = z.infer<
+	typeof yearOverYearVisualizationSchema
+>;

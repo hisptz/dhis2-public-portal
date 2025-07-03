@@ -1,11 +1,10 @@
 "use client";
 
-import { ActionIcon, Loader, Tooltip } from "@mantine/core";
+import { ActionIcon, Tooltip } from "@mantine/core";
 import { IconArrowsMaximize, IconArrowsMinimize } from "@tabler/icons-react";
 import i18n from "@dhis2/d2-i18n";
 import {
 	VisualizationConfig,
-	VisualizationDisplayItemType,
 	VisualizationItem,
 } from "@packages/shared/schemas";
 import { FullScreen } from "react-full-screen";
@@ -20,11 +19,7 @@ import {
 	useVisualizationRefs,
 } from "@/hooks/dataVisualization";
 import { useYearOverYearAnalytics } from "@packages/shared/hooks";
-import {
-	ChartSelector,
-	TableVisualizer,
-	VisualizationTitle,
-} from "@packages/ui/visualizations";
+import { VisualizationTitle } from "@packages/ui/visualizations";
 import { ActionMenu } from "./ActionMenu";
 import { CustomOrgUnitModal } from "./CustomOrgUnitModal";
 import { CustomPeriodModal } from "@/components/displayItems/visualizations/CustomPeriodModal";
@@ -64,19 +59,16 @@ export function YearOverYearDataVisComponent({
 	const { containerRef } = useContainerSize(chartRef);
 
 	const {
-		analytics,
-		loading: analyticsLoading,
 		setSelectedPeriods,
 		setSelectedOrgUnits,
 		selectedPeriods,
 		selectedOrgUnits,
 	} = useYearOverYearAnalytics({ visualizationConfig });
 
-
 	const { loading: legendSetLoading, legendSet } =
 		useVisualizationLegendSet(visualizationConfig);
 
-	const loading = analyticsLoading || legendSetLoading;
+	const loading = legendSetLoading;
 
 	const searchParams = useSearchParams();
 
@@ -120,38 +112,38 @@ export function YearOverYearDataVisComponent({
 							</div>
 						)}
 					</div>
-					{loading ? (
-						<div className="flex justify-center items-center h-full">
-							<Loader size="md" />{" "}
-						</div>
-					) : analytics ? (
-						showTable ? (
-							<div className="flex-1 h-full">
-								<TableVisualizer
-									fullScreen={handler.active}
-									setRef={tableRef}
-									analytics={analytics}
-									visualization={visualizationConfig}
-								/>
-							</div>
-						) : (
-							<div className="flex-1 h-full">
-								{type ===
-									VisualizationDisplayItemType.CHART && (
-									<ChartSelector
-										colors={colors}
-										setRef={chartRef}
-										analytics={analytics}
-										visualization={visualizationConfig}
-										fullScreen={handler.active}
-										tableRef={tableRef}
-									/>
-								)}
-							</div>
-						)
-					) : (
-						<div />
-					)}
+					{/*{loading ? (*/}
+					{/*	<div className="flex justify-center items-center h-full">*/}
+					{/*		<Loader size="md" />{" "}*/}
+					{/*	</div>*/}
+					{/*) : analytics ? (*/}
+					{/*	showTable ? (*/}
+					{/*		<div className="flex-1 h-full">*/}
+					{/*			<TableVisualizer*/}
+					{/*				fullScreen={handler.active}*/}
+					{/*				setRef={tableRef}*/}
+					{/*				analytics={analytics}*/}
+					{/*				visualization={visualizationConfig}*/}
+					{/*			/>*/}
+					{/*		</div>*/}
+					{/*	) : (*/}
+					{/*		<div className="flex-1 h-full">*/}
+					{/*			{type ===*/}
+					{/*				VisualizationDisplayItemType.CHART && (*/}
+					{/*				<ChartSelector*/}
+					{/*					colors={colors}*/}
+					{/*					setRef={chartRef}*/}
+					{/*					analytics={analytics}*/}
+					{/*					visualization={visualizationConfig}*/}
+					{/*					fullScreen={handler.active}*/}
+					{/*					tableRef={tableRef}*/}
+					{/*				/>*/}
+					{/*			)}*/}
+					{/*		</div>*/}
+					{/*	)*/}
+					{/*) : (*/}
+					{/*	<div />*/}
+					{/*)}*/}
 				</div>
 			</FullScreen>
 			{showOrgUnitSelector && (
