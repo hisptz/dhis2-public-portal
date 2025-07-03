@@ -4,6 +4,8 @@ import HighchartsReact from "highcharts-react-official";
 import { DHIS2Chart } from "@hisptz/dhis2-analytics";
 import { getChartLayout, getChartType } from "@packages/shared/utils";
 import { useResizeObserver } from "usehooks-ts";
+import { CircularLoader } from "@dhis2/ui";
+import { useVisualizationLegendSet } from "@packages/shared/hooks";
 
 export interface ChartVisualizerProps {
 	analytics: AnalyticsData;
@@ -20,6 +22,7 @@ export const ChartVisualizer = memo(function ChartVisualizer({
 }: ChartVisualizerProps) {
 	const type = getChartType(visualization);
 	const layout = getChartLayout(visualization);
+	const { loading, legendSet } = useVisualizationLegendSet(visualization);
 
 	const ref = useRef<HTMLDivElement>(null);
 	const { height = 0 } = useResizeObserver<HTMLDivElement>({
@@ -28,7 +31,11 @@ export const ChartVisualizer = memo(function ChartVisualizer({
 		box: "border-box",
 	});
 
-	return (
+	return loading ? (
+		<div className="flex justify-center items-center h-full">
+			<CircularLoader />
+		</div>
+	) : (
 		<div ref={ref} style={{ width: "100%", height: "100%" }}>
 			<DHIS2Chart
 				immutable
@@ -43,6 +50,7 @@ export const ChartVisualizer = memo(function ChartVisualizer({
 				config={{
 					type,
 					colors,
+					legendSet,
 					layout,
 					height: height,
 					showFilterAsTitle: false,

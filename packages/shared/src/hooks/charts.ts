@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { useDataQuery } from "@dhis2/app-runtime";
 import { useQuery } from "react-query";
 import { getVisualizationDimensions, getVisualizationFilters } from "../utils";
-import { PeriodUtility } from "@hisptz/dhis2-utils";
+import { LegendSet, PeriodUtility } from "@hisptz/dhis2-utils";
 import { head } from "lodash";
 
 type Dimension = "ou" | "pe" | "dx" | string;
@@ -150,5 +150,42 @@ export function useYearOverYearAnalytics({
 		setSelectedOrgUnits,
 		selectedPeriods,
 		selectedOrgUnits,
+	};
+}
+
+const legendSetQuery: any = {
+	set: {
+		resource: "legendSets",
+		id: ({ legendSet }: { legendSet: string }) => legendSet,
+		params: ({ legendSet }: { legendSet: string }) => {
+			return {
+				fields: [
+					"id",
+					"name",
+					"legends[name,id,startValue,endValue,color]",
+				],
+			};
+		},
+	},
+};
+
+type LegendSetResponse = {
+	set: LegendSet;
+};
+
+export function useVisualizationLegendSet(
+	visualizationConfig: VisualizationConfig,
+) {
+	const legendSet = visualizationConfig.legend?.set?.id;
+	const { data, loading } = useDataQuery<LegendSetResponse>(legendSetQuery, {
+		variables: {
+			legendSet,
+		},
+		lazy: !legendSet,
+	});
+
+	return {
+		loading,
+		legendSet: data?.set,
 	};
 }
