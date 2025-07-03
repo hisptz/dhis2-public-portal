@@ -6,6 +6,7 @@ export const staticItemSchema = z.object({
 	title: z.string(),
 	icon: z.string().optional(),
 	shortDescription: z.string(),
+	sortOrder: z.number().optional(),
 	content: z.string(),
 });
 

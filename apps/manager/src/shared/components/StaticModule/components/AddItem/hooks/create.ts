@@ -33,3 +33,34 @@ export function useCreateItem() {
 		createItem,
 	};
 }
+
+const getUpdateMutation = ({ namespace, id }: { namespace: string; id: string }) => ({
+	type: "update",
+	resource: `dataStore/${namespace}/${id}`,
+	data: ({ data }: { data: StaticItemConfig }) => data,
+});
+
+export function useUpdateItem() {
+	const engine = useDataEngine();
+	const module = useModule() as StaticModule;
+	const updateItem = useCallback(
+		async (data: StaticItemConfig) => {
+			await engine.mutate(
+				getUpdateMutation({
+					namespace: module?.config?.namespace,
+					id: data.id,
+				}) as any,
+				{
+					variables: {
+						data,
+					},
+				},
+			);
+		},
+		[engine, module?.config?.namespace],
+	);
+
+	return {
+		updateItem,
+	};
+}
