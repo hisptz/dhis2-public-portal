@@ -27,7 +27,6 @@ import { CustomOrgUnitModal } from "./CustomOrgUnitModal";
 import { CustomPeriodModal } from "@/components/displayItems/visualizations/CustomPeriodModal";
 import { Loader } from "@mantine/core";
 import { VisualizationDisplayItemType } from "@packages/shared/schemas";
-import { GroupedMonthYearChart } from "./YearOverYearChartVis";
 import YearOverYearChartVis from "./YearOverYearChartVis";
 
 import React from "react";
