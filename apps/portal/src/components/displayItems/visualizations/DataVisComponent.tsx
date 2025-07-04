@@ -4,6 +4,7 @@ import { ActionIcon, Loader, Tooltip } from "@mantine/core";
 import { IconArrowsMaximize, IconArrowsMinimize } from "@tabler/icons-react";
 import i18n from "@dhis2/d2-i18n";
 import {
+	LegendSetConfig,
 	VisualizationConfig,
 	VisualizationDisplayItemType,
 	VisualizationItem,
@@ -19,12 +20,10 @@ import { VisualizationTitle } from "@/components/displayItems/visualizations/Vis
 import {
 	useContainerSize,
 	useDimensionViewControls,
-	useVisualizationLegendSet,
 	useVisualizationRefs,
 } from "@/hooks/dataVisualization";
-import { ChartSelector } from "@/components/displayItems/visualizations/ChartSelector";
 import { useAnalytics } from "@packages/shared/hooks";
-import { TableVisualizer } from "@packages/ui/visualizations";
+import { ChartSelector, TableVisualizer } from "@packages/ui/visualizations";
 
 export function DataVisComponent({
 	visualizationConfig,
@@ -32,12 +31,14 @@ export function DataVisComponent({
 	showFilter,
 	disableActions,
 	colors,
+	legendSetConfig,
 }: {
 	visualizationConfig: VisualizationConfig;
 	config: VisualizationItem;
 	showFilter?: boolean;
 	colors: string[];
 	disableActions?: boolean;
+	legendSetConfig?: LegendSetConfig;
 }) {
 	const { type, orgUnitConfig, periodConfig } = config;
 	const { chartRef, tableRef, setSingleValueRef } = useVisualizationRefs();
@@ -62,17 +63,12 @@ export function DataVisComponent({
 
 	const {
 		analytics,
-		loading: analyticsLoading,
+		loading,
 		setSelectedPeriods,
 		setSelectedOrgUnits,
 		selectedPeriods,
 		selectedOrgUnits,
 	} = useAnalytics({ visualizationConfig });
-
-	const { loading: legendSetLoading, legendSet } =
-		useVisualizationLegendSet(visualizationConfig);
-
-	const loading = analyticsLoading || legendSetLoading;
 
 	const searchParams = useSearchParams();
 
@@ -134,19 +130,16 @@ export function DataVisComponent({
 							<div className="flex-1 h-full">
 								{type ===
 									VisualizationDisplayItemType.CHART && (
-										<ChartSelector
-											colors={colors}
-											setRef={chartRef}
-											analytics={analytics}
-											visualization={visualizationConfig}
-											config={config}
-											fullScreen={handler.active}
-											containerRef={containerRef}
-											legendSet={legendSet}
-											tableRef={tableRef}
-											setSingleValueRef={setSingleValueRef}
-										/>
-									)}
+									<ChartSelector
+										legendSetConfig={legendSetConfig}
+										colors={colors}
+										setRef={chartRef}
+										analytics={analytics}
+										visualization={visualizationConfig}
+										fullScreen={handler.active}
+										tableRef={tableRef}
+									/>
+								)}
 							</div>
 						)
 					) : (
