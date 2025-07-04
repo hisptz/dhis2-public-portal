@@ -6,7 +6,11 @@ import {
 import React, { memo, RefObject, useRef } from "react";
 import HighchartsReact from "highcharts-react-official";
 import { DHIS2Chart } from "@hisptz/dhis2-analytics";
-import { getChartLayout, getChartType } from "@packages/shared/utils";
+import {
+	getChartLayout,
+	getChartType,
+	getVisualizationLegendSet,
+} from "@packages/shared/utils";
 import { useResizeObserver } from "usehooks-ts";
 
 export interface ChartVisualizerProps {
@@ -22,10 +26,10 @@ export const ChartVisualizer = memo(function ChartVisualizer({
 	visualization,
 	colors,
 	setRef,
-	legendSet,
 }: ChartVisualizerProps) {
 	const type = getChartType(visualization);
 	const layout = getChartLayout(visualization);
+	const legendSet = getVisualizationLegendSet(visualization);
 
 	const ref = useRef<HTMLDivElement>(null);
 	const { height = 0 } = useResizeObserver<HTMLDivElement>({
@@ -33,8 +37,6 @@ export const ChartVisualizer = memo(function ChartVisualizer({
 		ref: ref!,
 		box: "border-box",
 	});
-
-	console.log(legendSet);
 
 	return (
 		<div ref={ref} style={{ width: "100%", height: "100%" }}>
