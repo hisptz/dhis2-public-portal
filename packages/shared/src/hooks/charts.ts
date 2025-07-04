@@ -2,6 +2,7 @@ import {
 	AnalyticsData,
 	VisualizationConfig,
 	YearOverYearVisualizationConfig,
+	yearOverYearVisualizationSchema,
 } from "@packages/shared/schemas";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -92,10 +93,19 @@ export function useYearOverYearAnalytics({
 	)
 		.filter(([_, value]) => value === true)
 		.map(([key]) => snakeCase(key).toUpperCase());
+		console.log('selectedRelativePeriods', selectedRelativePeriods)
 
-	console.log(selectedRelativePeriods);
 	// get the dx and ou
-	const yearlySeries = visualizationConfig.yearlySeries || [];
+	const getYearsFromPeriods = (periods: string[]) =>
+		Array.from(new Set(periods.map((pe) => pe.slice(0, 4))));
+
+	const yearsToFetch =
+		selectedPeriods.length > 0
+			? getYearsFromPeriods(selectedPeriods)
+			: visualizationConfig.yearlySeries || [];
+	console.log('selectedPeriods:', selectedPeriods);
+	console.log('yearsToFetch:', yearsToFetch);
+
 	const orgUnitFilter = (visualizationConfig.filters || []).find(
 		(filter: any) => filter.dimension === "ou",
 	);
@@ -108,11 +118,12 @@ export function useYearOverYearAnalytics({
 	);
 	const dx = dataFilter ? dataFilter.items.map((item: any) => item.id) : [];
 
-	// Prepare analytics query per each yearly series available
+	// Prepare analytics query per each year to fetch (dynamic)
 	useEffect(() => {
 		async function fetchYearlyAnalytics() {
 			const yearData = new Map<string, AnalyticsData>();
-			for (const yearId of yearlySeries) {
+			console.log('Fetching analytics for years:', yearsToFetch);
+			for (const yearId of yearsToFetch) {
 				const date = new Date();
 				const period = PeriodUtility.getPeriodById(yearId);
 				const year = period.start.year;
@@ -122,23 +133,24 @@ export function useYearOverYearAnalytics({
 
 				const response = (await refetch({
 					filters: {
-						ou: orgUnits,
+						ou: selectedOrgUnits.length > 0 ? selectedOrgUnits : orgUnits,
 						dx,
 					},
 					relativePeriodDate: periodDateString,
 					dimensions: {
-						pe: selectedRelativePeriods,
+						pe: selectedPeriods.length > 0 ? selectedPeriods : selectedRelativePeriods,
 					},
 				})) as { analytics: AnalyticsData };
 
 				yearData.set(yearId, response.analytics);
-				console.log(yearData);
+				console.log('API response for year', yearId, response.analytics);
+				console.log(visualizationConfig)
 			}
 			setData(yearData);
 		}
 
 		fetchYearlyAnalytics();
-	}, []);
+	}, [selectedOrgUnits, selectedPeriods, visualizationConfig, yearsToFetch]);
 
 	return {
 		analytics: data,

@@ -7,6 +7,7 @@ import {
 	VisualizationConfig,
 	VisualizationItem,
 	YearOverYearVisualizationConfig,
+	AnalyticsData,
 } from "@packages/shared/schemas";
 import { FullScreen } from "react-full-screen";
 
@@ -26,6 +27,10 @@ import { CustomOrgUnitModal } from "./CustomOrgUnitModal";
 import { CustomPeriodModal } from "@/components/displayItems/visualizations/CustomPeriodModal";
 import { Loader } from "@mantine/core";
 import { VisualizationDisplayItemType } from "@packages/shared/schemas";
+import { GroupedMonthYearChart } from "./YearOverYearChartVis";
+import YearOverYearChartVis from "./YearOverYearChartVis";
+
+import React from "react";
 
 export function YearOverYearDataVisComponent({
 	visualizationConfig,
@@ -75,6 +80,65 @@ export function YearOverYearDataVisComponent({
 
 	const searchParams = useSearchParams();
 
+	function transformToYoYAnalytics(analyticsMap: Map<string, AnalyticsData>): AnalyticsData {
+		const output: AnalyticsData = {
+			headers: [
+				{ name: "dx", column: "Data", valueType: "TEXT" },
+				{ name: "pe", column: "Period", valueType: "TEXT" },
+				{ name: "value", column: "Value", valueType: "NUMBER" },
+			],
+			metaData: {
+				items: {},
+				dimensions: { dx: [], pe: [], ou: [] },
+			},
+			rows: [],
+		};
+		const valueMap: Map<string, Record<string, number>> = new Map();
+		const allPeriods = new Set<string>();
+		const orgUnitSet = new Set<string>();
+		for (const [yearKey, analytics] of analyticsMap.entries()) {
+			for (const [pe, value] of analytics.rows) {
+				const year = yearKey;
+				if (!valueMap.has(year)) valueMap.set(year, {});
+				valueMap.get(year)![pe] = parseFloat(value);
+				allPeriods.add(pe);
+			}
+			Object.entries(analytics.metaData.items).forEach(([key, item]) => {
+				output.metaData.items[key] ??= item;
+			});
+			analytics.metaData.dimensions.ou?.forEach((ou) => orgUnitSet.add(ou));
+		}
+		const sortedPeriods = Array.from(allPeriods).sort();
+		sortedPeriods.forEach((pe) => {
+			if (!output.metaData.items[pe]) {
+				const year = pe.slice(0, 4);
+				const monthNum = parseInt(pe.slice(4, 6), 10) - 1;
+				const monthName = new Date(2000, monthNum).toLocaleString("en", { month: "long" });
+				output.metaData.items[pe] = { name: `${monthName} ${year}` };
+			}
+		});
+		for (const year of valueMap.keys()) {
+			for (const pe of sortedPeriods) {
+				const val = valueMap.get(year)?.[pe];
+				if (val !== undefined) {
+					output.rows.push([year, pe, String(val)]);
+				}
+			}
+			output.metaData.items[year] = { name: year };
+		}
+		output.metaData.dimensions.dx = Array.from(valueMap.keys());
+		output.metaData.dimensions.pe = sortedPeriods;
+		output.metaData.dimensions.ou = Array.from(orgUnitSet);
+		return output;
+	}
+
+	const combinedAnalytics = React.useMemo(() => {
+		if (analytics instanceof Map) {
+			return transformToYoYAnalytics(analytics);
+		}
+		return analytics;
+	}, [analytics]);
+
 	return (
 		<>
 			<FullScreen className="bg-white w-full h-full" handle={handler}>
@@ -119,30 +183,21 @@ export function YearOverYearDataVisComponent({
 						<div className="flex justify-center items-center h-full">
 							<Loader size="md" />{" "}
 						</div>
-					) : analytics ? (
+					) : combinedAnalytics ? (
 						showTable ? (
 							<div className="flex-1 h-full">
-								<TableVisualizer
-									fullScreen={handler.active}
-									setRef={tableRef}
-									analytics={analytics}
-									visualization={visualizationConfig}
-								/>
+								
 							</div>
 						) : (
 							<div className="flex-1 h-full">
 								{type ===
 									VisualizationDisplayItemType.CHART && (
-									<ChartSelector
-										colors={colors}
-										setRef={chartRef}
-										analytics={analytics}
-										visualization={visualizationConfig}
-										fullScreen={handler.active}
-										tableRef={tableRef}
-									/>
-									)
-								}
+										<YearOverYearChartVis
+											analytics={combinedAnalytics}
+											visualizationConfig={visualizationConfig}
+											colors={colors}
+										/>
+									)}
 							</div>
 						)
 					) : (
