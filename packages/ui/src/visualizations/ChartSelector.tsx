@@ -3,6 +3,7 @@ import React, { RefObject } from "react";
 import HighchartsReact from "highcharts-react-official";
 import {
 	AnalyticsData,
+	LegendSetConfig,
 	VisualizationChartType,
 	VisualizationConfig,
 } from "@packages/shared/schemas";
@@ -17,6 +18,7 @@ export function ChartSelector({
 	setRef,
 	fullScreen,
 	colors,
+	legendSetConfig,
 }: {
 	setRef: RefObject<HighchartsReact.RefObject | null>;
 	analytics: AnalyticsData;
@@ -24,6 +26,7 @@ export function ChartSelector({
 	tableRef: RefObject<HTMLTableElement | null>;
 	fullScreen: boolean;
 	colors: string[];
+	legendSetConfig?: LegendSetConfig;
 }) {
 	const chartType = visualization.type;
 	switch (chartType) {
@@ -51,6 +54,7 @@ export function ChartSelector({
 					setRef={setRef}
 					analytics={analytics}
 					visualization={visualization}
+					legendSet={legendSetConfig}
 				/>
 			);
 	}

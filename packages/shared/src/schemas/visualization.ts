@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { LegendSet } from "@hisptz/dhis2-utils";
 
 export const visualizationFields = [
 	"access",
@@ -141,6 +142,10 @@ export enum DataDimensionItemType {
 	PROGRAM_INDICATOR = "PROGRAM_INDICATOR",
 }
 
+export type LegendSetConfig =
+	| LegendSet
+	| { dataItem: string; legendSet: LegendSet }[];
+
 export enum DigitGroupSeparator {
 	SPACE = "SPACE",
 }
@@ -205,6 +210,7 @@ const dataDimensionItem = z.object({
 	expression: z.string().optional(),
 	access: accessSchema,
 	dimensionItemType: z.string(),
+	legendSet: legendSet.optional(),
 });
 
 export type DataDimensionItem = z.infer<typeof dataDimensionItem>;
@@ -217,6 +223,11 @@ const dimension = z.object({
 });
 
 export type DimensionConfig = z.infer<typeof dimension>;
+
+export enum LegendStrategy {
+	FIXED = "FIXED",
+	BY_DATA_ITEM = "BY_DATA_ITEM",
+}
 
 export const visualizationSchema = z.object({
 	access: accessSchema,
@@ -277,7 +288,7 @@ export const visualizationSchema = z.object({
 		.object({
 			showKey: z.boolean(),
 			style: z.string().optional(),
-			strategy: z.string().optional(),
+			strategy: z.nativeEnum(LegendStrategy),
 			set: z
 				.object({
 					id: z.string(),
