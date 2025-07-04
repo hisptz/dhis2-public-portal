@@ -4,6 +4,7 @@ import {
 	ChartVisualizationItem,
 	VisualizationChartType,
 	VisualizationConfig,
+	visualizationFields,
 } from "@packages/shared/schemas";
 import { getAppearanceConfig } from "@/utils/config/appConfig";
 import { YearOverYearDataVisComponent } from "@/components/displayItems/visualizations/YearOverYearDataVisComponent";
@@ -22,10 +23,11 @@ export async function getDataVisualization(config: ChartVisualizationItem) {
 		`visualizations/${id}`,
 		{
 			params: {
-				fields: "*,organisationUnits[id,path],rows[id,dimension,items],columns[id,dimension,items],filters[id,dimension,items]",
+				fields: visualizationFields.join(","),
 			},
 		},
 	);
+
 	return {
 		visualizationConfig,
 	};

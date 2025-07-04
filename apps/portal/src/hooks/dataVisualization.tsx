@@ -19,8 +19,6 @@ import {
 import Highcharts from "highcharts";
 import { isEmpty } from "lodash";
 import { useFullScreenHandle } from "react-full-screen";
-import { useDataQuery } from "@dhis2/app-runtime";
-import { LegendSet } from "@hisptz/dhis2-utils";
 import { ActionMenuGroup } from "@/components/displayItems/visualizations/ActionMenu";
 
 export function useDimensionViewControls({
@@ -61,11 +59,11 @@ export function useDimensionViewControls({
 			(
 				chartRef.current
 					?.chart as unknown as HighchartsReact.RefObject & {
-						exportChart: (
-							options: Highcharts.ExportingOptions,
-							chartOptions: Highcharts.Options,
-						) => void;
-					}
+					exportChart: (
+						options: Highcharts.ExportingOptions,
+						chartOptions: Highcharts.Options,
+					) => void;
+				}
 			)?.exportChart(
 				{
 					filename: label,
@@ -134,30 +132,38 @@ export function useDimensionViewControls({
 
 		const viewMenu: ActionMenuGroup = canShowTable
 			? {
-				label: i18n.t("View"),
-				actions: [
-					{
-						label: i18n.t("Show {{vis}}", { vis }),
-						icon: showTable ? <IconChartBar /> : <IconTable />,
-						onClick: toggleShowTable,
-					},
-					{
-						label: i18n.t("Full page"),
-						icon: handler.active ? <IconMinimize /> : <IconMaximize />,
-						onClick: onFullScreen,
-					},
-				],
-			}
+					label: i18n.t("View"),
+					actions: [
+						{
+							label: i18n.t("Show {{vis}}", { vis }),
+							icon: showTable ? <IconChartBar /> : <IconTable />,
+							onClick: toggleShowTable,
+						},
+						{
+							label: i18n.t("Full page"),
+							icon: handler.active ? (
+								<IconMinimize />
+							) : (
+								<IconMaximize />
+							),
+							onClick: onFullScreen,
+						},
+					],
+				}
 			: {
-				label: i18n.t("View"),
-				actions: [
-					{
-						label: i18n.t("Full page"),
-						icon: handler.active ? <IconMinimize /> : <IconMaximize />,
-						onClick: onFullScreen,
-					},
-				],
-			};
+					label: i18n.t("View"),
+					actions: [
+						{
+							label: i18n.t("Full page"),
+							icon: handler.active ? (
+								<IconMinimize />
+							) : (
+								<IconMaximize />
+							),
+							onClick: onFullScreen,
+						},
+					],
+				};
 
 		return [viewMenu, ...menus];
 	}, [
@@ -170,7 +176,7 @@ export function useDimensionViewControls({
 		toggleShowTable,
 		handler.active,
 		onFullScreen,
-		showFilter, 
+		showFilter,
 	]);
 
 	return {
@@ -217,42 +223,5 @@ export function useVisualizationRefs() {
 		chartRef,
 		tableRef,
 		setSingleValueRef,
-	};
-}
-
-const legendSetQuery: any = {
-	set: {
-		resource: "legendSets",
-		id: ({ legendSet }: { legendSet: string }) => legendSet,
-		params: ({ legendSet }: { legendSet: string }) => {
-			return {
-				fields: [
-					"id",
-					"name",
-					"legends[name,id,startValue,endValue,color]",
-				],
-			};
-		},
-	},
-};
-
-type LegendSetResponse = {
-	set: LegendSet;
-};
-
-export function useVisualizationLegendSet(
-	visualizationConfig: VisualizationConfig,
-) {
-	const legendSet = visualizationConfig.legend?.set?.id;
-	const { data, loading } = useDataQuery<LegendSetResponse>(legendSetQuery, {
-		variables: {
-			legendSet,
-		},
-		lazy: !legendSet,
-	});
-
-	return {
-		loading,
-		legendSet: data?.set,
 	};
 }
