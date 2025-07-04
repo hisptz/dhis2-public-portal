@@ -4,7 +4,6 @@ import { ActionIcon, Loader, Tooltip } from "@mantine/core";
 import { IconArrowsMaximize, IconArrowsMinimize } from "@tabler/icons-react";
 import i18n from "@dhis2/d2-i18n";
 import {
-	LegendSetConfig,
 	VisualizationConfig,
 	VisualizationDisplayItemType,
 	VisualizationItem,
@@ -31,14 +30,12 @@ export function DataVisComponent({
 	showFilter,
 	disableActions,
 	colors,
-	legendSetConfig,
 }: {
 	visualizationConfig: VisualizationConfig;
 	config: VisualizationItem;
 	showFilter?: boolean;
 	colors: string[];
 	disableActions?: boolean;
-	legendSetConfig?: LegendSetConfig;
 }) {
 	const { type, orgUnitConfig, periodConfig } = config;
 	const { chartRef, tableRef, setSingleValueRef } = useVisualizationRefs();
@@ -131,7 +128,6 @@ export function DataVisComponent({
 								{type ===
 									VisualizationDisplayItemType.CHART && (
 									<ChartSelector
-										legendSetConfig={legendSetConfig}
 										colors={colors}
 										setRef={chartRef}
 										analytics={analytics}
