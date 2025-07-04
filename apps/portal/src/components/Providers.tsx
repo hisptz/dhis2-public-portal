@@ -16,9 +16,9 @@ export function Providers({
 	const theme = config ? getAppTheme(config) : undefined;
 
 	return (
-		<MantineProvider theme={theme}>
-			<Notifications />
-			<ModalsProvider>{children}</ModalsProvider>
-		</MantineProvider>
+			<MantineProvider theme={theme}>
+				<Notifications />
+				<ModalsProvider>{children}</ModalsProvider>
+			</MantineProvider>
 	);
 }

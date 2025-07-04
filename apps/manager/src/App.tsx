@@ -14,6 +14,7 @@ const hashHistory = createHashHistory();
 
 const router = createRouter({ routeTree, history: hashHistory });
 
+
 // Register the router instance for type safety
 declare module "@tanstack/react-router" {
 	interface Register {
@@ -22,8 +23,8 @@ declare module "@tanstack/react-router" {
 }
 
 const MyApp = () => (
-	<DialogProvider>
-		<RouterProvider router={router} />
-	</DialogProvider>
+		<DialogProvider>
+			<RouterProvider router={router} />
+		</DialogProvider>
 );
 export default MyApp;
