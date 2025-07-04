@@ -4,7 +4,7 @@ import HighchartsReact from "highcharts-react-official";
 import { AnalyticsData } from "@packages/shared/schemas";
 import { useResizeObserver } from "@mantine/hooks";
 
-type GroupedMonthYearChartProps = {
+type YearOverYearChartVisProps = {
   analytics: AnalyticsData;
   visualizationConfig: any; // Use the correct type if available
   setRef?: RefObject<HighchartsReact.RefObject | null>;
@@ -16,7 +16,7 @@ const monthNames = [
   "July", "August", "September", "October", "November", "December"
 ];
 
-export const GroupedMonthYearChart: React.FC<GroupedMonthYearChartProps> = ({
+export const YearOverYearChartVis: React.FC<YearOverYearChartVisProps> = ({
   analytics,
   visualizationConfig,
   setRef,
@@ -73,4 +73,4 @@ export const GroupedMonthYearChart: React.FC<GroupedMonthYearChartProps> = ({
   );
 };
 
-export default GroupedMonthYearChart;
+export default YearOverYearChartVis;
