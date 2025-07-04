@@ -41,12 +41,14 @@ export function getChartLayout(visualization: VisualizationConfig): {
 }
 
 export function getDataItems(visualization: VisualizationConfig): string[] {
-	return visualization.dataDimensionItems.map((item) => {
-		const dataItem = item[
-			camelCase(item.dataDimensionItemType) as keyof typeof item
-		] as DataDimensionItem;
-		return dataItem!.id;
-	});
+	return compact(
+		visualization.dataDimensionItems.map((item) => {
+			const dataItem = item[
+				camelCase(item.dataDimensionItemType) as keyof typeof item
+			] as DataDimensionItem;
+			return dataItem?.id;
+		}),
+	);
 }
 
 export function getPeriods(visualization: VisualizationConfig) {
