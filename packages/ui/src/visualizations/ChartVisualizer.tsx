@@ -26,7 +26,6 @@ export const ChartVisualizer = memo(function ChartVisualizer({
 	visualization,
 	colors,
 	setRef,
-	legendSet,
 }: ChartVisualizerProps) {
 	const type = getChartType(visualization);
 	const layout = getChartLayout(visualization);
@@ -38,8 +37,6 @@ export const ChartVisualizer = memo(function ChartVisualizer({
 		ref: ref!,
 		box: "border-box",
 	});
-
-	console.log(legendSet);
 
 	return (
 		<div ref={ref} style={{ width: "100%", height: "100%" }}>
