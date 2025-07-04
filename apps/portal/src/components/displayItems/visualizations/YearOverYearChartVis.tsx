@@ -53,8 +53,8 @@ export const GroupedMonthYearChart: React.FC<GroupedMonthYearChartProps> = ({
   const options: Highcharts.Options = {
     chart: { type: chartType as any },
     title: { text: "" },
-    xAxis: { categories, title: { text: "Month" } },
-    yAxis: { title: { text: "Value" } },
+    xAxis: { categories, title: { text: "" } },
+    yAxis: { title: { text: "" } },
     series: series as Highcharts.SeriesOptionsType[],
     legend: { enabled: true },
     tooltip: { shared: true },
