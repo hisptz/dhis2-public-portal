@@ -31,9 +31,7 @@ async function getVisualizationLegendSet(
 			if (!legendConfig.set?.id) {
 				return;
 			}
-			return await dhis2HttpClient.get<LegendSet>(
-				`legendSets/${legendConfig.set!.id}`,
-			);
+			return legendConfig.set as LegendSet;
 		case "BY_DATA_ITEM":
 			return compact(
 				config.dataDimensionItems.map((item) => {
@@ -60,7 +58,7 @@ export async function getDataVisualization(config: ChartVisualizationItem) {
 		`visualizations/${id}`,
 		{
 			params: {
-				fields: "*,organisationUnits[id,path],rows[id,dimension,items],columns[id,dimension,items],filters[id,dimension,items],dataDimensionItems[*,indicator[id,displayName,legendSet[id,displayName,,legends[*]]],dataElement[id,displayName,legendSet[id,displayName,legends[*]]],programIndicator[id,displayName,legendSet[id,displayName,legends[*]]],reportingRate[id,displayName,legendSet[id,displayName,legends[*]]]]",
+				fields: "*,legend[*,set[id,displayName,legends[*]]]organisationUnits[id,path],rows[id,dimension,items],columns[id,dimension,items],filters[id,dimension,items],dataDimensionItems[*,indicator[id,displayName,legendSet[id,displayName,legends[*]]],dataElement[id,displayName,legendSet[id,displayName,legends[*]]],programIndicator[id,displayName,legendSet[id,displayName,legends[*]]],reportingRate[id,displayName,legendSet[id,displayName,legends[*]]]]",
 			},
 		},
 	);
