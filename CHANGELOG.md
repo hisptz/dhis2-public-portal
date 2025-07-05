@@ -1,3 +1,13 @@
+## [1.2.1](https://github.com/hisptz/dhis2-public-portal/compare/v1.2.0...v1.2.1) (2025-07-05)
+
+
+### Bug Fixes
+
+* **visualizations:** enhance field handling and refactor visualization utils ([5a39fa4](https://github.com/hisptz/dhis2-public-portal/commit/5a39fa4b6a72a83ad76707ac66b85cd57f014a62))
+* **visualizations:** integrate legend set configuration support ([544bdc3](https://github.com/hisptz/dhis2-public-portal/commit/544bdc3364bb1133cb2e083525531a27e77bc0e2))
+* **visualizations:** refactor legend set handling and improve visualization components ([2ed9810](https://github.com/hisptz/dhis2-public-portal/commit/2ed9810ea9d2abb6c66221f0b501ce39f38152d0))
+* **visualizations:** simplify legend set handling and update API request fields ([f26dafe](https://github.com/hisptz/dhis2-public-portal/commit/f26dafebb0be84827f7495a8098e5c6d917797fa))
+
 # [1.2.0](https://github.com/hisptz/dhis2-public-portal/compare/v1.1.2...v1.2.0) (2025-07-01)
 
 
