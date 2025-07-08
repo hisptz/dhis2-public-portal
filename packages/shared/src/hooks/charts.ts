@@ -10,8 +10,6 @@ import { getVisualizationDimensions, getVisualizationFilters } from "../utils";
 import { PeriodUtility } from "@hisptz/dhis2-utils";
 import { snakeCase } from "lodash";
 
-type Dimension = "ou" | "pe" | "dx" | string;
-
 const analyticsQuery = {
 	analytics: {
 		resource: "analytics",
@@ -82,12 +80,8 @@ export function useYearOverYearAnalytics({
 	const searchParams = useSearchParams();
 	const [selectedOrgUnits, setSelectedOrgUnits] = useState<string[]>([]);
 	const [selectedPeriods, setSelectedPeriods] = useState<string[]>(
-		searchParams.get("pe")?.split(",") ?? [],
+		searchParams?.get("pe")?.split(",") ?? [],
 	);
-
-	console.log({
-		relativePeriods: visualizationConfig.relativePeriods,
-	});
 
 	const { refetch, loading } = useDataQuery<{
 		analytics: AnalyticsData;
@@ -99,7 +93,6 @@ export function useYearOverYearAnalytics({
 	)
 		.filter(([_, value]) => value === true)
 		.map(([key]) => snakeCase(key).toUpperCase());
-	console.log("selectedRelativePeriods", selectedRelativePeriods);
 
 	// get the dx and ou
 	const getYearsFromPeriods = (periods: string[]) =>
@@ -109,8 +102,6 @@ export function useYearOverYearAnalytics({
 		selectedPeriods.length > 0
 			? getYearsFromPeriods(selectedPeriods)
 			: visualizationConfig.yearlySeries || [];
-	console.log("selectedPeriods:", selectedPeriods);
-	console.log("yearsToFetch:", yearsToFetch);
 
 	const orgUnitFilter = (visualizationConfig.filters || []).find(
 		(filter: any) => filter.dimension === "ou",
@@ -124,7 +115,7 @@ export function useYearOverYearAnalytics({
 	);
 	const dx = dataFilter ? dataFilter.items.map((item: any) => item.id) : [];
 
-	// Prepare analytics query per each year to fetch (dynamic)
+	// Prepare an analytics query per each year to fetch (dynamic)
 	useEffect(() => {
 		async function fetchYearlyAnalytics() {
 			const yearData = new Map<string, AnalyticsData>();
@@ -155,12 +146,6 @@ export function useYearOverYearAnalytics({
 				})) as { analytics: AnalyticsData };
 
 				yearData.set(yearId, response.analytics);
-				console.log(
-					"API response for year",
-					yearId,
-					response.analytics,
-				);
-				console.log(visualizationConfig);
 			}
 			setData(yearData);
 		}
