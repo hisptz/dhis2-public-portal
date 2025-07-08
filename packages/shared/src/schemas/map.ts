@@ -4,6 +4,7 @@ import { analyticsDimensionSchema } from "./visualization";
 export enum MapLayerType {
 	THEMATIC = "thematic",
 	ORG_UNIT = "orgUnit",
+	EARTH_ENGINE = "earthEngine",
 }
 
 export enum ThematicMapType {
@@ -31,6 +32,7 @@ const mapSchema = z.object({
 			organisationUnits: z.array(
 				z.object({ id: z.string(), path: z.string() }),
 			),
+			config: z.string().optional(),
 			thematicMapType: z.nativeEnum(ThematicMapType),
 			layer: z.nativeEnum(MapLayerType),
 			organisationUnitLevels: z.array(z.number()),
@@ -65,6 +67,7 @@ const mapSchema = z.object({
 						z.object({
 							id: z.string(),
 							dimensionItemType: z.string(),
+							name: z.string(),
 						}),
 					),
 				}),

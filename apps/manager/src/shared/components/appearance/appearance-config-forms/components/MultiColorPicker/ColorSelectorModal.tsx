@@ -34,6 +34,12 @@ export function ColorSelectorModal({ onClose, onAddColor, title }: Props) {
 							onChange={(e) => setColor(e.target.value)}
 							className="w-8 h-8 p-0 border-1 border-gray-300 rounded-sm cursor-pointer"
 						/>
+						<input
+							type="text"
+							value={color}
+							onChange={(e) => setColor(e.target.value)}
+							className="w-24 px-2 py-1 border border-gray-300 rounded-sm !text-sm"
+						/>
 					</div>
 				</div>
 			</ModalContent>

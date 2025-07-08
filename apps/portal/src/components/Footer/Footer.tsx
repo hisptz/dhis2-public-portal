@@ -12,26 +12,42 @@ import { FooterConfig, HeaderConfig } from "@packages/shared/schemas";
 import NextImage from "next/image";
 import { FooterLinks } from "@/components/Footer/components/FooterLinks";
 import { FooterStaticContent } from "@/components/Footer/components/FooterStaticContent";
+import { getForeground } from "@packages/shared/utils";
 
 export function Footer({
 	config,
 	header,
+	primaryColor,
 	logo,
 }: {
 	config: FooterConfig;
 	header: HeaderConfig;
+	primaryColor: string;
 	logo: string;
 }) {
+	const backgroundColor = config.coloredBackground
+		? config.usePrimaryColorAsBackgroundColor
+			? primaryColor
+			: config.footerBackgroundColor
+		: "#FFFFFF";
+	const foregroundColor = backgroundColor
+		? getForeground(backgroundColor)
+		: undefined;
+	const headerBackgroundColor = backgroundColor ?? foregroundColor;
 	const { title, subtitle } = header;
 	return (
-		<>
+		<div
+			style={{
+				background: headerBackgroundColor,
+				color: foregroundColor,
+			}}
+		>
 			<Flex
 				align="center"
 				direction="column"
 				justify="space-between"
 				w="100%"
 				style={{
-					background: "#fff",
 					borderTop: "1px solid #e9ecef",
 				}}
 			>
@@ -56,8 +72,13 @@ export function Footer({
 											</Title>
 											{subtitle?.text && (
 												<Text
+													c={
+														foregroundColor ==
+														"black"
+															? "dimmed"
+															: foregroundColor
+													}
 													size="sm"
-													c="dimmed"
 													ta="left"
 												>
 													{subtitle.text}
@@ -79,6 +100,7 @@ export function Footer({
 								>
 									{item.type === "links" ? (
 										<FooterLinks
+											color={foregroundColor}
 											config={{
 												links: item.links ?? [],
 												title: item.title,
@@ -101,10 +123,13 @@ export function Footer({
 			</Flex>
 			<Divider my="md" mx="xl" />
 			<Container size="lg" pb="xs">
-				<Text c="dimmed" ta="center">
+				<Text
+					c={foregroundColor == "black" ? "dimmed" : foregroundColor}
+					ta="center"
+				>
 					{config.copyright}
 				</Text>
 			</Container>
-		</>
+		</div>
 	);
 }

@@ -29,6 +29,7 @@ import {
 import { RHFCheckboxField, RHFTextInputField } from "@hisptz/dhis2-ui";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { FooterItemConfigInput } from "./FooterItem/FooterItemConfigInput";
+import { FooterStyleConfig } from "./components/FooterStyleConfig";
 
 type props = {
 	configurations: AppAppearanceConfig;
@@ -134,6 +135,8 @@ export function FooterConfigForm({
 								label={i18n.t("Show title")}
 								data-test="footer-show-title-checkbox"
 							/>
+							<hr className="border-gray-200 my-2" />
+							<FooterStyleConfig />
 							<hr className="border-gray-200 my-2" />
 						</div>
 

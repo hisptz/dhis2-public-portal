@@ -2,7 +2,13 @@ import { FooterLinksConfig } from "@packages/shared/schemas";
 import { Group, List, Title, useMantineTheme } from "@mantine/core";
 import { IconExternalLink } from "@tabler/icons-react";
 
-export function FooterLinks({ config }: { config: FooterLinksConfig }) {
+export function FooterLinks({
+	color,
+	config,
+}: {
+	color: string | undefined;
+	config: FooterLinksConfig;
+}) {
 	const { links, title } = config ?? {};
 	const theme = useMantineTheme();
 	return (
@@ -12,7 +18,11 @@ export function FooterLinks({ config }: { config: FooterLinksConfig }) {
 				{links.map((link) => (
 					<List.Item c={theme.primaryColor} key={link.url}>
 						<a href={link.url} target="_blank">
-							<Group align="center" gap={4}>
+							<Group
+								align="center"
+								gap={4}
+								c={color == "white" ? "white" : undefined}
+							>
 								{link.name}
 								<IconExternalLink size={14} />
 							</Group>

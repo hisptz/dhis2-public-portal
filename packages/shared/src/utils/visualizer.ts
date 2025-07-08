@@ -2,10 +2,19 @@ import {
 	AnalyticsDimensionSchema,
 	DataDimensionItem,
 	DimensionConfig,
+	LegendSetConfig,
 	VisualizationConfig,
 } from "../schemas";
-import { camelCase, flattenDeep, fromPairs, isEmpty } from "lodash";
+import {
+	camelCase,
+	compact,
+	flattenDeep,
+	fromPairs,
+	get,
+	isEmpty,
+} from "lodash";
 import { ChartType } from "@hisptz/dhis2-analytics";
+import { LegendSet } from "@hisptz/dhis2-utils";
 
 export function getLayout(visualization: VisualizationConfig): {
 	rows: AnalyticsDimensionSchema[];
@@ -32,12 +41,14 @@ export function getChartLayout(visualization: VisualizationConfig): {
 }
 
 export function getDataItems(visualization: VisualizationConfig): string[] {
-	return visualization.dataDimensionItems.map((item) => {
-		const dataItem = item[
-			camelCase(item.dataDimensionItemType) as keyof typeof item
-		] as DataDimensionItem;
-		return dataItem!.id;
-	});
+	return compact(
+		visualization.dataDimensionItems.map((item) => {
+			const dataItem = item[
+				camelCase(item.dataDimensionItemType) as keyof typeof item
+			] as DataDimensionItem;
+			return dataItem?.id;
+		}),
+	);
 }
 
 export function getPeriods(visualization: VisualizationConfig) {
@@ -74,6 +85,39 @@ export function getChartType(config: VisualizationConfig): ChartType {
 			.replace("_", "-") as ChartType;
 	}
 	return config.type.toLowerCase().replace("_", "-") as ChartType;
+}
+
+export function getVisualizationLegendSet(
+	config: VisualizationConfig,
+): LegendSetConfig | undefined {
+	if (!config.legend) {
+		return;
+	}
+	const legendConfig = config.legend;
+	switch (legendConfig.strategy) {
+		case "FIXED":
+			if (!legendConfig.set?.id) {
+				return;
+			}
+			return legendConfig.set as LegendSet;
+		case "BY_DATA_ITEM":
+			return compact(
+				config.dataDimensionItems.map((item) => {
+					const dataItem = get(
+						item,
+						camelCase(item.dataDimensionItemType.toLowerCase()),
+					);
+
+					if (dataItem.legendSet) {
+						return {
+							dataItem: dataItem.id,
+							legendSet: dataItem.legendSet as LegendSet,
+						};
+					}
+					return undefined;
+				}),
+			);
+	}
 }
 
 interface SelectedValues {

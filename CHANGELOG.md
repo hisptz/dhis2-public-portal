@@ -1,3 +1,45 @@
+## [1.2.1](https://github.com/hisptz/dhis2-public-portal/compare/v1.2.0...v1.2.1) (2025-07-05)
+
+
+### Bug Fixes
+
+* **visualizations:** enhance field handling and refactor visualization utils ([5a39fa4](https://github.com/hisptz/dhis2-public-portal/commit/5a39fa4b6a72a83ad76707ac66b85cd57f014a62))
+* **visualizations:** integrate legend set configuration support ([544bdc3](https://github.com/hisptz/dhis2-public-portal/commit/544bdc3364bb1133cb2e083525531a27e77bc0e2))
+* **visualizations:** refactor legend set handling and improve visualization components ([2ed9810](https://github.com/hisptz/dhis2-public-portal/commit/2ed9810ea9d2abb6c66221f0b501ce39f38152d0))
+* **visualizations:** simplify legend set handling and update API request fields ([f26dafe](https://github.com/hisptz/dhis2-public-portal/commit/f26dafebb0be84827f7495a8098e5c6d917797fa))
+
+# [1.2.0](https://github.com/hisptz/dhis2-public-portal/compare/v1.1.2...v1.2.0) (2025-07-01)
+
+
+### Bug Fixes
+
+* Adding a section for configuration documentation on the D2Flexiportal documentation ([a98e82f](https://github.com/hisptz/dhis2-public-portal/commit/a98e82faf1970f429937e2b918c9dd6be0cb7caa))
+* **configuration:** enhance import/export configuration and update documentation ([b4efee0](https://github.com/hisptz/dhis2-public-portal/commit/b4efee07af5b49af380615f9abc10c293303229a))
+* **DashboardGeneralConfig:** add showFilter checkbox to DashboardGeneralConfig for visualization filters ([cf3d7e8](https://github.com/hisptz/dhis2-public-portal/commit/cf3d7e81a0eb1bcb080a37c84d5f4eda6af50d67))
+* **defualt-footer:** enable colored background and primary color usage for the default footer ([781d095](https://github.com/hisptz/dhis2-public-portal/commit/781d095349398f0881b208d6839f5fce9dcb244a))
+* fixed issues with maps with automatic legends not showing the appropriate legends ([38d20b9](https://github.com/hisptz/dhis2-public-portal/commit/38d20b9aeee34b29c50567ffd549f2ef924570f4))
+* fixed issues with maps with automatic legends not showing the appropriate legends ([13ec06a](https://github.com/hisptz/dhis2-public-portal/commit/13ec06a02df6492f7c6fa4050cfb15e09b195eb2))
+* **Header:** update header background color configuration ([8e9f813](https://github.com/hisptz/dhis2-public-portal/commit/8e9f81370ef7a1fa721f7c9eceae284b39ed8131))
+* **LogSection:** enhance log titles with internationalization support ([63a1cc0](https://github.com/hisptz/dhis2-public-portal/commit/63a1cc00e76d415171fb232aaa78a571fd376d94))
+* **MenuItemForm:** improve menu item validation and update form schema ([357493f](https://github.com/hisptz/dhis2-public-portal/commit/357493f70d39cdff1d5afc3388d3472f26824a52))
+* support Earth Engine layers and update analytics dependency ([45f1f33](https://github.com/hisptz/dhis2-public-portal/commit/45f1f333a648a39c39279ec2aafce2d63e3c621f))
+* **visualization:** add optional showFilter property to baseVisualizationModuleSchema ([1b9b31e](https://github.com/hisptz/dhis2-public-portal/commit/1b9b31e44cab5b70179540c9ecf0a6c926e61bad))
+* **VisualizationModule:** conditionally render Selectors based on showFilter config ([73acf59](https://github.com/hisptz/dhis2-public-portal/commit/73acf590ccec763d6dd3ce0d2420c38101ea7e9a))
+
+
+### Features
+
+* **ColorPicker:** add text input for color value and improve color selection handling ([ca1df6c](https://github.com/hisptz/dhis2-public-portal/commit/ca1df6c4db4e2d96f4016a2b97d0512383f9efac))
+* **ConfigurationUtils:** add document fetching functions and enhance logging ([161a6a6](https://github.com/hisptz/dhis2-public-portal/commit/161a6a685ec4dbc3933b116a303b817fcabee574))
+* **ConfigurationUtils:** add document upload and delete functions with logging ([7c6ee83](https://github.com/hisptz/dhis2-public-portal/commit/7c6ee83265614afafd6f479e7b939f83b525b64d))
+* **ExportSection:** enhance export functionality to include document details and assets ([1c78525](https://github.com/hisptz/dhis2-public-portal/commit/1c7852552c64acd91cda0636f322cf0b6736f1a5))
+* **footer-configuration:** add configurable background color options for footer ([7956812](https://github.com/hisptz/dhis2-public-portal/commit/7956812360acd90bf399ee5a4b3763345a5a1efc))
+* **ImportConfiguration:** enhance import process to handle documents.json and upload associated files ([c8c943f](https://github.com/hisptz/dhis2-public-portal/commit/c8c943fa827a9459feaa648e307a5d5f22750848))
+* **ImportSection:** enhance import functionality to process documents.json and upload associated files ([b42e1ec](https://github.com/hisptz/dhis2-public-portal/commit/b42e1ecb556b6f3288f50587f7e5a3975bb7b863))
+* **portal:** enhance filter configuration for visualizations ([fb1ad44](https://github.com/hisptz/dhis2-public-portal/commit/fb1ad4489cc203ed7e4c4fb0bf775ec5356b4da1))
+* **useFile:** implement file upload hook with error handling and logging ([aacec2d](https://github.com/hisptz/dhis2-public-portal/commit/aacec2d6c64dc6abc31e112178e43c7f85d16d0e))
+* **visualization:** add showFilter prop to various components for filter visibility ([f6abb9c](https://github.com/hisptz/dhis2-public-portal/commit/f6abb9c678c49e3311c29f64333bbefb09452b77))
+
 ## [1.1.2](https://github.com/hisptz/dhis2-public-portal/compare/v1.1.1...v1.1.2) (2025-06-19)
 
 
