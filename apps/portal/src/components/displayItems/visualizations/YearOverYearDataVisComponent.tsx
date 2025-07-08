@@ -1,33 +1,30 @@
 "use client";
 
-import { ActionIcon, Tooltip } from "@mantine/core";
+import { ActionIcon, Loader, Tooltip } from "@mantine/core";
 import { IconArrowsMaximize, IconArrowsMinimize } from "@tabler/icons-react";
 import i18n from "@dhis2/d2-i18n";
 import {
-	VisualizationConfig,
+	AnalyticsData,
 	VisualizationItem,
 	YearOverYearVisualizationConfig,
-	AnalyticsData,
 } from "@packages/shared/schemas";
 import { FullScreen } from "react-full-screen";
 
-import { useSearchParams } from "next/navigation";
 import { isEmpty } from "lodash";
 import { CaptionPopover } from "@/components/CaptionPopover";
 import {
 	useContainerSize,
 	useDimensionViewControls,
-	useVisualizationLegendSet,
 	useVisualizationRefs,
 } from "@/hooks/dataVisualization";
 import { useYearOverYearAnalytics } from "@packages/shared/hooks";
-import { ChartSelector, TableVisualizer, VisualizationTitle } from "@packages/ui/visualizations";
+import {
+	VisualizationTitle,
+	YearOverYearVisualizer,
+} from "@packages/ui/visualizations";
 import { ActionMenu } from "./ActionMenu";
 import { CustomOrgUnitModal } from "./CustomOrgUnitModal";
 import { CustomPeriodModal } from "@/components/displayItems/visualizations/CustomPeriodModal";
-import { Loader } from "@mantine/core";
-import { VisualizationDisplayItemType } from "@packages/shared/schemas";
-import YearOverYearChartVis from "./YearOverYearChartVis";
 
 import React from "react";
 
@@ -38,14 +35,14 @@ export function YearOverYearDataVisComponent({
 	disableActions,
 	colors,
 }: {
-	visualizationConfig: VisualizationConfig;
+	visualizationConfig: YearOverYearVisualizationConfig;
 	config: VisualizationItem;
 	showFilter?: boolean;
 	colors: string[];
 	disableActions?: boolean;
 }) {
-	const { type, orgUnitConfig, periodConfig } = config;
-	const { chartRef, tableRef, setSingleValueRef } = useVisualizationRefs();
+	const { orgUnitConfig, periodConfig } = config;
+	const { chartRef, tableRef } = useVisualizationRefs();
 	const {
 		onCloseOrgUnitSelector,
 		showPeriodSelector,
@@ -66,20 +63,20 @@ export function YearOverYearDataVisComponent({
 	const { containerRef } = useContainerSize(chartRef);
 
 	const {
+		analytics,
+		loading,
 		setSelectedPeriods,
 		setSelectedOrgUnits,
 		selectedPeriods,
-		analytics,
-		loading,
 		selectedOrgUnits,
-	} = useYearOverYearAnalytics({ visualizationConfig: visualizationConfig as YearOverYearVisualizationConfig });
+	} = useYearOverYearAnalytics({
+		visualizationConfig:
+			visualizationConfig as YearOverYearVisualizationConfig,
+	});
 
-	const { loading: legendSetLoading, legendSet } =
-		useVisualizationLegendSet(visualizationConfig);
-
-	const searchParams = useSearchParams();
-
-	function transformToYoYAnalytics(analyticsMap: Map<string, AnalyticsData>): AnalyticsData {
+	function transformToYoYAnalytics(
+		analyticsMap: Map<string, AnalyticsData>,
+	): AnalyticsData {
 		const output: AnalyticsData = {
 			headers: [
 				{ name: "dx", column: "Data", valueType: "TEXT" },
@@ -105,14 +102,19 @@ export function YearOverYearDataVisComponent({
 			Object.entries(analytics.metaData.items).forEach(([key, item]) => {
 				output.metaData.items[key] ??= item;
 			});
-			analytics.metaData.dimensions.ou?.forEach((ou) => orgUnitSet.add(ou));
+			analytics.metaData.dimensions.ou?.forEach((ou) =>
+				orgUnitSet.add(ou),
+			);
 		}
 		const sortedPeriods = Array.from(allPeriods).sort();
 		sortedPeriods.forEach((pe) => {
 			if (!output.metaData.items[pe]) {
 				const year = pe.slice(0, 4);
 				const monthNum = parseInt(pe.slice(4, 6), 10) - 1;
-				const monthName = new Date(2000, monthNum).toLocaleString("en", { month: "long" });
+				const monthName = new Date(2000, monthNum).toLocaleString(
+					"en",
+					{ month: "long" },
+				);
 				output.metaData.items[pe] = { name: `${monthName} ${year}` };
 			}
 		});
@@ -184,19 +186,15 @@ export function YearOverYearDataVisComponent({
 						</div>
 					) : combinedAnalytics ? (
 						showTable ? (
-							<div className="flex-1 h-full">
-								
-							</div>
+							<div className="flex-1 h-full"></div>
 						) : (
 							<div className="flex-1 h-full">
-								{type ===
-									VisualizationDisplayItemType.CHART && (
-										<YearOverYearChartVis
-											analytics={combinedAnalytics}
-											visualizationConfig={visualizationConfig}
-											colors={colors}
-										/>
-									)}
+								<YearOverYearVisualizer
+									setRef={chartRef}
+									analytics={analytics}
+									visualization={visualizationConfig}
+									colors={colors}
+								/>
 							</div>
 						)
 					) : (
@@ -210,9 +208,7 @@ export function YearOverYearDataVisComponent({
 						setSelectedOrgUnits([]);
 					}}
 					orgUnitState={
-						!isEmpty(selectedOrgUnits)
-							? selectedOrgUnits
-							: (searchParams.get("ou")?.split(",") ?? [])
+						!isEmpty(selectedOrgUnits) ? selectedOrgUnits : []
 					}
 					onUpdate={(val) => {
 						setSelectedOrgUnits(val ?? []);
@@ -233,9 +229,7 @@ export function YearOverYearDataVisComponent({
 					}}
 					title={visualizationConfig.name}
 					periodState={
-						!isEmpty(selectedPeriods)
-							? selectedPeriods
-							: (searchParams.get("pe")?.split(",") ?? [])
+						!isEmpty(selectedPeriods) ? selectedPeriods : []
 					}
 					onUpdate={(val) => {
 						setSelectedPeriods(val);

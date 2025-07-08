@@ -2,7 +2,6 @@ import {
 	AnalyticsData,
 	VisualizationConfig,
 	YearOverYearVisualizationConfig,
-	yearOverYearVisualizationSchema,
 } from "@packages/shared/schemas";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -82,7 +81,14 @@ export function useYearOverYearAnalytics({
 	const [data, setData] = useState<Map<string, AnalyticsData>>();
 	const searchParams = useSearchParams();
 	const [selectedOrgUnits, setSelectedOrgUnits] = useState<string[]>([]);
-	const [selectedPeriods, setSelectedPeriods] = useState<string[]>([]);
+	const [selectedPeriods, setSelectedPeriods] = useState<string[]>(
+		searchParams.get("pe")?.split(",") ?? [],
+	);
+
+	console.log({
+		relativePeriods: visualizationConfig.relativePeriods,
+	});
+
 	const { refetch, loading } = useDataQuery<{
 		analytics: AnalyticsData;
 	}>(analyticsQuery, { lazy: true });
@@ -93,7 +99,7 @@ export function useYearOverYearAnalytics({
 	)
 		.filter(([_, value]) => value === true)
 		.map(([key]) => snakeCase(key).toUpperCase());
-		console.log('selectedRelativePeriods', selectedRelativePeriods)
+	console.log("selectedRelativePeriods", selectedRelativePeriods);
 
 	// get the dx and ou
 	const getYearsFromPeriods = (periods: string[]) =>
@@ -103,8 +109,8 @@ export function useYearOverYearAnalytics({
 		selectedPeriods.length > 0
 			? getYearsFromPeriods(selectedPeriods)
 			: visualizationConfig.yearlySeries || [];
-	console.log('selectedPeriods:', selectedPeriods);
-	console.log('yearsToFetch:', yearsToFetch);
+	console.log("selectedPeriods:", selectedPeriods);
+	console.log("yearsToFetch:", yearsToFetch);
 
 	const orgUnitFilter = (visualizationConfig.filters || []).find(
 		(filter: any) => filter.dimension === "ou",
@@ -122,7 +128,7 @@ export function useYearOverYearAnalytics({
 	useEffect(() => {
 		async function fetchYearlyAnalytics() {
 			const yearData = new Map<string, AnalyticsData>();
-			console.log('Fetching analytics for years:', yearsToFetch);
+			console.log("Fetching analytics for years:", yearsToFetch);
 			for (const yearId of yearsToFetch) {
 				const date = new Date();
 				const period = PeriodUtility.getPeriodById(yearId);
@@ -133,18 +139,28 @@ export function useYearOverYearAnalytics({
 
 				const response = (await refetch({
 					filters: {
-						ou: selectedOrgUnits.length > 0 ? selectedOrgUnits : orgUnits,
+						ou:
+							selectedOrgUnits.length > 0
+								? selectedOrgUnits
+								: orgUnits,
 						dx,
 					},
 					relativePeriodDate: periodDateString,
 					dimensions: {
-						pe: selectedPeriods.length > 0 ? selectedPeriods : selectedRelativePeriods,
+						pe:
+							selectedPeriods.length > 0
+								? selectedPeriods
+								: selectedRelativePeriods,
 					},
 				})) as { analytics: AnalyticsData };
 
 				yearData.set(yearId, response.analytics);
-				console.log('API response for year', yearId, response.analytics);
-				console.log(visualizationConfig)
+				console.log(
+					"API response for year",
+					yearId,
+					response.analytics,
+				);
+				console.log(visualizationConfig);
 			}
 			setData(yearData);
 		}

@@ -76,6 +76,7 @@ export const visualizationFields = [
 	"userAccesses",
 	"userGroupAccesses",
 	"yearlySeries",
+	"relativePeriods",
 	"!attributeDimensions",
 	"!attributeValues",
 	"!category",
@@ -93,7 +94,6 @@ export const visualizationFields = [
 	"!organisationUnits",
 	"!periods",
 	"!programIndicatorDimensions",
-	"!relativePeriods",
 	"!rowDimensions",
 	"!userOrganisationUnit",
 	"!userOrganisationUnitChildren",
@@ -345,7 +345,10 @@ const supportedVisualizations = ["MAP", "chart", "table"] as const;
 export type SupportedVisualization = (typeof supportedVisualizations)[number];
 
 export const yearOverYearVisualizationSchema = visualizationSchema.extend({
-	type: z.enum(["YEAR_OVER_YEAR_COLUMN", "YEAR_OVER_YEAR_LINE"]),
+	type: z.enum([
+		VisualizationChartType.YEAR_OVER_YEAR_COLUMN,
+		VisualizationChartType.YEAR_OVER_YEAR_LINE,
+	]),
 	yearlySeries: z.array(z.string()),
 	relativePeriods: z.record(z.string(), z.boolean()),
 });
