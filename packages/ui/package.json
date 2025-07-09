@@ -1,6 +1,6 @@
 {
   "name": "@packages/ui",
-  "version": "1.2.0",
+  "version": "1.2.2",
   "private": true,
   "exports": {
     "./visualizations": "./src/visualizations/index.ts"
