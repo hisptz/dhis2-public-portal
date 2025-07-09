@@ -21,9 +21,16 @@ export async function HighlightedSingleValueContainer({
 
 	const imageURL = getServerImageUrl(config.icon);
 
+	const periods = visualizationConfig.periods ?? [];
+
 	return (
 		<Stack w="100%" align="start" gap="sm">
-			<Title order={5}>{visualizationConfig.name}</Title>
+			<div>
+				<Title order={5}>{visualizationConfig.name}</Title>
+				<Title order={6} c={"gray"} pt={"xs"}>
+					{periods.map((pe: any) => pe["name"]).join(", ")}
+				</Title>
+			</div>
 			<Group w="100%" align="center" justify="space-between">
 				<ErrorBoundary fallback={<>Error getting data</>}>
 					<Suspense fallback={<div>Loading...</div>}>
