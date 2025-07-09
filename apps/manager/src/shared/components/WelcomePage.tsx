@@ -9,11 +9,11 @@ export function WelcomePage() {
 	return (
 		<div className="w-full h-full flex flex-col">
 			<h1 className="font-bold">
-				{i18n.t("Welcome to the public portal manager!")}
+				{i18n.t("Welcome to the FlexiPortal Manager!")}
 			</h1>
 			<p className="text-gray-500">
 				{i18n.t(
-					"You can use this application to configure your public portal web application",
+					"You can use this application to configure your FlexiPortal web application",
 				)}
 			</p>
 			<div className=" grid grid-cols-1 sm:grid-cols-2  lg:grid-cols-4 gap-4 align-top py-8 justify-items-start">
