@@ -1,3 +1,25 @@
+## [1.2.2](https://github.com/hisptz/dhis2-public-portal/compare/v1.2.1...v1.2.2) (2025-07-09)
+
+
+### Bug Fixes
+
+* **charts:** improving analytics for  YearOverYearAnalytics ([7f4c56d](https://github.com/hisptz/dhis2-public-portal/commit/7f4c56d7a55449fe22ae27902df69ed6dfc66827))
+* **hooks:** enhance year-over-year analytics handling ([7ac99ec](https://github.com/hisptz/dhis2-public-portal/commit/7ac99ec22f63ac4bde42253a284b4427bd402f44))
+* integrate React Query for data fetching in Manager and Portal apps ([3788db1](https://github.com/hisptz/dhis2-public-portal/commit/3788db1920adddb5e952a80d2829eefdd43b636d))
+* **visualizations:** add schema and type support for year-over-year visualizations ([79158cc](https://github.com/hisptz/dhis2-public-portal/commit/79158cc1a54791daaac3015504a034fe6b8e6694))
+* **visualizations:** enhance field handling and refactor visualization utils ([bd54eb1](https://github.com/hisptz/dhis2-public-portal/commit/bd54eb1a758b5fba76b6a294a9f8f8df6d486f7a))
+* **visualizations:** enhance YearOverYearDataVisComponent with analytics transformation and chart integration ([c6a8f91](https://github.com/hisptz/dhis2-public-portal/commit/c6a8f91763d2614023c81684ac9806433ee56630))
+* **visualizations:** enhance YearOverYearDataVisComponent with loading state and analytics handling ([5618975](https://github.com/hisptz/dhis2-public-portal/commit/5618975235d2e118cbdeb4056294738f16de332c))
+* **visualizations:** implement YearOverYearVisualizer and enhance YoY analytics ([4e1997c](https://github.com/hisptz/dhis2-public-portal/commit/4e1997cc1177e1a889b897e00ed2f631dbed734f))
+* **visualizations:** integrate legend set configuration support ([6266ec9](https://github.com/hisptz/dhis2-public-portal/commit/6266ec9871675fca17b0177a7ada8ddb3978273a))
+* **visualizations:** integrate legend set configuration support ([07d3064](https://github.com/hisptz/dhis2-public-portal/commit/07d306481ebd7332809e458373b82ff387622ba2))
+* **visualizations:** refactor legend set handling and improve visualization components ([e8800e8](https://github.com/hisptz/dhis2-public-portal/commit/e8800e8fc0d62e85c7221197933c4fe64c776a1d))
+* **visualizations:** refactor legend set handling and improve visualization components ([305a743](https://github.com/hisptz/dhis2-public-portal/commit/305a743fbeb4ef67bf59a6a00ffa9df830338539))
+* **visualizations:** replace YearOverYearChartVis with YearOverYearVisualizer and enhance YoY functionality ([16c40f8](https://github.com/hisptz/dhis2-public-portal/commit/16c40f884876022cff955f0b4bea4100c8069d0c))
+* **visualizations:** simplify legend set handling and update API request fields ([2638fb0](https://github.com/hisptz/dhis2-public-portal/commit/2638fb08d997fb4e78833c31eee68fbb229138cc))
+* **visualizations:** update DataVisualization to support YearOverYearVisualizationConfig ([2f62bbc](https://github.com/hisptz/dhis2-public-portal/commit/2f62bbc54647b94af92fbe12b5eb7c6347a1d2af))
+* **visualizations:** update YearOverYearChartVis to remove axis titles ([80b8ad2](https://github.com/hisptz/dhis2-public-portal/commit/80b8ad2e214c66aa7bb75c67c130f458ee3684a0))
+
 ## [1.2.1](https://github.com/hisptz/dhis2-public-portal/compare/v1.2.0...v1.2.1) (2025-07-05)
 
 
