@@ -1,6 +1,7 @@
 import {
 	ChartVisualizationItem,
 	VisualizationChartType,
+	YearOverYearVisualizationConfig,
 } from "@packages/shared/schemas";
 import { useVisualizationConfig } from "../../../hooks/visualization";
 import React from "react";
@@ -37,7 +38,9 @@ export function DataVisualization({ config }: MainVisualizationProps) {
 					colors={colors}
 					disableActions={false}
 					config={config}
-					visualizationConfig={visualizationConfig}
+					visualizationConfig={
+						visualizationConfig as YearOverYearVisualizationConfig
+					}
 				/>
 			) : (
 				<DataVisComponent
