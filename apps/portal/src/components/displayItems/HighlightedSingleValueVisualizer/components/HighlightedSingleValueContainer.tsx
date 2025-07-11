@@ -1,5 +1,6 @@
 import {
 	ChartVisualizationItem,
+	DefaultAnalyticsDimension,
 	HighlightedSingleValueConfig,
 } from "@packages/shared/schemas";
 import { Box, Group, Image, Stack, Title } from "@mantine/core";
@@ -9,6 +10,8 @@ import { HighlightedValueDisplay } from "@/components/displayItems/HighlightedSi
 import NextImage from "next/image";
 import { getServerImageUrl } from "@/utils/server/images";
 import { getDataVisualization } from "@/components/displayItems/visualizations/DataVisualization";
+import { find } from "lodash";
+import { PeriodUtility } from "@hisptz/dhis2-utils";
 
 export async function HighlightedSingleValueContainer({
 	config,
@@ -20,15 +23,22 @@ export async function HighlightedSingleValueContainer({
 	} as ChartVisualizationItem);
 
 	const imageURL = getServerImageUrl(config.icon);
-
-	const periods = visualizationConfig.periods ?? [];
+	const periodIds =
+		find(visualizationConfig.filters, {
+			dimension: DefaultAnalyticsDimension.pe,
+		})?.items?.map((item) => item.id) ?? [];
+	const periods = [];
+	for (const id of periodIds) {
+		const period = PeriodUtility.getPeriodById(id);
+		periods.push(period.name);
+	}
 
 	return (
 		<Stack w="100%" align="start" gap="sm">
 			<div>
 				<Title order={5}>{visualizationConfig.name}</Title>
 				<Title order={6} c={"gray"} pt={"xs"}>
-					{periods.map((pe: any) => pe["name"]).join(", ")}
+					{periods.join(", ")}
 				</Title>
 			</div>
 			<Group w="100%" align="center" justify="space-between">
