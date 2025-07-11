@@ -1,12 +1,14 @@
 import {
 	ChartVisualizationItem,
 	DefaultAnalyticsDimension,
-	HighlightedSingleValueConfig,
+	HighlightedSingleValueConfig
 } from "@packages/shared/schemas";
 import { Box, Group, Image, Stack, Title } from "@mantine/core";
 import { ErrorBoundary } from "react-error-boundary";
 import { Suspense } from "react";
-import { HighlightedValueDisplay } from "@/components/displayItems/HighlightedSingleValueVisualizer/components/HighlightedValueDisplay";
+import {
+	HighlightedValueDisplay
+} from "@/components/displayItems/HighlightedSingleValueVisualizer/components/HighlightedValueDisplay";
 import NextImage from "next/image";
 import { getServerImageUrl } from "@/utils/server/images";
 import { getDataVisualization } from "@/components/displayItems/visualizations/DataVisualization";
@@ -23,15 +25,11 @@ export async function HighlightedSingleValueContainer({
 	} as ChartVisualizationItem);
 
 	const imageURL = getServerImageUrl(config.icon);
-	const periodIds =
+	const periods =
 		find(visualizationConfig.filters, {
 			dimension: DefaultAnalyticsDimension.pe,
-		})?.items?.map((item) => item.id) ?? [];
-	const periods = [];
-	for (const id of periodIds) {
-		const period = PeriodUtility.getPeriodById(id);
-		periods.push(period.name);
-	}
+		})?.items?.map((item) => PeriodUtility.getPeriodById(item.id).name) ??
+		[];
 
 	return (
 		<Stack w="100%" align="start" gap="sm">
