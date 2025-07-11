@@ -27,7 +27,9 @@ export function EditMenuItem({
 					onSubmit={onUpdate}
 				/>
 			)}
-			<Button small onClick={onOpen} icon={<IconEdit16 />} />
+			<Button 
+				data-test="edit-menu-item-button"
+			 small onClick={onOpen} icon={<IconEdit16 />} />
 		</>
 	);
 }
