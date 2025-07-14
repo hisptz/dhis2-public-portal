@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import i18n from "@dhis2/d2-i18n";
 import { Field, FieldProps, FileInput } from "@dhis2/ui";
 import { useController } from "react-hook-form";
@@ -15,12 +15,17 @@ export function RHFIconInput({
 	const { field, fieldState } = useController({
 		name,
 	});
+	const [errorMessage, setErrorMessage] = useState<string | undefined>(undefined);
+	const validateFileType = (file: File): boolean => {
+		if (!accept) return true;
+		return file.type === (accept === "svg" ? "image/svg+xml" : "image/png");
+	};
 
 	return (
 		<Field
 			{...props}
-			error={!!fieldState.error}
-			validationText={fieldState.error?.message}
+			error={!!fieldState.error || !!errorMessage}
+			validationText={fieldState.error?.message || errorMessage}
 			required
 			label={label}
 		>
@@ -38,16 +43,22 @@ export function RHFIconInput({
 			)}
 			<FileInput
 				/*
-      // @ts-expect-error @dhis2/ui errors */
+	  // @ts-expect-error @dhis2/ui errors */
 				files={[field.value]}
 				buttonLabel={i18n.t("Upload Icon")}
 				onChange={async ({ files }) => {
 					const file = files.item(0);
-					if (file) {
+					if (file && validateFileType(file)) {
+						setErrorMessage(undefined);
 						field.onChange(await AppIconFile.fromFile(file));
+					} else if (file) {
+						field.onChange(null); 
+						setErrorMessage(i18n.t(`Only ${accept} files are allowed.`));
+					} else {
+						setErrorMessage(undefined); 
 					}
 				}}
-				accept={accept ?? "png"}
+				accept={accept ? (accept === "svg" ? "image/svg+xml" : "image/png") : undefined}
 				name={name}
 			/>
 		</Field>

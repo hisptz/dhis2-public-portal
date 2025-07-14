@@ -154,6 +154,13 @@ export function MenuItemForm({
 		};
 
 		if ((data.iconFile?.size ?? 0) > 0) {
+			if (data.iconFile?.type !== "image/svg+xml") {
+				form.setError("iconFile", {
+					type: "manual",
+					message: i18n.t("Only SVG icons are supported"),
+				});
+				return;
+			}
 			const iconId = await createIcon(data.iconFile!);
 			set(updatedData, "icon", iconId);
 		}
