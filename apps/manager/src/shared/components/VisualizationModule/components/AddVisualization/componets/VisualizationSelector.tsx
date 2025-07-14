@@ -39,7 +39,7 @@ type VisualizationQueryResponse = {
 const mapQuery = {
 	maps: {
 		resource: "maps",
-		params: ({}) => {
+		params: ({ }) => {
 			return {
 				fields: ["id", "displayName"],
 				paging: false,
@@ -80,13 +80,9 @@ export function MapSelector() {
 }
 
 export function VisSelector() {
-	const [visualizationType, setVisualizationType] = useState<string>();
-	const { data, loading, refetch } = useDataQuery<VisualizationQueryResponse>(
-		visQuery as any,
-	);
-
-	const visId = useWatch<VisualizationItem>({
-		name: "id",
+	const [visualizationType, setVisualizationType] = useState<string | undefined>(undefined);
+	const { data, loading, refetch } = useDataQuery<VisualizationQueryResponse>(visQuery as any, {
+		variables: { type: visualizationType },
 	});
 
 	const options = useMemo(
@@ -103,52 +99,41 @@ export function VisSelector() {
 
 	useEffect(() => {
 		if (visualizationType) {
-			refetch({
-				type: visualizationType,
-			});
+			refetch({ type: visualizationType });
 		}
-	}, [refetch, visualizationType]);
-
-	useEffect(() => {
-		const selectedVisualization = options.find(
-			(option) => option.value === visId,
-		);
-		if (visualizationType !== selectedVisualization?.type && !loading) {
-			setVisualizationType(selectedVisualization?.type);
-		}
-	}, [loading]);
+	}, [visualizationType, refetch]);
 
 	return (
-		<div className="flex flex-col gap-4 ">
+		<div className="flex flex-col gap-4">
 			<SingleSelectField
 				required
 				dataTest={"visualization-type-select"}
 				label={i18n.t("Visualization type")}
 				placeholder={i18n.t("All")}
-				onChange={({ selected }) => setVisualizationType(selected)}
+				onChange={({ selected }) => setVisualizationType(selected || undefined)}
 				selected={visualizationType}
 			>
-				{[
-					...Object.values(VisualizationChartType).map((type) => ({
-						label: capitalize(startCase(type)),
-						value: type,
-					})),
-				].map((option) => (
+				<SingleSelectOption
+					key="all"
+					label={i18n.t("All")}
+					value=""
+				/>
+				{Object.values(VisualizationChartType).map((type) => (
 					<SingleSelectOption
-						key={option.value}
-						label={option.label}
-						value={option.value}
+						key={type}
+						label={capitalize(startCase(type))}
+						value={type}
 					/>
 				))}
 			</SingleSelectField>
 			<RHFSingleSelectField
 				required
-				dataTest="visualization-select"				
+				dataTest="visualization-select"
 				disabled={loading}
 				label={i18n.t("Visualization")}
 				loading={loading}
 				options={options}
-				name={"id"}
+				name="id"
 			/>
 			{visualizationType == DisplayItemType.HIGHLIGHTED_SINGLE_VALUE && (
 				<RHFTextInputField name="icon" label={i18n.t("Icon")} />
