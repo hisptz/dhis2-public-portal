@@ -92,8 +92,8 @@ export function AddSectionForm({
 						<SectionIDField />
 						<RHFTextInputField
 							required
-							name="title"
-							label={i18n.t("Title")}
+							name="label"
+							label={i18n.t("Label")}
 						/>
 						<RHFSingleSelectField
 							required
