@@ -46,7 +46,12 @@ const fileQuery = {
 
 export const menuItemFormSchema = menuItemSchema.and(
 	z.object({
-		iconFile: z.instanceof(AppIconFile).optional(),
+		iconFile: z
+			.instanceof(AppIconFile)
+			.refine((file) => file.type === "image/svg+xml", {
+				message: i18n.t("Invalid icon file. Only SVG icons are supported."),
+			})
+			.optional(),
 	}),
 );
 export type MenuItemFormValues = z.infer<typeof menuItemFormSchema>;
@@ -113,6 +118,7 @@ export function MenuItemForm({
 
 	const form = useForm<MenuItemFormValues>({
 		resolver: zodResolver(formSchema),
+		mode: "onChange",
 		defaultValues: async () => {
 			if (!config) {
 				return {
@@ -154,13 +160,6 @@ export function MenuItemForm({
 		};
 
 		if ((data.iconFile?.size ?? 0) > 0) {
-			if (data.iconFile?.type !== "image/svg+xml") {
-				form.setError("iconFile", {
-					type: "manual",
-					message: i18n.t("Only SVG icons are supported"),
-				});
-				return;
-			}
 			const iconId = await createIcon(data.iconFile!);
 			set(updatedData, "icon", iconId);
 		}
