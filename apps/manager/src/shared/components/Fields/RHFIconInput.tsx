@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import i18n from "@dhis2/d2-i18n";
 import { Field, FieldProps, FileInput } from "@dhis2/ui";
 import { useController } from "react-hook-form";
