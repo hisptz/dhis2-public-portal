@@ -5,8 +5,8 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
-"POT-Creation-Date: 2025-07-15T07:08:36.050Z\n"
-"PO-Revision-Date: 2025-07-15T07:08:36.050Z\n"
+"POT-Creation-Date: 2025-07-15T12:11:18.778Z\n"
+"PO-Revision-Date: 2025-07-15T12:11:18.779Z\n"
 
 msgid "Could not get Appearance configurations"
 msgstr "Could not get Appearance configurations"
@@ -390,14 +390,14 @@ msgstr "Add sub item"
 msgid "Path"
 msgstr "Path"
 
+msgid "Invalid icon file. Only SVG icons are supported."
+msgstr "Invalid icon file. Only SVG icons are supported."
+
 msgid "A menu item with this path already exists. Please choose a different one."
 msgstr "A menu item with this path already exists. Please choose a different one."
 
 msgid "A menu item with this module ID already exists."
 msgstr "A menu item with this module ID already exists."
-
-msgid "Only SVG icons are supported"
-msgstr "Only SVG icons are supported"
 
 msgid "Create"
 msgstr "Create"
@@ -410,6 +410,9 @@ msgstr "Are you sure you want to close this form?. All changes will be lost"
 
 msgid " menu item"
 msgstr " menu item"
+
+msgid "Only SVG icons are supported"
+msgstr "Only SVG icons are supported"
 
 msgid "Icon"
 msgstr "Icon"

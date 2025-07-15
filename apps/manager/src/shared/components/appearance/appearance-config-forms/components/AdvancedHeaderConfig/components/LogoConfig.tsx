@@ -31,6 +31,7 @@ export function LogoConfig({ logoType, label }: Props) {
 							<RHFIconInput
 								name={`${STYLE_KEY}.${logoType}.url`}
 								label={i18n.t("Logo")}
+								accept={"image/*"}
 							/>
 						)}
 						<div className="flex flex-row gap-1">

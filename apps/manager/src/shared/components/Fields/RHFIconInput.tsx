@@ -10,12 +10,16 @@ export function RHFIconInput({
 	label,
 	accept,
 	...props
-}: { name: string; label: string; accept?: "png" | "svg" } & FieldProps) {
+}: {
+	name: string;
+	label: string;
+	accept?: HTMLInputElement["accept"];
+} & FieldProps) {
 	const config = useConfig();
 	const { field, fieldState } = useController({
 		name,
 	});
-	 
+
 	return (
 		<Field
 			{...props}
@@ -49,7 +53,7 @@ export function RHFIconInput({
 						field.onChange(null);
 					}
 				}}
-				accept={accept ? (accept === "svg" ? "image/svg+xml" : "image/png") : undefined}
+				accept={accept}
 				name={name}
 			/>
 		</Field>
