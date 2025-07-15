@@ -21,6 +21,7 @@ export function GeneralForm() {
 			<RHFIconInput
 				helpText={i18n.t("A 512px by 512px image is recommended")}
 				label={i18n.t("Application Icon")}
+				accept="image/*"
 				name="icon"
 			/>
 		</div>

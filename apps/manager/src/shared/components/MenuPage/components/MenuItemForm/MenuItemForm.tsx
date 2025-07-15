@@ -46,12 +46,19 @@ const fileQuery = {
 
 export const menuItemFormSchema = menuItemSchema.and(
 	z.object({
-		iconFile: z.instanceof(AppIconFile).optional(),
+		iconFile: z
+			.instanceof(AppIconFile)
+			.refine((file) => file.type === "image/svg+xml", {
+				message: i18n.t(
+					"Invalid icon file. Only SVG icons are supported.",
+				),
+			})
+			.optional(),
 	}),
 );
 export type MenuItemFormValues = z.infer<typeof menuItemFormSchema>;
 
-const getAllMenuItems = ((items: MenuItem[]) => {
+const getAllMenuItems = (items: MenuItem[]) => {
 	let allItems: MenuItem[] = [];
 	for (const item of items) {
 		if (item.type === MenuItemType.GROUP) {
@@ -60,7 +67,7 @@ const getAllMenuItems = ((items: MenuItem[]) => {
 		allItems.push(item);
 	}
 	return allItems;
-})
+};
 
 export function MenuItemForm({
 	config,
@@ -73,46 +80,58 @@ export function MenuItemForm({
 	const menus = useMenuConfig();
 	const { confirm } = useDialog();
 	const { create: createIcon } = useManageDocument();
-	const menuItems = useMemo(() => getAllMenuItems(menus.items), [menus.items]);
+	const menuItems = useMemo(
+		() => getAllMenuItems(menus.items),
+		[menus.items],
+	);
 
-	const formSchema = menuItemFormSchema.refine(
-		(data) => {
-			const conflictingItem = menuItems.find(
-				(item) => item.path === data.path
-			);
-			return !conflictingItem || conflictingItem.path === config?.path;
-		}, {
-		message: i18n.t(
-			"A menu item with this path already exists. Please choose a different one.",
-		),
-		path: ["path"],
-	}
-	).refine(
-		(data) => {
-			if (data.type !== MenuItemType.MODULE) {
-				return true;
-			}
-			const conflictingItem = menuItems.find(
-				(item) =>
-					item.type === MenuItemType.MODULE &&
-					"moduleId" in item &&
-					item.moduleId === data.moduleId
-			);
-			return (
-				!conflictingItem ||
-				(config?.type === MenuItemType.MODULE &&
-					conflictingItem.type === MenuItemType.MODULE &&
-					"moduleId" in conflictingItem &&
-					conflictingItem.moduleId === config?.moduleId)
-			);
-		},
-		{
-			message: i18n.t("A menu item with this module ID already exists."),
-			path: ["moduleId"],
-		});
+	const formSchema = menuItemFormSchema
+		.refine(
+			(data) => {
+				const conflictingItem = menuItems.find(
+					(item) => item.path === data.path,
+				);
+				return (
+					!conflictingItem || conflictingItem.path === config?.path
+				);
+			},
+			{
+				message: i18n.t(
+					"A menu item with this path already exists. Please choose a different one.",
+				),
+				path: ["path"],
+			},
+		)
+		.refine(
+			(data) => {
+				if (data.type !== MenuItemType.MODULE) {
+					return true;
+				}
+				const conflictingItem = menuItems.find(
+					(item) =>
+						item.type === MenuItemType.MODULE &&
+						"moduleId" in item &&
+						item.moduleId === data.moduleId,
+				);
+				return (
+					!conflictingItem ||
+					(config?.type === MenuItemType.MODULE &&
+						conflictingItem.type === MenuItemType.MODULE &&
+						"moduleId" in conflictingItem &&
+						conflictingItem.moduleId === config?.moduleId)
+				);
+			},
+			{
+				message: i18n.t(
+					"A menu item with this module ID already exists.",
+				),
+				path: ["moduleId"],
+			},
+		);
 
 	const form = useForm<MenuItemFormValues>({
 		resolver: zodResolver(formSchema),
+		mode: "onChange",
 		defaultValues: async () => {
 			if (!config) {
 				return {
@@ -123,22 +142,22 @@ export function MenuItemForm({
 
 			const file = config.icon
 				? ((await engine.query(fileQuery, {
-					variables: {
-						icon: config.icon,
-					},
-				})) as { icon: { displayName: string; id: string } })
+						variables: {
+							icon: config.icon,
+						},
+					})) as { icon: { displayName: string; id: string } })
 				: undefined;
 
 			return {
 				...config,
 				iconFile: file
 					? new AppIconFile(
-						[],
-						`${file?.icon?.displayName.replace(`[public-portal] `, ``)}`,
-						{
-							type: "image/png",
-						},
-					).setId(file.icon.id)
+							[],
+							`${file?.icon?.displayName.replace(`[public-portal] `, ``)}`,
+							{
+								type: "image/png",
+							},
+						).setId(file.icon.id)
 					: undefined,
 			} as MenuItemFormValues;
 		},
@@ -197,7 +216,7 @@ export function MenuItemForm({
 						<form className="flex flex-col gap-2">
 							<MenuTypeInput />
 							<RHFIconInput
-								accept="svg"
+								accept="image/svg+xml"
 								helpText={i18n.t(
 									"Only SVG icons are supported",
 								)}
