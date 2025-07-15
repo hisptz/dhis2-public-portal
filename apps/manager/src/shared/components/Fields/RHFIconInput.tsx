@@ -15,17 +15,12 @@ export function RHFIconInput({
 	const { field, fieldState } = useController({
 		name,
 	});
-	const [errorMessage, setErrorMessage] = useState<string | undefined>(undefined);
-	const validateFileType = (file: File): boolean => {
-		if (!accept) return true;
-		return file.type === (accept === "svg" ? "image/svg+xml" : "image/png");
-	};
-
+	 
 	return (
 		<Field
 			{...props}
-			error={!!fieldState.error || !!errorMessage}
-			validationText={fieldState.error?.message || errorMessage}
+			error={!!fieldState.error}
+			validationText={fieldState.error?.message}
 			required
 			label={label}
 		>
@@ -48,14 +43,10 @@ export function RHFIconInput({
 				buttonLabel={i18n.t("Upload Icon")}
 				onChange={async ({ files }) => {
 					const file = files.item(0);
-					if (file && validateFileType(file)) {
-						setErrorMessage(undefined);
+					if (file) {
 						field.onChange(await AppIconFile.fromFile(file));
-					} else if (file) {
-						field.onChange(null); 
-						setErrorMessage(i18n.t(`Only ${accept} files are allowed.`));
 					} else {
-						setErrorMessage(undefined); 
+						field.onChange(null);
 					}
 				}}
 				accept={accept ? (accept === "svg" ? "image/svg+xml" : "image/png") : undefined}
