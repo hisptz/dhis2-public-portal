@@ -10,7 +10,11 @@ export function RHFIconInput({
 	label,
 	accept,
 	...props
-}: { name: string; label: string; accept?: "png" | "svg" } & FieldProps) {
+}: {
+	name: string;
+	label: string;
+	accept?: HTMLInputElement["accept"];
+} & FieldProps) {
 	const config = useConfig();
 	const { field, fieldState } = useController({
 		name,
@@ -38,16 +42,18 @@ export function RHFIconInput({
 			)}
 			<FileInput
 				/*
-      // @ts-expect-error @dhis2/ui errors */
+	  // @ts-expect-error @dhis2/ui errors */
 				files={[field.value]}
 				buttonLabel={i18n.t("Upload Icon")}
 				onChange={async ({ files }) => {
 					const file = files.item(0);
 					if (file) {
 						field.onChange(await AppIconFile.fromFile(file));
+					} else {
+						field.onChange(null);
 					}
 				}}
-				accept={accept ?? "png"}
+				accept={accept}
 				name={name}
 			/>
 		</Field>
