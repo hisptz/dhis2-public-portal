@@ -9,13 +9,10 @@ import {
 	IconMapPin,
 	IconMaximize,
 	IconMinimize,
-	IconTable,
+	IconTable
 } from "@tabler/icons-react";
 import { downloadExcelFromTable } from "@/utils/table";
-import {
-	VisualizationConfig,
-	VisualizationItem,
-} from "@packages/shared/schemas";
+import { VisualizationChartType, VisualizationConfig, VisualizationItem } from "@packages/shared/schemas";
 import Highcharts from "highcharts";
 import { isEmpty } from "lodash";
 import { useFullScreenHandle } from "react-full-screen";
@@ -52,7 +49,10 @@ export function useDimensionViewControls({
 
 	const onDownload = () => {
 		const label = `${visualizationConfig.name.toLowerCase()}`;
-		if (showTable) {
+		if (
+			showTable ||
+			visualizationConfig.type === VisualizationChartType.TABLE
+		) {
 			downloadExcelFromTable(tableRef.current!, label);
 			return;
 		} else {
