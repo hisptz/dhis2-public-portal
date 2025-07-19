@@ -10,6 +10,10 @@ const columns: SimpleTableColumn[] = [
 		key: "label",
 	},
 	{
+		label: i18n.t("Section title"),
+		key: "title",
+	},
+	{
 		label: i18n.t("Type"),
 		key: "type",
 	},
