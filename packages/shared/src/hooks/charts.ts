@@ -119,7 +119,6 @@ export function useYearOverYearAnalytics({
 	useEffect(() => {
 		async function fetchYearlyAnalytics() {
 			const yearData = new Map<string, AnalyticsData>();
-			console.log("Fetching analytics for years:", yearsToFetch);
 			for (const yearId of yearsToFetch) {
 				const date = new Date();
 				const period = PeriodUtility.getPeriodById(yearId);
