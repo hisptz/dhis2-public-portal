@@ -86,7 +86,8 @@ function normalizeYear(year: string) {
 	if (years.length > 1) {
 		return years.map((year) => year.start!.year.toString());
 	}
-	return [year];
+
+	return [period.start.year.toString()];
 }
 
 function normalizeYears(years: string[]) {
@@ -149,7 +150,7 @@ export function useYearOverYearAnalytics({
 	useEffect(() => {
 		async function fetchYearlyAnalytics() {
 			const yearData = new Map<string, AnalyticsData>();
-			for (const yearId of yearsToFetch) {
+			for (const yearId of yearsToFetch.reverse()) {
 				const date = new Date();
 				const period = PeriodUtility.getPeriodById(yearId);
 				const year = period.start.year;
