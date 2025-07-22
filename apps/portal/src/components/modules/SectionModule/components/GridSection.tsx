@@ -5,10 +5,7 @@ import { DisplayItemSelector } from "@/components/displayItems/DisplayItemSelect
 
 export function GridSection({ config }: { config: GridLayoutSectionConfig }) {
 	return (
-		<SimpleGrid
-			cols={{ base: 1, sm: 2, md: 4}}
-			spacing="sm"
-		>
+		<SimpleGrid cols={{ base: 1, sm: 2, md: 2, lg: 3, xl: 4 }} spacing="sm">
 			{config.items.map((item) => (
 				<DisplayItemContainer
 					key={`${item.item.id}-container`}
