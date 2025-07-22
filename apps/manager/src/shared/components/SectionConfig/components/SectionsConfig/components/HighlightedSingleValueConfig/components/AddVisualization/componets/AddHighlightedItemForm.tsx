@@ -116,6 +116,7 @@ export function AddHighlightedItemForm({
 							<RHFIconInput
 								label={i18n.t("Icon")}
 								name={"icon"}
+								accept={"image/*"}
 							/>
 						</form>
 					)}

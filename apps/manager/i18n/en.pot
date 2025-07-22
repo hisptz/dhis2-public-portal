@@ -5,8 +5,8 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
-"POT-Creation-Date: 2025-07-18T12:44:52.721Z\n"
-"PO-Revision-Date: 2025-07-18T12:44:52.721Z\n"
+"POT-Creation-Date: 2025-07-15T12:42:29.369Z\n"
+"PO-Revision-Date: 2025-07-15T12:42:29.369Z\n"
 
 msgid "Could not get Appearance configurations"
 msgstr "Could not get Appearance configurations"
@@ -389,6 +389,9 @@ msgstr "Add sub item"
 
 msgid "Path"
 msgstr "Path"
+
+msgid "Invalid icon file. Only SVG icons are supported."
+msgstr "Invalid icon file. Only SVG icons are supported."
 
 msgid "A menu item with this path already exists. Please choose a different one."
 msgstr "A menu item with this path already exists. Please choose a different one."

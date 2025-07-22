@@ -1,3 +1,21 @@
+## [1.2.3](https://github.com/hisptz/dhis2-public-portal/compare/v1.2.2...v1.2.3) (2025-07-15)
+
+
+### Bug Fixes
+
+* **HeaderConfigForm:** update SaveButton to disable based on form dirty state and submission status ([3cca998](https://github.com/hisptz/dhis2-public-portal/commit/3cca998a163f52b640b6e400668a5e726ee9a130))
+* **HighlightedSingleValueContainer:** display periods in the highlighted single value container ([5f0da66](https://github.com/hisptz/dhis2-public-portal/commit/5f0da66ef8e67ac260369e9b1f64c20ef36b8531))
+* **HighlightedSingleValueContainer:** simplify period retrieval logic ([a273cce](https://github.com/hisptz/dhis2-public-portal/commit/a273ccef79e62e88deab72bba55ea4e1a8f5ceca))
+* **HighlightedSingleValueContainer:** update period handling to retrieve names from period filters ([d213a52](https://github.com/hisptz/dhis2-public-portal/commit/d213a5298b116e0cbb9e5ac9ad8a1c0ca6b50c42))
+* **home.cy.ts:** update welcome header text to reflect correct application name ([712b350](https://github.com/hisptz/dhis2-public-portal/commit/712b350788e8bbfd7ea1a2757f6da591404cc904))
+* **manager:** enhance icon input and validation for menu and appearance configs ([c7eaef6](https://github.com/hisptz/dhis2-public-portal/commit/c7eaef64aff359d915ab40b2e365aba77eca9d58))
+* **manager:** update welcome message to reflect FlexiPortal branding ([24de323](https://github.com/hisptz/dhis2-public-portal/commit/24de323e4bb4003b5fa1514e6a27aa6a03d51666))
+* **MenuItemForm:** add SVG file validation for icon uploads ([fb79e40](https://github.com/hisptz/dhis2-public-portal/commit/fb79e40a0c608b2e5a012fa137d8096aea7c4d13))
+* **RHFIconInput:** add file type validation and error handling for icon uploads ([42a4bbc](https://github.com/hisptz/dhis2-public-portal/commit/42a4bbc1ce1613c77b9e5bd70094cf652879ee1c))
+* **RHFIconInput:** remove redundant file type validation and error handling for icon uploads ([e226967](https://github.com/hisptz/dhis2-public-portal/commit/e226967db00b5c653b7845ec50b1ddcedb334636))
+* **SideAppMenu:** adjust height calculation to account for header height ([d7a88dc](https://github.com/hisptz/dhis2-public-portal/commit/d7a88dc40c35b27b1ba6de7bcd89eb68e322a461))
+* **VisSelector:** refactor visualization type handling and improve state management ([f3c2a6b](https://github.com/hisptz/dhis2-public-portal/commit/f3c2a6b43cf421775e89ddfd0f92503a6a00502a))
+
 ## [1.2.2](https://github.com/hisptz/dhis2-public-portal/compare/v1.2.1...v1.2.2) (2025-07-09)
 
 

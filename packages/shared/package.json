@@ -1,6 +1,6 @@
 {
   "name": "@packages/shared",
-  "version": "1.2.2",
+  "version": "1.2.3",
   "description": "Shared package for the health portal",
   "main": "index.js",
   "license": "MIT",

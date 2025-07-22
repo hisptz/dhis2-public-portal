@@ -155,7 +155,7 @@ function SaveButton({ onComplete, configurations, onClose }: props) {
 
 	return (
 		<Button
-			disabled={!form.isValid}
+			disabled={!form.isDirty || form.isSubmitting}
 			loading={form.isSubmitting}
 			onClick={(_, e) => {
 				handleSubmit(onUpdateConfiguration, onError)(e);
