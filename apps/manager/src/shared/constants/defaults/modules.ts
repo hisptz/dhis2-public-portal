@@ -13,6 +13,7 @@ export const defaultHomeModule: AppModule = {
 	config: {
 		sections: [
 			{
+				label: "welcome note",
 				sortOrder: 0,
 				type: SectionType.SINGLE_ITEM,
 				title: "Welcome to DHIS2 FlexiPortal",
