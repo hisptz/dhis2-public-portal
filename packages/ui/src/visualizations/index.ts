@@ -5,3 +5,4 @@ export * from "./RichTextView";
 export * from "./MapVisualizer";
 export * from "./VisualizationTitle";
 export * from "./ChartSelector";
+export * from "./YearOverYearVisualizer";

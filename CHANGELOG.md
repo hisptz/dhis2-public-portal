@@ -1,3 +1,53 @@
+## [1.2.3](https://github.com/hisptz/dhis2-public-portal/compare/v1.2.2...v1.2.3) (2025-07-15)
+
+
+### Bug Fixes
+
+* **HeaderConfigForm:** update SaveButton to disable based on form dirty state and submission status ([3cca998](https://github.com/hisptz/dhis2-public-portal/commit/3cca998a163f52b640b6e400668a5e726ee9a130))
+* **HighlightedSingleValueContainer:** display periods in the highlighted single value container ([5f0da66](https://github.com/hisptz/dhis2-public-portal/commit/5f0da66ef8e67ac260369e9b1f64c20ef36b8531))
+* **HighlightedSingleValueContainer:** simplify period retrieval logic ([a273cce](https://github.com/hisptz/dhis2-public-portal/commit/a273ccef79e62e88deab72bba55ea4e1a8f5ceca))
+* **HighlightedSingleValueContainer:** update period handling to retrieve names from period filters ([d213a52](https://github.com/hisptz/dhis2-public-portal/commit/d213a5298b116e0cbb9e5ac9ad8a1c0ca6b50c42))
+* **home.cy.ts:** update welcome header text to reflect correct application name ([712b350](https://github.com/hisptz/dhis2-public-portal/commit/712b350788e8bbfd7ea1a2757f6da591404cc904))
+* **manager:** enhance icon input and validation for menu and appearance configs ([c7eaef6](https://github.com/hisptz/dhis2-public-portal/commit/c7eaef64aff359d915ab40b2e365aba77eca9d58))
+* **manager:** update welcome message to reflect FlexiPortal branding ([24de323](https://github.com/hisptz/dhis2-public-portal/commit/24de323e4bb4003b5fa1514e6a27aa6a03d51666))
+* **MenuItemForm:** add SVG file validation for icon uploads ([fb79e40](https://github.com/hisptz/dhis2-public-portal/commit/fb79e40a0c608b2e5a012fa137d8096aea7c4d13))
+* **RHFIconInput:** add file type validation and error handling for icon uploads ([42a4bbc](https://github.com/hisptz/dhis2-public-portal/commit/42a4bbc1ce1613c77b9e5bd70094cf652879ee1c))
+* **RHFIconInput:** remove redundant file type validation and error handling for icon uploads ([e226967](https://github.com/hisptz/dhis2-public-portal/commit/e226967db00b5c653b7845ec50b1ddcedb334636))
+* **SideAppMenu:** adjust height calculation to account for header height ([d7a88dc](https://github.com/hisptz/dhis2-public-portal/commit/d7a88dc40c35b27b1ba6de7bcd89eb68e322a461))
+* **VisSelector:** refactor visualization type handling and improve state management ([f3c2a6b](https://github.com/hisptz/dhis2-public-portal/commit/f3c2a6b43cf421775e89ddfd0f92503a6a00502a))
+
+## [1.2.2](https://github.com/hisptz/dhis2-public-portal/compare/v1.2.1...v1.2.2) (2025-07-09)
+
+
+### Bug Fixes
+
+* **charts:** improving analytics for  YearOverYearAnalytics ([7f4c56d](https://github.com/hisptz/dhis2-public-portal/commit/7f4c56d7a55449fe22ae27902df69ed6dfc66827))
+* **hooks:** enhance year-over-year analytics handling ([7ac99ec](https://github.com/hisptz/dhis2-public-portal/commit/7ac99ec22f63ac4bde42253a284b4427bd402f44))
+* integrate React Query for data fetching in Manager and Portal apps ([3788db1](https://github.com/hisptz/dhis2-public-portal/commit/3788db1920adddb5e952a80d2829eefdd43b636d))
+* **visualizations:** add schema and type support for year-over-year visualizations ([79158cc](https://github.com/hisptz/dhis2-public-portal/commit/79158cc1a54791daaac3015504a034fe6b8e6694))
+* **visualizations:** enhance field handling and refactor visualization utils ([bd54eb1](https://github.com/hisptz/dhis2-public-portal/commit/bd54eb1a758b5fba76b6a294a9f8f8df6d486f7a))
+* **visualizations:** enhance YearOverYearDataVisComponent with analytics transformation and chart integration ([c6a8f91](https://github.com/hisptz/dhis2-public-portal/commit/c6a8f91763d2614023c81684ac9806433ee56630))
+* **visualizations:** enhance YearOverYearDataVisComponent with loading state and analytics handling ([5618975](https://github.com/hisptz/dhis2-public-portal/commit/5618975235d2e118cbdeb4056294738f16de332c))
+* **visualizations:** implement YearOverYearVisualizer and enhance YoY analytics ([4e1997c](https://github.com/hisptz/dhis2-public-portal/commit/4e1997cc1177e1a889b897e00ed2f631dbed734f))
+* **visualizations:** integrate legend set configuration support ([6266ec9](https://github.com/hisptz/dhis2-public-portal/commit/6266ec9871675fca17b0177a7ada8ddb3978273a))
+* **visualizations:** integrate legend set configuration support ([07d3064](https://github.com/hisptz/dhis2-public-portal/commit/07d306481ebd7332809e458373b82ff387622ba2))
+* **visualizations:** refactor legend set handling and improve visualization components ([e8800e8](https://github.com/hisptz/dhis2-public-portal/commit/e8800e8fc0d62e85c7221197933c4fe64c776a1d))
+* **visualizations:** refactor legend set handling and improve visualization components ([305a743](https://github.com/hisptz/dhis2-public-portal/commit/305a743fbeb4ef67bf59a6a00ffa9df830338539))
+* **visualizations:** replace YearOverYearChartVis with YearOverYearVisualizer and enhance YoY functionality ([16c40f8](https://github.com/hisptz/dhis2-public-portal/commit/16c40f884876022cff955f0b4bea4100c8069d0c))
+* **visualizations:** simplify legend set handling and update API request fields ([2638fb0](https://github.com/hisptz/dhis2-public-portal/commit/2638fb08d997fb4e78833c31eee68fbb229138cc))
+* **visualizations:** update DataVisualization to support YearOverYearVisualizationConfig ([2f62bbc](https://github.com/hisptz/dhis2-public-portal/commit/2f62bbc54647b94af92fbe12b5eb7c6347a1d2af))
+* **visualizations:** update YearOverYearChartVis to remove axis titles ([80b8ad2](https://github.com/hisptz/dhis2-public-portal/commit/80b8ad2e214c66aa7bb75c67c130f458ee3684a0))
+
+## [1.2.1](https://github.com/hisptz/dhis2-public-portal/compare/v1.2.0...v1.2.1) (2025-07-05)
+
+
+### Bug Fixes
+
+* **visualizations:** enhance field handling and refactor visualization utils ([5a39fa4](https://github.com/hisptz/dhis2-public-portal/commit/5a39fa4b6a72a83ad76707ac66b85cd57f014a62))
+* **visualizations:** integrate legend set configuration support ([544bdc3](https://github.com/hisptz/dhis2-public-portal/commit/544bdc3364bb1133cb2e083525531a27e77bc0e2))
+* **visualizations:** refactor legend set handling and improve visualization components ([2ed9810](https://github.com/hisptz/dhis2-public-portal/commit/2ed9810ea9d2abb6c66221f0b501ce39f38152d0))
+* **visualizations:** simplify legend set handling and update API request fields ([f26dafe](https://github.com/hisptz/dhis2-public-portal/commit/f26dafebb0be84827f7495a8098e5c6d917797fa))
+
 # [1.2.0](https://github.com/hisptz/dhis2-public-portal/compare/v1.1.2...v1.2.0) (2025-07-01)
 
 

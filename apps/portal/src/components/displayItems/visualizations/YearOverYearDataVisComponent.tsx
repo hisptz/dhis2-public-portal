@@ -4,30 +4,29 @@ import { ActionIcon, Loader, Tooltip } from "@mantine/core";
 import { IconArrowsMaximize, IconArrowsMinimize } from "@tabler/icons-react";
 import i18n from "@dhis2/d2-i18n";
 import {
-	VisualizationConfig,
-	VisualizationDisplayItemType,
+	AnalyticsData,
 	VisualizationItem,
+	YearOverYearVisualizationConfig,
 } from "@packages/shared/schemas";
 import { FullScreen } from "react-full-screen";
 
-import { useSearchParams } from "next/navigation";
 import { isEmpty } from "lodash";
 import { CaptionPopover } from "@/components/CaptionPopover";
 import {
 	useContainerSize,
 	useDimensionViewControls,
-	useVisualizationLegendSet,
 	useVisualizationRefs,
 } from "@/hooks/dataVisualization";
 import { useYearOverYearAnalytics } from "@packages/shared/hooks";
 import {
-	ChartSelector,
-	TableVisualizer,
 	VisualizationTitle,
+	YearOverYearVisualizer,
 } from "@packages/ui/visualizations";
 import { ActionMenu } from "./ActionMenu";
 import { CustomOrgUnitModal } from "./CustomOrgUnitModal";
 import { CustomPeriodModal } from "@/components/displayItems/visualizations/CustomPeriodModal";
+
+import React from "react";
 
 export function YearOverYearDataVisComponent({
 	visualizationConfig,
@@ -36,14 +35,14 @@ export function YearOverYearDataVisComponent({
 	disableActions,
 	colors,
 }: {
-	visualizationConfig: VisualizationConfig;
+	visualizationConfig: YearOverYearVisualizationConfig;
 	config: VisualizationItem;
 	showFilter?: boolean;
 	colors: string[];
 	disableActions?: boolean;
 }) {
-	const { type, orgUnitConfig, periodConfig } = config;
-	const { chartRef, tableRef, setSingleValueRef } = useVisualizationRefs();
+	const { orgUnitConfig, periodConfig } = config;
+	const { chartRef, tableRef } = useVisualizationRefs();
 	const {
 		onCloseOrgUnitSelector,
 		showPeriodSelector,
@@ -65,19 +64,81 @@ export function YearOverYearDataVisComponent({
 
 	const {
 		analytics,
-		loading: analyticsLoading,
+		loading,
 		setSelectedPeriods,
 		setSelectedOrgUnits,
 		selectedPeriods,
 		selectedOrgUnits,
-	} = useYearOverYearAnalytics({ visualizationConfig });
+	} = useYearOverYearAnalytics({
+		visualizationConfig:
+			visualizationConfig as YearOverYearVisualizationConfig,
+	});
 
-	const { loading: legendSetLoading, legendSet } =
-		useVisualizationLegendSet(visualizationConfig);
+	function transformToYoYAnalytics(
+		analyticsMap: Map<string, AnalyticsData>,
+	): AnalyticsData {
+		const output: AnalyticsData = {
+			headers: [
+				{ name: "dx", column: "Data", valueType: "TEXT" },
+				{ name: "pe", column: "Period", valueType: "TEXT" },
+				{ name: "value", column: "Value", valueType: "NUMBER" },
+			],
+			metaData: {
+				items: {},
+				dimensions: { dx: [], pe: [], ou: [] },
+			},
+			rows: [],
+		};
+		const valueMap: Map<string, Record<string, number>> = new Map();
+		const allPeriods = new Set<string>();
+		const orgUnitSet = new Set<string>();
+		for (const [yearKey, analytics] of analyticsMap.entries()) {
+			for (const [pe, value] of analytics.rows) {
+				const year = yearKey;
+				if (!valueMap.has(year)) valueMap.set(year, {});
+				valueMap.get(year)![pe] = parseFloat(value);
+				allPeriods.add(pe);
+			}
+			Object.entries(analytics.metaData.items).forEach(([key, item]) => {
+				output.metaData.items[key] ??= item;
+			});
+			analytics.metaData.dimensions.ou?.forEach((ou) =>
+				orgUnitSet.add(ou),
+			);
+		}
+		const sortedPeriods = Array.from(allPeriods).sort();
+		sortedPeriods.forEach((pe) => {
+			if (!output.metaData.items[pe]) {
+				const year = pe.slice(0, 4);
+				const monthNum = parseInt(pe.slice(4, 6), 10) - 1;
+				const monthName = new Date(2000, monthNum).toLocaleString(
+					"en",
+					{ month: "long" },
+				);
+				output.metaData.items[pe] = { name: `${monthName} ${year}` };
+			}
+		});
+		for (const year of valueMap.keys()) {
+			for (const pe of sortedPeriods) {
+				const val = valueMap.get(year)?.[pe];
+				if (val !== undefined) {
+					output.rows.push([year, pe, String(val)]);
+				}
+			}
+			output.metaData.items[year] = { name: year };
+		}
+		output.metaData.dimensions.dx = Array.from(valueMap.keys());
+		output.metaData.dimensions.pe = sortedPeriods;
+		output.metaData.dimensions.ou = Array.from(orgUnitSet);
+		return output;
+	}
 
-	const loading = analyticsLoading || legendSetLoading;
-
-	const searchParams = useSearchParams();
+	const combinedAnalytics = React.useMemo(() => {
+		if (analytics instanceof Map) {
+			return transformToYoYAnalytics(analytics);
+		}
+		return analytics;
+	}, [analytics]);
 
 	return (
 		<>
@@ -123,29 +184,17 @@ export function YearOverYearDataVisComponent({
 						<div className="flex justify-center items-center h-full">
 							<Loader size="md" />{" "}
 						</div>
-					) : analytics ? (
+					) : combinedAnalytics ? (
 						showTable ? (
-							<div className="flex-1 h-full">
-								<TableVisualizer
-									fullScreen={handler.active}
-									setRef={tableRef}
-									analytics={analytics}
-									visualization={visualizationConfig}
-								/>
-							</div>
+							<div className="flex-1 h-full"></div>
 						) : (
 							<div className="flex-1 h-full">
-								{type ===
-									VisualizationDisplayItemType.CHART && (
-									<ChartSelector
-										colors={colors}
-										setRef={chartRef}
-										analytics={analytics}
-										visualization={visualizationConfig}
-										fullScreen={handler.active}
-										tableRef={tableRef}
-									/>
-								)}
+								<YearOverYearVisualizer
+									setRef={chartRef}
+									analytics={analytics}
+									visualization={visualizationConfig}
+									colors={colors}
+								/>
 							</div>
 						)
 					) : (
@@ -159,9 +208,7 @@ export function YearOverYearDataVisComponent({
 						setSelectedOrgUnits([]);
 					}}
 					orgUnitState={
-						!isEmpty(selectedOrgUnits)
-							? selectedOrgUnits
-							: (searchParams.get("ou")?.split(",") ?? [])
+						!isEmpty(selectedOrgUnits) ? selectedOrgUnits : []
 					}
 					onUpdate={(val) => {
 						setSelectedOrgUnits(val ?? []);
@@ -182,9 +229,7 @@ export function YearOverYearDataVisComponent({
 					}}
 					title={visualizationConfig.name}
 					periodState={
-						!isEmpty(selectedPeriods)
-							? selectedPeriods
-							: (searchParams.get("pe")?.split(",") ?? [])
+						!isEmpty(selectedPeriods) ? selectedPeriods : []
 					}
 					onUpdate={(val) => {
 						setSelectedPeriods(val);

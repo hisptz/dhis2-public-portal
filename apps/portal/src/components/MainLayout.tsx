@@ -112,6 +112,9 @@ export function MainLayout({
 				{hasMenu && (
 					<SideAppMenu
 						menuConfig={menuConfig}
+						headerHeight={
+							appearanceConfig.header.style?.containerHeight
+						}
 						isOpen={
 							menuConfig.collapsible
 								? isLargerThanSm

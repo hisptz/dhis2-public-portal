@@ -5,8 +5,8 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
-"POT-Creation-Date: 2025-07-03T09:57:45.747Z\n"
-"PO-Revision-Date: 2025-07-03T09:57:45.748Z\n"
+"POT-Creation-Date: 2025-07-23T07:06:16.040Z\n"
+"PO-Revision-Date: 2025-07-23T07:06:16.040Z\n"
 
 msgid "Could not get Appearance configurations"
 msgstr "Could not get Appearance configurations"
@@ -390,6 +390,9 @@ msgstr "Add sub item"
 msgid "Path"
 msgstr "Path"
 
+msgid "Invalid icon file. Only SVG icons are supported."
+msgstr "Invalid icon file. Only SVG icons are supported."
+
 msgid "A menu item with this path already exists. Please choose a different one."
 msgstr "A menu item with this path already exists. Please choose a different one."
 
@@ -612,21 +615,6 @@ msgstr "Visualization type"
 msgid "All"
 msgstr "All"
 
-msgid "Add slideshow visualization"
-msgstr "Add slideshow visualization"
-
-msgid "{{action}} slideshow visualization"
-msgstr "{{action}} slideshow visualization"
-
-msgid "Edit slideshow visualization"
-msgstr "Edit slideshow visualization"
-
-msgid "Edit"
-msgstr "Edit"
-
-msgid "No slideshow visualization items configured"
-msgstr "No slideshow visualization items configured"
-
 msgid "Add Section"
 msgstr "Add Section"
 
@@ -734,11 +722,11 @@ msgstr "Save group changes"
 msgid "Failed to save visualization"
 msgstr "Failed to save visualization"
 
-msgid "Welcome to the public portal manager!"
-msgstr "Welcome to the public portal manager!"
+msgid "Welcome to the FlexiPortal Manager!"
+msgstr "Welcome to the FlexiPortal Manager!"
 
-msgid "You can use this application to configure your public portal web application"
-msgstr "You can use this application to configure your public portal web application"
+msgid "You can use this application to configure your FlexiPortal web application"
+msgstr "You can use this application to configure your FlexiPortal web application"
 
 msgid "Application colors"
 msgstr "Application colors"
