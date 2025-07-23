@@ -92,6 +92,7 @@ export function AddSectionForm({
 						<SectionIDField />
 						<RHFTextInputField
 							required
+							dataTest={"add-section-label"}
 							name="label"
 							label={i18n.t("Label")}
 						/>
