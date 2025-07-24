@@ -1,0 +1,39 @@
+{
+  "name": "data-service",
+  "version": "1.0.0",
+  "description": "Service to transfer data from source DHIS2 instances to the portal",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "dev": "nodemon src/app.ts",
+    "build": "tsup",
+    "postbuild": "./package.sh"
+  },
+  "dependencies": {
+    "@dhis2/multi-calendar-dates": "^2.1.0",
+    "@health-portal/shared": "*",
+    "async": "^3.2.6",
+    "axios": "^1.8.4",
+    "body-parser": "^2.2.0",
+    "bun": "^1.2.9",
+    "express": "^5.1.0",
+    "figlet": "^1.8.0",
+    "lodash": "^4.17.21",
+    "luxon": "^3.6.1",
+    "uuid": "^11.1.0",
+    "winston": "^3.17.0",
+    "zod": "^3.24.4",
+    "zod-validation-error": "^3.4.0"
+  },
+  "devDependencies": {
+    "@types/async": "^3.2.24",
+    "@types/bun": "^1.2.9",
+    "@types/figlet": "^1.7.0",
+    "@types/luxon": "^3.6.2",
+    "@types/node": "^22.14.0",
+    "bestzip": "^2.2.1",
+    "nodemon": "^3.1.9",
+    "tsup": "^8.4.0",
+    "typescript": "^5.8.3"
+  }
+}
