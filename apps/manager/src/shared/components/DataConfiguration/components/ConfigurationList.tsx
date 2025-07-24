@@ -33,7 +33,7 @@ export function ConfigurationList() {
 	const rows = configurations.map((configuration) => ({
 		...configuration,
 		name: configuration.source.name,
-		status: <RunConfigStatus configId={configuration.id} />,
+	    status: <RunConfigStatus configId={configuration.id} />,
 		actions: (
 			<ButtonStrip>
 				<Tooltip content={i18n.t("Edit configuration")}>

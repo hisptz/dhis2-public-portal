@@ -15,9 +15,7 @@ export const Route = createLazyFileRoute(
 function RouteComponent() {
 	return (
 		<ModuleContainer title={i18n.t("Data service configuration")}>
-			
 				<ConfigurationList />
-	
 		</ModuleContainer>
 
 	);
