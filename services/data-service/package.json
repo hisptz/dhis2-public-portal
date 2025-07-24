@@ -11,7 +11,7 @@
   },
   "dependencies": {
     "@dhis2/multi-calendar-dates": "^2.1.0",
-    "@health-portal/shared": "*",
+    "@packages/shared": "*",
     "async": "^3.2.6",
     "axios": "^1.8.4",
     "body-parser": "^2.2.0",
