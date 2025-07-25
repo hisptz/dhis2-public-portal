@@ -57,14 +57,14 @@ export function ConfigurationList() {
 	}));
 
 	return (
-		<>
+		<div className="flex flex-col gap-8">
 		<div className="flex justify-end"><AddDataSource /> </div>
 		<SimpleTable
 			rows={rows}
 			emptyLabel="There are no configuration present"
 			columns={columns}
 		/>
-		</>
+		</div>
 		
 	);
 }
