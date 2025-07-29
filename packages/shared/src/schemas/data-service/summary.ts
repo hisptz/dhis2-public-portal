@@ -5,7 +5,7 @@ export const dataDownloadSummary = z.object({
 	type: z.literal("download"),
 	periods: z.string().array().optional(),
 	dataItems: z.string().array().optional(),
-	status: z.enum(["SUCCESS", "FAILED", "DONE", "INIT"]),
+	status: z.enum(["SUCCESS", "QUEUED", "FAILED", "DONE", "INIT"]),
 	timestamp: z.string(),
 	count: z.number().optional(),
 	error: z.string().optional(),
@@ -19,7 +19,7 @@ export type DataDownloadSummaryList = z.infer<typeof dataDownloadSummaryList>;
 export const dataUploadSummary = z.object({
 	filename: z.string().optional(),
 	type: z.literal("upload"),
-	status: z.enum(["SUCCESS", "FAILED", "DONE", "INIT"]),
+	status: z.enum(["SUCCESS","QUEUED", "FAILED", "DONE", "INIT"]),
 	timestamp: z.string(),
 	error: z.string().optional(),
 	errorDetails: z.record(z.string(), z.unknown()).optional(),

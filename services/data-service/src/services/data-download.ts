@@ -1,23 +1,14 @@
 import {
 	DataDownloadSummary,
-	DataServiceAttributeValuesDataItemsSource,
 	DataServiceConfig,
 	DataServiceDataSourceItemsConfig,
 	DataServiceRuntimeConfig,
 } from "@packages/shared/schemas";
 import logger from "../logging";
-import { AxiosError, AxiosInstance } from "axios";
-import { compact, head, isEmpty } from "lodash";
-import { asyncify, queue } from "async";
-import {
-	fetchPagedData,
-	processAttributeComboData,
-	processData,
-	saveDataFile,
-} from "@/utils/data";
-import { Dimensions } from "@/schemas/metadata";
+import { AxiosError } from "axios";
+import { compact} from "lodash";
 import { DatastoreNamespaces } from "@packages/shared/constants";
-import { createDownloadClient, dhis2Client } from "@/clients/dhis2";
+import {  dhis2Client } from "@/clients/dhis2";
 import { checkOrCreateFolder } from "@/utils/files";
 import {
 	displayDownloadSummary,
@@ -26,9 +17,11 @@ import {
 	updateSummaryFile,
 } from "@/services/summary";
 import { v4 } from "uuid";
-import { completeUpload, initializeUploadQueue } from "@/services/data-upload";
-import { dataDownloadQueues, dataUploadQueues } from "@/variables/queue";
-import { downloadDataPerConfig } from "@/utils/download";
+import { completeUpload } from "@/services/data-upload";
+import { downloadQueue, pushToDownloadQueue, uploadQueue } from "@/rabbit/publisher";
+import { startUploadWorker } from "@/rabbit/upload.worker";
+import { waitForQueueToDrain } from "@/rabbit/queueMonitor";
+import { getQueueStatus } from "./status";
 
 export async function initializeDataDownload({
 	mainConfigId,
@@ -47,7 +40,6 @@ export async function initializeDataDownload({
 		const response = await dhis2Client.get<DataServiceConfig>(url);
 		logger.info(`Configuration retrieved from server for ${mainConfigId}`);
 		const mainConfig = response.data;
-		const client = createDownloadClient({ config: mainConfig });
 		const configs = compact(
 			dataItemsConfigIds.map((id) => {
 				return mainConfig.itemsConfig.find(
@@ -70,29 +62,23 @@ export async function initializeDataDownload({
 				dataItemsConfigIds: dataItemsConfigIds,
 			},
 		});
-		await initializeDataDownloadQueue({
-			client,
+		await updateSummaryFile({
+			id: v4(),
+			type: "download",
+			status: "INIT",
+			timestamp: new Date().toISOString(),
+			configId: mainConfigId,
+		});
+
+	    await startUploadWorker(mainConfigId);
+
+		await enqueueDownloadTasks({
 			mainConfig,
 			runtimeConfig,
+			configs,
 		});
-		await initializeUploadQueue({
-			configId: mainConfig.id,
-		});
-		for (const periodId of runtimeConfig.periods) {
-			logger.info(`Setting up data download for period ${periodId}...`);
-			for (const config of configs) {
-				checkOrCreateFolder(`outputs/${mainConfigId}`);
-				await downloadDataPerConfig({
-					config,
-					meta: {
-						runtimeConfig,
-						mainConfig,
-						periodId,
-					},
-				});
-			}
-			logger.info(`Done!`);
-		}
+
+
 	} catch (e) {
 		if (e instanceof AxiosError) {
 			logger.error(
@@ -107,163 +93,102 @@ export async function initializeDataDownload({
 	}
 }
 
-async function initializeDataDownloadQueue({
-	client,
-	mainConfig,
-	runtimeConfig,
+export async function waitForQueueToReceiveMessages(
+    queueName: string,
+    {
+        pollInterval = 500,
+        maxWaitTimeMs = 10000,
+    }: { pollInterval?: number; maxWaitTimeMs?: number } = {}
+): Promise<void> {
+    return new Promise((resolve, reject) => {
+        let waited = 0;
+
+        const interval = setInterval(async () => {
+            try {
+               const status = await getQueueStatus(queueName);
+			    const messages = typeof status?.messages === "number" ? status.messages : 0;
+
+                if (messages > 0) {
+                    clearInterval(interval);
+                    resolve();
+                } else {
+                    waited += pollInterval;
+
+                    if (waited >= maxWaitTimeMs) {
+                        clearInterval(interval);
+                        reject(
+                            new Error(
+                                `Timeout: No messages received in queue "${queueName}" after ${maxWaitTimeMs}ms`
+                            )
+                        );
+                    }
+                }
+            } catch (error) {
+                clearInterval(interval);
+                reject(
+                    new Error(
+                        `Error while polling queue "${queueName}": ${(error as Error).message}`
+                    )
+                );
+            }
+        }, pollInterval);
+    });
+}
+
+
+export async function enqueueDownloadTasks({
+    mainConfig,
+    runtimeConfig,
+    configs,
 }: {
-	client: AxiosInstance;
-	mainConfig: DataServiceConfig;
-	runtimeConfig: DataServiceRuntimeConfig;
+    mainConfig: DataServiceConfig;
+    runtimeConfig: DataServiceRuntimeConfig;
+    configs: DataServiceDataSourceItemsConfig[];
 }) {
-	logger.info(`Initializing data download queue for ${mainConfig.id}`);
-	dataDownloadQueues[mainConfig.id] = queue<{
-		dimensions: Dimensions;
-		filters?: Dimensions;
-		config: DataServiceDataSourceItemsConfig;
-	}>(
-		asyncify(
-			async ({
-				dimensions,
-				filters,
-				config,
-			}: {
-				dimensions: Dimensions;
-				filters?: Dimensions;
-				config: DataServiceDataSourceItemsConfig;
-			}) => {
-				try {
-					logger.info(
-						`Downloading data for ${dimensions.pe?.length} periods and ${dimensions.dx?.length} data items`,
-					);
-					const data = await fetchPagedData({
-						dimensions,
-						filters,
-						client,
-						timeout: runtimeConfig.timeout,
-					});
-					logger.info(`Data downloaded`);
-					if (isEmpty(data.dataValues)) {
-						logger.info(
-							`No data found for ${config.id}: ${dimensions.dx}`,
-						);
-						const summary: DataDownloadSummary = {
-							type: "download",
-							id: v4(),
-							status: "SUCCESS",
-							error: "No data found",
-							dataItems: dimensions.dx!,
-							periods: dimensions.pe!,
-							count: data.dataValues.length,
-							timestamp: new Date().toISOString(),
-						};
-						await updateSummaryFile({
-							...summary,
-							configId: mainConfig.id,
-						});
-						return;
-					}
-					logger.info(
-						`Processing data for ${dimensions.id}: ${dimensions.dx}`,
-					);
-					const processedData =
-						config.type === "ATTRIBUTE_VALUES"
-							? await processAttributeComboData({
-									data,
-									dataItemsConfig: config,
-									categoryOptionId: head(
-										filters![
-											(
-												config as DataServiceAttributeValuesDataItemsSource
-											).attributeId
-										],
-									) as string,
-								})
-							: await processData({
-									data,
-									dataItems: config.dataItems,
-								});
+    const configId = mainConfig.id;
+    const queueName = downloadQueue + configId;
 
-					logger.info(
-						`${processedData.dataValues.length} data values processed for ${JSON.stringify(dimensions)}`,
-					);
-					const status = await saveDataFile({
-						data: processedData.dataValues,
-						config: mainConfig,
-						itemsConfig: config,
-					});
-					logger.info(
-						`Data saved for ${config.id}: ${dimensions.dx}`,
-					);
-					const summary: DataDownloadSummary = {
-						type: "download",
-						id: v4(),
-						status: "SUCCESS",
-						dataItems: dimensions.dx!,
-						periods: dimensions.pe!,
-						count: data.dataValues.length,
-						timestamp: new Date().toISOString(),
-					};
-					await updateSummaryFile({
-						...summary,
-						configId: mainConfig.id,
-					});
-					return status;
-				} catch (e) {
-					if (e instanceof AxiosError) {
-						const summary: DataDownloadSummary = {
-							type: "download",
-							id: v4(),
-							status: "FAILED",
-							error: e.message,
-							errorDetails: e.response?.data,
-							dataItems: dimensions.dx!,
-							periods: dimensions.pe!,
-							timestamp: new Date().toISOString(),
-						};
-						await updateSummaryFile({
-							...summary,
-							configId: mainConfig.id,
-						});
-					}
-					if (e instanceof Error) {
-						logger.error(`Error downloading data: ${e.message}`);
-						throw e;
-					}
-				}
-			},
-		),
-	);
-	const summary: DataDownloadSummary = {
-		id: v4(),
-		type: "download",
-		status: "INIT",
-		timestamp: new Date().toISOString(),
-	};
-	await updateSummaryFile({
-		...summary,
-		configId: mainConfig.id,
-	});
+    checkOrCreateFolder(`outputs/${configId}`);
 
-	dataDownloadQueues[mainConfig.id].drain().then(async () => {
-		const summary: DataDownloadSummary = {
-			id: v4(),
-			type: "download",
-			status: "DONE",
-			timestamp: new Date().toISOString(),
-		};
-		await updateSummaryFile({
-			...summary,
-			configId: mainConfig.id,
-		});
-		await displayDownloadSummary(mainConfig.id);
-		const configId = mainConfig.id;
-		if (dataUploadQueues[configId].idle()) {
-			await completeUpload(configId);
-		} else {
-			dataUploadQueues[configId].drain().then(async () => {
-				await completeUpload(configId);
-			});
-		}
-	});
+    const pushPromises: Promise<void>[] = [];
+
+    for (const periodId of runtimeConfig.periods) {
+        for (const config of configs) {
+            const message = {
+                mainConfigId: configId,
+                mainConfig,
+                periodId,
+                config,
+                runtimeConfig,
+            };
+            pushPromises.push(pushToDownloadQueue(message));
+        }
+    }
+
+    await Promise.all(pushPromises);
+
+	await waitForQueueToReceiveMessages(queueName);
+
+    await waitForQueueToDrain({ queueName });
+
+    const summary: DataDownloadSummary = {
+        id: v4(),
+        type: "download",
+        status: "DONE",
+        timestamp: new Date().toISOString(),
+    };
+
+    await updateSummaryFile({
+        ...summary,
+        configId,
+    });
+
+    await displayDownloadSummary(configId);
+
+    const uploadQueueName = uploadQueue + configId;
+
+	await waitForQueueToReceiveMessages(uploadQueueName);
+    await waitForQueueToDrain({ queueName: uploadQueueName });
+
+    await completeUpload(configId);
 }

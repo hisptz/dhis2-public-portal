@@ -44,7 +44,7 @@ export async function initializeUploadQueue({
 	});
 }
 
-async function uploadDataFromFile({
+export async function uploadDataFromFile({
 	filename,
 	configId,
 }: {

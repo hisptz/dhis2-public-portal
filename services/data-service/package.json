@@ -12,6 +12,7 @@
   "dependencies": {
     "@dhis2/multi-calendar-dates": "^2.1.0",
     "@packages/shared": "*",
+    "amqplib": "^0.10.8",
     "async": "^3.2.6",
     "axios": "^1.8.4",
     "body-parser": "^2.2.0",
@@ -26,6 +27,7 @@
     "zod-validation-error": "^3.4.0"
   },
   "devDependencies": {
+    "@types/amqplib": "^0.10.7",
     "@types/async": "^3.2.24",
     "@types/bun": "^1.2.9",
     "@types/figlet": "^1.7.0",
