@@ -1,23 +1,29 @@
 import { useDataEngine } from "@dhis2/app-runtime";
 import {
-	DataDownloadSummary,
 	DataServiceRunStatus,
-	DataUploadSummary,
 } from "@packages/shared/schemas";
 import { useQuery } from "@tanstack/react-query";
-import { last } from "lodash";
 import { useMemo } from "react";
 
 const statusQuery: any = {
 	download: {
 		resource: `routes/data-service/run/services/data-download`,
-		id: ({ id }: { id: string }) => `${id}/summary`,
+		id: ({ id }: { id: string }) => `${id}/status`,
 	},
 	upload: {
 		resource: `routes/data-service/run/services/data-upload`,
-		id: ({ id }: { id: string }) => `${id}/summary`,
+		id: ({ id }: { id: string }) => `${id}/status`,
 	},
 };
+
+export interface QueueStatusResult {
+	queue: string;
+	messages: number;
+	messages_ready: number;
+	messages_unacknowledged: number;
+	status: DataServiceRunStatus;
+}
+
 
 export function useDataConfigRunStatus(id: string) {
 	const engine = useDataEngine();
@@ -28,12 +34,13 @@ export function useDataConfigRunStatus(id: string) {
 				id,
 			},
 		});
-		return response as {
-			download: { summaries: DataDownloadSummary[] };
-			upload: { summaries: DataUploadSummary[] };
+		return response as unknown as {
+			download: QueueStatusResult;
+			upload: QueueStatusResult;
 		};
 	}
 
+	
 	const { isLoading, data, error, isError, refetch, isRefetching } = useQuery(
 		{
 			queryFn: fetchStatus,
@@ -44,15 +51,13 @@ export function useDataConfigRunStatus(id: string) {
 					return 5000;
 				}
 
-				const lastDownloadStatus = last(
-					data.download.summaries,
-				)?.status;
-				const lastUploadStatus = last(data.upload.summaries)?.status;
+				const lastDownloadStatus = data.download.status;
+				const lastUploadStatus = data.upload.status;
 
 				if (
 					!(
-						lastDownloadStatus == "DONE" &&
-						lastUploadStatus == "DONE"
+						lastDownloadStatus == DataServiceRunStatus.COMPLETED &&
+						lastUploadStatus == DataServiceRunStatus.COMPLETED
 					)
 				) {
 					return 5000;
@@ -67,19 +72,23 @@ export function useDataConfigRunStatus(id: string) {
 		}
 		const { download, upload } = data;
 
-		const lastDownloadStatus = last(download.summaries)?.status;
-		const lastUploadStatus = last(upload.summaries)?.status;
+		const lastDownloadStatus = download.status;
+		const lastUploadStatus = upload.status;
 
 		if (!lastDownloadStatus || !lastUploadStatus) {
 			return DataServiceRunStatus.NOT_STARTED;
 		}
 
-		if (lastDownloadStatus != "DONE" || lastUploadStatus != "DONE") {
+		if (lastDownloadStatus == DataServiceRunStatus.RUNNING || lastUploadStatus == DataServiceRunStatus.RUNNING) {
 			return DataServiceRunStatus.RUNNING;
 		}
 
-		if (lastDownloadStatus == "DONE" && lastUploadStatus == "DONE") {
-			return DataServiceRunStatus.COMPLETED;
+		if (lastDownloadStatus == DataServiceRunStatus.QUEUED || lastUploadStatus == DataServiceRunStatus.QUEUED) {
+			return DataServiceRunStatus.QUEUED;
+		}
+
+		if (lastDownloadStatus == DataServiceRunStatus.IDLE && lastUploadStatus == DataServiceRunStatus.IDLE) {
+			return DataServiceRunStatus.IDLE;
 		}
 
 		return DataServiceRunStatus.UNKNOWN;
