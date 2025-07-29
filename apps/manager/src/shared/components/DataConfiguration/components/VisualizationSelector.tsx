@@ -62,7 +62,7 @@ export function VisualizationSelector({
 		const totalPages = parseInt(data?.vis?.pager?.pageCount);
 		if (page !== totalPages) {
 			refetch({
-				page: parseInt(data?.vis?.pager?.page) + 1,
+				page: parseInt(data?.vis?.pager?.page??"0") + 1,
 			});
 		}
 	}, [refetch, data]);
