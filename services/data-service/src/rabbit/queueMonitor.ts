@@ -14,7 +14,7 @@ export const waitForQueueToDrain = async ({
   queueName,
   intervalMs = 5000,
   logProgress = true,
-  maxStuckChecks = 5,
+  maxStuckChecks = 10,
 }: QueueMonitorOptions & { maxStuckChecks?: number }): Promise<void> => {
   const host = process.env.RABBITMQ_HOST;
   const username = process.env.RABBITMQ_USER;
@@ -60,6 +60,16 @@ export const waitForQueueToDrain = async ({
         if (stuckCounter >= maxStuckChecks) {
           const reason = `Queue "${queueName}" appears stuck after ${maxStuckChecks} checks. Deleting queue...`;
           logger.warn(reason);
+
+           // Delete the queue
+          try {
+            await axios.delete(queueUrl, { auth });
+            logger.info(`Queue "${queueName}" deleted successfully.`);
+          } catch (deleteError: any) {
+            logger.error(
+              `Failed to delete stuck queue "${queueName}": ${deleteError.message}`,
+            );
+          }
           break;
         }
       } else {
