@@ -10,7 +10,6 @@ import { v4 } from "uuid";
 import { Dimensions } from "@/schemas/metadata";
 import { isEmpty } from "lodash";
 import { categoriesMeta } from "@/variables/meta";
-import { dataUploadQueues } from "@/variables/queue";
 
 export interface DataResponse {
 	dataValues: Array<{
@@ -177,9 +176,6 @@ export async function saveDataFile({
 		{ createPath: true },
 	);
 	logger.info(`Data saved to ${fileLocation}`);
-	logger.info(`Queuing file`);
-	dataUploadQueues[config.id].push({
-		filename: fileLocation,
-	});
+	logger.info(`Queuing file for upload: ${fileLocation}`);
 	return fileLocation;
 }

@@ -10,6 +10,7 @@ import { DataDownloadSummary, DataServiceAttributeValuesDataItemsSource, DataSer
 import { chunk, head, isEmpty } from 'lodash';
 import { AxiosError } from 'axios';
 import dotenv from "dotenv";
+import { getDimensions } from '@/utils/dimensions';
 
 dotenv.config();
 
@@ -34,6 +35,13 @@ export async function startDownloadWorker(configId: string) {
             config,
             runtimeConfig
         } = job;
+
+        if (!mainConfigId || !periodId || !config || !runtimeConfig) {
+            logger.warn("Invalid job received", job);
+            channel.ack(msg); 
+            return;
+        }
+
         try {
             const url = `dataStore/${DatastoreNamespaces.DATA_SERVICE_CONFIG}/${mainConfigId}`;
             const response = await dhis2Client.get<DataServiceConfig>(url);
@@ -42,28 +50,27 @@ export async function startDownloadWorker(configId: string) {
             logger.info(`Processing job for config: ${mainConfigForClient.id}, period: ${periodId}, config: ${config.id}`);
 
 
-            const allDimensions: any = {
-                dx: config.dataItems.map((i: any) => i.id),
-                pe: [periodId],
-                ou: runtimeConfig.orgUnits,
-            };
+            const baseDimensions: any = getDimensions({
+                runtimeConfig,
+                mappingConfig: config,
+                periodId,
+            });
 
             const heavyDimension = runtimeConfig.paginateByData
                 ? "dx"
-                : Object.keys(allDimensions).reduce((acc, key) =>
-                    (allDimensions[acc]?.length || 0) > (allDimensions[key]?.length || 0)
+                : Object.keys(baseDimensions).reduce((acc, key) =>
+                    (baseDimensions[acc]?.length || 0) > (baseDimensions[key]?.length || 0)
                         ? acc
                         : key
                 );
 
             const pageSize = runtimeConfig.pageSize ?? 50;
 
-            // Only split parent jobs
-            if (!job.overrideDimensions && allDimensions[heavyDimension].length > pageSize) {
-                const chunks = chunk(allDimensions[heavyDimension], pageSize);
+            if (!job.overrideDimensions && baseDimensions[heavyDimension].length > pageSize) {
+                const chunks = chunk(baseDimensions[heavyDimension], pageSize);
                 for (const part of chunks) {
                     const paginatedDimensions = {
-                        ...allDimensions,
+                        ...baseDimensions,
                         [heavyDimension]: part,
                     };
                     await pushToDownloadQueue({
@@ -75,16 +82,12 @@ export async function startDownloadWorker(configId: string) {
                         overrideDimensions: paginatedDimensions,
                     });
                 }
-
-                logger.info(
-                    `Parent job split into ${chunks.length} sub-jobs for ${heavyDimension}`
-                );
-
-                channel.ack(msg); // Done with parent job
+                channel.ack(msg);
                 return;
             }
 
-            const dimensions = job.overrideDimensions || allDimensions;
+            const dimensions = job.overrideDimensions || baseDimensions;
+
 
             const data = await fetchPagedData({
                 dimensions,

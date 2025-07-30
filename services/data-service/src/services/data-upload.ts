@@ -1,10 +1,8 @@
 import logger from "@/logging";
-import { asyncify, queue } from "async";
 import { dhis2Client } from "@/clients/dhis2";
 import { DataUploadSummary } from "@packages/shared/schemas";
 import { displayUploadSummary, updateSummaryFile } from "@/services/summary";
 import { AxiosError } from "axios";
-import { dataUploadQueues } from "@/variables/queue";
 
 export async function completeUpload(configId: string) {
 	const summary: DataUploadSummary = {
@@ -19,30 +17,6 @@ export async function completeUpload(configId: string) {
 	await displayUploadSummary(configId);
 }
 
-export async function initializeUploadQueue({
-	configId,
-}: {
-	configId: string;
-}) {
-	logger.info(`Initializing upload queue for ${configId}`);
-	dataUploadQueues[configId] = queue(
-		asyncify(async ({ filename }: { filename: string }) =>
-			uploadDataFromFile({
-				filename,
-				configId,
-			}),
-		),
-	);
-	const summary: DataUploadSummary = {
-		type: "upload",
-		status: "INIT",
-		timestamp: new Date().toISOString(),
-	};
-	await updateSummaryFile({
-		...summary,
-		configId,
-	});
-}
 
 export async function uploadDataFromFile({
 	filename,

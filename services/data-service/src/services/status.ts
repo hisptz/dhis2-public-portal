@@ -1,4 +1,4 @@
-import { dataDownloadQueues, dataUploadQueues } from "@/variables/queue";
+import { dataDownloadQueues } from "@/variables/queue";
 import { get } from "lodash";
 import axios from "axios";
 import { DataServiceRunStatus } from "@packages/shared/schemas";
@@ -17,29 +17,6 @@ export function getDownloadStatus(configId: string) {
 		};
 	}
 	if (downloadQueue.running() > 0) {
-		return {
-			status: DataServiceRunStatus.RUNNING,
-		};
-	}
-
-	return {
-		status: DataServiceRunStatus.UNKNOWN,
-	};
-}
-
-export function getUploadStatus(configId: string) {
-	const uploadQueue = get(dataUploadQueues, configId);
-	if (!uploadQueue) {
-		return {
-			status: DataServiceRunStatus.NOT_STARTED,
-		};
-	}
-	if (uploadQueue.idle()) {
-		return {
-			status: DataServiceRunStatus.IDLE,
-		};
-	}
-	if (uploadQueue.running() > 0) {
 		return {
 			status: DataServiceRunStatus.RUNNING,
 		};
