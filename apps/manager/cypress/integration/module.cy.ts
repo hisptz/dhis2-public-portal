@@ -355,7 +355,7 @@ describe("Modules Page", () => {
 
 		sectionTypes.forEach(({ label, value }, index) => {
 			cy.contains("button", "Add Section").click();
-			cy.get('input[name="title"]').type(label + " Test Section");
+			cy.get('[data-test="add-section-label"]').type(label + " Test Section");
 			cy.get('[data-test="section-display-select"]').click();
 			cy.get(`[data-value="${value}"]`).click();
 			cy.get('[data-test="add-section-button"]').click();
@@ -439,7 +439,7 @@ describe("Modules Page", () => {
 
 		cy.get('input[value="header"]').click();
 		cy.contains("button", "Add Section").click();
-		cy.get('input[name="title"]').type("Single Item Test Section");
+		cy.get('[data-test="add-section-label"]').type("Single Item Test Section");
 		cy.get('[data-test="section-display-select"]').click();
 		cy.get(`[data-value="SINGLE_ITEM"]`).click();
 		cy.get('[data-test="add-section-button"]').click();

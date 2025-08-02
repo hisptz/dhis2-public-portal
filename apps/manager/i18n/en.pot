@@ -5,8 +5,8 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
-"POT-Creation-Date: 2025-07-02T09:57:54.074Z\n"
-"PO-Revision-Date: 2025-07-02T09:57:54.074Z\n"
+"POT-Creation-Date: 2025-08-02T09:42:57.941Z\n"
+"PO-Revision-Date: 2025-08-02T09:42:57.941Z\n"
 
 msgid "Could not get Appearance configurations"
 msgstr "Could not get Appearance configurations"
@@ -221,24 +221,6 @@ msgstr "Could not create document {{ errorMessage }}"
 msgid "Could not delete file {{ errorMessage }}"
 msgstr "Could not delete file {{ errorMessage }}"
 
-msgid "Sort document groups"
-msgstr "Sort document groups"
-
-msgid "Confirm exit"
-msgstr "Confirm exit"
-
-msgid "You have unsaved changes to the sort order. Are you sure you want to close?"
-msgstr "You have unsaved changes to the sort order. Are you sure you want to close?"
-
-msgid "Sort Menu Items"
-msgstr "Sort Menu Items"
-
-msgid "No items to sort."
-msgstr "No items to sort."
-
-msgid "Save order"
-msgstr "Save order"
-
 msgid "Remove"
 msgstr "Remove"
 
@@ -263,9 +245,6 @@ msgstr "Segmented"
 
 msgid "DropDown"
 msgstr "DropDown"
-
-msgid "Sort document items"
-msgstr "Sort document items"
 
 msgid "Something went wrong"
 msgstr "Something went wrong"
@@ -411,6 +390,9 @@ msgstr "Add sub item"
 msgid "Path"
 msgstr "Path"
 
+msgid "Invalid icon file. Only SVG icons are supported."
+msgstr "Invalid icon file. Only SVG icons are supported."
+
 msgid "A menu item with this path already exists. Please choose a different one."
 msgstr "A menu item with this path already exists. Please choose a different one."
 
@@ -419,6 +401,9 @@ msgstr "A menu item with this module ID already exists."
 
 msgid "Create"
 msgstr "Create"
+
+msgid "Confirm exit"
+msgstr "Confirm exit"
 
 msgid "Are you sure you want to close this form?. All changes will be lost"
 msgstr "Are you sure you want to close this form?. All changes will be lost"
@@ -473,6 +458,18 @@ msgstr "Reset"
 
 msgid "Sort menu items"
 msgstr "Sort menu items"
+
+msgid "You have unsaved changes to the sort order. Are you sure you want to close?"
+msgstr "You have unsaved changes to the sort order. Are you sure you want to close?"
+
+msgid "Sort Menu Items"
+msgstr "Sort Menu Items"
+
+msgid "No items to sort."
+msgstr "No items to sort."
+
+msgid "Save order"
+msgstr "Save order"
 
 msgid "Create a new module"
 msgstr "Create a new module"
@@ -648,6 +645,9 @@ msgstr "Horizontal"
 msgid "Sections"
 msgstr "Sections"
 
+msgid "Section title"
+msgstr "Section title"
+
 msgid "Content"
 msgstr "Content"
 
@@ -725,11 +725,11 @@ msgstr "Save group changes"
 msgid "Failed to save visualization"
 msgstr "Failed to save visualization"
 
-msgid "Welcome to the public portal manager!"
-msgstr "Welcome to the public portal manager!"
+msgid "Welcome to the FlexiPortal Manager!"
+msgstr "Welcome to the FlexiPortal Manager!"
 
-msgid "You can use this application to configure your public portal web application"
-msgstr "You can use this application to configure your public portal web application"
+msgid "You can use this application to configure your FlexiPortal web application"
+msgstr "You can use this application to configure your FlexiPortal web application"
 
 msgid "Application colors"
 msgstr "Application colors"
