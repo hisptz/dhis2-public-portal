@@ -55,7 +55,8 @@ export function YearOverYearVisualizer({
 			.map((value) => value.metaData?.dimensions?.pe ?? [])
 			.flat();
 		return uniq(allCategories).map(
-			(category) => PeriodUtility.getPeriodById(category).name,
+			(category) =>
+				PeriodUtility.getPeriodById(category).name.replace(/\d{4}/, ""), //A hack to remove years from periods.
 		);
 	}, [analytics]);
 
