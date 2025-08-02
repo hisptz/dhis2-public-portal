@@ -125,6 +125,10 @@ export function AppColorConfigForm({
 							name="background"
 							label={i18n.t("Background color")}
 						/>
+						<ColorPicker
+							name="titlesColor"
+							label={i18n.t("Titles color")}
+						/>
 						<MultiColorPicker
 							label={i18n.t("Chart colors")}
 							name="chartColors"
