@@ -20,7 +20,8 @@ export enum SectionDisplay {
 export const sectionType = z.nativeEnum(SectionType);
 export const baseSectionSchema = z.object({
 	id: z.string(),
-	title: z.string(),
+	label: z.string(),
+	title: z.string().optional(),
 	sortOrder: z.number(),
 	type: sectionType,
 });
