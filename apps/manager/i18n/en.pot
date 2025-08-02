@@ -5,8 +5,8 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
-"POT-Creation-Date: 2025-07-23T07:06:16.040Z\n"
-"PO-Revision-Date: 2025-07-23T07:06:16.040Z\n"
+"POT-Creation-Date: 2025-08-02T09:42:57.941Z\n"
+"PO-Revision-Date: 2025-08-02T09:42:57.941Z\n"
 
 msgid "Could not get Appearance configurations"
 msgstr "Could not get Appearance configurations"
@@ -644,6 +644,9 @@ msgstr "Horizontal"
 
 msgid "Sections"
 msgstr "Sections"
+
+msgid "Section title"
+msgstr "Section title"
 
 msgid "Content"
 msgstr "Content"
