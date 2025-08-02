@@ -7,8 +7,9 @@ import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useDataQuery } from "@dhis2/app-runtime";
 import { getVisualizationDimensions, getVisualizationFilters } from "../utils";
-import { PeriodUtility } from "@hisptz/dhis2-utils";
+import { PeriodTypeCategory, PeriodUtility } from "@hisptz/dhis2-utils";
 import { snakeCase } from "lodash";
+import { DateTime, Interval } from "luxon";
 
 const analyticsQuery = {
 	analytics: {
@@ -71,6 +72,28 @@ export function useAnalytics({
 	};
 }
 
+function normalizeYear(year: string) {
+	const periodCategory = PeriodUtility.getPeriodCategoryFromPeriodId(year);
+	if (periodCategory === PeriodTypeCategory.FIXED) {
+		return [year];
+	}
+	const period = PeriodUtility.getPeriodById(year);
+	const interval = Interval.fromDateTimes(
+		period.start,
+		DateTime.now().minus({ year: 1 }),
+	);
+	const years = interval.splitBy({ year: 1 });
+	if (years.length > 1) {
+		return years.map((year) => year.start!.year.toString());
+	}
+
+	return [period.start.year.toString()];
+}
+
+function normalizeYears(years: string[]) {
+	return years.flatMap((year) => normalizeYear(year));
+}
+
 export function useYearOverYearAnalytics({
 	visualizationConfig,
 }: {
@@ -98,10 +121,18 @@ export function useYearOverYearAnalytics({
 	const getYearsFromPeriods = (periods: string[]) =>
 		Array.from(new Set(periods.map((pe) => pe.slice(0, 4))));
 
-	const yearsToFetch =
-		selectedPeriods.length > 0
-			? getYearsFromPeriods(selectedPeriods)
+	const selectedYears = selectedPeriods.filter(
+		(periodId) =>
+			PeriodUtility.getPeriodById(periodId).type.rank === 8 ||
+			periodId.includes("YEAR"),
+	);
+
+	const years =
+		selectedYears.length > 0
+			? selectedYears
 			: visualizationConfig.yearlySeries || [];
+
+	const yearsToFetch = normalizeYears(years);
 
 	const orgUnitFilter = (visualizationConfig.filters || []).find(
 		(filter: any) => filter.dimension === "ou",
@@ -119,8 +150,7 @@ export function useYearOverYearAnalytics({
 	useEffect(() => {
 		async function fetchYearlyAnalytics() {
 			const yearData = new Map<string, AnalyticsData>();
-			console.log("Fetching analytics for years:", yearsToFetch);
-			for (const yearId of yearsToFetch) {
+			for (const yearId of yearsToFetch.reverse()) {
 				const date = new Date();
 				const period = PeriodUtility.getPeriodById(yearId);
 				const year = period.start.year;
@@ -151,7 +181,7 @@ export function useYearOverYearAnalytics({
 		}
 
 		fetchYearlyAnalytics();
-	}, [selectedOrgUnits, selectedPeriods, visualizationConfig, yearsToFetch]);
+	}, [selectedOrgUnits, selectedPeriods, visualizationConfig, years]);
 
 	return {
 		analytics: data,

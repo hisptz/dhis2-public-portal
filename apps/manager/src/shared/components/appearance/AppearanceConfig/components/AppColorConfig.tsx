@@ -16,7 +16,7 @@ export function AppColorConfig({ config, refetchConfig }: Props) {
 	const [showAppColor, setShowAppColor] = useState(false);
 
 	const { colors } = config;
-	const { primary, chartColors, background } = colors;
+	const { primary, chartColors, background, titlesColor } = colors;
 
 	return (
 		<>
@@ -28,6 +28,9 @@ export function AppColorConfig({ config, refetchConfig }: Props) {
 					</ConfigurationDetails>
 					<ConfigurationDetails title={"Background color"}>
 						<ConfigurationColor colorCode={background} />
+					</ConfigurationDetails>
+					<ConfigurationDetails title={"Titles color"}>
+						<ConfigurationColor colorCode={titlesColor} />
 					</ConfigurationDetails>
 					{chartColors && (
 						<ConfigurationDetails title={"Chart colors"}>

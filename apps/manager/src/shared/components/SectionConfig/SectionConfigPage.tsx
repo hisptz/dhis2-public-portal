@@ -14,8 +14,8 @@ function SectionPageHeader() {
 	const { sectionIndex } = useParams({
 		from: "/modules/_provider/$moduleId/_formProvider/edit/section/$sectionIndex/",
 	});
-	const label = useWatch<AppModule, `config.sections.${number}.title`>({
-		name: `config.sections.${sectionIndex}.title`,
+	const label = useWatch<AppModule, `config.sections.${number}.label`>({
+		name: `config.sections.${sectionIndex}.label`,
 	});
 
 	return (

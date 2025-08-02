@@ -1,13 +1,9 @@
 import { describe, expect, it } from "vitest";
-import axios from "axios";
 import {
 	analyticsDimensionSchema,
 	VisualizationChartType,
-	VisualizationConfig,
-	visualizationFields,
 	visualizationSchema,
 } from "./visualization";
-import { config } from "dotenv";
 import {
 	getChartLayout,
 	getDataItems,
@@ -16,24 +12,10 @@ import {
 	getPeriods,
 } from "../utils";
 import { PeriodUtility } from "@hisptz/dhis2-utils";
+import visualizationData from "./visualization.test.json";
 
-config();
-
-const dhis2Client = axios.create({
-	baseURL: process.env.VITE_DHIS2_BASE_URL,
-	headers: {
-		Authorization: `ApiToken ${process.env.VITE_DHIS2_BASE_PAT_TOKEN}`,
-	},
-});
-const response = await dhis2Client.get<{
-	visualizations: Array<VisualizationConfig>;
-}>("api/visualizations", {
-	params: {
-		fields: visualizationFields.join(","),
-		paging: false,
-	},
-});
-const visualizations = response.data?.visualizations;
+const visualizations: (typeof visualizationData)["visualizations"] =
+	visualizationData.visualizations;
 
 describe("visualization schema", async () => {
 	visualizations.forEach((visualization) => {
@@ -47,6 +29,7 @@ describe("visualization schema", async () => {
 describe("get layout function", async () => {
 	visualizations.forEach((visualization) => {
 		it(`Passes the get layout function ${visualization.name}<${visualization.type}>`, () => {
+			// @ts-ignore
 			const layout = getLayout(visualization);
 			Object.values(layout).forEach((value) => {
 				value.forEach((item) => {
@@ -62,6 +45,7 @@ describe("get chart layout function", async () => {
 	visualizations.forEach((visualization) => {
 		if (visualization.type !== VisualizationChartType.TABLE) {
 			it(`Passes the get chart layout function for chart visualization ${visualization.name}<${visualization.type}>`, () => {
+				// @ts-ignore
 				const layout = getChartLayout(visualization);
 				Object.values(layout).forEach((value) => {
 					value.forEach((item) => {
@@ -78,6 +62,7 @@ describe("get data items function", async () => {
 	visualizations.forEach((visualization) => {
 		it(`getDataItems returns at least one data item for visualization ${visualization.name}<${visualization.type}>`, () => {
 			try {
+				// @ts-ignore
 				const dataItems = getDataItems(visualization);
 				// expect(dataItems.length).equal(
 				// 	visualization.dataDimensionItems.length,
@@ -91,6 +76,7 @@ describe("get data items function", async () => {
 describe("get periods function", async () => {
 	visualizations.forEach((visualization) => {
 		it(`getPeriod returns a valid period for visualization ${visualization.name}<${visualization.type}>`, () => {
+			// @ts-ignore
 			const periods = getPeriods(visualization);
 			periods.forEach((period) => {
 				expect(() =>
@@ -103,6 +89,7 @@ describe("get periods function", async () => {
 describe("get org units function", async () => {
 	visualizations.forEach((visualization) => {
 		it(`getOrgUnits returns a valid orgUnits for visualization ${visualization.name}<${visualization.type}>`, () => {
+			// @ts-ignore
 			const orgUnits = getOrgUnits(visualization);
 			orgUnits.forEach((orgUnit) => {
 				expect(orgUnit).toMatch(

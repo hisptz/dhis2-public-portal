@@ -9,7 +9,7 @@ import {
 	IconMapPin,
 	IconMaximize,
 	IconMinimize,
-	IconTable,
+	IconTable
 } from "@tabler/icons-react";
 import { FullScreen, useFullScreenHandle } from "react-full-screen";
 import { OrgUnitSelection } from "@hisptz/dhis2-utils";
@@ -20,15 +20,14 @@ import { CustomOrgUnitModal } from "./CustomOrgUnitModal";
 import { CustomPeriodModal } from "./CustomPeriodModal";
 import { useBoolean, useResizeObserver } from "usehooks-ts";
 import { MapTableComponent } from "@/components/displayItems/visualizations/MapTableComponent";
-import {
-	ActionMenu,
-	ActionMenuGroup,
-} from "@/components/displayItems/visualizations/ActionMenu";
+import { ActionMenu, ActionMenuGroup } from "@/components/displayItems/visualizations/ActionMenu";
 import { downloadExcelFromTable } from "@/utils/table";
 import { CaptionPopover } from "@/components/CaptionPopover";
 import { MapConfig, VisualizationItem } from "@packages/shared/schemas";
 import { VisualizationTitle } from "@/components/displayItems/visualizations/VisualizationTitle";
-import { MapVisualizer } from "@packages/ui/visualizations";
+import { getOrgUnitSelectionFromIds, MapVisualizer } from "@packages/ui/visualizations";
+import { useSearchParams } from "next/navigation";
+import { defaultTo, isEmpty } from "lodash";
 
 export function MapVisComponent({
 	mapConfig,
@@ -41,6 +40,7 @@ export function MapVisComponent({
 	showFilter?: boolean;
 	disableActions?: boolean;
 }) {
+	const searchParams = useSearchParams();
 	const { orgUnitConfig, periodConfig } = config;
 	const { value: showTable, toggle: toggleShowTable } = useBoolean(false);
 	const handler = useFullScreenHandle();
@@ -131,7 +131,7 @@ export function MapVisComponent({
 		() => (showTable ? i18n.t("Map") : i18n.t("Table")),
 		[showTable],
 	);
-	
+
 	const actionMenuGroups: ActionMenuGroup[] = useMemo(() => {
 		const menus: ActionMenuGroup[] = [
 			{
@@ -144,7 +144,11 @@ export function MapVisComponent({
 					},
 					{
 						label: i18n.t("Full page"),
-						icon: handler.active ? <IconMinimize /> : <IconMaximize />,
+						icon: handler.active ? (
+							<IconMinimize />
+						) : (
+							<IconMaximize />
+						),
 						onClick: onFullScreen,
 					},
 				],
@@ -191,6 +195,9 @@ export function MapVisComponent({
 		showFilter,
 	]);
 
+	const periods = searchParams.get("pe")?.split(",");
+	const orgUnitsIds = searchParams.get("ou")?.split(",");
+
 	return (
 		<>
 			<FullScreen
@@ -235,13 +242,28 @@ export function MapVisComponent({
 							<div className="flex-1 h-full">
 								<MapTableComponent
 									fullScreen={handler.active}
-									orgUnitSelection={orgUnitSelectionState}
+									orgUnitSelection={
+										!isEmpty(
+											orgUnitSelectionState?.orgUnits,
+										)
+											? orgUnitSelectionState
+											: !isEmpty(orgUnitsIds)
+												? getOrgUnitSelectionFromIds(
+														orgUnitsIds ?? [],
+													)
+												: undefined
+									}
 									periodSelection={
-										periodState
-											? {
-													periods: periodState,
+										isEmpty(periodState) && isEmpty(periods)
+											? undefined
+											: {
+													periods: defaultTo(
+														isEmpty(periodState)
+															? periods
+															: periodState,
+														[],
+													),
 												}
-											: undefined
 									}
 									setRef={tableRef}
 									mapConfig={mapConfig}
@@ -251,13 +273,23 @@ export function MapVisComponent({
 							<MapVisualizer
 								mapConfig={mapConfig}
 								setRef={mapRef}
-								orgUnitSelection={orgUnitSelectionState}
+								orgUnitSelection={
+									!isEmpty(orgUnitSelectionState?.orgUnits)
+										? orgUnitSelectionState
+										: !isEmpty(orgUnitsIds)
+											? getOrgUnitSelectionFromIds(
+													orgUnitsIds ?? [],
+												)
+											: undefined
+								}
 								periodSelection={
-									periodState
-										? {
-											periods: periodState,
-										}
-										: undefined
+									isEmpty(periodState) && isEmpty(periods)
+										? undefined
+										: {
+												periods: !isEmpty(periodState)
+													? periodState
+													: periods,
+											}
 								}
 							/>
 						)}
@@ -267,9 +299,13 @@ export function MapVisComponent({
 			{orgUnits && (
 				<CustomOrgUnitModal
 					onReset={() => setOrgUnitSelectionState(undefined)}
-					orgUnitState={orgUnitSelectionState?.orgUnits?.map(
-						(ou) => ou.id,
-					)}
+					orgUnitState={
+						!isEmpty(orgUnitSelectionState?.orgUnits)
+							? orgUnitSelectionState?.orgUnits?.map(
+									(ou) => ou.id,
+								)
+							: (orgUnitsIds ?? [])
+					}
 					onUpdate={(val) => {
 						setOrgUnitSelectionState({
 							orgUnits: val?.map((ou: string) => ({
@@ -291,7 +327,9 @@ export function MapVisComponent({
 			{period && (
 				<CustomPeriodModal
 					onReset={() => setPeriodState(undefined)}
-					periodState={periodState}
+					periodState={
+						!isEmpty(periodState) ? periodState : (periods ?? [])
+					}
 					onUpdate={(val) => {
 						setPeriodState(val);
 					}}
