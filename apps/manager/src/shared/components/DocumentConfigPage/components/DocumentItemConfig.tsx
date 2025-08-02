@@ -3,9 +3,9 @@ import i18n from "@dhis2/d2-i18n";
 import { Button, ButtonStrip, Divider, IconDelete16 } from "@dhis2/ui";
 import { useFieldArray, useFormContext, useWatch } from "react-hook-form";
 import { DocumentItem, DocumentsModule } from "@packages/shared/schemas";
-import { useNavigate, useParams } from "@tanstack/react-router";
 import { DocumentItemListConfig } from "./DocumentItemList";
 import { AddDocumentButton } from "./AddDocument/AddDocumentButton";
+import { SortDocument } from "./SortDocument/SortDocument";
 
 export function DocumentItemConfig() {
 	const { setValue, getValues } = useFormContext<DocumentsModule>();
@@ -13,7 +13,7 @@ export function DocumentItemConfig() {
 		name: "config.grouped",
 	});
 
-	const { fields, append, update, remove } = useFieldArray<
+	const { fields, append, remove, replace } = useFieldArray<
 		DocumentsModule,
 		"config.items"
 	>({
@@ -47,12 +47,17 @@ export function DocumentItemConfig() {
 		};
 	});
 
+	const handleSortSubmit = (sortedItems: DocumentItem[]) => {
+		replace(sortedItems);
+	};
+
 	return (
 		<div className="flex-1 w-full flex flex-col gap-2">
 			<div className="flex items-center justify-between">
 				<h3 className="text-2xl">{i18n.t("Documents")}</h3>
 				<ButtonStrip end>
-					<AddDocumentButton onAdd={onAddDocument} />
+					<SortDocument items={fields} onSortSubmit={handleSortSubmit} />
+					<AddDocumentButton onAdd={onAddDocument} sortOrder={fields.length + 1}/>
 				</ButtonStrip>
 			</div>
 			<Divider />

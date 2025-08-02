@@ -4,7 +4,7 @@ describe("home", () => {
 	it("should display welcome header", () => {
 		cy.visit("/");
 		cy.get("h1")
-			.contains("Welcome to the public portal manager!")
+			.contains("Welcome to the FlexiPortal Manager!")
 			.should("be.visible");
 	});
 

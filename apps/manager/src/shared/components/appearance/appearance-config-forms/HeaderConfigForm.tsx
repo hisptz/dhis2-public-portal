@@ -155,7 +155,7 @@ function SaveButton({ onComplete, configurations, onClose }: props) {
 
 	return (
 		<Button
-			disabled={!form.isValid}
+			disabled={!form.isDirty || form.isSubmitting}
 			loading={form.isSubmitting}
 			onClick={(_, e) => {
 				handleSubmit(onUpdateConfiguration, onError)(e);
@@ -177,7 +177,6 @@ export function HeaderConfigForm({
 	const form = useForm<AppearanceConfigFormData>({
 		defaultValues: async () => {
 			const fileUrl = configurations.header.style.trailingLogo?.url;
-			console.log(configurations.header);
 			if (isEmpty(fileUrl))
 				return configurations as AppearanceConfigFormData;
 			return {

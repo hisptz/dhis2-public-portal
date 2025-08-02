@@ -1,14 +1,14 @@
 "use client";
 
-import {AppAppearanceConfig, AppMenuConfig, AppMeta, MenuPosition,} from "@packages/shared/schemas";
-import {AppShell, Center, Loader, useMantineTheme} from "@mantine/core";
-import {AppHeader} from "@/components/Header/Header";
-import {useDisclosure} from "@mantine/hooks";
-import {Suspense, useCallback, useEffect, useRef, useState} from "react";
-import {Footer} from "@/components/Footer/Footer";
-import {SideAppMenu} from "@/components/AppMenu/SideAppMenu";
-import {useMediaQuery} from "usehooks-ts";
-import {useGetImageUrl} from "@/utils/client/images";
+import { AppAppearanceConfig, AppMenuConfig, AppMeta, MenuPosition } from "@packages/shared/schemas";
+import { AppShell, Center, Loader, useMantineTheme } from "@mantine/core";
+import { AppHeader } from "@/components/Header/Header";
+import { useDisclosure } from "@mantine/hooks";
+import { Suspense, useCallback, useEffect, useRef, useState } from "react";
+import { Footer } from "@/components/Footer/Footer";
+import { SideAppMenu } from "@/components/AppMenu/SideAppMenu";
+import { useMediaQuery } from "usehooks-ts";
+import { useGetImageUrl } from "@/utils/client/images";
 
 const DEFAULT_HEADER_HEIGHT = 138;
 
@@ -112,6 +112,9 @@ export function MainLayout({
 				{hasMenu && (
 					<SideAppMenu
 						menuConfig={menuConfig}
+						headerHeight={
+							appearanceConfig.header.style?.containerHeight
+						}
 						isOpen={
 							menuConfig.collapsible
 								? isLargerThanSm
@@ -155,6 +158,7 @@ export function MainLayout({
 			>
 				<Footer
 					logo={logo}
+					primaryColor={appearanceConfig.colors.primary}
 					header={appearanceConfig!.header}
 					config={appearanceConfig!.footer}
 				/>

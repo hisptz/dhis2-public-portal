@@ -6,6 +6,7 @@ import { ConfigurationDetails } from "./ConfigurationDetails";
 import { Button, IconEdit16 } from "@dhis2/ui";
 import { FooterConfigForm } from "../../appearance-config-forms/FooterConfig/FooterConfigForm";
 import { RichTextView } from "@packages/ui/visualizations";
+import { ConfigurationColor } from "./ConfigurationColor";
 
 type Props = {
 	config: AppAppearanceConfig;
@@ -14,8 +15,14 @@ type Props = {
 
 export function FooterConfig({ config, refetchConfig }: Props) {
 	const [showFooterConfig, setShowFooterConfig] = useState(false);
-	const { footer } = config;
-	const { copyright, footerItems } = footer;
+	const { footer, colors } = config;
+	const {
+		copyright,
+		footerItems,
+		coloredBackground,
+		footerBackgroundColor,
+		usePrimaryColorAsBackgroundColor,
+	} = footer;
 
 	return (
 		<>
@@ -27,6 +34,19 @@ export function FooterConfig({ config, refetchConfig }: Props) {
 							title={i18n.t("Copyright")}
 							value={copyright}
 						/>
+					)}
+					{coloredBackground && (
+						<ConfigurationDetails
+							title={i18n.t("Background color")}
+						>
+							<ConfigurationColor
+								colorCode={
+									usePrimaryColorAsBackgroundColor
+										? colors.primary
+										: (footerBackgroundColor ?? "#FFF")
+								}
+							/>
+						</ConfigurationDetails>
 					)}
 					{(footerItems ?? []).map((item, index) => (
 						<ConfigurationDetails

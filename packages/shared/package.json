@@ -1,6 +1,6 @@
 {
   "name": "@packages/shared",
-  "version": "1.0.0",
+  "version": "1.2.3",
   "description": "Shared package for the health portal",
   "main": "index.js",
   "license": "MIT",
@@ -17,12 +17,14 @@
   },
   "dependencies": {
     "@dhis2/multi-calendar-dates": "^2.1.0",
-    "@hisptz/dhis2-utils": "^2.0.17",
     "@hisptz/dhis2-analytics": "^2.1.9",
-    "lodash": "^4.17.21"
+    "@hisptz/dhis2-utils": "^2.0.17",
+    "lodash": "^4.17.21",
+    "luxon": "^3.7.1"
   },
   "devDependencies": {
     "@types/lodash": "^4.17.16",
+    "@types/luxon": "^3.6.2",
     "axios": "^1.8.4",
     "dotenv": "^16.5.0",
     "typescript": "5.6.3"

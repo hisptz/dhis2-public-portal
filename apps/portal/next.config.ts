@@ -4,6 +4,7 @@ import path from "path";
 const nextConfig: NextConfig = {
 	reactStrictMode: false,
 	basePath: process.env.CONTEXT_PATH ?? "",
+
 	images: {
 		dangerouslyAllowSVG: true,
 		contentDispositionType: "inline",
@@ -24,13 +25,12 @@ const nextConfig: NextConfig = {
 		},
 	},
 	experimental: {},
-	serverExternalPackages: ["canvas"],
+	serverExternalPackages: ["canvas", "@google/earthengine"],
 	webpack(config) {
 		// Grab the existing rule that handles SVG imports
 		const fileLoaderRule = config.module.rules.find((rule: any) =>
 			rule.test?.test?.(".svg"),
 		);
-
 		config.module.rules.push(
 			// Reapply the existing rule, but only for svg imports ending in ?url
 			{

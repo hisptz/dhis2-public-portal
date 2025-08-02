@@ -1,12 +1,13 @@
 import React, { useMemo } from "react";
 import { useFieldArray, useWatch } from "react-hook-form";
-import { DocumentsModule } from "@packages/shared/schemas";
+import { DocumentGroup, DocumentsModule } from "@packages/shared/schemas";
 import { SimpleTable, SimpleTableColumn } from "@hisptz/dhis2-ui";
 import i18n from "@dhis2/d2-i18n";
 import { ButtonStrip, Field } from "@dhis2/ui";
 import { AddDocumentGroup } from "./components/AddDocumentGroup";
 import { EditDocumentGroup } from "./components/EditDocumentGroup";
 import { DeleteDocumentGroup } from "./components/DeleteDocumentGroup";
+import { SortDocumentGroup } from "./components/SortDocumentGroup/SortDocumentGroup";
 
 const columns: SimpleTableColumn[] = [
 	{
@@ -28,7 +29,7 @@ export function DocumentGroupConfig() {
 	const hasGroups = useWatch<DocumentsModule, "config.grouped">({
 		name: "config.grouped",
 	});
-	const { fields, append, update, remove } = useFieldArray<
+	const { fields, append, update, remove, replace } = useFieldArray<
 		DocumentsModule,
 		"config.groups"
 	>({
@@ -64,6 +65,9 @@ export function DocumentGroupConfig() {
 	if (!hasGroups) {
 		return null;
 	}
+	const handleSortSubmit = (sortedItems: DocumentGroup[]) => {
+			replace(sortedItems);
+		};
 
 	return (
 		<Field>
@@ -71,7 +75,8 @@ export function DocumentGroupConfig() {
 				<div className="flex flex-row gap-4 justify-between">
 					<h3 className="text-2xl">{i18n.t("Groups")}</h3>
 					<ButtonStrip end>
-						<AddDocumentGroup onAdd={append} />
+						<SortDocumentGroup items={fields} onSortSubmit={handleSortSubmit} />
+						<AddDocumentGroup onAdd={append} sortOrder={fields.length + 1}/>
 					</ButtonStrip>
 				</div>
 				<SimpleTable

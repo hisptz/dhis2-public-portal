@@ -16,7 +16,7 @@ import {
 	ModalTitle,
 } from "@dhis2/ui";
 import i18n from "@dhis2/d2-i18n";
-import React from "react";
+import React, { useMemo } from "react";
 import { useDialog } from "@hisptz/dhis2-ui";
 import { MenuTypeSelector } from "./MenuTypeSelector";
 import { MenuTypeInput } from "./MenuTypeInput";
@@ -25,6 +25,7 @@ import { useDataEngine } from "@dhis2/app-runtime";
 import { RHFIconInput } from "../../../Fields/RHFIconInput";
 import { useManageDocument } from "../../../../hooks/document";
 import { set } from "lodash";
+import { useMenuConfig } from "../../providers/MenuProvider";
 
 export interface MenuItemFormProps {
 	onClose(): void;
@@ -45,10 +46,28 @@ const fileQuery = {
 
 export const menuItemFormSchema = menuItemSchema.and(
 	z.object({
-		iconFile: z.instanceof(AppIconFile).optional(),
+		iconFile: z
+			.instanceof(AppIconFile)
+			.refine((file) => file.type === "image/svg+xml", {
+				message: i18n.t(
+					"Invalid icon file. Only SVG icons are supported.",
+				),
+			})
+			.optional(),
 	}),
 );
 export type MenuItemFormValues = z.infer<typeof menuItemFormSchema>;
+
+const getAllMenuItems = (items: MenuItem[]) => {
+	let allItems: MenuItem[] = [];
+	for (const item of items) {
+		if (item.type === MenuItemType.GROUP) {
+			allItems = [...allItems, ...getAllMenuItems(item.items)];
+		}
+		allItems.push(item);
+	}
+	return allItems;
+};
 
 export function MenuItemForm({
 	config,
@@ -58,11 +77,61 @@ export function MenuItemForm({
 	hide,
 }: MenuItemFormProps) {
 	const engine = useDataEngine();
+	const menus = useMenuConfig();
 	const { confirm } = useDialog();
 	const { create: createIcon } = useManageDocument();
+	const menuItems = useMemo(
+		() => getAllMenuItems(menus.items),
+		[menus.items],
+	);
+
+	const formSchema = menuItemFormSchema
+		.refine(
+			(data) => {
+				const conflictingItem = menuItems.find(
+					(item) => item.path === data.path,
+				);
+				return (
+					!conflictingItem || conflictingItem.path === config?.path
+				);
+			},
+			{
+				message: i18n.t(
+					"A menu item with this path already exists. Please choose a different one.",
+				),
+				path: ["path"],
+			},
+		)
+		.refine(
+			(data) => {
+				if (data.type !== MenuItemType.MODULE) {
+					return true;
+				}
+				const conflictingItem = menuItems.find(
+					(item) =>
+						item.type === MenuItemType.MODULE &&
+						"moduleId" in item &&
+						item.moduleId === data.moduleId,
+				);
+				return (
+					!conflictingItem ||
+					(config?.type === MenuItemType.MODULE &&
+						conflictingItem.type === MenuItemType.MODULE &&
+						"moduleId" in conflictingItem &&
+						conflictingItem.moduleId === config?.moduleId)
+				);
+			},
+			{
+				message: i18n.t(
+					"A menu item with this module ID already exists.",
+				),
+				path: ["moduleId"],
+			},
+		);
 
 	const form = useForm<MenuItemFormValues>({
-		resolver: zodResolver(menuItemFormSchema),
+		resolver: zodResolver(formSchema),
+		mode: "onChange",
 		defaultValues: async () => {
 			if (!config) {
 				return {
@@ -147,7 +216,7 @@ export function MenuItemForm({
 						<form className="flex flex-col gap-2">
 							<MenuTypeInput />
 							<RHFIconInput
-								accept="svg"
+								accept="image/svg+xml"
 								helpText={i18n.t(
 									"Only SVG icons are supported",
 								)}
@@ -169,7 +238,7 @@ export function MenuItemForm({
 							primary
 						>
 							{form.formState.isSubmitting
-								? i18n.t("Uploading icon...")
+								? i18n.t("Saving...")
 								: action}
 						</Button>
 					</ButtonStrip>
