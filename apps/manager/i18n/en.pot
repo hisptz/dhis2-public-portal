@@ -5,8 +5,8 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
-"POT-Creation-Date: 2025-08-02T09:42:57.941Z\n"
-"PO-Revision-Date: 2025-08-02T09:42:57.941Z\n"
+"POT-Creation-Date: 2025-08-02T14:26:50.570Z\n"
+"PO-Revision-Date: 2025-08-02T14:26:50.571Z\n"
 
 msgid "Could not get Appearance configurations"
 msgstr "Could not get Appearance configurations"
@@ -35,14 +35,14 @@ msgstr "Back to all modules"
 msgid "Module"
 msgstr "Module"
 
-msgid "small screen"
-msgstr "small screen"
+msgid "Small screen"
+msgstr "Small screen"
 
-msgid "medium screen"
-msgstr "medium screen"
+msgid "Medium screen"
+msgstr "Medium screen"
 
-msgid "large screen"
-msgstr "large screen"
+msgid "Large screen"
+msgstr "Large screen"
 
 msgid "Please fix the validation errors before saving"
 msgstr "Please fix the validation errors before saving"
@@ -221,6 +221,27 @@ msgstr "Could not create document {{ errorMessage }}"
 msgid "Could not delete file {{ errorMessage }}"
 msgstr "Could not delete file {{ errorMessage }}"
 
+msgid "Sort document groups"
+msgstr "Sort document groups"
+
+msgid "Confirm exit"
+msgstr "Confirm exit"
+
+msgid "You have unsaved changes to the sort order. Are you sure you want to close?"
+msgstr "You have unsaved changes to the sort order. Are you sure you want to close?"
+
+msgid "Sort Document Groups"
+msgstr "Sort Document Groups"
+
+msgid "No items to sort."
+msgstr "No items to sort."
+
+msgid "Updating..."
+msgstr "Updating..."
+
+msgid "Update order"
+msgstr "Update order"
+
 msgid "Remove"
 msgstr "Remove"
 
@@ -245,6 +266,12 @@ msgstr "Segmented"
 
 msgid "DropDown"
 msgstr "DropDown"
+
+msgid "Sort document items"
+msgstr "Sort document items"
+
+msgid "Sort Document Items"
+msgstr "Sort Document Items"
 
 msgid "Something went wrong"
 msgstr "Something went wrong"
@@ -402,9 +429,6 @@ msgstr "A menu item with this module ID already exists."
 msgid "Create"
 msgstr "Create"
 
-msgid "Confirm exit"
-msgstr "Confirm exit"
-
 msgid "Are you sure you want to close this form?. All changes will be lost"
 msgstr "Are you sure you want to close this form?. All changes will be lost"
 
@@ -459,14 +483,8 @@ msgstr "Reset"
 msgid "Sort menu items"
 msgstr "Sort menu items"
 
-msgid "You have unsaved changes to the sort order. Are you sure you want to close?"
-msgstr "You have unsaved changes to the sort order. Are you sure you want to close?"
-
 msgid "Sort Menu Items"
 msgstr "Sort Menu Items"
-
-msgid "No items to sort."
-msgstr "No items to sort."
 
 msgid "Save order"
 msgstr "Save order"
@@ -651,6 +669,9 @@ msgstr "Section title"
 msgid "Content"
 msgstr "Content"
 
+msgid "Item created successfully"
+msgstr "Item created successfully"
+
 msgid "Create an item"
 msgstr "Create an item"
 
@@ -668,6 +689,15 @@ msgstr "Delete item"
 
 msgid "Are you sure you want to delete the item "
 msgstr "Are you sure you want to delete the item "
+
+msgid "Sort items"
+msgstr "Sort items"
+
+msgid "Sort Items"
+msgstr "Sort Items"
+
+msgid "Update..."
+msgstr "Update..."
 
 msgid "Error loading item"
 msgstr "Error loading item"
@@ -722,6 +752,15 @@ msgstr "Group selector"
 msgid "Save group changes"
 msgstr "Save group changes"
 
+msgid "small screen"
+msgstr "small screen"
+
+msgid "medium screen"
+msgstr "medium screen"
+
+msgid "large screen"
+msgstr "large screen"
+
 msgid "Failed to save visualization"
 msgstr "Failed to save visualization"
 
@@ -771,9 +810,6 @@ msgstr "Color configurations updated successfully"
 msgid "Error updating color configurations"
 msgstr "Error updating color configurations"
 
-msgid "Updating..."
-msgstr "Updating..."
-
 msgid "Could not save form. Fix the form errors fist and try again"
 msgstr "Could not save form. Fix the form errors fist and try again"
 
@@ -782,6 +818,9 @@ msgstr "Application Color Configurations"
 
 msgid "Primary color"
 msgstr "Primary color"
+
+msgid "Titles color"
+msgstr "Titles color"
 
 msgid "Chart colors"
 msgstr "Chart colors"
