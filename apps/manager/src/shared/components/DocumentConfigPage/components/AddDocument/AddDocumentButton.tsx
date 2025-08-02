@@ -7,8 +7,10 @@ import { DocumentItem } from "@packages/shared/schemas";
 
 export function AddDocumentButton({
 	onAdd,
+	sortOrder,
 }: {
 	onAdd: (visualization: DocumentItem) => void;
+	sortOrder?: number;
 }) {
 	const { value: hide, setTrue: onHide, setFalse: onShow } = useBoolean(true);
 
@@ -19,6 +21,7 @@ export function AddDocumentButton({
 					hide={hide}
 					onClose={onHide}
 					onSubmit={onAdd}
+					sortOrder={sortOrder}
 				/>
 			)}
 			<Button onClick={onShow} icon={<IconAdd24 />}>
