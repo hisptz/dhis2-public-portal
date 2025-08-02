@@ -1,10 +1,3 @@
-## [1.3.1](https://github.com/hisptz/dhis2-public-portal/compare/v1.3.0...v1.3.1) (2025-08-02)
-
-
-### Bug Fixes
-
-* **tests:** update button label assertions for order actions ([c361146](https://github.com/hisptz/dhis2-public-portal/commit/c3611469173cc8b9e291623a89c6f2e85873b51b))
-
 # [1.3.0](https://github.com/hisptz/dhis2-public-portal/compare/v1.2.3...v1.3.0) (2025-08-02)
 
 
