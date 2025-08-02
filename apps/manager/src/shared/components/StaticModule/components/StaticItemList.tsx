@@ -4,13 +4,13 @@ import i18n from "@dhis2/d2-i18n";
 import { StaticItemConfig } from "@packages/shared/schemas";
 import { Button, IconView16 } from "@dhis2/ui";
 import { useItemList } from "../hooks/data";
-import React from "react";
-import { StyledIcon } from "../../Icon";
+import React, { useMemo } from "react";
 import { AddItem } from "./AddItem/AddItem";
 import { useModule } from "../../ModulesPage/providers/ModuleProvider";
 import { FullLoader } from "../../FullLoader";
 import ErrorPage from "../../ErrorPage/ErrorPage";
 import { RichContent } from "../../RichContent";
+import { SortItems } from "./SortItems/SortItems";
 
 const columns: SimpleTableColumn[] = [
 	{
@@ -25,20 +25,22 @@ const columns: SimpleTableColumn[] = [
 		label: i18n.t("Content"),
 		key: "content",
 	},
-	// {
-	// 	label: i18n.t("Icon"),
-	// 	key: "icon",
-	// },
 	{
 		label: i18n.t("Actions"),
 		key: "actions",
 	},
 ];
 
+
 export function StaticItemList() {
-	const { items, loading, error } = useItemList();
+	const { items, loading, error, refetch } = useItemList();
 	const module = useModule();
-	const itemList = items.flat() as StaticItemConfig[];
+
+	const itemList = useMemo(() => {
+		return (items.flat() as StaticItemConfig[])
+			.slice()
+			.sort((a, b) => (a.sortOrder ?? Number.MAX_SAFE_INTEGER) - (b.sortOrder ?? Number.MAX_SAFE_INTEGER));
+	}, [items]);
 	const navigate = useNavigate();
 
 	const rows = itemList.map((item: StaticItemConfig) => ({
@@ -47,15 +49,7 @@ export function StaticItemList() {
 			item?.shortDescription.length > 500
 				? item?.shortDescription.slice(0, 500) + "..."
 				: item?.shortDescription,
-		content: (<RichContent content={item?.content ?? ""}  />),
-		// icon: (
-		// 	<div
-		// 		style={{ borderRadius: "10%" }}
-		// 		className="p-4 flex items-center justify-center"
-		// 	>
-		// 		<StyledIcon height={48} width={48} icon={item.icon} />
-		// 	</div>
-		// ),
+		content: (<RichContent content={item?.content ?? ""} />),
 		actions: (
 			<Button
 				icon={<IconView16 />}
@@ -68,6 +62,7 @@ export function StaticItemList() {
 			></Button>
 		),
 	}));
+
 
 	if (loading)
 		return (
@@ -88,7 +83,13 @@ export function StaticItemList() {
 		<div className="flex flex-col gap-4">
 			<div className="flex justify-between">
 				<h3 className="text-2xl">{i18n.t("Items")}</h3>
-				<AddItem />
+				<div className="flex gap-4">
+					<SortItems items={itemList} onSortSubmit={
+						async () => {
+							refetch();
+						}
+					} /> <AddItem /></div>
+
 			</div>
 			<SimpleDataTable columns={columns} rows={rows} />
 		</div>

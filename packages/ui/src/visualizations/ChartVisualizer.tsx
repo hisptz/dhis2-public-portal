@@ -1,8 +1,16 @@
-import { AnalyticsData, VisualizationConfig } from "@packages/shared/schemas";
+import {
+	AnalyticsData,
+	LegendSetConfig,
+	VisualizationConfig,
+} from "@packages/shared/schemas";
 import React, { memo, RefObject, useRef } from "react";
 import HighchartsReact from "highcharts-react-official";
 import { DHIS2Chart } from "@hisptz/dhis2-analytics";
-import { getChartLayout, getChartType } from "@packages/shared/utils";
+import {
+	getChartLayout,
+	getChartType,
+	getVisualizationLegendSet,
+} from "@packages/shared/utils";
 import { useResizeObserver } from "usehooks-ts";
 
 export interface ChartVisualizerProps {
@@ -10,6 +18,7 @@ export interface ChartVisualizerProps {
 	visualization: VisualizationConfig;
 	colors: string[];
 	setRef: RefObject<HighchartsReact.RefObject | null>;
+	legendSet?: LegendSetConfig;
 }
 
 export const ChartVisualizer = memo(function ChartVisualizer({
@@ -20,6 +29,7 @@ export const ChartVisualizer = memo(function ChartVisualizer({
 }: ChartVisualizerProps) {
 	const type = getChartType(visualization);
 	const layout = getChartLayout(visualization);
+	const legendSet = getVisualizationLegendSet(visualization);
 
 	const ref = useRef<HTMLDivElement>(null);
 	const { height = 0 } = useResizeObserver<HTMLDivElement>({
@@ -48,6 +58,8 @@ export const ChartVisualizer = memo(function ChartVisualizer({
 					showFilterAsTitle: false,
 					name: visualization.displayName,
 					allowChartTypeChange: false,
+					// @ts-expect-error fixes on the lib
+					legendSet: legendSet,
 				}}
 			/>
 		</div>

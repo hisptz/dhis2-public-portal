@@ -3436,10 +3436,10 @@
   dependencies:
     "@hapi/hoek" "^9.0.0"
 
-"@hisptz/dhis2-analytics@^2.1.11":
-  version "2.1.11"
-  resolved "https://registry.yarnpkg.com/@hisptz/dhis2-analytics/-/dhis2-analytics-2.1.11.tgz#8fa5a02d847b5d30e235d22bb0a9c70a5f88d709"
-  integrity sha512-EJuErtnjBMBXPzBEVSHIAls1cIM0o/pVNCsLfao6O6QQD9c3P5fCDPhilm6J3bo8jQds8OswzjY01hocR1yeaQ==
+"@hisptz/dhis2-analytics@^2.1.14":
+  version "2.1.14"
+  resolved "https://registry.yarnpkg.com/@hisptz/dhis2-analytics/-/dhis2-analytics-2.1.14.tgz#5a30093bad2741ebeb3c4d24171dc90d5c318ae9"
+  integrity sha512-Qjdj/yChQFXGwu/VdhKN7ssYGMwO2LunskfMinhwXN2pxjoYjWWEWh0VbkfE72ClwPZ+Db610p/yr+yRWY7R6w==
   dependencies:
     "@google/earthengine" "^1.5.21"
     "@hisptz/dhis2-ui" "2.0.48"
@@ -6196,6 +6196,16 @@
   version "4.17.17"
   resolved "https://registry.yarnpkg.com/@types/lodash/-/lodash-4.17.17.tgz#fb85a04f47e9e4da888384feead0de05f7070355"
   integrity sha512-RRVJ+J3J+WmyOTqnz3PiBLA501eKwXl2noseKOrNo/6+XEHjTAxO4xHvxQB6QuNm+s4WRbn6rSiap8+EA+ykFQ==
+
+"@types/lodash@^4.17.20":
+  version "4.17.20"
+  resolved "https://registry.yarnpkg.com/@types/lodash/-/lodash-4.17.20.tgz#1ca77361d7363432d29f5e55950d9ec1e1c6ea93"
+  integrity sha512-H3MHACvFUEiujabxhaI/ImO6gUrd8oOurg7LQtS7mbwIXA/cUqWrvBsaeJ23aZEPk1TAYkurjfMbSELfoCXlGA==
+
+"@types/luxon@^3.6.2":
+  version "3.6.2"
+  resolved "https://registry.yarnpkg.com/@types/luxon/-/luxon-3.6.2.tgz#be6536931801f437eafcb9c0f6d6781f72308041"
+  integrity sha512-R/BdP7OxEMc44l2Ex5lSXHoIXTB2JLNa3y2QISIbr58U/YcsffyQrYW//hZSdrfxrjRZj3GcUoxMPGdO8gSYuw==
 
 "@types/mdast@^4.0.0", "@types/mdast@^4.0.2":
   version "4.0.4"
@@ -16550,6 +16560,11 @@ luxon@^3.4.4:
   version "3.6.1"
   resolved "https://registry.yarnpkg.com/luxon/-/luxon-3.6.1.tgz#d283ffc4c0076cb0db7885ec6da1c49ba97e47b0"
   integrity sha512-tJLxrKJhO2ukZ5z0gyjY1zPh3Rh88Ej9P7jNrZiHMUXHae1yvI2imgOZtL1TO8TW6biMMKfTtAOoEJANgtWBMQ==
+
+luxon@^3.7.1:
+  version "3.7.1"
+  resolved "https://registry.yarnpkg.com/luxon/-/luxon-3.7.1.tgz#9bd09aa84a56afb00c57ea78a8ec5bd16eb24ec0"
+  integrity sha512-RkRWjA926cTvz5rAb1BqyWkKbbjzCGchDUIKMCUvNi17j6f6j8uHGDV82Aqcqtzd+icoYpELmG3ksgGiFNNcNg==
 
 magic-string@^0.25.0, magic-string@^0.25.7:
   version "0.25.9"

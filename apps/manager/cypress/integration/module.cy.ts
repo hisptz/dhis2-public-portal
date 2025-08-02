@@ -109,7 +109,6 @@ describe("Modules Page", () => {
 		});
 	});
 
-
 	// Test for Visualization Module
 	it("should add and edit visualization Module", () => {
 		cy.contains("a", modulesMenu.label).click();
@@ -260,7 +259,27 @@ describe("Modules Page", () => {
 			cy.get('[data-test="dhis2-uicore-button"]').click();
 		});
 		cy.contains("button", "Back").click();
-		cy.contains("td", "Blog Test").parent("tr").within(() => {
+
+		cy.contains("button", "Add item").click();
+		cy.get('input[name="title"]').type("Blog Test 2");
+		cy.contains("button", "Create item").click();
+		cy.get('textarea[name="shortDescription"]').type("This is a short description for the blog test item.");
+		cy.get(".jodit-wysiwyg").type("This is a full description for the blog test item.");
+		cy.contains("button", "Save changes").click();
+		cy.wait(5000);
+		cy.contains("button", "Sort items").click();
+
+
+		cy.get('[data-rbd-draggable-id="blog-test"]')
+			.focus().trigger('keydown', { keyCode: 32 });
+		cy.get('[data-rbd-draggable-id="blog-test"]')
+			.trigger('keydown', { keyCode: 40, force: true });
+		cy.get('[data-rbd-draggable-id="blog-test"]')
+			.trigger('keydown', { keyCode: 32, force: true });
+		cy.wait(1000);
+		cy.contains("button", "Save order").click();
+		cy.wait(1000);
+		cy.contains("td", "Blog Test 2").parent("tr").within(() => {
 			cy.get('[data-test="dhis2-uicore-button"]').click();
 		});
 		cy.contains("button", "Delete item").click();
@@ -281,21 +300,17 @@ describe("Modules Page", () => {
 		cy.get('input[name="config.title"]').type("New Test Module");
 
 		//For non-grouped
-		cy.contains("button", "Add document").click();
-		cy.get('[data-test="document-label-input"]').type("Document Test");
-		cy.get('[data-test="document-type-select"]').click();
-		cy.get('[data-value="PDF"]').click();
-		cy.get('[data-test="file-input"]').click();
-		cy.get('input[type="file"]').as('fileInput');
-		cy.fixture('FlexiPortal_Overview.pdf', 'base64').then(fileContent => {
-			cy.get('@fileInput').attachFile({
-				fileContent,
-				fileName: 'FlexiPortal_Overview.pdf',
-				mimeType: 'application/pdf',
-				encoding: 'base64'
-			});
-		});
-		cy.get('[data-test="add-document-button"]').click();
+		const documentTitles = ["Document Test", "Document Test 2"];
+		for (const title of documentTitles) {
+			cy.contains("button", "Add document").click();
+			cy.get('[data-test="document-label-input"]').type(title);
+			cy.get('[data-test="document-type-select"]').click();
+			cy.get('[data-value="PDF"]').click();
+			cy.get('input[type="file"]').attachFile('FlexiPortal_Overview.pdf');
+			cy.get('[data-test="add-document-button"]').click();
+			cy.contains("td", title).should("be.visible");
+		}
+
 		cy.contains("td", "Document Test").parent("tr").within(() => {
 			cy.get('[data-test="dhis2-uicore-button"]').click();
 		});
@@ -303,23 +318,33 @@ describe("Modules Page", () => {
 		// For grouped
 		cy.get('input[name="config.grouped"]').click();
 		cy.get('input[value="segmented"]').click();
-		cy.contains("button", "Add group").click();
-		cy.get('[data-test="document-group-title-input"]').type("Test Group");
-		cy.contains("button", "Add file").click();
-		cy.get('[data-test="document-group-label-input"]').type("Group Document Test");
-		cy.get('[data-test="document-type-select"]').click();
-		cy.get('[data-value="PDF"]').click();
-		cy.get('input[type="file"]').as('groupFileInput');
-		cy.fixture('FlexiPortal_Overview.pdf', 'base64').then(fileContent => {
-			cy.get('@fileInput').attachFile({
-				fileContent,
-				fileName: 'FlexiPortal_Overview.pdf',
-				mimeType: 'application/pdf',
-				encoding: 'base64'
-			});
-		});
-		cy.get('[data-test="save-file-button"]').click();
-		cy.get('[data-test="save-document-group-button"]').click();
+
+		const groupTitles = ["Test Group", "Test Group 2"];
+		for (const title of groupTitles) {
+			cy.contains("button", "Add group").click();
+			cy.get('[data-test="document-group-title-input"]').type(title);
+			cy.contains("button", "Add file").click();
+			cy.get('[data-test="document-group-label-input"]').type("Group Document Test");
+			cy.get('[data-test="document-type-select"]').click();
+			cy.get('[data-value="PDF"]').click();
+			cy.get('input[type="file"]').attachFile('FlexiPortal_Overview.pdf');
+			cy.get('[data-test="save-file-button"]').click();
+			cy.get('[data-test="save-document-group-button"]').click();
+		}
+
+		cy.wait(5000);
+		cy.contains("button", "Sort document groups").click();
+
+		cy.get('[data-rbd-draggable-id="test-group"]')
+			.focus().trigger('keydown', { keyCode: 32 });
+		cy.get('[data-rbd-draggable-id="test-group"]')
+			.trigger('keydown', { keyCode: 40, force: true });
+		cy.get('[data-rbd-draggable-id="test-group"]')
+			.trigger('keydown', { keyCode: 32, force: true });
+		cy.wait(1000);
+		cy.contains("button", "Save order").click();
+		cy.wait(1000);
+
 		cy.contains("td", "Document Test").parent("tr").within(() => {
 			cy.get('[data-test="edit-document-group-button"]').click();
 		});
@@ -332,6 +357,7 @@ describe("Modules Page", () => {
 		cy.contains("button", "Save changes").click();
 	});
 
+	// Test for Section Module
 	it("should add and edit section Module", () => {
 		const sectionTypes = Object.values(SectionType).map((types) => ({
 			label: startCase(types.toLowerCase()),
@@ -349,7 +375,7 @@ describe("Modules Page", () => {
 
 		sectionTypes.forEach(({ label, value }, index) => {
 			cy.contains("button", "Add Section").click();
-			cy.get('input[name="title"]').type(label + " Test Section");
+			cy.get('[data-test="add-section-label"]').type(label + " Test Section");
 			cy.get('[data-test="section-display-select"]').click();
 			cy.get(`[data-value="${value}"]`).click();
 			cy.get('[data-test="add-section-button"]').click();
@@ -433,7 +459,7 @@ describe("Modules Page", () => {
 
 		cy.get('input[value="header"]').click();
 		cy.contains("button", "Add Section").click();
-		cy.get('input[name="title"]').type("Single Item Test Section");
+		cy.get('[data-test="add-section-label"]').type("Single Item Test Section");
 		cy.get('[data-test="section-display-select"]').click();
 		cy.get(`[data-value="SINGLE_ITEM"]`).click();
 		cy.get('[data-test="add-section-button"]').click();

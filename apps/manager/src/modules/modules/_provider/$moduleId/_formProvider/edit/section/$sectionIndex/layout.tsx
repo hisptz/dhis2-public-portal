@@ -5,10 +5,25 @@ import {
 } from "@tanstack/react-router";
 import React, { useCallback, useMemo, useState } from "react";
 import i18n from "@dhis2/d2-i18n";
-import { Button, ButtonStrip, Card, Divider, IconArrowLeft24, SingleSelectField, SingleSelectOption } from "@dhis2/ui";
+import {
+	Button,
+	ButtonStrip,
+	Card,
+	Divider,
+	IconArrowLeft24,
+	SingleSelectField,
+	SingleSelectOption,
+} from "@dhis2/ui";
 import { useFieldArray, useFormContext } from "react-hook-form";
 import { z } from "zod";
-import { AppModule, DisplayItem, DisplayItemType, FlexibleLayoutConfig, SectionModuleConfig, VisualizationItem, VisualizationModule } from "@packages/shared/schemas";
+import {
+	AppModule,
+	DisplayItem,
+	DisplayItemType,
+	FlexibleLayoutConfig,
+	SectionModuleConfig,
+	VisualizationItem,
+} from "@packages/shared/schemas";
 import { SectionLayoutEditor } from "../../../../../../../../shared/components/SectionLayoutEditor";
 import { useSaveModule } from "../../../../../../../../shared/components/ModulesPage/hooks/save";
 import { useAlert } from "@dhis2/app-runtime";
@@ -65,9 +80,9 @@ function RouteComponent() {
 
 	const widths = useMemo(
 		() => [
-			{ name: i18n.t("small screen"), value: 996 },
-			{ name: i18n.t("medium screen"), value: 1200 },
-			{ name: i18n.t("large screen"), value: 1500 },
+			{ name: i18n.t("Small screen"), value: 996 },
+			{ name: i18n.t("Medium screen"), value: 1200 },
+			{ name: i18n.t("Large screen"), value: 1500 },
 		],
 		[],
 	);
@@ -101,10 +116,9 @@ function RouteComponent() {
 		}
 	};
 
-
 	const onAddVisualization = useCallback(
 		(visualization: VisualizationItem) => {
-			if (fields.some(field => field.item.id === visualization.id)) {
+			if (fields.some((field) => field.item.id === visualization.id)) {
 				show({
 					message: i18n.t("This visualization is already added"),
 					type: { critical: true },
@@ -117,7 +131,9 @@ function RouteComponent() {
 				item: visualization,
 			};
 			append(displayItem);
-			const layouts = getValues(`config.sections.${sectionIndex}.layouts`) as FlexibleLayoutConfig;
+			const layouts = getValues(
+				`config.sections.${sectionIndex}.layouts`,
+			) as FlexibleLayoutConfig;
 			if (layouts) {
 				const updatedLayouts = mapValues(layouts, (value, key) => {
 					if (value) {
@@ -127,7 +143,14 @@ function RouteComponent() {
 								i: visualization.id,
 								x: 0,
 								y: 0,
-								w: key === "lg" ? 12 : key === "md" ? 10 : key === "sm" ? 6 : 4,
+								w:
+									key === "lg"
+										? 12
+										: key === "md"
+											? 10
+											: key === "sm"
+												? 6
+												: 4,
 								h: 8,
 							},
 						];
@@ -137,12 +160,22 @@ function RouteComponent() {
 							i: visualization.id,
 							x: 0,
 							y: 0,
-							w: key === "lg" ? 12 : key === "md" ? 10 : key === "sm" ? 6 : 4,
+							w:
+								key === "lg"
+									? 12
+									: key === "md"
+										? 10
+										: key === "sm"
+											? 6
+											: 4,
 							h: 8,
 						},
 					];
 				});
-				setValue(`config.sections.${sectionIndex}.layouts`, updatedLayouts);
+				setValue(
+					`config.sections.${sectionIndex}.layouts`,
+					updatedLayouts,
+				);
 			} else {
 				setValue(`config.sections.${sectionIndex}.layouts`, {
 					lg: [{ i: visualization.id, x: 0, y: 0, w: 12, h: 8 }],
@@ -157,21 +190,25 @@ function RouteComponent() {
 
 	const handleDelete = useCallback(
 		(id: string) => {
-			const index = fields.findIndex(field => field.item.id === id);
+			const index = fields.findIndex((field) => field.item.id === id);
 			if (index === -1) {
 				return;
 			}
 			remove(index);
-			const layouts = getValues(`config.sections.${sectionIndex}.layouts`) as FlexibleLayoutConfig;
+			const layouts = getValues(
+				`config.sections.${sectionIndex}.layouts`,
+			) as FlexibleLayoutConfig;
 			const updatedLayouts = Object.fromEntries(
 				Object.entries(layouts).map(([key, value]) => [
 					key,
-					value ? value.filter((layoutItem) => layoutItem.i !== id) : [],
-				])
+					value
+						? value.filter((layoutItem) => layoutItem.i !== id)
+						: [],
+				]),
 			);
 			setValue(`config.sections.${sectionIndex}.layouts`, updatedLayouts);
 		},
-		[fields, remove, getValues, sectionIndex, setValue]
+		[fields, remove, getValues, sectionIndex, setValue],
 	);
 
 	return (
@@ -188,11 +225,15 @@ function RouteComponent() {
 					</Button>
 				</div>
 				<div className="flex justify-between gap-8">
-					<h2 className="text-2xl">{i18n.t("Manage visualization")}</h2>
+					<h2 className="text-2xl">
+						{i18n.t("Manage visualization")}
+					</h2>
 					<ButtonStrip end>
 						<Button
 							onClick={() => {
-								resetField(`config.sections.${sectionIndex}.layouts`);
+								resetField(
+									`config.sections.${sectionIndex}.layouts`,
+								);
 								goBack();
 							}}
 						>
@@ -221,8 +262,11 @@ function RouteComponent() {
 							<SingleSelectField
 								dataTest={"screen-size-select"}
 								selected={size.toString()}
-								onChange={({ selected }) => setSize(parseInt(selected))}
-								label={i18n.t("Select screen size")}>
+								onChange={({ selected }) =>
+									setSize(parseInt(selected))
+								}
+								label={i18n.t("Select screen size")}
+							>
 								{widths.map(({ name, value }) => (
 									<SingleSelectOption
 										key={value.toString()}
@@ -248,7 +292,9 @@ function RouteComponent() {
 				<ButtonStrip end>
 					<Button
 						onClick={() => {
-							resetField(`config.sections.${sectionIndex}.layouts`);
+							resetField(
+								`config.sections.${sectionIndex}.layouts`,
+							);
 							goBack();
 						}}
 					>
@@ -257,9 +303,7 @@ function RouteComponent() {
 					<Button
 						primary
 						loading={formState.isSubmitting}
-						disabled={
-							!formState.isDirty || formState.isSubmitting
-						}
+						disabled={!formState.isDirty || formState.isSubmitting}
 						onClick={() => {
 							handleSubmit(onSubmit, onError)();
 						}}

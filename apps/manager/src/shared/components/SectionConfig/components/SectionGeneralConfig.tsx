@@ -11,6 +11,10 @@ export function SectionGeneralConfig() {
 		<div className="flex flex-col gap-6">
 			<RHFTextInputField
 				required
+				name={`${namePrefix}.label`}
+				label={i18n.t("Label")}
+			/>
+			<RHFTextInputField
 				name={`${namePrefix}.title`}
 				label={i18n.t("Title")}
 			/>

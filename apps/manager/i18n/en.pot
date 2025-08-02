@@ -5,8 +5,8 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
-"POT-Creation-Date: 2025-06-30T10:30:07.256Z\n"
-"PO-Revision-Date: 2025-06-30T10:30:07.257Z\n"
+"POT-Creation-Date: 2025-08-02T09:42:57.941Z\n"
+"PO-Revision-Date: 2025-08-02T09:42:57.941Z\n"
 
 msgid "Could not get Appearance configurations"
 msgstr "Could not get Appearance configurations"
@@ -390,6 +390,15 @@ msgstr "Add sub item"
 msgid "Path"
 msgstr "Path"
 
+msgid "Invalid icon file. Only SVG icons are supported."
+msgstr "Invalid icon file. Only SVG icons are supported."
+
+msgid "A menu item with this path already exists. Please choose a different one."
+msgstr "A menu item with this path already exists. Please choose a different one."
+
+msgid "A menu item with this module ID already exists."
+msgstr "A menu item with this module ID already exists."
+
 msgid "Create"
 msgstr "Create"
 
@@ -407,9 +416,6 @@ msgstr "Only SVG icons are supported"
 
 msgid "Icon"
 msgstr "Icon"
-
-msgid "Uploading icon..."
-msgstr "Uploading icon..."
 
 msgid "Menu items"
 msgstr "Menu items"
@@ -639,6 +645,9 @@ msgstr "Horizontal"
 msgid "Sections"
 msgstr "Sections"
 
+msgid "Section title"
+msgstr "Section title"
+
 msgid "Content"
 msgstr "Content"
 
@@ -716,11 +725,11 @@ msgstr "Save group changes"
 msgid "Failed to save visualization"
 msgstr "Failed to save visualization"
 
-msgid "Welcome to the public portal manager!"
-msgstr "Welcome to the public portal manager!"
+msgid "Welcome to the FlexiPortal Manager!"
+msgstr "Welcome to the FlexiPortal Manager!"
 
-msgid "You can use this application to configure your public portal web application"
-msgstr "You can use this application to configure your public portal web application"
+msgid "You can use this application to configure your FlexiPortal web application"
+msgstr "You can use this application to configure your FlexiPortal web application"
 
 msgid "Application colors"
 msgstr "Application colors"
@@ -731,14 +740,14 @@ msgstr "Footer configuration"
 msgid "Copyright"
 msgstr "Copyright"
 
+msgid "Background color"
+msgstr "Background color"
+
 msgid "Header configuration"
 msgstr "Header configuration"
 
 msgid "Subtitle"
 msgstr "Subtitle"
-
-msgid "Background color"
-msgstr "Background color"
 
 msgid "Header height"
 msgstr "Header height"
@@ -773,9 +782,6 @@ msgstr "Application Color Configurations"
 
 msgid "Primary color"
 msgstr "Primary color"
-
-msgid "Titles color"
-msgstr "Titles color"
 
 msgid "Chart colors"
 msgstr "Chart colors"
@@ -837,6 +843,18 @@ msgstr "Footer links"
 msgid "Add footer link"
 msgstr "Add footer link"
 
+msgid "Background Color"
+msgstr "Background Color"
+
+msgid "Use primary color as background color"
+msgstr "Use primary color as background color"
+
+msgid "Footer styles"
+msgstr "Footer styles"
+
+msgid "Show colored background"
+msgstr "Show colored background"
+
 msgid "Header configurations updated successfully"
 msgstr "Header configurations updated successfully"
 
@@ -861,17 +879,8 @@ msgstr "Hide advanced options"
 msgid "Show advanced options"
 msgstr "Show advanced options"
 
-msgid "Background Color"
-msgstr "Background Color"
-
-msgid "Use primary color as background color"
-msgstr "Use primary color as background color"
-
 msgid "Header styles"
 msgstr "Header styles"
-
-msgid "Show colored background"
-msgstr "Show colored background"
 
 msgid "Show logo"
 msgstr "Show logo"
@@ -909,8 +918,8 @@ msgstr "Header title"
 msgid "Color"
 msgstr "Color"
 
-msgid "There are colors selected. Click the add button to add one."
-msgstr "There are colors selected. Click the add button to add one."
+msgid "There are no colors selected. Click the add button to add one."
+msgstr "There are no colors selected. Click the add button to add one."
 
 msgid "Add color"
 msgstr "Add color"

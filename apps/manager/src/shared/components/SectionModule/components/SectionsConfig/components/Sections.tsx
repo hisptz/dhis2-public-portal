@@ -6,7 +6,11 @@ import { startCase } from "lodash";
 
 const columns: SimpleTableColumn[] = [
 	{
-		label: i18n.t("Title"),
+		label: i18n.t("Label"),
+		key: "label",
+	},
+	{
+		label: i18n.t("Section title"),
 		key: "title",
 	},
 	{

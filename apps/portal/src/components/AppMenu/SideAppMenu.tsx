@@ -1,10 +1,4 @@
-import {
-	AppShell,
-	Burger,
-	Group,
-	ScrollArea,
-	useMantineTheme,
-} from "@mantine/core";
+import { AppShell, Burger, Group, ScrollArea, useMantineTheme } from "@mantine/core";
 import { AppMenuConfig } from "@packages/shared/schemas";
 import classes from "./NavbarNested.module.css";
 import { LinksGroup } from "@/components/AppMenu/components/NavbarLinksGroup";
@@ -16,9 +10,11 @@ export function SideAppMenu({
 	menuConfig,
 	isOpen,
 	setOpen,
+	headerHeight,
 }: {
 	menuConfig: AppMenuConfig;
 	isOpen: boolean;
+	headerHeight: number | undefined;
 	setOpen: Dispatch<SetStateAction<boolean>>;
 }) {
 	const theme = useMantineTheme();
@@ -85,7 +81,7 @@ export function SideAppMenu({
 			style={{
 				transition: "width 300ms cubic-bezier(0.4, 0, 0.2, 1)",
 				overflow: "hidden",
-				height: "100dvh",
+				height: `calc(100dvh - ${headerHeight ?? 0}px)`,
 			}}
 		>
 			{isLargerThanSm && menuConfig.collapsible && (
