@@ -5,9 +5,11 @@ type Props = {
 };
 
 export function ConfigurationTitle({ title }: Props) {
+	const dataTestId = `configuration-title-${title}`;
+	console.log(`Rendering ConfigurationTitle with data-test: ${dataTestId}`);
 	return (
 		<>
-			<h4 className="text-lg font-bold">{title}</h4>
+			<h3 data-test ={dataTestId} className="text-lg font-bold">{title}</h3>
 			<hr className="border-gray-300 my-2" />
 		</>
 	);
