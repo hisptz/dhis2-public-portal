@@ -9,6 +9,7 @@ import {  getQueueStatus } from "@/services/status";
 import { v4 } from "uuid";
 import { startDownloadWorker } from "@/rabbit/download.worker";
 import { downloadQueue, uploadQueue } from "@/rabbit/publisher";
+import { startUploadWorker } from "@/rabbit/upload.worker";
 
 export const serviceRouter = Router();
 /*
@@ -20,8 +21,6 @@ export const serviceRouter = Router();
 serviceRouter.post("/data-download/:configId", async (req, res) => {
 	try {
 		const { configId } = req.params;
-
-		await startDownloadWorker(configId);
 
 		const parsedBody = dataDownloadBodySchema.parse(req.body);
 

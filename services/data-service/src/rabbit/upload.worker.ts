@@ -5,7 +5,8 @@ import { updateSummaryFile } from "@/services/summary";
 import { DataUploadSummary } from "@packages/shared/schemas";
 import { uploadDataFromFile } from "@/services/data-upload";
 
-export async function startUploadWorker(configId: string) {
+export async function startUploadWorker() {
+    const configId = 'hmis';
     const rabbitUri = process.env.RABBITMQ_URI || "amqp://admin:Dhis%402025@vmi2689920.contaboserver.net:5672";
     const conn = await amqp.connect(rabbitUri);
     const channel = await conn.createChannel();
@@ -13,7 +14,7 @@ export async function startUploadWorker(configId: string) {
     const queueName = uploadQueue + configId;
     await channel.assertQueue(queueName, { durable: true });
 
-    channel.prefetch(1);
+    channel.prefetch(100);
 
     channel.consume(queueName, async (msg) => {
         if (msg === null) return;

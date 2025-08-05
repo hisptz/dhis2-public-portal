@@ -11,18 +11,20 @@ import { chunk, head, isEmpty } from 'lodash';
 import { AxiosError } from 'axios';
 import dotenv from "dotenv";
 import { getDimensions } from '@/utils/dimensions';
+import pLimit from 'p-limit';
 
 dotenv.config();
 
 
-export async function startDownloadWorker(configId: string) {
+export async function startDownloadWorker() {
+    const configId = 'hmis';
     const rabbitUri = process.env.RABBITMQ_URI || "amqp://admin:Dhis%402025@vmi2689920.contaboserver.net:5672";
     const conn = await amqp.connect(rabbitUri);
     const channel = await conn.createChannel();
     const queueName = downloadQueue + configId;
     await channel.assertQueue(queueName, { durable: true });
 
-    channel.prefetch(1);
+    channel.prefetch(100);
 
     channel.consume(queueName, async (msg) => {
         if (msg === null) return;
@@ -38,7 +40,7 @@ export async function startDownloadWorker(configId: string) {
 
         if (!mainConfigId || !periodId || !config || !runtimeConfig) {
             logger.warn("Invalid job received", job);
-            channel.ack(msg); 
+            channel.ack(msg);
             return;
         }
 
@@ -48,7 +50,6 @@ export async function startDownloadWorker(configId: string) {
             const mainConfigForClient = response.data;
             const client = createDownloadClient({ config: mainConfigForClient });
             logger.info(`Processing job for config: ${mainConfigForClient.id}, period: ${periodId}, config: ${config.id}`);
-
 
             const baseDimensions: any = getDimensions({
                 runtimeConfig,
@@ -66,9 +67,13 @@ export async function startDownloadWorker(configId: string) {
 
             const pageSize = runtimeConfig.pageSize ?? 50;
 
+            // ✅ Parallel requeue with p-limit
             if (!job.overrideDimensions && baseDimensions[heavyDimension].length > pageSize) {
                 const chunks = chunk(baseDimensions[heavyDimension], pageSize);
-                for (const part of chunks) {
+
+                const limit = pLimit(10);
+
+                await Promise.all(chunks.map(part => limit(async () => {
                     const paginatedDimensions = {
                         ...baseDimensions,
                         [heavyDimension]: part,
@@ -81,13 +86,13 @@ export async function startDownloadWorker(configId: string) {
                         runtimeConfig,
                         overrideDimensions: paginatedDimensions,
                     });
-                }
+                })));
+
                 channel.ack(msg);
                 return;
             }
 
             const dimensions = job.overrideDimensions || baseDimensions;
-
 
             const data = await fetchPagedData({
                 dimensions,
@@ -95,11 +100,11 @@ export async function startDownloadWorker(configId: string) {
                 client,
                 timeout: runtimeConfig.timeout,
             });
+
             logger.info(`Data downloaded`);
+
             if (isEmpty(data.dataValues)) {
-                logger.info(
-                    `No data found for ${config.id}: ${dimensions.dx}`,
-                );
+                logger.info(`No data found for ${config.id}: ${dimensions.dx}`);
                 const summary: DataDownloadSummary = {
                     type: "download",
                     id: v4(),
@@ -114,33 +119,26 @@ export async function startDownloadWorker(configId: string) {
                     ...summary,
                     configId: mainConfig.id,
                 });
+                channel.ack(msg);
                 return;
             }
-            logger.info(
-                `Processing data for ${dimensions.dx}`,
-            );
+
+            logger.info(`Processing data for ${dimensions.dx}`);
 
             const processedData = config.type === "ATTRIBUTE_VALUES"
                 ? await processAttributeComboData({
                     data,
                     dataItemsConfig: config,
                     categoryOptionId: head(
-                        config.filters![
-                        (
-                            config as DataServiceAttributeValuesDataItemsSource
-                        ).attributeId
-                        ],
+                        config.filters![(config as DataServiceAttributeValuesDataItemsSource).attributeId]
                     ) as string,
                 })
-                :
-                await processData({
+                : await processData({
                     data,
                     dataItems: config.dataItems,
                 });
 
-            logger.info(
-                `${processedData.dataValues.length} data values processed for ${JSON.stringify(dimensions)}`,
-            );
+            logger.info(`${processedData.dataValues.length} data values processed for ${JSON.stringify(dimensions)}`);
 
             if (!isEmpty(processedData.dataValues)) {
                 const filename = await saveDataFile({
@@ -148,9 +146,7 @@ export async function startDownloadWorker(configId: string) {
                     config: mainConfig,
                     itemsConfig: config,
                 });
-                logger.info(
-                    `Data saved for ${config.id}: ${dimensions.dx}`,
-                );
+                logger.info(`Data saved for ${config.id}: ${dimensions.dx}`);
 
                 const summary: DataDownloadSummary = {
                     type: "download",
@@ -170,11 +166,11 @@ export async function startDownloadWorker(configId: string) {
                     mainConfigId,
                     filename,
                 };
-                await pushToUploadQueue(uploadJob);
+                pushToUploadQueue(uploadJob);
                 logger.info(`Upload job pushed to queue for config: ${config.id}`);
             }
-            channel.ack(msg);
 
+            channel.ack(msg);
         } catch (e) {
             const errorMessage = e instanceof Error ? e.message : "Unknown error";
             const errorDetails = e instanceof AxiosError ? e.response?.data : undefined;
@@ -190,8 +186,8 @@ export async function startDownloadWorker(configId: string) {
                 errorDetails,
                 timestamp: new Date().toISOString(),
             });
+
             channel.nack(msg, false, false);
         }
     });
 }
-

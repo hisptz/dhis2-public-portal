@@ -70,8 +70,6 @@ export async function initializeDataDownload({
 			configId: mainConfigId,
 		});
 
-	    await startUploadWorker(mainConfigId);
-
 		await enqueueDownloadTasks({
 			mainConfig,
 			runtimeConfig,
@@ -169,8 +167,6 @@ export async function enqueueDownloadTasks({
 
 	await waitForQueueToReceiveMessages(queueName);
 
-    await waitForQueueToDrain({ queueName });
-
     const summary: DataDownloadSummary = {
         id: v4(),
         type: "download",
@@ -188,7 +184,7 @@ export async function enqueueDownloadTasks({
     const uploadQueueName = uploadQueue + configId;
 
 	await waitForQueueToReceiveMessages(uploadQueueName);
-    await waitForQueueToDrain({ queueName: uploadQueueName });
+   
 
     await completeUpload(configId);
 }

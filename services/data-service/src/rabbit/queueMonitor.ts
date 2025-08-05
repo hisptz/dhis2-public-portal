@@ -14,7 +14,7 @@ export const waitForQueueToDrain = async ({
   queueName,
   intervalMs = 5000,
   logProgress = true,
-  maxStuckChecks = 10,
+  maxStuckChecks = 20,
 }: QueueMonitorOptions & { maxStuckChecks?: number }): Promise<void> => {
   const host = process.env.RABBITMQ_HOST;
   const username = process.env.RABBITMQ_USER;

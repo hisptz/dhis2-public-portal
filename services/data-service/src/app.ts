@@ -6,8 +6,24 @@ import { serviceRouter } from "./routes/services";
 import { env } from "@/env";
 import * as fs from "node:fs";
 import { connectRabbit } from "./rabbit/publisher";
+import { startDownloadWorker } from "./rabbit/download.worker";
+import { startUploadWorker } from "./rabbit/upload.worker";
 
 const app = express();
+
+try {
+    await startDownloadWorker();
+    console.log("Download worker started");
+} catch (e) {
+    console.error("Failed to start download worker:", e);
+}
+
+try {
+    await startUploadWorker();
+    console.log("Upload worker started");
+} catch (e) {
+    console.error("Failed to start upload worker:", e);
+}
 
 app.use(express.json());
 
@@ -17,6 +33,7 @@ app.get("/", (req, res) => {
 app.use("/routes", dhis2routes);
 app.use("/status", serviceStatusRouter);
 app.use("/services", serviceRouter);
+
 
 
 if (env.SERVE_HTTP === "true") {
@@ -46,5 +63,4 @@ if (env.SERVE_HTTP === "true") {
 	).catch((err) => {
 		console.error("Failed to connect to RabbitMQ:", err);
 	});
-
 }
