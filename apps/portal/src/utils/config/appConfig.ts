@@ -50,22 +50,27 @@ export async function getAppConfigsFromNamespace<T>(
 }
 
 export async function getAppearanceConfig() {
-	const appearanceConfig =
-		await getAppConfigWithNamespace<AppAppearanceConfig>({
+	try {
+		const appearanceConfig =
+			await getAppConfigWithNamespace<AppAppearanceConfig>({
+				namespace: DatastoreNamespaces.MAIN_CONFIG,
+				key: "appearance",
+			});
+
+		const menuConfig = await getAppConfigWithNamespace<AppMenuConfig>({
 			namespace: DatastoreNamespaces.MAIN_CONFIG,
-			key: "appearance",
+			key: "menu",
 		});
 
-	const menuConfig = await getAppConfigWithNamespace<AppMenuConfig>({
-		namespace: DatastoreNamespaces.MAIN_CONFIG,
-		key: "menu",
-	});
-
-	if (!appearanceConfig || !menuConfig) {
+		if (!appearanceConfig || !menuConfig) {
+			return;
+		}
+		return {
+			appearanceConfig,
+			menuConfig,
+		};
+	} catch (error) {
+		console.error("Error fetching appearance config:", error);
 		return;
 	}
-	return {
-		appearanceConfig,
-		menuConfig,
-	};
 }

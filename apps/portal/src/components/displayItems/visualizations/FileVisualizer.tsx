@@ -43,7 +43,7 @@ export async function FileVisualizer({ config }: PDFVisualizerProps) {
 
 	const href = getServerImageUrl(config.id);
 
-	if (!data) {
+	if (!data || !href) {
 		return (
 			<div className="flex flex-col gap-4 justify-center items-center text-center h-full">
 				<IconCircleX color="error" fontSize="medium" />
