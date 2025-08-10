@@ -28,4 +28,4 @@ jobs:
         run: yarn manager build
       # Publish to the App Hub
       - name: Release to DHIS2 App Hub
-        run: yarn manager publish
+        run: yarn manager publish:app-hub
