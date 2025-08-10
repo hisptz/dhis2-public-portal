@@ -20,7 +20,6 @@ jobs:
       - uses: actions/setup-node@v2
         with:
           node-version: lts/*
-          cache: "yarn"
 
       - name: Install JS dependencies
         run: yarn install --frozen-lockfile
