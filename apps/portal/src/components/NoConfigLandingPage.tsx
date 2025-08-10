@@ -1,6 +1,14 @@
 "use client";
 
-import { Anchor, Button, Center, Container, Stack, Text, Title } from "@mantine/core";
+import {
+	Anchor,
+	Button,
+	Center,
+	Container,
+	Stack,
+	Text,
+	Title,
+} from "@mantine/core";
 import Link from "next/link";
 
 export function NoConfigLandingPage() {
