@@ -1,3 +1,16 @@
+## [1.3.2](https://github.com/hisptz/dhis2-public-portal/compare/v1.3.1...v1.3.2) (2025-08-10)
+
+
+### Bug Fixes
+
+* 500 error being displayed instead of no configuration page when the portal is connected to a DHIS2 instance without configuration ([bec7c7f](https://github.com/hisptz/dhis2-public-portal/commit/bec7c7ffb744e6546d39ecbdaf6a96ddecfd8d4c))
+* fixed issues with legends not working for pivot tables ([86c1810](https://github.com/hisptz/dhis2-public-portal/commit/86c1810730abdd8b37bb641764b48428b4420fbc)), closes [#240](https://github.com/hisptz/dhis2-public-portal/issues/240)
+
+
+### Reverts
+
+* Revert "chore(release): cut 1.3.1 [skip release]" ([3daea8c](https://github.com/hisptz/dhis2-public-portal/commit/3daea8c002184f35513a75694727c994c7253239))
+
 # [1.3.0](https://github.com/hisptz/dhis2-public-portal/compare/v1.2.3...v1.3.0) (2025-08-02)
 
 
