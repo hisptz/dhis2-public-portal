@@ -25,7 +25,7 @@ export function HeaderConfig({ appearanceConfig, refetchConfig }: Props) {
 	return (
 		<>
 			<section>
-				<ConfigurationTitle title={i18n.t("Header configuration")} />
+				<ConfigurationTitle data-test="configuration-title-Header configuration" title={i18n.t("Header configuration")} />
 				<div className="mx-2 flex flex-col gap-2">
 					{title && (
 						<ConfigurationDetails
@@ -77,6 +77,7 @@ export function HeaderConfig({ appearanceConfig, refetchConfig }: Props) {
 
 				<div className="mt-2">
 					<Button
+						data-test="update-header-button"
 						onClick={() => setShowHeaderConfig(true)}
 						small
 						secondary

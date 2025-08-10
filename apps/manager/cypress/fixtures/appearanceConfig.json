@@ -1,0 +1,84 @@
+{
+  "logo": "https://example.com/test-logo.png",
+  "colors": {
+    "primary": "#3366FF",
+    "background": "#F8F9FA",
+    "chartColors": [
+      "#3366FF",
+      "#FF6633",
+      "#33CC99",
+      "#9966FF",
+      "#FF9933",
+      "#33CCFF",
+      "#FF6699",
+      "#66CC33"
+    ]
+  },
+  "header": {
+    "style": {
+      "leadingLogo": {
+        "show": true,
+        "width": 70,
+        "height": 70
+      },
+      "trailingLogo": {
+        "show": true,
+        "width": 50,
+        "height": 50
+      },
+      "containerHeight": 150,
+      "coloredBackground": true,
+      "usePrimaryColorAsBackgroundColor": false,
+      "headerBackgroundColor": "#4A90E2"
+    },
+    "title": {
+      "text": "Test Portal Title",
+      "style": {
+        "align": "center",
+        "textSize": 32,
+        "textColor": "#FFFFFF"
+      }
+    },
+    "subtitle": {
+      "text": "Test Portal Subtitle for Cypress Testing",
+      "style": {
+        "textSize": 16,
+        "textColor": "#F0F0F0"
+      }
+    }
+  },
+  "footer": {
+    "copyright": "© Test Copyright 2023",
+    "showTitle": true,
+    "footerItems": [
+      {
+        "title": "Test Address",
+        "type": "static",
+        "staticContent": "<p>123 Test Street<br>Test City, 12345<br>Test Country</p>"
+      },
+      {
+        "title": "Test Links",
+        "type": "links",
+        "links": [
+          {
+            "url": "https://example.com/test1",
+            "name": "Test Link 1"
+          },
+          {
+            "url": "https://example.com/test2",
+            "name": "Test Link 2"
+          },
+          {
+            "url": "https://example.com/test3",
+            "name": "Test Link 3"
+          }
+        ]
+      },
+      {
+        "title": "Contact Us",
+        "type": "static",
+        "staticContent": "Email: test@example.com<br>Phone: +1 234 567 8900"
+      }
+    ]
+  }
+}
