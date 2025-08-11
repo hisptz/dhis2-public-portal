@@ -103,7 +103,7 @@ export function RunConfigSummaryDetails({
 			case "upload":
 				return summaries?.upload?.map((summary) => ({
 					...summary,
-					id: summary.filename,
+					id: summary.filename??'',
 					imported: summary.importSummary?.imported,
 					ignored: summary.importSummary?.ignored,
 					timestamp: summary.timestamp
