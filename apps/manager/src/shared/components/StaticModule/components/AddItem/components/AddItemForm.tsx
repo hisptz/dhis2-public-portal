@@ -22,15 +22,19 @@ import { useCreateItem } from "../hooks/create";
 import { useModule } from "../../../../ModulesPage/providers/ModuleProvider";
 import { useSaveModule } from "../../../hooks/namespace";
 
+export interface AddItemFormProps {
+	hide: boolean;
+	onClose: () => void;
+	onComplete: (item: StaticItemConfig) => void;
+	sortOrder: number;
+}
+
 export function AddItemForm({
 	hide,
 	onClose,
 	onComplete,
-}: {
-	hide: boolean;
-	onClose: () => void;
-	onComplete: (item: StaticItemConfig) => void;
-}) {
+	sortOrder,
+}: AddItemFormProps) {
 	const { createItem } = useCreateItem();
 	const module = useModule() as StaticModule;
 	const { save } = useSaveModule(module.id);
@@ -45,6 +49,7 @@ export function AddItemForm({
 			content: "",
 			icon: "",
 			shortDescription: "",
+			sortOrder,
 		},
 	});
 
@@ -57,12 +62,13 @@ export function AddItemForm({
 				};
 				await save(module);
 			}
-			await createItem(data);
+			const itemWithSortOrder = { ...data, sortOrder };
+			await createItem(itemWithSortOrder);
 			show({
-				message: i18n.t("Module created successfully"),
+				message: i18n.t("Item created successfully"),
 				type: { success: true },
 			});
-			onComplete(data);
+			onComplete(itemWithSortOrder);
 			onClose();
 		} catch (e) {
 			if (e instanceof FetchError || e instanceof Error) {
@@ -86,6 +92,7 @@ export function AddItemForm({
 							label={i18n.t("Title")}
 						/>
 						<RHFIDField label="ID" name="id" dependsOn="title" />
+						{/* <input type="hidden" {...form.register("sortOrder")} /> */}
 					</form>
 				</ModalContent>
 				<ModalActions>

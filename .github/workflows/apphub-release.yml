@@ -20,7 +20,6 @@ jobs:
       - uses: actions/setup-node@v2
         with:
           node-version: lts/*
-          cache: "yarn"
 
       - name: Install JS dependencies
         run: yarn install --frozen-lockfile
@@ -29,4 +28,4 @@ jobs:
         run: yarn manager build
       # Publish to the App Hub
       - name: Release to DHIS2 App Hub
-        run: yarn manager publish
+        run: yarn manager publish:app-hub

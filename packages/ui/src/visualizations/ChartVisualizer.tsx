@@ -58,7 +58,6 @@ export const ChartVisualizer = memo(function ChartVisualizer({
 					showFilterAsTitle: false,
 					name: visualization.displayName,
 					allowChartTypeChange: false,
-					// @ts-expect-error fixes on the lib
 					legendSet: legendSet,
 				}}
 			/>

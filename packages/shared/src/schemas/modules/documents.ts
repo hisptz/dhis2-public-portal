@@ -10,6 +10,7 @@ export const documentItemSchema = z.object({
 	id: z.string(),
 	label: z.string(),
 	type: z.nativeEnum(DocumentType),
+	sortOrder: z.number().optional(),
 });
 
 export type DocumentItem = z.infer<typeof documentItemSchema>;
@@ -24,6 +25,7 @@ export const baseDocumentModuleConfigSchema = z.object({
 export const documentGroupSchema = z.object({
 	id: z.string(),
 	title: z.string(),
+	sortOrder: z.number().optional(),
 	items: z.array(documentItemSchema),
 });
 

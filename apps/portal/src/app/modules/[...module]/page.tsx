@@ -10,6 +10,7 @@ import { BaseCardError } from "@/components/CardError";
 import { DocumentsModule } from "@/components/modules/DocumentsModule/DocumentsModule";
 import { ModuleMetaProps } from "@/types/appMetadata";
 import { getModuleMetadata } from "@/utils/moduleMetadata";
+import { getAppearanceConfig } from "@/utils/config/appConfig";
 
 export async function generateMetadata(props: ModuleMetaProps) {
 	return await getModuleMetadata({ props });
@@ -24,6 +25,9 @@ export default async function ModuleLandingPage({
 }) {
 	const { module } = await params;
 	const searchParamsValue = await searchParams;
+
+	const appearanceConfigData = await getAppearanceConfig();
+	const titlesColor = appearanceConfigData?.appearanceConfig.colors.titlesColor;
 
 	if (module.includes("details")) {
 		//We are dealing with a details page
@@ -70,6 +74,7 @@ export default async function ModuleLandingPage({
 				<VisualizationModule
 					searchParams={searchParamsValue}
 					config={moduleConfig.config}
+					titlesColor={titlesColor ?? "#120d0c"}
 				/>
 			);
 		case ModuleType.STATIC:
@@ -77,6 +82,7 @@ export default async function ModuleLandingPage({
 				<StaticModule
 					moduleId={moduleId}
 					config={moduleConfig.config}
+					titlesColor={titlesColor ?? "#120d0c"}
 				/>
 			);
 		case ModuleType.DOCUMENTS:
@@ -84,6 +90,7 @@ export default async function ModuleLandingPage({
 				<DocumentsModule
 					config={moduleConfig.config}
 					searchParams={searchParamsValue}
+					titlesColor={titlesColor ?? "#120d0c"}
 				/>
 			);
 		default:
