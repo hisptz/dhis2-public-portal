@@ -11,20 +11,6 @@ import { startUploadWorker } from "./rabbit/upload.worker";
 
 const app = express();
 
-try {
-    await startDownloadWorker();
-    console.log("Download worker started");
-} catch (e) {
-    console.error("Failed to start download worker:", e);
-}
-
-try {
-    await startUploadWorker();
-    console.log("Upload worker started");
-} catch (e) {
-    console.error("Failed to start upload worker:", e);
-}
-
 app.use(express.json());
 
 app.get("/", (req, res) => {

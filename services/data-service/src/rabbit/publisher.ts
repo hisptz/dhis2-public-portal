@@ -36,8 +36,8 @@ export async function connectRabbit(maxRetries = 10, delayMs = 5000) {
             );
 
             if (attempt >= maxRetries) {
-                logger.error("🚨 Max retries reached. Could not connect to RabbitMQ.");
-                throw err; // Fail completely
+                logger.error("Max retries reached. Could not connect to RabbitMQ.");
+                throw err;
             }
 
             logger.info(`🔄 Retrying in ${delayMs / 1000} seconds...`);

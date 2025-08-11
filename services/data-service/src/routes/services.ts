@@ -5,26 +5,22 @@ import { initializeDataDownload } from "@/services/data-download";
 import logger from "@/logging";
 import { AxiosError } from "axios";
 import { getDownloadSummary, getUploadSummary, updateSummaryFile } from "@/services/summary";
-import {  getQueueStatus } from "@/services/status";
+import { getQueueStatus } from "@/services/status";
 import { v4 } from "uuid";
 import { startDownloadWorker } from "@/rabbit/download.worker";
 import { downloadQueue, uploadQueue } from "@/rabbit/publisher";
 import { startUploadWorker } from "@/rabbit/upload.worker";
 
 export const serviceRouter = Router();
-/*
- Initiates data download and upload simultaneously.
- @params
-  configIds - required, list of configurations to run data exchange on
- * */
-
 serviceRouter.post("/data-download/:configId", async (req, res) => {
 	try {
 		const { configId } = req.params;
+		await startDownloadWorker(configId);
+        await startUploadWorker(configId);
 
 		const parsedBody = dataDownloadBodySchema.parse(req.body);
 
-	
+
 		void initializeDataDownload({
 			mainConfigId: configId,
 			dataItemsConfigIds: parsedBody.dataItemsConfigIds,
@@ -101,43 +97,43 @@ serviceRouter.get("/data-download/:configId/summary", async (req, res) => {
 });
 
 serviceRouter.get(["/data-download/:configId/status", "/data-upload/:configId/status"], async (req, res) => {
-  try {
-    const { configId } = req.params;
-    const path = req.path;
+	try {
+		const { configId } = req.params;
+		const path = req.path;
 
-    const queueName = path.startsWith("/data-download/")
-      ? downloadQueue+configId
-      : path.startsWith("/data-upload/")
-      ? uploadQueue+configId
-      : null;
+		const queueName = path.startsWith("/data-download/")
+			? downloadQueue + configId
+			: path.startsWith("/data-upload/")
+				? uploadQueue + configId
+				: null;
 
-    if (!queueName) {
-      return res.status(400).json({
-        status: "failed",
-        message: "Unrecognized queue type",
-      });
-    }
+		if (!queueName) {
+			return res.status(400).json({
+				status: "failed",
+				message: "Unrecognized queue type",
+			});
+		}
 
-    const status = await getQueueStatus(queueName);
+		const status = await getQueueStatus(queueName);
 
-    if (!status) {
-      return res.status(404).json({
-        status: "failed",
-        message: "Queue status not found",
-      });
-    }
+		if (!status) {
+			return res.status(404).json({
+				status: "failed",
+				message: "Queue status not found",
+			});
+		}
 
-    return res.json({
-      configId,
-      ...status,
-    });
+		return res.json({
+			configId,
+			...status,
+		});
 
-  } catch (error: any) {
-    res.status(500).json({
-      status: "failed",
-      message: error.message,
-    });
-  }
+	} catch (error: any) {
+		res.status(500).json({
+			status: "failed",
+			message: error.message,
+		});
+	}
 });
 
 serviceRouter.get("/data-upload/:configId/summary", async (req, res) => {

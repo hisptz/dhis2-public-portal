@@ -4,15 +4,53 @@ import { uploadQueue } from "./publisher";
 import { updateSummaryFile } from "@/services/summary";
 import { DataUploadSummary } from "@packages/shared/schemas";
 import { uploadDataFromFile } from "@/services/data-upload";
+import { scheduleReconnect } from "./download.worker";
 
-export async function startUploadWorker() {
-    const configId = 'hmis';
+
+const activeUploadWorkers = new Map();
+
+export async function startUploadWorker(configId: string) {
+    let channelClosed = false;
+    if (activeUploadWorkers.has(configId)) {
+        logger.info(`Upload worker for configId "${configId}" is already running.`);
+        return activeUploadWorkers.get(configId);
+    }
+
     const rabbitUri = process.env.RABBITMQ_URI || "amqp://admin:Dhis%402025@vmi2689920.contaboserver.net:5672";
-    const conn = await amqp.connect(rabbitUri);
+    let conn;
+    try {
+        conn = await amqp.connect(rabbitUri);
+    } catch (err: any) {
+        logger.error(`Failed to connect to RabbitMQ for configId "${configId}": ${err.message || err}`);
+        throw err;
+    }
+
+    conn.on("close", () => {
+        logger.warn(`RabbitMQ connection closed for configId "${configId}".`);
+        activeUploadWorkers.delete(configId);
+        scheduleReconnect(configId);
+    });
+
+    conn.on("error", (err) => {
+        logger.error(`RabbitMQ connection error for configId "${configId}": ${err.message}`);
+    });
+
     const channel = await conn.createChannel();
 
     const queueName = uploadQueue + configId;
     await channel.assertQueue(queueName, { durable: true });
+
+    channel.on("close", () => {
+        channelClosed = true;
+        logger.warn(`RabbitMQ channel closed for configId "${configId}". Reconnecting...`);
+        activeUploadWorkers.delete(configId);
+        scheduleReconnect(configId);
+    });
+
+    channel.on("error", (err) => {
+        logger.error(`RabbitMQ channel error for configId "${configId}": ${err.message}`);
+    });
+
 
     channel.prefetch(100);
 
@@ -32,17 +70,25 @@ export async function startUploadWorker() {
                 timestamp: new Date().toISOString(),
             };
             await uploadDataFromFile({ filename: filename, configId: mainConfigId });
-         
+
             await updateSummaryFile({
                 ...summary,
-               configId: mainConfigId,
+                configId: mainConfigId,
             });
-            channel.ack(msg);
+            if (!channelClosed) channel.ack(msg);
         } catch (err) {
-          logger.error(`Upload failed: ${err}`);
-          channel.nack(msg, false, false);
+            logger.error(`Upload failed: ${err}`);
+            if (!channelClosed) {
+                try {
+                    channel.nack(msg, false, true);
+                } catch (ackErr: any) {
+                    logger.error(`Failed to nack message for ${configId}: ${ackErr.message || ackErr}`);
+                }
+            }
         }
     });
+
+    activeUploadWorkers.set(configId, { conn, channel });
 }
 
 

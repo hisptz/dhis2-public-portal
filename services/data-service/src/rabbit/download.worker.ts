@@ -15,14 +15,60 @@ import pLimit from 'p-limit';
 
 dotenv.config();
 
+const activeDownloadWorkers = new Map();
 
-export async function startDownloadWorker() {
-    const configId = 'hmis';
+export function scheduleReconnect(configId: string, attempt = 1) {
+    const delay = Math.min(30000, attempt * 5000);
+    logger.warn(`Retrying RabbitMQ connection for configId "${configId}" in ${delay / 1000}s...`);
+    setTimeout(() => {
+        startDownloadWorker(configId).catch(() => {
+            scheduleReconnect(configId, attempt + 1);
+        });
+    }, delay);
+}
+
+export async function startDownloadWorker(configId: string) {
+    let channelClosed = false;
+    if (activeDownloadWorkers.has(configId)) {
+        logger.info(`Download worker for configId "${configId}" is already running.`);
+        return activeDownloadWorkers.get(configId);
+    }
+
     const rabbitUri = process.env.RABBITMQ_URI || "amqp://admin:Dhis%402025@vmi2689920.contaboserver.net:5672";
-    const conn = await amqp.connect(rabbitUri);
+    let conn;
+    try {
+        conn = await amqp.connect(rabbitUri);
+    } catch (err: any) {
+        logger.error(`Failed to connect to RabbitMQ for configId "${configId}": ${err.message || err}`);
+        throw err;
+    }
+
+    conn.on("close", () => {
+
+        logger.warn(`RabbitMQ connection closed for configId "${configId}".`);
+        activeDownloadWorkers.delete(configId);
+        scheduleReconnect(configId);
+    });
+
+    conn.on("error", (err) => {
+        logger.error(`RabbitMQ connection error for configId "${configId}": ${err.message}`);
+    });
+
     const channel = await conn.createChannel();
     const queueName = downloadQueue + configId;
     await channel.assertQueue(queueName, { durable: true });
+
+    channel.on("close", () => {
+        channelClosed = true;
+        logger.warn(`RabbitMQ channel closed for configId "${configId}". Reconnecting...`);
+        activeDownloadWorkers.delete(configId);
+        scheduleReconnect(configId);
+    });
+
+    channel.on("error", (err) => {
+        logger.error(`RabbitMQ channel error for configId "${configId}": ${err.message}`);
+    });
+
 
     channel.prefetch(100);
 
@@ -40,7 +86,7 @@ export async function startDownloadWorker() {
 
         if (!mainConfigId || !periodId || !config || !runtimeConfig) {
             logger.warn("Invalid job received", job);
-            channel.ack(msg);
+            if (!channelClosed) channel.ack(msg);
             return;
         }
 
@@ -88,7 +134,7 @@ export async function startDownloadWorker() {
                     });
                 })));
 
-                channel.ack(msg);
+                if (!channelClosed) channel.ack(msg);
                 return;
             }
 
@@ -119,7 +165,7 @@ export async function startDownloadWorker() {
                     ...summary,
                     configId: mainConfig.id,
                 });
-                channel.ack(msg);
+                if (!channelClosed) channel.ack(msg);
                 return;
             }
 
@@ -169,8 +215,7 @@ export async function startDownloadWorker() {
                 pushToUploadQueue(uploadJob);
                 logger.info(`Upload job pushed to queue for config: ${config.id}`);
             }
-
-            channel.ack(msg);
+            if (!channelClosed) channel.ack(msg);
         } catch (e) {
             const errorMessage = e instanceof Error ? e.message : "Unknown error";
             const errorDetails = e instanceof AxiosError ? e.response?.data : undefined;
@@ -186,8 +231,14 @@ export async function startDownloadWorker() {
                 errorDetails,
                 timestamp: new Date().toISOString(),
             });
-
-            channel.nack(msg, false, false);
+            if (!channelClosed) {
+                try {
+                    channel.nack(msg, false, true);
+                } catch (ackErr: any) {
+                    logger.error(`Failed to nack message for ${configId}: ${ackErr.message || ackErr}`);
+                }
+            }
         }
     });
+    activeDownloadWorkers.set(configId, { conn, channel });
 }
