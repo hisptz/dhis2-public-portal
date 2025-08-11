@@ -6,7 +6,6 @@ import {
 } from "@packages/shared/schemas";
 import logger from "@/logging";
 import { getDimensions } from "@/utils/dimensions";
-import { dataDownloadQueues } from "@/variables/queue";
 import { chunk } from "lodash";
 import { categoriesMeta } from "@/variables/meta";
 import { getCategoryMetadata } from "@/utils/metadata";
@@ -44,10 +43,7 @@ export async function downloadDataForDxItems({
 			logger.info(
 				`Heavy dimension is small enough to download all at once`,
 			);
-			await dataDownloadQueues[meta.mainConfig.id].push({
-				dimensions,
-				config,
-			});
+			
 			logger.info(`Download complete`);
 			return;
 		}
@@ -60,10 +56,7 @@ export async function downloadDataForDxItems({
 				...dimensions,
 				[heavyDimension]: iteration,
 			};
-			dataDownloadQueues[meta.mainConfig.id].push({
-				dimensions: paginatedDimensions,
-				config: config,
-			});
+			
 		}
 	} catch (e) {
 		if (e instanceof Error) {
@@ -132,13 +125,6 @@ export async function downloadDataForAttributeItems({
 						},
 					)}`,
 				);
-				dataDownloadQueues[meta.mainConfig.id].push({
-					dimensions: paginatedDimensions,
-					filters: {
-						[config.attributeId]: [categoryOption],
-					},
-					config,
-				});
 			}
 		}
 	} catch (e) {

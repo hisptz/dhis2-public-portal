@@ -1,31 +1,6 @@
-import { dataDownloadQueues } from "@/variables/queue";
-import { get } from "lodash";
 import axios from "axios";
 import { DataServiceRunStatus } from "@packages/shared/schemas";
 import logger from "@/logging";
-
-export function getDownloadStatus(configId: string) {
-	const downloadQueue = get(dataDownloadQueues, configId);
-	if (!downloadQueue) {
-		return {
-			status: DataServiceRunStatus.NOT_STARTED,
-		};
-	}
-	if (downloadQueue.idle()) {
-		return {
-			status: DataServiceRunStatus.IDLE,
-		};
-	}
-	if (downloadQueue.running() > 0) {
-		return {
-			status: DataServiceRunStatus.RUNNING,
-		};
-	}
-
-	return {
-		status: DataServiceRunStatus.UNKNOWN,
-	};
-}
 
 
 

@@ -67,7 +67,7 @@ export async function startDownloadWorker() {
 
             const pageSize = runtimeConfig.pageSize ?? 50;
 
-            // ✅ Parallel requeue with p-limit
+            // Parallel requeue with p-limit
             if (!job.overrideDimensions && baseDimensions[heavyDimension].length > pageSize) {
                 const chunks = chunk(baseDimensions[heavyDimension], pageSize);
 
