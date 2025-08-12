@@ -25,6 +25,7 @@ type Props = {
 	onClose: () => void;
 	onSubmit: (visualization: DocumentItem) => void;
 	documentItem?: DocumentItem;
+	sortOrder?: number;
 };
 
 const documentPayloadSchema = documentItemSchema.extend({
@@ -38,6 +39,7 @@ export function AddDocumentForm({
 	onClose,
 	onSubmit,
 	documentItem,
+	sortOrder,
 }: Props) {
 	const { show } = useAlert(
 		({ message }) => message,
@@ -51,6 +53,7 @@ export function AddDocumentForm({
 		shouldFocusError: false,
 		defaultValues: {
 			...documentItem,
+			sortOrder: sortOrder ?? 1,
 		},
 	});
 

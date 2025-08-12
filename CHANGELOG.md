@@ -1,3 +1,61 @@
+## [1.3.2](https://github.com/hisptz/dhis2-public-portal/compare/v1.3.1...v1.3.2) (2025-08-10)
+
+
+### Bug Fixes
+
+* 500 error being displayed instead of no configuration page when the portal is connected to a DHIS2 instance without configuration ([bec7c7f](https://github.com/hisptz/dhis2-public-portal/commit/bec7c7ffb744e6546d39ecbdaf6a96ddecfd8d4c))
+* fixed issues with legends not working for pivot tables ([86c1810](https://github.com/hisptz/dhis2-public-portal/commit/86c1810730abdd8b37bb641764b48428b4420fbc)), closes [#240](https://github.com/hisptz/dhis2-public-portal/issues/240)
+
+
+### Reverts
+
+* Revert "chore(release): cut 1.3.1 [skip release]" ([3daea8c](https://github.com/hisptz/dhis2-public-portal/commit/3daea8c002184f35513a75694727c994c7253239))
+
+# [1.3.0](https://github.com/hisptz/dhis2-public-portal/compare/v1.2.3...v1.3.0) (2025-08-02)
+
+
+### Bug Fixes
+
+* **dataVisualization:** handle table downloads for explicit table chart type ([c52e6cb](https://github.com/hisptz/dhis2-public-portal/commit/c52e6cb341348c5a283e2701cbc2debab5f8428a))
+* **GridSection:** adjust grid column configuration for responsive layout ([a45c33f](https://github.com/hisptz/dhis2-public-portal/commit/a45c33f44a91c4e345250c559bb58ba507aeaed4))
+* **i18n:** update POT creation and revision dates, add new menu item messages ([9a24d89](https://github.com/hisptz/dhis2-public-portal/commit/9a24d89314f614f905639762014f00979162105d))
+* **i18n:** update POT creation and revision dates; change 'public portal manager' to 'FlexiPortal Manager' for branding consistency ([7fb9bc6](https://github.com/hisptz/dhis2-public-portal/commit/7fb9bc6978f12357880fdb32703c130a0707ab6a))
+* **layout:** update screen size labels to use title case for consistency ([ca95046](https://github.com/hisptz/dhis2-public-portal/commit/ca95046c4f03be492065ab8f75c2c62ede691312))
+* **MapVisComponent:** enhance org unit and period selection handling from URL search params ([3325432](https://github.com/hisptz/dhis2-public-portal/commit/332543241ea2a6efa5d026ee02f68d821810be87))
+* **modules:** add missing label for welcome note section ([2c2b87e](https://github.com/hisptz/dhis2-public-portal/commit/2c2b87e67a05803f8117ab23bf7bdefd5e6e4b3c))
+* **portal:** update grid layout to support responsive column adjustments ([f65f87a](https://github.com/hisptz/dhis2-public-portal/commit/f65f87af665355f1293bd0e429a106f10e048521))
+* **Sections:** restore 'title' column in data table for section display ([af3d445](https://github.com/hisptz/dhis2-public-portal/commit/af3d4455ca584735d958d98893416da730873652))
+* **section:** update baseSectionSchema to ensure label is required and title is optional ([b4ffde0](https://github.com/hisptz/dhis2-public-portal/commit/b4ffde0c83b310fc15cb727564c842a39e1796dc))
+* **section:** update field names from 'title' to 'label' for consistency across components ([8937f92](https://github.com/hisptz/dhis2-public-portal/commit/8937f92dd144e9853c4ba89c7adb3f012e3095f0))
+* **section:** update input selectors for adding sections and localize section title ([2c67433](https://github.com/hisptz/dhis2-public-portal/commit/2c67433becd6b6dec45d93fc6a49d1da44e01c09))
+* **sort-document:** update i18n keys and modal titles for better clarity ([22f7e08](https://github.com/hisptz/dhis2-public-portal/commit/22f7e08f926bdea49e8fec6a5762bba964be0928))
+* **sort-items:** update i18n keys for button labels ([857636c](https://github.com/hisptz/dhis2-public-portal/commit/857636c04711e26e44ee5ee223d13922a74d357e))
+* **tests:** update button label assertions for order actions ([2cde0f9](https://github.com/hisptz/dhis2-public-portal/commit/2cde0f9ac59a68bdcec80b8398cbb50271afe95d))
+* **year-by-year:** relative periods fixes ([1e8ecd7](https://github.com/hisptz/dhis2-public-portal/commit/1e8ecd762390d3dcdb31e95c48309fe7426dc778))
+* **year-over-year:** adjust period formatting and analytics fetch order ([40b9358](https://github.com/hisptz/dhis2-public-portal/commit/40b935836fadfa4c5760a6376c42146b084b91ff))
+
+
+### Features
+
+* **AddDocumentForm:** add sortOrder prop to manage document sorting ([f6f85fd](https://github.com/hisptz/dhis2-public-portal/commit/f6f85fd6326c43e09978165a7dea15a662416f5e))
+* **AddDocumentGroup:** pass sortOrder prop to DocumentGroupForm component ([d785a54](https://github.com/hisptz/dhis2-public-portal/commit/d785a549980d65a655a33596a48f94029ddbcf08))
+* **AddItemForm:** refactor props interface and include sortOrder in item creation ([7da96de](https://github.com/hisptz/dhis2-public-portal/commit/7da96de5e4ed52598fc95f52b731478fdbf29f18))
+* **AddItem:** integrate item list fetching and sorting logic ([30f8a92](https://github.com/hisptz/dhis2-public-portal/commit/30f8a92e0d6011e5119b3b1eb8f87f52a028e747))
+* **appearance:** add titles color configuration and update related components ([32447b6](https://github.com/hisptz/dhis2-public-portal/commit/32447b68d6e97d2cedf605b3dc2b73c8e2b494fb))
+* **DocumentGroupConfig:** integrate SortDocumentGroup component and handle sorting ([2155897](https://github.com/hisptz/dhis2-public-portal/commit/2155897bc3d4bdd8939b49b46c22097a11f00348))
+* **DocumentGroupForm:** make sortOrder prop optional in DocumentGroupForm component ([a7b8dbb](https://github.com/hisptz/dhis2-public-portal/commit/a7b8dbbf1ed2e8072f7f74b99690037495ff21ef))
+* **documents:** make sortOrder optional in documentItemSchema and documentGroupSchema ([9082f06](https://github.com/hisptz/dhis2-public-portal/commit/9082f06bff31d93757d0af3761fab9409a0a354b))
+* **sortDocumentForm:** add SortDocumentForm component for draggable item sorting ([5d4b41d](https://github.com/hisptz/dhis2-public-portal/commit/5d4b41ddd85f9c98ce69fb4461b0323afcab29ff))
+* **SortDocumentGroup:** add SortDocumentGroup component for sorting document groups ([01f0153](https://github.com/hisptz/dhis2-public-portal/commit/01f0153e3b7975ab1c674107831cc14bafe73ff5))
+* **SortDocumentGroupForm:** add SortDocumentGroupForm component for sorting document groups ([be138bf](https://github.com/hisptz/dhis2-public-portal/commit/be138bfe921b46a92d907710c78a0f9fcc07e684))
+* **SortDocument:** implement SortDocument component for sorting document items ([10d71f9](https://github.com/hisptz/dhis2-public-portal/commit/10d71f93310e9b8c0904e556cca27ff231a75871))
+* **SortItems:** add SortItems component for item sorting functionality ([f1b4c9e](https://github.com/hisptz/dhis2-public-portal/commit/f1b4c9e248c4e6700adc63b7d0cee864ed94f963))
+* **SortItemsForm:** implement draggable item sorting with modal interface ([b6f9cd1](https://github.com/hisptz/dhis2-public-portal/commit/b6f9cd1faab7000587dd07dfe17a07ed33cba3c6))
+* **StaticItemList:** add sorting functionality with SortItems component ([cb31b76](https://github.com/hisptz/dhis2-public-portal/commit/cb31b76328576ebbfb2c9ee34bd219c53c41a130))
+* **staticItemSchema:** add optional sortOrder field to static item schema ([fbc58b9](https://github.com/hisptz/dhis2-public-portal/commit/fbc58b9beba5f02203717a4aa567efb8aec73969))
+* **UpdateItem:** implement update item functionality with mutation hook ([6b7d9c4](https://github.com/hisptz/dhis2-public-portal/commit/6b7d9c497aeb004a21816b5e1872999338d6e631))
+* **visualization:** update heading color configuration in VisualizationModule and related components ([afd2b94](https://github.com/hisptz/dhis2-public-portal/commit/afd2b944fe144079d95f867ecc6140d796ebbad1))
+
 ## [1.2.3](https://github.com/hisptz/dhis2-public-portal/compare/v1.2.2...v1.2.3) (2025-07-15)
 
 

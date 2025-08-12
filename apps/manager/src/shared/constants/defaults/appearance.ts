@@ -5,6 +5,7 @@ export const defaultAppearanceConfig: AppAppearanceConfig = {
 	colors: {
 		primary: "#2C6693",
 		background: "#F3F5F7",
+		titlesColor: "#120d0c",
 		chartColors: [
 			"#2c6693",
 			"#5a6aaa",

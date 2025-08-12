@@ -3436,46 +3436,12 @@
   dependencies:
     "@hapi/hoek" "^9.0.0"
 
-"@hisptz/dhis2-analytics@^2.1.14":
-  version "2.1.14"
-  resolved "https://registry.yarnpkg.com/@hisptz/dhis2-analytics/-/dhis2-analytics-2.1.14.tgz#5a30093bad2741ebeb3c4d24171dc90d5c318ae9"
-  integrity sha512-Qjdj/yChQFXGwu/VdhKN7ssYGMwO2LunskfMinhwXN2pxjoYjWWEWh0VbkfE72ClwPZ+Db610p/yr+yRWY7R6w==
+"@hisptz/dhis2-analytics@^2.1.16":
+  version "2.1.16"
+  resolved "https://registry.yarnpkg.com/@hisptz/dhis2-analytics/-/dhis2-analytics-2.1.16.tgz#90745980d932a11dd12913260b72fc7b683c893e"
+  integrity sha512-J0sZ2Io0VK9DQdLA81Qg0hTfuk6wzKoWGsyLJgEjlZnDUxbTUo/zXteajDotdA6QiXjeJuwVhvZo+tgoL7pLeA==
   dependencies:
     "@google/earthengine" "^1.5.21"
-    "@hisptz/dhis2-ui" "2.0.48"
-    "@hisptz/dhis2-utils" "2.0.18"
-    "@react-leaflet/core" "^2.1.0"
-    "@react-pdf/renderer" "^4.0.0"
-    "@tanstack/react-table" "^8.19.3"
-    async-es "^3.2.5"
-    d3-color "^3.1.0"
-    d3-scale "^4.0.2"
-    file-saver "^2.0.5"
-    highcharts "^12.2.0"
-    highcharts-react-official "^3.2.1"
-    jotai-devtools "^0.10.1"
-    leaflet "^1.9.4"
-    leaflet-easyprint "^2.1.9"
-    leaflet.fullscreen "^4.0.0"
-    luxon "^3.4.4"
-    react-circular-progressbar "^2.1.0"
-    react-dnd "^16.0.1"
-    react-dnd-html5-backend "^16.0.1"
-    react-error-boundary "^4.0.12"
-    react-helmet "^6.1.0"
-    react-leaflet "^4.2.1"
-    react-leaflet-custom-control "^1.4.0"
-    react-query "^3.39.3"
-    react-spring "^9.6.1"
-    react-to-print "^3.0.1"
-    screenfull "^6.0.2"
-    xlsx "^0.18.5"
-
-"@hisptz/dhis2-analytics@^2.1.9":
-  version "2.1.9"
-  resolved "https://registry.yarnpkg.com/@hisptz/dhis2-analytics/-/dhis2-analytics-2.1.9.tgz#4b5efb708fce22c8f2b17f4962a3ab1cf9604ab6"
-  integrity sha512-R76KC/w8H+43t2YqD/0Ljirsrh8PThMvHvTwaX0G/z792uaJZnMfbdbS+6eJbnT7IQR4TwHG+GXmjGtzuYKQ6w==
-  dependencies:
     "@hisptz/dhis2-ui" "2.0.48"
     "@hisptz/dhis2-utils" "2.0.18"
     "@react-leaflet/core" "^2.1.0"

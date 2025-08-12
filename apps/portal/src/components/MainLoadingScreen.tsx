@@ -9,7 +9,6 @@ import { getServerImageUrl } from "@/utils/server/images";
 export default async function MainLoadingScreen() {
 	const config = await getAppearanceConfig();
 	const appMeta = await getAppMeta();
-
 	const logo = appMeta?.icon ? getServerImageUrl(appMeta?.icon) : undefined;
 
 	if (!config) {

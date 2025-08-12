@@ -17,38 +17,21 @@ export async function getAppConfigWithNamespace<T>({
 	}
 }
 
-export async function updateAppConfigWithNamespace<T>({
-	namespace,
-	key,
-	data,
-}: {
-	namespace: DatastoreNamespaces;
-	key: string;
-	data: T;
-}) {
-	const url = `dataStore/${namespace}/${key}`;
-	const response = await dhis2HttpClient.put<
-		T,
-		{
-			httpStatusCode: number;
-			status: string;
-			message: string;
-		}
-	>(url, data);
-	return response.httpStatusCode === 200;
-}
-
 export async function getAppConfigsFromNamespace<T>(
 	namespace: DatastoreNamespaces,
 ): Promise<T[]> {
-	const url = `dataStore/${namespace}`;
-	const response = await dhis2HttpClient.get<{
-		entries: { key: string; value: T }[];
-		pager: Pagination;
-	}>(url, {
-		params: {
-			fields: ".",
-		},
-	});
-	return response?.entries.map(({ value }) => value) ?? [];
+	try {
+		const url = `dataStore/${namespace}`;
+		const response = await dhis2HttpClient.get<{
+			entries: { key: string; value: T }[];
+			pager: Pagination;
+		}>(url, {
+			params: {
+				fields: ".",
+			},
+		});
+		return response?.entries.map(({ value }) => value) ?? [];
+	} catch (e) {
+		return [];
+	}
 }
