@@ -1,0 +1,9 @@
+services:
+  data-service:
+    build: .
+    container_name: data-service
+    ports:
+      - "4002:4002"
+    env_file:
+      - .env
+    restart: unless-stopped

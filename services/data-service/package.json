@@ -11,7 +11,6 @@
   },
   "dependencies": {
     "@dhis2/multi-calendar-dates": "^2.1.0",
-    "@packages/shared": "*",
     "amqplib": "^0.10.8",
     "async": "^3.2.6",
     "axios": "^1.8.4",
