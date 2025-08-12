@@ -1,8 +1,10 @@
 services:
   data-service:
-    build: .
     container_name: data-service
+    build:
+      context: ../../      
+      dockerfile: services/data-service/Dockerfile
     ports:
       - "4002:4002"
-    command: yarn dev
     restart: unless-stopped
+    command: yarn workspace data-service dev
