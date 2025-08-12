@@ -6,8 +6,6 @@ import { serviceRouter } from "./routes/services";
 import { env } from "@/env";
 import * as fs from "node:fs";
 import { connectRabbit } from "./rabbit/publisher";
-import { startDownloadWorker } from "./rabbit/download.worker";
-import { startUploadWorker } from "./rabbit/upload.worker";
 
 const app = express();
 

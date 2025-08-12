@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "Service to transfer data from source DHIS2 instances to the portal",
   "main": "index.js",
+  "private": true,
   "license": "MIT",
   "scripts": {
     "dev": "nodemon src/app.ts",
@@ -10,6 +11,7 @@
     "postbuild": "./package.sh"
   },
   "dependencies": {
+    "@packages/shared": "*",
     "@dhis2/multi-calendar-dates": "^2.1.0",
     "amqplib": "^0.10.8",
     "async": "^3.2.6",
@@ -34,9 +36,12 @@
     "@types/figlet": "^1.7.0",
     "@types/luxon": "^3.6.2",
     "@types/node": "^22.14.0",
+    "dotenv": "^16.5.0",
+    "dotenv-cli": "^8.0.0",
     "bestzip": "^2.2.1",
     "nodemon": "^3.1.9",
     "tsup": "^8.4.0",
     "typescript": "^5.8.3"
-  }
+  },
+ "packageManager": "yarn@1.22.22"
 }

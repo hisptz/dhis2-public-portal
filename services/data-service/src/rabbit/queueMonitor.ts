@@ -1,8 +1,8 @@
 import logger from "@/logging";
 import axios from "axios";
-import dotenv from "dotenv";
+import {config} from "dotenv";
 
-dotenv.config();
+config();
 
 interface QueueMonitorOptions {
   queueName: string;

@@ -9,11 +9,11 @@ import { DatastoreNamespaces } from '@packages/shared/constants';
 import { DataDownloadSummary, DataServiceAttributeValuesDataItemsSource, DataServiceConfig } from '@packages/shared/schemas';
 import { chunk, head, isEmpty } from 'lodash';
 import { AxiosError } from 'axios';
-import dotenv from "dotenv";
+import { config } from "dotenv";
 import { getDimensions } from '@/utils/dimensions';
 import pLimit from 'p-limit';
 
-dotenv.config();
+config();
 
 const activeDownloadWorkers = new Map();
 

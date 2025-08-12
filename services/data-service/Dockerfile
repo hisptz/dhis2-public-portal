@@ -1,14 +1,13 @@
-FROM oven/bun:1
+FROM node:18
 
 WORKDIR /app
 
-COPY package*.json bun.lockb* ./
+COPY package.json yarn.lock ./
 
-RUN bun install --production
+RUN yarn install
 
 COPY . .
 
 EXPOSE 4002
 
-
-CMD ["bun", "run", "src/app.ts"]
+CMD ["yarn", "dev"]

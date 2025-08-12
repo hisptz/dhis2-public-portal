@@ -4,6 +4,5 @@ services:
     container_name: data-service
     ports:
       - "4002:4002"
-    env_file:
-      - .env
+    command: yarn dev
     restart: unless-stopped
