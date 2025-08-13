@@ -1,0 +1,6 @@
+{
+  "ext": "ts",
+  "execMap": {
+    "ts": "bun run"
+  }
+}
