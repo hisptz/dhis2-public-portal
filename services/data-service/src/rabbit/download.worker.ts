@@ -44,7 +44,6 @@ export async function startDownloadWorker(configId: string) {
     }
 
     conn.on("close", () => {
-
         logger.warn(`RabbitMQ connection closed for configId "${configId}".`);
         activeDownloadWorkers.delete(configId);
         scheduleReconnect(configId);
@@ -69,8 +68,9 @@ export async function startDownloadWorker(configId: string) {
         logger.error(`RabbitMQ channel error for configId "${configId}": ${err.message}`);
     });
 
+    const prefetchCount = parseInt(process.env.RABBITMQ_PREFETCH_COUNT || "20");
 
-    channel.prefetch(20);
+    channel.prefetch(prefetchCount);
 
     channel.consume(queueName, async (msg) => {
         if (msg === null) return;
