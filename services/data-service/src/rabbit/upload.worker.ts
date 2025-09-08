@@ -52,7 +52,7 @@ export async function startUploadWorker(configId: string) {
     });
 
 
-    channel.prefetch(100);
+    channel.prefetch(20);
 
     channel.consume(queueName, async (msg) => {
         if (msg === null) return;
