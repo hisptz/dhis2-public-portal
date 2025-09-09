@@ -8,6 +8,7 @@ import { scheduleReconnect } from "./download.worker";
 
 
 const activeUploadWorkers = new Map();
+const retryCounts = new Map<string, number>();
 
 export async function startUploadWorker(configId: string) {
     let channelClosed = false;
@@ -63,6 +64,9 @@ export async function startUploadWorker(configId: string) {
 
         logger.info(`Uploading data for config ${mainConfigId}`);
 
+        const jobId = `${mainConfigId}-${filename}`;
+        const currentRetries = retryCounts.get(jobId) || 0;
+
         try {
             logger.info(`Initializing upload queue for ${mainConfigId}`);
             const summary: DataUploadSummary = {
@@ -76,12 +80,24 @@ export async function startUploadWorker(configId: string) {
                 ...summary,
                 configId: mainConfigId,
             });
-            if (!channelClosed) channel.ack(msg);
+            if (!channelClosed) {
+                channel.ack(msg);
+                retryCounts.delete(jobId);
+            }
+
         } catch (err) {
             logger.error(`Upload failed: ${err}`);
             if (!channelClosed) {
                 try {
-                    channel.nack(msg, false, true);
+                    if (currentRetries < 2) {
+                        retryCounts.set(jobId, currentRetries + 1);
+                        logger.warn(`Retrying job ${jobId}, attempt ${currentRetries + 1}`);
+                        channel.nack(msg, false, true);
+                    } else {
+                        logger.error(`Job ${jobId} reached max retries, discarding`);
+                        retryCounts.delete(jobId);
+                        channel.nack(msg, false, false);
+                    }
                 } catch (ackErr: any) {
                     logger.error(`Failed to nack message for ${configId}: ${ackErr.message || ackErr}`);
                 }

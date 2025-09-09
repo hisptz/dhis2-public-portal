@@ -16,6 +16,7 @@ import pLimit from 'p-limit';
 config();
 
 const activeDownloadWorkers = new Map();
+const retryCounts = new Map<string, number>();
 
 export function scheduleReconnect(configId: string, attempt = 1) {
     const delay = Math.min(30000, attempt * 5000);
@@ -89,6 +90,9 @@ export async function startDownloadWorker(configId: string) {
             if (!channelClosed) channel.ack(msg);
             return;
         }
+
+        const jobId = `${mainConfigId}-${config.id}-${periodId}`;
+        const currentRetries = retryCounts.get(jobId) || 0;
 
         try {
             const url = `dataStore/${DatastoreNamespaces.DATA_SERVICE_CONFIG}/${mainConfigId}`;
@@ -165,7 +169,11 @@ export async function startDownloadWorker(configId: string) {
                     ...summary,
                     configId: mainConfig.id,
                 });
-                if (!channelClosed) channel.ack(msg);
+                if (!channelClosed) {
+                    channel.ack(msg);
+                    retryCounts.delete(jobId);
+                }
+
                 return;
             }
 
@@ -231,9 +239,18 @@ export async function startDownloadWorker(configId: string) {
                 errorDetails,
                 timestamp: new Date().toISOString(),
             });
+
             if (!channelClosed) {
                 try {
-                    channel.nack(msg, false, true);
+                    if (currentRetries < 2) {
+                        retryCounts.set(jobId, currentRetries + 1);
+                        logger.warn(`Retrying job ${jobId}, attempt ${currentRetries + 1}`);
+                        channel.nack(msg, false, true);
+                    } else {
+                        logger.error(`Job ${jobId} reached max retries, discarding`);
+                        retryCounts.delete(jobId);
+                        channel.nack(msg, false, false);
+                    }
                 } catch (ackErr: any) {
                     logger.error(`Failed to nack message for ${configId}: ${ackErr.message || ackErr}`);
                 }
