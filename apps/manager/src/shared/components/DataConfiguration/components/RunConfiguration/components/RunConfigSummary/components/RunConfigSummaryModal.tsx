@@ -29,7 +29,7 @@ export function RunConfigSummaryModal({
 			<ModalTitle>
 				<div className="flex items-center gap-2 justify-between w-full">
 					<span>
-						{i18n.t("Last run summary")} - {config.source.name}{" "}
+						{config.source.name}{" "}
 					</span>
 					<StatusIndicator status={status} />
 				</div>
@@ -38,7 +38,7 @@ export function RunConfigSummaryModal({
 				<div className="flex flex-col gap-4 h-full">
 					<div className="flex flex-col gap-2">
 						<h6 className="text-lg font-bold">
-							{i18n.t("Summaries")}
+							{i18n.t("Service Processing Overview")}
 						</h6>
 						<Suspense
 							fallback={
