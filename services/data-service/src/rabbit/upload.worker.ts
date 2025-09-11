@@ -39,7 +39,16 @@ export async function startUploadWorker(configId: string) {
     const channel = await conn.createChannel();
 
     const queueName = uploadQueue + configId;
-    await channel.assertQueue(queueName, { durable: true });
+    const dlqName = `dlq_${queueName}`;
+
+    await channel.assertQueue(dlqName, { durable: true });
+
+    await channel.assertQueue(queueName, {
+        durable: true, arguments: {
+            "x-dead-letter-exchange": "",
+            "x-dead-letter-routing-key": dlqName,
+        }
+    });
 
     channel.on("close", () => {
         channelClosed = true;

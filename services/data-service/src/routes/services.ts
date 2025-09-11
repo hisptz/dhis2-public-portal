@@ -4,9 +4,8 @@ import { fromError } from "zod-validation-error";
 import { initializeDataDownload } from "@/services/data-download";
 import logger from "@/logging";
 import { AxiosError } from "axios";
-import { getDownloadSummary, getUploadSummary, updateSummaryFile } from "@/services/summary";
+import { getDownloadSummary, getUploadSummary } from "@/services/summary";
 import { getQueueStatus } from "@/services/status";
-import { v4 } from "uuid";
 import { startDownloadWorker } from "@/rabbit/download.worker";
 import { downloadQueue, uploadQueue } from "@/rabbit/publisher";
 import { startUploadWorker } from "@/rabbit/upload.worker";
@@ -29,14 +28,6 @@ serviceRouter.post("/data-download/:configId", async (req, res) => {
 			logger.error(
 				`Config ${configId}: ${e.message}`
 			);
-		});
-
-		await updateSummaryFile({
-			id: v4(),
-			type: "download",
-			status: "QUEUED",
-			timestamp: new Date().toISOString(),
-			configId,
 		});
 
 		logger.info(`Download job for configId ${configId} has been queued.`);
