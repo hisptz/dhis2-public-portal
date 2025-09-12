@@ -39,6 +39,7 @@ export function RunConfigSummaryDetails({
 		{ label: "Total Processes", value: rows?.messages },
 		{ label: "In Queue", value: rows?.messages_ready },
 		{ label: "Being Processed", value: rows?.messages_unacknowledged },
+		{ label: "Failed Processes", value: rows?.dlq_messages},
 	];
 
 	return (
@@ -58,12 +59,12 @@ export function RunConfigSummaryDetails({
 				{cards.map((card) => (
 					<div
 						key={card.label}
-						className="flex-1 p-8 bg-white rounded-lg flex flex-col items-center justify-center"
+						className="flex-1 p-4 bg-gray-100 rounded flex flex-col items-center justify-center"
 					>
 						<span className="text-gray-500">{card.label}</span>
 						<CountUp
 							end={card.value}
-							duration={0.5}
+							duration={2.5}
 							redraw={true}
 							className="text-xl"
 						/>

@@ -1,12 +1,10 @@
 import amqp from 'amqplib';
 import { createDownloadClient, dhis2Client } from '@/clients/dhis2';
 import logger from '@/logging';
-import { v4 } from 'uuid';
 import { fetchPagedData, processAttributeComboData, processData, saveDataFile } from '@/utils/data';
-import { updateSummaryFile } from '@/services/summary';
 import { downloadQueue, pushToDownloadQueue, pushToUploadQueue } from './publisher';
 import { DatastoreNamespaces } from '@packages/shared/constants';
-import { DataDownloadSummary, DataServiceAttributeValuesDataItemsSource, DataServiceConfig } from '@packages/shared/schemas';
+import {  DataServiceAttributeValuesDataItemsSource, DataServiceConfig } from '@packages/shared/schemas';
 import { chunk, head, isEmpty } from 'lodash';
 import { AxiosError } from 'axios';
 import { config } from "dotenv";
@@ -165,20 +163,7 @@ export async function startDownloadWorker(configId: string) {
 
             if (isEmpty(data.dataValues)) {
                 logger.info(`No data found for ${config.id}: ${dimensions.dx}`);
-                const summary: DataDownloadSummary = {
-                    type: "download",
-                    id: v4(),
-                    status: "SUCCESS",
-                    error: "No data found",
-                    dataItems: dimensions.dx!,
-                    periods: dimensions.pe!,
-                    count: data.dataValues.length,
-                    timestamp: new Date().toISOString(),
-                };
-                await updateSummaryFile({
-                    ...summary,
-                    configId: mainConfig.id,
-                });
+           
                 if (!channelClosed) {
                     channel.ack(msg);
                     retryCounts.delete(jobId);
@@ -212,20 +197,6 @@ export async function startDownloadWorker(configId: string) {
                 });
                 logger.info(`Data saved for ${config.id}: ${dimensions.dx}`);
 
-                const summary: DataDownloadSummary = {
-                    type: "download",
-                    id: v4(),
-                    status: "SUCCESS",
-                    dataItems: dimensions.dx!,
-                    periods: dimensions.pe!,
-                    count: data.dataValues.length,
-                    timestamp: new Date().toISOString(),
-                };
-                await updateSummaryFile({
-                    ...summary,
-                    configId: mainConfig.id,
-                });
-
                 const uploadJob = {
                     mainConfigId,
                     filename,
@@ -238,17 +209,7 @@ export async function startDownloadWorker(configId: string) {
             const errorMessage = e instanceof Error ? e.message : "Unknown error";
             const errorDetails = e instanceof AxiosError ? e.response?.data : undefined;
 
-            logger.error(`Job failed: ${errorMessage}`);
-
-            await updateSummaryFile({
-                id: v4(),
-                type: 'download',
-                status: 'FAILED',
-                configId: mainConfigId,
-                error: errorMessage,
-                errorDetails,
-                timestamp: new Date().toISOString(),
-            });
+            logger.error(`Job failed: ${errorDetails??errorMessage}`);
 
             if (!channelClosed) {
                 try {

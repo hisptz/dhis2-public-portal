@@ -9,6 +9,7 @@ export interface QueueStatusResult {
 	messages: number;
 	messages_ready: number;
 	messages_unacknowledged: number;
+	dlq_messages: number,
 	status: DataServiceRunStatus;
 }
 
@@ -24,10 +25,25 @@ export const getQueueStatus = async (queueName: string): Promise<QueueStatusResu
 
 	const url = `${host}/api/queues/${vhost}/${queueName}`;
 
+	const dlqName = `dlq_${queueName}`;
+	const dlqUrl = `${host}/api/queues/${vhost}/${dlqName}`;
+
 	try {
 		const { data } = await axios.get(url, {
 			auth: { username, password },
 		});
+
+		let dlqMessages = 0;
+
+		try {
+			const { data: dlqData } = await axios.get(dlqUrl, {
+				auth: { username, password },
+			});
+			dlqMessages = dlqData.messages || 0;
+		} catch (dlqError: any) {
+			logger.warn(`No DLQ found for queue "${queueName}"`);
+		}
+
 
 		const { messages, messages_ready, messages_unacknowledged } = data;
 
@@ -55,6 +71,7 @@ export const getQueueStatus = async (queueName: string): Promise<QueueStatusResu
 			messages,
 			messages_ready,
 			messages_unacknowledged,
+			dlq_messages: dlqMessages,
 			status,
 		};
 	} catch (error: any) {
@@ -64,6 +81,7 @@ export const getQueueStatus = async (queueName: string): Promise<QueueStatusResu
 			messages: 0,
 			messages_ready: 0,
 			messages_unacknowledged: 0,
+			dlq_messages: 0,
 			status: DataServiceRunStatus.FAILED,
 		};
 	}

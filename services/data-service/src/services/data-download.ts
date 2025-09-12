@@ -14,13 +14,10 @@ import {
 	displayDownloadSummary,
 	initializeDownloadSummary,
 	initializeUploadSummary,
-	updateSummaryFile,
 } from "@/services/summary";
 import { v4 } from "uuid";
 import { completeUpload } from "@/services/data-upload";
 import { downloadQueue, pushToDownloadQueue, uploadQueue } from "@/rabbit/publisher";
-import { startUploadWorker } from "@/rabbit/upload.worker";
-import { waitForQueueToDrain } from "@/rabbit/queueMonitor";
 import { getQueueStatus } from "./status";
 
 export async function initializeDataDownload({
@@ -61,13 +58,6 @@ export async function initializeDataDownload({
 				runtimeConfig: runtimeConfig,
 				dataItemsConfigIds: dataItemsConfigIds,
 			},
-		});
-		await updateSummaryFile({
-			id: v4(),
-			type: "download",
-			status: "INIT",
-			timestamp: new Date().toISOString(),
-			configId: mainConfigId,
 		});
 
 		await enqueueDownloadTasks({
@@ -166,25 +156,11 @@ export async function enqueueDownloadTasks({
     await Promise.all(pushPromises);
 
 	await waitForQueueToReceiveMessages(queueName);
-
-    const summary: DataDownloadSummary = {
-        id: v4(),
-        type: "download",
-        status: "DONE",
-        timestamp: new Date().toISOString(),
-    };
-
-    await updateSummaryFile({
-        ...summary,
-        configId,
-    });
-
-    await displayDownloadSummary(configId);
+	
+   // await displayDownloadSummary(configId);
 
     const uploadQueueName = uploadQueue + configId;
 
 	await waitForQueueToReceiveMessages(uploadQueueName);
    
-
-    await completeUpload(configId);
 }

@@ -1,19 +1,10 @@
 import logger from "@/logging";
 import { dhis2Client } from "@/clients/dhis2";
 import { DataUploadSummary } from "@packages/shared/schemas";
-import { displayUploadSummary, updateSummaryFile } from "@/services/summary";
+import { displayUploadSummary } from "@/services/summary";
 import { AxiosError } from "axios";
 
 export async function completeUpload(configId: string) {
-	const summary: DataUploadSummary = {
-		type: "upload",
-		status: "DONE",
-		timestamp: new Date().toISOString(),
-	};
-	await updateSummaryFile({
-		...summary,
-		configId,
-	});
 	await displayUploadSummary(configId);
 }
 
@@ -48,18 +39,7 @@ export async function uploadDataFromFile({
 		if (ignoredCount > 0) {
 			logger.warn(`${ignoredCount} data values ignored`);
 		}
-
-		const summary: DataUploadSummary = {
-			importSummary: importSummary.importCount,
-			status: "SUCCESS",
-			type: "upload",
-			filename: filename,
-			timestamp: new Date().toISOString(),
-		};
-		await updateSummaryFile({
-			...summary,
-			configId,
-		});
+		
 		if (await file.exists()) {
 			logger.info(`Deleting ${filename} file`);
 			await file.delete();
@@ -86,55 +66,21 @@ export async function uploadDataFromFile({
 				if (await file.exists()) {
 					await file.delete();
 				}
-				const summary: DataUploadSummary = {
-					importSummary: importSummary.importCount,
-					error: e.message,
-					status: "FAILED",
-					type: "upload",
-					filename: filename,
-					timestamp: new Date().toISOString(),
-					errorDetails: response.data,
-				};
-				await updateSummaryFile({
-					...summary,
-					configId,
-				});
+				
 				return;
 			} else {
 				const response = e.response;
 				logger.error(
 					`Status code: ${response?.status} - ${response?.statusText}`,
 				);
-				const summary: DataUploadSummary = {
-					status: "FAILED",
-					type: "upload",
-					filename: filename,
-					error: JSON.stringify(response?.data ?? response),
-					errorDetails: response?.data,
-					timestamp: new Date().toISOString(),
-				};
-				await updateSummaryFile({
-					...summary,
-					configId,
-				});
+				
 			}
 			return;
 		}
 		logger.error(
 			`Error uploading ${filename} file: ${e.message ?? JSON.stringify(e)}`,
 		);
-		const summary: DataUploadSummary = {
-			status: "FAILED",
-			type: "upload",
-			filename: filename,
-			error: e.message,
-			errorDetails: e,
-			timestamp: new Date().toISOString(),
-		};
-		await updateSummaryFile({
-			...summary,
-			configId,
-		});
+		
 		return;
 	}
 }

@@ -21,6 +21,7 @@ export interface QueueStatusResult {
 	messages: number;
 	messages_ready: number;
 	messages_unacknowledged: number;
+	dlq_messages: number,
 	status: DataServiceRunStatus;
 }
 

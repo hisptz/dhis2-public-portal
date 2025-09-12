@@ -1,8 +1,6 @@
 import logger from "@/logging";
 import amqp from 'amqplib';
 import { uploadQueue } from "./publisher";
-import { updateSummaryFile } from "@/services/summary";
-import { DataUploadSummary } from "@packages/shared/schemas";
 import { uploadDataFromFile } from "@/services/data-upload";
 import { scheduleReconnect } from "./download.worker";
 
@@ -78,17 +76,8 @@ export async function startUploadWorker(configId: string) {
 
         try {
             logger.info(`Initializing upload queue for ${mainConfigId}`);
-            const summary: DataUploadSummary = {
-                type: "upload",
-                status: "INIT",
-                timestamp: new Date().toISOString(),
-            };
             await uploadDataFromFile({ filename: filename, configId: mainConfigId });
 
-            await updateSummaryFile({
-                ...summary,
-                configId: mainConfigId,
-            });
             if (!channelClosed) {
                 channel.ack(msg);
                 retryCounts.delete(jobId);
