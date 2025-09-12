@@ -1,5 +1,4 @@
 import {
-	DataDownloadSummary,
 	DataServiceConfig,
 	DataServiceDataSourceItemsConfig,
 	DataServiceRuntimeConfig,
@@ -10,13 +9,6 @@ import { compact} from "lodash";
 import { DatastoreNamespaces } from "@packages/shared/constants";
 import {  dhis2Client } from "@/clients/dhis2";
 import { checkOrCreateFolder } from "@/utils/files";
-import {
-	displayDownloadSummary,
-	initializeDownloadSummary,
-	initializeUploadSummary,
-} from "@/services/summary";
-import { v4 } from "uuid";
-import { completeUpload } from "@/services/data-upload";
 import { downloadQueue, pushToDownloadQueue, uploadQueue } from "@/rabbit/publisher";
 import { getQueueStatus } from "./status";
 

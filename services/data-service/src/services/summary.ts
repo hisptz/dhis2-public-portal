@@ -11,59 +11,7 @@ const summaryPath = `summaries`;
 const downloadFilename = "data-download-summary";
 const uploadFilename = "data-upload-summary";
 
-export async function initializeUploadSummary(
-	configId: string,
-	{
-		runtimeConfig,
-	}: {
-		runtimeConfig: DataDownloadBody;
-	},
-) {
-	const uploadFile = Bun.file(
-		`./${summaryPath}/${configId}/${uploadFilename}.json`,
-		{
-			type: "application/json",
-		},
-	);
-	if (await uploadFile.exists()) {
-		await uploadFile.delete();
-	}
-	const uploadSummary = {
-		runtimeConfig,
-		summaries: [],
-	};
-	await uploadFile.write(JSON.stringify(uploadSummary));
-	logger.info(`Summary files initialized`);
-}
 
-export async function initializeDownloadSummary(
-	configId: string,
-	{
-		runtimeConfig,
-	}: {
-		runtimeConfig: DataDownloadBody;
-	},
-) {
-	const downloadFile = Bun.file(
-		`./${summaryPath}/${configId}/${downloadFilename}.json`,
-		{
-			type: "application/json",
-		},
-	);
-	logger.info(`Clearing out summary files...`);
-	if (await downloadFile.exists()) {
-		await downloadFile.delete();
-	}
-
-	logger.info(`Summary files cleared`);
-	const downloadSummary = {
-		runtimeConfig,
-		summaries: [],
-	};
-
-	await downloadFile.write(JSON.stringify(downloadSummary));
-	logger.info(`Summary files initialized`);
-}
 
 export async function getUploadSummary(configId: string) {
 	const file = Bun.file(

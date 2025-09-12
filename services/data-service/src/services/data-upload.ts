@@ -1,6 +1,5 @@
 import logger from "@/logging";
 import { dhis2Client } from "@/clients/dhis2";
-import { DataUploadSummary } from "@packages/shared/schemas";
 import { displayUploadSummary } from "@/services/summary";
 import { AxiosError } from "axios";
 
@@ -66,8 +65,7 @@ export async function uploadDataFromFile({
 				if (await file.exists()) {
 					await file.delete();
 				}
-				
-				return;
+				throw e;
 			} else {
 				const response = e.response;
 				logger.error(
@@ -75,12 +73,12 @@ export async function uploadDataFromFile({
 				);
 				
 			}
-			return;
+			throw e;
 		}
 		logger.error(
 			`Error uploading ${filename} file: ${e.message ?? JSON.stringify(e)}`,
 		);
 		
-		return;
+		throw e;
 	}
 }
