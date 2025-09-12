@@ -17,7 +17,7 @@ export function RunConfigSummary({ config }: { config: DataServiceConfig }) {
 					config={config}
 				/>
 			)}
-			<Tooltip content={i18n.t("View last run summary")}>
+			<Tooltip content={i18n.t("View service overview")}>
 				<Button
 					small
 					onClick={onShow}
