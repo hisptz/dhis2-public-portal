@@ -43,6 +43,7 @@ export async function startUploadWorker(configId: string) {
 
     await channel.assertQueue(queueName, {
         durable: true, arguments: {
+            "x-dead-letter-exchange": "",
             "x-dead-letter-routing-key": dlqName,
         }
     });

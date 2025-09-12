@@ -59,7 +59,6 @@ export async function pushToDownloadQueue(jobData: any) {
 		throw new Error("Channel not initialized");
 	}
 	const queueName = downloadQueue + jobData.mainConfigId;
-	await downloadChannel.assertQueue(queueName, { durable: true });
 	downloadChannel.sendToQueue(queueName, Buffer.from(JSON.stringify(jobData)), {
 		persistent: true,
 	});
@@ -73,7 +72,6 @@ export async function pushToUploadQueue(jobData: any) {
 		throw new Error("Channel not initialized");
 	}
 	const queueName = uploadQueue + jobData.mainConfigId;
-	await uploadChannel.assertQueue(queueName, { durable: true });
 	uploadChannel.sendToQueue(queueName, Buffer.from(JSON.stringify(jobData)), {
 		persistent: true,
 	});
