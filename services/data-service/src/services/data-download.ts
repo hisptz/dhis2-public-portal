@@ -47,18 +47,6 @@ export async function initializeDataDownload({
 		logger.info(
 			`Data for ${configs.length} configurations will be downloaded`,
 		);
-		await initializeUploadSummary(mainConfigId, {
-			runtimeConfig: {
-				runtimeConfig: runtimeConfig,
-				dataItemsConfigIds: dataItemsConfigIds,
-			},
-		});
-		await initializeDownloadSummary(mainConfigId, {
-			runtimeConfig: {
-				runtimeConfig: runtimeConfig,
-				dataItemsConfigIds: dataItemsConfigIds,
-			},
-		});
 
 		await enqueueDownloadTasks({
 			mainConfig,
