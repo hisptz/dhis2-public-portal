@@ -64,7 +64,7 @@ export function RunConfigSummaryDetails({
 						<span className="text-gray-500">{card.label}</span>
 						<CountUp
 							end={card.value}
-							duration={2.5}
+							duration={1.5}
 							redraw={true}
 							className="text-xl"
 						/>
