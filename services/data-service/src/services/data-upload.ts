@@ -56,6 +56,7 @@ export async function uploadDataFromFile({
 					`Status code: ${response.status} - ${response.statusText}`,
 				);
 				const importSummary = response.data?.response;
+				logger.error(importSummary);
 				const importCount = importSummary.importCount.imported;
 				const ignoredCount = importSummary.importCount.ignored;
 				logger.info(`${importCount} data values imported successfully`);

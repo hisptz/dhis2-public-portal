@@ -15,6 +15,7 @@ export interface DataResponse {
 	dataValues: Array<{
 		comment: string;
 		created: string;
+		categoryOptionCombo?: string;
 		dataElement: string;
 		lastUpdated: string;
 		orgUnit: string;
@@ -145,13 +146,30 @@ export async function processData({
 }) {
 	return {
 		dataValues: data.dataValues.map((value) => {
-			const config = dataItems.find(
-				({ sourceId }) => sourceId === value.dataElement,
-			);
-			return {
-				...value,
-				dataElement: config?.id ?? value.dataElement,
-			};
+			const config = dataItems.find(({ sourceId }) => {
+				if (sourceId === value.dataElement) return true;
+
+				if (sourceId.includes(".")) {
+					const [de, coc] = sourceId.split(".");
+					return de === value.dataElement && coc === value.categoryOptionCombo;
+				}
+
+				return false;
+			});
+
+			let newValue = { ...value };
+
+			if (config) {
+				if (config.id.includes(".")) {
+					const [newDe, newCoc] = config.id.split(".");
+					newValue.dataElement = newDe;
+					newValue.categoryOptionCombo = newCoc;
+				} else {
+					newValue.dataElement = config.id;
+				}
+			}
+
+			return newValue;
 		}),
 	};
 }
