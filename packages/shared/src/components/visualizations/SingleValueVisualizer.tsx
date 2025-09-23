@@ -2,12 +2,12 @@ import React, { RefObject, useMemo, useRef } from "react";
 import { clamp, flatten, get, head, truncate } from "lodash";
 import { useResizeObserver } from "usehooks-ts";
 import i18n from "@dhis2/d2-i18n";
-import { AnalyticsData, VisualizationConfig } from "@packages/shared/schemas";
+import { AnalyticsData, VisualizationConfig } from "../../schemas";
 import {
 	getForeground,
 	getLegendColorFromValue,
 	numberFormatter,
-} from "@packages/shared/utils";
+} from "../../utils";
 
 export function SingleValueVisualizer({
 	analytics,

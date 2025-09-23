@@ -17,16 +17,17 @@ import {
 	useDimensionViewControls,
 	useVisualizationRefs,
 } from "@/hooks/dataVisualization";
-import { useYearOverYearAnalytics } from "@packages/shared/hooks";
 import {
 	VisualizationTitle,
 	YearOverYearVisualizer,
-} from "@packages/ui/visualizations";
+} from "@packages/shared/visualizations";
 import { ActionMenu } from "./ActionMenu";
 import { CustomOrgUnitModal } from "./CustomOrgUnitModal";
 import { CustomPeriodModal } from "@/components/displayItems/visualizations/CustomPeriodModal";
 
 import React from "react";
+import { useSearchParams } from "next/navigation";
+import { useYearOverYearAnalytics } from "@/hooks/charts";
 
 export function YearOverYearDataVisComponent({
 	visualizationConfig,
@@ -43,6 +44,8 @@ export function YearOverYearDataVisComponent({
 }) {
 	const { orgUnitConfig, periodConfig } = config;
 	const { chartRef, tableRef } = useVisualizationRefs();
+	const searchParams = useSearchParams();
+	const params = React.useMemo(() => new Map(searchParams), [searchParams]);
 	const {
 		onCloseOrgUnitSelector,
 		showPeriodSelector,
@@ -72,6 +75,7 @@ export function YearOverYearDataVisComponent({
 	} = useYearOverYearAnalytics({
 		visualizationConfig:
 			visualizationConfig as YearOverYearVisualizationConfig,
+		params,
 	});
 
 	function transformToYoYAnalytics(
@@ -102,7 +106,7 @@ export function YearOverYearDataVisComponent({
 			Object.entries(analytics.metaData.items).forEach(([key, item]) => {
 				output.metaData.items[key] ??= item;
 			});
-			analytics.metaData.dimensions.ou?.forEach((ou) =>
+			analytics.metaData.dimensions.ou?.forEach((ou: string) =>
 				orgUnitSet.add(ou),
 			);
 		}

@@ -1,0 +1,21 @@
+packages:
+  - packages/*
+  - services/*
+  - apps/*
+
+onlyBuiltDependencies:
+  - '@dhis2/cli-helpers-engine'
+  - '@tailwindcss/oxide'
+  - core-js-pure
+  - esbuild
+
+publicHoistPattern:
+  - '@dhis2/ui'
+  - typeface-roboto
+  - prop-types
+  - '@dhis2/d2-i18n'
+  - post-robot
+  - styled-jsx
+  - '@dhis2/app-adapter'
+  - '@dhis2/pwa'
+  - '@hisptz/dhis2-analytics'
