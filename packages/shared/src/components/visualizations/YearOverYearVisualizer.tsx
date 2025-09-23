@@ -2,7 +2,7 @@ import {
 	AnalyticsData,
 	VisualizationChartType,
 	YearOverYearVisualizationConfig,
-} from "@packages/shared/schemas";
+} from "../../schemas";
 import React, { RefObject, useMemo } from "react";
 import HighchartsReact from "highcharts-react-official";
 import Highcharts from "highcharts";

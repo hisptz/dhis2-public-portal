@@ -5,10 +5,11 @@ on:
     branches:
       - develop
     paths:
+      - '.github/workflows/portal-e2e.yml'
       - 'apps/portal/**'
       - 'packages/**'
       - 'package.json'
-      - 'yarn.lock'
+      - 'pnpm-lock.yaml'
 
 jobs:
   e2e-test:
@@ -19,20 +20,25 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
+      - uses: pnpm/action-setup@v4
+        name: Install pnpm
+        with:
+          run_install: false
+
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
-          cache: 'yarn'
-
+          node-version: '22'
+          cache: 'pnpm'
       - name: Install dependencies
-        run: yarn install --frozen-lockfile
+        run: pnpm install --frozen-lockfile
 
       - name: Cypress run
         uses: cypress-io/github-action@v6
         with:
           working-directory: apps/portal
-          start: yarn dev
+          install: false
+          start: pnpm run dev
           wait-on: 'http://localhost:3000'
           wait-on-timeout: 120
           browser: chrome

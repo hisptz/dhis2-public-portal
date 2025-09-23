@@ -4,6 +4,11 @@ export default defineConfig({
 	test: {
 		projects: ["apps/*", "packages/*"],
 		include: ["**/*.test.ts?(x)"],
-		exclude: ["apps/manager/.d2/**/*", "apps/portal/build/**/*"],
+		exclude: [
+			"apps/manager/.d2/**/*",
+			"apps/portal/build/**/*",
+			"node_modules/**/*",
+			"**node_modules/**/*",
+		],
 	},
 });
