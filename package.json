@@ -6,7 +6,7 @@
     "manager": "pnpm --filter manager",
     "docs": "pnpm --filter docs",
     "shared": "pnpm --filter @packages/shared",
-    "test": "vitest -c vitest.config.ts",
+    "test": "vitest -c vitest.config.mts",
     "build": "turbo run build",
     "dev": "turbo run dev",
     "dev:portal": "turbo run dev --filter portal",

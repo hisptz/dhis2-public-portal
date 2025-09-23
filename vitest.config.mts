@@ -7,6 +7,7 @@ export default defineConfig({
 		exclude: [
 			"apps/manager/.d2/**/*",
 			"apps/portal/build/**/*",
+			"node_modules/**/*",
 			"**node_modules/**/*",
 		],
 	},
