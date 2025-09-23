@@ -27,7 +27,7 @@ RUN corepack enable
 RUN apk add --no-cache python3 make g++ build-base cairo-dev pango-dev giflib-dev py-setuptools
 RUN npm -g install corepack@latest
 RUN corepack enable
-RUN pnpm install --frozen-lockfile
+RUN pnpm install --no-frozen-lockfile
 
 # Build the project
 COPY --from=builder /app/out/full/ .
