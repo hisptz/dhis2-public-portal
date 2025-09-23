@@ -17,15 +17,22 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - uses: actions/setup-node@v2
+      - uses: pnpm/action-setup@v4
+        name: Install pnpm
         with:
-          node-version: lts/*
+          run_install: false
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'pnpm'
 
       - name: Install JS dependencies
-        run: yarn install --frozen-lockfile
+        run: pnpm install --frozen-lockfile
 
       - name: Build
-        run: yarn manager build
+        run: pnpm run build --filter manager
       # Publish to the App Hub
       - name: Release to DHIS2 App Hub
-        run: yarn manager publish:app-hub
+        run: pnpm run  publish:app-hub --filter manager

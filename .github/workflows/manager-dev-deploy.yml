@@ -11,11 +11,12 @@ on:
   push:
     branches: [ develop ]
     paths:
+      - '.github/workflows/manager-dev-deploy.yml'
       - 'apps/manager/**'
       - 'packages/shared/**'
       - 'packages/ui/**'
       - 'package.json'
-      - 'yarn.lock'
+      - 'pnpm.lock'
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
@@ -28,19 +29,22 @@ jobs:
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v3
-
-      # Sets up a Node.js environment, with yarn as the package manager
-      - uses: actions/setup-node@v3
+      - uses: pnpm/action-setup@v4
+        name: Install pnpm
         with:
-          node-version: lts/*
-          cache: yarn
+          run_install: false
 
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'pnpm'
       - name: Install JS dependencies
-        run: yarn install --frozen-lockfile
+        run: pnpm install --frozen-lockfile
 
       - name: Build Manager App
-        run: yarn manager build
+        run: pnpm build --filter manager
 
       # Deploy to development DHIS2 instance
       - name: Deploy to Development DHIS2 Instance
-        run: yarn manager deploy --username ${{ env.D2_USERNAME }} ${{env.DHIS2_BASE_URL}}
+        run: pnpm manager deploy --username ${{ env.D2_USERNAME }} ${{env.DHIS2_BASE_URL}}

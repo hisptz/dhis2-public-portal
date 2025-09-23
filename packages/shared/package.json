@@ -44,6 +44,7 @@
   },
   "dependencies": {
     "react-jsx-parser": "^2.4.1",
+    "styled-components": "^6.1.19",
     "usehooks-ts": "^3.1.1"
   }
 }

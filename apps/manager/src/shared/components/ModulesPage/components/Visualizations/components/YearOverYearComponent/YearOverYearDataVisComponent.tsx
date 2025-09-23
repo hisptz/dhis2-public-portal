@@ -24,6 +24,7 @@ export function YearOverYearDataVisComponent({
 }) {
 	const { loading, analytics } = useYearOverYearAnalytics({
 		visualizationConfig,
+		params: new Map(),
 	});
 
 	return (

@@ -25,6 +25,7 @@ export function DataVisComponent({
 	const handler = useFullScreenHandle();
 	const { analytics, loading: analyticsLoading } = useAnalytics({
 		visualizationConfig,
+		params: new Map(),
 	});
 
 	return (

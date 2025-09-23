@@ -75,6 +75,7 @@
     "react-hook-form": "^7.57.0",
     "react-jsx-parser": "^2.4.0",
     "react-resizable": "^3.0.5",
+    "styled-components": "^6.1.19",
     "styled-jsx": "^4.0.1",
     "usehooks-ts": "^3.1.1",
     "xlsx": "^0.18.5",
