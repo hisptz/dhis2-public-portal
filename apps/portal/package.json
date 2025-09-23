@@ -8,7 +8,7 @@
     "build:standalone": "./build.sh",
     "start": "next start",
     "lint": "next lint",
-    "check-types": "tsc --noEmit",
+    "check-types": "next typegen &&  tsc --noEmit",
     "test:e2e": "dotenv -- cross-var concurrently --kill-others --success first -c blue,green --names app,cypress 'yarn dev' 'cypress run'",
     "test:e2e-open": "dotenv -- cross-var concurrently -c blue,green --names app,cypress 'yarn dev'  'cypress open'"
   },
