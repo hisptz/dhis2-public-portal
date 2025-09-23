@@ -16,7 +16,7 @@ import {
 	Draggable,
 	Droppable,
 	DropResult,
-} from "react-beautiful-dnd";
+} from "@hello-pangea/dnd";
 
 export interface SortManualProps {
 	onClose(): void;
