@@ -37,6 +37,7 @@ jobs:
         uses: cypress-io/github-action@v6
         with:
           working-directory: apps/portal
+          install: false
           start: pnpm run dev
           wait-on: 'http://localhost:3000'
           wait-on-timeout: 120
