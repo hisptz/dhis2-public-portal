@@ -8,6 +8,7 @@ onlyBuiltDependencies:
   - '@tailwindcss/oxide'
   - core-js-pure
   - esbuild
+  - cypress
 
 publicHoistPattern:
   - '@dhis2/ui'
