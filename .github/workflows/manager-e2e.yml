@@ -30,11 +30,15 @@ jobs:
           node-version: '22'
           cache: 'pnpm'
       - name: Install dependencies
-        run: pnpm install --frozen-lockfile
+        uses: cypress-io/github-action@v6
+        with:
+          working-directory: apps/manager
+          runTests: false
 
       - name: Cypress run
         uses: cypress-io/github-action@v6
         with:
+          install: false
           working-directory: apps/manager
           start: pnpm run dev
           wait-on: 'http://localhost:3001'
