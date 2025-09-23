@@ -2,12 +2,12 @@ import React, { RefObject, useMemo, useRef } from "react";
 import { clamp, flatten, get, head, truncate } from "lodash";
 import { useResizeObserver } from "usehooks-ts";
 import i18n from "@dhis2/d2-i18n";
-import { AnalyticsData, VisualizationConfig } from "../../schemas";
+import { AnalyticsData, VisualizationConfig } from "@packages/shared/schemas";
 import {
 	getForeground,
 	getLegendColorFromValue,
 	numberFormatter,
-} from "../../utils";
+} from "@packages/shared/utils";
 
 export function SingleValueVisualizer({
 	analytics,
@@ -20,12 +20,12 @@ export function SingleValueVisualizer({
 	colors: string[];
 	background?: boolean;
 }) {
-	const legendSet = head(visualization.columns[0]!.items)?.legendSet;
+	const legendSet = visualization.dataDimensionItems[0]?.indicator?.legendSet;
 	const ref = useRef<HTMLDivElement | null>(null);
-	const { width } = useResizeObserver({
+	const { height } = useResizeObserver({
 		ref: ref as RefObject<HTMLDivElement>,
 	});
-	const { rows, headers, metaData } = analytics;
+	const { rows, headers, metaData } = analytics;	
 	const valueHeaderIndex = headers.findIndex(({ name }) => name === "value");
 	const value = parseFloat(get(head(rows), [valueHeaderIndex]) ?? "");
 
@@ -85,10 +85,10 @@ export function SingleValueVisualizer({
 	}, [background, colors, legendColor, visualization.legend]);
 
 	const fontSize = useMemo(() => {
-		const textLength = value.toString().length;
-		const size = Math.ceil((width ?? 100) / textLength) + 12;
+ 		const availableHeight = (height ?? 100) * 0.8;  
+ 		const size = Math.ceil(availableHeight * 0.4);  
 		return clamp(size, 14, 120);
-	}, [width, value]);
+	}, [height]);
 
 	return (
 		<div className="w-full h-full flex flex-col align-center justify-center gap-2">
