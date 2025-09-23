@@ -9,9 +9,11 @@ import { CardLoading } from "@/components/CardLoading";
 
 const NoSSRDHIS2Chart = dynamic(
 	() =>
-		import("@packages/ui/visualizations").then(({ ChartVisualizer }) => ({
-			default: ChartVisualizer,
-		})),
+		import("@packages/shared/visualizations").then(
+			({ ChartVisualizer }) => ({
+				default: ChartVisualizer,
+			}),
+		),
 	{
 		ssr: false,
 		loading: () => {

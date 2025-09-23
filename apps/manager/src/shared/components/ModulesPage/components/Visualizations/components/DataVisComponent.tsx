@@ -7,7 +7,10 @@ import { FullScreen, useFullScreenHandle } from "react-full-screen";
 import { useAnalytics } from "@packages/shared/hooks";
 import React from "react";
 import { FullLoader } from "../../../../FullLoader";
-import { ChartSelector, VisualizationTitle } from "@packages/ui/visualizations";
+import {
+	ChartSelector,
+	VisualizationTitle,
+} from "@packages/shared/visualizations";
 
 export function DataVisComponent({
 	visualizationConfig,
