@@ -10,8 +10,8 @@
     "test": "d2-app-scripts test --passWithNoTests",
     "deploy": "d2-app-scripts deploy",
     "publish:app-hub": "d2-app-scripts publish",
-    "test:e2e": "concurrently --kill-others --success first -c blue,green --names app,cypress 'pnpm start'  'cypress run'",
-    "test:e2e-open": "concurrently -c blue,green --names app,cypress 'pnpm start'  'cypress open'",
+    "test:e2e": "concurrently --kill-others --success first -c blue,green --names app,cypress 'pnpm run dev'  'cypress run'",
+    "test:e2e-open": "concurrently -c blue,green --names app,cypress 'pnpm run dev'  'cypress open'",
     "check-types": "tsr generate && tsc --noEmit"
   },
   "devDependencies": {

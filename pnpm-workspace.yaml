@@ -3,12 +3,20 @@ packages:
   - services/*
   - apps/*
 
+ignoredBuiltDependencies:
+  - '@parcel/watcher'
+  - canvas
+  - core-js
+  - sharp
+  - unrs-resolver
+  - yarn
+
 onlyBuiltDependencies:
   - '@dhis2/cli-helpers-engine'
   - '@tailwindcss/oxide'
   - core-js-pure
-  - esbuild
   - cypress
+  - esbuild
 
 publicHoistPattern:
   - '@dhis2/ui'
