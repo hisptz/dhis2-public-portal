@@ -14,16 +14,18 @@ export function SingleValueVisualizer({
 	visualization,
 	colors,
 	background,
+	containerRef,
 }: {
 	analytics: AnalyticsData;
 	visualization: VisualizationConfig;
 	colors: string[];
 	background?: boolean;
+	containerRef?: RefObject<HTMLDivElement | null>;
 }) {
 	const legendSet = visualization.dataDimensionItems[0]?.indicator?.legendSet;
 	const ref = useRef<HTMLDivElement | null>(null);
 	const { height } = useResizeObserver({
-		ref: ref as RefObject<HTMLDivElement>,
+		ref: (containerRef ?? ref) as RefObject<HTMLDivElement>,
 	});
 	const { rows, headers, metaData } = analytics;	
 	const valueHeaderIndex = headers.findIndex(({ name }) => name === "value");
@@ -85,9 +87,9 @@ export function SingleValueVisualizer({
 	}, [background, colors, legendColor, visualization.legend]);
 
 	const fontSize = useMemo(() => {
- 		const availableHeight = (height ?? 100) * 0.8;  
- 		const size = Math.ceil(availableHeight * 0.4);  
-		return clamp(size, 14, 120);
+ 		const availableHeight = (height ?? 100) * 0.6;  
+ 		const size = Math.ceil(availableHeight * 0.3);  
+		return clamp(size, 14, 80);  
 	}, [height]);
 
 	return (
@@ -105,13 +107,13 @@ export function SingleValueVisualizer({
 				<span
 					style={{
 						background: backgroundColor,
-						height: "80%",
+						minHeight: "80%",
 						borderRadius: 10,
 						color,
 						padding: 16,
 						fontSize,
 					}}
-					className="flex-1 flex flex-col font-bold text-center justify-center align-middle"
+					className="flex-1 flex flex-col font-bold text-center justify-center align-middle overflow-hidden"
 				>
 					{i18n.t("No data")}
 				</span>
@@ -120,13 +122,13 @@ export function SingleValueVisualizer({
 					ref={ref}
 					style={{
 						background: backgroundColor,
-						height: "80%",
+						minHeight: "80%",
 						borderRadius: 10,
 						color,
 						padding: 16,
 						fontSize,
 					}}
-					className="flex-1 flex flex-col font-bold text-center justify-center align-middle"
+					className="flex-1 flex flex-col font-bold text-center justify-center align-middle overflow-hidden break-words"
 				>
 					{numberFormatter(value)}
 				</span>
