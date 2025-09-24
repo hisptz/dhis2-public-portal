@@ -96,7 +96,7 @@ export function SingleValueVisualizer({
 		<div className="w-full h-full flex flex-col align-center justify-center gap-2">
 			<span
 				style={{ fontSize: 16 }}
-				className="text-background-500 text-center"
+				className="text-background-500 text-center min-h-[2.5rem] leading-tight line-clamp-2 flex items-start"
 			>
 				{truncate(labels.join(" - "), {
 					length: 50,
