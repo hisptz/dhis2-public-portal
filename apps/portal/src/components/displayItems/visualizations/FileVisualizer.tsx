@@ -1,11 +1,15 @@
 import { LibraryFileData } from "@packages/shared/schemas";
-import { IconCircleX, IconFileZip, IconScan } from "@tabler/icons-react";
+import { IconCircleX } from "@tabler/icons-react";
 import { Box, Text } from "@mantine/core";
 import { dhis2HttpClient } from "@/utils/api/dhis2";
 import Link from "next/link";
 import { getServerImageUrl } from "@/utils/server/images";
 import { PDFVisualizer } from "@/components/displayItems/visualizations/PDFVisualizer";
+ import { XLSXVisualizer } from "@/components/displayItems/visualizations/XLSXVisualizer";
+import { ZIPVisualizer } from "@/components/displayItems/visualizations/ZIPVisualizer";
+import { TXTVisualizer } from "@/components/displayItems/visualizations/TXTVisualizer";
 import { env } from "@/utils/env";
+import { DOCXVisualizer } from "./DOCXVisualizer";
 
 export interface PDFVisualizerProps {
 	config: LibraryFileData;
@@ -80,8 +84,10 @@ export async function FileVisualizer({ config }: PDFVisualizerProps) {
 		>
 			<Box className="flex flex-col items-center justify-center" flex={1}>
 				{type === "PDF" && <PDFVisualizer path={href} />}
-				{type === "ZIP" && <IconFileZip {...iconProps} />}
-				{type === "DOC" && <IconScan {...iconProps} />}
+				{type === "DOCX" && <DOCXVisualizer path={href} />}
+				{type === "ZIP" && <ZIPVisualizer path={href} />}
+				{type === "XLSX" && <XLSXVisualizer path={href} />}
+				{type === "TXT" && <TXTVisualizer path={href} />}
 			</Box>
 			<b className="text-primary-500">{config?.label}</b>
 		</Link>
