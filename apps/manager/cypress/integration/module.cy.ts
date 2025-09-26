@@ -339,19 +339,24 @@ describe("Modules Page", () => {
 
 		cy.get('input[name="config.title"]').type("New Test Module");
 
-		//For non-grouped
-		const documentTitles = ["Document Test", "Document Test 2"];
-		for (const title of documentTitles) {
+		//For non-grouped - Test different file types
+		const documentTypes = [
+			{ title: "PDF Document", type: "PDF", file: "FlexiPortal_Overview.pdf" },
+			{ title: "Text Document", type: "TXT", file: "test-document.txt" },
+			{ title: "Archive Document", type: "ZIP", file: "test-archive.zip" }
+		];
+		
+		for (const doc of documentTypes) {
 			cy.contains("button", "Add document").click();
-			cy.get('[data-test="document-label-input"]').type(title);
+			cy.get('[data-test="document-label-input"]').type(doc.title);
 			cy.get('[data-test="document-type-select"]').click();
-			cy.get('[data-value="PDF"]').click();
-			cy.get('input[type="file"]').attachFile("FlexiPortal_Overview.pdf");
+			cy.get(`[data-value="${doc.type}"]`).click();
+			cy.get('input[type="file"]').attachFile(doc.file);
 			cy.get('[data-test="add-document-button"]').click();
-			cy.contains("td", title).should("be.visible");
+			cy.contains("td", doc.title).should("be.visible");
 		}
 
-		cy.contains("td", "Document Test")
+		cy.contains("td", "PDF Document")
 			.parent("tr")
 			.within(() => {
 				cy.get('[data-test="dhis2-uicore-button"]').click();
@@ -361,17 +366,24 @@ describe("Modules Page", () => {
 		cy.get('input[name="config.grouped"]').click();
 		cy.get('input[value="segmented"]').click();
 
-		const groupTitles = ["Test Group", "Test Group 2"];
-		for (const title of groupTitles) {
+		// For grouped - Test different file types in groups
+		const groupTitles = ["PDF Group", "Text Group"];
+		const groupFileTypes = [
+			{ type: "PDF", file: "FlexiPortal_Overview.pdf", label: "Group PDF Test" },
+			{ type: "TXT", file: "test-document.txt", label: "Group Text Test" }
+		];
+		
+		for (let i = 0; i < groupTitles.length; i++) {
+			const title = groupTitles[i];
+			const fileType = groupFileTypes[i];
+			
 			cy.contains("button", "Add group").click();
 			cy.get('[data-test="document-group-title-input"]').type(title);
 			cy.contains("button", "Add file").click();
-			cy.get('[data-test="document-group-label-input"]').type(
-				"Group Document Test",
-			);
+			cy.get('[data-test="document-group-label-input"]').type(fileType.label);
 			cy.get('[data-test="document-type-select"]').click();
-			cy.get('[data-value="PDF"]').click();
-			cy.get('input[type="file"]').attachFile("FlexiPortal_Overview.pdf");
+			cy.get(`[data-value="${fileType.type}"]`).click();
+			cy.get('input[type="file"]').attachFile(fileType.file);
 			cy.get('[data-test="save-file-button"]').click();
 			cy.get('[data-test="save-document-group-button"]').click();
 		}
@@ -379,14 +391,14 @@ describe("Modules Page", () => {
 		cy.wait(5000);
 		cy.contains("button", "Sort document groups").click();
 
-		cy.get('[data-rbd-draggable-id="test-group"]')
+		cy.get('[data-rbd-draggable-id="pdf-group"]')
 			.focus()
 			.trigger("keydown", { keyCode: 32 });
-		cy.get('[data-rbd-draggable-id="test-group"]').trigger("keydown", {
+		cy.get('[data-rbd-draggable-id="pdf-group"]').trigger("keydown", {
 			keyCode: 40,
 			force: true,
 		});
-		cy.get('[data-rbd-draggable-id="test-group"]').trigger("keydown", {
+		cy.get('[data-rbd-draggable-id="pdf-group"]').trigger("keydown", {
 			keyCode: 32,
 			force: true,
 		});
@@ -394,7 +406,7 @@ describe("Modules Page", () => {
 		cy.contains("button", "Update order").click();
 		cy.wait(1000);
 
-		cy.contains("td", "Document Test")
+		cy.contains("td", "PDF Document")
 			.parent("tr")
 			.within(() => {
 				cy.get('[data-test="edit-document-group-button"]').click();
