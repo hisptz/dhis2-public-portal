@@ -61,7 +61,7 @@ Click **Add Document** to open the document form. Fill in the following fields:
 
 - **Label** – Name of the document
 - **ID** – Auto-filled from label (used for URL)
-- **File Type** – Currently only **PDF** is supported
+- **File Type** – Supports **PDF**, **DOCX**, **ZIP**, **XLSX**, and **TXT** file formats
 - **Upload File** – Select and upload the PDF file
 
 You can add multiple documents. Each added document will appear in the list below.
@@ -87,7 +87,7 @@ After group creation, a new section appears allowing you to add documents to tha
 Within each group, click **Add File**. Fill in:
 
 - **Label** – Name of the document
-- **File Type** – PDF only
+- **File Type** – Supports **PDF**, **DOCX**, **ZIP**, **XLSX**, and **TXT** file formats
 - **Upload File** – Choose the document file
 
 You can add multiple files before saving the group.
@@ -119,7 +119,7 @@ At the top of the module page, you will find buttons to:
 | **Flat Mode**         | List of documents without grouping                  |
 | **Grouped Mode**      | Organize documents into titled groups               |
 | **Add/Edit/Delete**   | Full CRUD support for files and groups              |
-| **PDF Support Only**  | Currently supports only PDF file type               |
+| **PDF/Document Support**  | Supports multiple file formats: PDF, DOCX, ZIP, XLSX, TXT               |
  
 ---
 
