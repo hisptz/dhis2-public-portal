@@ -42,7 +42,8 @@
     ],
     "packages": [
       "apps/*",
-      "packages/*"
+      "packages/*",
+      "services/*"
     ]
   },
   "repository": {

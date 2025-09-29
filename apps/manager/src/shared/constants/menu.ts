@@ -47,4 +47,12 @@ export const appMenus: Array<AppMenuItem> = [
 		),
 		action: i18n.t("Import or export configuration"),
 	},
+	{
+		label: i18n.t("Data service configuration"),
+		href: "/data-service-configuration",
+		description: i18n.t(
+			"Configure the data service for the web portal application, including data sources and synchronization settings",
+		),
+		action: i18n.t("Configure data service"),
+	},
 ];

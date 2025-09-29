@@ -69,6 +69,7 @@
     "react": "^19.0.0",
     "react-beautiful-dnd": "^13.1.1",
     "react-dom": "^19.0.0",
+    "react-countup": "^6.5.3",
     "react-error-boundary": "^6.0.0",
     "react-full-screen": "^1.1.1",
     "react-grid-layout": "^1.5.1",
