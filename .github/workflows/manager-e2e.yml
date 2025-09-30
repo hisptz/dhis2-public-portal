@@ -36,6 +36,10 @@ jobs:
         run: pnpm exec cypress install
         working-directory: apps/manager
 
+      - name: install Cypress binary
+        run: pnpm exec cypress install
+        working-directory: apps/manager
+
       - name: Cypress run
         uses: cypress-io/github-action@v6
         with:

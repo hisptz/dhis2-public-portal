@@ -16,7 +16,7 @@ import {
 	Draggable,
 	Droppable,
 	DropResult,
-} from "react-beautiful-dnd";
+} from "@hello-pangea/dnd";
 import { useUpdateItem } from "../AddItem/hooks/create";
 import { useRefreshModule } from "../../../ModulesPage/providers/ModuleProvider";
 
