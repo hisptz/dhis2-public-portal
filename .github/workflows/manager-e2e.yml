@@ -31,6 +31,10 @@ jobs:
           cache: 'pnpm'
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
+      
+      - name: install Cypress binary
+        run: pnpm exec cypress install
+        working-directory: apps/manager
 
       - name: Cypress run
         uses: cypress-io/github-action@v6
@@ -43,6 +47,7 @@ jobs:
           browser: chrome
           config-file: cypress.config.ts
           record: true
+          publish-summary: true
         env:
           CYPRESS_RECORD_KEY: ${{ secrets.MANAGER_CYPRESS_RECORD_KEY }}
           CYPRESS_dhis2Username: ${{ secrets.CYPRESS_DHIS2_USERNAME }}
