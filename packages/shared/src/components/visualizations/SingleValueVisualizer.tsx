@@ -27,7 +27,12 @@ export function SingleValueVisualizer({
 	});
 	const { rows, headers, metaData } = analytics;
 	const valueHeaderIndex = headers.findIndex(({ name }) => name === "value");
+	const dataHeaderIndex = headers.findIndex(({ name }) => name === "dx");
 	const value = parseFloat(get(head(rows), [valueHeaderIndex]) ?? "");
+	const dataItemId = get(head(rows), [dataHeaderIndex]);
+	
+ 	const dataItem = dataItemId ? metaData?.items[dataItemId] : null;
+	const isPercentage = dataItem?.indicatorType?.factor === 100;
 
 	const labels = visualization.subtitle
 		? [visualization.subtitle]
@@ -128,7 +133,7 @@ export function SingleValueVisualizer({
 					}}
 					className="flex-1 flex flex-col font-bold text-center justify-center align-middle"
 				>
-					{numberFormatter(value)}
+					{isPercentage ? `${numberFormatter(value)}%` : numberFormatter(value)}
 				</span>
 			)}
 		</div>
