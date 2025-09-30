@@ -11,7 +11,7 @@
     "postbuild": "./package.sh"
   },
   "dependencies": {
-    "@packages/shared": "*",
+    "@packages/shared": "workspace:*",
     "@dhis2/multi-calendar-dates": "^2.1.0",
     "amqplib": "^0.10.8",
     "async": "^3.2.6",
@@ -43,5 +43,5 @@
     "tsup": "^8.4.0",
     "typescript": "^5.8.3"
   },
- "packageManager": "yarn@1.22.22"
+  "packageManager": "pnpm@10.17.0"
 }

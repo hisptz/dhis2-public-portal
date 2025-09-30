@@ -43,11 +43,10 @@ export function useDataConfigRunStatus(id: string) {
 
 	
 	const { isLoading, data, error, isError, refetch, isRefetching } = useQuery(
+		["status", id],
+		fetchStatus,
 		{
-			queryFn: fetchStatus,
-			queryKey: ["status", id],
-			refetchInterval: (query) => {
-				const data = query.state.data;
+			refetchInterval: (data) => {
 				if (!data) {
 					return 5000;
 				}
@@ -63,6 +62,8 @@ export function useDataConfigRunStatus(id: string) {
 				) {
 					return 5000;
 				}
+				
+				return false; // Stop refetching when both are completed
 			},
 		},
 	);

@@ -5,8 +5,8 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
-"POT-Creation-Date: 2025-09-23T10:08:27.526Z\n"
-"PO-Revision-Date: 2025-09-23T10:08:27.526Z\n"
+"POT-Creation-Date: 2025-09-29T11:59:01.968Z\n"
+"PO-Revision-Date: 2025-09-29T11:59:01.969Z\n"
 
 msgid "Could not get Appearance configurations"
 msgstr "Could not get Appearance configurations"
@@ -16,6 +16,9 @@ msgstr "Error"
 
 msgid "Import/Export Configuration"
 msgstr "Import/Export Configuration"
+
+msgid "Data service configuration"
+msgstr "Data service configuration"
 
 msgid "General configuration"
 msgstr "General configuration"
@@ -92,6 +95,234 @@ msgstr "Detail"
 msgid "Remove visualization"
 msgstr "Remove visualization"
 
+msgid "Add data configuration"
+msgstr "Add data configuration"
+
+msgid "Please provide either a PAT or username and password"
+msgstr "Please provide either a PAT or username and password"
+
+msgid ""
+"Could not connect to the DHIS2 instance. Please check the URL, and "
+"authentication, and try again."
+msgstr ""
+"Could not connect to the DHIS2 instance. Please check the URL, and "
+"authentication, and try again."
+
+msgid "Add data service configuration"
+msgstr "Add data service configuration"
+
+msgid "Name"
+msgstr "Name"
+
+msgid "ID"
+msgstr "ID"
+
+msgid "URL"
+msgstr "URL"
+
+msgid "Validating..."
+msgstr "Validating..."
+
+msgid "Create"
+msgstr "Create"
+
+msgid "Add visualization"
+msgstr "Add visualization"
+
+msgid "Use basic authentication"
+msgstr "Use basic authentication"
+
+msgid "Username"
+msgstr "Username"
+
+msgid "Password"
+msgstr "Password"
+
+msgid "Personal Access Token (PAT)"
+msgstr "Personal Access Token (PAT)"
+
+msgid "Latest Status"
+msgstr "Latest Status"
+
+msgid "Actions"
+msgstr "Actions"
+
+msgid "Edit configuration"
+msgstr "Edit configuration"
+
+msgid "Could not save form, check the logs for more information"
+msgstr "Could not save form, check the logs for more information"
+
+msgid "Data items configuration"
+msgstr "Data items configuration"
+
+msgid "Add data item"
+msgstr "Add data item"
+
+msgid "Could not get attribute options"
+msgstr "Could not get attribute options"
+
+msgid "Attribute Options"
+msgstr "Attribute Options"
+
+msgid "Select all"
+msgstr "Select all"
+
+msgid "Clear values"
+msgstr "Clear values"
+
+msgid "Could not get attributes dimensions"
+msgstr "Could not get attributes dimensions"
+
+msgid "Attribute"
+msgstr "Attribute"
+
+msgid "Update"
+msgstr "Update"
+
+msgid "data item configuration"
+msgstr "data item configuration"
+
+msgid "Type"
+msgstr "Type"
+
+msgid "Period type"
+msgstr "Period type"
+
+msgid "Parent organisation unit ID"
+msgstr "Parent organisation unit ID"
+
+msgid "The top level organisation unit on the source to fetch data from "
+msgstr "The top level organisation unit on the source to fetch data from "
+
+msgid "Organisation unit level"
+msgstr "Organisation unit level"
+
+msgid "Organisation unit level at the source to pull data from"
+msgstr "Organisation unit level at the source to pull data from"
+
+msgid "Source ID"
+msgstr "Source ID"
+
+msgid ""
+"A valid analytics dimension item from the source (data element, data "
+"element and category option)"
+msgstr ""
+"A valid analytics dimension item from the source (data element, data "
+"element and category option)"
+
+msgid ""
+"A valid analytics dimension item (data element, data element and category "
+"option)"
+msgstr ""
+"A valid analytics dimension item (data element, data element and category "
+"option)"
+
+msgid "Data items"
+msgstr "Data items"
+
+msgid "Period Type"
+msgstr "Period Type"
+
+msgid "There are no data items present"
+msgstr "There are no data items present"
+
+msgid "Connection successful"
+msgstr "Connection successful"
+
+msgid "Connection failed"
+msgstr "Connection failed"
+
+msgid "Testing..."
+msgstr "Testing..."
+
+msgid "Test connection"
+msgstr "Test connection"
+
+msgid "Run configuration"
+msgstr "Run configuration"
+
+msgid "Run requested successfully"
+msgstr "Run requested successfully"
+
+msgid "Error requesting run"
+msgstr "Error requesting run"
+
+msgid "Run"
+msgstr "Run"
+
+msgid "Page size"
+msgstr "Page size"
+
+msgid "Paginate by data"
+msgstr "Paginate by data"
+
+msgid "Requesting run..."
+msgstr "Requesting run..."
+
+msgid "Configuration items"
+msgstr "Configuration items"
+
+msgid "Clear selection"
+msgstr "Clear selection"
+
+msgid "Periods"
+msgstr "Periods"
+
+msgid "N/A"
+msgstr "N/A"
+
+msgid "Idle"
+msgstr "Idle"
+
+msgid "Running"
+msgstr "Running"
+
+msgid "Not started"
+msgstr "Not started"
+
+msgid "Unknown"
+msgstr "Unknown"
+
+msgid "Completed"
+msgstr "Completed"
+
+msgid "Unknown error"
+msgstr "Unknown error"
+
+msgid "View service overview"
+msgstr "View service overview"
+
+msgid "Error logs"
+msgstr "Error logs"
+
+msgid "Dismiss"
+msgstr "Dismiss"
+
+msgid "Show error logs"
+msgstr "Show error logs"
+
+msgid "Service Processing Overview"
+msgstr "Service Processing Overview"
+
+msgid "Could not get source information"
+msgstr "Could not get source information"
+
+msgid "Visualizations"
+msgstr "Visualizations"
+
+msgid "Configuration saved successfully"
+msgstr "Configuration saved successfully"
+
+msgid "Failed to save configuration"
+msgstr "Failed to save configuration"
+
+msgid "Configuration updated successfully"
+msgstr "Configuration updated successfully"
+
+msgid "Could not save changes"
+msgstr "Could not save changes"
+
 msgid "Add document"
 msgstr "Add document"
 
@@ -125,20 +356,11 @@ msgstr "Document is being uploaded, please wait..."
 msgid "This will be a part of the url. It should not contain spaces"
 msgstr "This will be a part of the url. It should not contain spaces"
 
-msgid "ID"
-msgstr "ID"
-
 msgid "Group"
 msgstr "Group"
 
 msgid "Files"
 msgstr "Files"
-
-msgid "Actions"
-msgstr "Actions"
-
-msgid "N/A"
-msgstr "N/A"
 
 msgid "Groups"
 msgstr "Groups"
@@ -176,9 +398,6 @@ msgstr "Edit document group"
 msgid "Add document group"
 msgstr "Add document group"
 
-msgid "Update"
-msgstr "Update"
-
 msgid "Save"
 msgstr "Save"
 
@@ -187,9 +406,6 @@ msgstr "Title"
 
 msgid "Edit group"
 msgstr "Edit group"
-
-msgid "Type"
-msgstr "Type"
 
 msgid "There are no files present"
 msgstr "There are no files present"
@@ -318,9 +534,6 @@ msgstr "Short name"
 msgid "Short description"
 msgstr "Short description"
 
-msgid "Visualizations"
-msgstr "Visualizations"
-
 msgid "Manage visualizations"
 msgstr "Manage visualizations"
 
@@ -426,9 +639,6 @@ msgstr "A menu item with this path already exists. Please choose a different one
 msgid "A menu item with this module ID already exists."
 msgstr "A menu item with this module ID already exists."
 
-msgid "Create"
-msgstr "Create"
-
 msgid "Are you sure you want to close this form?. All changes will be lost"
 msgstr "Are you sure you want to close this form?. All changes will be lost"
 
@@ -449,9 +659,6 @@ msgstr "There are no sub menus defined"
 
 msgid " sub menu item"
 msgstr " sub menu item"
-
-msgid "Name"
-msgstr "Name"
 
 msgid "Menu Position"
 msgstr "Menu Position"
@@ -548,9 +755,6 @@ msgstr "documentation"
 
 msgid "to add more modules"
 msgstr "to add more modules"
-
-msgid "Could not save changes"
-msgstr "Could not save changes"
 
 msgid "Section"
 msgstr "Section"
@@ -1010,6 +1214,16 @@ msgstr ""
 
 msgid "Import or export configuration"
 msgstr "Import or export configuration"
+
+msgid ""
+"Configure the data service for the web portal application, including data "
+"sources and synchronization settings"
+msgstr ""
+"Configure the data service for the web portal application, including data "
+"sources and synchronization settings"
+
+msgid "Configure data service"
+msgstr "Configure data service"
 
 msgid "Menu"
 msgstr "Menu"
