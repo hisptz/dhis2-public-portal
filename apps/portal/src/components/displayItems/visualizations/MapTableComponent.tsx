@@ -7,15 +7,13 @@ import {
 } from "@packages/shared/schemas";
 import { flattenDeep, head } from "lodash";
 import { OrgUnitSelection } from "@hisptz/dhis2-utils";
-import { getOrgUnitsSelection } from "@/utils/orgUnits";
-
-// @ts-ignore
+import { getOrgUnitsSelection } from "@/utils/orgUnits"; // @ts-ignore
 import { useDataQuery } from "@dhis2/app-runtime";
 import { Loader } from "@mantine/core";
 import i18n from "@dhis2/d2-i18n";
 import dynamic from "next/dynamic";
 import { RefObject, useMemo } from "react";
-import { getOrgUnitSelectionFromIds } from "@packages/ui/visualizations";
+import { getOrgUnitSelectionFromIds } from "@packages/shared/visualizations";
 
 const NoSSRDHIS2Table = dynamic(
 	() =>

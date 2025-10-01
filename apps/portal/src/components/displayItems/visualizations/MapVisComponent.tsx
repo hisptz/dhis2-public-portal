@@ -9,7 +9,7 @@ import {
 	IconMapPin,
 	IconMaximize,
 	IconMinimize,
-	IconTable
+	IconTable,
 } from "@tabler/icons-react";
 import { FullScreen, useFullScreenHandle } from "react-full-screen";
 import { OrgUnitSelection } from "@hisptz/dhis2-utils";
@@ -20,12 +20,18 @@ import { CustomOrgUnitModal } from "./CustomOrgUnitModal";
 import { CustomPeriodModal } from "./CustomPeriodModal";
 import { useBoolean, useResizeObserver } from "usehooks-ts";
 import { MapTableComponent } from "@/components/displayItems/visualizations/MapTableComponent";
-import { ActionMenu, ActionMenuGroup } from "@/components/displayItems/visualizations/ActionMenu";
+import {
+	ActionMenu,
+	ActionMenuGroup,
+} from "@/components/displayItems/visualizations/ActionMenu";
 import { downloadExcelFromTable } from "@/utils/table";
 import { CaptionPopover } from "@/components/CaptionPopover";
 import { MapConfig, VisualizationItem } from "@packages/shared/schemas";
 import { VisualizationTitle } from "@/components/displayItems/visualizations/VisualizationTitle";
-import { getOrgUnitSelectionFromIds, MapVisualizer } from "@packages/ui/visualizations";
+import {
+	getOrgUnitSelectionFromIds,
+	MapVisualizer,
+} from "@packages/shared/visualizations";
 import { useSearchParams } from "next/navigation";
 import { defaultTo, isEmpty } from "lodash";
 

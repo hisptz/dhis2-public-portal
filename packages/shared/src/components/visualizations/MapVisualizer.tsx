@@ -6,9 +6,9 @@ import {
 	ThematicLayerConfig,
 } from "@hisptz/dhis2-analytics";
 import { Map as LeafletMap } from "leaflet";
-import { MapConfig, MapLayerType } from "@packages/shared/schemas";
+import { MapConfig, MapLayerType } from "../../schemas";
 import React, { memo, useMemo } from "react";
-import { forEach, head, set } from "lodash";
+import { forEach, head, isEmpty, set } from "lodash";
 import { OrgUnitSelection } from "@hisptz/dhis2-utils";
 
 export interface MapViewProps {
@@ -88,7 +88,7 @@ export const MapVisualizer = memo(function MapVisualizer({
 					radius: view.radiusHigh,
 				} as ThematicLayerConfig;
 			});
-	}, [mapConfig]);
+	}, [mapConfig.mapViews]);
 	const boundaryLayer = useMemo(() => {
 		return head(
 			mapConfig.mapViews
@@ -100,7 +100,7 @@ export const MapVisualizer = memo(function MapVisualizer({
 					} as MapProps["boundaryLayer"];
 				}),
 		);
-	}, [mapConfig]);
+	}, [mapConfig.mapViews]);
 
 	const earthEngineLayers: EarthEngineLayerConfig[] = useMemo(() => {
 		return mapConfig.mapViews
@@ -123,7 +123,7 @@ export const MapVisualizer = memo(function MapVisualizer({
 					},
 				} as EarthEngineLayerConfig;
 			});
-	}, [mapConfig]);
+	}, [mapConfig.mapViews]);
 
 	const activePeriodSelection = useMemo(() => {
 		if (periodSelection) {
@@ -138,7 +138,7 @@ export const MapVisualizer = memo(function MapVisualizer({
 			?.filters?.map(({ items }) => items.map(({ id }) => id))
 			.flat();
 		return {
-			periods,
+			periods: !isEmpty(periods) ? periods : ["THIS_YEAR"],
 		};
 	}, [mapConfig.mapViews, periodSelection]);
 

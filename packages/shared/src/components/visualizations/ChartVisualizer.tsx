@@ -2,7 +2,7 @@ import {
 	AnalyticsData,
 	LegendSetConfig,
 	VisualizationConfig,
-} from "@packages/shared/schemas";
+} from "../../schemas";
 import React, { memo, RefObject, useRef } from "react";
 import HighchartsReact from "highcharts-react-official";
 import { DHIS2Chart } from "@hisptz/dhis2-analytics";
@@ -10,7 +10,7 @@ import {
 	getChartLayout,
 	getChartType,
 	getVisualizationLegendSet,
-} from "@packages/shared/utils";
+} from "../../utils";
 import { useResizeObserver } from "usehooks-ts";
 
 export interface ChartVisualizerProps {

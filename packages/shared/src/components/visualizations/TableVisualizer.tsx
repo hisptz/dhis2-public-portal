@@ -1,9 +1,9 @@
 import React, { RefObject, useMemo } from "react";
 
-import { AnalyticsData, VisualizationConfig } from "@packages/shared/schemas";
+import { AnalyticsData, VisualizationConfig } from "../../schemas";
 import { isArray, isEmpty } from "lodash";
 import { DHIS2PivotTable } from "@hisptz/dhis2-analytics";
-import { getVisualizationLegendSet } from "@packages/shared/utils";
+import { getVisualizationLegendSet } from "../../utils";
 import { LegendSet } from "@hisptz/dhis2-utils";
 
 export interface TableVisualizerProps {

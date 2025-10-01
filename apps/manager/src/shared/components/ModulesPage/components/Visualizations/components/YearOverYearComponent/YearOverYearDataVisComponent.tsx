@@ -8,7 +8,7 @@ import { useYearOverYearAnalytics } from "@packages/shared/hooks";
 import {
 	VisualizationTitle,
 	YearOverYearVisualizer,
-} from "@packages/ui/visualizations";
+} from "@packages/shared/visualizations";
 import { FullLoader } from "../../../../../FullLoader";
 
 export function YearOverYearDataVisComponent({
@@ -24,6 +24,7 @@ export function YearOverYearDataVisComponent({
 }) {
 	const { loading, analytics } = useYearOverYearAnalytics({
 		visualizationConfig,
+		params: new Map(),
 	});
 
 	return (

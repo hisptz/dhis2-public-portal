@@ -5,7 +5,7 @@ import { ConfigurationTitle } from "./ConfigurationTitle";
 import { ConfigurationDetails } from "./ConfigurationDetails";
 import { Button, IconEdit16 } from "@dhis2/ui";
 import { FooterConfigForm } from "../../appearance-config-forms/FooterConfig/FooterConfigForm";
-import { RichTextView } from "@packages/ui/visualizations";
+import { RichTextView } from "@packages/shared/visualizations";
 import { ConfigurationColor } from "./ConfigurationColor";
 
 type Props = {

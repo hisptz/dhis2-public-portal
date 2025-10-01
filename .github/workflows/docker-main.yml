@@ -3,11 +3,11 @@ name: Build and Push Docker Image (Main)
 on:
   push:
     paths:
-      - apps/portal/**
-      - packages/**
+      - '.github/workflows/docker-main.yml'
+      - 'apps/portal/**'
+      - 'packages/**'
     branches:
       - main
-
   workflow_dispatch:
 
 jobs:

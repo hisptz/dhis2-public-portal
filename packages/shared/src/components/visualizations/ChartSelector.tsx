@@ -5,7 +5,7 @@ import {
 	AnalyticsData,
 	VisualizationChartType,
 	VisualizationConfig,
-} from "@packages/shared/schemas";
+} from "../../schemas";
 import { SingleValueVisualizer } from "./SingleValueVisualizer";
 import { TableVisualizer } from "./TableVisualizer";
 import { ChartVisualizer } from "./ChartVisualizer";

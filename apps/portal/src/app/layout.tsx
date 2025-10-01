@@ -7,7 +7,6 @@ import { DHIS2AppProvider } from "@/components/DHIS2AppProvider";
 import { NavigationBar } from "@/components/NavigationBar";
 
 import "react-grid-layout/css/styles.css";
-import "react-resizable/css/styles.css";
 import { Providers } from "@/components/Providers";
 import { getAppearanceConfig } from "@/utils/config/appConfig";
 import { env } from "@/utils/env";
