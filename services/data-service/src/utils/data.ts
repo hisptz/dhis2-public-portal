@@ -8,8 +8,9 @@ import {
 } from "@packages/shared/schemas";
 import { v4 } from "uuid";
 import { Dimensions } from "@/schemas/metadata";
-import { isEmpty } from "lodash";
+import { isEmpty, isEqual, uniqWith } from "lodash";
 import { categoriesMeta } from "@/variables/meta";
+import { seq } from "async";
 
 export interface DataResponse {
 	dataValues: Array<{
@@ -88,6 +89,159 @@ export async function fetchPagedData({
 			} else {
 				logger.error(`Error fetching data: Unknown error`);
 				logger.error(`Error: ${JSON.stringify(e)}`);
+			}
+			throw e;
+		}
+	}
+}
+
+
+type Mapping = { id: string; sourceId: string };
+type Expanded = { combo: string; id: string; name: string };
+
+
+async function expandDataElement(
+	client: AxiosInstance,
+	element: string,
+	timeout?: number
+): Promise<Expanded[]> {
+	if (element.includes(".")) {
+		const [de, coc] = element.split(".");
+		return [{ combo: element, id: coc, name: "" }];
+	}
+
+	const pipeline = seq(
+		// Step 1: get categoryCombo id
+		(deId: string, cb: any) => {
+			client
+				.get(`dataElements/${deId}?fields=categoryCombo`, {
+					timeout,
+					timeoutErrorMessage: `Timed out after ${timeout}ms fetching data element ${deId}`,
+				})
+				.then((res) => {
+					cb(null, { deId, categoryComboId: res.data?.categoryCombo?.id });
+				})
+				.catch((err) => cb(err));
+		},
+
+		// Step 2: get categoryOptionCombos
+		(input: { deId: string; categoryComboId: string }, cb: any) => {
+			client
+				.get(
+					`categoryCombos/${input.categoryComboId}?fields=id,categoryOptionCombos`,
+					{ timeout }
+				)
+				.then((res) => {
+					cb(null, {
+						deId: input.deId,
+						optionCombos: res.data?.categoryOptionCombos ?? [],
+					});
+				})
+				.catch((err) => cb(err));
+		},
+
+		// Step 3: fetch each categoryOptionCombo details
+		(input: { deId: string; optionCombos: { id: string }[] }, cb: any) => {
+			(async () => {
+				try {
+					const results: Expanded[] = [];
+					for (const coc of input.optionCombos) {
+						const res = await client.get(
+							`categoryOptionCombos/${coc.id}?fields=id,name`,
+							{ timeout }
+						);
+						results.push({
+							combo: `${input.deId}.${res.data.id}`,
+							id: res.data.id,
+							name: res.data.name,
+						});
+					}
+					cb(null, results);
+				} catch (err) {
+					cb(err);
+				}
+			})();
+		}
+	);
+
+	return new Promise<Expanded[]>((resolve, reject) => {
+		pipeline(element, (err: any, result: Expanded[]) => {
+			if (err) return reject(err);
+			resolve(result);
+		});
+	});
+}
+
+
+
+export async function processDataItems({
+	mappings,
+	sourceClient,
+	destinationClient,
+	timeout,
+}: {
+	mappings: Mapping[];
+	sourceClient: AxiosInstance;
+	destinationClient: AxiosInstance;
+	timeout?: number;
+}) {
+	try {
+		const results: Mapping[] = [];
+
+		for (const { id, sourceId } of mappings) {
+			const idExpanded = id.includes(".");
+			const sourceExpanded = sourceId.includes(".");
+
+			// Case 1: both already expanded -> keep as-is
+			if (idExpanded && sourceExpanded) {
+				results.push({ id, sourceId });
+				continue;
+			}
+
+
+			// Case 2: expand whichever is not expanded
+			const idCombos = await expandDataElement(destinationClient, id, timeout);
+			const sourceCombos = await expandDataElement(sourceClient, sourceId, timeout);
+
+			for (const idCoc of idCombos) {
+				// Priority 1: match by ID
+				const matchById = sourceCombos.find((s) => s.id === idCoc.id);
+				if (matchById) {
+					results.push({
+						id: idCoc.combo,
+						sourceId: matchById.combo,
+					});
+					continue; // skip name check
+				}
+
+				// Priority 2: match by name
+				const matchByName = sourceCombos.find(
+					(s) => s.name && s.name === idCoc.name,
+				);
+				if (matchByName) {
+					results.push({
+						id: idCoc.combo,
+						sourceId: matchByName.combo,
+					});
+				}
+			}
+		}
+
+		return uniqWith(results, isEqual);
+
+	} catch (e) {
+		if (e instanceof AxiosError) {
+			console.error(`Axios Error fetching data: ${e.message}`);
+			console.error(
+				`Axios Status code: ${e.response?.status} - ${e.response?.statusText}`,
+			);
+			throw e;
+		} else {
+			if (e instanceof Error) {
+				console.error(`Error fetching data: ${e.message}`);
+			} else {
+				console.error(`Error fetching data: Unknown error`);
+				console.error(`Error: ${JSON.stringify(e)}`);
 			}
 			throw e;
 		}
