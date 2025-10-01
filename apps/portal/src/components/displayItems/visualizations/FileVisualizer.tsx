@@ -30,10 +30,6 @@ interface ErrorResponseData {
 
 export async function FileVisualizer({ config }: PDFVisualizerProps) {
 	const type = config.type;
-	const iconProps = {
-		style: { fontSize: 64 },
-		color: "primary",
-	} as const;
 	const url = `documents/${config.id}`;
 
 	const data = await dhis2HttpClient.get<ResponseData | ErrorResponseData>(
