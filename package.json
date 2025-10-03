@@ -35,7 +35,7 @@
   "engines": {
     "node": ">=20"
   },
-  "packageManager": "pnpm@10.17.0",
+  "packageManager": "pnpm@10.18.0",
   "workspaces": {
     "nohoist": [
       "sharp"
@@ -48,6 +48,5 @@
   "repository": {
     "url": "git@github.com:hisptz/dhis2-public-portal.git"
   },
-  "dependencies": {},
   "version": "1.3.2"
 }

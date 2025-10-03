@@ -2,30 +2,32 @@ import React, { RefObject, useMemo, useRef } from "react";
 import { clamp, flatten, get, head, truncate } from "lodash";
 import { useResizeObserver } from "usehooks-ts";
 import i18n from "@dhis2/d2-i18n";
-import { AnalyticsData, VisualizationConfig } from "../../schemas";
+import { AnalyticsData, VisualizationConfig } from "@packages/shared/schemas";
 import {
 	getForeground,
 	getLegendColorFromValue,
 	numberFormatter,
-} from "../../utils";
+} from "@packages/shared/utils";
 
 export function SingleValueVisualizer({
 	analytics,
 	visualization,
 	colors,
 	background,
+	containerRef,
 }: {
 	analytics: AnalyticsData;
 	visualization: VisualizationConfig;
 	colors: string[];
 	background?: boolean;
+	containerRef?: RefObject<HTMLDivElement | null>;
 }) {
-	const legendSet = head(visualization.columns[0]!.items)?.legendSet;
+	const legendSet = visualization.dataDimensionItems[0]?.indicator?.legendSet;
 	const ref = useRef<HTMLDivElement | null>(null);
-	const { width } = useResizeObserver({
-		ref: ref as RefObject<HTMLDivElement>,
+	const { height } = useResizeObserver({
+		ref: (containerRef ?? ref) as RefObject<HTMLDivElement>,
 	});
-	const { rows, headers, metaData } = analytics;
+	const { rows, headers, metaData } = analytics;	
 	const valueHeaderIndex = headers.findIndex(({ name }) => name === "value");
 	const value = parseFloat(get(head(rows), [valueHeaderIndex]) ?? "");
 
@@ -85,16 +87,16 @@ export function SingleValueVisualizer({
 	}, [background, colors, legendColor, visualization.legend]);
 
 	const fontSize = useMemo(() => {
-		const textLength = value.toString().length;
-		const size = Math.ceil((width ?? 100) / textLength) + 12;
-		return clamp(size, 14, 120);
-	}, [width, value]);
+ 		const availableHeight = (height ?? 100) * 0.6;  
+ 		const size = Math.ceil(availableHeight * 0.3);  
+		return clamp(size, 14, 80);  
+	}, [height]);
 
 	return (
 		<div className="w-full h-full flex flex-col align-center justify-center gap-2">
 			<span
 				style={{ fontSize: 16 }}
-				className="text-background-500 text-center"
+				className="text-background-500 text-center min-h-[2.5rem] leading-tight line-clamp-2 flex items-start"
 			>
 				{truncate(labels.join(" - "), {
 					length: 50,
@@ -105,13 +107,13 @@ export function SingleValueVisualizer({
 				<span
 					style={{
 						background: backgroundColor,
-						height: "80%",
+						minHeight: "80%",
 						borderRadius: 10,
 						color,
 						padding: 16,
 						fontSize,
 					}}
-					className="flex-1 flex flex-col font-bold text-center justify-center align-middle"
+					className="flex-1 flex flex-col font-bold text-center justify-center align-middle overflow-hidden"
 				>
 					{i18n.t("No data")}
 				</span>
@@ -120,13 +122,13 @@ export function SingleValueVisualizer({
 					ref={ref}
 					style={{
 						background: backgroundColor,
-						height: "80%",
+						minHeight: "80%",
 						borderRadius: 10,
 						color,
 						padding: 16,
 						fontSize,
 					}}
-					className="flex-1 flex flex-col font-bold text-center justify-center align-middle"
+					className="flex-1 flex flex-col font-bold text-center justify-center align-middle overflow-hidden break-words"
 				>
 					{numberFormatter(value)}
 				</span>
