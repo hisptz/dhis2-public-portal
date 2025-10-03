@@ -17,6 +17,7 @@ export function ChartSelector({
 	setRef,
 	fullScreen,
 	colors,
+	containerRef,
 }: {
 	setRef: RefObject<HighchartsReact.RefObject | null>;
 	analytics: AnalyticsData;
@@ -24,6 +25,7 @@ export function ChartSelector({
 	tableRef: RefObject<HTMLTableElement | null>;
 	fullScreen: boolean;
 	colors: string[];
+	containerRef?: RefObject<HTMLDivElement | null>;
 }) {
 	const chartType = visualization.type;
 	switch (chartType) {
@@ -33,6 +35,7 @@ export function ChartSelector({
 					visualization={visualization}
 					analytics={analytics}
 					colors={colors}
+					containerRef={containerRef}
 				/>
 			);
 		case VisualizationChartType.TABLE:

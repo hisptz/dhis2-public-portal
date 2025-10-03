@@ -33,11 +33,15 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
+      - name: install Cypress binary
+        run: pnpm exec cypress install
+        working-directory: apps/portal
+
       - name: Cypress run
         uses: cypress-io/github-action@v6
         with:
-          working-directory: apps/portal
           install: false
+          working-directory: apps/portal
           start: pnpm run dev
           wait-on: 'http://localhost:3000'
           wait-on-timeout: 120
