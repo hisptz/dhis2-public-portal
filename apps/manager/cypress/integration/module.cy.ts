@@ -303,14 +303,14 @@ describe("Modules Page", () => {
 		cy.wait(5000);
 		cy.contains("button", "Sort items").click();
 
-		cy.get('[data-rbd-draggable-id="blog-test"]')
+		cy.get('[data-rfd-draggable-id="blog-test"]')
 			.focus()
 			.trigger("keydown", { keyCode: 32 });
-		cy.get('[data-rbd-draggable-id="blog-test"]').trigger("keydown", {
+		cy.get('[data-rfd-draggable-id="blog-test"]').trigger("keydown", {
 			keyCode: 40,
 			force: true,
 		});
-		cy.get('[data-rbd-draggable-id="blog-test"]').trigger("keydown", {
+		cy.get('[data-rfd-draggable-id="blog-test"]').trigger("keydown", {
 			keyCode: 32,
 			force: true,
 		});
@@ -379,14 +379,14 @@ describe("Modules Page", () => {
 		cy.wait(5000);
 		cy.contains("button", "Sort document groups").click();
 
-		cy.get('[data-rbd-draggable-id="test-group"]')
+		cy.get('[data-rfd-draggable-id="test-group"]')
 			.focus()
 			.trigger("keydown", { keyCode: 32 });
-		cy.get('[data-rbd-draggable-id="test-group"]').trigger("keydown", {
+		cy.get('[data-rfd-draggable-id="test-group"]').trigger("keydown", {
 			keyCode: 40,
 			force: true,
 		});
-		cy.get('[data-rbd-draggable-id="test-group"]').trigger("keydown", {
+		cy.get('[data-rfd-draggable-id="test-group"]').trigger("keydown", {
 			keyCode: 32,
 			force: true,
 		});

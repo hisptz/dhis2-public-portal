@@ -138,6 +138,7 @@ export function DataVisComponent({
 										visualization={visualizationConfig}
 										fullScreen={handler.active}
 										tableRef={tableRef}
+										containerRef={containerRef}
 									/>
 								)}
 							</div>
