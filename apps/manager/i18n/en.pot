@@ -5,8 +5,13 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
-"POT-Creation-Date: 2025-09-23T10:08:27.526Z\n"
-"PO-Revision-Date: 2025-09-23T10:08:27.526Z\n"
+<<<<<<< Updated upstream
+"POT-Creation-Date: 2025-07-23T07:06:16.040Z\n"
+"PO-Revision-Date: 2025-07-23T07:06:16.040Z\n"
+=======
+"POT-Creation-Date: 2025-07-17T11:46:17.715Z\n"
+"PO-Revision-Date: 2025-07-17T11:46:17.715Z\n"
+>>>>>>> Stashed changes
 
 msgid "Could not get Appearance configurations"
 msgstr "Could not get Appearance configurations"
@@ -35,14 +40,14 @@ msgstr "Back to all modules"
 msgid "Module"
 msgstr "Module"
 
-msgid "Small screen"
-msgstr "Small screen"
+msgid "small screen"
+msgstr "small screen"
 
-msgid "Medium screen"
-msgstr "Medium screen"
+msgid "medium screen"
+msgstr "medium screen"
 
-msgid "Large screen"
-msgstr "Large screen"
+msgid "large screen"
+msgstr "large screen"
 
 msgid "Please fix the validation errors before saving"
 msgstr "Please fix the validation errors before saving"
@@ -221,27 +226,6 @@ msgstr "Could not create document {{ errorMessage }}"
 msgid "Could not delete file {{ errorMessage }}"
 msgstr "Could not delete file {{ errorMessage }}"
 
-msgid "Sort document groups"
-msgstr "Sort document groups"
-
-msgid "Confirm exit"
-msgstr "Confirm exit"
-
-msgid "You have unsaved changes to the sort order. Are you sure you want to close?"
-msgstr "You have unsaved changes to the sort order. Are you sure you want to close?"
-
-msgid "Sort Document Groups"
-msgstr "Sort Document Groups"
-
-msgid "No items to sort."
-msgstr "No items to sort."
-
-msgid "Updating..."
-msgstr "Updating..."
-
-msgid "Update order"
-msgstr "Update order"
-
 msgid "Remove"
 msgstr "Remove"
 
@@ -266,12 +250,6 @@ msgstr "Segmented"
 
 msgid "DropDown"
 msgstr "DropDown"
-
-msgid "Sort document items"
-msgstr "Sort document items"
-
-msgid "Sort Document Items"
-msgstr "Sort Document Items"
 
 msgid "Something went wrong"
 msgstr "Something went wrong"
@@ -429,6 +407,9 @@ msgstr "A menu item with this module ID already exists."
 msgid "Create"
 msgstr "Create"
 
+msgid "Confirm exit"
+msgstr "Confirm exit"
+
 msgid "Are you sure you want to close this form?. All changes will be lost"
 msgstr "Are you sure you want to close this form?. All changes will be lost"
 
@@ -483,8 +464,14 @@ msgstr "Reset"
 msgid "Sort menu items"
 msgstr "Sort menu items"
 
+msgid "You have unsaved changes to the sort order. Are you sure you want to close?"
+msgstr "You have unsaved changes to the sort order. Are you sure you want to close?"
+
 msgid "Sort Menu Items"
 msgstr "Sort Menu Items"
+
+msgid "No items to sort."
+msgstr "No items to sort."
 
 msgid "Save order"
 msgstr "Save order"
@@ -633,6 +620,24 @@ msgstr "Visualization type"
 msgid "All"
 msgstr "All"
 
+<<<<<<< Updated upstream
+=======
+msgid "Add slideshow item"
+msgstr "Add slideshow item"
+
+msgid "{{action}} slideshow item"
+msgstr "{{action}} slideshow item"
+
+msgid "Edit slideshow item"
+msgstr "Edit slideshow item"
+
+msgid "Edit"
+msgstr "Edit"
+
+msgid "No slideshow items configured"
+msgstr "No slideshow items configured"
+
+>>>>>>> Stashed changes
 msgid "Add Section"
 msgstr "Add Section"
 
@@ -663,14 +668,8 @@ msgstr "Horizontal"
 msgid "Sections"
 msgstr "Sections"
 
-msgid "Section title"
-msgstr "Section title"
-
 msgid "Content"
 msgstr "Content"
-
-msgid "Item created successfully"
-msgstr "Item created successfully"
 
 msgid "Create an item"
 msgstr "Create an item"
@@ -689,15 +688,6 @@ msgstr "Delete item"
 
 msgid "Are you sure you want to delete the item "
 msgstr "Are you sure you want to delete the item "
-
-msgid "Sort items"
-msgstr "Sort items"
-
-msgid "Sort Items"
-msgstr "Sort Items"
-
-msgid "Update..."
-msgstr "Update..."
 
 msgid "Error loading item"
 msgstr "Error loading item"
@@ -752,15 +742,6 @@ msgstr "Group selector"
 msgid "Save group changes"
 msgstr "Save group changes"
 
-msgid "small screen"
-msgstr "small screen"
-
-msgid "medium screen"
-msgstr "medium screen"
-
-msgid "large screen"
-msgstr "large screen"
-
 msgid "Failed to save visualization"
 msgstr "Failed to save visualization"
 
@@ -810,6 +791,9 @@ msgstr "Color configurations updated successfully"
 msgid "Error updating color configurations"
 msgstr "Error updating color configurations"
 
+msgid "Updating..."
+msgstr "Updating..."
+
 msgid "Could not save form. Fix the form errors fist and try again"
 msgstr "Could not save form. Fix the form errors fist and try again"
 
@@ -818,9 +802,6 @@ msgstr "Application Color Configurations"
 
 msgid "Primary color"
 msgstr "Primary color"
-
-msgid "Titles color"
-msgstr "Titles color"
 
 msgid "Chart colors"
 msgstr "Chart colors"
@@ -1026,3 +1007,11 @@ msgstr "Error deleting file"
 msgctxt "Follows either create or update"
 msgid " menu item"
 msgstr " menu item"
+
+msgctxt "Application title"
+msgid "__MANIFEST_APP_TITLE"
+msgstr "FlexiPortal Manager"
+
+msgctxt "Application description"
+msgid "__MANIFEST_APP_DESCRIPTION"
+msgstr ""

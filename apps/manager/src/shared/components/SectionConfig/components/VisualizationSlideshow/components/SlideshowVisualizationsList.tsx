@@ -55,7 +55,7 @@ export function SlideshowVisualizationsList({
 		<SimpleTable
 			columns={columns}
 			rows={rows}
-			emptyLabel={i18n.t("No slideshow visualization items configured")}
+			emptyLabel={i18n.t("No slideshow items configured")}
 		/>
 	);
 }

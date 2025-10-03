@@ -2,6 +2,7 @@ import React from "react";
 import {
 	SlideshowVisualization,
 	slideshowVisualizationSchema,
+	VisualizationDisplayItemType,
 } from "@packages/shared/schemas";
 import { FormProvider, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -14,6 +15,7 @@ import {
 	ModalTitle,
 } from "@dhis2/ui";
 import i18n from "@dhis2/d2-i18n";
+import { RHFSingleSelectField } from "@hisptz/dhis2-ui";
 
 type Props = {
 	visualization?: SlideshowVisualization;
@@ -45,11 +47,25 @@ export function AddSlideshowVisualizationItemForm({
 		<FormProvider {...form}>
 			<Modal position="middle" onClose={onClose} hide={hide}>
 				<ModalTitle>
-					{i18n.t("{{action}} slideshow visualization", { action })}
+					{i18n.t("{{action}} slideshow item", { action })}
 				</ModalTitle>
 				<ModalContent>
-					{/*	content here*/}
-					form here!!
+					<RHFSingleSelectField
+						required
+						dataTest={"section-single-item-visualization-type"}
+						label={i18n.t("Type")}
+						options={[
+							{
+								label: i18n.t("Visualization"),
+								value: VisualizationDisplayItemType.CHART,
+							},
+							{
+								label: i18n.t("Map"),
+								value: VisualizationDisplayItemType.MAP,
+							},
+						]}
+						name="type"
+					/>
 				</ModalContent>
 				<ModalActions>
 					<ButtonStrip>

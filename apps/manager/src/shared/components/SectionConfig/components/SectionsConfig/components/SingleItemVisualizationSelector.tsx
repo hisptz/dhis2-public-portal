@@ -11,51 +11,11 @@ import {
 	VisualizationChartType,
 	VisualizationDisplayItemType,
 } from "@packages/shared/schemas";
-
-const visQuery = {
-	vis: {
-		resource: "visualizations",
-		params: ({ type }: { type: string }) => {
-			return {
-				fields: ["id", "displayName", "type"],
-				order: "name:asc",
-				paging: false,
-				filter: type ? [`type:eq:${type}`] : undefined,
-			};
-		},
-	},
-};
-
-type VisualizationQueryResponse = {
-	vis: {
-		visualizations: Array<{
-			id: string;
-			displayName: string;
-			type: string;
-		}>;
-	};
-};
-
-const mapQuery = {
-	maps: {
-		resource: "maps",
-		params: ({}) => {
-			return {
-				fields: ["id", "displayName"],
-				paging: false,
-			};
-		},
-	},
-};
-
-type MapQueryResponse = {
-	maps: {
-		maps: Array<{
-			id: string;
-			displayName: string;
-		}>;
-	};
-};
+import {
+	MapQueryResponse,
+	VisualizationQueryResponse,
+} from "../../../types/visualization";
+import { mapQuery, visQuery } from "../../../constants/visualization";
 
 export function MapSelector({
 	namePrefix,

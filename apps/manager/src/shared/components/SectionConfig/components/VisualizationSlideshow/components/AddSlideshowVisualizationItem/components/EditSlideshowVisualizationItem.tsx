@@ -28,7 +28,7 @@ export function EditSlideshowVisualizationItem({
 			)}
 			<Button
 				dataTest="edit-slideshow-visualization-button"
-				title={i18n.t("Edit slideshow visualization")}
+				title={i18n.t("Edit slideshow item")}
 				onClick={onShow}
 			>
 				{i18n.t("Edit")}
