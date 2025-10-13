@@ -113,6 +113,18 @@ msgstr "Label"
 msgid "PDF"
 msgstr "PDF"
 
+msgid "DOCX"
+msgstr "DOCX"
+
+msgid "ZIP"
+msgstr "ZIP"
+
+msgid "XLSX"
+msgstr "XLSX"
+
+msgid "TXT"
+msgstr "TXT"
+
 msgid "File type"
 msgstr "File type"
 
