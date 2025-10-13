@@ -40,9 +40,9 @@
       "cache": false,
       "persistent": true
     },
-    "publish:app-hub" : {
+    "publish:app-hub": {
       "dependsOn": [
-
+        "build"
       ]
     }
   }

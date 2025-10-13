@@ -9,6 +9,7 @@
     "test": "vitest -c vitest.config.mts",
     "build": "turbo run build",
     "build:standalone": "turbo run build:standalone --filter portal",
+    "publish:app-hub": "turbo run publish:app-hub --filter manager",
     "dev": "turbo run dev",
     "dev:portal": "turbo run dev --filter portal",
     "dev:manager": "turbo run dev --filter manager",
