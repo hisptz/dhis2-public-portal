@@ -21,8 +21,12 @@ import {
 	useDimensionViewControls,
 	useVisualizationRefs,
 } from "@/hooks/dataVisualization";
-import { useAnalytics } from "@packages/shared/hooks";
-import { ChartSelector, TableVisualizer } from "@packages/ui/visualizations";
+import {
+	ChartSelector,
+	TableVisualizer,
+} from "@packages/shared/visualizations";
+import { useMemo } from "react";
+import { useAnalytics } from "@/hooks/charts";
 
 export function DataVisComponent({
 	visualizationConfig,
@@ -57,6 +61,8 @@ export function DataVisComponent({
 	});
 
 	const { containerRef } = useContainerSize(chartRef);
+	const searchParams = useSearchParams();
+	const params = useMemo(() => new Map(searchParams), [searchParams]);
 
 	const {
 		analytics,
@@ -65,9 +71,7 @@ export function DataVisComponent({
 		setSelectedOrgUnits,
 		selectedPeriods,
 		selectedOrgUnits,
-	} = useAnalytics({ visualizationConfig });
-
-	const searchParams = useSearchParams();
+	} = useAnalytics({ visualizationConfig, params });
 
 	return (
 		<>
@@ -78,7 +82,9 @@ export function DataVisComponent({
 					ref={containerRef}
 				>
 					<div className="flex flex-row place-content-between">
-						<VisualizationTitle title={visualizationConfig.name} />
+						{!visualizationConfig.hideTitle && (
+							<VisualizationTitle title={visualizationConfig.name} />
+						)}
 						{!disableActions && (
 							<div className="flex flex-row gap-2 align-middle">
 								{handler.active && (
@@ -134,6 +140,7 @@ export function DataVisComponent({
 										visualization={visualizationConfig}
 										fullScreen={handler.active}
 										tableRef={tableRef}
+										containerRef={containerRef}
 									/>
 								)}
 							</div>

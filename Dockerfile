@@ -22,11 +22,12 @@ WORKDIR /app
 # First install the dependencies (as they change less often)
 COPY .gitignore .gitignore
 COPY --from=builder /app/out/json/ .
-COPY --from=builder /app/out/yarn.lock ./yarn.lock
+COPY --from=builder /app/out/pnpm-lock.yaml ./pnpm-lock.yaml
 RUN corepack enable
 RUN apk add --no-cache python3 make g++ build-base cairo-dev pango-dev giflib-dev py-setuptools
-
-RUN yarn install --frozen-lockfile
+RUN npm -g install corepack@latest
+RUN corepack enable
+RUN pnpm install --no-frozen-lockfile
 
 # Build the project
 COPY --from=builder /app/out/full/ .
@@ -44,8 +45,9 @@ ENV CONTEXT_PATH=$CONTEXT_PATH
 
 RUN touch ./apps/portal/.env.local
 RUN echo CONTEXT_PATH=$CONTEXT_PATH >> ./apps/portal/.env.local
-
-RUN yarn portal run build
+RUN npm -g install corepack@latest
+RUN corepack enable
+RUN pnpm run build --filter portal
 
 FROM base AS runner
 WORKDIR /app

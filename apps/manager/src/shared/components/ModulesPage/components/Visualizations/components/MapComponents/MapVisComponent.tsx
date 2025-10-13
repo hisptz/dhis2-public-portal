@@ -2,7 +2,10 @@ import React, { RefObject, useCallback, useRef, useState } from "react";
 import { Map as LeafletMap } from "leaflet";
 import { useResizeObserver } from "usehooks-ts";
 import { MapConfig } from "@packages/shared/schemas";
-import { MapVisualizer, VisualizationTitle } from "@packages/ui/visualizations";
+import {
+	MapVisualizer,
+	VisualizationTitle,
+} from "@packages/shared/visualizations";
 
 export function MapVisComponent({ mapConfig }: { mapConfig: MapConfig }) {
 	const mapContainer = useRef<HTMLDivElement | null>(null);

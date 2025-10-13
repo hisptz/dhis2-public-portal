@@ -3,11 +3,14 @@ name: Build and Push Docker Image (Develop)
 on:
   push:
     paths:
+      - '.github/workflows/docker-develop.yml'
       - apps/portal/**
       - packages/**
       - Dockerfile
     branches:
       - develop
+  workflow_dispatch:
+
 
 jobs:
   build-and-push:

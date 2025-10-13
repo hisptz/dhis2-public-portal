@@ -5,10 +5,11 @@ on:
     branches:
       - develop
     paths:
+      - '.github/workflows/manager-e2e.yml'
       - 'apps/manager/**'
       - 'packages/**'
       - 'package.json'
-      - 'yarn.lock'
+      - 'pnpm-lock.yaml'
 
 jobs:
   e2e-test:
@@ -18,26 +19,39 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        name: Install pnpm
+        with:
+          run_install: false
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
-          cache: 'yarn'
-
+          node-version: '22'
+          cache: 'pnpm'
       - name: Install dependencies
-        run: yarn install --frozen-lockfile
+        run: pnpm install --frozen-lockfile
+      
+      - name: install Cypress binary
+        run: pnpm exec cypress install
+        working-directory: apps/manager
+
+      - name: install Cypress binary
+        run: pnpm exec cypress install
+        working-directory: apps/manager
 
       - name: Cypress run
         uses: cypress-io/github-action@v6
         with:
+          install: false
           working-directory: apps/manager
-          start: yarn dev
+          start: pnpm run dev
           wait-on: 'http://localhost:3001'
           wait-on-timeout: 120
           browser: chrome
           config-file: cypress.config.ts
           record: true
+          publish-summary: true
         env:
           CYPRESS_RECORD_KEY: ${{ secrets.MANAGER_CYPRESS_RECORD_KEY }}
           CYPRESS_dhis2Username: ${{ secrets.CYPRESS_DHIS2_USERNAME }}

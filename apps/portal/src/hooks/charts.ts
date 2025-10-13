@@ -1,14 +1,18 @@
 import { useEffect, useState } from "react";
 import { useDataQuery } from "@dhis2/app-runtime";
-import { getVisualizationDimensions, getVisualizationFilters } from "../utils";
 import { PeriodTypeCategory, PeriodUtility } from "@hisptz/dhis2-utils";
 import { snakeCase } from "lodash";
 import { DateTime, Interval } from "luxon";
+
+import {
+	getVisualizationDimensions,
+	getVisualizationFilters,
+} from "@packages/shared/utils";
 import {
 	AnalyticsData,
 	VisualizationConfig,
 	YearOverYearVisualizationConfig,
-} from "../schemas";
+} from "@packages/shared/schemas";
 
 const analyticsQuery = {
 	analytics: {

@@ -12,13 +12,14 @@
     "types": [
       "cypress",
       "node"
-    ]
+    ],
   },
   "include": [
     "src",
     "types",
     "tailwind.config.ts",
     "cypress",
-    "cypress.config.ts"
+    "cypress.config.ts",
+    "viteConfigExtensions.mts"
   ]
 }
