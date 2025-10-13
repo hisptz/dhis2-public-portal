@@ -17,8 +17,7 @@ export default {
 		[
 			"@semantic-release/exec",
 			{
-				prepareCmd:
-					"node /scripts/update-versions.js ${nextRelease.version}",
+				prepareCmd: "pnpm update-versions ${nextRelease.version}",
 			},
 		],
 		[
