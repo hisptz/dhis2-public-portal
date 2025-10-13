@@ -24,7 +24,7 @@ export default {
 			"@semantic-release/exec",
 			{
 				prepareCmd:
-					"pnpm build --filter manager && pnpm build:standalone --filter portal",
+					"pnpm build --filter manager && pnpm build:standalone",
 			},
 		],
 		[
