@@ -58,7 +58,7 @@ To showcase downloadable document files.
 
 **How it works:**
 
-- Allows file uploads (currently supports **PDF**).
+- Allows file uploads (supports **PDF**, **DOCX**, **ZIP**, **XLSX**, and **TXT** formats).
 - Users configure display options: **Segmented** or **Dropdown**.
 - Supports **grouped** or **ungrouped** documents.
     - **Ungrouped:** Direct list of documents.
