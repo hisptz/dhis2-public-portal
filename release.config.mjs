@@ -18,14 +18,14 @@ export default {
 			"@semantic-release/exec",
 			{
 				prepareCmd:
-					"node scripts/update-versions.js ${nextRelease.version}",
+					"node ./scripts/update-versions.js ${nextRelease.version}",
 			},
 		],
 		[
 			"@semantic-release/exec",
 			{
 				prepareCmd:
-					"yarn manager build && yarn portal build:standalone",
+					"pnpm build --filter manager && pnpm build:standalone --filter portal",
 			},
 		],
 		[
