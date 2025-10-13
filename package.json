@@ -15,7 +15,7 @@
     "lint": "turbo run lint",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
     "check-types": "turbo run check-types",
-    "update-versions": "node ../scripts/update-versions.js",
+    "update-versions": "node scripts/update-versions.js",
     "release": "semantic-release",
     "clean": "find . -name 'node_modules' -type d -prune -exec rm -rf '{}' +"
   },
