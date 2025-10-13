@@ -16,9 +16,9 @@ cp .env build/apps/portal || echo ".env file not found. Will assume the app will
 
 BUNDLE_NAME="$PKG_NAME-$PKG_VERSION.zip"
 cd build  || return
-yarn install --frozen-lockfile
+pnpm  install --frozen-lockfile
 echo "Building the app"
-yarn portal build
+pnpm build --filter portal
 
 echo "Copying files"
 cp apps/portal/next.config.ts app/

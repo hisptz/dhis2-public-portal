@@ -19,6 +19,13 @@
         "build/**"
       ]
     },
+    "build:standalone": {
+      "dependsOn": [
+      ],
+      "outputs": [
+        "build/**"
+      ]
+    },
     "lint": {
       "dependsOn": [
         "^lint"
