@@ -45,14 +45,14 @@ export function useCreateDataSource() {
 				url: `${data.source.url}/api/**`,
 				auth: data.source.pat
 					? {
-							type: "api-token",
-							token: data.source.pat,
-						}
+						type: "api-token",
+						token: data.source.pat,
+					}
 					: {
-							type: "http-basic",
-							username: data.source.username,
-							password: data.source.password,
-						},
+						type: "http-basic",
+						username: data.source.username,
+						password: data.source.password,
+					},
 			};
 
 			const response = (await createRoute({ data: routePayload })) as {
@@ -161,5 +161,66 @@ export function useUpdateDataSource() {
 
 	return {
 		save,
+	};
+}
+
+const deleteRouteMutation: any = {
+	type: "delete" as const,
+	resource: "routes",
+	id: ({ id }: { id: string }) => id,
+};
+
+const deleteDataSourceMutation: any = {
+	type: "delete" as const,
+	resource: `dataStore/${DatastoreNamespaces.DATA_SERVICE_CONFIG}`,
+	id: ({ id }: { id: string }) => id,
+};
+
+export function useDeleteDataSource() {
+	const refreshList = useRefreshDataSources();
+	const { show } = useAlert(
+		({ message }) => message,
+		({ type }) => ({ ...type, duration: 3000 }),
+	);
+	const engine = useDataEngine();
+
+	const deleteConfig = async (config: DataServiceConfig) => {
+		try {
+			await engine.mutate(deleteRouteMutation, {
+				variables: {
+					id: config.source.routeId,
+				},
+			});
+
+			await engine.mutate(deleteDataSourceMutation, {
+				variables: {
+					id: config.id,
+				},
+			});
+
+			show({
+				message: i18n.t("Configuration deleted successfully"),
+				type: { success: true },
+			});
+			refreshList();
+		} catch (error) {
+			if (error instanceof FetchError) {
+				show({
+					message: `${i18n.t("Failed to delete configuration")}: ${error.message}`,
+					type: { critical: true },
+				});
+			}
+			if (error instanceof Error) {
+				show({
+					message: `${i18n.t("Failed to delete configuration")}: ${error.message}`,
+					type: { critical: true },
+				});
+			}
+			throw error;
+		}
+	};
+
+	return {
+		deleteConfig,
 	};
 }
