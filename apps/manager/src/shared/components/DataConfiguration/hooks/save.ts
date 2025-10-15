@@ -107,7 +107,7 @@ export function useCreateDataSource() {
 	};
 }
 
-const updateRouteMutation = {
+const updateRouteMutation: any = {
 	type: "update" as const,
 	resource: "routes",
 	id: ({ id }: { id: string }) => id,
@@ -161,6 +161,120 @@ export function useUpdateDataSource() {
 
 	return {
 		save,
+	};
+}
+
+export function useUpdateConnection() {
+	const refreshList = useRefreshDataSources();
+	const { show } = useAlert(
+		({ message }) => message,
+		({ type }) => ({ ...type, duration: 3000 }),
+	);
+	const engine = useDataEngine();
+	const { configId } = useParams({
+		from: "/data-service-configuration/_provider/$configId/_provider/",
+	});
+
+	const updateConnection = async (
+		data: {
+			name: string;
+			url: string;
+			pat?: string;
+			username?: string;
+			password?: string;
+			routeId: string;
+		},
+		callbacks?: {
+			onSuccess?: (updatedConfig: any) => void;
+		}
+	) => {
+		try {
+ 			const hasCredentials = !!data.pat || (!!data.username && !!data.password);
+ 			if (hasCredentials) {
+				const routePayload = {
+					name: `[data service] ${data.name}`,
+					url: `${data.url}/api/**`,
+					auth: data.pat
+						? {
+								type: "api-token",
+								token: data.pat,
+							}
+						: {
+								type: "http-basic",
+								username: data.username,
+								password: data.password,
+							},
+				};
+
+				await engine.mutate(updateRouteMutation, {
+					variables: {
+						id: data.routeId,
+						data: routePayload,
+					},
+				});
+			} else {
+ 				const routePayload = {
+					name: `[data service] ${data.name}`,
+					url: `${data.url}/api/**`,
+				};
+
+				await engine.mutate(updateRouteMutation, {
+					variables: {
+						id: data.routeId,
+						data: routePayload,
+					},
+				});
+			}
+ 			const currentConfig = await engine.query(
+				{
+					config: {
+						resource: `dataStore/${DatastoreNamespaces.DATA_SERVICE_CONFIG}`,
+						id: configId,
+					},
+				},
+				{
+					variables: {
+						id: configId,
+					},
+				}
+			);
+
+			const updatedConfig = {
+				...(currentConfig as any).config,
+				source: {
+					...(currentConfig as any).config.source,
+					name: data.name,
+				},
+			};
+
+			await engine.mutate(updateDataSourceMutation, {
+				variables: {
+					id: configId,
+					data: updatedConfig,
+				},
+			});
+
+			show({
+				message: i18n.t("Connection updated successfully"),
+				type: { success: true },
+			});
+			refreshList();
+ 			if (callbacks?.onSuccess) {
+				callbacks.onSuccess(updatedConfig);
+			}
+		} catch (error) {
+			if (error instanceof Error) {
+				show({
+					message: `${i18n.t("Failed to update connection")}: ${error.message}`,
+					type: { critical: true },
+				});
+			}
+			throw error;
+		}
+	};
+
+	return {
+		updateConnection,
 	};
 }
 
