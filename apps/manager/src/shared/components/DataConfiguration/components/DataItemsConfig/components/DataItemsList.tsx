@@ -4,7 +4,7 @@ import { SimpleTable, SimpleTableColumn } from "@hisptz/dhis2-ui";
 import i18n from "@dhis2/d2-i18n";
 import { startCase } from "lodash";
 import { FixedPeriodType } from "@hisptz/dhis2-utils";
-import { ButtonStrip } from "@dhis2/ui";
+import { ButtonStrip, Divider } from "@dhis2/ui";
 import React from "react";
 import { AddDataItemConfig } from "./AddDataItemConfig/AddDataItemConfig";
 import { EditDataItemConfig } from "./AddDataItemConfig/EditDataItemConfig";
@@ -54,10 +54,11 @@ export function DataItemsList() {
 	}));
 
 	return (
-		<div className="flex flex-col gap-4 w-full">
+		<div className="flex flex-col gap-2 w-full">
 			<ButtonStrip end>
 				<AddDataItemConfig onAdd={append} />
 			</ButtonStrip>
+			<Divider />
 			<SimpleTable
 				columns={columns}
 				rows={rows}
