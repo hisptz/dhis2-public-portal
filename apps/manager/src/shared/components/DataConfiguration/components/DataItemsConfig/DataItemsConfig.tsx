@@ -5,8 +5,6 @@ import { DataItemsList } from "./components/DataItemsList";
 
 export function DataItemsConfig() {
 	return (
-		<Field label={i18n.t("Data items configuration")}>
-			<DataItemsList />
-		</Field>
+		<DataItemsList />
 	);
 }
