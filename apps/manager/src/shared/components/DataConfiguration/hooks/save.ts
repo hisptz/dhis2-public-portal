@@ -189,42 +189,48 @@ export function useUpdateConnection() {
 		}
 	) => {
 		try {
+			const existingRoute = await engine.query(
+				{
+					route: {
+						resource: "routes",
+						id: data.routeId,
+					},
+				},
+				{
+					variables: {
+						id: data.routeId,
+					},
+				}
+			);
+
  			const hasCredentials = !!data.pat || (!!data.username && !!data.password);
- 			if (hasCredentials) {
-				const routePayload = {
-					name: `[data service] ${data.name}`,
-					url: `${data.url}/api/**`,
-					auth: data.pat
-						? {
-								type: "api-token",
-								token: data.pat,
-							}
-						: {
-								type: "http-basic",
-								username: data.username,
-								password: data.password,
-							},
-				};
-
-				await engine.mutate(updateRouteMutation, {
-					variables: {
-						id: data.routeId,
-						data: routePayload,
-					},
-				});
-			} else {
- 				const routePayload = {
-					name: `[data service] ${data.name}`,
-					url: `${data.url}/api/**`,
-				};
-
-				await engine.mutate(updateRouteMutation, {
-					variables: {
-						id: data.routeId,
-						data: routePayload,
-					},
-				});
+ 			
+ 			const routePayload: any = {
+				name: `[data service] ${data.name}`,
+				url: `${data.url}/api/**`,
+			};
+			
+			if (hasCredentials) {
+				routePayload.auth = data.pat
+					? {
+							type: "api-token",
+							token: data.pat,
+						}
+					: {
+							type: "http-basic",
+							username: data.username,
+							password: data.password,
+						};
+			} else if ((existingRoute as any).route?.auth) {
+				routePayload.auth = (existingRoute as any).route.auth;
 			}
+
+			await engine.mutate(updateRouteMutation, {
+				variables: {
+					id: data.routeId,
+					data: routePayload,
+				},
+			});
  			const currentConfig = await engine.query(
 				{
 					config: {
