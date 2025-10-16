@@ -1,6 +1,6 @@
 import React from "react";
 import { useDataConfigRunStatus } from "./hooks/status";
-import { CircularLoader, Tag } from "@dhis2/ui";
+import { Button, CircularLoader, IconSync16, Tag } from "@dhis2/ui";
 import { DataServiceRunStatus } from "@packages/shared/schemas";
 import i18n from "@dhis2/d2-i18n";
 
@@ -16,12 +16,16 @@ export function StatusIndicator({
 			return <Tag neutral>{i18n.t("Idle")}</Tag>;
 		case DataServiceRunStatus.RUNNING:
 			return <Tag neutral>{i18n.t("Running")}</Tag>;
+		case DataServiceRunStatus.QUEUED:
+			return <Tag>{i18n.t("Queued")}</Tag>;
 		case DataServiceRunStatus.NOT_STARTED:
 			return <Tag>{i18n.t("Not started")}</Tag>;
 		case DataServiceRunStatus.UNKNOWN:
 			return <Tag negative>{i18n.t("Unknown")}</Tag>;
 		case DataServiceRunStatus.COMPLETED:
 			return <Tag positive>{i18n.t("Completed")}</Tag>;
+		case DataServiceRunStatus.FAILED:
+			return <Tag negative>{i18n.t("Failed")}</Tag>;
 	}
 }
 
@@ -38,7 +42,7 @@ export function RunConfigStatus({ configId }: { configId: string }) {
 	}
 
 	if (isError) {
-		return <span>{error?.message ?? i18n.t("Unknown error")}</span>;
+		return <span>{(error as any)?.message ?? i18n.t("Unknown error")}</span>;
 	}
 
 	return (
