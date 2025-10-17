@@ -5,6 +5,7 @@ import i18n from "@dhis2/d2-i18n";
 import { RunConfigStatus } from "./RunConfiguration/components/RunConfigStatus/RunConfigStatus";
 import { AddDataSource } from "./AddDataSource";
 import { ActionsMenu } from "./ActionsMenu";
+import { useRoutes } from "../hooks/useRoutes";
 
 const columns: SimpleTableColumn[] = [
 	{
@@ -12,7 +13,11 @@ const columns: SimpleTableColumn[] = [
 		key: "name",
 	},
 	{
-		label: i18n.t("Latest Status"),
+		label: i18n.t("URL"),
+		key: "url",
+	},
+	{
+		label: i18n.t("Latest Migration Status"),
 		key: "status",
 	},
 	{
@@ -23,13 +28,20 @@ const columns: SimpleTableColumn[] = [
 
 export function ConfigurationList() {
 	const configurations = useDataSources();
+	const { routes } = useRoutes();
 
-	const rows = configurations.map((configuration) => ({
-		...configuration,
-		name: configuration.source.name,
-	    status: <RunConfigStatus configId={configuration.id} />,
-		actions: <ActionsMenu config={configuration} />,
-	}));
+	const rows = configurations.map((configuration) => {
+		const route = routes.find((r) => r.id === configuration.source.routeId);
+		const url = route?.url?.replace("/api/**", "") || configuration.source.routeId;
+
+		return {
+			...configuration,
+			name: configuration.source.name,
+			url,
+			status: <RunConfigStatus configId={configuration.id} />,
+			actions: <ActionsMenu config={configuration} />,
+		};
+	});
 
 	return (
 		<div className="flex flex-col gap-8">
