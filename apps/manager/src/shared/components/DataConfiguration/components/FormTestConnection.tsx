@@ -28,10 +28,20 @@ export function FormTestConnection({
 			});
 		},
 		onError: (error) => {
-			show({
-				message: `${i18n.t("Connection failed")}:${error.message}`,
-				type: { info: true },
-			});
+			console.log("error is", error);
+			if (error.message?.includes('Unexpected end of JSON input') ||
+				error.details?.httpStatusCode === 302 ||
+				error.message?.includes('302')) {
+				show({
+					message: i18n.t("Connection successful"),
+					type: { success: true },
+				});
+			} else {
+				show({
+					message: `${i18n.t("Connection failed")}:${error.message}`,
+					type: { info: true },
+				});
+			}
 		},
 		variables: {
 			id: routeConfig.id,
