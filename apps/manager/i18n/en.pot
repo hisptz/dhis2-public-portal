@@ -5,8 +5,8 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
-"POT-Creation-Date: 2025-10-16T13:30:48.067Z\n"
-"PO-Revision-Date: 2025-10-16T13:30:48.067Z\n"
+"POT-Creation-Date: 2025-10-17T08:47:40.758Z\n"
+"PO-Revision-Date: 2025-10-17T08:47:40.758Z\n"
 
 msgid "Could not get Appearance configurations"
 msgstr "Could not get Appearance configurations"
@@ -107,14 +107,17 @@ msgstr "This action cannot be undone."
 msgid "Delete"
 msgstr "Delete"
 
-msgid "Edit configuration"
-msgstr "Edit configuration"
+msgid "Edit connenction"
+msgstr "Edit connenction"
 
 msgid "Run migration"
 msgstr "Run migration"
 
 msgid "View overview"
 msgstr "View overview"
+
+msgid "Delete connection"
+msgstr "Delete connection"
 
 msgid "Add data configuration"
 msgstr "Add data configuration"
@@ -162,8 +165,8 @@ msgstr "Password"
 msgid "Personal Access Token (PAT)"
 msgstr "Personal Access Token (PAT)"
 
-msgid "Latest Status"
-msgstr "Latest Status"
+msgid "Latest Migration Status"
+msgstr "Latest Migration Status"
 
 msgid "Actions"
 msgstr "Actions"
@@ -266,6 +269,9 @@ msgstr "Save"
 
 msgid "Connection successful"
 msgstr "Connection successful"
+
+msgid "Connection successful (redirected)"
+msgstr "Connection successful (redirected)"
 
 msgid "Connection failed"
 msgstr "Connection failed"
