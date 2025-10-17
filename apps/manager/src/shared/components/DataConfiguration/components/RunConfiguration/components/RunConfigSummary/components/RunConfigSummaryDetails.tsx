@@ -32,7 +32,7 @@ export function RunConfigSummaryDetails({
 		}
 	}, [summaries, type]);
 
-	if (isError) return <div>{error?.message ?? "Unknown error"}</div>;
+	if (isError) return <div>{(error as any)?.message ?? "Unknown error"}</div>;
 	if (false) return <CircularLoader small />;
 
 	const cards = [
