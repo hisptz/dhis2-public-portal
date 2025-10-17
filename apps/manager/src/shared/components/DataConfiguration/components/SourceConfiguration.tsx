@@ -2,35 +2,17 @@ import { useWatch } from "react-hook-form";
 import { DataServiceConfig } from "@packages/shared/schemas";
 import React, { useEffect } from "react";
 import i18n from "@dhis2/d2-i18n";
-import { useDataQuery } from "@dhis2/app-runtime";
 import { CircularLoader } from "@dhis2/ui";
 import { FormTestConnection } from "./FormTestConnection";
 import { EditConnectionButton } from "./EditConnectionButton";
-
-const routeQuery: any = {
-	route: {
-		resource: "routes",
-		id: ({ id }: { id: string }) => id,
-	},
-};
-
-interface QueryResponse {
-	route: {
-		id: string;
-		name: string;
-		url: string;
-	};
-}
+import { useRoute } from "../hooks/useRoute";
 
 export function SourceConfiguration() {
 	const source = useWatch<DataServiceConfig, "source">({
 		name: "source",
 	});
-	const { loading, data, error, refetch } = useDataQuery<QueryResponse>(routeQuery, {
-		variables: {
-			id: source.routeId,
-		},
-	});
+	
+	const { loading, route, error, refetch } = useRoute(source?.routeId);
 
 	useEffect(() => {
 		if (source?.routeId) {
@@ -66,19 +48,19 @@ export function SourceConfiguration() {
 							{i18n.t("URL")}:
 						</span>
 						<a
-							href={data?.route?.url.replace("/api/**", "")}
+							href={route?.url.replace("/api/**", "")}
 							target="_blank"
 							rel="noopener noreferrer"
 							className="text-base text-blue-600 hover:text-blue-800 hover:underline"
 						>
-							{data?.route?.url.replace("/api/**", "")}
+							{route?.url.replace("/api/**", "")}
 						</a>
 					</div>
-					<div className="flex gap-2 items-center pt-2 border-t border-gray-100">
+					<div className="flex gap-2 items-center pt-2 ">
 
 						<EditConnectionButton />
-						{data?.route && (
-							<FormTestConnection routeConfig={data?.route} />
+						{route && (
+							<FormTestConnection routeConfig={route} />
 						)}
 					</div>
 				</>
