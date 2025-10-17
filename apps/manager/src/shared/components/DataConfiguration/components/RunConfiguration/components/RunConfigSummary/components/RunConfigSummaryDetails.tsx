@@ -33,13 +33,13 @@ export function RunConfigSummaryDetails({
 	}, [summaries, type]);
 
 	if (isError) return <div>{error?.message ?? "Unknown error"}</div>;
-	if (isLoading) return <CircularLoader small />;
+	if (false) return <CircularLoader small />;
 
 	const cards = [
-		{ label: "Total Processes", value: rows?.messages },
-		{ label: "In Queue", value: rows?.messages_ready },
-		{ label: "Being Processed", value: rows?.messages_unacknowledged },
-		{ label: "Failed Processes", value: rows?.dlq_messages},
+		// { label: "Total Processes", value: rows?.messages },
+		{ label: "Pending Processes", value: rows?.messages_ready },
+		{ label: "Currently running", value: rows?.messages_unacknowledged },
+		{ label: "Failed", value: rows?.dlq_messages },
 	];
 
 	return (
@@ -49,8 +49,10 @@ export function RunConfigSummaryDetails({
 					selected={type}
 					onChange={({ value }) => setType(value as "download" | "upload")}
 					options={[
-						{ label: "Download Processes", value: "download" },
-						{ label: "Upload Processes", value: "upload" },
+						{ label: "Metadata", value: "download" },
+						{ label: "Data", value: "upload" },
+						{ label: "Deletion", value: "upload" },
+
 					]}
 				/>
 			</div>
