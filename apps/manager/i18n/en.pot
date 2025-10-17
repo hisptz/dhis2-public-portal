@@ -5,8 +5,8 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
-"POT-Creation-Date: 2025-09-29T11:59:01.968Z\n"
-"PO-Revision-Date: 2025-09-29T11:59:01.969Z\n"
+"POT-Creation-Date: 2025-10-16T13:30:48.067Z\n"
+"PO-Revision-Date: 2025-10-16T13:30:48.067Z\n"
 
 msgid "Could not get Appearance configurations"
 msgstr "Could not get Appearance configurations"
@@ -16,6 +16,9 @@ msgstr "Error"
 
 msgid "Import/Export Configuration"
 msgstr "Import/Export Configuration"
+
+msgid "Back"
+msgstr "Back"
 
 msgid "Data service configuration"
 msgstr "Data service configuration"
@@ -56,9 +59,6 @@ msgstr "Failed to save section"
 msgid "This visualization is already added"
 msgstr "This visualization is already added"
 
-msgid "Back"
-msgstr "Back"
-
 msgid "Manage visualization"
 msgstr "Manage visualization"
 
@@ -94,6 +94,27 @@ msgstr "Detail"
 
 msgid "Remove visualization"
 msgstr "Remove visualization"
+
+msgid "Confirm delete"
+msgstr "Confirm delete"
+
+msgid "Are you sure you want to delete the configuration "
+msgstr "Are you sure you want to delete the configuration "
+
+msgid "This action cannot be undone."
+msgstr "This action cannot be undone."
+
+msgid "Delete"
+msgstr "Delete"
+
+msgid "Edit configuration"
+msgstr "Edit configuration"
+
+msgid "Run migration"
+msgstr "Run migration"
+
+msgid "View overview"
+msgstr "View overview"
 
 msgid "Add data configuration"
 msgstr "Add data configuration"
@@ -147,14 +168,8 @@ msgstr "Latest Status"
 msgid "Actions"
 msgstr "Actions"
 
-msgid "Edit configuration"
-msgstr "Edit configuration"
-
 msgid "Could not save form, check the logs for more information"
 msgstr "Could not save form, check the logs for more information"
-
-msgid "Data items configuration"
-msgstr "Data items configuration"
 
 msgid "Add data item"
 msgstr "Add data item"
@@ -227,6 +242,28 @@ msgstr "Period Type"
 msgid "There are no data items present"
 msgstr "There are no data items present"
 
+msgid "Delete configuration"
+msgstr "Delete configuration"
+
+msgid "Edit connection"
+msgstr "Edit connection"
+
+msgid "Please provide either a PAT or both username and password"
+msgstr "Please provide either a PAT or both username and password"
+
+msgid "Update Authentication (Optional)"
+msgstr "Update Authentication (Optional)"
+
+msgid ""
+"Credentials are already set. Only fill these fields if you want to update "
+"them."
+msgstr ""
+"Credentials are already set. Only fill these fields if you want to update "
+"them."
+
+msgid "Save"
+msgstr "Save"
+
 msgid "Connection successful"
 msgstr "Connection successful"
 
@@ -250,6 +287,72 @@ msgstr "Error requesting run"
 
 msgid "Run"
 msgstr "Run"
+
+msgid "Analytics Required"
+msgstr "Analytics Required"
+
+msgid ""
+"Please ensure analytics have been run on the source instance before "
+"proceeding with validation. Running analytics ensures the data is "
+"up-to-date for accurate validation results."
+msgstr ""
+"Please ensure analytics have been run on the source instance before "
+"proceeding with validation. Running analytics ensures the data is "
+"up-to-date for accurate validation results."
+
+msgid "Service Type"
+msgstr "Service Type"
+
+msgid "Select service type"
+msgstr "Select service type"
+
+msgid "Metadata Migration"
+msgstr "Metadata Migration"
+
+msgid "Data Migration"
+msgstr "Data Migration"
+
+msgid "Data Validation"
+msgstr "Data Validation"
+
+msgid "Data Deletion"
+msgstr "Data Deletion"
+
+msgid "Metadata Source"
+msgstr "Metadata Source"
+
+msgid "Select metadata source"
+msgstr "Select metadata source"
+
+msgid "Browse from Source"
+msgstr "Browse from Source"
+
+msgid "Extract from FlexiPortal Configuration"
+msgstr "Extract from FlexiPortal Configuration"
+
+msgid "Metadata Types"
+msgstr "Metadata Types"
+
+msgid "Select metadata types"
+msgstr "Select metadata types"
+
+msgid "Visualizations"
+msgstr "Visualizations"
+
+msgid "Maps"
+msgstr "Maps"
+
+msgid "Dashboards"
+msgstr "Dashboards"
+
+msgid "Select Visualizations"
+msgstr "Select Visualizations"
+
+msgid "Select Maps"
+msgstr "Select Maps"
+
+msgid "Select Dashboards"
+msgstr "Select Dashboards"
 
 msgid "Page size"
 msgstr "Page size"
@@ -278,6 +381,9 @@ msgstr "Idle"
 msgid "Running"
 msgstr "Running"
 
+msgid "Queued"
+msgstr "Queued"
+
 msgid "Not started"
 msgstr "Not started"
 
@@ -286,6 +392,9 @@ msgstr "Unknown"
 
 msgid "Completed"
 msgstr "Completed"
+
+msgid "Failed"
+msgstr "Failed"
 
 msgid "Unknown error"
 msgstr "Unknown error"
@@ -305,11 +414,11 @@ msgstr "Show error logs"
 msgid "Service Processing Overview"
 msgstr "Service Processing Overview"
 
+msgid "Loading connection details..."
+msgstr "Loading connection details..."
+
 msgid "Could not get source information"
 msgstr "Could not get source information"
-
-msgid "Visualizations"
-msgstr "Visualizations"
 
 msgid "Configuration saved successfully"
 msgstr "Configuration saved successfully"
@@ -322,6 +431,18 @@ msgstr "Configuration updated successfully"
 
 msgid "Could not save changes"
 msgstr "Could not save changes"
+
+msgid "Connection updated successfully"
+msgstr "Connection updated successfully"
+
+msgid "Failed to update connection"
+msgstr "Failed to update connection"
+
+msgid "Configuration deleted successfully"
+msgstr "Configuration deleted successfully"
+
+msgid "Failed to delete configuration"
+msgstr "Failed to delete configuration"
 
 msgid "Add document"
 msgstr "Add document"
@@ -386,9 +507,6 @@ msgstr "This action is irreversible."
 msgid "Deleting..."
 msgstr "Deleting..."
 
-msgid "Delete"
-msgstr "Delete"
-
 msgid "Delete group"
 msgstr "Delete group"
 
@@ -397,9 +515,6 @@ msgstr "Edit document group"
 
 msgid "Add document group"
 msgstr "Add document group"
-
-msgid "Save"
-msgstr "Save"
 
 msgid "Title"
 msgstr "Title"
@@ -617,9 +732,6 @@ msgstr "to get started"
 
 msgid "Add menu item"
 msgstr "Add menu item"
-
-msgid "Confirm delete"
-msgstr "Confirm delete"
 
 msgid "Are you sure you want to delete the menu item "
 msgstr "Are you sure you want to delete the menu item "
