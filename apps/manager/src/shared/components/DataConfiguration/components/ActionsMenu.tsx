@@ -10,6 +10,7 @@ import {
 	IconLaunch16,
 	IconTerminalWindow16,
 	IconDelete16,
+	IconImportItems24,
 } from "@dhis2/ui";
 import { DataServiceConfig } from "@packages/shared/schemas";
 import { useNavigate } from "@tanstack/react-router";
@@ -115,13 +116,13 @@ export function ActionsMenu({ config }: { config: DataServiceConfig }) {
 				>
 					<Menu>
 						<MenuItem
-							label={i18n.t("Edit configuration")}
+							label={i18n.t("Edit connenction")}
 							icon={<IconEdit16 />}
 							onClick={handleEdit}
 						/>
 						<MenuItem
 							label={i18n.t("Run migration")}
-							icon={<IconLaunch16 />}
+							icon={<IconImportItems24 />}
 							onClick={handleRun}
 						/>
 						<MenuItem
@@ -131,7 +132,7 @@ export function ActionsMenu({ config }: { config: DataServiceConfig }) {
 						/>
 						<Divider />
 						<MenuItem
-							label={i18n.t("Delete")}
+							label={i18n.t("Delete connection")}
 							icon={<IconDelete16 />}
 							onClick={handleDelete}
 							destructive
