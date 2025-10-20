@@ -1,58 +1,55 @@
-import logger from "@/logging";
-import amqp from "amqplib";
+import logger from "@/logging"; 
+import { getChannel } from "./connection";
+import { getQueueNames, QueueType } from "../variables/queue-names";
+ 
 
-let channel: amqp.Channel;
-
-export const downloadQueue= "download_";
-
+// Legacy queue names for backward compatibility
+export const downloadQueue = "download_";
 export const uploadQueue = "upload_";
 
-export async function connectRabbit(maxRetries = 10, delayMs = 5000) {
-    const rabbitUri = process.env.RABBITMQ_URI || "amqp://admin:Dhis%402025@vmi2689920.contaboserver.net:5672";
 
-    let attempt = 0;
-
-    while (attempt < maxRetries) {
-        try {
-            const connection = await amqp.connect(rabbitUri);
-            channel = await connection.createChannel();
-            logger.info("Connected to RabbitMQ");
-
-            
-            connection.on("close", () => {
-                logger.warn("RabbitMQ connection closed. Reconnecting...");
-                connectRabbit(maxRetries, delayMs);
-            });
-
-            connection.on("error", (err) => {
-                logger.error("RabbitMQ connection error:", err.message);
-            });
-
-            return channel;
-        } catch (err) {
-            attempt++;
-            logger.error(
-                `RabbitMQ connection failed (Attempt ${attempt}/${maxRetries}): ${err}`
-            );
-
-            if (attempt >= maxRetries) {
-                logger.error("Max retries reached. Could not connect to RabbitMQ.");
-                throw err;
-            }
-
-            logger.info(`🔄 Retrying in ${delayMs / 1000} seconds...`);
-            await new Promise((res) => setTimeout(res, delayMs));
-        }
+export async function pushToQueue(
+    configId: string, 
+    queueType: QueueType, 
+    jobData: any, 
+    error?: any
+) {
+    const currentChannel = getChannel();
+    if (!currentChannel) {
+        throw new Error("Channel not initialized");
     }
+    
+    const queueNames = getQueueNames(configId);
+    
+    // Get the specific queue name based on type
+    const queueName = queueNames[queueType];
+    
+    // Create message with metadata
+    const messageData = {
+        ...jobData,
+        configId,
+        queueType,
+        timestamp: new Date().toISOString(),
+        ...(error && queueType === 'failed' && {
+            error: {
+                message: error.message,
+                stack: error.stack,
+                name: error.name
+            }
+        })
+    };
+    
+    const messageBuffer = Buffer.from(JSON.stringify(messageData));
+
+    await currentChannel.sendToQueue(queueName, messageBuffer, {
+        persistent: true,
+    });
+    
+    logger.info(`Message pushed to ${queueType} queue: ${queueName}`);
 }
+ 
 
-
-
-export function getChannel(): amqp.Channel {
-	if (!channel) throw new Error("RabbitMQ channel not initialized");
-	return channel;
-}
-
+// Legacy functions for backward compatibility
 export async function pushToDownloadQueue(jobData: any) {
 	const downloadChannel = getChannel();
 	if (!downloadChannel) {
@@ -64,8 +61,6 @@ export async function pushToDownloadQueue(jobData: any) {
 	});
 }
 
-
-
 export async function pushToUploadQueue(jobData: any) {
 	const uploadChannel = getChannel();
 	if (!uploadChannel) {
@@ -76,3 +71,4 @@ export async function pushToUploadQueue(jobData: any) {
 		persistent: true,
 	});
 }
+
