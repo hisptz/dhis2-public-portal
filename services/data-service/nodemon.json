@@ -1,6 +1,4 @@
 {
   "ext": "ts",
-  "execMap": {
-    "ts": "bun run"
-  }
+  "exec": "tsx src/app.ts"
 }
