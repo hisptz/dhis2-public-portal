@@ -4,6 +4,7 @@ import { env } from "@/env";
 import { DataServiceConfig } from "@packages/shared/schemas";
 import logger from "@/logging";
 import { uniqBy } from "lodash";
+import * as fs from "node:fs";
 
 config();
 
@@ -78,7 +79,8 @@ export async function uploadMetadataFile(filePath: string) {
 	logger.info(`Starting upload: ${filePath}`);
 
 	try {
-		const payload = await Bun.file(filePath).json();
+		const fileContent = await fs.promises.readFile(filePath, 'utf8');
+		const payload = JSON.parse(fileContent);
 
 		const response = await dhis2Client.post(url, payload, {
 			headers: { "Content-Type": "application/json" },
@@ -88,26 +90,28 @@ export async function uploadMetadataFile(filePath: string) {
 		logger.info(`Upload completed Successfully`);
 		logger.info(
 			`${JSON.stringify(
-				response.data.response.stats || response.data,
+				response.data?.response?.stats || response.data || "No response data",
 				null,
 				2
 			)}`
 		);
 
 		return response.data;
-	} catch (err: any) {
-		const payload = await Bun.file(filePath).json();
+	} catch (error: any) {
+		const fileContent = await fs.promises.readFile(filePath, 'utf8');
+		const payload = JSON.parse(fileContent);
 
-		await handleImportErrors(payload, err.response?.data);
+		await handleImportErrors(payload, error.response?.data);
 
 		logger.error(`Error uploading ${filePath}`);
 		logger.error(
 			`${JSON.stringify(
-				err.response?.data?.response.stats || err.message,
+				error.response?.data?.response?.stats || error.response?.data || error.message,
 				null,
 				2
 			)}`
 		);
+		throw error;
 	}
 }
 
@@ -119,10 +123,8 @@ export async function handleImportErrors(
 
 	let existingLog: any = {};
 	try {
-		const file = Bun.file(errorPath);
-		if (await file.exists()) {
-			existingLog = await file.json();
-		}
+		const fileContent = await fs.promises.readFile(errorPath, 'utf8');
+		existingLog = JSON.parse(fileContent);
 	} catch (e: any) {
 		console.warn(
 			`Could not read existing error log, starting new: ${e.message}`
@@ -173,5 +175,7 @@ export async function handleImportErrors(
 		}
 	}
 
-	await Bun.write(errorPath, JSON.stringify(existingLog, null, 2));
+	// Ensure logs directory exists
+	await fs.promises.mkdir('logs', { recursive: true });
+	await fs.promises.writeFile(errorPath, JSON.stringify(existingLog, null, 2), 'utf8');
 }

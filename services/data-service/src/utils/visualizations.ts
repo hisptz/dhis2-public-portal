@@ -1,4 +1,5 @@
 import { dhis2Client } from "@/clients/dhis2";
+import logger from "@/logging";
 import * as _ from "lodash";
 
 enum DisplayItemType {
@@ -50,25 +51,30 @@ export async function getModuleConfigs() {
       }
       if (moduleResponse.data.type == DisplayItemType.VISUALIZATION) {
         if (moduleResponse.data.config.grouped) {
-          for (const group of moduleResponse.data.config.groups) {
-            moduleConfigs.push(...group.items.map((item: any) => item.item));
+          for (const group of moduleResponse.data.config.groups || []) {
+            if (group.items && Array.isArray(group.items)) {
+              moduleConfigs.push(...group.items.map((item: any) => item.item));
+            }
           }
         } else {
-          moduleConfigs.push(
-            ...moduleResponse.data.config.items.map((item: any) => item.item)
-          );
+          if (moduleResponse.data.config.items && Array.isArray(moduleResponse.data.config.items)) {
+            moduleConfigs.push(
+              ...moduleResponse.data.config.items.map((item: any) => item.item)
+            );
+          }
         }
       }
       if (moduleResponse.data.type == DisplayItemType.SECTION) {
-        for (const section of moduleResponse.data.config.sections) {
+        for (const section of moduleResponse.data.config.sections || []) {
           if (
             section.type == "SINGLE_ITEM" &&
+            section.item &&
             (section.item.type == DisplayItemType.VISUALIZATION ||
               section.item.type == DisplayItemType.HIGHLIGHTED_SINGLE_VALUE)
           ) {
             moduleConfigs.push(section.item.item);
           } else {
-            if (section.type != "SINGLE_ITEM") {
+            if (section.type != "SINGLE_ITEM" && section.items && Array.isArray(section.items)) {
               moduleConfigs.push(
                 ...section.items.map((item: any) => item.item)
               );

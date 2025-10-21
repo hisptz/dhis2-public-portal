@@ -10,8 +10,7 @@ import { apiDoc } from "./openapi";
 import path, { dirname } from "path";
 import swagger from "swagger-ui-express";
 import { fileURLToPath } from "url";
-import { connectRabbit } from "./rabbit/connection";
-import { initializeAllQueuesFromDatastore } from "./rabbit/queue-manager";
+import { startWorker } from "./rabbit/worker";
 
 
 const __filename = fileURLToPath(import.meta.url);
@@ -51,16 +50,13 @@ initialize({
 		),
 	);
 	if (env.SERVE_HTTP === "true") {
-		connectRabbit()
+		startWorker()
 			.then(async () => {
 				try {
-					console.log("🔧 Initializing queues from datastore...");
-					const result = await initializeAllQueuesFromDatastore();
-					console.log(`✅ Queue initialization complete: ${result.successful}/${result.total} configs processed`);
+					console.log("Worker started successfully");
 				} catch (error) {
-					console.warn("⚠️ Queue initialization failed, but service will continue:", error);
+					console.warn("⚠️ Worker startup failed, but service will continue:", error);
 				}
-				
 				app.listen(env.DATA_SERVICE_PORT, () => {
 					console.log(
 						`DHIS2 Data service is running and listening on http://localhost:${env.DATA_SERVICE_PORT}`,
@@ -75,16 +71,14 @@ initialize({
 			key: fs.readFileSync(`./localhost-key.pem`),
 			cert: fs.readFileSync(`./localhost.pem`),
 		};
-		connectRabbit()
+		startWorker()
 			.then(async () => {
 				try {
-					console.log("🔧 Initializing queues from datastore...");
-					const result = await initializeAllQueuesFromDatastore();
-					console.log(`✅ Queue initialization complete: ${result.successful}/${result.total} configs processed`);
+					console.log("Worker started successfully");
 				} catch (error) {
-					console.warn("⚠️ Queue initialization failed, but service will continue:", error);
+					console.warn("⚠️ Worker startup failed, but service will continue:", error);
 				}
-				
+
 				https
 					.createServer(options, app)
 					.listen(env.DATA_SERVICE_PORT, () => {
