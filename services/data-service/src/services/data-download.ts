@@ -9,8 +9,9 @@ import { compact} from "lodash";
 import { DatastoreNamespaces } from "@packages/shared/constants";
 import {  dhis2Client } from "@/clients/dhis2";
 import { checkOrCreateFolder } from "@/utils/files";
-import { downloadQueue, pushToDownloadQueue, uploadQueue } from "@/rabbit/publisher";
+import { downloadQueue, uploadQueue, pushToQueue } from "@/rabbit/publisher";
 import { getQueueStatus } from "./status";
+import { getQueueNames } from "@/variables/queue-names";
 
 export async function initializeDataDownload({
 	mainConfigId,
@@ -114,8 +115,10 @@ export async function enqueueDownloadTasks({
     configs: DataServiceDataSourceItemsConfig[];
 }) {
     const configId = mainConfig.id;
-    const queueName = downloadQueue + configId;
-
+    
+    // Use new queue structure
+    const queueNames = getQueueNames(configId);
+    
     checkOrCreateFolder(`outputs/${configId}`);
 
     const pushPromises: Promise<void>[] = [];
@@ -129,18 +132,20 @@ export async function enqueueDownloadTasks({
                 config,
                 runtimeConfig,
             };
-            pushPromises.push(pushToDownloadQueue(message));
+            
+            // Use new data download queue
+            pushPromises.push(pushToQueue(configId, 'dataDownload', message));
         }
     }
 
     await Promise.all(pushPromises);
 
-	await waitForQueueToReceiveMessages(queueName);
+    // Wait for messages in the new data download queue
+	await waitForQueueToReceiveMessages(queueNames.dataDownload);
 	
    // await displayDownloadSummary(configId);
 
-    const uploadQueueName = uploadQueue + configId;
-
-	await waitForQueueToReceiveMessages(uploadQueueName);
+    // Wait for messages in the new data upload queue
+	await waitForQueueToReceiveMessages(queueNames.dataUpload);
    
 }
