@@ -81,32 +81,48 @@ export function RunConfigForm({
 
 	const onSubmit = async (data: RunConfigFormValues) => {
 		try {
-			// TODO: Implement extraction from FlexiPortal configuration
+			let requestData = { ...data };
+
+			// Handle metadata migration with different sources
+			if (data.service === "metadata-migration") {
+				if (data.metadataSource === "source") {
+					requestData = {
+						...data,
+						metadataSource: "source",
+						selectedVisualizations: data.selectedVisualizations || [],
+						selectedMaps: data.selectedMaps || [],
+						selectedDashboards: data.selectedDashboards || [],
+					};
+				} else {
+					requestData = {
+						...data,
+						metadataSource: "flexiportal-config",
+					};
+				}
+			}
 
 			await engine.mutate({
 				type: "create" as const,
 				resource: `routes/data-service/run/services/data-download/${config.id}`,
-				data,
+				data: requestData,
 			});
-			await queryClient.invalidateQueries({
-				queryKey: ["status", config.id],
+			queryClient.invalidateQueries({
+				queryKey: ["data-service-logs", config.id],
 			});
 			show({
-				message: i18n.t("Run requested successfully"),
+				message: i18n.t("Service started successfully"),
 				type: { success: true },
 			});
 			onClose();
 		} catch (error) {
-			if (error instanceof FetchError) {
-				show({
-					message: `${i18n.t("Error requesting run")}: ${error.message}`,
-					type: { critical: true },
-				});
-			}
+			console.error(error);
+			show({
+				message: i18n.t("Failed to start service, Error: ") +
+					(error instanceof FetchError ? error.message : String(error)),
+				type: { critical: true },
+			});
 		}
-	};
-
-	return (
+	}; return (
 		<FormProvider {...form}>
 			<Modal hide={hide} onClose={onClose} position="middle">
 				<ModalTitle>
