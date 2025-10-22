@@ -1,6 +1,7 @@
 import logger from "@/logging";
 import { uploadMetadataFile } from "@/clients/dhis2";
 import { ProcessedMetadata } from "./metadata-download";
+import { processConfigurationFromQueue, ConfigurationImportSummary } from "./utils/configuration-import";
 import * as fs from "node:fs";
 import * as path from "node:path";
 
@@ -117,24 +118,49 @@ export async function uploadMetadata(metadata: ProcessedMetadata, configId?: str
 /**
  * Uploads metadata from a queue message
  * This function is designed to be called by queue consumers
- * @param jobData - The job data from the queue containing metadata and configId
+ * Handles both metadata and configuration uploads based on message type
+ * @param jobData - The job data from the queue containing metadata/configuration and configId
  */
 export async function uploadMetadataFromQueue(jobData: any): Promise<void> {
   try {
-    const { metadata, configId, downloadedAt } = jobData;
+    const { metadata, configId, downloadedAt, type, configuration } = jobData;
     
-    logger.info(`Processing metadata upload job for config: ${configId}`, {
+    logger.info(`Processing upload job for config: ${configId}`, {
+      type: type || 'metadata',
       hasMetadata: !!metadata,
+      hasConfiguration: !!configuration,
       downloadedAt,
       jobDataKeys: Object.keys(jobData || {}),
     });
-    
-    if (!metadata) {
-      throw new Error(`No metadata provided in job data for config: ${configId}. Job data keys: ${Object.keys(jobData || {}).join(', ')}`);
-    }
 
     if (!configId) {
       throw new Error(`No configId provided in job data. Job data keys: ${Object.keys(jobData || {}).join(', ')}`);
+    }
+
+    // Handle configuration upload
+    if (type === 'configuration') {
+      logger.info(`Processing configuration upload for config: ${configId}`);
+      
+      if (!configuration) {
+        throw new Error(`No configuration provided in job data for config: ${configId}`);
+      }
+
+      const summary = await processConfigurationFromQueue(configId, jobData);
+      
+      logger.info(`Configuration upload completed for config: ${configId}`, {
+        totalNamespaces: summary.totalNamespaces,
+        successfulNamespaces: summary.successfulNamespaces,
+        duration: summary.duration
+      });
+      
+      return;
+    }
+
+    // Handle metadata upload (existing logic)
+    logger.info(`Processing metadata upload for config: ${configId}`);
+    
+    if (!metadata) {
+      throw new Error(`No metadata provided in job data for config: ${configId}. Job data keys: ${Object.keys(jobData || {}).join(', ')}`);
     }
 
     // Validate metadata structure
@@ -147,7 +173,7 @@ export async function uploadMetadataFromQueue(jobData: any): Promise<void> {
     logger.info(`Metadata upload job completed successfully for config: ${configId}`);
     
   } catch (error: any) {
-    logger.error(`Error processing metadata upload job:`, {
+    logger.error(`Error processing upload job:`, {
       error: {
         message: error.message,
         stack: error.stack,
@@ -155,7 +181,9 @@ export async function uploadMetadataFromQueue(jobData: any): Promise<void> {
       },
       jobData: {
         configId: jobData?.configId,
+        type: jobData?.type,
         hasMetadata: !!jobData?.metadata,
+        hasConfiguration: !!jobData?.configuration,
         downloadedAt: jobData?.downloadedAt,
         jobDataKeys: Object.keys(jobData || {}),
       }
