@@ -1,4 +1,4 @@
-import { dhis2Client } from "@/clients/dhis2";
+import { dhis2Client, getSourceClientFromConfig } from "@/clients/dhis2";
 import logger from "@/logging";
 
 /**
@@ -12,23 +12,28 @@ export interface DefaultCategoryValues {
 
 /**
  * Cache for default values to avoid repeated API calls
+ * Separate caches for source and destination
  */
-let cachedDefaultValues: DefaultCategoryValues | null = null;
+let cachedSourceDefaults: DefaultCategoryValues | null = null;
+let cachedDestinationDefaults: DefaultCategoryValues | null = null;
 
 /**
- * Fetches the default category system values from DHIS2
- * These are the built-in default values that every DHIS2 instance has
+ * Fetches the default category system values from the source DHIS2 instance
+ * @param configId - Optional config ID to get source client, if not provided falls back to destination
  */
-export async function getDefaultCategoryValues(): Promise<DefaultCategoryValues> {
-    if (cachedDefaultValues) {
-        return cachedDefaultValues;
+export async function getDefaultCategoryValues(configId?: string): Promise<DefaultCategoryValues> {
+    if (cachedSourceDefaults) {
+        return cachedSourceDefaults;
     }
 
     try {
-        logger.info("Fetching default category system values from DHIS2...");
+        logger.info(`Fetching default category system values from ${configId ? 'source' : 'destination'} DHIS2...`);
+
+        // Get the appropriate client - source if configId provided, destination otherwise
+        const client = configId ? await getSourceClientFromConfig(configId) : dhis2Client;
 
         // Fetch default category combo (there should be exactly one with name "default")
-        const categoryComboResponse = await dhis2Client.get<{
+        const categoryComboResponse = await client.get<{
             categoryCombos: Array<{
                 id: string;
                 name: string;
@@ -41,9 +46,9 @@ export async function getDefaultCategoryValues(): Promise<DefaultCategoryValues>
                 paging: false
             }
         });
-        logger.info('xxx Category Combos fetched:', categoryComboResponse.data.categoryCombos);
+        logger.info('Category Combos fetched:', categoryComboResponse.data.categoryCombos);
         const defaultCategoryCombo = categoryComboResponse.data.categoryCombos.find(
-            combo => combo.name.toLowerCase() === 'default'
+            (combo: { id: string; name: string; displayName: string }) => combo.name.toLowerCase() === 'default'
         );
 
         if (!defaultCategoryCombo) {
@@ -51,8 +56,7 @@ export async function getDefaultCategoryValues(): Promise<DefaultCategoryValues>
         }
 
         // Fetch default category (there should be exactly one with name "default")
-        //TODO: GET FROM SOURCE 
-        const categoryResponse = await dhis2Client.get<{
+        const categoryResponse = await client.get<{
             categories: Array<{
                 id: string;
                 name: string;
@@ -65,10 +69,10 @@ export async function getDefaultCategoryValues(): Promise<DefaultCategoryValues>
                 paging: false
             }
         });
-        logger.info('xxx Categories fetched:', categoryResponse.data.categories);
+        logger.info('Categories fetched:', categoryResponse.data.categories);
 
         const defaultCategory = categoryResponse.data.categories.find(
-            category => category.name.toLowerCase() === 'default'
+            (category: { id: string; name: string; displayName: string }) => category.name.toLowerCase() === 'default'
         );
 
         if (!defaultCategory) {
@@ -76,7 +80,7 @@ export async function getDefaultCategoryValues(): Promise<DefaultCategoryValues>
         }
 
         // Fetch default category option (there should be exactly one with name "default")
-        const categoryOptionResponse = await dhis2Client.get<{
+        const categoryOptionResponse = await client.get<{
             categoryOptions: Array<{
                 id: string;
                 name: string;
@@ -89,54 +93,53 @@ export async function getDefaultCategoryValues(): Promise<DefaultCategoryValues>
                 paging: false
             }
         });
-        logger.info('xxx Category Options fetched:', categoryOptionResponse.data.categoryOptions);
+        logger.info('Category Options fetched:', categoryOptionResponse.data.categoryOptions);
 
         const defaultCategoryOption = categoryOptionResponse.data.categoryOptions.find(
-            option => option.name.toLowerCase() === 'default'
+            (option: { id: string; name: string; displayName: string }) => option.name.toLowerCase() === 'default'
         );
 
         if (!defaultCategoryOption) {
             throw new Error('Default category option not found');
         }
 
-        cachedDefaultValues = {
+        const defaultValues = {
             defaultCategoryComboId: defaultCategoryCombo.id,
             defaultCategoryId: defaultCategory.id,
             defaultCategoryOptionId: defaultCategoryOption.id,
         };
 
+        // Cache based on whether this was source or destination
+        if (configId) {
+            cachedSourceDefaults = defaultValues;
+        } else {
+            cachedDestinationDefaults = defaultValues;
+        }
+
         logger.info('Default category system values fetched successfully:', {
-            defaultCategoryComboId: cachedDefaultValues.defaultCategoryComboId,
-            defaultCategoryId: cachedDefaultValues.defaultCategoryId,
-            defaultCategoryOptionId: cachedDefaultValues.defaultCategoryOptionId,
+            defaultCategoryComboId: defaultValues.defaultCategoryComboId,
+            defaultCategoryId: defaultValues.defaultCategoryId,
+            defaultCategoryOptionId: defaultValues.defaultCategoryOptionId,
+            source: configId ? 'source' : 'destination'
         });
 
-        return cachedDefaultValues;
+        return defaultValues;
 
     } catch (error) {
         logger.error('Failed to fetch default category system values:', error);
-        // throw error;
-        // Fallback to environment variables or hardcoded values as last resort
-        logger.warn('Falling back to environment variables or hardcoded defaults');
-        
-        const fallbackValues = {
-            defaultCategoryComboId: process.env.SOURCE_DEFAULT_CATEGORY_COMBO_ID ?? "bjDvmb4bfuf",
-            defaultCategoryId: process.env.SOURCE_DEFAULT_CATEGORY_ID ?? "GLevLNI9wkl",
-            defaultCategoryOptionId: process.env.SOURCE_DEFAULT_CATEGORY_OPTION ?? "xYerKDKCefk",
-        };
-
-        cachedDefaultValues = fallbackValues;
-        return fallbackValues;
+        throw error;
     }
 }
 
 /**
- * Gets default values for destination DHIS2 instance
- * For now, this uses the same function but could be extended to query a different instance
+ * Gets default values for destination DHIS2 instance (direct API access)
  */
 export async function getDestinationDefaultCategoryValues(): Promise<DefaultCategoryValues> {
-    // For now, assuming destination has same default structure
-    // This could be extended to query a different DHIS2 instance if needed
+    if (cachedDestinationDefaults) {
+        return cachedDestinationDefaults;
+    }
+    
+    // Call getDefaultCategoryValues without configId to use destination client
     return getDefaultCategoryValues();
 }
 
@@ -144,7 +147,8 @@ export async function getDestinationDefaultCategoryValues(): Promise<DefaultCate
  * Clears the cache - useful for testing or if you need to refresh values
  */
 export function clearDefaultCategoryCache(): void {
-    cachedDefaultValues = null;
+    cachedSourceDefaults = null;
+    cachedDestinationDefaults = null;
     logger.info('Default category values cache cleared');
 }
 

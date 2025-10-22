@@ -21,6 +21,7 @@ import logger from "@/logging";
 import { getDefaultCategoryValues, getDestinationDefaultCategoryValues } from "../../utils/default-categories";
 import { pushToQueue } from "../../rabbit/publisher";
 import { exportConfiguration } from "./utils/configuration-export";
+import { getMetadataFromDashboards } from "../../utils/dashboard";
 
 export interface ProcessedMetadata {
     legendSets: any;
@@ -43,50 +44,98 @@ export interface ProcessedMetadata {
     };
 }
 
+export interface MetadataDownloadOptions {
+    configId: string;
+    metadataSource?: 'source' | 'flexiportal-config';
+    selectedVisualizations?: Array<{ id: string; name: string }>;
+    selectedMaps?: Array<{ id: string; name: string }>;
+    selectedDashboards?: Array<{ id: string; name: string }>;
+}
 
-export async function downloadAndQueueMetadata(configId: string): Promise<void> {
+export async function downloadAndQueueMetadata(options: MetadataDownloadOptions): Promise<void> {
     try {
+        const { configId } = options;
         logger.info(`Starting metadata download and queue process for config: ${configId}`);
-        const metadata = await downloadMetadata(configId);
+        
+        const metadata = await downloadMetadata(options);
         const configuration = await exportConfiguration(configId);
+        
         await pushToQueue(configId, 'metadataUpload', {
             metadata,
             configId,
             downloadedAt: new Date().toISOString()
         });
+        
         await pushToQueue(configId, 'metadataUpload', {
             type: 'configuration',
             configuration,
             timestamp: new Date().toISOString()
         });
+        
         logger.info(`Metadata successfully downloaded and queued for upload (config: ${configId})`);
     } catch (error) {
-        logger.error(`Error during download and queue process for config ${configId}:`, error);
+        logger.error(`Error during download and queue process for config ${options.configId}:`, error);
         throw error;
     }
 }
 
-export async function downloadMetadata(configId?: string): Promise<ProcessedMetadata> {
+export async function downloadMetadata(options: MetadataDownloadOptions): Promise<ProcessedMetadata> {
     try {
+        const { configId, metadataSource = 'flexiportal-config' } = options;
+        
         // Fetch default category values dynamically
         logger.info("Fetching default category system values...");
         const sourceDefaults = await getDefaultCategoryValues(configId);
         const destinationDefaults = await getDestinationDefaultCategoryValues();
 
-        logger.info("Loading Module Configs...");
-        const moduleConfigs = await getModuleConfigs(configId);
+        let visualizations: any[] = [];
+        let maps: any[] = [];
 
-        logger.info("Extracting Visualizations...");
-        const visualizations = [...getVisualizations(moduleConfigs ?? [])];
+        if (metadataSource === 'flexiportal-config') {
+             logger.info("Loading Module Configs...");
+            const moduleConfigs = await getModuleConfigs(configId);
 
-        logger.info("Extracting Maps...");
-        const maps = [...getMaps(moduleConfigs ?? [])];
+            logger.info("Extracting Visualizations from modules...");
+            visualizations = [...getVisualizations(moduleConfigs ?? [])];
+
+            logger.info("Extracting Maps from modules...");
+            maps = [...getMaps(moduleConfigs ?? [])];
+
+        } else if (metadataSource === 'source') {
+            logger.info("Processing selected metadata items...");
+            const selectedVisualizationIds = options.selectedVisualizations?.map(v => v.id) || [];
+            
+            const selectedMapIds = options.selectedMaps?.map(m => m.id) || [];
+            
+            let dashboardExtractedIds: { visualizationIds: string[]; mapIds: string[] } = { visualizationIds: [], mapIds: [] };
+            if (options.selectedDashboards && options.selectedDashboards.length > 0) {
+                logger.info(`Extracting metadata from ${options.selectedDashboards.length} selected dashboards...`);
+                const dashboardIds = options.selectedDashboards.map(d => d.id);
+                dashboardExtractedIds = await getMetadataFromDashboards(dashboardIds, configId);
+            }
+
+            const allVisualizationIds = [...new Set([
+                ...selectedVisualizationIds,
+                ...dashboardExtractedIds.visualizationIds
+            ])];
+            
+            const allMapIds = [...new Set([
+                ...selectedMapIds,
+                ...dashboardExtractedIds.mapIds
+            ])];
+
+            logger.info(`Total visualizations to process: ${allVisualizationIds.length}`);
+            logger.info(`Total maps to process: ${allMapIds.length}`);
+
+            visualizations = allVisualizationIds.map(id => ({ id }));
+            maps = allMapIds.map(id => ({ id }));
+        }
 
         logger.info("Fetching Map Configs...");
-        const mapsConfig = (await getMapsConfig(maps, configId)) ?? [];
+        const mapsConfig = maps.length > 0 ? (await getMapsConfig(maps, configId)) ?? [] : [];
 
         logger.info("Fetching Visualization Configs...");
-        const visualizationConfig = await getVisualizationConfigs(visualizations, configId);
+        const visualizationConfig = visualizations.length > 0 ? await getVisualizationConfigs(visualizations, configId) : [];
 
         logger.info("Collecting Indicator IDs...");
         const indicatorIds = [
@@ -140,27 +189,27 @@ export async function downloadMetadata(configId?: string): Promise<ProcessedMeta
         logger.info("Collecting legend sets IDs...");
         const legendSetIds: string[] = [
             ...dataElements
-                .map(({ legendSets }) => legendSets.map(({ id }: { id: string }) => id))
+                .map(({ legendSets }) => legendSets?.map(({ id }: { id: string }) => id) || [])
                 .flat(),
             ...indicators
-                .map(({ legendSets }) => legendSets.map(({ id }: { id: string }) => id))
+                .map(({ legendSets }) => legendSets?.map(({ id }: { id: string }) => id) || [])
                 .flat(),
             ...compact(visualizationConfig?.map(({ legend }) => legend?.set?.id)),
             ...compact(
                 mapsConfig
                     .map(({ mapViews }) =>
-                        mapViews.map(
+                        mapViews?.map(
                             ({ legendSet }: { legendSet: { id: string } }) => legendSet?.id
-                        )
+                        ) || []
                     )
                     .flat()
             ),
         ];
 
         logger.info("Fetching LegendSets...");
-        const legendSets = await getLegendSets(uniq(legendSetIds), configId);
+        const legendSets = legendSetIds.length > 0 ? await getLegendSets(uniq(legendSetIds), configId) : [];
 
-        // Process and return metadata instead of writing files
+        // Process and return metadata
         const processedMetadata: ProcessedMetadata = {
             legendSets,
             visualizations: {
@@ -210,13 +259,18 @@ export async function downloadMetadata(configId?: string): Promise<ProcessedMeta
             },
         };
 
-        logger.info("Metadata download and processing completed successfully");
+        logger.info(`Metadata download completed successfully. Source: ${metadataSource}`);
         return processedMetadata;
 
     } catch (error) {
         logger.error("Error during metadata download:", error);
         throw error;
     }
+}
+
+// Backward compatibility - convert single configId to options object
+export async function downloadAndQueueMetadataLegacy(configId: string): Promise<void> {
+    return downloadAndQueueMetadata({ configId });
 }
 
 

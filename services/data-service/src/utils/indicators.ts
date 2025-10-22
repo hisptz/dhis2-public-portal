@@ -1,14 +1,14 @@
 import { chunk, compact, uniq } from "lodash";
 import { mapSeries } from "async";
-import { dhis2Client } from "@/clients/dhis2";
+import { dhis2Client, getSourceClientFromConfig } from "@/clients/dhis2";
 import { getDefaultCategoryValues, getDestinationDefaultCategoryValues } from "./default-categories";
 
 let sourceDefaults: Awaited<ReturnType<typeof getDefaultCategoryValues>> | null = null;
 let destinationDefaults: Awaited<ReturnType<typeof getDestinationDefaultCategoryValues>> | null = null;
 
-async function getSourceDefaults() {
+async function getSourceDefaults(configId?: string) {
   if (!sourceDefaults) {
-    sourceDefaults = await getDefaultCategoryValues();
+    sourceDefaults = await getDefaultCategoryValues(configId);
   }
   return sourceDefaults;
 }
@@ -20,14 +20,15 @@ async function getDestinationDefaults() {
   return destinationDefaults;
 }
 
-export async function getDataElementsFromServer(dataElementIds: string[]) {
+export async function getDataElementsFromServer(dataElementIds: string[], configId?: string) {
+  const client = configId ? await getSourceClientFromConfig(configId) : dhis2Client;
   const url = `dataElements`;
   const params = {
     fields: ":owner,!createdBy,!lastUpdatedBy,!created,!lastUpdated",
     filter: `id:in:[${dataElementIds.join(",")}]`,
     paging: false,
   };
-  const response = await dhis2Client.get<{
+  const response = await client.get<{
     dataElements: { id: string; [key: string]: unknown }[];
   }>(url, {
     params,
@@ -35,19 +36,20 @@ export async function getDataElementsFromServer(dataElementIds: string[]) {
   return response.data.dataElements;
 }
 
-export async function getDataElements(dataElementIds: string[]) {
+export async function getDataElements(dataElementIds: string[], configId?: string) {
   if (dataElementIds.length > 100) {
     console.info(`Getting data elements in batches of 100`);
     const chunks = chunk(dataElementIds, 100);
     const dataElements = await mapSeries(chunks, async (chunk: string[]) => {
-      return getDataElementsFromServer(chunk);
+      return getDataElementsFromServer(chunk, configId);
     });
     return dataElements.flat();
   }
-  return getDataElementsFromServer(dataElementIds);
+  return getDataElementsFromServer(dataElementIds, configId);
 }
 
-export async function getCategoryCombos(categoryOptionComboIds: string[]) {
+export async function getCategoryCombos(categoryOptionComboIds: string[], configId?: string) {
+  const client = configId ? await getSourceClientFromConfig(configId) : dhis2Client;
   //We first need to get the category combo, then the categories making up the category combos
   const categories = [];
   const categoryOptions = [];
@@ -59,7 +61,7 @@ export async function getCategoryCombos(categoryOptionComboIds: string[]) {
     filter: `id:in:[${categoryOptionComboIds.join(",")}]`,
     paging: false,
   };
-  const response = await dhis2Client.get<{
+  const response = await client.get<{
     categoryOptionCombos: Array<{
       id: string;
       categoryCombo: { id: string };
@@ -84,7 +86,7 @@ export async function getCategoryCombos(categoryOptionComboIds: string[]) {
     paging: false,
   };
 
-  const categoryComboResponse = await dhis2Client.get<{
+  const categoryComboResponse = await client.get<{
     categoryCombos: Array<{
       id: string;
       [key: string]: unknown;
@@ -109,7 +111,7 @@ export async function getCategoryCombos(categoryOptionComboIds: string[]) {
     paging: false,
   };
 
-  const categoryResponse = await dhis2Client.get<{
+  const categoryResponse = await client.get<{
     categories: Array<{
       id: string;
       categoryOptions: Array<{ id: string; [key: string]: unknown }>;
@@ -299,9 +301,11 @@ export async function getCategoryCombosFromDataElements(
   dataElements: Array<{
     id: string;
     categoryCombo: { id: string };
-  }>
+  }>,
+  configId?: string
 ) {
-  const sourceDefaults = await getSourceDefaults();
+  const sourceDefaults = await getSourceDefaults(configId);
+  const client = configId ? await getSourceClientFromConfig(configId) : dhis2Client;
   
   const categoryCombos = [];
   const categoryOptions = [];
@@ -318,7 +322,7 @@ export async function getCategoryCombosFromDataElements(
     paging: false,
   };
 
-  const categoryComboResponse = await dhis2Client.get<{
+  const categoryComboResponse = await client.get<{
     categoryCombos: Array<{
       id: string;
       [key: string]: unknown;
@@ -348,7 +352,7 @@ export async function getCategoryCombosFromDataElements(
     paging: false,
   };
 
-  const categoryResponse = await dhis2Client.get<{
+  const categoryResponse = await client.get<{
     categories: Array<{
       id: string;
       categoryOptions: Array<{ id: string; [key: string]: unknown }>;
@@ -377,14 +381,15 @@ export async function getCategoryCombosFromDataElements(
   };
 }
 
-export async function getIndicatorTypes(indicatorTypeIds: string[]) {
+export async function getIndicatorTypes(indicatorTypeIds: string[], configId?: string) {
+  const client = configId ? await getSourceClientFromConfig(configId) : dhis2Client;
   const url = `indicatorTypes`;
   const params = {
     fields: ":owner,!createdBy,!lastUpdatedBy,!created,!lastUpdated",
     filter: `id:in:[${indicatorTypeIds.join(",")}]`,
     paging: false,
   };
-  const response = await dhis2Client.get<{
+  const response = await client.get<{
     indicatorTypes: Array<{ id: string; [key: string]: unknown }>;
   }>(url, {
     params,
@@ -392,7 +397,7 @@ export async function getIndicatorTypes(indicatorTypeIds: string[]) {
   return response.data.indicatorTypes;
 }
 
-export async function getIndicatorsSources(indicators: Array<Indicator>) {
+export async function getIndicatorsSources(indicators: Array<Indicator>, configId?: string) {
   const dataElementIds: string[] = [];
   const programIndicatorIds: string[] = [];
   const categoryOptionComboIds: string[] = [];
@@ -410,20 +415,21 @@ export async function getIndicatorsSources(indicators: Array<Indicator>) {
     dataSetIds.push(...indicatorSources.dataSets);
   }
 
-  const dataElements = await getDataElements(uniq(dataElementIds));
-  const categoryMeta = await getCategoryCombos(uniq(categoryOptionComboIds));
+  const dataElements = await getDataElements(uniq(dataElementIds), configId);
+  const categoryMeta = await getCategoryCombos(uniq(categoryOptionComboIds), configId);
 
   const { dataElements: dataElementsFromProgramIndicators } =
     await getDataElementsForProgramIndicators(uniq(programIndicatorIds));
   return {
     dataElements: [...dataElements, ...dataElementsFromProgramIndicators],
     programIndicatorIds,
-    indicatorTypes: await getIndicatorTypes(uniq(indicatorTypes)),
+    indicatorTypes: await getIndicatorTypes(uniq(indicatorTypes), configId),
     ...categoryMeta,
   };
 }
 
-export async function getLegendSets(legendSetIds: string[]) {
+export async function getLegendSets(legendSetIds: string[], configId?: string) {
+  const client = configId ? await getSourceClientFromConfig(configId) : dhis2Client;
   const url = `legendSets`;
   const params = {
     fields:
@@ -431,7 +437,7 @@ export async function getLegendSets(legendSetIds: string[]) {
     filter: `id:in:[${legendSetIds.join(",")}]`,
     paging: false,
   };
-  const response = await dhis2Client.get<{
+  const response = await client.get<{
     legendSets: Array<{
       id: string;
       [key: string]: unknown;

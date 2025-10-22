@@ -10,6 +10,12 @@ export const POST: Operation = async (
 ) => {
     try {
         const { id: configId } = req.params;
+        const { 
+            metadataSource, 
+            selectedVisualizations, 
+            selectedMaps, 
+            selectedDashboards 
+        } = req.body || {};
 
         if (!configId) {
             return res.status(400).json({
@@ -18,14 +24,22 @@ export const POST: Operation = async (
             });
         }
 
-        logger.info(`Metadata download and upload request received for config: ${configId}`);
+        logger.info(`Metadata download request received for config: ${configId}`);
+        logger.info(`Metadata source: ${metadataSource || 'flexiportal-config'}`);
+
         await pushToQueue(configId, 'metadataDownload', {
             configId,
+            metadataSource,
+            selectedVisualizations,
+            selectedMaps,
+            selectedDashboards,
             requestedAt: new Date().toISOString()
         });
+
         res.status(202).json({
             message: 'Metadata download initiated successfully',
             configId,
+            metadataSource: metadataSource || 'flexiportal-config',
             status: 'processing',
             description: 'Metadata download has been queued for processing'
         });
@@ -55,6 +69,53 @@ POST.apiDoc = {
             description: "Configuration ID"
         }
     ],
+    requestBody: {
+        required: false,
+        content: {
+            "application/json": {
+                schema: {
+                    type: "object",
+                    properties: {
+                        metadataSource: {
+                            type: "string",
+                            enum: ["source", "flexiportal-config"],
+                            description: "Source of metadata selection"
+                        },
+                        selectedVisualizations: {
+                            type: "array",
+                            items: {
+                                type: "object",
+                                properties: {
+                                    id: { type: "string" },
+                                    name: { type: "string" }
+                                }
+                            }
+                        },
+                        selectedMaps: {
+                            type: "array",
+                            items: {
+                                type: "object",
+                                properties: {
+                                    id: { type: "string" },
+                                    name: { type: "string" }
+                                }
+                            }
+                        },
+                        selectedDashboards: {
+                            type: "array",
+                            items: {
+                                type: "object",
+                                properties: {
+                                    id: { type: "string" },
+                                    name: { type: "string" }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
     responses: {
         "202": {
             description: "Metadata download initiated successfully",
@@ -65,6 +126,7 @@ POST.apiDoc = {
                         properties: {
                             message: { type: "string" },
                             configId: { type: "string" },
+                            metadataSource: { type: "string" },
                             status: { type: "string" },
                             description: { type: "string" }
                         }

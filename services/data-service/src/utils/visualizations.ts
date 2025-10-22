@@ -1,4 +1,4 @@
-import { dhis2Client } from "@/clients/dhis2";
+import { dhis2Client, getSourceClientFromConfig } from "@/clients/dhis2";
 import logger from "@/logging";
 import * as _ from "lodash";
 
@@ -32,15 +32,16 @@ type Dashboard = {
 
 type ModuleConfig = any;
 
-export async function getModuleConfigs() {
+export async function getModuleConfigs(configId?: string) {
   try {
+    const client = configId ? await getSourceClientFromConfig(configId) : dhis2Client;
     const url = `dataStore/hisptz-public-portal-modules`;
-    const response = await dhis2Client.get<Array<String>>(url);
+    const response = await client.get<Array<String>>(url);
     const moduleIds = response.data ?? [];
     const moduleConfigs = [];
     for (const moduleId of moduleIds) {
       const moduleUrl = `dataStore/hisptz-public-portal-modules/${moduleId}`;
-      const moduleResponse = await dhis2Client.get<{
+      const moduleResponse = await client.get<{
         config: ModuleConfig;
         type: DisplayItemType;
       }>(moduleUrl);
@@ -89,8 +90,6 @@ export async function getModuleConfigs() {
   }
 }
 
- 
-
 export function getVisualizations(
   moduleConfigs: { id: string; type: VisualizationDisplayItemType }[]
 ) {
@@ -115,9 +114,10 @@ export function getMaps(
   return maps;
 }
 
-export async function getVisualizationConfigs(visualizations: Visualization[]) {
+export async function getVisualizationConfigs(visualizations: Visualization[], configId?: string) {
+  const client = configId ? await getSourceClientFromConfig(configId) : dhis2Client;
   if (visualizations.length < 30) {
-    const response = await dhis2Client.get<{ visualizations: any[] }>(
+    const response = await client.get<{ visualizations: any[] }>(
       `visualizations`,
       {
         params: {
@@ -133,7 +133,7 @@ export async function getVisualizationConfigs(visualizations: Visualization[]) {
   const chunked = _.chunk(visualizations, 30);
   for (const chunk of chunked) {
     const ids = chunk.map((vis) => vis.id).join(",");
-    const response = await dhis2Client.get<{ visualizations: any[] }>(
+    const response = await client.get<{ visualizations: any[] }>(
       `visualizations`,
       {
         params: {
@@ -148,9 +148,10 @@ export async function getVisualizationConfigs(visualizations: Visualization[]) {
   return visualizationConfigs;
 }
 
-export async function getMapsConfig(maps: Visualization[]) {
+export async function getMapsConfig(maps: Visualization[], configId?: string) {
+  const client = configId ? await getSourceClientFromConfig(configId) : dhis2Client;
   if (maps.length < 30) {
-    const response = await dhis2Client.get<{ maps: any[] }>(`maps`, {
+    const response = await client.get<{ maps: any[] }>(`maps`, {
       params: {
         fields: ":owner,!createdBy,!lastUpdatedBy,!created,!lastUpdated",
         filter: `id:in:[${maps.map((vis) => vis.id).join(",")}]`,
@@ -162,7 +163,7 @@ export async function getMapsConfig(maps: Visualization[]) {
   const mapConfigs = [];
   const chunked = _.chunk(maps, 30);
   for (const chunk of chunked) {
-    const response = await dhis2Client.get<{ maps: any[] }>(`maps`, {
+    const response = await client.get<{ maps: any[] }>(`maps`, {
       params: {
         fields: ":owner,!createdBy,!lastUpdatedBy,!created,!lastUpdated",
         filter: `id:in:[${chunk.map((vis) => vis.id).join(",")}]`,
@@ -200,9 +201,10 @@ export function getIndicatorIdsFromMaps(mapsConfig: any[]) {
   );
 }
 
-export async function getIndicatorConfigs(indicatorIds: string[]) {
+export async function getIndicatorConfigs(indicatorIds: string[], configId?: string) {
+  const client = configId ? await getSourceClientFromConfig(configId) : dhis2Client;
   if (indicatorIds.length < 30) {
-    const response = await dhis2Client.get<{ indicators: any[] }>(
+    const response = await client.get<{ indicators: any[] }>(
       `indicators`,
       {
         params: {
@@ -220,7 +222,7 @@ export async function getIndicatorConfigs(indicatorIds: string[]) {
   const indicators = [];
   const chunked = _.chunk(indicatorIds, 30);
   for (const chunk of chunked) {
-    const response = await dhis2Client.get<{ indicators: any[] }>(
+    const response = await client.get<{ indicators: any[] }>(
       `indicators`,
       {
         params: {
@@ -268,9 +270,10 @@ export function getDataElementIdsFromVisualizations(
   );
 }
 
-export async function getDataElementConfigs(dataElementIds: string[]) {
+export async function getDataElementConfigs(dataElementIds: string[], configId?: string) {
+  const client = configId ? await getSourceClientFromConfig(configId) : dhis2Client;
   if (dataElementIds.length < 30) {
-    const response = await dhis2Client.get<{ dataElements: any[] }>(
+    const response = await client.get<{ dataElements: any[] }>(
       `dataElements`,
       {
         params: {
@@ -289,7 +292,7 @@ export async function getDataElementConfigs(dataElementIds: string[]) {
   const dataElements = [];
   const chunked = _.chunk(dataElementIds, 30);
   for (const chunk of chunked) {
-    const response = await dhis2Client.get<{ dataElements: any[] }>(
+    const response = await client.get<{ dataElements: any[] }>(
       `dataElements`,
       {
         params: {
