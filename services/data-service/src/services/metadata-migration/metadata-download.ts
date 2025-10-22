@@ -55,18 +55,6 @@ export async function downloadAndQueueMetadata(configId: string): Promise<void> 
     logger.info(`Metadata successfully downloaded and queued for upload (config: ${configId})`);
   } catch (error) {
     logger.error(`Error during download and queue process for config ${configId}:`, error);
-    
-    // Push error to failed queue
-    try {
-      await pushToQueue(configId, 'failed', { 
-        operation: 'metadata-download',
-        configId,
-        failedAt: new Date().toISOString()
-      }, error);
-    } catch (queueError) {
-      logger.error('Failed to push error to failed queue:', queueError);
-    }
-    
     throw error;
   }
 }
@@ -75,11 +63,11 @@ export async function downloadMetadata(configId?: string): Promise<ProcessedMeta
   try {
     // Fetch default category values dynamically
     logger.info("Fetching default category system values...");
-    const sourceDefaults = await getDefaultCategoryValues();
+    const sourceDefaults = await getDefaultCategoryValues(configId);
     const destinationDefaults = await getDestinationDefaultCategoryValues();
 
     logger.info("Loading Module Configs...");
-    const moduleConfigs = await getModuleConfigs();
+    const moduleConfigs = await getModuleConfigs(configId);
 
     logger.info("Extracting Visualizations...");
     const visualizations = [...getVisualizations(moduleConfigs ?? [])];
@@ -88,10 +76,10 @@ export async function downloadMetadata(configId?: string): Promise<ProcessedMeta
     const maps = [...getMaps(moduleConfigs ?? [])];
 
     logger.info("Fetching Map Configs...");
-    const mapsConfig = (await getMapsConfig(maps)) ?? [];
+    const mapsConfig = (await getMapsConfig(maps, configId)) ?? [];
 
     logger.info("Fetching Visualization Configs...");
-    const visualizationConfig = await getVisualizationConfigs(visualizations);
+    const visualizationConfig = await getVisualizationConfigs(visualizations, configId);
 
     logger.info("Collecting Indicator IDs...");
     const indicatorIds = [
@@ -106,18 +94,19 @@ export async function downloadMetadata(configId?: string): Promise<ProcessedMeta
     ];
 
     logger.info("Fetching Indicators...");
-    const indicators = await getIndicatorConfigs(indicatorIds);
+    const indicators = await getIndicatorConfigs(indicatorIds, configId);
 
     logger.info("Fetching Data Elements...");
-    const dataElements = await getDataElementConfigs(dataElementIds);
+    const dataElements = await getDataElementConfigs(dataElementIds, configId);
 
     logger.info("Getting Indicator Sources...");
-    const indicatorMeta = await getIndicatorsSources(indicators);
+    const indicatorMeta = await getIndicatorsSources(indicators, configId);
     dataElements.push(...indicatorMeta.dataElements);
 
     logger.info("Getting Category Combos...");
     const dataElementMeta = await getCategoryCombosFromDataElements(
-      uniqBy(dataElements, "id")
+      uniqBy(dataElements, "id"),
+      configId
     );
 
     logger.info("Collecting categories...");
@@ -162,7 +151,7 @@ export async function downloadMetadata(configId?: string): Promise<ProcessedMeta
     ];
 
     logger.info("Fetching LegendSets...");
-    const legendSets = await getLegendSets(uniq(legendSetIds));
+    const legendSets = await getLegendSets(uniq(legendSetIds), configId);
 
     // Process and return metadata instead of writing files
     const processedMetadata: ProcessedMetadata = {
