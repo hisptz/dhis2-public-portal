@@ -40,3 +40,43 @@ export const POST: Operation = async (
         });
     }
 };
+
+POST.apiDoc = {
+    summary: "Download metadata for a configuration",
+    description: "Initiates metadata download from source DHIS2 instance and queues it for processing",
+    operationId: "downloadMetadata",
+    tags: ["METADATA"],
+    parameters: [
+        {
+            in: "path",
+            name: "id",
+            required: true,
+            schema: { type: "string" },
+            description: "Configuration ID"
+        }
+    ],
+    responses: {
+        "202": {
+            description: "Metadata download initiated successfully",
+            content: {
+                "application/json": {
+                    schema: {
+                        type: "object",
+                        properties: {
+                            message: { type: "string" },
+                            configId: { type: "string" },
+                            status: { type: "string" },
+                            description: { type: "string" }
+                        }
+                    }
+                }
+            }
+        },
+        "400": {
+            description: "Bad request - missing configuration ID"
+        },
+        "500": {
+            description: "Internal server error during metadata download"
+        }
+    }
+};

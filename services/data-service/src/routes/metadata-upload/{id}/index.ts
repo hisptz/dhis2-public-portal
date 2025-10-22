@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from 'express';
 import logger from '@/logging';
-import { uploadMetadata, validateMetadata } from '@/services/metadata-migration/metadata-upload';
+import { validateMetadata } from '@/services/metadata-migration/metadata-upload';
 import { pushToQueue } from '@/rabbit/publisher';
 import { Operation } from 'express-openapi';
 
@@ -11,7 +11,7 @@ export const POST: Operation = async (
 ) => {
     try {
       const { id: configId } = req.params;
-      const { metadata, queueUpload = false } = req.body;
+      const { metadata } = req.body;
 
       if (!configId) {
         return res.status(400).json({
@@ -36,31 +36,19 @@ export const POST: Operation = async (
       }
 
       logger.info(`Metadata upload request received for config: ${configId}`);
-
-      if (queueUpload) {
-        // Queue the upload for background processing
-        await pushToQueue(configId, 'metadataUpload', {
-          metadata,
-          configId,
-          queuedAt: new Date().toISOString()
-        });
-        
-        res.status(202).json({
-          message: 'Metadata upload queued successfully',
-          configId,
-          status: 'queued',
-          description: 'Metadata has been queued for upload processing'
-        });
-      } else {
-        // Upload immediately
-        await uploadMetadata(metadata, configId);
-        
-        res.status(200).json({
-          message: 'Metadata uploaded successfully',
-          configId,
-          status: 'completed'
-        });
-      }
+ 
+      await pushToQueue(configId, 'metadataUpload', {
+        metadata,
+        configId,
+        queuedAt: new Date().toISOString()
+      });
+      
+      res.status(202).json({
+        message: 'Metadata upload queued successfully',
+        configId,
+        status: 'queued',
+        description: 'Metadata has been queued for upload processing'
+      });
 
     } catch (error: any) {
       logger.error('Error in metadata upload endpoint:', error);
@@ -74,9 +62,9 @@ export const POST: Operation = async (
 };
 
 POST.apiDoc = {
-    summary: "Upload metadata for a configuration",
-    description: "Uploads processed metadata either immediately or queues it for background processing",
-    operationId: "uploadMetadata",
+    summary: "Upload processed metadata for a configuration",
+    description: "Queues already processed metadata for upload to destination DHIS2 instance. Used for retrying uploads when download succeeded but upload failed.",
+    operationId: "uploadProcessedMetadata",
     tags: ["METADATA"],
     parameters: [
         {
@@ -96,12 +84,7 @@ POST.apiDoc = {
                     properties: {
                         metadata: {
                             type: "object",
-                            description: "Processed metadata to upload"
-                        },
-                        queueUpload: {
-                            type: "boolean",
-                            default: false,
-                            description: "Whether to queue the upload for background processing"
+                            description: "Already processed metadata ready for upload"
                         }
                     },
                     required: ["metadata"]
@@ -110,23 +93,8 @@ POST.apiDoc = {
         }
     },
     responses: {
-        "200": {
-            description: "Metadata uploaded successfully (immediate upload)",
-            content: {
-                "application/json": {
-                    schema: {
-                        type: "object",
-                        properties: {
-                            message: { type: "string" },
-                            configId: { type: "string" },
-                            status: { type: "string" }
-                        }
-                    }
-                }
-            }
-        },
         "202": {
-            description: "Metadata upload queued successfully (queued upload)",
+            description: "Metadata upload queued successfully",
             content: {
                 "application/json": {
                     schema: {
