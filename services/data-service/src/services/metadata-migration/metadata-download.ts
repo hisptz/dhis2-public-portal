@@ -22,6 +22,8 @@ import { getDefaultCategoryValues, getDestinationDefaultCategoryValues } from ".
 import { pushToQueue } from "../../rabbit/publisher";
 import { exportConfiguration } from "./utils/configuration-export";
 import { getMetadataFromDashboards } from "../../utils/dashboard";
+import { DatastoreNamespaces } from "@packages/shared/constants";
+import { dhis2Client } from "@/clients/dhis2";
 
 export interface ProcessedMetadata {
     legendSets: any;
@@ -55,23 +57,23 @@ export interface MetadataDownloadOptions {
 export async function downloadAndQueueMetadata(options: MetadataDownloadOptions): Promise<void> {
     try {
         const { configId } = options;
+        logger.info(`Starting Options: ${JSON.stringify(options)}`);
         logger.info(`Starting metadata download and queue process for config: ${configId}`);
-        
+
         const metadata = await downloadMetadata(options);
         const configuration = await exportConfiguration(configId);
-        
+
         await pushToQueue(configId, 'metadataUpload', {
             metadata,
             configId,
             downloadedAt: new Date().toISOString()
         });
-        
         await pushToQueue(configId, 'metadataUpload', {
             type: 'configuration',
             configuration,
             timestamp: new Date().toISOString()
         });
-        
+
         logger.info(`Metadata successfully downloaded and queued for upload (config: ${configId})`);
     } catch (error) {
         logger.error(`Error during download and queue process for config ${options.configId}:`, error);
@@ -82,18 +84,24 @@ export async function downloadAndQueueMetadata(options: MetadataDownloadOptions)
 export async function downloadMetadata(options: MetadataDownloadOptions): Promise<ProcessedMetadata> {
     try {
         const { configId, metadataSource = 'flexiportal-config' } = options;
-        
+        const configUrl = `dataStore/${DatastoreNamespaces.DATA_SERVICE_CONFIG}/${configId}`;
+        const { data: config } = await dhis2Client.get(configUrl);
+        const routeId = config.source.routeId;
+
+        if (!config?.source?.routeId) {
+            throw new Error(`No routeId found in config ${configId}`);
+        }
         // Fetch default category values dynamically
         logger.info("Fetching default category system values...");
-        const sourceDefaults = await getDefaultCategoryValues(configId);
+        const sourceDefaults = await getDefaultCategoryValues(routeId);
         const destinationDefaults = await getDestinationDefaultCategoryValues();
 
         let visualizations: any[] = [];
         let maps: any[] = [];
 
         if (metadataSource === 'flexiportal-config') {
-             logger.info("Loading Module Configs...");
-            const moduleConfigs = await getModuleConfigs(configId);
+            logger.info("Loading Module Configs...");
+            const moduleConfigs = await getModuleConfigs(routeId);
 
             logger.info("Extracting Visualizations from modules...");
             visualizations = [...getVisualizations(moduleConfigs ?? [])];
@@ -104,21 +112,20 @@ export async function downloadMetadata(options: MetadataDownloadOptions): Promis
         } else if (metadataSource === 'source') {
             logger.info("Processing selected metadata items...");
             const selectedVisualizationIds = options.selectedVisualizations?.map(v => v.id) || [];
-            
+
             const selectedMapIds = options.selectedMaps?.map(m => m.id) || [];
-            
+
             let dashboardExtractedIds: { visualizationIds: string[]; mapIds: string[] } = { visualizationIds: [], mapIds: [] };
             if (options.selectedDashboards && options.selectedDashboards.length > 0) {
-                logger.info(`Extracting metadata from ${options.selectedDashboards.length} selected dashboards...`);
                 const dashboardIds = options.selectedDashboards.map(d => d.id);
-                dashboardExtractedIds = await getMetadataFromDashboards(dashboardIds, configId);
+                dashboardExtractedIds = await getMetadataFromDashboards(dashboardIds, routeId);
             }
 
             const allVisualizationIds = [...new Set([
                 ...selectedVisualizationIds,
                 ...dashboardExtractedIds.visualizationIds
             ])];
-            
+
             const allMapIds = [...new Set([
                 ...selectedMapIds,
                 ...dashboardExtractedIds.mapIds
@@ -132,28 +139,38 @@ export async function downloadMetadata(options: MetadataDownloadOptions): Promis
         }
 
         logger.info("Fetching Map Configs...");
-        const mapsConfig = maps.length > 0 ? (await getMapsConfig(maps, configId)) ?? [] : [];
+        const mapsConfig = maps.length > 0 ? (await getMapsConfig(maps, routeId)) ?? [] : [];
 
         logger.info("Fetching Visualization Configs...");
-        const visualizationConfig = visualizations.length > 0 ? await getVisualizationConfigs(visualizations, configId) : [];
+        const visualizationConfig = visualizations.length > 0 ? await getVisualizationConfigs(visualizations, routeId) : [];
 
         logger.info("Collecting Indicator IDs...");
         const indicatorIds = [
             ...(getIndicatorIdsFromMaps(mapsConfig ?? []) ?? []),
             ...getIndicatorIdsFromVisualizations(visualizationConfig ?? []),
         ];
+        logger.info(`Collected ${indicatorIds.length} unique indicator IDs`, {
+            indicatorIds: indicatorIds.slice(0, 10),
+            totalCount: indicatorIds.length
+        });
 
         logger.info("Collecting Data Element IDs...");
         const dataElementIds = [
             ...(getDataElementIdsFromMaps(mapsConfig ?? []) ?? []),
             ...getDataElementIdsFromVisualizations(visualizationConfig ?? []),
         ];
+        logger.info(`Collected ${dataElementIds.length} unique data element IDs`, {
+            dataElementIds: dataElementIds.slice(0, 10),
+            totalCount: dataElementIds.length
+        });
 
         logger.info("Fetching Indicators...");
         const indicators = await getIndicatorConfigs(indicatorIds, configId);
+        logger.info(`Successfully fetched ${indicators.length} indicators`);
 
         logger.info("Fetching Data Elements...");
         const dataElements = await getDataElementConfigs(dataElementIds, configId);
+        logger.info(`Successfully fetched ${dataElements.length} data elements`);
 
         logger.info("Getting Indicator Sources...");
         const indicatorMeta = await getIndicatorsSources(indicators, configId);
@@ -207,8 +224,8 @@ export async function downloadMetadata(options: MetadataDownloadOptions): Promis
         ];
 
         logger.info("Fetching LegendSets...");
-        const legendSets = legendSetIds.length > 0 ? await getLegendSets(uniq(legendSetIds), configId) : [];
-
+        const legendSets = legendSetIds.length > 0 ? await getLegendSets(uniq(legendSetIds), routeId) : [];
+        logger.info(`Total LegendSets fetched: ${legendSets}`);
         // Process and return metadata
         const processedMetadata: ProcessedMetadata = {
             legendSets,
@@ -254,7 +271,7 @@ export async function downloadMetadata(options: MetadataDownloadOptions): Promis
                     (option) => option.id != sourceDefaults.defaultCategoryOptionId
                 ),
                 categoryOptionCombos: uniqBy(categoryOptionCombos, "id").filter(
-                    (optionCombo: any) => !(optionCombo.name as string).includes("default")
+                    (optionCombo: any) => optionCombo && optionCombo.name && !(optionCombo.name as string).includes("default")
                 ),
             },
         };
@@ -267,10 +284,3 @@ export async function downloadMetadata(options: MetadataDownloadOptions): Promis
         throw error;
     }
 }
-
-// Backward compatibility - convert single configId to options object
-export async function downloadAndQueueMetadataLegacy(configId: string): Promise<void> {
-    return downloadAndQueueMetadata({ configId });
-}
-
-

@@ -1,38 +1,41 @@
-import { dhis2Client, getSourceClientFromConfig } from "@/clients/dhis2";
+import { dhis2Client, createSourceClient } from "@/clients/dhis2";
 import logger from "@/logging";
 
-/**
- * Default category system values that we need to fetch from DHIS2
- */
 export interface DefaultCategoryValues {
     defaultCategoryComboId: string;
     defaultCategoryId: string;
     defaultCategoryOptionId: string;
 }
 
-/**
- * Cache for default values to avoid repeated API calls
- * Separate caches for source and destination
- */
+
 let cachedSourceDefaults: DefaultCategoryValues | null = null;
 let cachedDestinationDefaults: DefaultCategoryValues | null = null;
 
-/**
- * Fetches the default category system values from the source DHIS2 instance
- * @param configId - Optional config ID to get source client, if not provided falls back to destination
- */
-export async function getDefaultCategoryValues(configId?: string): Promise<DefaultCategoryValues> {
+export async function getDefaultCategoryValues(routeId?: string): Promise<DefaultCategoryValues> {
     if (cachedSourceDefaults) {
         return cachedSourceDefaults;
     }
 
     try {
-        logger.info(`Fetching default category system values from ${configId ? 'source' : 'destination'} DHIS2...`);
+        logger.info(`Fetching default category system values from ${routeId ? 'source' : 'destination'} DHIS2...`);
 
-        // Get the appropriate client - source if configId provided, destination otherwise
-        const client = configId ? await getSourceClientFromConfig(configId) : dhis2Client;
+        const client = routeId ? await createSourceClient(routeId) : dhis2Client;
 
-        // Fetch default category combo (there should be exactly one with name "default")
+        const allCombosResponse = await client.get<{
+            categoryCombos: Array<{
+                id: string;
+                name: string;
+                displayName: string;
+            }>;
+        }>('categoryCombos', {
+            params: {
+                fields: 'id,name,displayName',
+                pageSize: 10,
+                paging: true
+            }
+        });
+        logger.info('All Category Combos available:', allCombosResponse.data?.categoryCombos || []);
+
         const categoryComboResponse = await client.get<{
             categoryCombos: Array<{
                 id: string;
@@ -46,8 +49,11 @@ export async function getDefaultCategoryValues(configId?: string): Promise<Defau
                 paging: false
             }
         });
-        logger.info('Category Combos fetched:', categoryComboResponse.data.categoryCombos);
-        const defaultCategoryCombo = categoryComboResponse.data.categoryCombos.find(
+
+        const categoryCombos = categoryComboResponse.data?.categoryCombos || [];
+        logger.info(`Category Combos fetched: ${categoryCombos.length} items`, categoryCombos);
+
+        const defaultCategoryCombo = categoryCombos.find(
             (combo: { id: string; name: string; displayName: string }) => combo.name.toLowerCase() === 'default'
         );
 
@@ -55,7 +61,6 @@ export async function getDefaultCategoryValues(configId?: string): Promise<Defau
             throw new Error('Default category combo not found');
         }
 
-        // Fetch default category (there should be exactly one with name "default")
         const categoryResponse = await client.get<{
             categories: Array<{
                 id: string;
@@ -69,9 +74,11 @@ export async function getDefaultCategoryValues(configId?: string): Promise<Defau
                 paging: false
             }
         });
-        logger.info('Categories fetched:', categoryResponse.data.categories);
 
-        const defaultCategory = categoryResponse.data.categories.find(
+        const categories = categoryResponse.data?.categories || [];
+        logger.info(`Categories fetched: ${categories.length} items`, categories);
+
+        const defaultCategory = categories.find(
             (category: { id: string; name: string; displayName: string }) => category.name.toLowerCase() === 'default'
         );
 
@@ -79,7 +86,6 @@ export async function getDefaultCategoryValues(configId?: string): Promise<Defau
             throw new Error('Default category not found');
         }
 
-        // Fetch default category option (there should be exactly one with name "default")
         const categoryOptionResponse = await client.get<{
             categoryOptions: Array<{
                 id: string;
@@ -93,9 +99,11 @@ export async function getDefaultCategoryValues(configId?: string): Promise<Defau
                 paging: false
             }
         });
-        logger.info('Category Options fetched:', categoryOptionResponse.data.categoryOptions);
 
-        const defaultCategoryOption = categoryOptionResponse.data.categoryOptions.find(
+        const categoryOptions = categoryOptionResponse.data?.categoryOptions || [];
+        logger.info(`Category Options fetched: ${categoryOptions.length} items`, categoryOptions);
+
+        const defaultCategoryOption = categoryOptions.find(
             (option: { id: string; name: string; displayName: string }) => option.name.toLowerCase() === 'default'
         );
 
@@ -109,8 +117,7 @@ export async function getDefaultCategoryValues(configId?: string): Promise<Defau
             defaultCategoryOptionId: defaultCategoryOption.id,
         };
 
-        // Cache based on whether this was source or destination
-        if (configId) {
+        if (routeId) {
             cachedSourceDefaults = defaultValues;
         } else {
             cachedDestinationDefaults = defaultValues;
@@ -120,7 +127,7 @@ export async function getDefaultCategoryValues(configId?: string): Promise<Defau
             defaultCategoryComboId: defaultValues.defaultCategoryComboId,
             defaultCategoryId: defaultValues.defaultCategoryId,
             defaultCategoryOptionId: defaultValues.defaultCategoryOptionId,
-            source: configId ? 'source' : 'destination'
+            source: routeId ? 'source' : 'destination'
         });
 
         return defaultValues;
@@ -131,25 +138,16 @@ export async function getDefaultCategoryValues(configId?: string): Promise<Defau
     }
 }
 
-/**
- * Gets default values for destination DHIS2 instance (direct API access)
- */
 export async function getDestinationDefaultCategoryValues(): Promise<DefaultCategoryValues> {
     if (cachedDestinationDefaults) {
         return cachedDestinationDefaults;
     }
-    
-    // Call getDefaultCategoryValues without configId to use destination client
     return getDefaultCategoryValues();
 }
 
-/**
- * Clears the cache - useful for testing or if you need to refresh values
- */
 export function clearDefaultCategoryCache(): void {
     cachedSourceDefaults = null;
     cachedDestinationDefaults = null;
     logger.info('Default category values cache cleared');
 }
 
- 

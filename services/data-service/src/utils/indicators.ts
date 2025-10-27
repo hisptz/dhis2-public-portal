@@ -1,14 +1,23 @@
-import { chunk, compact, uniq } from "lodash";
+import { chunk, compact, filter, uniq } from "lodash";
 import { mapSeries } from "async";
-import { dhis2Client, getSourceClientFromConfig } from "@/clients/dhis2";
+import { dhis2Client, createSourceClient } from "@/clients/dhis2";
 import { getDefaultCategoryValues, getDestinationDefaultCategoryValues } from "./default-categories";
+import logger from "@/logging";
+import { fetchItemsInParallel } from "./parallel-fetch";
+
+type Indicator = {
+  id: string;
+  indicatorType: { id: string };
+  numerator: string;
+  denominator: string;
+};
 
 let sourceDefaults: Awaited<ReturnType<typeof getDefaultCategoryValues>> | null = null;
 let destinationDefaults: Awaited<ReturnType<typeof getDestinationDefaultCategoryValues>> | null = null;
 
-async function getSourceDefaults(configId?: string) {
+async function getSourceDefaults(routeId?: string) {
   if (!sourceDefaults) {
-    sourceDefaults = await getDefaultCategoryValues(configId);
+    sourceDefaults = await getDefaultCategoryValues(routeId);
   }
   return sourceDefaults;
 }
@@ -20,115 +29,129 @@ async function getDestinationDefaults() {
   return destinationDefaults;
 }
 
-export async function getDataElementsFromServer(dataElementIds: string[], configId?: string) {
-  const client = configId ? await getSourceClientFromConfig(configId) : dhis2Client;
-  const url = `dataElements`;
-  const params = {
-    fields: ":owner,!createdBy,!lastUpdatedBy,!created,!lastUpdated",
-    filter: `id:in:[${dataElementIds.join(",")}]`,
-    paging: false,
-  };
-  const response = await client.get<{
-    dataElements: { id: string; [key: string]: unknown }[];
-  }>(url, {
-    params,
+export async function getDataElementsFromServer(dataElementIds: string[], routeId?: string) {
+  if (!dataElementIds || dataElementIds.length === 0) {
+    logger.warn("No data element IDs provided — skipping fetch");
+    return [];
+  }
+
+  logger.info(`Fetching ${dataElementIds.length} data elements from server`, {
+    routeId,
+    dataElementCount: dataElementIds.length,
+    sampleIds: dataElementIds.slice(0, 5)
   });
-  return response.data.dataElements;
+
+  const client = routeId ? await createSourceClient(routeId) : dhis2Client;
+
+  const dataElements = await fetchItemsInParallel(
+    client,
+    'dataElements',
+    dataElementIds,
+    ':owner,!createdBy,!lastUpdatedBy,!created,!lastUpdated',
+    5
+
+  );
+
+  logger.info(`getDataElementsFromServer completed: ${dataElements.length} data elements fetched`);
+  return dataElements;
 }
 
-export async function getDataElements(dataElementIds: string[], configId?: string) {
+export async function getDataElements(dataElementIds: string[], routeId?: string) {
   if (dataElementIds.length > 100) {
-    console.info(`Getting data elements in batches of 100`);
     const chunks = chunk(dataElementIds, 100);
     const dataElements = await mapSeries(chunks, async (chunk: string[]) => {
-      return getDataElementsFromServer(chunk, configId);
+      return getDataElementsFromServer(chunk, routeId);
     });
     return dataElements.flat();
   }
-  return getDataElementsFromServer(dataElementIds, configId);
+  return getDataElementsFromServer(dataElementIds, routeId);
 }
 
-export async function getCategoryCombos(categoryOptionComboIds: string[], configId?: string) {
-  const client = configId ? await getSourceClientFromConfig(configId) : dhis2Client;
-  //We first need to get the category combo, then the categories making up the category combos
+export async function getCategoryCombos(categoryOptionComboIds: string[], routeId?: string) {
+  const client = routeId ? await createSourceClient(routeId) : dhis2Client;
   const categories = [];
   const categoryOptions = [];
   const categoryCombos = [];
   const categoryOptionCombos = [];
-  const url = "categoryOptionCombos";
-  const params = {
-    fields: ":owner,!createdBy,!lastUpdatedBy,!created,!lastUpdated",
-    filter: `id:in:[${categoryOptionComboIds.join(",")}]`,
-    paging: false,
-  };
-  const response = await client.get<{
-    categoryOptionCombos: Array<{
-      id: string;
-      categoryCombo: { id: string };
-      [key: string]: unknown;
-    }>;
-  }>(url, {
-    params,
-  });
 
-  categoryOptionCombos.push(...response.data.categoryOptionCombos);
+  logger.info("Fetching category option combos...");
+
+  const fetchedCategoryOptionCombos = await fetchItemsInParallel(
+    client,
+    'categoryOptionCombos',
+    categoryOptionComboIds,
+    ':owner,!createdBy,!lastUpdatedBy,!created,!lastUpdated',
+    5
+
+  );
+
+  categoryOptionCombos.push(...fetchedCategoryOptionCombos);
+  logger.info(`Successfully fetched ${fetchedCategoryOptionCombos.length} category option combos`);
 
   const categoryComboIds = uniq(
-    response.data.categoryOptionCombos.map(
-      (categoryOptionCombo) => categoryOptionCombo.categoryCombo.id
+    fetchedCategoryOptionCombos.map(
+      (categoryOptionCombo: any) => categoryOptionCombo.categoryCombo.id
     )
   );
-
-  const categoryComboUrl = `categoryCombos`;
-  const categoryComboParams = {
-    fields: ":owner,!createdBy,!lastUpdatedBy,!created,!lastUpdated",
-    filter: `id:in:[${categoryComboIds.join(",")}]`,
-    paging: false,
-  };
-
-  const categoryComboResponse = await client.get<{
-    categoryCombos: Array<{
-      id: string;
-      [key: string]: unknown;
-      categories: Array<{ id: string }>;
-    }>;
-  }>(categoryComboUrl, {
-    params: categoryComboParams,
+  logger.info(`Extracted ${categoryComboIds.length} unique category combo IDs`, {
+    categoryComboIds: categoryComboIds.slice(0, 10)
   });
 
-  categoryCombos.push(...categoryComboResponse.data.categoryCombos);
+  logger.info("Fetching category combos...");
+
+  const fetchedCategoryCombos = await fetchItemsInParallel(
+    client,
+    'categoryCombos',
+    categoryComboIds,
+    ':owner,!createdBy,!lastUpdatedBy,!created,!lastUpdated',
+    5
+
+  );
+
+  categoryCombos.push(...fetchedCategoryCombos);
+  logger.info(`Successfully fetched ${fetchedCategoryCombos.length} category combos`);
 
   const categoriesIds = uniq(
-    categoryComboResponse.data.categoryCombos
-      .map(({ categories }) => categories.map(({ id }) => id))
+    fetchedCategoryCombos
+      .map(({ categories }: any) => categories.map(({ id }: any) => id))
       .flat()
   );
-  const categoryUrl = `categories`;
-  const categoryParams = {
-    fields:
-      ":owner,!createdBy,!lastUpdatedBy,!created,!lastUpdated,categoryOptions[:owner,!createdBy,!lastUpdatedBy,!created,!lastUpdated]",
-    filter: `id:in:[${categoriesIds.join(",")}]`,
-    paging: false,
-  };
-
-  const categoryResponse = await client.get<{
-    categories: Array<{
-      id: string;
-      categoryOptions: Array<{ id: string; [key: string]: unknown }>;
-      [key: string]: unknown;
-    }>;
-  }>(categoryUrl, {
-    params: categoryParams,
+  logger.info(`Extracted ${categoriesIds.length} unique category IDs`, {
+    categoriesIds: categoriesIds.slice(0, 10)
   });
-  categoryOptions.push(
-    ...categoryResponse.data.categories
-      .map(({ categoryOptions }) => categoryOptions)
+
+  logger.info("Fetching categories...");
+  const fetchedCategories = await fetchItemsInParallel(
+    client,
+    'categories',
+    categoriesIds,
+    ':owner,!createdBy,!lastUpdatedBy,!created,!lastUpdated,categoryOptions[:owner,!createdBy,!lastUpdatedBy,!created,!lastUpdated]',
+    5
+
+  );
+
+  const categoryOptionIds = uniq(
+    fetchedCategories
+      .map(({ categoryOptions }: any) => categoryOptions.map(({ id }: any) => id))
       .flat()
   );
+
+  logger.info("Fetching category options...");
+  const fetchedCategoryOptions = await fetchItemsInParallel(
+    client,
+    'categoryOptions',
+    categoryOptionIds,
+    ':owner,!createdBy,!lastUpdatedBy,!created,!lastUpdated,name,shortName',
+    5
+
+  );
+
+  categoryOptions.push(...fetchedCategoryOptions);
+
   categories.push(
-    ...categoryResponse.data.categories.map((category) => ({
+    ...fetchedCategories.map((category: any) => ({
       ...category,
-      categoryOptions: category.categoryOptions.map(({ id }) => ({ id })),
+      categoryOptions: category.categoryOptions.map(({ id }: any) => ({ id })),
     }))
   );
 
@@ -143,28 +166,31 @@ export async function getCategoryCombos(categoryOptionComboIds: string[], config
 export async function getDataElementsForProgramIndicators(
   programIndicatorIds: string[]
 ) {
-  const destinationDefaults = await getDestinationDefaults();
-  
-  const url = `programIndicators`;
-  const params = {
-    fields: "id,name,shortName,legendSets[id]",
-    filter: `id:in:[${programIndicatorIds.join(",")}]`,
-    paging: false,
-  };
-  const response = await dhis2Client.get<{
-    programIndicators: Array<{
-      id: string;
-      name: string;
-      shortName: string;
-      legendSets: Array<{ id: string }>;
-      [key: string]: unknown;
-    }>;
-  }>(url, {
-    params,
+  if (!programIndicatorIds || programIndicatorIds.length === 0) {
+    logger.warn("No program indicator IDs provided — skipping fetch");
+    return {
+      dataElements: [],
+    };
+  }
+
+  logger.info(`getDataElementsForProgramIndicators called with ${programIndicatorIds.length} program indicator IDs`, {
+    programIndicatorIds: programIndicatorIds.slice(0, 10),
+    totalCount: programIndicatorIds.length
   });
 
-  const dataElements = response.data.programIndicators.map(
-    (programIndicator) => {
+  const destinationDefaults = await getDestinationDefaults();
+
+  const programIndicators = await fetchItemsInParallel(
+    dhis2Client,
+    'programIndicators',
+    programIndicatorIds,
+    'id,name,shortName,legendSets[id]',
+    5
+
+  );
+
+  const dataElements = programIndicators.map(
+    (programIndicator: any) => {
       return {
         id: programIndicator.id,
         name: programIndicator.name,
@@ -180,6 +206,7 @@ export async function getDataElementsForProgramIndicators(
     }
   );
 
+  logger.info(`Successfully converted ${dataElements.length} program indicators to data elements`);
   return {
     dataElements,
   };
@@ -248,13 +275,6 @@ export function getDataItemsFromIndicatorExpression(expression: string) {
   };
 }
 
-type Indicator = {
-  id: string;
-  indicatorType: { id: string };
-  numerator: string;
-  denominator: string;
-};
-
 export function getIndicatorSources(indicator: Indicator) {
   const type = indicator.indicatorType.id;
   const numeratorDataItems = getDataItemsFromIndicatorExpression(
@@ -302,74 +322,95 @@ export async function getCategoryCombosFromDataElements(
     id: string;
     categoryCombo: { id: string };
   }>,
-  configId?: string
+  routeId?: string
 ) {
-  const sourceDefaults = await getSourceDefaults(configId);
-  const client = configId ? await getSourceClientFromConfig(configId) : dhis2Client;
-  
+  logger.info(`getCategoryCombosFromDataElements called with ${dataElements.length} data elements`, {
+    dataElementIds: dataElements.slice(0, 10).map(de => de.id),
+    totalCount: dataElements.length,
+    routeId
+  });
+
+  const sourceDefaults = await getSourceDefaults(routeId);
+  logger.info(`Source default category combo id: ${sourceDefaults.defaultCategoryComboId}`);
+  const client = routeId ? await createSourceClient(routeId) : dhis2Client;
+
   const categoryCombos = [];
   const categoryOptions = [];
   const categoryOptionCombos = [];
   const categories = [];
-  const categoryComboIds = dataElements
-    .map((dataElement) => dataElement.categoryCombo.id)
-    .filter((val) => val != sourceDefaults.defaultCategoryComboId);
-  const categoryComboUrl = `categoryCombos`;
-  const categoryComboParams = {
-    fields:
-      ":owner,!createdBy,!lastUpdatedBy,!created,!lastUpdated,categoryOptionCombos[:owner,!createdBy,!lastUpdatedBy,!created,!lastUpdated]",
-    filter: `id:in:[${categoryComboIds.join(",")}]`,
-    paging: false,
-  };
+  const categoryComboIds = uniq(
+    dataElements
+      .map((dataElement) => dataElement.categoryCombo.id)
+      .filter((val) => val != sourceDefaults.defaultCategoryComboId)
+  );
 
-  const categoryComboResponse = await client.get<{
-    categoryCombos: Array<{
-      id: string;
-      [key: string]: unknown;
-      categories: Array<{ id: string }>;
-      categoryOptionCombos: Array<{ id: string; [key: string]: unknown }>;
-    }>;
-  }>(categoryComboUrl, {
-    params: categoryComboParams,
+  logger.info(`Extracted ${categoryComboIds.length} non-default category combo IDs`, {
+    categoryComboIds: categoryComboIds.slice(0, 10)
   });
 
-  categoryCombos.push(...categoryComboResponse.data.categoryCombos);
+  if (categoryComboIds.length === 0) {
+    logger.info("No non-default category combos found, returning empty results");
+    return {
+      categories: [],
+      categoryOptions: [],
+      categoryCombos: [],
+      categoryOptionCombos: [],
+    };
+  }
+
+  logger.info("Fetching category combos from data elements...");
+
+  const fetchedCategoryCombos = await fetchItemsInParallel(
+    client,
+    'categoryCombos',
+    categoryComboIds,
+    ':owner,!createdBy,!lastUpdatedBy,!created,!lastUpdated,categoryOptionCombos[:owner,!createdBy,!lastUpdatedBy,!created,!lastUpdated]',
+    5
+
+  );
+
+  categoryCombos.push(...fetchedCategoryCombos);
   categoryOptionCombos.push(
-    ...categoryComboResponse.data.categoryCombos
+    ...fetchedCategoryCombos
       .map((categoryCombo) => categoryCombo.categoryOptionCombos)
       .flat()
   );
   const categoriesIds = uniq(
-    categoryComboResponse.data.categoryCombos
-      .map(({ categories }) => categories.map(({ id }) => id))
+    fetchedCategoryCombos
+      .map(({ categories }: any) => categories.map(({ id }: any) => id))
       .flat()
   );
-  const categoryUrl = `categories`;
-  const categoryParams = {
-    fields:
-      ":owner,!createdBy,!lastUpdatedBy,!created,!lastUpdated,categoryOptions[:owner,!createdBy,!lastUpdatedBy,!created,!lastUpdated]",
-    filter: `id:in:[${categoriesIds.join(",")}]`,
-    paging: false,
-  };
 
-  const categoryResponse = await client.get<{
-    categories: Array<{
-      id: string;
-      categoryOptions: Array<{ id: string; [key: string]: unknown }>;
-      [key: string]: unknown;
-    }>;
-  }>(categoryUrl, {
-    params: categoryParams,
-  });
-  categoryOptions.push(
-    ...categoryResponse.data.categories
-      .map(({ categoryOptions }) => categoryOptions)
+  const fetchedCategories = await fetchItemsInParallel(
+    client,
+    'categories',
+    categoriesIds,
+    ':owner,!createdBy,!lastUpdatedBy,!created,!lastUpdated,categoryOptions[:owner,!createdBy,!lastUpdatedBy,!created,!lastUpdated]',
+    5
+
+  );
+
+  const categoryOptionIds = uniq(
+    fetchedCategories
+      .map(({ categoryOptions }: any) => categoryOptions.map(({ id }: any) => id))
       .flat()
   );
+
+  const fetchedCategoryOptions = await fetchItemsInParallel(
+    client,
+    'categoryOptions',
+    categoryOptionIds,
+    ':owner,!createdBy,!lastUpdatedBy,!created,!lastUpdated,name,shortName',
+    5
+
+  );
+
+  categoryOptions.push(...fetchedCategoryOptions);
+
   categories.push(
-    ...categoryResponse.data.categories.map((category) => ({
+    ...fetchedCategories.map((category: any) => ({
       ...category,
-      categoryOptions: category.categoryOptions.map(({ id }) => ({ id })),
+      categoryOptions: category.categoryOptions.map(({ id }: any) => ({ id })),
     }))
   );
 
@@ -381,23 +422,28 @@ export async function getCategoryCombosFromDataElements(
   };
 }
 
-export async function getIndicatorTypes(indicatorTypeIds: string[], configId?: string) {
-  const client = configId ? await getSourceClientFromConfig(configId) : dhis2Client;
-  const url = `indicatorTypes`;
-  const params = {
-    fields: ":owner,!createdBy,!lastUpdatedBy,!created,!lastUpdated",
-    filter: `id:in:[${indicatorTypeIds.join(",")}]`,
-    paging: false,
-  };
-  const response = await client.get<{
-    indicatorTypes: Array<{ id: string; [key: string]: unknown }>;
-  }>(url, {
-    params,
-  });
-  return response.data.indicatorTypes;
+export async function getIndicatorTypes(indicatorTypeIds: string[], routeId?: string) {
+  const client = routeId ? await createSourceClient(routeId) : dhis2Client;
+
+  const indicatorTypes = await fetchItemsInParallel(
+    client,
+    'indicatorTypes',
+    indicatorTypeIds,
+    ':owner,!createdBy,!lastUpdatedBy,!created,!lastUpdated',
+    5
+
+  );
+
+  return indicatorTypes;
 }
 
-export async function getIndicatorsSources(indicators: Array<Indicator>, configId?: string) {
+export async function getIndicatorsSources(indicators: Array<Indicator>, routeId?: string) {
+  logger.info(`getIndicatorsSources called with ${indicators.length} indicators`, {
+    indicatorIds: indicators.slice(0, 10).map(i => i.id),
+    totalCount: indicators.length,
+    routeId
+  });
+
   const dataElementIds: string[] = [];
   const programIndicatorIds: string[] = [];
   const categoryOptionComboIds: string[] = [];
@@ -405,6 +451,8 @@ export async function getIndicatorsSources(indicators: Array<Indicator>, configI
     (indicator) => indicator.indicatorType.id
   );
   const dataSetIds = [];
+
+  logger.info("Extracting data items from indicator expressions...");
   for (const indicator of indicators) {
     const indicatorSources = getIndicatorSources(indicator);
     dataElementIds.push(...indicatorSources.dataElements);
@@ -415,39 +463,58 @@ export async function getIndicatorsSources(indicators: Array<Indicator>, configI
     dataSetIds.push(...indicatorSources.dataSets);
   }
 
-  const dataElements = await getDataElements(uniq(dataElementIds), configId);
-  const categoryMeta = await getCategoryCombos(uniq(categoryOptionComboIds), configId);
+  logger.info(`Extracted IDs from indicator expressions:`, {
+    dataElementIds: dataElementIds.length,
+    categoryOptionComboIds: categoryOptionComboIds.length,
+    programIndicatorIds: programIndicatorIds.length,
+    indicatorTypes: indicatorTypes.length
+  });
+
+  const dataElements = await getDataElements(uniq(dataElementIds), routeId);
+  logger.info(`Successfully fetched ${dataElements.length} data elements`);
+
+  const categoryMeta = await getCategoryCombos(uniq(categoryOptionComboIds), routeId);
+  logger.info(`Successfully fetched category metadata:`, {
+    categories: categoryMeta.categories.length,
+    categoryOptions: categoryMeta.categoryOptions.length,
+    categoryCombos: categoryMeta.categoryCombos.length,
+    categoryOptionCombos: categoryMeta.categoryOptionCombos.length
+  });
 
   const { dataElements: dataElementsFromProgramIndicators } =
     await getDataElementsForProgramIndicators(uniq(programIndicatorIds));
+  logger.info(`Successfully converted ${dataElementsFromProgramIndicators.length} program indicators to data elements`);
+
+  const indicatorTypesResult = await getIndicatorTypes(uniq(indicatorTypes), routeId);
+  logger.info(`Successfully fetched ${indicatorTypesResult.length} indicator types`);
   return {
     dataElements: [...dataElements, ...dataElementsFromProgramIndicators],
     programIndicatorIds,
-    indicatorTypes: await getIndicatorTypes(uniq(indicatorTypes), configId),
+    indicatorTypes: indicatorTypesResult,
     ...categoryMeta,
   };
 }
 
-export async function getLegendSets(legendSetIds: string[], configId?: string) {
-  const client = configId ? await getSourceClientFromConfig(configId) : dhis2Client;
-  const url = `legendSets`;
-  const params = {
-    fields:
-      ":owner,!createdBy,!lastUpdatedBy,!created,!lastUpdated,legends[:owner,!createdBy,!lastUpdatedBy,!created,!lastUpdated]",
-    filter: `id:in:[${legendSetIds.join(",")}]`,
-    paging: false,
-  };
-  const response = await client.get<{
-    legendSets: Array<{
-      id: string;
-      [key: string]: unknown;
-      legends: Array<{ id: string }>;
-    }>;
-  }>(url, {
-    params,
+export async function getLegendSets(legendSetIds: string[], routeId?: string) {
+  logger.info(`getLegendSets called with ${legendSetIds.length} legend set IDs`, {
+    legendSetIds: legendSetIds.slice(0, 10),
+    totalCount: legendSetIds.length,
+    routeId
   });
 
+  const client = routeId ? await createSourceClient(routeId) : dhis2Client;
+
+  const legendSets = await fetchItemsInParallel(
+    client,
+    'legendSets',
+    legendSetIds,
+    ':owner,!createdBy,!lastUpdatedBy,!created,!lastUpdated,legends[:owner,!createdBy,!lastUpdatedBy,!created,!lastUpdated]',
+    5
+
+  );
+
+  logger.info(`Successfully fetched ${legendSets.length} legend sets`);
   return {
-    legendSets: response.data.legendSets,
+    legendSets: legendSets,
   };
 }

@@ -1,19 +1,154 @@
 import logger from "@/logging";
 import { uploadMetadataFile } from "@/clients/dhis2";
 import { ProcessedMetadata } from "./metadata-download";
-import { processConfigurationFromQueue, ConfigurationImportSummary } from "./utils/configuration-import";
+import { processConfigurationFromQueue } from "./utils/configuration-import";
 import * as fs from "node:fs";
-import * as path from "node:path";
 
-/**
- * Uploads processed metadata to the destination DHIS2 instance
- * @param metadata - The processed metadata to upload
- * @param configId - The configuration ID for tracking
- */
+export async function uploadMetadataFromQueue(jobData: any): Promise<void> {
+  try {
+    const { metadata, configId, downloadedAt, type, configuration } = jobData;
+
+    logger.info(`Processing upload job for config: ${configId}`, {
+      type: type || 'metadata',
+      hasMetadata: !!metadata,
+      hasConfiguration: !!configuration,
+      downloadedAt,
+      jobDataKeys: Object.keys(jobData || {}),
+    });
+
+    if (!configId) {
+      throw new Error(`No configId provided in job data. Job data keys: ${Object.keys(jobData || {}).join(', ')}`);
+    }
+
+    if (type === 'configuration') {
+      logger.info(`Processing configuration upload for config: ${configId}`);
+
+      if (!configuration) {
+        throw new Error(`No configuration provided in job data for config: ${configId}`);
+      }
+
+      const summary = await processConfigurationFromQueue(configId, jobData);
+
+      logger.info(`Configuration upload completed for config: ${configId}`, {
+        totalNamespaces: summary.totalNamespaces,
+        successfulNamespaces: summary.successfulNamespaces,
+        duration: summary.duration
+      });
+
+      return;
+    }
+
+    logger.info(`Processing metadata upload for config: ${configId}`);
+
+    if (!metadata) {
+      throw new Error(`No metadata provided in job data for config: ${configId}. Job data keys: ${Object.keys(jobData || {}).join(', ')}`);
+    }
+
+    if (!validateMetadata(metadata)) {
+      throw new Error(`Invalid metadata structure for config: ${configId}`);
+    }
+
+    await uploadMetadata(metadata, configId);
+
+    logger.info(`Metadata upload job completed successfully for config: ${configId}`);
+
+  } catch (error: any) {
+    logger.error(`Error processing upload job:`, {
+      error: {
+        message: error.message,
+        stack: error.stack,
+        name: error.name,
+      },
+      jobData: {
+        configId: jobData?.configId,
+        type: jobData?.type,
+        hasMetadata: !!jobData?.metadata,
+        hasConfiguration: !!jobData?.configuration,
+        downloadedAt: jobData?.downloadedAt,
+        jobDataKeys: Object.keys(jobData || {}),
+      }
+    });
+    throw error;
+  }
+}
+
+
+async function uploadCategoriesMetadata(categories: any, tempDir: string): Promise<void> {
+  const maxItemsPerUpload = 500; 
+
+  // Check total items count
+  const totalCategories = categories.categories?.length || 0;
+  const totalCategoryOptions = categories.categoryOptions?.length || 0;
+  const totalCategoryCombos = categories.categoryCombos?.length || 0;
+  const totalCategoryOptionCombos = categories.categoryOptionCombos?.length || 0;
+
+  const totalItems = totalCategories + totalCategoryOptions + totalCategoryCombos + totalCategoryOptionCombos;
+
+  logger.info(`Categories metadata summary: ${totalCategories} categories, ${totalCategoryOptions} categoryOptions, ${totalCategoryCombos} categoryCombos, ${totalCategoryOptionCombos} categoryOptionCombos (${totalItems} total items)`);
+
+  if (totalItems <= maxItemsPerUpload) {
+    // Upload as single file if small enough
+    logger.info("Categories metadata is small enough for single upload");
+    const categoriesPath = `${tempDir}/categories.json`;
+    await fs.promises.writeFile(
+      categoriesPath,
+      JSON.stringify(categories, null, 2),
+      'utf8'
+    );
+    await uploadMetadataFile(categoriesPath);
+  } else {
+    // Split into separate uploads by type
+    logger.info("Categories metadata is large, splitting into separate uploads");
+
+    // Upload categories first
+    if (categories.categories?.length > 0) {
+      const categoriesPath = `${tempDir}/categories-only.json`;
+      await fs.promises.writeFile(
+        categoriesPath,
+        JSON.stringify({ categories: categories.categories }, null, 2),
+        'utf8'
+      );
+      await uploadMetadataFile(categoriesPath);
+    }
+
+    // Upload category options
+    if (categories.categoryOptions?.length > 0) {
+      const categoryOptionsPath = `${tempDir}/categoryOptions.json`;
+      await fs.promises.writeFile(
+        categoryOptionsPath,
+        JSON.stringify({ categoryOptions: categories.categoryOptions }, null, 2),
+        'utf8'
+      );
+      await uploadMetadataFile(categoryOptionsPath);
+    }
+
+    // Upload category combos
+    if (categories.categoryCombos?.length > 0) {
+      const categoryCombosPath = `${tempDir}/categoryCombos.json`;
+      await fs.promises.writeFile(
+        categoryCombosPath,
+        JSON.stringify({ categoryCombos: categories.categoryCombos }, null, 2),
+        'utf8'
+      );
+      await uploadMetadataFile(categoryCombosPath);
+    }
+
+    // Upload category option combos
+    if (categories.categoryOptionCombos?.length > 0) {
+      const categoryOptionCombosPath = `${tempDir}/categoryOptionCombos.json`;
+      await fs.promises.writeFile(
+        categoryOptionCombosPath,
+        JSON.stringify({ categoryOptionCombos: categories.categoryOptionCombos }, null, 2),
+        'utf8'
+      );
+      await uploadMetadataFile(categoryOptionCombosPath);
+    }
+  }
+}
+
 export async function uploadMetadata(metadata: ProcessedMetadata, configId?: string): Promise<void> {
-  // Declare tempDir at function scope so it's accessible in catch block
-  let tempDir: string | undefined;
-  
+   let tempDir: string | undefined;
+
   try {
     logger.info(`Starting metadata upload${configId ? ` for config ${configId}` : ''}...`);
 
@@ -58,34 +193,25 @@ export async function uploadMetadata(metadata: ProcessedMetadata, configId?: str
       'utf8'
     );
 
-    // Write categories
-    logger.info("Writing Categories, CategoryCombos, CategoryOptions & CategoryOptionCombos to temporary file...");
-    const categoriesPath = `${tempDir}/categories.json`;
-    await fs.promises.writeFile(
-      categoriesPath,
-      JSON.stringify(metadata.categories, null, 2),
-      'utf8'
-    );
-
     // Upload files in the correct order (dependencies first)
     logger.info("Starting upload of metadata files...");
-    
+
     // Upload legend sets first (they don't depend on anything)
     await uploadMetadataFile(legendSetsPath);
-    
+
     // Upload indicator types (needed for indicators)
     await uploadMetadataFile(indicatorTypesPath);
-    
-    // Upload categories (needed for data elements)
-    await uploadMetadataFile(categoriesPath);
-    
+
+    // Upload categories (needed for data elements) - split if too large
+    logger.info("Uploading Categories, CategoryCombos, CategoryOptions & CategoryOptionCombos...");
+    await uploadCategoriesMetadata(metadata.categories, tempDir);
+
     // Upload data items (indicators and data elements)
     await uploadMetadataFile(dataItemsPath);
-    
+
     // Upload visualizations last (they depend on data items)
     await uploadMetadataFile(visualizationsPath);
 
-    // Clean up temporary files
     logger.info("Cleaning up temporary files...");
     try {
       await fs.promises.rm(tempDir, { recursive: true, force: true });
@@ -99,7 +225,6 @@ export async function uploadMetadata(metadata: ProcessedMetadata, configId?: str
     );
 
   } catch (error) {
-    // Clean up temp files on error
     if (tempDir) {
       logger.info("Cleaning up temporary files after error...");
       try {
@@ -109,99 +234,17 @@ export async function uploadMetadata(metadata: ProcessedMetadata, configId?: str
         logger.warn("Failed to clean up temp files after error:", cleanupError);
       }
     }
-    
+
     logger.error(`Error during metadata upload${configId ? ` for config ${configId}` : ''}:`, error);
     throw error;
   }
 }
 
-/**
- * Uploads metadata from a queue message
- * This function is designed to be called by queue consumers
- * Handles both metadata and configuration uploads based on message type
- * @param jobData - The job data from the queue containing metadata/configuration and configId
- */
-export async function uploadMetadataFromQueue(jobData: any): Promise<void> {
-  try {
-    const { metadata, configId, downloadedAt, type, configuration } = jobData;
-    
-    logger.info(`Processing upload job for config: ${configId}`, {
-      type: type || 'metadata',
-      hasMetadata: !!metadata,
-      hasConfiguration: !!configuration,
-      downloadedAt,
-      jobDataKeys: Object.keys(jobData || {}),
-    });
 
-    if (!configId) {
-      throw new Error(`No configId provided in job data. Job data keys: ${Object.keys(jobData || {}).join(', ')}`);
-    }
-
-    // Handle configuration upload
-    if (type === 'configuration') {
-      logger.info(`Processing configuration upload for config: ${configId}`);
-      
-      if (!configuration) {
-        throw new Error(`No configuration provided in job data for config: ${configId}`);
-      }
-
-      const summary = await processConfigurationFromQueue(configId, jobData);
-      
-      logger.info(`Configuration upload completed for config: ${configId}`, {
-        totalNamespaces: summary.totalNamespaces,
-        successfulNamespaces: summary.successfulNamespaces,
-        duration: summary.duration
-      });
-      
-      return;
-    }
-
-    // Handle metadata upload (existing logic)
-    logger.info(`Processing metadata upload for config: ${configId}`);
-    
-    if (!metadata) {
-      throw new Error(`No metadata provided in job data for config: ${configId}. Job data keys: ${Object.keys(jobData || {}).join(', ')}`);
-    }
-
-    // Validate metadata structure
-    if (!validateMetadata(metadata)) {
-      throw new Error(`Invalid metadata structure for config: ${configId}`);
-    }
-    
-    await uploadMetadata(metadata, configId);
-    
-    logger.info(`Metadata upload job completed successfully for config: ${configId}`);
-    
-  } catch (error: any) {
-    logger.error(`Error processing upload job:`, {
-      error: {
-        message: error.message,
-        stack: error.stack,
-        name: error.name,
-      },
-      jobData: {
-        configId: jobData?.configId,
-        type: jobData?.type,
-        hasMetadata: !!jobData?.metadata,
-        hasConfiguration: !!jobData?.configuration,
-        downloadedAt: jobData?.downloadedAt,
-        jobDataKeys: Object.keys(jobData || {}),
-      }
-    });
-    throw error;
-  }
-}
-
-/**
- * Validates that the metadata structure is correct before upload
- * @param metadata - The metadata to validate
- * @returns boolean indicating if metadata is valid
- */
 export function validateMetadata(metadata: any): metadata is ProcessedMetadata {
   try {
-    // Check if all required properties exist
     const requiredProps = ['legendSets', 'visualizations', 'dataItems', 'indicatorTypes', 'categories'];
-    
+
     for (const prop of requiredProps) {
       if (!(prop in metadata)) {
         logger.error(`Missing required property: ${prop}`);
@@ -209,19 +252,16 @@ export function validateMetadata(metadata: any): metadata is ProcessedMetadata {
       }
     }
 
-    // Check nested structure for visualizations
     if (!metadata.visualizations.maps || !metadata.visualizations.visualizations) {
       logger.error("Invalid visualizations structure");
       return false;
     }
 
-    // Check nested structure for dataItems
     if (!metadata.dataItems.indicators || !metadata.dataItems.dataElements) {
       logger.error("Invalid dataItems structure");
       return false;
     }
 
-    // Check nested structure for categories
     const categoryProps = ['categories', 'categoryCombos', 'categoryOptions', 'categoryOptionCombos'];
     for (const prop of categoryProps) {
       if (!(prop in metadata.categories)) {

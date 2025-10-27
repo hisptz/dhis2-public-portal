@@ -1,6 +1,8 @@
-import { dhis2Client, getSourceClientFromConfig } from "@/clients/dhis2";
+import { dhis2Client, createSourceClient } from "@/clients/dhis2";
 import logger from "@/logging";
 import * as _ from "lodash";
+import { fetchItemsInParallel } from "./parallel-fetch";
+export { fetchItemsInParallel };
 
 enum DisplayItemType {
   RICH_TEXT = "RICH_TEXT",
@@ -32,9 +34,9 @@ type Dashboard = {
 
 type ModuleConfig = any;
 
-export async function getModuleConfigs(configId?: string) {
+export async function getModuleConfigs(routeId?: string) {
   try {
-    const client = configId ? await getSourceClientFromConfig(configId) : dhis2Client;
+    const client = routeId ? await createSourceClient(routeId) : dhis2Client;
     const url = `dataStore/hisptz-public-portal-modules`;
     const response = await client.get<Array<String>>(url);
     const moduleIds = response.data ?? [];
@@ -114,65 +116,59 @@ export function getMaps(
   return maps;
 }
 
-export async function getVisualizationConfigs(visualizations: Visualization[], configId?: string) {
-  const client = configId ? await getSourceClientFromConfig(configId) : dhis2Client;
-  if (visualizations.length < 30) {
-    const response = await client.get<{ visualizations: any[] }>(
-      `visualizations`,
-      {
-        params: {
-          fields: ":owner,!createdBy,!lastUpdatedBy,!created,!lastUpdated",
-          filter: `id:in:[${visualizations.map((vis) => vis.id).join(",")}]`,
-          paging: false,
-        },
-      }
-    );
-    return response.data?.visualizations;
+export async function getVisualizationConfigs(
+  visualizations: { id: string }[],
+  routeId?: string
+) {
+  const client = routeId
+    ? await createSourceClient(routeId)
+    : dhis2Client;
+
+  if (!visualizations || visualizations.length === 0) {
+    logger.warn("No visualizations provided — skipping fetch");
+    return [];
   }
-  const visualizationConfigs = [];
-  const chunked = _.chunk(visualizations, 30);
-  for (const chunk of chunked) {
-    const ids = chunk.map((vis) => vis.id).join(",");
-    const response = await client.get<{ visualizations: any[] }>(
-      `visualizations`,
-      {
-        params: {
-          fields: ":owner,!createdBy,!lastUpdatedBy,!created,!lastUpdated",
-          filter: `id:in:[${ids}]`,
-          paging: false,
-        },
-      }
-    );
-    visualizationConfigs.push(...response.data.visualizations);
-  }
-  return visualizationConfigs;
+
+  logger.info(`Fetching configurations for ${visualizations.length} visualizations`);
+
+  const visualizationIds = visualizations.map(v => v.id);
+  
+  const allVisualizations = await fetchItemsInParallel(
+    client,
+    'visualizations',
+    visualizationIds,
+    ':owner,!createdBy,!lastUpdatedBy,!created,!lastUpdated',
+    5 
+  );
+
+  logger.info(
+    `getVisualizationConfigs completed: ${allVisualizations.length} total visualizations fetched`
+  );
+  return allVisualizations;
 }
 
-export async function getMapsConfig(maps: Visualization[], configId?: string) {
-  const client = configId ? await getSourceClientFromConfig(configId) : dhis2Client;
-  if (maps.length < 30) {
-    const response = await client.get<{ maps: any[] }>(`maps`, {
-      params: {
-        fields: ":owner,!createdBy,!lastUpdatedBy,!created,!lastUpdated",
-        filter: `id:in:[${maps.map((vis) => vis.id).join(",")}]`,
-        paging: false,
-      },
-    });
-    return response.data.maps;
+export async function getMapsConfig(maps: Visualization[], routeId?: string) {
+  const client = routeId ? await createSourceClient(routeId) : dhis2Client;
+  
+  if (!maps || maps.length === 0) {
+    logger.warn("No maps provided — skipping fetch");
+    return [];
   }
-  const mapConfigs = [];
-  const chunked = _.chunk(maps, 30);
-  for (const chunk of chunked) {
-    const response = await client.get<{ maps: any[] }>(`maps`, {
-      params: {
-        fields: ":owner,!createdBy,!lastUpdatedBy,!created,!lastUpdated",
-        filter: `id:in:[${chunk.map((vis) => vis.id).join(",")}]`,
-        paging: false,
-      },
-    });
-    mapConfigs.push(...response.data.maps);
-  }
-  return mapConfigs;
+
+  logger.info(`Fetching configurations for ${maps.length} maps`);
+
+  const mapIds = maps.map(map => map.id);
+  
+  const allMaps = await fetchItemsInParallel(
+    client,
+    'maps',
+    mapIds,
+    ':owner,!createdBy,!lastUpdatedBy,!created,!lastUpdated',
+    5 
+  );
+
+  logger.info(`getMapsConfig completed: ${allMaps.length} total maps fetched`);
+  return allMaps;
 }
 
 export function getIndicatorIdsFromVisualizations(visualizationConfigs: any[]) {
@@ -201,45 +197,31 @@ export function getIndicatorIdsFromMaps(mapsConfig: any[]) {
   );
 }
 
-export async function getIndicatorConfigs(indicatorIds: string[], configId?: string) {
-  const client = configId ? await getSourceClientFromConfig(configId) : dhis2Client;
-  if (indicatorIds.length < 30) {
-    const response = await client.get<{ indicators: any[] }>(
-      `indicators`,
-      {
-        params: {
-          fields: ":owner,!createdBy,!lastUpdatedBy,!created,!lastUpdated",
-          filter: `id:in:[${indicatorIds.join(",")}]`,
-          paging: false,
-        },
-      }
-    );
-    return response.data.indicators.map((indicator) => ({
-      ...indicator,
-      translations: [],
-    }));
+export async function getIndicatorConfigs(indicatorIds: string[], routeId: string) {
+  const client = await createSourceClient(routeId);
+  
+  if (!indicatorIds || indicatorIds.length === 0) {
+    logger.warn("No indicator IDs provided — skipping fetch");
+    return [];
   }
-  const indicators = [];
-  const chunked = _.chunk(indicatorIds, 30);
-  for (const chunk of chunked) {
-    const response = await client.get<{ indicators: any[] }>(
-      `indicators`,
-      {
-        params: {
-          fields: ":owner,!createdBy,!lastUpdatedBy,!created,!lastUpdated",
-          filter: `id:in:[${chunk.join(",")}]`,
-          paging: false,
-        },
-      }
-    );
-    indicators.push(
-      ...response.data.indicators.map((indicator) => ({
-        ...indicator,
-        translations: [],
-      }))
-    );
-  }
-  return indicators;
+
+  logger.info(`Fetching configurations for ${indicatorIds.length} indicators`);
+
+  const indicators = await fetchItemsInParallel(
+    client,
+    'indicators',
+    indicatorIds,
+    ':owner,!createdBy,!lastUpdatedBy,!created,!lastUpdated',
+    5 
+  );
+
+  const processedIndicators = indicators.map((indicator: any) => ({
+    ...indicator,
+    translations: [],
+  }));
+
+  logger.info(`getIndicatorConfigs completed: ${processedIndicators.length} total indicators fetched`);
+  return processedIndicators;
 }
 
 export function getDataElementIdsFromMaps(mapsConfig: any[]) {
@@ -270,44 +252,32 @@ export function getDataElementIdsFromVisualizations(
   );
 }
 
-export async function getDataElementConfigs(dataElementIds: string[], configId?: string) {
-  const client = configId ? await getSourceClientFromConfig(configId) : dhis2Client;
-  if (dataElementIds.length < 30) {
-    const response = await client.get<{ dataElements: any[] }>(
-      `dataElements`,
-      {
-        params: {
-          fields: ":owner,!createdBy,!lastUpdatedBy,!created,!lastUpdated",
-          filter: `id:in:[${dataElementIds.join(",")}]`,
-          paging: false,
-        },
-      }
-    );
+export async function getDataElementConfigs(dataElementIds: string[], routeId?: string) {
+  const client = routeId ? await createSourceClient(routeId) : dhis2Client;
+  logger.info(`getDataElementConfigs called with ${dataElementIds.length} data element IDs`, {
+    dataElementIds: dataElementIds.slice(0, 10),  
+    totalCount: dataElementIds.length,
+    routeId
+  });
+  
+  if (!dataElementIds || dataElementIds.length === 0) {
+    logger.warn("No data element IDs provided — skipping fetch");
+    return [];
+  }
 
-    return response.data.dataElements.map((dataElement) => ({
-      ...dataElement,
-      translations: [],
-    }));
-  }
-  const dataElements = [];
-  const chunked = _.chunk(dataElementIds, 30);
-  for (const chunk of chunked) {
-    const response = await client.get<{ dataElements: any[] }>(
-      `dataElements`,
-      {
-        params: {
-          fields: ":owner,!createdBy,!lastUpdatedBy,!created,!lastUpdated",
-          filter: `id:in:[${chunk.join(",")}]`,
-          paging: false,
-        },
-      }
-    );
-    dataElements.push(
-      ...response.data.dataElements.map((dataElement) => ({
-        ...dataElement,
-        translations: [],
-      }))
-    );
-  }
-  return dataElements;
+  const dataElements = await fetchItemsInParallel(
+    client,
+    'dataElements',
+    dataElementIds,
+    ':owner,!createdBy,!lastUpdatedBy,!created,!lastUpdated',
+    5 
+  );
+
+   const processedDataElements = dataElements.map((dataElement: any) => ({
+    ...dataElement,
+    translations: [],
+  }));
+
+  logger.info(`getDataElementConfigs completed: ${processedDataElements.length} total data elements fetched`);
+  return processedDataElements;
 }
