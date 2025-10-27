@@ -16,7 +16,7 @@ export const dhis2Client = axios.create({
 		Authorization: `ApiToken ${env.DHIS2_PAT}`,
 	},
 });
- 
+
 
 export function createSourceClient(routeId: string): AxiosInstance {
 	return axios.create({
@@ -32,16 +32,16 @@ export async function getSourceClientFromConfig(configId: string): Promise<Axios
 	try {
 		const configUrl = `dataStore/${DatastoreNamespaces.DATA_SERVICE_CONFIG}/${configId}`;
 		const { data: config } = await dhis2Client.get(configUrl);
-		
+
 		if (!config?.source?.routeId) {
 			throw new Error(`No routeId found in config ${configId}`);
 		}
-		
+
 		return createSourceClient(config.source.routeId);
 	} catch (error) {
 		throw new Error(`Failed to get source client for config ${configId}: ${error instanceof Error ? error.message : 'Unknown error'}`);
 	}
-} 
+}
 
 export function createDownloadClient({
 	config,
@@ -94,6 +94,28 @@ export function getDHIS2ClientByBasicAuth({
 	});
 }
 
+async function uploadWithRetry(url: string, payload: any, maxRetries: number = 3): Promise<any> {
+	for (let attempt = 1; attempt <= maxRetries; attempt++) {
+		try {
+			logger.info(`Upload attempt ${attempt}/${maxRetries}`);
+			const response = await dhis2Client.post(url, payload, {
+				headers: { "Content-Type": "application/json" },
+				timeout: 120000,
+			});
+			return response;
+		} catch (error: any) {
+			logger.warn(`Upload attempt ${attempt} failed:`, error.message);
+
+			if (attempt === maxRetries) {
+				throw error;
+			}
+			const waitTime = Math.pow(2, attempt) * 1000;
+			logger.info(`Waiting ${waitTime}ms before retry...`);
+			await new Promise(resolve => setTimeout(resolve, waitTime));
+		}
+	}
+}
+
 export async function uploadMetadataFile(filePath: string) {
 	const url =
 		"metadata?importStrategy=CREATE_AND_UPDATE&async=false&atomicMode=NONE";
@@ -107,12 +129,23 @@ export async function uploadMetadataFile(filePath: string) {
 
 	try {
 		const fileContent = await fs.promises.readFile(filePath, 'utf8');
+		const fileSizeKB = Math.round(Buffer.byteLength(fileContent, 'utf8') / 1024);
+		logger.info(`File size: ${fileSizeKB} KB`);
+
 		const payload = JSON.parse(fileContent);
 
-		const response = await dhis2Client.post(url, payload, {
-			headers: { "Content-Type": "application/json" },
-			timeout: 30000,
-		});
+		// Log payload structure for debugging
+		if (payload) {
+			const keys = Object.keys(payload);
+			logger.info(`Payload contains: ${keys.join(', ')}`);
+			for (const key of keys) {
+				if (Array.isArray(payload[key])) {
+					logger.info(`  ${key}: ${payload[key].length} items`);
+				}
+			}
+		}
+
+		const response = await uploadWithRetry(url, payload);
 
 		logger.info(`Upload completed Successfully`);
 		logger.info(
@@ -138,6 +171,13 @@ export async function uploadMetadataFile(filePath: string) {
 				2
 			)}`
 		);
+		logger.error(
+			`${JSON.stringify(
+				error.response?.data?.response?.data,
+				null,
+				2
+			)}`
+		);
 		throw error;
 	}
 }
@@ -156,6 +196,12 @@ export async function handleImportErrors(
 		console.warn(
 			`Could not read existing error log, starting new: ${e.message}`
 		);
+	}
+
+	// Check if importResponse exists before accessing its properties
+	if (!importResponse) {
+		logger.warn("No import response available for error handling");
+		return;
 	}
 
 	const typeReports: any[] = importResponse.response?.typeReports || [];
