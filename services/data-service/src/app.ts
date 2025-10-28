@@ -1,4 +1,5 @@
 import express from "express";
+import cors from "cors";
 import https from "https";
 import { dhis2routes } from "./routes/sourceRoutes";
 import { serviceStatusRouter } from "./routes/status";
@@ -17,6 +18,17 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
 const app = express();
+
+// CORS configuration to allow frontend requests
+app.use(cors({
+	origin: [
+		'http://localhost:3001', 
+	],
+	credentials: true,
+	methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+	allowedHeaders: ['Content-Type', 'Authorization', 'x-requested-with']
+}));
+
 app.use(express.json());
 
 initialize({

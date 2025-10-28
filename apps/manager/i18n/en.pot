@@ -5,8 +5,8 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
-"POT-Creation-Date: 2025-10-22T09:54:16.900Z\n"
-"PO-Revision-Date: 2025-10-22T09:54:16.900Z\n"
+"POT-Creation-Date: 2025-10-27T06:49:00.196Z\n"
+"PO-Revision-Date: 2025-10-27T06:49:00.196Z\n"
 
 msgid "Could not get Appearance configurations"
 msgstr "Could not get Appearance configurations"
@@ -282,11 +282,8 @@ msgstr "Test connection"
 msgid "Run configuration"
 msgstr "Run configuration"
 
-msgid "Run requested successfully"
-msgstr "Run requested successfully"
-
-msgid "Error requesting run"
-msgstr "Error requesting run"
+msgid "Service started successfully"
+msgstr "Service started successfully"
 
 msgid "Run"
 msgstr "Run"
@@ -404,6 +401,84 @@ msgstr "Unknown error"
 
 msgid "View service overview"
 msgstr "View service overview"
+
+msgid "Processing"
+msgstr "Processing"
+
+msgid "Pending"
+msgstr "Pending"
+
+msgid "Messages"
+msgstr "Messages"
+
+msgid "Consumers"
+msgstr "Consumers"
+
+msgid "Click to view error details"
+msgstr "Click to view error details"
+
+msgid "Click for details"
+msgstr "Click for details"
+
+msgid "Failed Processes Details"
+msgstr "Failed Processes Details"
+
+msgid "Clear All Failed"
+msgstr "Clear All Failed"
+
+msgid "Process Type"
+msgstr "Process Type"
+
+msgid "Error Message"
+msgstr "Error Message"
+
+msgid "Retry Count"
+msgstr "Retry Count"
+
+msgid "Failed At"
+msgstr "Failed At"
+
+msgid "No failed messages found"
+msgstr "No failed messages found"
+
+msgid "All processes completed successfully!"
+msgstr "All processes completed successfully!"
+
+msgid "Close"
+msgstr "Close"
+
+msgid "Error loading process data"
+msgstr "Error loading process data"
+
+msgid "Unknown error occurred"
+msgstr "Unknown error occurred"
+
+msgid "Metadata Migration Process"
+msgstr "Metadata Migration Process"
+
+msgid "Download Process"
+msgstr "Download Process"
+
+msgid "Upload Process"
+msgstr "Upload Process"
+
+msgid "Data Migration Process"
+msgstr "Data Migration Process"
+
+msgid "Deletion Process"
+msgstr "Deletion Process"
+
+msgid "Failed Processes"
+msgstr "Failed Processes"
+
+msgid "Total Failed Messages"
+msgstr "Total Failed Messages"
+
+msgid "All Processes Running Smoothly!"
+msgstr "All Processes Running Smoothly!"
+
+msgid "No failed messages detected"
+msgstr "No failed messages detected"
 
 msgid "Error logs"
 msgstr "Error logs"

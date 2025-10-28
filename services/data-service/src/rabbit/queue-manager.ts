@@ -26,7 +26,7 @@ export async function createQueuesForConfig(configId: string) {
 
     // Create failed queue first (no DLX routing to avoid circular reference)
     await currentChannel.assertQueue(queueNames.failed, { durable: true });
-    logger.info(`✓ Created queue: ${queueNames.failed}`);
+    logger.info(`Created queue: ${queueNames.failed}`);
 
     // Create all other queues with failed queue as DLX
     const queuesToCreate = [
@@ -39,7 +39,7 @@ export async function createQueuesForConfig(configId: string) {
 
     for (const queue of queuesToCreate) {
         await currentChannel.assertQueue(queue.name, queueOptions);
-        logger.info(`✓ Created queue: ${queue.name} (${queue.description})`);
+        logger.info(`Created queue: ${queue.name} (${queue.description})`);
     }
     logger.info(`All queues created successfully for configId: ${configId}`);
     return queueNames;
@@ -70,7 +70,7 @@ export async function initializeQueuesFromDatastore(configId: string) {
             queues: queueNames
         };
     } catch (error) {
-        logger.error(`Failed to initialize queues for configId ${configId}:`, error);
+        logger.error(`Failed to initialize queues for configId ${configId}: ${(error as Error).message || String(error)}`);
         throw error;
     }
 }
@@ -105,7 +105,7 @@ export async function initializeAllQueuesFromDatastore() {
             results
         };
     } catch (error) {
-        logger.error("Failed to initialize queues from datastore:", error);
+        logger.error(`Failed to initialize queues from datastore: ${(error as Error).message || String(error)}`);
         throw error;
     }
 }
@@ -160,7 +160,7 @@ export async function getConfigQueueStats(configId: string) {
             timestamp: new Date().toISOString()
         };
     } catch (error) {
-        logger.error(`Failed to get queue stats for configId ${configId}:`, error);
+        logger.error(`Failed to get queue stats for configId ${configId}: ${(error as Error).message || String(error)}`);
         throw error;
     }
 }
@@ -196,14 +196,14 @@ export async function purgeConfigQueues(configId: string) {
                 purged: true,
                 messageCount: purgeResult.messageCount
             };
-            logger.info(`✓ Purged queue ${queue.name}: ${purgeResult.messageCount} messages`);
+            logger.info(`Purged queue ${queue.name}: ${purgeResult.messageCount} messages`);
         } catch (error) {
             results[queue.key] = {
                 name: queue.name,
                 purged: false,
                 error: (error as Error).message
             };
-            logger.error(`✗ Failed to purge queue ${queue.name}:`, error);
+            logger.error(`Failed to purge queue ${queue.name}: ${(error as Error).message || String(error)}`);
         }
     }
 
@@ -245,14 +245,14 @@ export async function deleteConfigQueues(configId: string) {
                 deleted: true,
                 messageCount: deleteResult.messageCount
             };
-            logger.info(`✓ Deleted queue ${queue.name}: ${deleteResult.messageCount} messages removed`);
+            logger.info(`Deleted queue ${queue.name}: ${deleteResult.messageCount} messages removed`);
         } catch (error) {
             results[queue.key] = {
                 name: queue.name,
                 deleted: false,
                 error: (error as Error).message
             };
-            logger.error(`✗ Failed to delete queue ${queue.name}:`, error);
+            logger.error(`Failed to delete queue ${queue.name}: ${(error as Error).message || String(error)}`);
         }
     }
 
