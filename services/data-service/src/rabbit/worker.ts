@@ -2,14 +2,14 @@ import { Channel, ConsumeMessage } from "amqplib";
 import figlet from "figlet";
 import logger from "@/logging";
 import { connectRabbit, getChannel } from "./connection";
-import { uploadDataFromFile } from "@/services/data-upload";
+import { uploadDataFromQueue } from "@/services/data-migration/data-upload";
 import { uploadMetadataFromQueue } from "@/services/metadata-migration/metadata-upload";
-import { initializeDataDownload } from "@/services/data-download";
 import { downloadAndQueueMetadata } from "@/services/metadata-migration/metadata-download";
 import { getQueueNames } from "@/variables/queue-names";
 import { DatastoreNamespaces } from "@packages/shared/constants";
 import { dhis2Client } from "@/clients/dhis2";
 import axios from "axios";
+import { downloadData } from "@/services/data-migration/data-download";
 
 let isConnecting = false;
 const RECONNECT_DELAY = 5000;
@@ -18,31 +18,21 @@ const MAX_RETRIES = 3;
 // Handler map for different queue types
 const handlerMap: Record<string, (messageContent: any) => Promise<void>> = {
   "dataDownload": async (messageContent) => {
-    const { mainConfigId, dataItemsConfigIds, runtimeConfig } = messageContent;
+    const { mainConfigId } = messageContent;
     logger.info(`Processing data download for config: ${mainConfigId}`);
-
-    await initializeDataDownload({
-      mainConfigId,
-      dataItemsConfigIds,
-      runtimeConfig,
-    });
+    await downloadData(messageContent);
   },
 
   "dataUpload": async (messageContent) => {
     const { mainConfigId, filename } = messageContent;
     logger.info(`Processing data upload for config: ${mainConfigId}, file: ${filename}`);
-
-    await uploadDataFromFile({
-      filename,
-      configId: mainConfigId
-    });
+    await uploadDataFromQueue(messageContent);
   },
 
   "metadataDownload": async (messageContent) => {
     const { configId } = messageContent;
     logger.info(`Processing metadata download for config: ${configId}`);
-
-    await downloadAndQueueMetadata(configId);
+    await downloadAndQueueMetadata(messageContent);
   },
 
   "metadataUpload": async (messageContent) => {
@@ -255,7 +245,7 @@ const setupConsumer = async (channel: Channel) => {
 
     const prefetchCount = parseInt(process.env.RABBITMQ_PREFETCH_COUNT || "2");
     channel.prefetch(prefetchCount);
-    
+
     // Set up queues and consumers for each config
     for (const configId of configIds) {
       const queueNames = getQueueNames(configId);
