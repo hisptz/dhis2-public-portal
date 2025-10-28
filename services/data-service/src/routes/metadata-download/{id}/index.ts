@@ -10,13 +10,13 @@ export const POST: Operation = async (
 ) => {
     try {
         const { id: configId } = req.params;
-        const { 
-            metadataSource, 
-            selectedVisualizations, 
-            selectedMaps, 
-            selectedDashboards 
+        const {
+            metadataSource,
+            selectedVisualizations,
+            selectedMaps,
+            selectedDashboards
         } = req.body || {};
-
+        
         if (!configId) {
             return res.status(400).json({
                 error: 'Configuration ID is required',

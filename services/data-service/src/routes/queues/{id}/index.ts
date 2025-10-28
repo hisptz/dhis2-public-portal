@@ -121,19 +121,19 @@ export const DELETE: Operation = async (
     next: NextFunction,
 ) => {
     try {
-        const configId = req.params.id; // Use 'id' instead of 'configId' to match the file path {id}
-        logger.info(`API request: Delete queues for configId: ${configId}`);
+        const { id: configId } = req.params;
+        logger.info(`DELETE API request for configId: ${configId}`);
         
         const result = await deleteConfigQueues(configId);
         
         res.json({
             success: true,
-            ...result
+            ...result,
+            timestamp: new Date().toISOString()
         });
     } catch (error) {
-        logger.error(`Failed to delete queues for ${req.params.id}:`, error);
-        
         const errorMessage = error instanceof Error ? error.message : String(error);
+        logger.error(`Failed to delete queues for ${req.params.id}: ${errorMessage}`);
         
         res.status(500).json({
             success: false,
@@ -152,7 +152,7 @@ GET.apiDoc = {
     parameters: [
         {
             in: "path",
-            name: "configId",
+            name: "id",
             required: true,
             schema: { type: "string" },
             description: "Configuration ID"
@@ -189,7 +189,7 @@ POST.apiDoc = {
     parameters: [
         {
             in: "path",
-            name: "configId",
+            name: "id",
             required: true,
             schema: { type: "string" },
             description: "Configuration ID"
@@ -237,7 +237,7 @@ DELETE.apiDoc = {
     parameters: [
         {
             in: "path",
-            name: "configId",
+            name: "id",
             required: true,
             schema: { type: "string" },
             description: "Configuration ID"

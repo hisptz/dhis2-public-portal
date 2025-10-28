@@ -253,6 +253,9 @@ const setupConsumer = async (channel: Channel) => {
     const configIds = await getAllConfigIds();
     logger.info(`[ConsumerSetup] Found ${configIds.length} configurations`);
 
+    const prefetchCount = parseInt(process.env.RABBITMQ_PREFETCH_COUNT || "2");
+    channel.prefetch(prefetchCount);
+    
     // Set up queues and consumers for each config
     for (const configId of configIds) {
       const queueNames = getQueueNames(configId);
@@ -292,8 +295,7 @@ const setupConsumer = async (channel: Channel) => {
       }
     }
 
-    const prefetchCount = parseInt(process.env.RABBITMQ_PREFETCH_COUNT || "2");
-    channel.prefetch(prefetchCount);
+
 
     logger.info("================================================================");
     logger.info(`[Worker] Setup complete. Waiting for messages...`);
