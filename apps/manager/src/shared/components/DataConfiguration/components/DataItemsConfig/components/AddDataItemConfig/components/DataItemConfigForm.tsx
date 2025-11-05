@@ -19,11 +19,13 @@ import { startCase } from "lodash";
 import { FormProvider, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { PeriodTypeCategory, PeriodUtility } from "@hisptz/dhis2-utils";
-import { DataItemsConfig } from "./DataItemsConfig";
 
 import { AttributeFields } from "./AttributeFields";
 import { RHFIDField } from "../../../../../../Fields/IDField";
 import { RHFNumberField } from "../../../../../../Fields/RHFNumberField";
+import { RHFOrgUnitField } from "../../../../../../Fields/RHFOrgUnitField";
+import { MappedDataItemsSelector } from "./MappedDataItemsSelector";
+import { useParams } from "@tanstack/react-router";
 
 export function DataItemConfigForm({
 	data,
@@ -41,6 +43,10 @@ export function DataItemConfigForm({
 		defaultValues: data,
 	});
 	const action = data ? i18n.t("Update") : i18n.t("Create");
+
+	const { configId } = useParams({
+		from: "/data-service-configuration/_provider/$configId/_provider",
+	});
 
 	const onFormSubmit = (data: DataServiceDataSourceItemsConfig) => {
 		onSubmit(data);
@@ -89,13 +95,14 @@ export function DataItemConfigForm({
 								};
 							})}
 						/>
-						<RHFTextInputField
+						<RHFOrgUnitField
 							required
 							name="parentOrgUnitId"
-							label={i18n.t("Parent organisation unit ID")}
+							label={i18n.t("Parent organisation unit")}
 							helpText={i18n.t(
-								"The top level organisation unit on the source to fetch data from ",
+								"The top level organisation unit on the source to fetch data from",
 							)}
+							singleSelection={true}
 						/>
 						<RHFNumberField
 							required
@@ -105,7 +112,13 @@ export function DataItemConfigForm({
 								"Organisation unit level at the source to pull data from",
 							)}
 						/>
-						<DataItemsConfig />
+						<MappedDataItemsSelector
+							configId={configId}
+							name="dataItems"
+							label={i18n.t("Data items")}
+							required
+							helpText={i18n.t("Select data items from the pre-mapped items created during metadata migration")}
+						/>
 					</form>
 				</ModalContent>
 				<ModalActions>
