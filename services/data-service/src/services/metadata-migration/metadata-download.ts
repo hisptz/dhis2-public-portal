@@ -24,6 +24,11 @@ import { exportConfiguration } from "./utils/configuration-export";
 import { getMetadataFromDashboards } from "../../utils/dashboard";
 import { DatastoreNamespaces } from "@packages/shared/constants";
 import { dhis2Client } from "@/clients/dhis2";
+import {
+    generateDataItemMappings,
+    saveDataItemMappings,
+    DataItemMapping
+} from "../../utils/data-item-mapping";
 
 export interface ProcessedMetadata {
     legendSets: any;
@@ -44,6 +49,10 @@ export interface ProcessedMetadata {
         categoryOptions: any[];
         categoryOptionCombos: any[];
     };
+    mappings?: {
+        dataItems: DataItemMapping[];
+    };
+    programIndicatorIds?: string[]; 
 }
 
 export interface MetadataDownloadOptions {
@@ -62,7 +71,7 @@ export async function downloadAndQueueMetadata(options: MetadataDownloadOptions)
 
         const metadata = await downloadMetadata(options);
         const configuration = await exportConfiguration(configId);
-
+        await generateAndSaveDataItemMappings(metadata, configId, options);
         await pushToQueue(configId, 'metadataUpload', {
             metadata,
             configId,
@@ -80,6 +89,48 @@ export async function downloadAndQueueMetadata(options: MetadataDownloadOptions)
         throw error;
     }
 }
+
+
+async function generateAndSaveDataItemMappings(
+    metadata: ProcessedMetadata,
+    configId: string,
+    options: MetadataDownloadOptions
+): Promise<void> {
+    try {
+        logger.info(`Generating data item mappings for config: ${configId}`);
+        const dataElementIds = metadata.dataItems.dataElements.map((de: any) => de.id);
+        const programIndicatorIds = metadata.programIndicatorIds || [];
+
+        if (dataElementIds.length === 0 && programIndicatorIds.length === 0) {
+            logger.info(`No data elements or program indicators found, skipping mapping generation`);
+            return;
+        }
+        logger.info(`Generating mappings for ${dataElementIds.length} data elements and ${programIndicatorIds.length} program indicators`);
+        // Get the route ID from config
+        const configUrl = `dataStore/${DatastoreNamespaces.DATA_SERVICE_CONFIG}/${configId}`;
+        const { data: config } = await dhis2Client.get(configUrl);
+        const routeId = config.source?.routeId;
+        // Generate mappings
+        const mappings = await generateDataItemMappings(
+            dataElementIds,
+            programIndicatorIds,
+            configId,
+            routeId
+        );
+        // Save mappings to datastore
+        await saveDataItemMappings(mappings, configId, routeId);
+        metadata.mappings = {
+            dataItems: mappings
+        };
+
+        logger.info(`Successfully generated and saved ${mappings.length} data item mappings`);
+
+    } catch (error) {
+        logger.error(`Error generating and saving data item mappings:`, error);
+        logger.warn(`Continuing with metadata download despite mapping error`);
+    }
+}
+
 
 export async function downloadMetadata(options: MetadataDownloadOptions): Promise<ProcessedMetadata> {
     try {
@@ -175,6 +226,9 @@ export async function downloadMetadata(options: MetadataDownloadOptions): Promis
         logger.info("Getting Indicator Sources...");
         const indicatorMeta = await getIndicatorsSources(indicators, configId);
         dataElements.push(...indicatorMeta.dataElements);
+
+        const programIndicatorIds = indicatorMeta.programIndicatorIds || [];
+        logger.info(`Found ${programIndicatorIds.length} program indicators from indicator sources`);
 
         logger.info("Getting Category Combos...");
         const dataElementMeta = await getCategoryCombosFromDataElements(
@@ -274,6 +328,7 @@ export async function downloadMetadata(options: MetadataDownloadOptions): Promis
                     (optionCombo: any) => optionCombo && optionCombo.name && !(optionCombo.name as string).includes("default")
                 ),
             },
+            programIndicatorIds,
         };
 
         logger.info(`Metadata download completed successfully. Source: ${metadataSource}`);

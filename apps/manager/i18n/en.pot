@@ -5,8 +5,8 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
-"POT-Creation-Date: 2025-10-27T06:49:00.196Z\n"
-"PO-Revision-Date: 2025-10-27T06:49:00.196Z\n"
+"POT-Creation-Date: 2025-11-04T05:30:58.124Z\n"
+"PO-Revision-Date: 2025-11-04T05:30:58.124Z\n"
 
 msgid "Could not get Appearance configurations"
 msgstr "Could not get Appearance configurations"
@@ -402,26 +402,17 @@ msgstr "Unknown error"
 msgid "View service overview"
 msgstr "View service overview"
 
-msgid "Processing"
-msgstr "Processing"
-
-msgid "Pending"
-msgstr "Pending"
-
-msgid "Messages"
-msgstr "Messages"
-
-msgid "Consumers"
-msgstr "Consumers"
-
-msgid "Click to view error details"
-msgstr "Click to view error details"
-
-msgid "Click for details"
-msgstr "Click for details"
-
 msgid "Failed Processes Details"
 msgstr "Failed Processes Details"
+
+msgid "Error Loading Failed Messages"
+msgstr "Error Loading Failed Messages"
+
+msgid "An unexpected error occurred"
+msgstr "An unexpected error occurred"
+
+msgid "Debug Info"
+msgstr "Debug Info"
 
 msgid "Clear All Failed"
 msgstr "Clear All Failed"
@@ -447,38 +438,23 @@ msgstr "All processes completed successfully!"
 msgid "Close"
 msgstr "Close"
 
+msgid "Click for details"
+msgstr "Click for details"
+
+msgid "Processing"
+msgstr "Processing"
+
 msgid "Error loading process data"
 msgstr "Error loading process data"
 
 msgid "Unknown error occurred"
 msgstr "Unknown error occurred"
 
-msgid "Metadata Migration Process"
-msgstr "Metadata Migration Process"
-
 msgid "Download Process"
 msgstr "Download Process"
 
 msgid "Upload Process"
 msgstr "Upload Process"
-
-msgid "Data Migration Process"
-msgstr "Data Migration Process"
-
-msgid "Deletion Process"
-msgstr "Deletion Process"
-
-msgid "Failed Processes"
-msgstr "Failed Processes"
-
-msgid "Total Failed Messages"
-msgstr "Total Failed Messages"
-
-msgid "All Processes Running Smoothly!"
-msgstr "All Processes Running Smoothly!"
-
-msgid "No failed messages detected"
-msgstr "No failed messages detected"
 
 msgid "Error logs"
 msgstr "Error logs"

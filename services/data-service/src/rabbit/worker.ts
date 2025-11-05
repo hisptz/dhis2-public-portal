@@ -10,6 +10,7 @@ import { DatastoreNamespaces } from "@packages/shared/constants";
 import { dhis2Client } from "@/clients/dhis2";
 import axios from "axios";
 import { downloadData } from "@/services/data-migration/data-download";
+import { deleteDataFiles } from "@/services/data-migration/data-deletion";
 
 let isConnecting = false;
 const RECONNECT_DELAY = 5000;
@@ -21,6 +22,12 @@ const handlerMap: Record<string, (messageContent: any) => Promise<void>> = {
     const { mainConfigId } = messageContent;
     logger.info(`Processing data download for config: ${mainConfigId}`);
     await downloadData(messageContent);
+  },
+
+  "dataDeletion": async (messageContent) => {
+    const { configId } = messageContent;
+    logger.info(`Processing data deletion for config: ${configId}`);
+    await deleteDataFiles(configId);
   },
 
   "dataUpload": async (messageContent) => {
