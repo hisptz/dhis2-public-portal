@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { useController, useFormContext } from "react-hook-form";
-import { Field, CircularLoader, MultiSelectField, MultiSelectOption } from "@dhis2/ui";
+import { Field, CircularLoader, MultiSelectField, MultiSelectOption, NoticeBox } from "@dhis2/ui";
 import { useDataQuery } from "@dhis2/app-runtime";
 import { DatastoreNamespaces } from "@packages/shared/constants";
 import { DataServiceDataSourceItemsConfig } from "@packages/shared/schemas";
@@ -126,52 +126,58 @@ export function MappedDataItemsSelector({
         );
     }
 
-    if (queryError) {
-        return (
-            <Field
-                label={label}
-                error
-                validationText={i18n.t("Failed to load mapped data items. Please ensure metadata migration has been completed.")}
-            >
-                <div />
-            </Field>
-        );
-    }
-
-    if (!options.length) {
-        return (
-            <Field
-                label={label}
-                warning
-                validationText={i18n.t("No mapped data items found. Please run metadata migration first.")}
-            >
-                <div />
-            </Field>
-        );
-    }
-
-    return (
-        <Field
-            label={label}
-            required={required}
-            helpText={helpText || i18n.t("Select from pre-mapped data items from metadata migration")}
-            error={!!error}
-            validationText={error?.message}
-        >
-            <MultiSelectField
-                selected={selectedValues}
-                onChange={({ selected }) => handleSelectionChange(selected)}
-                filterable
-                placeholder={i18n.t("Search and select data items...")}
-            >
-                {options.map(option => (
-                    <MultiSelectOption
-                        key={option.value}
-                        label={option.label}
-                        value={option.value}
-                    />
-                ))}
-            </MultiSelectField>
-        </Field>
-    );
+	if (queryError) {
+		return (
+			<div className="flex flex-col gap-4">
+				<Field label={label} required={required}>
+					<div />
+				</Field>
+				<NoticeBox
+					error
+					title={i18n.t("Failed to Load Mapped Data Items")}
+				>
+					{i18n.t("There was an error loading the pre-mapped data items. Please ensure that metadata migration has been completed successfully and that the configuration exists in the datastore.")}
+				</NoticeBox>
+			</div>
+		);
+	}	if (!options.length) {
+		return (
+			<div className="flex flex-col gap-4">
+				<Field label={label} required={required}>
+					<div />
+				</Field>
+				<NoticeBox
+					warning
+					title={i18n.t("No Mapped Data Items Available")}
+				>
+					{i18n.t("No pre-mapped data items were found for this configuration. Please run metadata migration first to generate data item mappings, or ensure that data items have been properly migrated from the source system.")}
+				</NoticeBox>
+			</div>
+		);
+	}    return (
+		<div className="flex flex-col gap-4">
+			<Field
+				label={label}
+				required={required}
+				helpText={helpText || i18n.t("Select from pre-mapped data items from metadata migration")}
+				error={!!error}
+				validationText={error?.message}
+			>
+				<MultiSelectField
+					selected={selectedValues}
+					onChange={({ selected }) => handleSelectionChange(selected)}
+					filterable
+					placeholder={i18n.t("Search and select data items...")}
+				>
+					{options.map(option => (
+						<MultiSelectOption
+							key={option.value}
+							label={option.label}
+							value={option.value}
+						/>
+					))}
+				</MultiSelectField>
+			</Field>
+		</div>
+	);
 }
