@@ -10,6 +10,8 @@ import { v4 } from "uuid";
 import { Dimensions } from "@/schemas/metadata";
 import { isEmpty } from "lodash";
 import { categoriesMeta } from "@/variables/meta";
+import * as fs from "node:fs";
+import * as path from "node:path";
 
 export interface DataResponse {
 	dataValues: Array<{
@@ -47,6 +49,7 @@ export async function fetchPagedData({
 	try {
 		const url = `analytics/dataValueSet.json`;
 		const params = new URLSearchParams();
+
 		Object.keys(dimensions).forEach((key) => {
 			if (!isEmpty(dimensions[key])) {
 				params.append(
@@ -65,6 +68,7 @@ export async function fetchPagedData({
 				}
 			});
 		}
+
 		const response = await client.get<DataResponse>(url, {
 			params,
 			timeout,
@@ -186,13 +190,19 @@ export async function saveDataFile({
 	const payload = {
 		dataValues: data,
 	};
-	await Bun.write(
+
+	logger.info(`Saving data to ${fileLocation}...`);
+	logger.info(`Data payload size: ${JSON.stringify(payload).length} bytes`);
+	
+ 	const dir = path.dirname(fileLocation);
+	await fs.promises.mkdir(dir, { recursive: true });
+	
+ 	await fs.promises.writeFile(
 		fileLocation,
-		JSON.stringify({
-			...payload,
-		}),
-		{ createPath: true },
+		JSON.stringify(payload, null, 2),
+		'utf8'
 	);
+	
 	logger.info(`Data saved to ${fileLocation}`);
 	logger.info(`Queuing file for upload: ${fileLocation}`);
 	return fileLocation;

@@ -1,4 +1,5 @@
 import logger from "@/logging";
+import * as fs from "node:fs";
 
 const dataItems = {
 	"indicators": [
@@ -3933,10 +3934,10 @@ logger.info(`Extracted ${mapping.length} unique mappings.`);
 
 const fileLocation = `./mapping.json`;
 
-await Bun.write(
+await fs.promises.writeFile(
 	fileLocation,
 	JSON.stringify(mapping, null, 2),
-	{ createPath: true },
+	'utf8'
 );
 
 logger.info(`Mapping file written to ${fileLocation}`);
