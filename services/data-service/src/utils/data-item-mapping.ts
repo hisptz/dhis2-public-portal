@@ -87,25 +87,51 @@ async function generateDataElementMappings(
         const sourceDefaults = await getDefaultCategoryValues(routeId);
         const client = routeId ? await createSourceClient(routeId) : dhis2Client;
 
-        // Fetch data elements with their category combos
         const dataElements = await fetchItemsInParallel(
             client,
             'dataElements',
             dataElementIds,
-            'id,name,categoryCombo[id,name,categoryOptionCombos[id,name]]',
+            'id,name,categoryCombo',
             5
         );
+
+        const categoryComboIds = new Set<string>();
+        for (const dataElement of dataElements) {
+            if (dataElement?.categoryCombo?.id &&
+                dataElement.categoryCombo.id !== sourceDefaults.defaultCategoryComboId) {
+                categoryComboIds.add(dataElement.categoryCombo.id);
+            }
+        }
+
+        let categoryCombosWithOptions: any[] = [];
+        if (categoryComboIds.size > 0) {
+            categoryCombosWithOptions = await fetchItemsInParallel(
+                client,
+                'categoryCombos',
+                Array.from(categoryComboIds),
+                'id,categoryOptionCombos',
+                5
+            );
+        }
+
+        // Create a lookup map for category combos
+        const categoryComboLookup = new Map<string, any>();
+        for (const categoryCombo of categoryCombosWithOptions) {
+            if (categoryCombo?.id) {
+                categoryComboLookup.set(categoryCombo.id, categoryCombo);
+            } else {
+                logger.warn(`Category combo missing ID:`, categoryCombo);
+            }
+        }
 
         const mappings: DataItemMapping[] = [];
 
         for (const dataElement of dataElements) {
-            // Validate that the data element has required properties
             if (!dataElement || !dataElement.id) {
                 logger.warn(`Skipping invalid data element:`, dataElement);
                 continue;
             }
 
-            // Ensure categoryCombo exists
             if (!dataElement.categoryCombo || !dataElement.categoryCombo.id) {
                 logger.warn(`Data element ${dataElement.id} missing category combo, using simple mapping`);
                 mappings.push({
@@ -118,15 +144,14 @@ async function generateDataElementMappings(
             const isDefaultCategoryCombo = dataElement.categoryCombo.id === sourceDefaults.defaultCategoryComboId;
 
             if (isDefaultCategoryCombo) {
-                // For default category combo, create simple mapping
                 mappings.push({
                     id: dataElement.id,
                     sourceId: dataElement.id
                 });
             } else {
-                // For non-default category combo, create mappings for each category option combo
-                if (dataElement.categoryCombo.categoryOptionCombos && dataElement.categoryCombo.categoryOptionCombos.length > 0) {
-                    for (const categoryOptionCombo of dataElement.categoryCombo.categoryOptionCombos) {
+                const categoryCombo = categoryComboLookup.get(dataElement.categoryCombo.id);
+                if (categoryCombo && categoryCombo.categoryOptionCombos && categoryCombo.categoryOptionCombos.length > 0) {
+                    for (const categoryOptionCombo of categoryCombo.categoryOptionCombos) {
                         if (categoryOptionCombo && categoryOptionCombo.id) {
                             mappings.push({
                                 id: `${dataElement.id}.${categoryOptionCombo.id}`,
@@ -137,8 +162,7 @@ async function generateDataElementMappings(
                         }
                     }
                 } else {
-                    // Fallback to simple mapping if category option combos not available
-                    logger.warn(`Data element ${dataElement.id} has non-default category combo but no category option combos, using simple mapping`);
+                    logger.warn(`Data element ${dataElement.id} has non-default category combo ${dataElement.categoryCombo.id} but no category option combos found, using simple mapping`);
                     mappings.push({
                         id: dataElement.id,
                         sourceId: dataElement.id
@@ -254,10 +278,7 @@ export async function saveDataItemMappings(
 
         const updatedData: DataItemMappings = {
             ...existingData,
-            dataItems: mergedItems,
-            // createdAt: existingData?.createdAt || new Date().toISOString(),
-            // configId,
-            // sourceInstanceId: sourceInstanceId || existingData?.sourceInstanceId || 'unknown'
+            dataItems: mergedItems
         };
 
         if (existingData) {
@@ -290,7 +311,7 @@ export async function saveDataItemMappings(
 //         const url = `dataStore/${DatastoreNamespaces.DATA_SERVICE_CONFIG}/${datastoreKey}`;
 
 //         const response = await dhis2Client.get<DataItemMappings>(url);
-        
+
 //         logger.info(`Successfully retrieved data item mappings`, {
 //             mappingsCount: response.data.dataItems.length,
 //             // createdAt: response.data.createdAt
@@ -303,7 +324,7 @@ export async function saveDataItemMappings(
 //             logger.info(`No data item mappings found for config: ${configId}`);
 //             return null;
 //         }
-        
+
 //         logger.error(`Error retrieving data item mappings from datastore:`, error);
 //         throw error;
 //     }
@@ -446,7 +467,7 @@ export function extractIdsFromMappings(mappings: DataItemMapping[]): {
 
     for (const mapping of mappings) {
         const sourceId = mapping.sourceId;
-        
+
         // Check if it's a program indicator (assuming they follow a specific pattern)
         // You might need to adjust this logic based on your program indicator ID patterns
         if (sourceId.includes('.') && !sourceId.match(/^[A-Za-z0-9]{11}\.[A-Za-z0-9]{11}$/)) {
