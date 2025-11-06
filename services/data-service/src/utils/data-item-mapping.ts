@@ -210,41 +210,7 @@ function generateProgramIndicatorMappings(programIndicatorIds: string[]): DataIt
 
 /**
  * Save data item mappings to the destination datastore
- */
-// export async function saveDataItemMappings(
-//     mappings: DataItemMapping[],
-//     configId: string,
-//     sourceInstanceId?: string
-// ): Promise<void> {
-//     try {
-//         logger.info(`Saving data item mappings to datastore`, {
-//             mappingsCount: mappings.length,
-//             configId,
-//             sourceInstanceId
-//         });
-
-//         const mappingData: DataItemMappings = {
-//             dataItems: mappings,
-//             createdAt: new Date().toISOString(),
-//             configId,
-//             sourceInstanceId: sourceInstanceId || 'unknown'
-//         };
-
-//         const datastoreKey = `${configId}-mappings`;
-//         const url = `dataStore/${DatastoreNamespaces.DATA_SERVICE_CONFIG}/${datastoreKey}`;
-
-//         await dhis2Client.post(url, mappingData);
-
-//         logger.info(`Successfully saved data item mappings to datastore`, {
-//             datastoreKey,
-//             mappingsCount: mappings.length
-//         });
-
-//     } catch (error) {
-//         logger.error(`Error saving data item mappings to datastore:`, error);
-//         throw error;
-//     }
-// }
+ */ 
 export async function saveDataItemMappings(
     mappings: DataItemMapping[],
     configId: string,
@@ -302,33 +268,7 @@ export async function saveDataItemMappings(
 
 /**
  * Retrieve data item mappings from the destination datastore
- */
-// export async function getDataItemMappings(configId: string): Promise<DataItemMappings | null> {
-//     try {
-//         logger.info(`Retrieving data item mappings from datastore for config: ${configId}`);
-
-//         const datastoreKey = `${configId}-mappings`;
-//         const url = `dataStore/${DatastoreNamespaces.DATA_SERVICE_CONFIG}/${datastoreKey}`;
-
-//         const response = await dhis2Client.get<DataItemMappings>(url);
-
-//         logger.info(`Successfully retrieved data item mappings`, {
-//             mappingsCount: response.data.dataItems.length,
-//             // createdAt: response.data.createdAt
-//         });
-
-//         return response.data;
-
-//     } catch (error: any) {
-//         if (error.response?.status === 404) {
-//             logger.info(`No data item mappings found for config: ${configId}`);
-//             return null;
-//         }
-
-//         logger.error(`Error retrieving data item mappings from datastore:`, error);
-//         throw error;
-//     }
-// }
+ */ 
 export async function getDataItemMappings(configId: string): Promise<DataItemMappings | null> {
     const datastoreKey = `${configId}`;
     const url = `dataStore/${DatastoreNamespaces.DATA_SERVICE_CONFIG}/${datastoreKey}`;
@@ -359,41 +299,7 @@ export async function getDataItemMappings(configId: string): Promise<DataItemMap
 
 /**
  * Update existing data item mappings in the datastore
- */
-// export async function updateDataItemMappings(
-//     mappings: DataItemMapping[],
-//     configId: string,
-//     sourceInstanceId?: string
-// ): Promise<void> {
-//     try {
-//         logger.info(`Updating data item mappings in datastore`, {
-//             mappingsCount: mappings.length,
-//             configId,
-//             sourceInstanceId
-//         });
-
-//         const mappingData: DataItemMappings = {
-//             dataItems: mappings,
-//             createdAt: new Date().toISOString(),
-//             configId,
-//             sourceInstanceId: sourceInstanceId || 'unknown'
-//         };
-
-//         const datastoreKey = `${configId}-mappings`;
-//         const url = `dataStore/${DatastoreNamespaces.DATA_SERVICE_CONFIG}/${datastoreKey}`;
-
-//         await dhis2Client.put(url, mappingData);
-
-//         logger.info(`Successfully updated data item mappings in datastore`, {
-//             datastoreKey,
-//             mappingsCount: mappings.length
-//         });
-
-//     } catch (error) {
-//         logger.error(`Error updating data item mappings in datastore:`, error);
-//         throw error;
-//     }
-// }
+ */ 
 export async function updateDataItemMappings(
     mappings: DataItemMapping[],
     configId: string,
@@ -427,11 +333,7 @@ export async function updateDataItemMappings(
 
         const updatedData: DataItemMappings = {
             ...existingData,
-            dataItems: mergedItems,
-            // updatedAt: new Date().toISOString(),
-            // createdAt: existingData?.createdAt || new Date().toISOString(),
-            // configId,
-            // sourceInstanceId: sourceInstanceId || existingData?.sourceInstanceId || 'unknown'
+            dataItems: mergedItems 
         };
 
         if (existingData) {
