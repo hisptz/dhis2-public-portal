@@ -1,95 +1,96 @@
-import { useDataEngine } from "@dhis2/app-runtime";
-import {
-	DataServiceRunStatus,
-} from "@packages/shared/schemas";
+import { DataServiceRunStatus } from "@packages/shared/schemas";
 import { useQuery } from "@tanstack/react-query";
 import { useMemo } from "react";
-
-const statusQuery: any = {
-	download: {
-		resource: `routes/data-service/run/services/data-download`,
-		id: ({ id }: { id: string }) => `${id}/status`,
-	},
-	upload: {
-		resource: `routes/data-service/run/services/data-upload`,
-		id: ({ id }: { id: string }) => `${id}/status`,
-	},
-};
+import { getConfigStatus } from "../../../../../../../services/dataServiceClient";
 
 export interface QueueStatusResult {
 	queue: string;
 	messages: number;
 	messages_ready: number;
 	messages_unacknowledged: number;
-	dlq_messages: number,
+	dlq_messages: number;
 	status: DataServiceRunStatus;
+	last_activity?: string;
+	consumers?: number;
+}
+
+export interface ConfigStatusResponse {
+	success: boolean;
+	configId: string;
+	queues: {
+		metadataDownload?: QueueStatusResult;
+		metadataUpload?: QueueStatusResult;
+		dataDownload?: QueueStatusResult;
+		dataUpload?: QueueStatusResult;
+	};
+	health: {
+		healthy: boolean;
+		totalQueues: number;
+		activeQueues: number;
+		failedQueues: number;
+		issues: string[];
+	};
+	timestamp: string;
 }
 
 
 export function useDataConfigRunStatus(id: string) {
-	const engine = useDataEngine();
-
-	async function fetchStatus() {
-		const response = await engine.query(statusQuery, {
-			variables: {
-				id,
-			},
-		});
-		return response as unknown as {
-			download: QueueStatusResult;
-			upload: QueueStatusResult;
-		};
+	async function fetchStatus(): Promise<ConfigStatusResponse> {
+ 		const response = await getConfigStatus(id);
+		if (response.success) {
+			return response as any as ConfigStatusResponse;
+		} else {
+			throw new Error(response.message || 'Failed to fetch status');
+		}
 	}
 
-	
-	const { isLoading, data, error, isError, refetch, isRefetching } = useQuery(
-		["status", id],
-		fetchStatus,
-		{
-			refetchInterval: (data) => {
-				if (!data) {
-					return 5000;
-				}
-
-				const lastDownloadStatus = data.download.status;
-				const lastUploadStatus = data.upload.status;
-
-				if (
-					!(
-						lastDownloadStatus == DataServiceRunStatus.COMPLETED &&
-						lastUploadStatus == DataServiceRunStatus.COMPLETED
-					)
-				) {
-					return 5000;
-				}
-				
-				return false; // Stop refetching when both are completed
-			},
-		},
-	);
+	const { isLoading, data, error, isError } = useQuery({
+		queryKey: ["config-status", id],
+		queryFn: fetchStatus,
+		refetchInterval: 5000,
+		refetchIntervalInBackground: true,
+		retry: 3,
+		retryDelay: (attemptIndex) => Math.min(1000 * 2 ** attemptIndex, 30000),
+	});
 
 	const status: DataServiceRunStatus | null = useMemo(() => {
-		if (!data) {
+		if (!data || !data.queues) {
 			return null;
 		}
-		const { download, upload } = data;
 
-		const lastDownloadStatus = download.status;
-		const lastUploadStatus = upload.status;
+		const { queues } = data;
 
-		if (!lastDownloadStatus || !lastUploadStatus) {
+ 		const statuses = [
+			queues.metadataDownload?.status,
+			queues.metadataUpload?.status,
+			queues.dataDownload?.status,
+			queues.dataUpload?.status,
+		].filter(Boolean);
+
+		if (statuses.length === 0) {
 			return DataServiceRunStatus.NOT_STARTED;
 		}
 
-		if (lastDownloadStatus == DataServiceRunStatus.RUNNING || lastUploadStatus == DataServiceRunStatus.RUNNING) {
+		// Priority order: RUNNING > QUEUED > FAILED > COMPLETED > IDLE > UNKNOWN
+ 		if (statuses.some(s => s === DataServiceRunStatus.RUNNING)) {
 			return DataServiceRunStatus.RUNNING;
 		}
-
-		if (lastDownloadStatus == DataServiceRunStatus.QUEUED || lastUploadStatus == DataServiceRunStatus.QUEUED) {
+		if (statuses.some(s => s === DataServiceRunStatus.QUEUED)) {
 			return DataServiceRunStatus.QUEUED;
 		}
+		if (statuses.some(s => s === DataServiceRunStatus.FAILED)) {
+			return DataServiceRunStatus.FAILED;
+		}
+ 
+		if (statuses.some(s => s === DataServiceRunStatus.COMPLETED)) {
+			return DataServiceRunStatus.COMPLETED;
+		}
 
-		if (lastDownloadStatus == DataServiceRunStatus.IDLE && lastUploadStatus == DataServiceRunStatus.IDLE) {
+ 		if (statuses.every(s => s === DataServiceRunStatus.IDLE)) {
+			return DataServiceRunStatus.IDLE;
+		}
+
+		if (statuses.every(s => s === DataServiceRunStatus.NOT_STARTED)) {
 			return DataServiceRunStatus.IDLE;
 		}
 
@@ -99,9 +100,8 @@ export function useDataConfigRunStatus(id: string) {
 	return {
 		isLoading,
 		status,
-		refetch,
+		data,
 		isError,
 		error,
-		isRefetching,
 	};
 }
