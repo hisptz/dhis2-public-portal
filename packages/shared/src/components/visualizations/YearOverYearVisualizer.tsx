@@ -7,7 +7,7 @@ import React, { RefObject, useMemo } from "react";
 import HighchartsReact from "highcharts-react-official";
 import Highcharts from "highcharts";
 import { PeriodUtility } from "@hisptz/dhis2-utils";
-import { uniq } from "lodash";
+import { isEmpty, uniq } from "lodash";
 
 export interface YearOverYearChartVisualizerProps {
 	analytics?: Map<string, AnalyticsData>;
@@ -67,7 +67,7 @@ export function YearOverYearVisualizer({
 				: "column";
 		return {
 			chart: { type: chartType },
-			title: { text: "" },
+			title: { text: isEmpty(visualization?.filters) ? "" : visualization.filters?.map((filter)=> filter.items.map((item) => item.displayName).join(", ")).join(", ") },
 			xAxis: { categories, title: { text: "" } },
 			yAxis: { title: { text: "" } },
 			series,
