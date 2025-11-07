@@ -95,3 +95,19 @@ export const dataDownloadBodySchema = z.object({
 });
 
 export type DataDownloadBody = z.infer<typeof dataDownloadBodySchema>;
+
+export const dataUploadBodySchema = z.object({
+	filename: z.string().min(1, "Filename is required"),
+	queuedAt: z.string().optional(),
+	downloadedFrom: z.string().optional(),
+});
+
+export type DataUploadBody = z.infer<typeof dataUploadBodySchema>;
+
+export const dataItemMappingSchema = z.object({
+	id: z.string().min(1, "ID is required"),
+	sourceId: z.string().min(1, "Source ID is required"),
+});
+
+export type DataItemMapping = z.infer<typeof dataItemMappingSchema>;
+ 
