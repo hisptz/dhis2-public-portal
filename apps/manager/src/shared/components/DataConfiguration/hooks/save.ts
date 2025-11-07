@@ -10,6 +10,7 @@ import { DatastoreNamespaces } from "@packages/shared/constants";
 import i18n from "@dhis2/d2-i18n";
 import { useNavigate, useParams } from "@tanstack/react-router";
 import { useRefreshDataSources } from "../providers/DataSourcesProvider";
+import { createQueues, deleteQueues } from "../../../services/dataServiceClient";
 
 const createRouteMutation = {
 	type: "create" as const,
@@ -75,6 +76,15 @@ export function useCreateDataSource() {
 				},
 			});
 
+			try {
+				await createQueues(data.id);
+			} catch (queueError) {
+				show({
+					message: i18n.t("Configuration saved, but queue creation failed. Queues will be created automatically when needed."),
+					type: { warning: true },
+				});
+			}
+
 			show({
 				message: i18n.t("Configuration saved successfully"),
 				type: { success: true },
@@ -133,6 +143,7 @@ export function useUpdateDataSource() {
 		({ message }) => message,
 		({ type }) => ({ ...type, duration: 3000 }),
 	);
+	const engine = useDataEngine();
 	const [mutate] = useDataMutation(updateDataSourceMutation, {
 		variables: {
 			id: configId,
@@ -152,7 +163,34 @@ export function useUpdateDataSource() {
 	});
 
 	const save = async (data: DataServiceConfig) => {
-		await mutate({ data });
+		try {
+			const currentConfig = await engine.query(
+				{
+					config: {
+						resource: `dataStore/${DatastoreNamespaces.DATA_SERVICE_CONFIG}`,
+						id: configId,
+					},
+				},
+				{
+					variables: {
+						id: configId,
+					},
+				}
+			);
+
+			const mergedData = {
+				...(currentConfig as any).config,
+				...data,
+				...(!(data as any).dataItems && (currentConfig as any).config?.dataItems && {
+					dataItems: (currentConfig as any).config.dataItems
+				}),
+			};
+			await mutate({ data: mergedData });
+		} catch (error) {
+			console.warn('Could not fetch current config, using provided data as-is:', error);
+			await mutate({ data });
+		}
+
 		refreshList();
 		await navigate({
 			to: "/data-service-configuration",
@@ -203,24 +241,24 @@ export function useUpdateConnection() {
 				}
 			);
 
- 			const hasCredentials = !!data.pat || (!!data.username && !!data.password);
- 			
- 			const routePayload: any = {
+			const hasCredentials = !!data.pat || (!!data.username && !!data.password);
+
+			const routePayload: any = {
 				name: `[data service] ${data.name}`,
 				url: `${data.url}/api/**`,
 			};
-			
+
 			if (hasCredentials) {
 				routePayload.auth = data.pat
 					? {
-							type: "api-token",
-							token: data.pat,
-						}
+						type: "api-token",
+						token: data.pat,
+					}
 					: {
-							type: "http-basic",
-							username: data.username,
-							password: data.password,
-						};
+						type: "http-basic",
+						username: data.username,
+						password: data.password,
+					};
 			} else if ((existingRoute as any).route?.auth) {
 				routePayload.auth = (existingRoute as any).route.auth;
 			}
@@ -231,7 +269,7 @@ export function useUpdateConnection() {
 					data: routePayload,
 				},
 			});
- 			const currentConfig = await engine.query(
+			const currentConfig = await engine.query(
 				{
 					config: {
 						resource: `dataStore/${DatastoreNamespaces.DATA_SERVICE_CONFIG}`,
@@ -265,7 +303,7 @@ export function useUpdateConnection() {
 				type: { success: true },
 			});
 			refreshList();
- 			if (callbacks?.onSuccess) {
+			if (callbacks?.onSuccess) {
 				callbacks.onSuccess(updatedConfig);
 			}
 		} catch (error) {
@@ -306,6 +344,12 @@ export function useDeleteDataSource() {
 
 	const deleteConfig = async (config: DataServiceConfig) => {
 		try {
+			try {
+				await deleteQueues(config.id);
+			} catch (queueError) {
+				console.warn(`Failed to delete queues for config ${config.id}:`, queueError);
+			}
+
 			await engine.mutate(deleteRouteMutation, {
 				variables: {
 					id: config.source.routeId,
