@@ -1,9 +1,6 @@
 import express from "express";
 import cors from "cors";
 import https from "https";
-import { dhis2routes } from "./routes/sourceRoutes";
-import { serviceStatusRouter } from "./routes/status";
-import { serviceRouter } from "./routes/services";
 import { env } from "@/env";
 import * as fs from "node:fs";
 import { initialize } from 'express-openapi';
@@ -12,6 +9,7 @@ import path, { dirname } from "path";
 import swagger from "swagger-ui-express";
 import { fileURLToPath } from "url";
 import { startWorker } from "./rabbit/worker";
+import { conditionalApiKeyMiddleware } from "./middleware/apiKey";
 
 
 const __filename = fileURLToPath(import.meta.url);
@@ -19,19 +17,18 @@ const __dirname = dirname(__filename);
 
 const app = express();
 
-// CORS configuration to allow frontend requests
 app.use(cors({
 	origin: [
-		'http://localhost:3001',
-		'http://localhost:3000',
-		'http://localhost:3002',
+		env.FLEXIPORTAL_URL || 'http://localhost:3001',
+		'http://localhost:3000'
 	],
 	credentials: true,
 	methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-	allowedHeaders: ['Content-Type', 'Authorization', 'x-requested-with']
+	allowedHeaders: ['Content-Type', 'Authorization', 'x-requested-with', 'x-api-key']
 }));
 
 app.use(express.json());
+app.use(conditionalApiKeyMiddleware);
 
 initialize({
 	app,
@@ -47,9 +44,6 @@ initialize({
 	app.get("/", (req, res) => {
 		res.send("Hello, Welcome to the DHIS2 Flexiportal Data Service!, Navigate to /docs to view documentation on usage and endpoints");
 	});
-	app.use("/routes", dhis2routes);
-	app.use("/status", serviceStatusRouter);
-	app.use("/services", serviceRouter);
 
 	app.use(
 		`/docs`,
