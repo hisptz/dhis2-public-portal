@@ -81,15 +81,12 @@ export function useDataConfigRunStatus(id: string) {
 		if (statuses.some(s => s === DataServiceRunStatus.FAILED)) {
 			return DataServiceRunStatus.FAILED;
 		}
- 
 		if (statuses.some(s => s === DataServiceRunStatus.COMPLETED)) {
 			return DataServiceRunStatus.COMPLETED;
 		}
-
  		if (statuses.every(s => s === DataServiceRunStatus.IDLE)) {
 			return DataServiceRunStatus.IDLE;
 		}
-
 		if (statuses.every(s => s === DataServiceRunStatus.NOT_STARTED)) {
 			return DataServiceRunStatus.IDLE;
 		}
