@@ -1,24 +1,68 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { useController, useFormContext } from "react-hook-form";
-import { Field, CircularLoader, MultiSelectField, MultiSelectOption, NoticeBox } from "@dhis2/ui";
+import { Field, MultiSelectField, MultiSelectOption, NoticeBox } from "@dhis2/ui";
 import { useDataQuery } from "@dhis2/app-runtime";
 import { DatastoreNamespaces } from "@packages/shared/constants";
 import { DataServiceDataSourceItemsConfig } from "@packages/shared/schemas";
 import i18n from "@dhis2/d2-i18n";
 
-const mappedDataItemsQuery = {
+interface MappedItem {
+    id: string;
+    sourceId: string;
+}
+
+interface ItemsConfig {
+    id: string;
+    name: string;
+    dataItems?: MappedItem[];
+}
+
+interface ConfigData {
+    dataItems?: MappedItem[];
+    itemsConfig?: ItemsConfig[];
+}
+
+interface Metadata {
+    id: string;
+    displayName?: string;
+    name?: string;
+}
+
+interface MetadataResponse {
+    dataElements?: Metadata[];
+    categoryOptionCombos?: Metadata[];
+}
+
+const DATASTORE_QUERY = {
     mappings: {
         resource: `dataStore/${DatastoreNamespaces.DATA_SERVICE_CONFIG}`,
         id: ({ configId }: { configId: string }) => configId,
-        params: {
-            fields: "dataItems,itemsConfig",
-        },
+        params: { fields: "dataItems,itemsConfig" },
     },
-};
+} as const;
 
-interface MappedDataItemsSelectorProps {
+const METADATA_QUERY = {
+    dataElements: {
+        resource: "dataElements",
+        params: ({ ids }: { ids?: string }) => ({
+            fields: "id,displayName,name",
+            filter: ids ? `id:in:[${ids}]` : undefined,
+            paging: false,
+        }),
+    },
+    categoryOptionCombos: {
+        resource: "categoryOptionCombos",
+        params: ({ ids }: { ids?: string }) => ({
+            fields: "id,displayName,name",
+            filter: ids ? `id:in:[${ids}]` : undefined,
+            paging: false,
+        }),
+    },
+} as const;
+
+interface Props {
     configId: string;
-    name: string;
+    name: keyof DataServiceDataSourceItemsConfig;
     label: string;
     required?: boolean;
     helpText?: string;
@@ -30,154 +74,177 @@ export function MappedDataItemsSelector({
     label,
     required,
     helpText,
-}: MappedDataItemsSelectorProps) {
+}: Props) {
     const { control } = useFormContext<DataServiceDataSourceItemsConfig>();
 
     const {
         field: { value, onChange },
         fieldState: { error },
     } = useController({
-        name: name as any,
+        name,
         control,
-        rules: { required: required ? i18n.t("At least one data item is required") : false },
+        rules: { required: required && i18n.t("At least one data item is required") },
     });
 
-    const { data, loading, error: queryError } = useDataQuery<{
-        mappings: {
-            dataItems?: Array<{
-                id: string;
-                sourceId: string;
-            }>;
-            itemsConfig?: Array<{
-                id: string;
-                name: string;
-                dataItems: Array<{
-                    id: string;
-                    sourceId: string;
-                }>;
-            }>;
-        };
-    }>(mappedDataItemsQuery, {
-        variables: { configId },
+    const [metadataIds, setMetadataIds] = useState({
+        dataElements: "",
+        categoryOptionCombos: "",
     });
+
+    const { data: configData, loading: configLoading, error: configError } = useDataQuery<{
+        mappings: ConfigData;
+    }>(DATASTORE_QUERY, { variables: { configId } });
+
+    const { data: metadata, loading: metadataLoading, refetch } = useDataQuery<{
+        dataElements?: MetadataResponse;
+        categoryOptionCombos?: MetadataResponse;
+    }>(METADATA_QUERY, { lazy: true });
+
+    useEffect(() => {
+        if (!configData?.mappings) return;
+
+        const allItems: MappedItem[] = [
+            ...(configData.mappings.dataItems || []),
+            ...(configData.mappings.itemsConfig || []).flatMap((c) => c.dataItems || []),
+        ];
+
+        const deSet = new Set<string>();
+        const cocSet = new Set<string>();
+
+        allItems.forEach((item) => {
+            if (item.sourceId.includes(".")) {
+                const [de, coc] = item.sourceId.split(".");
+                deSet.add(de);
+                cocSet.add(coc);
+            } else {
+                deSet.add(item.sourceId);
+            }
+        });
+
+        const deIds = Array.from(deSet).join(",");
+        const cocIds = Array.from(cocSet).join(",");
+
+        if (deIds || cocIds) {
+            setMetadataIds({ dataElements: deIds, categoryOptionCombos: cocIds });
+            refetch({
+                dataElements: { ids: deIds },
+                categoryOptionCombos: { ids: cocIds },
+            });
+        }
+    }, [configData, refetch]);
 
     const options = useMemo(() => {
-        let allDataItems: Array<{ id: string; sourceId: string }> = [];
+        if (!configData?.mappings || metadataLoading) return [];
 
-        if (data?.mappings?.dataItems) {
-            allDataItems = [...allDataItems, ...data.mappings.dataItems];
-        }
+        const allItems: MappedItem[] = [
+            ...(configData.mappings.dataItems || []),
+            ...(configData.mappings.itemsConfig || []).flatMap((c) => c.dataItems || []),
+        ];
 
-        if (data?.mappings?.itemsConfig) {
-            const itemsConfigDataItems = data.mappings.itemsConfig
-                .flatMap(config => config.dataItems || []);
-            allDataItems = [...allDataItems, ...itemsConfigDataItems];
-        }
+        const uniqueItems = allItems.filter(
+            (item, index, self) => self.findIndex((i) => i.id === item.id) === index
+        );
 
-        const uniqueDataItems = allDataItems.reduce((acc, item) => {
-            if (!acc.find(existing => existing.id === item.id)) {
-                acc.push(item);
-            }
-            return acc;
-        }, [] as Array<{ id: string; sourceId: string }>);
+        const deMap = new Map<string, string>();
+        const cocMap = new Map<string, string>();
 
-        return uniqueDataItems.map(item => ({
-            label: `${item.sourceId} → ${item.id}`,
-            value: item.id,
-            sourceId: item.sourceId,
-        }));
-    }, [data]);
-
-    const handleSelectionChange = (selectedIds: string[]) => {
-        const selectedItems = selectedIds.map(id => {
-            let mappedItem: { id: string; sourceId: string } | undefined;
-
-            if (data?.mappings?.dataItems) {
-                mappedItem = data.mappings.dataItems.find(item => item.id === id);
-            }
-
-            if (!mappedItem && data?.mappings?.itemsConfig) {
-                const allItemsConfigDataItems = data.mappings.itemsConfig
-                    .flatMap(config => config.dataItems || []);
-                mappedItem = allItemsConfigDataItems.find(item => item.id === id);
-            }
-
-            return {
-                id,
-                sourceId: mappedItem?.sourceId || id,
-            };
+        metadata?.dataElements?.dataElements?.forEach((de) => {
+            deMap.set(de.id, de.displayName || de.name || de.id);
         });
+
+        metadata?.categoryOptionCombos?.categoryOptionCombos?.forEach((coc) => {
+            cocMap.set(coc.id, coc.displayName || coc.name || coc.id);
+        });
+
+        return uniqueItems.map((item) => {
+            let label: string;
+            if (item.sourceId.includes(".")) {
+                const [deId, cocId] = item.sourceId.split(".");
+                const deName = deMap.get(deId) || deId;
+                const cocName = cocMap.get(cocId) || cocId;
+                label = `${deName} (${cocName})`;
+            } else {
+                label = deMap.get(item.sourceId) || item.sourceId;
+            }
+            return { label, value: item.id };
+        });
+    }, [configData, metadata, metadataLoading]);
+
+    const handleChange = (selected: string[]) => {
+        const allItems: MappedItem[] = [
+            ...(configData?.mappings?.dataItems || []),
+            ...(configData?.mappings?.itemsConfig || []).flatMap((c) => c.dataItems || []),
+        ];
+
+        const selectedItems = selected.map((id) => {
+            const item = allItems.find((i) => i.id === id);
+            return { id, sourceId: item?.sourceId || id };
+        });
+
         onChange(selectedItems);
     };
 
-    const selectedValues = useMemo(() => {
-        if (!Array.isArray(value)) return [];
-        return value.map(item => item.id);
-    }, [value]);
+    const selectedValues = useMemo(
+        () => (Array.isArray(value) ? value.map((v: MappedItem) => v.id) : []),
+        [value]
+    );
 
-    if (loading) {
+    if (configLoading || metadataLoading) {
         return (
-            <Field label={label}>
-                <div className="flex items-center gap-2">
-                    <CircularLoader small />
-                    <span>{i18n.t("Loading mapped data items...")}</span>
-                </div>
+            <Field label={label} required={required} helpText={helpText}>
+                <MultiSelectField
+                    selected={[]}
+                    onChange={() => { }}
+                    filterable
+                    placeholder={i18n.t("Loading...")}
+                    disabled
+                />
             </Field>
         );
     }
 
-	if (queryError) {
-		return (
-			<div className="flex flex-col gap-4">
-				<Field label={label} required={required}>
-					<div />
-				</Field>
-				<NoticeBox
-					error
-					title={i18n.t("Failed to Load Mapped Data Items")}
-				>
-					{i18n.t("There was an error loading the pre-mapped data items. Please ensure that metadata migration has been completed successfully and that the configuration exists in the datastore.")}
-				</NoticeBox>
-			</div>
-		);
-	}	if (!options.length) {
-		return (
-			<div className="flex flex-col gap-4">
-				<Field label={label} required={required}>
-					<div />
-				</Field>
-				<NoticeBox
-					warning
-					title={i18n.t("No Mapped Data Items Available")}
-				>
-					{i18n.t("No pre-mapped data items were found for this configuration. Please run metadata migration first to generate data item mappings, or ensure that data items have been properly migrated from the source system.")}
-				</NoticeBox>
-			</div>
-		);
-	}    return (
-		<div className="flex flex-col gap-4">
-			<Field
-				label={label}
-				required={required}
-				helpText={helpText || i18n.t("Select from pre-mapped data items from metadata migration")}
-				error={!!error}
-				validationText={error?.message}
-			>
-				<MultiSelectField
-					selected={selectedValues}
-					onChange={({ selected }) => handleSelectionChange(selected)}
-					filterable
-					placeholder={i18n.t("Search and select data items...")}
-				>
-					{options.map(option => (
-						<MultiSelectOption
-							key={option.value}
-							label={option.label}
-							value={option.value}
-						/>
-					))}
-				</MultiSelectField>
-			</Field>
-		</div>
-	);
+    if (configError) {
+        return (
+            <>
+                <Field label={label} required={required} />
+                <NoticeBox error title={i18n.t("Failed to Load Mapped Data Items")}>
+                    {i18n.t(
+                        "Error loading configuration. Ensure metadata migration is complete and config exists."
+                    )}
+                </NoticeBox>
+            </>
+        );
+    }
+
+    if (!options.length) {
+        return (
+            <>
+                <Field label={label} required={required} />
+                <NoticeBox warning title={i18n.t("No Mapped Data Items")}>
+                    {i18n.t("Run metadata migration to generate mappings.")}
+                </NoticeBox>
+            </>
+        );
+    }
+
+    return (
+        <Field
+            label={label}
+            required={required}
+            helpText={helpText || i18n.t("Select from mapped data items from metadata migration")}
+            error={!!error}
+            validationText={error?.message}
+        >
+            <MultiSelectField
+                selected={selectedValues}
+                onChange={({ selected }) => handleChange(selected)}
+                filterable
+                placeholder={i18n.t("Search and select data items...")}
+            >
+                {options.map((opt) => (
+                    <MultiSelectOption key={opt.value} label={opt.label} value={opt.value} />
+                ))}
+            </MultiSelectField>
+        </Field>
+    );
 }
