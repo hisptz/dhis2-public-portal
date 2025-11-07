@@ -5,8 +5,8 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
-"POT-Creation-Date: 2025-11-04T05:30:58.124Z\n"
-"PO-Revision-Date: 2025-11-04T05:30:58.124Z\n"
+"POT-Creation-Date: 2025-11-07T09:53:51.924Z\n"
+"PO-Revision-Date: 2025-11-07T09:53:51.924Z\n"
 
 msgid "Could not get Appearance configurations"
 msgstr "Could not get Appearance configurations"
@@ -207,17 +207,27 @@ msgstr "Type"
 msgid "Period type"
 msgstr "Period type"
 
-msgid "Parent organisation unit ID"
-msgstr "Parent organisation unit ID"
+msgid "Parent organisation unit"
+msgstr "Parent organisation unit"
 
-msgid "The top level organisation unit on the source to fetch data from "
-msgstr "The top level organisation unit on the source to fetch data from "
+msgid "The top level organisation unit on the source to fetch data from"
+msgstr "The top level organisation unit on the source to fetch data from"
 
 msgid "Organisation unit level"
 msgstr "Organisation unit level"
 
 msgid "Organisation unit level at the source to pull data from"
 msgstr "Organisation unit level at the source to pull data from"
+
+msgid "Data items"
+msgstr "Data items"
+
+msgid ""
+"Select data items from the pre-mapped items created during metadata "
+"migration"
+msgstr ""
+"Select data items from the pre-mapped items created during metadata "
+"migration"
 
 msgid "Source ID"
 msgstr "Source ID"
@@ -236,8 +246,33 @@ msgstr ""
 "A valid analytics dimension item (data element, data element and category "
 "option)"
 
-msgid "Data items"
-msgstr "Data items"
+msgid "At least one data item is required"
+msgstr "At least one data item is required"
+
+msgid "Loading..."
+msgstr "Loading..."
+
+msgid "Failed to Load Mapped Data Items"
+msgstr "Failed to Load Mapped Data Items"
+
+msgid ""
+"Error loading configuration. Ensure metadata migration is complete and "
+"config exists."
+msgstr ""
+"Error loading configuration. Ensure metadata migration is complete and "
+"config exists."
+
+msgid "No Mapped Data Items"
+msgstr "No Mapped Data Items"
+
+msgid "Run metadata migration to generate mappings."
+msgstr "Run metadata migration to generate mappings."
+
+msgid "Select from mapped data items from metadata migration"
+msgstr "Select from mapped data items from metadata migration"
+
+msgid "Search and select data items..."
+msgstr "Search and select data items..."
 
 msgid "Period Type"
 msgstr "Period Type"
@@ -285,6 +320,9 @@ msgstr "Run configuration"
 msgid "Service started successfully"
 msgstr "Service started successfully"
 
+msgid "Failed to start service"
+msgstr "Failed to start service"
+
 msgid "Run"
 msgstr "Run"
 
@@ -299,6 +337,16 @@ msgstr ""
 "Please ensure analytics have been run on the source instance before "
 "proceeding with validation. Running analytics ensures the data is "
 "up-to-date for accurate validation results."
+
+msgid "Destructive Operation"
+msgstr "Destructive Operation"
+
+msgid ""
+"This operation will permanently delete all data files for the selected "
+"configuration items and periods. This action cannot be undone."
+msgstr ""
+"This operation will permanently delete all data files for the selected "
+"configuration items and periods. This action cannot be undone."
 
 msgid "Service Type"
 msgstr "Service Type"
@@ -360,8 +408,14 @@ msgstr "Page size"
 msgid "Paginate by data"
 msgstr "Paginate by data"
 
+msgid "Deleting data..."
+msgstr "Deleting data..."
+
 msgid "Requesting run..."
 msgstr "Requesting run..."
+
+msgid "Delete Data"
+msgstr "Delete Data"
 
 msgid "Configuration items"
 msgstr "Configuration items"
@@ -473,6 +527,13 @@ msgstr "Loading connection details..."
 
 msgid "Could not get source information"
 msgstr "Could not get source information"
+
+msgid ""
+"Configuration saved, but queue creation failed. Queues will be created "
+"automatically when needed."
+msgstr ""
+"Configuration saved, but queue creation failed. Queues will be created "
+"automatically when needed."
 
 msgid "Configuration saved successfully"
 msgstr "Configuration saved successfully"
@@ -666,6 +727,12 @@ msgstr "Reload"
 
 msgid "Upload Icon"
 msgstr "Upload Icon"
+
+msgid "This field is required"
+msgstr "This field is required"
+
+msgid "Select organisation unit"
+msgstr "Select organisation unit"
 
 msgid "Application name"
 msgstr "Application name"

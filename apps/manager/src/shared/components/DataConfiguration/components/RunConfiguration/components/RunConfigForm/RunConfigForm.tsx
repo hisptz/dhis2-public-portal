@@ -16,13 +16,14 @@ import React from "react";
 import i18n from "@dhis2/d2-i18n";
 import { PeriodSelector } from "./components/PeriodSelector";
 import { z } from "zod";
-import { FetchError, useAlert, useDataEngine } from "@dhis2/app-runtime";
+import { useAlert, useDataEngine } from "@dhis2/app-runtime";
 import { ConfigSelector } from "./components/ConfigSelector";
 import { useQueryClient } from "@tanstack/react-query";
 import { RHFCheckboxField, RHFSingleSelectField } from "@hisptz/dhis2-ui";
 import { RHFNumberField } from "../../../../../Fields/RHFNumberField";
 import { RHFMultiSelectField } from "../../../../../Fields/RHFMultiSelectField";
 import { SourceMetadataSelector } from "./components/SourceMetadataSelector";
+import { downloadMetadata, downloadData, validateData, deleteData } from "../../../../../../services/dataServiceClient";
 
 const runConfigSchema = z.object({
 	service: z.enum([
@@ -52,8 +53,7 @@ export function RunConfigForm({
 	onClose: () => void;
 }) {
 	const queryClient = useQueryClient();
-	const engine = useDataEngine();
-	const { show } = useAlert(
+ 	const { show } = useAlert(
 		({ message }) => message,
 		({ type }) => ({ ...type, duration: 3000 }),
 	);
@@ -81,44 +81,67 @@ export function RunConfigForm({
 
 	const onSubmit = async (data: RunConfigFormValues) => {
 		try {
-			let requestData = { ...data };
-
-			// Handle metadata migration with different sources
+			let result;
 			if (data.service === "metadata-migration") {
-				if (data.metadataSource === "source") {
-					requestData = {
-						...data,
-						metadataSource: "source",
-						selectedVisualizations: data.selectedVisualizations || [],
-						selectedMaps: data.selectedMaps || [],
-						selectedDashboards: data.selectedDashboards || [],
-					};
-				} else {
-					requestData = {
-						...data,
-						metadataSource: "flexiportal-config",
-					};
-				}
+				const metadataRequest = {
+					metadataSource: data.metadataSource || "source",
+					selectedVisualizations: data.selectedVisualizations || [],
+					selectedMaps: data.selectedMaps || [],
+					selectedDashboards: data.selectedDashboards || [],
+				};
+				result = await downloadMetadata(config.id, metadataRequest);
+			} else if (data.service === "data-deletion") {
+				const deletionRequest = {
+					configId: config.id,
+					dataItemsConfigIds: data.dataItemsConfigIds,
+					runtimeConfig: data.runtimeConfig,
+				};
+
+				result = await deleteData(config.id, deletionRequest);
+			} else if (data.service === "data-validation") {
+				const validationRequest = {
+					dataItemsConfigIds: data.dataItemsConfigIds,
+					runtimeConfig: data.runtimeConfig,
+				};
+
+				result = await validateData(config.id, validationRequest);
+			} else {
+
+				const dataRequest = {
+					dataItemsConfigIds: data.dataItemsConfigIds,
+					runtimeConfig: data.runtimeConfig,
+				};
+
+				result = await downloadData(config.id, dataRequest);
 			}
 
-			await engine.mutate({
-				type: "create" as const,
-				resource: `routes/data-service/run/services/data-download/${config.id}`,
-				data: requestData,
-			});
 			queryClient.invalidateQueries({
 				queryKey: ["data-service-logs", config.id],
 			});
+
+			let successMessage = result.message || i18n.t("Service started successfully");
+			if (data.service === "data-deletion" && result.filesDeleted !== undefined) {
+				successMessage = i18n.t("Data deletion completed. {{count}} files deleted ({{size}})", {
+					count: result.filesDeleted,
+					size: result.totalSizeDeleted
+				});
+			}
+
 			show({
-				message: i18n.t("Service started successfully"),
+				message: successMessage,
 				type: { success: true },
 			});
 			onClose();
 		} catch (error) {
 			console.error(error);
+			let errorMessage = i18n.t("Failed to start service");
+			if (error instanceof Error) {
+				errorMessage = `${errorMessage}: ${error.message}`;
+			} else {
+				errorMessage = `${errorMessage}: ${String(error)}`;
+			}
 			show({
-				message: i18n.t("Failed to start service, Error: ") +
-					(error instanceof FetchError ? error.message : String(error)),
+				message: errorMessage,
 				type: { critical: true },
 			});
 		}
@@ -134,6 +157,13 @@ export function RunConfigForm({
 							<NoticeBox warning title={i18n.t("Analytics Required")}>
 								{i18n.t(
 									"Please ensure analytics have been run on the source instance before proceeding with validation. Running analytics ensures the data is up-to-date for accurate validation results."
+								)}
+							</NoticeBox>
+						)}
+						{selectedService === "data-deletion" && (
+							<NoticeBox error title={i18n.t("Destructive Operation")}>
+								{i18n.t(
+									"This operation will permanently delete all data files for the selected configuration items and periods. This action cannot be undone."
 								)}
 							</NoticeBox>
 						)}
@@ -221,20 +251,24 @@ export function RunConfigForm({
 								)}
 							</>
 						)}
-						{selectedService != "metadata-migration" && (
+						{selectedService !== "metadata-migration" && (
 							<>
 								<PeriodSelector minPeriodType={"MONTHLY"} />
 								<ConfigSelector config={config} />
-								<RHFNumberField
-									name={"runtimeConfig.pageSize"}
-									label={i18n.t("Page size")}
-								/>
-								<RHFCheckboxField
-									name={"runtimeConfig.paginateByData"}
-									label={i18n.t("Paginate by data")}
-								/>
-							</>)
-						}
+								{selectedService !== "data-deletion" && (
+									<>
+										<RHFNumberField
+											name={"runtimeConfig.pageSize"}
+											label={i18n.t("Page size")}
+										/>
+										<RHFCheckboxField
+											name={"runtimeConfig.paginateByData"}
+											label={i18n.t("Paginate by data")}
+										/>
+									</>
+								)}
+							</>
+						)}
 					</form>
 				</ModalContent>
 				<ModalActions>
@@ -246,8 +280,12 @@ export function RunConfigForm({
 							primary
 						>
 							{form.formState.isSubmitting
-								? i18n.t("Requesting run...")
-								: i18n.t("Run")}
+								? (selectedService === "data-deletion"
+									? i18n.t("Deleting data...")
+									: i18n.t("Requesting run..."))
+								: (selectedService === "data-deletion"
+									? i18n.t("Delete Data")
+									: i18n.t("Run"))}
 						</Button>
 					</ButtonStrip>
 				</ModalActions>
