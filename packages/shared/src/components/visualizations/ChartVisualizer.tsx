@@ -56,6 +56,11 @@ export const ChartVisualizer = memo(function ChartVisualizer({
 					colors,
 					layout,
 					height: height,
+					customTitle: visualization.filters
+						.map(({ items }) =>
+							items.map(({ name }) => name).join(", "),
+						)
+						.join(" - "),
 					showFilterAsTitle: !isEmpty(visualization.filters),
 					name: visualization.displayName,
 					allowChartTypeChange: false,

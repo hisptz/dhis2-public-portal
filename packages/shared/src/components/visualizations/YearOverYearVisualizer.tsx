@@ -67,7 +67,17 @@ export function YearOverYearVisualizer({
 				: "column";
 		return {
 			chart: { type: chartType },
-			title: { text: isEmpty(visualization?.filters) ? "" : visualization.filters?.map((filter)=> filter.items.map((item) => item.displayName).join(", ")).join(", ") },
+			title: {
+				text: isEmpty(visualization?.filters)
+					? ""
+					: visualization.filters
+							?.map((filter) =>
+								filter.items
+									.map((item) => item.displayName)
+									.join(", "),
+							)
+							.join(", "),
+			},
 			xAxis: { categories, title: { text: "" } },
 			yAxis: { title: { text: "" } },
 			series,
