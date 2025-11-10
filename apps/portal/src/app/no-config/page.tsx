@@ -1,3 +1,5 @@
+"use client";
+
 import { NoConfigLandingPage } from "@/components/NoConfigLandingPage";
 import { Box } from "@mantine/core";
 
