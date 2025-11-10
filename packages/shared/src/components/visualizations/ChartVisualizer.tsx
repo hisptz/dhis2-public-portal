@@ -12,7 +12,7 @@ import {
 	getVisualizationLegendSet,
 } from "../../utils";
 import { useResizeObserver } from "usehooks-ts";
-import { capitalize, isEmpty, upperCase } from "lodash";
+import { isEmpty } from "lodash";
 
 export interface ChartVisualizerProps {
 	analytics: AnalyticsData;
@@ -55,15 +55,6 @@ export const ChartVisualizer = memo(function ChartVisualizer({
 					colors,
 					layout,
 					height: height,
-					customTitle: visualization.filters
-						.map(({ items }) =>
-							items
-								.map(({ displayName }) =>
-									capitalize(upperCase(displayName)),
-								)
-								.join(", "),
-						)
-						.join(" - "),
 					showFilterAsTitle: !isEmpty(visualization.filters),
 					name: visualization.displayName,
 					allowChartTypeChange: false,

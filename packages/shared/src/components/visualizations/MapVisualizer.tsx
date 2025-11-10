@@ -198,7 +198,7 @@ export const MapVisualizer = memo(function MapVisualizer({
 				position: "topright",
 			}}
 			setRef={setRef}
-			showPeriodTitle={true}
+			showPeriodTitle
 			periodSelection={activePeriodSelection}
 			boundaryLayer={boundaryLayer}
 			orgUnitSelection={activeOrgUnitSelection}
