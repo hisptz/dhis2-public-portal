@@ -1,3 +1,13 @@
+## [1.5.1](https://github.com/hisptz/dhis2-public-portal/compare/v1.5.0...v1.5.1) (2025-11-10)
+
+
+### Bug Fixes
+
+* add "use client" directive to multiple components ([67fd430](https://github.com/hisptz/dhis2-public-portal/commit/67fd4300ce5b96ddabdf05c704e9b85f7f34f0da))
+* add "use client" directive to NotFoundPage component ([e215106](https://github.com/hisptz/dhis2-public-portal/commit/e215106b7b445e83c3db63b2df363bee12422763))
+* fixed issues with filter labels for charts not being well formatted ([dc40a1f](https://github.com/hisptz/dhis2-public-portal/commit/dc40a1f3b7cf7f130aa82946088b379b830486b8))
+* fixed issues with filter labels for charts not being well formatted ([2bc86e9](https://github.com/hisptz/dhis2-public-portal/commit/2bc86e91a965629cb643d38bb3332740da75cfef))
+
 # [1.5.0](https://github.com/hisptz/dhis2-public-portal/compare/v1.4.0...v1.5.0) (2025-11-10)
 
 
