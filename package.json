@@ -1,55 +1,55 @@
 {
-  "name": "dhis2-public-portal",
-  "private": true,
-  "scripts": {
-    "portal": "pnpm --filter portal",
-    "manager": "pnpm --filter manager",
-    "docs": "pnpm --filter docs",
-    "shared": "pnpm --filter @packages/shared",
-    "test": "vitest -c vitest.config.mts",
-    "build": "turbo run build",
-    "build:standalone": "turbo run build:standalone --filter portal",
-    "publish:app-hub": "turbo run publish:app-hub --filter manager",
-    "dev": "turbo run dev",
-    "dev:portal": "turbo run dev --filter portal",
-    "dev:manager": "turbo run dev --filter manager",
-    "dev:docs": "turbo run dev --filter docs",
-    "lint": "turbo run lint",
-    "format": "prettier --write \"**/*.{ts,tsx,md}\"",
-    "check-types": "turbo run check-types",
-    "update-versions": "node scripts/update-versions.js",
-    "release": "semantic-release",
-    "clean": "find . -name 'node_modules' -type d -prune -exec rm -rf '{}' +"
-  },
-  "devDependencies": {
-    "@semantic-release/changelog": "^6.0.3",
-    "@semantic-release/commit-analyzer": "^13.0.1",
-    "@semantic-release/exec": "^7.0.3",
-    "@semantic-release/git": "^10.0.1",
-    "@semantic-release/github": "^11.0.1",
-    "@semantic-release/npm": "^12.0.1",
-    "@semantic-release/release-notes-generator": "^14.0.3",
-    "prettier": "^3.5.3",
-    "semantic-release": "^24.2.3",
-    "turbo": "^2.5.8",
-    "typescript": "5.8.3",
-    "vitest": "^3.1.1"
-  },
-  "engines": {
-    "node": ">=20"
-  },
-  "packageManager": "pnpm@10.18.2",
-  "workspaces": {
-    "nohoist": [
-      "sharp"
-    ],
-    "packages": [
-      "apps/*",
-      "packages/*"
-    ]
-  },
-  "repository": {
-    "url": "git@github.com:hisptz/dhis2-public-portal.git"
-  },
-  "version": "1.5.0"
+	"name": "dhis2-public-portal",
+	"private": true,
+	"scripts": {
+		"portal": "pnpm --filter portal",
+		"manager": "pnpm --filter manager",
+		"docs": "pnpm --filter docs",
+		"shared": "pnpm --filter @packages/shared",
+		"test": "vitest -c vitest.config.mts",
+		"build": "turbo run build",
+		"build:standalone": "turbo run build:standalone --filter portal",
+		"publish:app-hub": "turbo run publish:app-hub --filter manager",
+		"dev": "turbo run dev",
+		"dev:portal": "turbo run dev --filter portal",
+		"dev:manager": "turbo run dev --filter manager",
+		"dev:docs": "turbo run dev --filter docs",
+		"lint": "turbo run lint",
+		"format": "prettier --write \"**/*.{ts,tsx,md}\"",
+		"check-types": "turbo run check-types",
+		"update-versions": "node scripts/update-versions.js",
+		"release": "semantic-release",
+		"clean": "find . -name 'node_modules' -type d -prune -exec rm -rf '{}' +"
+	},
+	"devDependencies": {
+		"@semantic-release/changelog": "^6.0.3",
+		"@semantic-release/commit-analyzer": "^13.0.1",
+		"@semantic-release/exec": "^7.0.3",
+		"@semantic-release/git": "^10.0.1",
+		"@semantic-release/github": "^11.0.1",
+		"@semantic-release/npm": "^12.0.1",
+		"@semantic-release/release-notes-generator": "^14.0.3",
+		"prettier": "^3.5.3",
+		"semantic-release": "^24.2.3",
+		"turbo": "^2.6.0",
+		"typescript": "5.8.3",
+		"vitest": "^3.1.1"
+	},
+	"engines": {
+		"node": ">=20"
+	},
+	"packageManager": "pnpm@10.21.0",
+	"workspaces": {
+		"nohoist": [
+			"sharp"
+		],
+		"packages": [
+			"apps/*",
+			"packages/*"
+		]
+	},
+	"repository": {
+		"url": "git@github.com:hisptz/dhis2-public-portal.git"
+	},
+	"version": "1.5.0"
 }
