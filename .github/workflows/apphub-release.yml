@@ -44,4 +44,4 @@ jobs:
           echo "channel=$channel" >> $GITHUB_OUTPUT
       # Publish to the App Hub
       - name: Release to DHIS2 App Hub
-        run: pnpm run  publish:app-hub --filter manager  -k ${{secrets.D2_APP_HUB_API_KEY}} --channel ${{ steps.set_channel.outputs.channel }}
+        run: pnpm run  publish:app-hub --filter manager -- -k ${{secrets.D2_APP_HUB_API_KEY}} --channel ${{ steps.set_channel.outputs.channel }}
