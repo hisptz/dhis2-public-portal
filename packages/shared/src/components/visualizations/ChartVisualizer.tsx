@@ -12,6 +12,7 @@ import {
 	getVisualizationLegendSet,
 } from "../../utils";
 import { useResizeObserver } from "usehooks-ts";
+import { isEmpty } from "lodash";
 
 export interface ChartVisualizerProps {
 	analytics: AnalyticsData;
@@ -55,7 +56,12 @@ export const ChartVisualizer = memo(function ChartVisualizer({
 					colors,
 					layout,
 					height: height,
-					showFilterAsTitle: false,
+					customTitle: visualization.filters
+						.map(({ items }) =>
+							items.map(({ name }) => name).join(", "),
+						)
+						.join(" - "),
+					showFilterAsTitle: !isEmpty(visualization.filters),
 					name: visualization.displayName,
 					allowChartTypeChange: false,
 					legendSet: legendSet,
