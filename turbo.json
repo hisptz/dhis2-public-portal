@@ -39,6 +39,11 @@
     "dev": {
       "cache": false,
       "persistent": true
+    },
+    "publish:app-hub": {
+      "dependsOn": [
+        "build"
+      ]
     }
   }
 }

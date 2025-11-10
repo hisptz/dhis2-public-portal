@@ -30,9 +30,6 @@ jobs:
 
       - name: Install JS dependencies
         run: pnpm install --frozen-lockfile
-
-      - name: Build
-        run: pnpm run build --filter manager
       # Publish to the App Hub
       - name: Release to DHIS2 App Hub
         run: pnpm run  publish:app-hub --filter manager
