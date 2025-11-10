@@ -1,3 +1,11 @@
+# [1.5.0](https://github.com/hisptz/dhis2-public-portal/compare/v1.4.0...v1.5.0) (2025-11-10)
+
+
+### Features
+
+* enhance chart title generation with filter-based naming ([adeec24](https://github.com/hisptz/dhis2-public-portal/commit/adeec24bff603878f3703d19b21648b14d6d1150))
+* enhance visualizations with dynamic filter titles and improved props handling ([b6212d2](https://github.com/hisptz/dhis2-public-portal/commit/b6212d2c9716e444c46ab79312db300d474fad3f))
+
 # [1.4.0](https://github.com/hisptz/dhis2-public-portal/compare/v1.3.2...v1.4.0) (2025-10-13)
 
 
