@@ -7,7 +7,7 @@ env:
 on:
   # Triggers the workflow when a new release is created
   release:
-
+    types: [ released ]
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
@@ -31,5 +31,17 @@ jobs:
       - name: Install JS dependencies
         run: pnpm install --frozen-lockfile
       # Publish to the App Hub
+      - name: Set channel
+        id: set_channel
+        run: |
+          release_name="${{ github.event.release.name }}"
+          channel="stable"
+          if [[ "$release_name" == *"alpha"* ]]; then
+            channel="alpha"
+          elif [[ "$release_name" == *"beta"* ]]; then
+            channel="beta"
+          fi
+          echo "channel=$channel" >> $GITHUB_OUTPUT
+      # Publish to the App Hub
       - name: Release to DHIS2 App Hub
-        run: pnpm run  publish:app-hub --filter manager
+        run: pnpm run  publish:app-hub --filter manager  -k ${{secrets.D2_APP_HUB_API_KEY}} --channel ${{ steps.set_channel.outputs.channel }}
