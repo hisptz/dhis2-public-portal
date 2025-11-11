@@ -31,7 +31,7 @@ export function SortButton({
                     }}
                 />
             )}
-            <Button onClick={openModal} disabled={items.length === 0}> 
+            <Button onClick={openModal} disabled={items.length === 0} dataTest="sort-menu-items-button"> 
                 {i18n.t("Sort menu items")}
             </Button>
         </>

@@ -31,7 +31,12 @@ export function AddSubMenuItem({
 					parentPath={parentPath}
 				/>
 			)}
-			<Button icon={<IconAdd16 />} onClick={onOpen} small>
+			<Button
+				data-test="add-sub-menu-item-button"
+				icon={<IconAdd16 />} 
+			
+			onClick={onOpen}
+			 small>
 				{i18n.t("Add sub item")}
 			</Button>
 		</>

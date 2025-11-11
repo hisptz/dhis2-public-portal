@@ -1,0 +1,33 @@
+{
+  "style": {
+    "leadingLogo": {
+      "show": true,
+      "width": 70,
+      "height": 70
+    },
+    "trailingLogo": {
+      "show": true,
+      "width": 70,
+      "height": 70
+    },
+    "containerHeight": 150,
+    "coloredBackground": true,
+    "usePrimaryColorAsBackgroundColor": false,
+    "headerBackgroundColor": "#4A90E2"
+  },
+  "title": {
+    "text": "This heading is from cypress for testing",
+    "style": {
+      "align": "center",
+      "textSize": 32,
+      "textColor": "##4A90E2"
+    }
+  },
+  "subtitle": {
+    "text": "This subtitle is from cypress for testing",
+    "style": {
+      "textSize": 32,
+      "textColor": "##4A90E2"
+    }
+  }
+}

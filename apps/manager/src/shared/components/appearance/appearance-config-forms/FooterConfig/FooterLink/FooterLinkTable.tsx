@@ -46,6 +46,7 @@ export function FooterLinkTable({ fields, update, remove }: Props) {
 				<Tooltip content={i18n.t("Remove Link")}>
 					<Button
 						icon={<IconDelete16 />}
+						data-test="on-update-delete-footer-link-button"
 						small
 						onClick={() => remove(index)}
 					/>
@@ -53,6 +54,7 @@ export function FooterLinkTable({ fields, update, remove }: Props) {
 				<Tooltip content={i18n.t("Edit link")}>
 					<Button
 						icon={<IconEdit16 />}
+						data-test="on-update-edit-footer-link-button"
 						small
 						onClick={() => update(index, field)}
 					/>
