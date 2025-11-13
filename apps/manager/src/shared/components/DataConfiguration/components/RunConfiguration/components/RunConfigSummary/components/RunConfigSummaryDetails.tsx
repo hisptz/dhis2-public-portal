@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { useRunConfigSummary } from "../hooks/summary";
 import {
     DataServiceConfig,
 } from "@packages/shared/schemas";
@@ -18,11 +17,11 @@ export function RunConfigSummaryDetails({
 }: {
     config: DataServiceConfig;
 }) {
-    const [activeTab, setActiveTab] = useState<"metadata" | "data">("metadata");
+    const [activeTab, setActiveTab] = useState<"metadata" | "data" | "deletion">("metadata");
     const [showFailedModal, setShowFailedModal] = useState(false);
+    const [selectedProcessType, setSelectedProcessType] = useState<string | undefined>(undefined);
 
     const { data: processData, isLoading, isError, error } = useProcessMonitoring(config.id);
-    const { summaries } = useRunConfigSummary(config.id);
 
     if (isError) {
         return (
@@ -51,11 +50,15 @@ export function RunConfigSummaryDetails({
             </div>
         );
     }
-   
-    console.log('Metadata download:', processData?.metadata.download);
-    console.log('Metadata upload:', processData?.metadata.upload);
-    const handleFailedClick = () => {
+ 
+    const handleFailedClick = (processType: string) => {
+        setSelectedProcessType(processType);
         setShowFailedModal(true);
+    };
+
+    const handleCloseModal = () => {
+        setShowFailedModal(false);
+        setSelectedProcessType(undefined);
     };
 
     return (
@@ -63,10 +66,11 @@ export function RunConfigSummaryDetails({
             <div className="bg-white">
                 <SegmentedControl
                     selected={activeTab}
-                    onChange={({ value }) => setActiveTab(value as "metadata" | "data")}
+                    onChange={({ value }) => setActiveTab(value as "metadata" | "data" | "deletion")}
                     options={[
                         { label: i18n.t("Metadata Migration"), value: "metadata" },
                         { label: i18n.t("Data Migration"), value: "data" },
+                        { label: i18n.t("Data Deletion"), value: "deletion" },
                     ]}
                 />
             </div>
@@ -77,14 +81,16 @@ export function RunConfigSummaryDetails({
                     <ProcessSection
                         title={i18n.t('Download Process')}
                         icon="↓"
-                        process={processData.metadata.download}
+                        process={processData.metadataDownload}
+                        processType="Metadata Download"
                         onFailedClick={handleFailedClick}
                     />
 
                     <ProcessSection
                         title={i18n.t('Upload Process')}
                         icon="↑"
-                        process={processData.metadata.upload}
+                        process={processData.metadataUpload}
+                        processType="Metadata Upload"
                         onFailedClick={handleFailedClick}
                     />
                 </div>
@@ -96,14 +102,29 @@ export function RunConfigSummaryDetails({
                     <ProcessSection
                         title={i18n.t('Download Process')}
                         icon="↓"
-                        process={processData.data.download}
+                        process={processData.dataDownload}
+                        processType="Data Download"
                         onFailedClick={handleFailedClick}
                     />
 
                     <ProcessSection
                         title={i18n.t('Upload Process')}
                         icon="↑"
-                        process={processData.data.upload}
+                        process={processData.dataUpload}
+                        processType="Data Upload"
+                        onFailedClick={handleFailedClick}
+                    />
+                </div>
+            )}
+
+            {activeTab === "deletion" && processData && (
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
+
+                    <ProcessSection
+                        title={i18n.t('Data Deletion Process')}
+                        icon="↑"
+                        process={processData.dataDeletion}
+                        processType="Data Delete"
                         onFailedClick={handleFailedClick}
                     />
                 </div>
@@ -112,7 +133,8 @@ export function RunConfigSummaryDetails({
             <FailedQueueModal
                 configId={config.id}
                 isOpen={showFailedModal}
-                onClose={() => setShowFailedModal(false)}
+                onClose={handleCloseModal}
+                processType={selectedProcessType}
             />
         </div>
     );

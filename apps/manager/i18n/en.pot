@@ -5,8 +5,8 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
-"POT-Creation-Date: 2025-11-10T07:20:30.571Z\n"
-"PO-Revision-Date: 2025-11-10T07:20:30.571Z\n"
+"POT-Creation-Date: 2025-11-13T04:17:20.449Z\n"
+"PO-Revision-Date: 2025-11-13T04:17:20.449Z\n"
 
 msgid "Could not get Appearance configurations"
 msgstr "Could not get Appearance configurations"
@@ -320,6 +320,9 @@ msgstr "Run configuration"
 msgid "Service started successfully"
 msgstr "Service started successfully"
 
+msgid "Data deletion process started successfully. Check the queue for progress."
+msgstr "Data deletion process started successfully. Check the queue for progress."
+
 msgid "Failed to start service"
 msgstr "Failed to start service"
 
@@ -447,14 +450,14 @@ msgstr "Unknown"
 msgid "Completed"
 msgstr "Completed"
 
-msgid "Failed"
-msgstr "Failed"
-
 msgid "Unknown error"
 msgstr "Unknown error"
 
 msgid "View service overview"
 msgstr "View service overview"
+
+msgid "Failed {{processType}} Details"
+msgstr "Failed {{processType}} Details"
 
 msgid "Failed Processes Details"
 msgstr "Failed Processes Details"
@@ -468,20 +471,35 @@ msgstr "An unexpected error occurred"
 msgid "Debug Info"
 msgstr "Debug Info"
 
+msgid "Showing only {{processType}} failures"
+msgstr "Showing only {{processType}} failures"
+
+msgid "Clear {{processType}} Failed"
+msgstr "Clear {{processType}} Failed"
+
 msgid "Clear All Failed"
 msgstr "Clear All Failed"
-
-msgid "Process Type"
-msgstr "Process Type"
 
 msgid "Error Message"
 msgstr "Error Message"
 
-msgid "Retry Count"
-msgstr "Retry Count"
+msgid "Process Type"
+msgstr "Process Type"
+
+msgid "Failed Endpoint"
+msgstr "Failed Endpoint"
 
 msgid "Failed At"
 msgstr "Failed At"
+
+msgid "Details"
+msgstr "Details"
+
+msgid "Retry"
+msgstr "Retry"
+
+msgid "Detailed Error Information"
+msgstr "Detailed Error Information"
 
 msgid "No failed messages found"
 msgstr "No failed messages found"
@@ -489,14 +507,26 @@ msgstr "No failed messages found"
 msgid "All processes completed successfully!"
 msgstr "All processes completed successfully!"
 
+msgid "Retrying All..."
+msgstr "Retrying All..."
+
+msgid "Retry All Failed"
+msgstr "Retry All Failed"
+
+msgid "Retrying..."
+msgstr "Retrying..."
+
+msgid "Retry {{processType}}"
+msgstr "Retry {{processType}}"
+
+msgid "Clear Queue"
+msgstr "Clear Queue"
+
 msgid "Close"
 msgstr "Close"
 
 msgid "Click for details"
 msgstr "Click for details"
-
-msgid "Processing"
-msgstr "Processing"
 
 msgid "Error loading process data"
 msgstr "Error loading process data"
@@ -509,6 +539,9 @@ msgstr "Download Process"
 
 msgid "Upload Process"
 msgstr "Upload Process"
+
+msgid "Data Deletion Process"
+msgstr "Data Deletion Process"
 
 msgid "Error logs"
 msgstr "Error logs"

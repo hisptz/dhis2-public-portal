@@ -23,7 +23,7 @@ import { RHFCheckboxField, RHFSingleSelectField } from "@hisptz/dhis2-ui";
 import { RHFNumberField } from "../../../../../Fields/RHFNumberField";
 import { RHFMultiSelectField } from "../../../../../Fields/RHFMultiSelectField";
 import { SourceMetadataSelector } from "./components/SourceMetadataSelector";
-import { downloadMetadata, downloadData, validateData, deleteData } from "../../../../../../services/dataServiceClient";
+import { downloadMetadata, downloadData, validateData, startDataDeletion } from "../../../../../../services/dataServiceClient";
 
 const runConfigSchema = z.object({
 	service: z.enum([
@@ -92,12 +92,11 @@ export function RunConfigForm({
 				result = await downloadMetadata(config.id, metadataRequest);
 			} else if (data.service === "data-deletion") {
 				const deletionRequest = {
-					configId: config.id,
 					dataItemsConfigIds: data.dataItemsConfigIds,
 					runtimeConfig: data.runtimeConfig,
 				};
 
-				result = await deleteData(config.id, deletionRequest);
+				result = await startDataDeletion(config.id, deletionRequest);
 			} else if (data.service === "data-validation") {
 				const validationRequest = {
 					dataItemsConfigIds: data.dataItemsConfigIds,
@@ -120,11 +119,8 @@ export function RunConfigForm({
 			});
 
 			let successMessage = result.message || i18n.t("Service started successfully");
-			if (data.service === "data-deletion" && result.filesDeleted !== undefined) {
-				successMessage = i18n.t("Data deletion completed. {{count}} files deleted ({{size}})", {
-					count: result.filesDeleted,
-					size: result.totalSizeDeleted
-				});
+			if (data.service === "data-deletion") {
+				successMessage = i18n.t("Data deletion process started successfully. Check the queue for progress.");
 			}
 
 			show({

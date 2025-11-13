@@ -1,81 +1,50 @@
 import React from "react";
 import i18n from "@dhis2/d2-i18n";
-import { ProcessStatus } from "../types";
 import { MetricCard } from "./MetricCard";
 
+interface ProcessStatus {
+    queued: number;     
+    processing: number; 
+    failed: number;     
+}
 interface ProcessSectionProps {
     title: string;
     icon: string;
     process: ProcessStatus;
-    onFailedClick?: () => void;
+    processType?: string;
+    onFailedClick?: (processType: string) => void;
 }
 
-export function ProcessSection({ 
-    title, 
-    icon, 
-    process, 
-    onFailedClick 
-}: ProcessSectionProps) {
-     const calculateBreakdown = (process: ProcessStatus) => {
-        if (process.queued !== undefined && process.processing !== undefined && process.failed !== undefined) {
-             return {
-                queued: process.queued,
-                processing: process.processing,
-                failed: process.failed
-            };
-        }
-        
-         let queued = 0;
-        let processing = 0;
-        let failed = 0;
-
-        if (process.queueType === 'failed') {
-             failed = process.messageCount;
-        } else {
-             if (process.consumerCount > 0 && process.messageCount > 0) {
-                 processing = Math.min(process.consumerCount, process.messageCount);
-                queued = Math.max(0, process.messageCount - processing);
-            } else {
-                 queued = process.messageCount;
-            }
-        }
-
-        return { queued, processing, failed };
-    };
-
-    const breakdown = calculateBreakdown(process);
-
+export function ProcessSection({ title, icon, process, processType, onFailedClick }: ProcessSectionProps) {
     return (
         <div className="flex flex-col gap-3">
-            <h4
-                className="m-0 text-base font-semibold flex items-center gap-2"
-                style={{ color: 'var(--colors-grey800)' }}
-            >
+            <h4 className="m-0 text-base font-semibold flex items-center gap-2">
                 <span>{icon}</span>
                 {title}
             </h4>
-            <div
-                className="grid gap-3"
-                style={{ gridTemplateColumns: 'repeat(auto-fit, minmax(140px, 1fr))' }}
-            >
+
+            <div className="grid gap-3" style={{ gridTemplateColumns: 'repeat(auto-fit, minmax(140px, 1fr))' }}>
                 <MetricCard 
-                    title={i18n.t('Queued')}
-                    value={breakdown.queued}
+                    title="Queued"
+                    value={process.queued}
                     color="var(--colors-yellow700)"
                     bgColor="var(--colors-yellow050)"
                 />
                 <MetricCard 
-                    title={i18n.t('Processing')}
-                    value={breakdown.processing}
+                    title="Processing"
+                    value={process.processing}
                     color="var(--colors-blue700)"
                     bgColor="var(--colors-blue050)"
                 />
                 <MetricCard 
-                    title={i18n.t('Failed')}
-                    value={breakdown.failed}
+                    title="Failed"
+                    value={process.failed}
                     color="var(--colors-red700)"
                     bgColor="var(--colors-red050)"
-                    onClick={breakdown.failed > 0 ? onFailedClick : undefined}
+                    onClick={process.failed > 0 && onFailedClick && processType ? 
+                        () => onFailedClick(processType) : 
+                        undefined
+                    }
                 />
             </div>
         </div>
