@@ -2,6 +2,7 @@ import { NextFunction, Request, Response } from 'express';
 import logger from '@/logging';
 import { pushToQueue } from '@/rabbit/publisher';
 import { Operation } from 'express-openapi';
+import { startJob } from '@/utils/progress-tracker';
 
 export const POST: Operation = async (
     req: Request,
@@ -12,11 +13,11 @@ export const POST: Operation = async (
         const { id: configId } = req.params;
         const {
             metadataSource,
-            selectedVisualizations,
-            selectedMaps,
-            selectedDashboards
+            selectedVisualizations = [],
+            selectedMaps = [],
+            selectedDashboards = []
         } = req.body || {};
-        
+
         if (!configId) {
             return res.status(400).json({
                 error: 'Configuration ID is required',
@@ -24,8 +25,11 @@ export const POST: Operation = async (
             });
         }
 
-        logger.info(`Metadata download request received for config: ${configId}`);
-        logger.info(`Metadata source: ${metadataSource || 'flexiportal-config'}`);
+        // Calculate total items to process
+        const totalItems = selectedVisualizations.length + selectedMaps.length + selectedDashboards.length;
+ 
+        // Start progress tracking
+        await startJob(configId, 'metadata-download', totalItems);
 
         await pushToQueue(configId, 'metadataDownload', {
             configId,
@@ -33,6 +37,7 @@ export const POST: Operation = async (
             selectedVisualizations,
             selectedMaps,
             selectedDashboards,
+            totalItems,  
             requestedAt: new Date().toISOString()
         });
 
@@ -40,8 +45,9 @@ export const POST: Operation = async (
             message: 'Metadata download initiated successfully',
             configId,
             metadataSource: metadataSource || 'flexiportal-config',
+            totalItems,
             status: 'processing',
-            description: 'Metadata download has been queued for processing'
+            description: `Metadata download queued: ${totalItems} items to process`
         });
 
     } catch (error: any) {

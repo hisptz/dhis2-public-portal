@@ -15,25 +15,16 @@ export const POST: Operation = async (
         const { id: configId } = req.params;
         const parsedBody = dataUploadBodySchema.parse(req.body);
         
-        logger.info(`Starting data upload process for config: ${configId}`, {
-            filename: parsedBody.filename,
-            queuedAt: parsedBody.queuedAt,
-            downloadedFrom: parsedBody.downloadedFrom,
-        });
-
         // Create upload job data
         const uploadJobData = {
             mainConfigId: configId,
             filename: parsedBody.filename,
+            payload: parsedBody.payload,
             queuedAt: parsedBody.queuedAt || new Date().toISOString(),
             downloadedFrom: parsedBody.downloadedFrom,
         };
 
         await uploadDataFromQueue(uploadJobData);
-
-        logger.info(`Data upload completed successfully for config: ${configId}`, {
-            filename: parsedBody.filename,
-        });
 
         res.json({
             status: "completed",
@@ -114,12 +105,26 @@ POST.apiDoc = {
             "application/json": {
                 schema: {
                     type: "object",
-                    required: ["filename"],
+                    oneOf: [
+                        { required: ["filename"] },
+                        { required: ["payload"] }
+                    ],
                     properties: {
                         filename: {
                             type: "string",
                             description: "Path to the data file to upload",
                             minLength: 1
+                        },
+                        payload: {
+                            type: "object",
+                            description: "Direct data payload to upload (alternative to filename)",
+                            properties: {
+                                dataValues: {
+                                    type: "array",
+                                    items: { type: "object" },
+                                    description: "Array of data values to upload"
+                                }
+                            }
                         },
                         queuedAt: {
                             type: "string",

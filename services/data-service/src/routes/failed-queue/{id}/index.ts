@@ -27,13 +27,12 @@ export const GET: Operation = async (
 
         const queueNames = getQueueNames(configId);
         const failedQueueName = queueNames.failed;
-        
-        // RabbitMQ Management API configuration
+
         const rabbitMQConfig = {
             baseURL: process.env.RABBITMQ_HOST || 'http://localhost:15672',
             username: process.env.RABBITMQ_USER || 'guest',
             password: process.env.RABBITMQ_PASS || 'guest',
-            vhost: process.env.RABBITMQ_VHOST || '%2F' 
+            vhost: process.env.RABBITMQ_VHOST || '%2F'
         };
 
         const baseURL = rabbitMQConfig.baseURL;
@@ -42,9 +41,9 @@ export const GET: Operation = async (
         let totalFailedMessages = 0;
         let messages: any[] = [];
         let sourceQueues: Set<string> = new Set();
+        let sourceQueueCounts: Map<string, number> = new Map();
 
         try {
-            // First, get queue information
             const queueInfoResponse = await axios.get(
                 `${baseURL}/api/queues/${rabbitMQConfig.vhost}/${failedQueueName}`,
                 {
@@ -57,15 +56,11 @@ export const GET: Operation = async (
 
             totalFailedMessages = queueInfoResponse.data.messages || 0;
 
-            // If we need to inspect messages and there are messages available
             if (totalFailedMessages > 0 && (includeMessages || onlyQueues)) {
-                // For pagination, we need to fetch more messages than just limit + offset
-                // because we might need to filter by queue, so we fetch a larger batch
-                const fetchCount = onlyQueues ? 
-                    Math.min(50, totalFailedMessages) : // For queue discovery, fetch reasonable amount
-                    Math.min(offset + limit * 2, totalFailedMessages); // For pagination, fetch extra to handle filtering
-                
-                // Get messages using the Management API (truly non-destructive)
+                const fetchCount = onlyQueues ?
+                    Math.min(50, totalFailedMessages) :
+                    Math.min(offset + limit * 2, totalFailedMessages);
+
                 const messagesResponse = await axios.post(
                     `${baseURL}/api/queues/${rabbitMQConfig.vhost}/${failedQueueName}/get`,
                     {
@@ -84,40 +79,36 @@ export const GET: Operation = async (
 
                 const rawMessages = messagesResponse.data;
 
-                // Process each message
                 for (let i = 0; i < rawMessages.length; i++) {
                     const rawMsg = rawMessages[i];
                     const headers = rawMsg.properties?.headers || {};
-                    
-                    // Extract queue info from x-death header
+
                     const xDeath = headers['x-death'];
                     let sourceQueue = null;
-                    
+
                     if (xDeath && Array.isArray(xDeath) && xDeath.length > 0) {
                         const deathInfo = xDeath[0];
                         sourceQueue = deathInfo.queue;
                     }
-                    
-                    
-                    // Add to source queues set if we have a source queue
+
+
                     if (sourceQueue) {
                         sourceQueues.add(sourceQueue);
+                        sourceQueueCounts.set(sourceQueue, (sourceQueueCounts.get(sourceQueue) || 0) + 1);
                     }
-                    
-                    // Only process full message details if includeMessages is true or onlyQueues is false
+
                     if (includeMessages || !onlyQueues) {
-                        // Parse message content for full details
                         let payload;
                         try {
                             payload = JSON.parse(rawMsg.payload);
                         } catch {
-                            payload = rawMsg.payload; // If not JSON, keep as string
+                            payload = rawMsg.payload;
                         }
-                        
+
                         let deathTimestamp = null;
                         let deathReason = null;
                         let retryCount = null;
-                        
+
                         if (xDeath && Array.isArray(xDeath) && xDeath.length > 0) {
                             const deathInfo = xDeath[0];
                             retryCount = deathInfo.count;
@@ -135,7 +126,7 @@ export const GET: Operation = async (
                             deathTimestamp,
                             headers: {
                                 'x-axios-code': headers['x-axios-code'],
-                                'x-axios-status': headers['x-axios-status'], 
+                                'x-axios-status': headers['x-axios-status'],
                                 'x-axios-url': headers['x-axios-url'],
                                 'x-death': headers['x-death'],
                                 'x-error-message': headers['x-error-message'],
@@ -145,32 +136,28 @@ export const GET: Operation = async (
                             payload,
                             retrievedAt: new Date().toISOString()
                         };
-                        
-                        // Filter by source queue if specified
+
                         if (!filterByQueue || sourceQueue === filterByQueue) {
                             messages.push(messageDetails);
                         }
                     }
-                    
-                    // For onlyQueues mode, check if we've found all possible queues (early termination)
+
                     if (onlyQueues && sourceQueues.size >= 5) {
                         console.log(`Found all 5 possible source queues, stopping early at message ${i + 1}`);
                         break;
                     }
                 }
 
-                // Apply pagination to the filtered messages (only if not onlyQueues mode)
                 if (!onlyQueues && messages.length > 0) {
                     const totalMessages = messages.length;
                     messages = messages.slice(offset, offset + limit);
-                    
+
                     console.log(`Pagination applied: showing ${messages.length} messages (${offset + 1}-${offset + messages.length} of ${totalMessages} filtered)`);
                 }
             }
 
         } catch (apiError: any) {
             console.warn(`RabbitMQ Management API error for config ${configId}:`, apiError.message);
-            // Fallback to direct queue check if Management API fails
             const channel = getChannel();
             if (channel) {
                 try {
@@ -183,22 +170,23 @@ export const GET: Operation = async (
             }
         }
 
-        // Build response based on query mode
         const responseData: any = {
             configId,
             totalFailedMessages,
             retrievedAt: new Date().toISOString()
         };
-        
+
         if (onlyQueues) {
             responseData.sourceQueues = Array.from(sourceQueues);
             responseData.sourceQueueCount = sourceQueues.size;
+            responseData.sourceQueueCounts = Object.fromEntries(sourceQueueCounts);
         } else {
             responseData.messages = messages;
             if (sourceQueues.size > 0) {
                 responseData.sourceQueues = Array.from(sourceQueues);
+                responseData.sourceQueueCounts = Object.fromEntries(sourceQueueCounts);
             }
-            
+
             // Add pagination metadata
             if (includeMessages && !onlyQueues) {
                 responseData.pagination = {
@@ -215,7 +203,7 @@ export const GET: Operation = async (
 
         res.json({
             success: true,
-            message: onlyQueues ? 
+            message: onlyQueues ?
                 `Found ${sourceQueues.size} unique source queues from ${totalFailedMessages} failed messages` :
                 `Found ${totalFailedMessages} failed messages`,
             data: responseData,
@@ -253,12 +241,12 @@ export const DELETE: Operation = async (
         // Clear the failed queue
         const channel = getChannel();
         let clearedMessages = 0;
-        
+
         if (channel) {
             try {
                 const queueNames = getQueueNames(configId);
                 const failedQueueName = queueNames.failed;
-                
+
                 const result = await channel.purgeQueue(failedQueueName);
                 clearedMessages = result.messageCount;
                 console.log(`Cleared ${clearedMessages} messages from failed queue: ${failedQueueName}`);
@@ -289,6 +277,238 @@ export const DELETE: Operation = async (
             message: 'Failed to clear failed queue',
             timestamp: new Date().toISOString()
         });
+    }
+};
+
+GET.apiDoc = {
+    summary: "Get failed queue messages and source queue information",
+    description: "Retrieves failed messages from the RabbitMQ dead letter queue for a specific configuration. Supports different modes: full message details, source queues only, or filtered by queue type. Provides pagination and detailed error information for troubleshooting.",
+    operationId: "getFailedQueueMessages",
+    tags: ["FAILED QUEUE"],
+    parameters: [
+        {
+            in: "path",
+            name: "id",
+            required: true,
+            schema: { type: "string" },
+            description: "Configuration ID"
+        },
+        {
+            in: "query",
+            name: "includeMessages",
+            schema: { type: "boolean", default: false },
+            description: "Whether to include full message details in the response"
+        },
+        {
+            in: "query",
+            name: "onlyQueues",
+            schema: { type: "boolean", default: false },
+            description: "Return only source queue information without message details (lightweight mode)"
+        },
+        {
+            in: "query",
+            name: "queue",
+            schema: { type: "string" },
+            description: "Filter messages by specific source queue name"
+        },
+        {
+            in: "query",
+            name: "limit",
+            schema: { type: "integer", minimum: 1, maximum: 100, default: 50 },
+            description: "Maximum number of messages to return per page"
+        },
+        {
+            in: "query",
+            name: "offset",
+            schema: { type: "integer", minimum: 0, default: 0 },
+            description: "Number of messages to skip for pagination"
+        }
+    ],
+    responses: {
+        "200": {
+            description: "Failed queue information retrieved successfully",
+            content: {
+                "application/json": {
+                    schema: {
+                        type: "object",
+                        properties: {
+                            success: { type: "boolean", example: true },
+                            message: { type: "string", example: "Found 5 failed messages" },
+                            data: {
+                                type: "object",
+                                properties: {
+                                    configId: { type: "string", example: "config-123" },
+                                    totalFailedMessages: { type: "integer", example: 5 },
+                                    retrievedAt: { type: "string", format: "date-time" },
+                                    sourceQueues: {
+                                        type: "array",
+                                        items: { type: "string" },
+                                        example: ["config-123-data-download-queue", "config-123-data-upload-queue"],
+                                        description: "List of source queues that have failed messages"
+                                    },
+                                    sourceQueueCounts: {
+                                        type: "object",
+                                        additionalProperties: { type: "integer" },
+                                        example: {
+                                            "config-123-data-download-queue": 3,
+                                            "config-123-data-upload-queue": 2
+                                        },
+                                        description: "Count of failed messages per source queue"
+                                    },
+                                    messages: {
+                                        type: "array",
+                                        description: "Detailed failed message information (only when includeMessages=true)",
+                                        items: {
+                                            type: "object",
+                                            properties: {
+                                                messageId: { type: "string", example: "msg-1" },
+                                                sourceQueue: { type: "string", example: "config-123-data-download-queue" },
+                                                retryCount: { type: "integer", example: 3 },
+                                                deathReason: { type: "string", example: "rejected" },
+                                                deathTimestamp: { type: "string", format: "date-time" },
+                                                headers: {
+                                                    type: "object",
+                                                    properties: {
+                                                        "x-error-message": { type: "string", example: "HTTP 400 Bad Request" },
+                                                        "x-axios-status": { type: "string", example: "400" },
+                                                        "x-axios-url": { type: "string", example: "https://dhis2.example.com/api/dataValueSets" },
+                                                        "x-failure-reason": { type: "string", example: "Invalid data format" }
+                                                    }
+                                                },
+                                                payload: {
+                                                    type: "object",
+                                                    description: "Original message payload that failed to process"
+                                                },
+                                                retrievedAt: { type: "string", format: "date-time" }
+                                            }
+                                        }
+                                    },
+                                    pagination: {
+                                        type: "object",
+                                        description: "Pagination information (only when includeMessages=true and onlyQueues=false)",
+                                        properties: {
+                                            limit: { type: "integer", example: 50 },
+                                            offset: { type: "integer", example: 0 },
+                                            currentPageSize: { type: "integer", example: 5 },
+                                            hasNextPage: { type: "boolean", example: false },
+                                            hasPreviousPage: { type: "boolean", example: false },
+                                            totalPages: { type: "integer", example: 1 },
+                                            currentPage: { type: "integer", example: 1 }
+                                        }
+                                    }
+                                }
+                            },
+                            timestamp: { type: "string", format: "date-time" }
+                        }
+                    }
+                }
+            }
+        },
+        "400": {
+            description: "Bad request - missing or invalid configuration ID",
+            content: {
+                "application/json": {
+                    schema: {
+                        type: "object",
+                        properties: {
+                            success: { type: "boolean", example: false },
+                            error: { type: "string", example: "Configuration ID is required" },
+                            timestamp: { type: "string", format: "date-time" }
+                        }
+                    }
+                }
+            }
+        },
+        "500": {
+            description: "Internal server error",
+            content: {
+                "application/json": {
+                    schema: {
+                        type: "object",
+                        properties: {
+                            success: { type: "boolean", example: false },
+                            configId: { type: "string", example: "config-123" },
+                            error: { type: "string", example: "Internal server error" },
+                            message: { type: "string", example: "Failed to fetch failed queue details" },
+                            timestamp: { type: "string", format: "date-time" }
+                        }
+                    }
+                }
+            }
+        }
+    }
+};
+
+DELETE.apiDoc = {
+    summary: "Clear all failed messages from the queue",
+    description: "Purges all failed messages from the RabbitMQ dead letter queue for a specific configuration. This operation is irreversible and will permanently remove all failed messages.",
+    operationId: "clearFailedQueue",
+    tags: ["FAILED QUEUE"],
+    parameters: [
+        {
+            in: "path",
+            name: "id",
+            required: true,
+            schema: { type: "string" },
+            description: "Configuration ID"
+        }
+    ],
+    responses: {
+        "200": {
+            description: "Failed queue cleared successfully",
+            content: {
+                "application/json": {
+                    schema: {
+                        type: "object",
+                        properties: {
+                            success: { type: "boolean", example: true },
+                            message: { type: "string", example: "Cleared 5 failed messages" },
+                            data: {
+                                type: "object",
+                                properties: {
+                                    configId: { type: "string", example: "config-123" },
+                                    clearedMessages: { type: "integer", example: 5 },
+                                    clearedAt: { type: "string", format: "date-time" }
+                                }
+                            },
+                            timestamp: { type: "string", format: "date-time" }
+                        }
+                    }
+                }
+            }
+        },
+        "400": {
+            description: "Bad request - missing configuration ID",
+            content: {
+                "application/json": {
+                    schema: {
+                        type: "object",
+                        properties: {
+                            success: { type: "boolean", example: false },
+                            error: { type: "string", example: "Configuration ID is required" },
+                            timestamp: { type: "string", format: "date-time" }
+                        }
+                    }
+                }
+            }
+        },
+        "500": {
+            description: "Internal server error",
+            content: {
+                "application/json": {
+                    schema: {
+                        type: "object",
+                        properties: {
+                            success: { type: "boolean", example: false },
+                            configId: { type: "string", example: "config-123" },
+                            error: { type: "string", example: "Internal server error" },
+                            message: { type: "string", example: "Failed to clear failed queue" },
+                            timestamp: { type: "string", format: "date-time" }
+                        }
+                    }
+                }
+            }
+        }
     }
 };
 

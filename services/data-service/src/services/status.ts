@@ -63,36 +63,27 @@ export const getQueueStatus = async (queueName: string, configId: string): Promi
 		const hasActivityNow = messages > 0 || messages_ready > 0 || messages_unacknowledged > 0;
 		const isProcessingNow = messages_unacknowledged > 0;
 
-		// Update activity tracking
-		queueActivityMap.set(queueName, {
+ 		queueActivityMap.set(queueName, {
 			hasActivity: hadActivityBefore || hasActivityNow,
 			lastSeen: hasActivityNow ? now : (previousActivity?.lastSeen || now),
 			lastProcessedCount: messages,
 			wasProcessing: isProcessingNow
 		});
 
-		// Determine status based on current state and history
-		if (isProcessingNow) {
-			// Currently processing messages
-			status = DataServiceRunStatus.RUNNING;
+ 		if (isProcessingNow) {
+ 			status = DataServiceRunStatus.RUNNING;
 		} else if (messages_ready > 0) {
-			// Has messages waiting to be processed
-			status = DataServiceRunStatus.QUEUED;
+ 			status = DataServiceRunStatus.QUEUED;
 		} else if (messages === 0 && messages_ready === 0 && messages_unacknowledged === 0) {
-			// No messages in queue
-			if (wasProcessing && hadActivityBefore) {
-				// Was processing before, now empty - likely completed
-				// Check if completion was recent (within last 30 seconds)
-				const timeSinceLastActivity = now.getTime() - (previousActivity?.lastSeen?.getTime() || 0);
-				const recentlyCompleted = timeSinceLastActivity < 30000; // 30 seconds
+ 			if (wasProcessing && hadActivityBefore) {
+  				const timeSinceLastActivity = now.getTime() - (previousActivity?.lastSeen?.getTime() || 0);
+				const recentlyCompleted = timeSinceLastActivity < 60000; 
 				
 				status = recentlyCompleted ? DataServiceRunStatus.COMPLETED : DataServiceRunStatus.IDLE;
 			} else if (hadActivityBefore) {
-				// Had activity before but wasn't actively processing
-				status = DataServiceRunStatus.IDLE;
+ 				status = DataServiceRunStatus.IDLE;
 			} else {
-				// Never had activity
-				status = DataServiceRunStatus.NOT_STARTED;
+ 				status = DataServiceRunStatus.NOT_STARTED;
 			}
 		}
 
@@ -130,8 +121,7 @@ export const getMultipleQueueStatus = async (queueNames: string[], configId: str
 				return result.value;
 			}
 			
-			// Return failed status for rejected promises
-			logger.warn(`Failed to get status for queue: ${queueNames[index]}`);
+ 			logger.warn(`Failed to get status for queue: ${queueNames[index]}`);
 			return {
 				queue: queueNames[index],
 				messages: 0,
@@ -205,7 +195,7 @@ export const markQueueAsCompleted = (queueName: string): void => {
 		hasActivity: true,
 		lastSeen: now,
 		lastProcessedCount: 0,
-		wasProcessing: true // Mark as was processing so it shows COMPLETED
+		wasProcessing: true 
 	});
 	
 	logger.info(`Queue ${queueName} marked as completed`);

@@ -1,23 +1,22 @@
 import logger from "@/logging";
 import { NextFunction, Request, Response } from "express";
 import { Operation } from "express-openapi";
-import { 
-    getConfigQueueStats,
+import {
     purgeConfigQueues,
     deleteConfigQueues,
     initializeQueuesFromDatastore,
     createQueuesForConfig
 } from "@/rabbit/queue-manager";
- 
+
 export const GET: Operation = async (
     req: Request,
     res: Response,
     next: NextFunction,
 ) => {
     try {
-        const configId = req.params.id; // Use 'id' instead of 'configId' to match the file path {id}
+        const configId = req.params.id;
         logger.info(`API request: Get queue stats for configId: ${configId}`);
-        
+
         if (!configId) {
             return res.status(400).json({
                 success: false,
@@ -25,23 +24,19 @@ export const GET: Operation = async (
                 timestamp: new Date().toISOString()
             });
         }
-        
-        // Temporarily return simple response for debugging
-        // const stats = await getConfigQueueStats(configId);
-        
+
+
         res.json({
             success: true,
             configId,
             message: "Queue stats endpoint working",
-            // stats,
             timestamp: new Date().toISOString()
         });
     } catch (error) {
         logger.error(`Failed to get queue stats for ${req.params.id}:`, error);
-        
-        // Ensure error is properly serialized
+
         const errorMessage = error instanceof Error ? error.message : String(error);
-        
+
         res.status(500).json({
             success: false,
             configId: req.params.id,
@@ -57,10 +52,8 @@ export const POST: Operation = async (
     next: NextFunction,
 ) => {
     try {
-        const configId = req.params.id;  
+        const configId = req.params.id;
         const { action } = req.body;
-
-        logger.info(`API request: ${action} for configId: ${configId}`);
 
         let result;
         switch (action) {
@@ -102,10 +95,10 @@ export const POST: Operation = async (
         }
     } catch (error) {
         logger.error(`Failed to ${req.body.action} queues for ${req.params.id}:`, error);
-        
+
         const statusCode = (error as Error).message.includes('not found') ? 404 : 500;
         const errorMessage = error instanceof Error ? error.message : String(error);
-        
+
         res.status(statusCode).json({
             success: false,
             configId: req.params.id,
@@ -123,9 +116,9 @@ export const DELETE: Operation = async (
     try {
         const { id: configId } = req.params;
         logger.info(`DELETE API request for configId: ${configId}`);
-        
+
         const result = await deleteConfigQueues(configId);
-        
+
         res.json({
             success: true,
             ...result,
@@ -134,7 +127,7 @@ export const DELETE: Operation = async (
     } catch (error) {
         const errorMessage = error instanceof Error ? error.message : String(error);
         logger.error(`Failed to delete queues for ${req.params.id}: ${errorMessage}`);
-        
+
         res.status(500).json({
             success: false,
             configId: req.params.id,

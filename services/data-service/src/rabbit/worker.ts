@@ -5,16 +5,16 @@ import { connectRabbit, getChannel } from "./connection";
 import { uploadDataFromQueue } from "@/services/data-migration/data-upload";
 import { uploadMetadataFromQueue } from "@/services/metadata-migration/metadata-upload";
 import { downloadAndQueueMetadata } from "@/services/metadata-migration/metadata-download";
+import { deleteData } from "@/services/data-migration/data-delete";
 import { getQueueNames } from "@/variables/queue-names";
 import { DatastoreNamespaces } from "@packages/shared/constants";
 import { dhis2Client } from "@/clients/dhis2";
 import axios from "axios";
 import { downloadData } from "@/services/data-migration/data-download";
-import { deleteDataFiles } from "@/services/data-migration/data-deletion";
 
 let isConnecting = false;
 const RECONNECT_DELAY = 5000;
-const MAX_RETRIES = 3;
+const MAX_RETRIES = 1;
 
 // Handler map for different queue types
 const handlerMap: Record<string, (messageContent: any) => Promise<void>> = {
@@ -25,9 +25,9 @@ const handlerMap: Record<string, (messageContent: any) => Promise<void>> = {
   },
 
   "dataDeletion": async (messageContent) => {
-    const { configId } = messageContent;
-    logger.info(`Processing data deletion for config: ${configId}`);
-    await deleteDataFiles(configId);
+    const { mainConfigId } = messageContent;
+    logger.info(`Processing data deletion for config: ${mainConfigId}`);
+    await deleteData(messageContent);
   },
 
   "dataUpload": async (messageContent) => {
@@ -111,45 +111,15 @@ const handleMessage = async (
 
   try {
     const messageContent = JSON.parse(msg.content.toString());
-    const currentRetryCount = parseInt(msg.properties.headers?.["x-retry-count"] || "0");
-    const isRetry = currentRetryCount > 0;
-
-    logger.info(
-      `[Worker] ==> Message Received! Queue Type: ${queueType}${isRetry ? ` (Retry ${currentRetryCount})` : ''}`,
-      {
-        retryCount: currentRetryCount,
-        messageId: msg.properties.messageId,
-        timestamp: new Date().toISOString(),
-      }
-    );
-
     await handler(messageContent);
 
     channel.ack(msg);
     logger.info(
-      `[Worker] <== Message Processed & Acknowledged for ${queueType}.`,
+      `[Worker] <==> Message Processed & Acknowledged for ${queueType}.`,
     );
   } catch (error: any) {
-    // Get retry count from custom header or initialize
     let retryCount = parseInt(msg.properties.headers?.["x-retry-count"] || "0");
 
-    // Enhanced error logging
-    logger.error(
-      `[Worker] Handler error for ${queueType}. Retry attempt: ${retryCount + 1}`,
-      {
-        error: {
-          message: error.message,
-          stack: error.stack,
-          name: error.name,
-        },
-        queueType,
-        messageContent: JSON.parse(msg.content.toString()),
-        retryCount,
-        messageHeaders: msg.properties.headers,
-      }
-    );
-
-    // Add error details to message headers for debugging
     if (!msg.properties.headers) {
       msg.properties.headers = {};
     }
@@ -161,12 +131,10 @@ const handleMessage = async (
 
     msg.properties.headers['x-failure-reason'] = JSON.stringify(failureReason);
     msg.properties.headers['x-error-message'] = error.message;
-    msg.properties.headers['x-error-stack'] = error.stack;
     msg.properties.headers['x-error-name'] = error.name;
     msg.properties.headers['x-error-timestamp'] = new Date().toISOString();
     msg.properties.headers['x-queue-type'] = queueType;
 
-    // Add additional axios error details if available
     if (axios.isAxiosError(error)) {
       msg.properties.headers['x-axios-status'] = error.response?.status?.toString() || 'unknown';
       msg.properties.headers['x-axios-code'] = error.code || 'unknown';
@@ -177,27 +145,24 @@ const handleMessage = async (
       logger.warn(`[Worker] Retrying message (attempt ${retryCount + 1}/${MAX_RETRIES}). Requeuing...`);
 
       try {
-        // Get configId from message content to construct proper queue name
         const messageContent = JSON.parse(msg.content.toString());
         const configId = messageContent.configId;
 
         if (!configId) {
           logger.error(`[Worker] No configId found in message content for retry. Cannot determine queue name.`);
-          channel.nack(msg, false, false); // Send to DLQ
+          channel.nack(msg, false, false); 
           return;
         }
 
-        // Get the proper queue names for this config
         const queueNames = getQueueNames(configId);
         const actualQueueName = queueNames[queueType as keyof typeof queueNames];
 
         if (!actualQueueName) {
           logger.error(`[Worker] No queue name found for type: ${queueType} and config: ${configId}`);
-          channel.nack(msg, false, false); // Send to DLQ
+          channel.nack(msg, false, false); 
           return;
         }
 
-        // Republish message with updated retry count
         const updatedHeaders = {
           ...msg.properties.headers,
           'x-retry-count': retryCount + 1,
@@ -209,19 +174,9 @@ const handleMessage = async (
           headers: updatedHeaders,
         });
 
-        logger.info(`[Worker] Message republished with retry count: ${retryCount + 1} to queue: ${actualQueueName}`, {
-          newRetryCount: retryCount + 1,
-          queueType,
-          actualQueueName,
-          configId,
-          messageId: msg.properties.messageId,
-        });
-
-        // Acknowledge the current message after successful republish
         channel.ack(msg);
       } catch (republishError) {
         logger.error(`[Worker] Failed to republish message:`, republishError);
-        // If republish fails, don't ack - let it go to DLQ
         channel.nack(msg, false, false);
       }
     } else {
@@ -245,8 +200,6 @@ const handleMessage = async (
 const setupConsumer = async (channel: Channel) => {
   try {
     logger.info("[ConsumerSetup] Starting to discover configs from datastore...");
-
-    // Get all config IDs from datastore (we'll need to implement this)
     const configIds = await getAllConfigIds();
     logger.info(`[ConsumerSetup] Found ${configIds.length} configurations`);
 
@@ -275,6 +228,7 @@ const setupConsumer = async (channel: Channel) => {
         { queueName: queueNames.metadataUpload, handlerType: "metadataUpload" },
         { queueName: queueNames.dataDownload, handlerType: "dataDownload" },
         { queueName: queueNames.dataUpload, handlerType: "dataUpload" },
+        { queueName: queueNames.dataDeletion, handlerType: "dataDeletion" },
       ];
 
       for (const { queueName, handlerType } of queuesToSetup) {
