@@ -15,8 +15,7 @@ export const POST: Operation = async (
         const { id: configId } = req.params;
         const parsedBody = dataUploadBodySchema.parse(req.body);
         
-        // Create upload job data
-        const uploadJobData = {
+         const uploadJobData = {
             mainConfigId: configId,
             filename: parsedBody.filename,
             payload: parsedBody.payload,

@@ -6,33 +6,26 @@ import * as fs from "node:fs";
 
 export interface DataUploadJob {
     mainConfigId: string;
-    filename: string;
+    filename?: string;
+    payload?: any;
     queuedAt?: string;
     downloadedFrom?: string;
 }
 
 export async function uploadDataFromQueue(jobData: any): Promise<void> {
     try {
-        const { mainConfigId, filename, queuedAt, downloadedFrom } = jobData;
-
-        logger.info(`Processing data upload job for config: ${mainConfigId}`, {
-            filename,
-            queuedAt,
-            downloadedFrom,
-            jobDataKeys: Object.keys(jobData || {}),
-        });
+        const { mainConfigId, filename, payload, queuedAt, downloadedFrom } = jobData;
 
         if (!validateUploadJobData(jobData)) {
             throw new Error(`Invalid upload job data for config: ${mainConfigId}`);
         }
-
-        await uploadDataFromFile({ filename, configId: mainConfigId });
-
-        logger.info(`Data upload job completed successfully for config: ${mainConfigId}`, {
-            filename,
-            downloadedFrom,
-        });
-
+        if (payload) {
+            await uploadDataFromPayload({ payload, configId: mainConfigId, filename });
+        } else if (filename) {
+            await uploadDataFromFile({ filename, configId: mainConfigId });
+        } else {
+            throw new Error(`No payload or filename provided for upload job`);
+        }
     } catch (error: any) {
         logger.error(`Error processing data upload job:`, {
             error: {
@@ -40,25 +33,24 @@ export async function uploadDataFromQueue(jobData: any): Promise<void> {
                 stack: error.stack,
                 name: error.name,
             },
-            jobData: {
-                mainConfigId: jobData?.mainConfigId,
-                filename: jobData?.filename,
-                queuedAt: jobData?.queuedAt,
-                downloadedFrom: jobData?.downloadedFrom,
-                jobDataKeys: Object.keys(jobData || {}),
-            }
         });
         throw error;
     }
 }
 
 function validateUploadJobData(jobData: any): boolean {
-    const { mainConfigId, filename } = jobData;
+    const { mainConfigId, filename, payload } = jobData;
 
-    if (!mainConfigId || !filename) {
-        logger.error("Missing required upload job data fields", {
+    if (!mainConfigId) {
+        logger.error("Missing required mainConfigId in upload job data");
+        return false;
+    }
+
+    if (!filename && !payload) {
+        logger.error("Missing both filename and payload in upload job data", {
             hasMainConfigId: !!mainConfigId,
             hasFilename: !!filename,
+            hasPayload: !!payload,
         });
         return false;
     }
@@ -99,13 +91,7 @@ export async function uploadDataFromFile({
             throw new Error(`Invalid data file format: missing or invalid dataValues array in ${filename}`);
         }
 
-        const uploadResponse = await uploadDataValues(payload);
-
-        logger.info(`Data upload completed successfully for ${filename}`, {
-            imported: uploadResponse.imported,
-            ignored: uploadResponse.ignored,
-            total: payload.dataValues.length
-        });
+        await uploadDataValues(payload);
 
         // Clean up the file after successful upload
         await cleanupDataFile(filename);
@@ -118,12 +104,51 @@ export async function uploadDataFromFile({
                 name: error.name,
             },
             configId,
-            filename,
         });
 
         // Handle specific error cases
         if (error instanceof AxiosError) {
             await handleUploadAxiosError(error, filename);
+        }
+
+        throw error;
+    }
+}
+
+export async function uploadDataFromPayload({
+    payload,
+    configId,
+    filename,
+}: {
+    payload: any;
+    configId: string;
+    filename?: string;
+}): Promise<void> {
+    try {
+
+        if (!payload || !payload.dataValues || !Array.isArray(payload.dataValues)) {
+            throw new Error(`Invalid payload format: missing or invalid dataValues array`);
+        }
+        await uploadDataValues(payload);
+
+        // Clean up the file if it exists and upload was successful
+        if (filename) {
+            await cleanupDataFile(filename);
+        }
+
+    } catch (error: any) {
+        logger.error(`Error uploading data from payload:`, {
+            error: {
+                message: error.message,
+                stack: error.stack,
+                name: error.name,
+            },
+            configId 
+        });
+
+        // Handle specific error cases
+        if (error instanceof AxiosError) {
+            await handleUploadAxiosError(error, filename || 'payload-upload');
         }
 
         throw error;
@@ -139,7 +164,7 @@ async function uploadDataValues(payload: any): Promise<{ imported: number; ignor
 
     const response = await dhis2Client.post(url, payload, { params });
     const importSummary = response.data?.response;
-    
+
     if (!importSummary || !importSummary.importCount) {
         throw new Error("Invalid response from DHIS2 data upload");
     }

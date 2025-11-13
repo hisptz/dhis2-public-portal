@@ -10,7 +10,6 @@ import {
 import { AxiosError } from "axios";
 import { chunk, compact, head, isEmpty } from "lodash";
 import { pushToQueue } from "@/rabbit/publisher";
-import { getQueueNames } from "@/variables/queue-names";
 import { checkOrCreateFolder } from "@/utils/files";
 import { fetchPagedData, processAttributeComboData, processData, saveDataFile } from "@/utils/data";
 import pLimit from "p-limit";
@@ -35,7 +34,6 @@ export async function downloadAndQueueData(options: DataDownloadOptions): Promis
     try {
         const { mainConfigId, dataItemsConfigIds, runtimeConfig } = options;
         logger.info(`Starting data download and queue process for config: ${mainConfigId}`);
-        logger.info(`Processing ${dataItemsConfigIds.length} data item configurations`);
 
         const mainConfig = await fetchMainConfiguration(mainConfigId);
         const dataItemConfigs = compact(dataItemsConfigIds.map((id) => {
@@ -43,7 +41,6 @@ export async function downloadAndQueueData(options: DataDownloadOptions): Promis
         }));
         checkOrCreateFolder(`outputs/${mainConfigId}`);
         await enqueueDataDownloadTasks(mainConfig, runtimeConfig, dataItemConfigs);
-        logger.info(`Data download jobs successfully queued for config: ${mainConfigId}`);
     } catch (error) {
         logger.error(`Error during download and queue process for config ${options.mainConfigId}:`, error);
         throw error;
@@ -55,7 +52,6 @@ async function fetchMainConfiguration(configId: string): Promise<DataServiceConf
         logger.info(`Getting configuration from server for ${configId}...`);
         const url = `dataStore/${DatastoreNamespaces.DATA_SERVICE_CONFIG}/${configId}`;
         const response = await dhis2Client.get<DataServiceConfig>(url);
-        logger.info(`Configuration retrieved from server for ${configId}`);
         return response.data;
     } catch (error) {
         if (error instanceof AxiosError) {
@@ -74,9 +70,6 @@ async function enqueueDataDownloadTasks(
     dataItemConfigs: DataServiceDataSourceItemsConfig[]
 ): Promise<void> {
     const configId = mainConfig.id;
-    const queueNames = getQueueNames(configId);
-
-    logger.info(`Using data download queue: ${queueNames.dataDownload}`);
 
     const pushPromises: Promise<void>[] = [];
 
@@ -104,24 +97,15 @@ async function enqueueDataDownloadTasks(
 
 export async function downloadData(jobData: any): Promise<void> {
     try {
-        const { mainConfigId, mainConfig, periodId, config, runtimeConfig, overrideDimensions } = jobData;
-
-        logger.info(`Processing data download job for config: ${mainConfigId}`, {
-            periodId,
-            configId: config?.id,
-            hasOverrideDimensions: !!overrideDimensions,
-            jobDataKeys: Object.keys(jobData || {}),
-        });
-
-        // Get fresh configuration for client creation
+        const { mainConfigId } = jobData;
         const mainConfigForClient = await fetchMainConfiguration(mainConfigId);
         const client = createDownloadClient({ config: mainConfigForClient });
-        logger.info(`Processing job for config: ${mainConfigForClient.id}, period: ${periodId}, config: ${config.id}`);
+
         const shouldPaginate = await handlePagination(jobData, client);
         if (shouldPaginate) {
             return;
         }
-        // Process the actual data download
+
         await processDataDownload(jobData, client);
 
     } catch (error: any) {
@@ -130,13 +114,6 @@ export async function downloadData(jobData: any): Promise<void> {
                 message: error.message,
                 stack: error.stack,
                 name: error.name,
-            },
-            jobData: {
-                mainConfigId: jobData?.mainConfigId,
-                configId: jobData?.config?.id,
-                periodId: jobData?.periodId,
-                hasOverrideDimensions: !!jobData?.overrideDimensions,
-                jobDataKeys: Object.keys(jobData || {}),
             }
         });
         throw error;
@@ -171,8 +148,6 @@ async function handlePagination(jobData: any, client: any): Promise<boolean> {
     if (baseDimensions[heavyDimension].length <= pageSize) {
         return false;
     }
-
-    logger.info(`Pagination needed for ${heavyDimension} (${baseDimensions[heavyDimension].length} items > ${pageSize})`);
 
     const chunks = chunk(baseDimensions[heavyDimension], pageSize);
     const limit = pLimit(10);
@@ -209,8 +184,6 @@ async function processDataDownload(jobData: any, client: any): Promise<void> {
         periodId,
     });
 
-    logger.info(`Fetching data for dimensions: ${JSON.stringify(Object.keys(dimensions))}`);
-
     const data = await fetchPagedData({
         dimensions,
         filters: config.filters,
@@ -218,14 +191,11 @@ async function processDataDownload(jobData: any, client: any): Promise<void> {
         timeout: runtimeConfig.timeout,
     });
 
-    logger.info(`Data download completed`);
-
     if (isEmpty(data.dataValues)) {
         logger.info(`No data found for ${config.id}: ${JSON.stringify(dimensions.dx?.slice(0, 5) || 'no dx')}`);
         return;
     }
 
-    logger.info(`Processing ${data.dataValues.length} data values for ${JSON.stringify(dimensions.dx?.slice(0, 5) || 'no dx')}`);
 
     const processedData = config.type === "ATTRIBUTE_VALUES"
         ? await processAttributeComboData({
@@ -248,18 +218,14 @@ async function processDataDownload(jobData: any, client: any): Promise<void> {
             config: mainConfig,
             itemsConfig: config,
         });
-        logger.info(`haha xxx Data saved: ${processedData.dataValues}`);
-        
-        logger.info(` xxx Data saved to file: ${filename}`);
 
         await pushToQueue(mainConfigId, 'dataUpload', {
             mainConfigId,
             filename,
+            payload: processedData,
         }, {
             queuedAt: new Date().toISOString(),
             downloadedFrom: config.id
         });
-
-        logger.info(`Upload job queued for file: ${filename}`);
     }
 }
