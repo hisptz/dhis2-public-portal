@@ -4,6 +4,7 @@ import { DatastoreNamespaces } from "@packages/shared/constants";
 import { dhis2Client } from "@/clients/dhis2";
 import { DataServiceConfig } from "@packages/shared/schemas";
 import { getQueueNames } from "@/variables/queue-names";
+import { startWorker } from "./worker";
 
 /**
  * Creates all required queues for a specific config
@@ -42,6 +43,10 @@ export async function createQueuesForConfig(configId: string) {
         logger.info(`Created queue: ${queue.name} (${queue.description})`);
     }
     logger.info(`All queues created successfully for configId: ${configId}`);
+    logger.info(`Restarting worker to setup consumers for new configuration: ${configId}`);
+    await startWorker();
+    logger.info(`Worker restarted successfully. Configuration ${configId} is ready for processing.`);
+
     return queueNames;
 }
 
@@ -52,7 +57,6 @@ export async function initializeQueuesFromDatastore(configId: string) {
     try {
         logger.info(`Checking datastore for configId: ${configId}`);
 
-        // Check if config exists in datastore
         const url = `dataStore/${DatastoreNamespaces.DATA_SERVICE_CONFIG}/${configId}`;
         const response = await dhis2Client.get<DataServiceConfig>(url);
 
@@ -60,9 +64,7 @@ export async function initializeQueuesFromDatastore(configId: string) {
             throw new Error(`Configuration ${configId} not found in datastore`);
         }
 
-        logger.info(`Configuration found in datastore for ${configId}`);
 
-        // Create queues for this config
         const queueNames = await createQueuesForConfig(configId);
 
         return {
@@ -82,13 +84,11 @@ export async function initializeAllQueuesFromDatastore() {
     try {
         logger.info("Fetching all configurations from datastore...");
 
-        // Get all config keys from datastore
         const keysUrl = `dataStore/${DatastoreNamespaces.DATA_SERVICE_CONFIG}`;
         const keysResponse = await dhis2Client.get<string[]>(keysUrl);
 
         const configIds = keysResponse.data || [];
-        logger.info(`Found ${configIds.length} configurations in datastore`);
-
+ 
         const results = await Promise.allSettled(
             configIds.map(configId => initializeQueuesFromDatastore(configId))
         );
@@ -106,61 +106,6 @@ export async function initializeAllQueuesFromDatastore() {
         };
     } catch (error) {
         logger.error(`Failed to initialize queues from datastore: ${(error as Error).message || String(error)}`);
-        throw error;
-    }
-}
-
-
-/**
- * Get queue statistics for a specific config
- */
-export async function getConfigQueueStats(configId: string) {
-    const currentChannel = getChannel();
-    if (!currentChannel) {
-        throw new Error("Channel not initialized");
-    }
-
-    const queueNames = getQueueNames(configId);
-    const stats: Record<string, any> = {};
-
-    try {
-        // Get stats for each queue
-        const queueChecks = [
-            { key: 'metadataDownload', name: queueNames.metadataDownload },
-            { key: 'metadataUpload', name: queueNames.metadataUpload },
-            { key: 'dataDownload', name: queueNames.dataDownload },
-            { key: 'dataUpload', name: queueNames.dataUpload },
-            { key: 'dataDeletion', name: queueNames.dataDeletion },
-            { key: 'failed', name: queueNames.failed }
-        ];
-
-        for (const queue of queueChecks) {
-            try {
-                const queueInfo = await currentChannel.checkQueue(queue.name);
-                stats[queue.key] = {
-                    name: queue.name,
-                    messageCount: queueInfo.messageCount,
-                    consumerCount: queueInfo.consumerCount,
-                    status: 'active'
-                };
-            } catch (error) {
-                stats[queue.key] = {
-                    name: queue.name,
-                    messageCount: 0,
-                    consumerCount: 0,
-                    status: 'not_found',
-                    error: (error as Error).message
-                };
-            }
-        }
-
-        return {
-            configId,
-            queues: stats,
-            timestamp: new Date().toISOString()
-        };
-    } catch (error) {
-        logger.error(`Failed to get queue stats for configId ${configId}: ${(error as Error).message || String(error)}`);
         throw error;
     }
 }
@@ -225,8 +170,6 @@ export async function deleteConfigQueues(configId: string) {
 
     const queueNames = getQueueNames(configId);
     const results: Record<string, any> = {};
-
-    logger.info(`Deleting all queues for configId: ${configId}`);
 
     const queuesToDelete = [
         { key: 'metadataDownload', name: queueNames.metadataDownload },
