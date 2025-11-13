@@ -97,10 +97,17 @@ export const dataDownloadBodySchema = z.object({
 export type DataDownloadBody = z.infer<typeof dataDownloadBodySchema>;
 
 export const dataUploadBodySchema = z.object({
-	filename: z.string().min(1, "Filename is required"),
+	filename: z.string().min(1).optional(), 
+	payload: z.any().optional(),
 	queuedAt: z.string().optional(),
 	downloadedFrom: z.string().optional(),
-});
+}).refine(
+	(data) => data.filename || data.payload,
+	{
+		message: "Either filename or payload must be provided",
+		path: ["filename", "payload"],
+	}
+);
 
 export type DataUploadBody = z.infer<typeof dataUploadBodySchema>;
 
