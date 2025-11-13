@@ -3,7 +3,7 @@ import { Operation } from 'express-openapi';
 import logger from '@/logging';
 import { getMultipleQueueStatus, getSystemHealth } from '@/services/status';
 import { getQueueNames } from '@/variables/queue-names';
-import { getAllProgress, buildProcessStatus } from '@/services/simple-progress-tracker';
+import { getAllProgress, buildProcessStatus } from '@/utils/progress-tracker';
 
 export const GET: Operation = async (
     req: Request,
@@ -28,6 +28,7 @@ export const GET: Operation = async (
             queueNames.metadataUpload,
             queueNames.dataDownload,
             queueNames.dataUpload,
+            queueNames.dataDeletion,   
             queueNames.failed  
         ];
 
@@ -39,26 +40,32 @@ export const GET: Operation = async (
             metadataUpload: queueStatuses.find((q: any) => q.queue === queueNames.metadataUpload),
             dataDownload: queueStatuses.find((q: any) => q.queue === queueNames.dataDownload),
             dataUpload: queueStatuses.find((q: any) => q.queue === queueNames.dataUpload),
+            dataDeletion: queueStatuses.find((q: any) => q.queue === queueNames.dataDeletion),  
             dlq: queueStatuses.find((q: any) => q.queue === queueNames.failed),  
         };
 
-        // Get progress data for simple process status
+         const buildProcessStatusFromQueue = (queueData: any) => ({
+            queued: queueData?.messages_ready || 0,
+            processing: queueData?.messages_unacknowledged || 0,
+            failed: 0  
+        });
+
         const progressData = await getAllProgress(configId);
         const failedCount = statusByType.dlq?.messages || 0;
 
-        // Build simple process status for the ProcessSection components
         const processes = {
             metadataDownload: buildProcessStatus('metadata-download', progressData, failedCount),
             metadataUpload: buildProcessStatus('metadata-upload', progressData, failedCount),
-            dataDownload: buildProcessStatus('data-download', progressData, failedCount),
-            dataUpload: buildProcessStatus('data-upload', progressData, failedCount)
+             dataDownload: buildProcessStatusFromQueue(statusByType.dataDownload),
+            dataUpload: buildProcessStatusFromQueue(statusByType.dataUpload),
+            dataDeletion: buildProcessStatusFromQueue(statusByType.dataDeletion)
         };
-
+ 
         res.json({
             success: true,
             configId,
-            queues: statusByType,        // Your existing queue data (for other parts of the app)
-            processes,                   // NEW: Simple process data (for ProcessSection components)
+            queues: statusByType,        
+            processes,                   
             health,
             timestamp: new Date().toISOString()
         });
