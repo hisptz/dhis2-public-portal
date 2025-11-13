@@ -3,7 +3,7 @@ import logger from '@/logging';
 import { Operation } from 'express-openapi';
 import { AxiosError } from 'axios';
 import { fromError } from 'zod-validation-error';
-import { deleteAndQueueData, completeDelete } from '@/services/data-migration/data-delete';
+import { deleteAndQueueData } from '@/services/data-migration/data-delete';
 import { dataDownloadBodySchema } from '@packages/shared/schemas';  
 
 export const POST: Operation = async (
@@ -48,49 +48,6 @@ export const POST: Operation = async (
                 status: "failed",
                 message: fromError(e).toString(),
                 details: e.errors,
-            });
-            return;
-        } else {
-            res.status(500).json({
-                status: "failed",
-                message: e.message,
-            });
-        }
-    }
-};
-
-export const DELETE: Operation = async (
-    req: Request,
-    res: Response,
-    next: NextFunction,
-) => {
-    try {
-        const { id: configId } = req.params;
-        const { confirm } = req.query;
-        
-        if (confirm !== 'true') {
-            return res.status(400).json({
-                status: "failed",
-                message: "Confirmation required. Set 'confirm=true' to proceed with data deletion."
-            });
-        }
-
-        logger.info(`Getting delete summary for config: ${configId}`);
-
-        await completeDelete(configId);
-
-        res.json({
-            status: "success",
-            message: `Delete summary generated for config ${configId}`,
-        });
-    } catch (e: any) {
-        logger.error(`Error in data deletion endpoint for config ${req.params.id}:`, e);
-        
-        if (e instanceof AxiosError) {
-            res.status(e.status ?? 500).json({
-                status: "failed",
-                message: e.message,
-                details: e.response?.data,
             });
             return;
         } else {
@@ -180,62 +137,6 @@ POST.apiDoc = {
         },
         "500": {
             description: "Internal server error during data deletion"
-        }
-    }
-};
-
-DELETE.apiDoc = {
-    summary: "Complete data deletion process",
-    description: "Completes the data deletion process and generates summary for a specific configuration.",
-    operationId: "completeDataDeletion",
-    tags: ["DATA"],
-    parameters: [
-        {
-            name: "id",
-            in: "path",
-            required: true,
-            schema: {
-                type: "string"
-            },
-            description: "Configuration ID"
-        },
-        {
-            name: "confirm",
-            in: "query",
-            required: true,
-            schema: {
-                type: "string",
-                enum: ["true"]
-            },
-            description: "Confirmation flag - must be 'true' to proceed with deletion"
-        }
-    ],
-    responses: {
-        200: {
-            description: "Data files deleted successfully",
-            content: {
-                "application/json": {
-                    schema: {
-                        type: "object",
-                        properties: {
-                            status: { type: "string", example: "success" },
-                            message: { type: "string" },
-                            filesDeleted: { type: "number" },
-                            totalSizeDeleted: { type: "string" },
-                            directoryRemoved: { type: "boolean" }
-                        }
-                    }
-                }
-            }
-        },
-        400: {
-            description: "Bad request - confirmation required"
-        },
-        404: {
-            description: "Configuration not found or no data to delete"
-        },
-        500: {
-            description: "Failed to delete data files"
         }
     }
 };
