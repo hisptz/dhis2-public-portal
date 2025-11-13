@@ -42,4 +42,3 @@ yarn-error.log*
 /apps/manager/cypress.env.json
 /services/data-service/logs
 /services/data-service/outputs
-/services/data-service/QUEUE_SYSTEM.md

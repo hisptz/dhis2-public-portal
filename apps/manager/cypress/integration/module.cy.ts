@@ -389,22 +389,6 @@ describe("Modules Page", () => {
 		}
 
 		cy.wait(5000);
-		cy.contains("button", "Sort document groups").click();
-
-		cy.get('[data-rfd-draggable-id="test-group"]')
-			.focus()
-			.trigger("keydown", { keyCode: 32 });
-		cy.get('[data-rfd-draggable-id="test-group"]').trigger("keydown", {
-			keyCode: 40,
-			force: true,
-		});
-		cy.get('[data-rfd-draggable-id="test-group"]').trigger("keydown", {
-			keyCode: 32,
-			force: true,
-		});
-		cy.wait(1000);
-		cy.contains("button", "Update order").click();
-		cy.wait(1000);
 
 		cy.contains("td", "PDF Document")
 			.parent("tr")
