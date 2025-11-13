@@ -3,6 +3,7 @@ import { Operation } from 'express-openapi';
 import logger from '@/logging';
 import { getMultipleQueueStatus, getSystemHealth } from '@/services/status';
 import { getQueueNames } from '@/variables/queue-names';
+import { getAllProgress, buildProcessStatus } from '@/services/simple-progress-tracker';
 
 export const GET: Operation = async (
     req: Request,
@@ -20,7 +21,6 @@ export const GET: Operation = async (
             });
         }
 
-        logger.info(`Status request for config: ${configId}`);
 
         const queueNames = getQueueNames(configId);
         const allQueueNames = [
@@ -42,10 +42,23 @@ export const GET: Operation = async (
             dlq: queueStatuses.find((q: any) => q.queue === queueNames.failed),  
         };
 
+        // Get progress data for simple process status
+        const progressData = await getAllProgress(configId);
+        const failedCount = statusByType.dlq?.messages || 0;
+
+        // Build simple process status for the ProcessSection components
+        const processes = {
+            metadataDownload: buildProcessStatus('metadata-download', progressData, failedCount),
+            metadataUpload: buildProcessStatus('metadata-upload', progressData, failedCount),
+            dataDownload: buildProcessStatus('data-download', progressData, failedCount),
+            dataUpload: buildProcessStatus('data-upload', progressData, failedCount)
+        };
+
         res.json({
             success: true,
             configId,
-            queues: statusByType,
+            queues: statusByType,        // Your existing queue data (for other parts of the app)
+            processes,                   // NEW: Simple process data (for ProcessSection components)
             health,
             timestamp: new Date().toISOString()
         });

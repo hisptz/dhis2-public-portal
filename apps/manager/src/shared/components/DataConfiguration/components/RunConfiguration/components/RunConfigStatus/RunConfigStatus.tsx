@@ -25,7 +25,7 @@ export function StatusIndicator({
 		case DataServiceRunStatus.COMPLETED:
 			return <Tag positive>{i18n.t("Completed")}</Tag>;
 		case DataServiceRunStatus.FAILED:
-			return <Tag negative>{i18n.t("Failed")}</Tag>;
+			return <Tag neutral>{i18n.t("Idle")}</Tag>;
 	}
 }
 

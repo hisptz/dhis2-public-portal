@@ -1,28 +1,8 @@
 import { NextFunction, Request, Response } from 'express';
-import logger from '@/logging';
+import { Operation } from 'express-openapi';
 import { getChannel } from '@/rabbit/connection';
 import { getQueueNames } from '@/variables/queue-names';
-import { Operation } from 'express-openapi';
-
-export interface FailedMessage {
-    messageId?: string;
-    queueType: string;
-    configId: string;
-    retryCount: number;
-    queue: string;
-    failureReason: any;
-    errorMessage: string;
-    errorStack?: string;
-    errorTimestamp: string;
-    originalData: any;
-}
-
-export interface FailedQueueResponse {
-    configId: string;
-    totalFailedMessages: number;
-    messages: FailedMessage[];
-    retrievedAt: string;
-}
+import axios from 'axios';
 
 export const GET: Operation = async (
     req: Request,
@@ -31,97 +11,225 @@ export const GET: Operation = async (
 ) => {
     try {
         const { id: configId } = req.params;
-        const { limit = 50, offset = 0 } = req.query;
+        const includeMessages = req.query.includeMessages === 'true';
+        const filterByQueue = req.query.queue as string;
+        const onlyQueues = req.query.onlyQueues === 'true';
+        const limit = parseInt(req.query.limit as string) || (onlyQueues ? 50 : 50);
+        const offset = parseInt(req.query.offset as string) || 0;
 
         if (!configId) {
             return res.status(400).json({
-                error: 'Configuration ID is required',
-                message: 'Please provide a valid configuration ID in the URL parameters'
+                success: false,
+                error: "Configuration ID is required",
+                timestamp: new Date().toISOString()
             });
-        }
-
-        logger.info(`Fetching failed queue details for config: ${configId}`);
-
-        const channel = getChannel();
-        if (!channel) {
-            throw new Error('RabbitMQ channel not available');
         }
 
         const queueNames = getQueueNames(configId);
         const failedQueueName = queueNames.failed;
-
-        const queueInfo = await channel.checkQueue(failedQueueName);
-        const totalFailedMessages = queueInfo.messageCount;
-
-        if (totalFailedMessages === 0) {
-            return res.json({
-                configId,
-                totalFailedMessages: 0,
-                messages: [],
-                retrievedAt: new Date().toISOString()
-            });
-        }
-
-        const messages: FailedMessage[] = [];
-        let retrievedCount = 0;
-        const maxMessages = Math.min(Number(limit), 100);  
-
-        try {
-            while (retrievedCount < maxMessages && retrievedCount < totalFailedMessages) {
-                try {
-                    const msg = await channel.get(failedQueueName, { noAck: false });
-                    if (!msg) break;
-
-                    const messageContent = JSON.parse(msg.content.toString());
-                    const headers = msg.properties.headers || {};
-                    logger.debug('Failed message headers:', headers);
-                        logger.debug('Failed message content:', messageContent);
-
-                    const failedMessage: FailedMessage = {
-                        messageId: msg.properties.messageId,
-                        queue: headers['x-death[queue]'] || 'unknown',
-                        queueType: headers['x-queue-type'] || 'unknown',
-                        configId: messageContent.configId || configId,
-                        retryCount: parseInt(headers['x-retry-count'] || '0'),
-                        failureReason: headers['x-failure-reason'] ? JSON.parse(headers['x-failure-reason']) : null,
-                        errorMessage: headers['x-error-message'] || 'Unknown error',
-                        errorStack: headers['x-error-stack'],
-                        errorTimestamp: headers['x-error-timestamp'] || msg.properties.timestamp,
-                        originalData: messageContent
-                    };
-
-                    messages.push(failedMessage);
-                    
-                    // Requeue the message back to failed queue to maintain it
-                    await channel.sendToQueue(failedQueueName, msg.content, msg.properties);
-                    channel.ack(msg);
-                    
-                    retrievedCount++;
-                } catch (msgError) {
-                    logger.warn('Error processing failed message:', msgError);
-                    break;
-                }
-            }
-        } catch (error) {
-            logger.warn('Error retrieving failed messages:', error);
-        }
-
-        const response: FailedQueueResponse = {
-            configId,
-            totalFailedMessages,
-            messages: messages.slice(Number(offset), Number(offset) + Number(limit)),
-            retrievedAt: new Date().toISOString()
+        
+        // RabbitMQ Management API configuration
+        const rabbitMQConfig = {
+            baseURL: process.env.RABBITMQ_HOST || 'http://localhost:15672',
+            username: process.env.RABBITMQ_USER || 'guest',
+            password: process.env.RABBITMQ_PASS || 'guest',
+            vhost: process.env.RABBITMQ_VHOST || '%2F' 
         };
 
-        logger.info(`Retrieved ${messages.length} failed messages for config: ${configId}`);
-        res.json(response);
+        const baseURL = rabbitMQConfig.baseURL;
+        const auth = Buffer.from(`${rabbitMQConfig.username}:${rabbitMQConfig.password}`).toString('base64');
 
-    } catch (error: any) {
-        logger.error('Error fetching failed queue details:', error);
+        let totalFailedMessages = 0;
+        let messages: any[] = [];
+        let sourceQueues: Set<string> = new Set();
+
+        try {
+            // First, get queue information
+            const queueInfoResponse = await axios.get(
+                `${baseURL}/api/queues/${rabbitMQConfig.vhost}/${failedQueueName}`,
+                {
+                    headers: {
+                        'Authorization': `Basic ${auth}`,
+                        'Content-Type': 'application/json'
+                    }
+                }
+            );
+
+            totalFailedMessages = queueInfoResponse.data.messages || 0;
+
+            // If we need to inspect messages and there are messages available
+            if (totalFailedMessages > 0 && (includeMessages || onlyQueues)) {
+                // For pagination, we need to fetch more messages than just limit + offset
+                // because we might need to filter by queue, so we fetch a larger batch
+                const fetchCount = onlyQueues ? 
+                    Math.min(50, totalFailedMessages) : // For queue discovery, fetch reasonable amount
+                    Math.min(offset + limit * 2, totalFailedMessages); // For pagination, fetch extra to handle filtering
+                
+                // Get messages using the Management API (truly non-destructive)
+                const messagesResponse = await axios.post(
+                    `${baseURL}/api/queues/${rabbitMQConfig.vhost}/${failedQueueName}/get`,
+                    {
+                        count: fetchCount,
+                        ackmode: "ack_requeue_true", // Requeue messages to avoid consumption
+                        encoding: "auto",
+                        truncate: 50000
+                    },
+                    {
+                        headers: {
+                            'Authorization': `Basic ${auth}`,
+                            'Content-Type': 'application/json'
+                        }
+                    }
+                );
+
+                const rawMessages = messagesResponse.data;
+
+                // Process each message
+                for (let i = 0; i < rawMessages.length; i++) {
+                    const rawMsg = rawMessages[i];
+                    const headers = rawMsg.properties?.headers || {};
+                    
+                    // Extract queue info from x-death header
+                    const xDeath = headers['x-death'];
+                    let sourceQueue = null;
+                    
+                    if (xDeath && Array.isArray(xDeath) && xDeath.length > 0) {
+                        const deathInfo = xDeath[0];
+                        sourceQueue = deathInfo.queue;
+                    }
+                    
+                    
+                    // Add to source queues set if we have a source queue
+                    if (sourceQueue) {
+                        sourceQueues.add(sourceQueue);
+                    }
+                    
+                    // Only process full message details if includeMessages is true or onlyQueues is false
+                    if (includeMessages || !onlyQueues) {
+                        // Parse message content for full details
+                        let payload;
+                        try {
+                            payload = JSON.parse(rawMsg.payload);
+                        } catch {
+                            payload = rawMsg.payload; // If not JSON, keep as string
+                        }
+                        
+                        let deathTimestamp = null;
+                        let deathReason = null;
+                        let retryCount = null;
+                        
+                        if (xDeath && Array.isArray(xDeath) && xDeath.length > 0) {
+                            const deathInfo = xDeath[0];
+                            retryCount = deathInfo.count;
+                            deathReason = deathInfo.reason;
+                            if (deathInfo.time) {
+                                deathTimestamp = new Date(deathInfo.time * 1000).toISOString();
+                            }
+                        }
+
+                        const messageDetails = {
+                            messageId: rawMsg.properties?.message_id || `msg-${i + 1}`,
+                            sourceQueue,
+                            retryCount,
+                            deathReason,
+                            deathTimestamp,
+                            headers: {
+                                'x-axios-code': headers['x-axios-code'],
+                                'x-axios-status': headers['x-axios-status'], 
+                                'x-axios-url': headers['x-axios-url'],
+                                'x-death': headers['x-death'],
+                                'x-error-message': headers['x-error-message'],
+                                'x-failure-reason': headers['x-failure-reason'],
+                                'x-retry-timestamp': headers['x-retry-timestamp']
+                            },
+                            payload,
+                            retrievedAt: new Date().toISOString()
+                        };
+                        
+                        // Filter by source queue if specified
+                        if (!filterByQueue || sourceQueue === filterByQueue) {
+                            messages.push(messageDetails);
+                        }
+                    }
+                    
+                    // For onlyQueues mode, check if we've found all possible queues (early termination)
+                    if (onlyQueues && sourceQueues.size >= 5) {
+                        console.log(`Found all 5 possible source queues, stopping early at message ${i + 1}`);
+                        break;
+                    }
+                }
+
+                // Apply pagination to the filtered messages (only if not onlyQueues mode)
+                if (!onlyQueues && messages.length > 0) {
+                    const totalMessages = messages.length;
+                    messages = messages.slice(offset, offset + limit);
+                    
+                    console.log(`Pagination applied: showing ${messages.length} messages (${offset + 1}-${offset + messages.length} of ${totalMessages} filtered)`);
+                }
+            }
+
+        } catch (apiError: any) {
+            console.warn(`RabbitMQ Management API error for config ${configId}:`, apiError.message);
+            // Fallback to direct queue check if Management API fails
+            const channel = getChannel();
+            if (channel) {
+                try {
+                    const queueInfo = await channel.checkQueue(failedQueueName);
+                    totalFailedMessages = queueInfo.messageCount;
+                    console.log(`Fallback: Found ${totalFailedMessages} messages in failed queue`);
+                } catch (queueError) {
+                    console.warn(`Failed queue does not exist or error checking queue:`, queueError);
+                }
+            }
+        }
+
+        // Build response based on query mode
+        const responseData: any = {
+            configId,
+            totalFailedMessages,
+            retrievedAt: new Date().toISOString()
+        };
+        
+        if (onlyQueues) {
+            responseData.sourceQueues = Array.from(sourceQueues);
+            responseData.sourceQueueCount = sourceQueues.size;
+        } else {
+            responseData.messages = messages;
+            if (sourceQueues.size > 0) {
+                responseData.sourceQueues = Array.from(sourceQueues);
+            }
+            
+            // Add pagination metadata
+            if (includeMessages && !onlyQueues) {
+                responseData.pagination = {
+                    limit,
+                    offset,
+                    currentPageSize: messages.length,
+                    hasNextPage: (offset + limit) < totalFailedMessages,
+                    hasPreviousPage: offset > 0,
+                    totalPages: Math.ceil(totalFailedMessages / limit),
+                    currentPage: Math.floor(offset / limit) + 1
+                };
+            }
+        }
+
+        res.json({
+            success: true,
+            message: onlyQueues ? 
+                `Found ${sourceQueues.size} unique source queues from ${totalFailedMessages} failed messages` :
+                `Found ${totalFailedMessages} failed messages`,
+            data: responseData,
+            timestamp: new Date().toISOString()
+        });
+
+    } catch (error) {
+        console.error('Error in failed-queue GET:', error);
         res.status(500).json({
-            error: 'Failed to fetch failed queue details',
-            message: error.message || 'An unexpected error occurred',
-            configId: req.params.id
+            success: false,
+            configId: req.params.id,
+            error: "Internal server error",
+            message: 'Failed to fetch failed queue details',
+            timestamp: new Date().toISOString()
         });
     }
 };
@@ -136,104 +244,51 @@ export const DELETE: Operation = async (
 
         if (!configId) {
             return res.status(400).json({
-                error: 'Configuration ID is required'
+                success: false,
+                error: "Configuration ID is required",
+                timestamp: new Date().toISOString()
             });
         }
 
-        logger.info(`Clearing failed queue for config: ${configId}`);
-
+        // Clear the failed queue
         const channel = getChannel();
-        if (!channel) {
-            throw new Error('RabbitMQ channel not available');
+        let clearedMessages = 0;
+        
+        if (channel) {
+            try {
+                const queueNames = getQueueNames(configId);
+                const failedQueueName = queueNames.failed;
+                
+                const result = await channel.purgeQueue(failedQueueName);
+                clearedMessages = result.messageCount;
+                console.log(`Cleared ${clearedMessages} messages from failed queue: ${failedQueueName}`);
+            } catch (queueError) {
+                console.warn(`Failed to clear queue for config ${configId}:`, queueError);
+            }
+        } else {
+            console.log('RabbitMQ channel not available - no messages to clear');
         }
 
-        const queueNames = getQueueNames(configId);
-        const failedQueueName = queueNames.failed;
-
-        // Purge the failed queue
-        const result = await channel.purgeQueue(failedQueueName);
-        
-        logger.info(`Cleared ${result.messageCount} messages from failed queue for config: ${configId}`);
-        
         res.json({
-            message: 'Failed queue cleared successfully',
-            configId,
-            clearedMessages: result.messageCount,
-            clearedAt: new Date().toISOString()
+            success: true,
+            message: `Cleared ${clearedMessages} failed messages`,
+            data: {
+                configId,
+                clearedMessages,
+                clearedAt: new Date().toISOString()
+            },
+            timestamp: new Date().toISOString()
         });
 
-    } catch (error: any) {
-        logger.error('Error clearing failed queue:', error);
+    } catch (error) {
+        console.error('Error in failed-queue DELETE:', error);
         res.status(500).json({
-            error: 'Failed to clear failed queue',
-            message: error.message || 'An unexpected error occurred',
-            configId: req.params.id
+            success: false,
+            configId: req.params.id,
+            error: "Internal server error",
+            message: 'Failed to clear failed queue',
+            timestamp: new Date().toISOString()
         });
     }
 };
 
-GET.apiDoc = {
-    summary: "Get failed queue details for a configuration",
-    description: "Retrieves detailed information about failed messages in the failed queue",
-    operationId: "getFailedQueueDetails",
-    tags: ["MONITORING"],
-    parameters: [
-        {
-            in: "path",
-            name: "id",
-            required: true,
-            schema: { type: "string" },
-            description: "Configuration ID"
-        },
-        {
-            in: "query",
-            name: "limit",
-            schema: { type: "number", default: 50 },
-            description: "Maximum number of messages to retrieve"
-        },
-        {
-            in: "query",
-            name: "offset",
-            schema: { type: "number", default: 0 },
-            description: "Number of messages to skip"
-        }
-    ],
-    responses: {
-        "200": {
-            description: "Failed queue details retrieved successfully"
-        },
-        "400": {
-            description: "Bad request - missing configuration ID"
-        },
-        "500": {
-            description: "Internal server error"
-        }
-    }
-};
-
-DELETE.apiDoc = {
-    summary: "Clear failed queue for a configuration",
-    description: "Removes all failed messages from the failed queue",
-    operationId: "clearFailedQueue",
-    tags: ["MONITORING"],
-    parameters: [
-        {
-            in: "path",
-            name: "id",
-            required: true,
-            schema: { type: "string" },
-            description: "Configuration ID"
-        }
-    ],
-    responses: {
-        "200": {
-            description: "Failed queue cleared successfully"
-        },
-        "400": {
-            description: "Bad request - missing configuration ID"
-        },
-        "500": {
-            description: "Internal server error"
-        }
-    }
-};
