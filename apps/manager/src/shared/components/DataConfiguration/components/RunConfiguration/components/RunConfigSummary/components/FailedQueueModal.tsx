@@ -92,7 +92,6 @@ export function FailedQueueModal({
         clearFailedQueue,
         isError,
         error,
-        retryAllFailed,
         retryByProcessType,
         isRetryingByType,
         retrySingleMessage,

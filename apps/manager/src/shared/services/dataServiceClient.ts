@@ -1,4 +1,3 @@
-
 export interface ApiResponse {
     success: boolean;
     message: string;
@@ -72,20 +71,20 @@ export async function downloadData(configId: string, data: any): Promise<ApiResp
     });
 }
 
+export async function startDataDeletion(configId: string, data: any): Promise<ApiResponse> {
+    return apiCall(`/data-delete/${configId}`, {
+        method: 'POST',
+        body: JSON.stringify(data),
+    });
+}
+ 
 export async function validateData(configId: string, data: any): Promise<ApiResponse> {
     return apiCall(`/data-validation/${configId}`, {
         method: 'POST',
         body: JSON.stringify(data),
     });
 }
-
-export async function deleteData(configId: string, data: any): Promise<ApiResponse> {
-    return apiCall(`/data-delete/${configId}?confirm=true`, {
-        method: 'DELETE',
-        body: JSON.stringify(data),
-    });
-}
-
+ 
 export async function createQueues(configId: string): Promise<ApiResponse> {
     return apiCall(`/queues/${configId}`, {
         method: 'POST',
@@ -108,4 +107,73 @@ export async function getConfigStatus(configId: string): Promise<ApiResponse> {
         console.error(`getConfigStatus error for ${configId}:`, error);
         throw error;
     }
+}
+
+export async function getFailedQueue(configId: string, options: { 
+    limit?: number; 
+    offset?: number; 
+    includeMessages?: boolean;
+    queue?: string;
+    onlyQueues?: boolean;
+} = {}): Promise<ApiResponse> {
+    try {
+        const { limit = 50, offset = 0, includeMessages = false, queue, onlyQueues = false } = options;
+        const queryParams = new URLSearchParams({
+            limit: limit.toString(),
+            offset: offset.toString(),
+        });
+        
+        if (includeMessages) {
+            queryParams.set('includeMessages', 'true');
+        }
+        
+        if (onlyQueues) {
+            queryParams.set('onlyQueues', 'true');
+        }
+        
+        if (queue) {
+            queryParams.set('queue', queue);
+        }
+        
+        const response = await apiCall(`/failed-queue/${configId}?${queryParams}`);
+         return response;
+    } catch (error) {
+        console.error(`getFailedQueue error for ${configId}:`, error);
+        throw error;
+    }
+}
+
+export async function getFailedQueueSources(configId: string): Promise<ApiResponse> {
+    try {
+        const response = await apiCall(`/failed-queue/${configId}?onlyQueues=true`);
+         return response;
+    } catch (error) {
+         throw error;
+    }
+}
+
+export async function clearFailedQueue(configId: string): Promise<ApiResponse> {
+    return apiCall(`/failed-queue/${configId}`, {
+        method: 'DELETE',
+    });
+}
+
+// Retry operations
+export async function retryByProcessType(
+    configId: string, 
+    processType: 'data-upload' | 'metadata-upload' | 'data-download' | 'metadata-download' | 'data-delete',
+    maxRetries: number = 10
+): Promise<ApiResponse> {
+    return apiCall(`/retry/${configId}`, {
+        method: 'POST',
+        body: JSON.stringify({
+            maxRetries,
+        }),
+    });
+}
+
+export async function retrySingleMessage(configId: string, messageId: string): Promise<ApiResponse> {
+    return apiCall(`/retry/${configId}/message/${messageId}`, {
+        method: 'POST',
+    });
 }
