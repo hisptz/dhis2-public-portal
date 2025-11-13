@@ -10,15 +10,14 @@ mkdir -p "build/bundle"
 echo "Pruning portal app for building"
 turbo prune portal --out-dir apps/portal/build
 
-
 cp pm2.config.js build/app
 cp .env build/apps/portal || echo ".env file not found. Will assume the app will run at the root"
 
 BUNDLE_NAME="$PKG_NAME-$PKG_VERSION.zip"
 cd build  || return
-yarn install --frozen-lockfile
+pnpm  install no-frozen-lockfile
 echo "Building the app"
-yarn portal build
+pnpm build --filter portal
 
 echo "Copying files"
 cp apps/portal/next.config.ts app/

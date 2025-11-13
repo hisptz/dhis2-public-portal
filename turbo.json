@@ -19,6 +19,13 @@
         "build/**"
       ]
     },
+    "build:standalone": {
+      "dependsOn": [
+      ],
+      "outputs": [
+        "build/**"
+      ]
+    },
     "lint": {
       "dependsOn": [
         "^lint"
@@ -32,6 +39,11 @@
     "dev": {
       "cache": false,
       "persistent": true
+    },
+    "publish:app-hub": {
+      "dependsOn": [
+        "build"
+      ]
     }
   }
 }

@@ -1,3 +1,5 @@
+"use client";
+
 import { Illustration404 } from "@/components/ErrorPages/404Illustration";
 import {
 	Box,

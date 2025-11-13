@@ -4,6 +4,10 @@ import { ItemsDisplay } from "./visualization";
 
 export enum DocumentType {
 	PDF = "PDF",
+	DOCX = "DOCX",
+	ZIP = "ZIP",
+	XLSX = "XLSX",
+	TXT = "TXT",
 }
 
 export const documentItemSchema = z.object({

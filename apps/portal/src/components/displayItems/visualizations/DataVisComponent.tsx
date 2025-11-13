@@ -82,7 +82,9 @@ export function DataVisComponent({
 					ref={containerRef}
 				>
 					<div className="flex flex-row place-content-between">
-						<VisualizationTitle title={visualizationConfig.name} />
+						{!visualizationConfig.hideTitle && (
+							<VisualizationTitle title={visualizationConfig.name} />
+						)}
 						{!disableActions && (
 							<div className="flex flex-row gap-2 align-middle">
 								{handler.active && (
@@ -138,6 +140,7 @@ export function DataVisComponent({
 										visualization={visualizationConfig}
 										fullScreen={handler.active}
 										tableRef={tableRef}
+										containerRef={containerRef}
 									/>
 								)}
 							</div>

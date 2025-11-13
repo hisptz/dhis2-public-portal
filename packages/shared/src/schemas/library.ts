@@ -3,7 +3,7 @@ import { z } from "zod";
 export const libraryFilesSchema = z.object({
 	id: z.string(),
 	label: z.string(),
-	type: z.enum(["PDF", "ZIP", "DOC"]),
+	type: z.enum(["PDF", "DOCX", "ZIP", "XLSX", "TXT"]),
 });
 
 export const baseLibraryGroupSchema = z.object({

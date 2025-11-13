@@ -1,3 +1,55 @@
+## [1.5.1](https://github.com/hisptz/dhis2-public-portal/compare/v1.5.0...v1.5.1) (2025-11-10)
+
+
+### Bug Fixes
+
+* add "use client" directive to multiple components ([67fd430](https://github.com/hisptz/dhis2-public-portal/commit/67fd4300ce5b96ddabdf05c704e9b85f7f34f0da))
+* add "use client" directive to NotFoundPage component ([e215106](https://github.com/hisptz/dhis2-public-portal/commit/e215106b7b445e83c3db63b2df363bee12422763))
+* fixed issues with filter labels for charts not being well formatted ([dc40a1f](https://github.com/hisptz/dhis2-public-portal/commit/dc40a1f3b7cf7f130aa82946088b379b830486b8))
+* fixed issues with filter labels for charts not being well formatted ([2bc86e9](https://github.com/hisptz/dhis2-public-portal/commit/2bc86e91a965629cb643d38bb3332740da75cfef))
+
+# [1.5.0](https://github.com/hisptz/dhis2-public-portal/compare/v1.4.0...v1.5.0) (2025-11-10)
+
+
+### Features
+
+* enhance chart title generation with filter-based naming ([adeec24](https://github.com/hisptz/dhis2-public-portal/commit/adeec24bff603878f3703d19b21648b14d6d1150))
+* enhance visualizations with dynamic filter titles and improved props handling ([b6212d2](https://github.com/hisptz/dhis2-public-portal/commit/b6212d2c9716e444c46ab79312db300d474fad3f))
+
+# [1.4.0](https://github.com/hisptz/dhis2-public-portal/compare/v1.3.2...v1.4.0) (2025-10-13)
+
+
+### Bug Fixes
+
+* **ChartSelector:** pass containerRef to SingleValueVisualizer for improved reference handling ([5960bf4](https://github.com/hisptz/dhis2-public-portal/commit/5960bf47de90cb7789cd03c9a84c2ff3024e55ef))
+* **DataVisComponent:** pass containerRef to FullScreen for improved layout handling ([afef843](https://github.com/hisptz/dhis2-public-portal/commit/afef843f7b4eb9c097ef795c8f17cf4bd6abee02))
+* fixed issues with filtering of modules causing infinite loop ([286bfad](https://github.com/hisptz/dhis2-public-portal/commit/286bfadeb4d359d0ecc8b737b2d4dc6a85cb4729))
+* **i18n:** update POT creation and revision dates in translation file ([1685e34](https://github.com/hisptz/dhis2-public-portal/commit/1685e347776d32b9d7cee4c6ba40204ec3b26358))
+* **i18n:** update POT creation and revision dates in translation file ([68da147](https://github.com/hisptz/dhis2-public-portal/commit/68da14794f0cc05d17ddc80723ef849aaba82773))
+* **i18n:** update POT creation and revision dates, add application title and description ([b84cecb](https://github.com/hisptz/dhis2-public-portal/commit/b84cecb5c5829ee7c15236790f3b1e21d8a43bcf))
+* **module.cy.ts:** update draggable ID references in module tests ([180135a](https://github.com/hisptz/dhis2-public-portal/commit/180135a1a871c3fe36269ec4437c06cec87169a2))
+* **portal-e2e:** move Cypress binary installation step before Cypress run ([4ae9feb](https://github.com/hisptz/dhis2-public-portal/commit/4ae9feb166cdf638727e8d870126869a051c93d9))
+* **SingleValueVisualizer:** conditionally render subtitle based on hideSubtitle property ([2edaca1](https://github.com/hisptz/dhis2-public-portal/commit/2edaca1c8ba4faccacb45c77a9decbe549fc017c))
+* **SingleValueVisualizer:** display percentage format for values when applicable in SingleValueVisualizer ([31786df](https://github.com/hisptz/dhis2-public-portal/commit/31786df4853c7e24ab44b602ea1843b1e24ba55a))
+* **SingleValueVisualizer:** enhance styling for label display with min-height and line clamping ([f4cf488](https://github.com/hisptz/dhis2-public-portal/commit/f4cf488875791d8c7697d5d3efc244819b5514ee))
+* **SingleValueVisualizer:** improve container reference handling and adjust font size calculations ([b3e93d6](https://github.com/hisptz/dhis2-public-portal/commit/b3e93d666afc533a7e6a646321fa5ea644519cd8))
+* **VisualizationTitle:** enhance styling for title display ([5f03843](https://github.com/hisptz/dhis2-public-portal/commit/5f038430642e2d90dd06a8c8f07543d32ba5f942))
+* **workflows:** update Cypress installation command to use pnpm exec for consistency ([fc46ce8](https://github.com/hisptz/dhis2-public-portal/commit/fc46ce8075578d7592b206ce281ecec43aa79bd6))
+
+
+### Features
+
+* **DataVisComponent:** conditionally render visualization title based on hideTitle property ([8bba843](https://github.com/hisptz/dhis2-public-portal/commit/8bba8433362b6d30808921a4f7c69dc73d33bd5c))
+* **DocumentModule:** enhance document handling by adding support for multiple file types in both grouped and non-grouped scenarios ([33d347f](https://github.com/hisptz/dhis2-public-portal/commit/33d347fbd4548556a91bdc0d0d0229738ad025b3))
+* **DocumentModule:** update file type support to include DOCX, ZIP, XLSX, and TXT formats ([f4c7189](https://github.com/hisptz/dhis2-public-portal/commit/f4c7189ff7424967890699d23c9d5e6e03e5b3c3))
+* **DocumentModule:** update supported file formats to include DOCX, ZIP, XLSX, and TXT ([50bf6eb](https://github.com/hisptz/dhis2-public-portal/commit/50bf6eb64cdbec116be9dae184b41f12191501a1))
+* **DOCXVisualizer:** add DOCXVisualizer component for rendering Word documents ([c6480ad](https://github.com/hisptz/dhis2-public-portal/commit/c6480adab6842c9f5284e371ad1d6a3b76fc6de9))
+* **FileVisualizer:** integrate additional visualizers for DOCX, ZIP, XLSX, and TXT file types ([4b483d1](https://github.com/hisptz/dhis2-public-portal/commit/4b483d16e1849c6aca769792117e096c10ca98f9))
+* **manager-e2e:** install Cypress binary and enable publish summary ([b4ee6d1](https://github.com/hisptz/dhis2-public-portal/commit/b4ee6d1f1f1df437b4003da2263a5c1f910bd426))
+* **TXTVisualizer:** add TXTVisualizer component for rendering text files ([56eec14](https://github.com/hisptz/dhis2-public-portal/commit/56eec145d4ec4aa1f765e37beefee7a7c7755dae))
+* **XLSXVisualizer:** add XLSXVisualizer component for rendering Excel spreadsheets ([fc18199](https://github.com/hisptz/dhis2-public-portal/commit/fc181997235cd5629a96938c5b77223f2f8b5408))
+* **ZIPVisualizer:** add ZIPVisualizer component for rendering ZIP file contents ([aafea15](https://github.com/hisptz/dhis2-public-portal/commit/aafea15d019e2931aba0dca3d37c7739d7910422))
+
 ## [1.3.2](https://github.com/hisptz/dhis2-public-portal/compare/v1.3.1...v1.3.2) (2025-08-10)
 
 

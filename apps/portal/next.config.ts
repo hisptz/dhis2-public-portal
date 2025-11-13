@@ -4,7 +4,6 @@ import path from "path";
 const nextConfig: NextConfig = {
 	reactStrictMode: false,
 	basePath: process.env.CONTEXT_PATH ?? "",
-
 	images: {
 		dangerouslyAllowSVG: true,
 		contentDispositionType: "inline",
@@ -23,6 +22,19 @@ const nextConfig: NextConfig = {
 				as: "*.js",
 			},
 		},
+	},
+	async headers() {
+		return [
+			{
+				source: "/:path*{/}?",
+				headers: [
+					{
+						key: "X-Accel-Buffering",
+						value: "no",
+					},
+				],
+			},
+		];
 	},
 	experimental: {},
 	serverExternalPackages: ["canvas", "@google/earthengine"],

@@ -1,0 +1,8 @@
+This is a sample text file for testing TXT document uploads in the DHIS2 Public Portal.
+
+It contains multiple lines of text to verify that text file handling works correctly.
+
+Features to test:
+- File upload functionality
+- Preview display
+- Download capability

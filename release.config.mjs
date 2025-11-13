@@ -17,21 +17,26 @@ export default {
 		[
 			"@semantic-release/exec",
 			{
-				prepareCmd:
-					"node scripts/update-versions.js ${nextRelease.version}",
+				prepareCmd: "pnpm update-versions ${nextRelease.version}",
 			},
 		],
 		[
 			"@semantic-release/exec",
 			{
 				prepareCmd:
-					"yarn manager build && yarn portal build:standalone",
+					"pnpm build --filter manager && pnpm build:standalone",
 			},
 		],
 		[
 			"@semantic-release/git",
 			{
-				assets: ["CHANGELOG.md", "package.json"],
+				assets: [
+					"CHANGELOG.md",
+					"package.json",
+					"apps/manager/package.json",
+					"apps/portal/package.json",
+					"apps/docs/package.json",
+				],
 				message:
 					"chore(release): cut ${nextRelease.version} [skip release]\n\n${nextRelease.notes}",
 			},

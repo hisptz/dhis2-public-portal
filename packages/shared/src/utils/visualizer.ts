@@ -156,7 +156,10 @@ function getDimensionItems(
 				}
 				return [column.dimension, periodParams!];
 			}
-			return [column.dimension, column.items.map((item) => item.id)];
+			return [
+				column.dimension,
+				compact(column.items).map((item) => item.id),
+			];
 		}),
 	);
 }
