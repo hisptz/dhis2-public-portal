@@ -48,29 +48,27 @@ export async function fetchPagedData({
 }) {
 	try {
 		const url = `analytics/dataValueSet.json`;
-		const params = new URLSearchParams();
+		const queryParams: string[] = [];
 
 		Object.keys(dimensions).forEach((key) => {
 			if (!isEmpty(dimensions[key])) {
-				params.append(
-					"dimension",
-					`${key}:${dimensions[key]?.join(";")}`,
-				);
+				const dimensionParam = `${key}:${dimensions[key]?.join(";")}`;
+				queryParams.push(`dimension=${dimensionParam}`);
 			}
 		});
+
 		if (!isEmpty(filters)) {
 			Object.keys(filters).forEach((key) => {
 				if (!isEmpty(filters[key])) {
-					params.append(
-						"filter",
-						`${key}:${filters[key]?.join(";")}`,
-					);
+					const filterParam = `${key}:${filters[key]?.join(";")}`;
+					queryParams.push(`filter=${filterParam}`);
 				}
 			});
 		}
 
-		const response = await client.get<DataResponse>(url, {
-			params,
+		const queryString = queryParams.join('&');
+		const fullUrl = queryString ? `${url}?${queryString}` : url;
+		const response = await client.get<DataResponse>(fullUrl, {
 			timeout,
 			timeoutErrorMessage: `Data fetch timed out after ${timeout}ms for data items: ${dimensions.dx?.join(",")}, periods: ${dimensions.pe?.join(",")} and org unit ${dimensions.ou?.join(", ")} & filters: ${filters?.dx?.join(",")}`,
 		});
@@ -191,18 +189,16 @@ export async function saveDataFile({
 		dataValues: data,
 	};
 
-	logger.info(`Saving data to ${fileLocation}...`);
-	logger.info(`Data payload size: ${JSON.stringify(payload).length} bytes`);
-	
- 	const dir = path.dirname(fileLocation);
+
+	const dir = path.dirname(fileLocation);
 	await fs.promises.mkdir(dir, { recursive: true });
-	
- 	await fs.promises.writeFile(
+
+	await fs.promises.writeFile(
 		fileLocation,
 		JSON.stringify(payload, null, 2),
 		'utf8'
 	);
-	
+
 	logger.info(`Data saved to ${fileLocation}`);
 	logger.info(`Queuing file for upload: ${fileLocation}`);
 	return fileLocation;

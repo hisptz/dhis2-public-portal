@@ -29,6 +29,7 @@ import {
     saveDataItemMappings,
     DataItemMapping
 } from "../../utils/data-item-mapping";
+import { startJob, updateProgress, completeJob } from "@/utils/progress-tracker";
 
 export interface ProcessedMetadata {
     legendSets: any;
@@ -61,20 +62,35 @@ export interface MetadataDownloadOptions {
     selectedVisualizations?: Array<{ id: string; name: string }>;
     selectedMaps?: Array<{ id: string; name: string }>;
     selectedDashboards?: Array<{ id: string; name: string }>;
+    totalItems?: number;
 }
 
 export async function downloadAndQueueMetadata(options: MetadataDownloadOptions): Promise<void> {
     try {
-        const { configId } = options;
-        logger.info(`Starting Options: ${JSON.stringify(options)}`);
+        const { configId, selectedVisualizations = [], selectedMaps = [], selectedDashboards = [], totalItems = 0 } = options;
         logger.info(`Starting metadata download and queue process for config: ${configId}`);
 
+        
+        let actualTotalItems = totalItems;
+        if (actualTotalItems === 0) {
+            actualTotalItems = selectedVisualizations.length + selectedMaps.length + selectedDashboards.length;
+            await startJob(configId, 'metadata-download', actualTotalItems);
+        }
+
         const metadata = await downloadMetadata(options);
+        await updateProgress(configId, 'metadata-download', actualTotalItems, actualTotalItems);
+
+        // Start metadata upload tracking
+        const uploadItemCount = 5;
+        await startJob(configId, 'metadata-upload', uploadItemCount);
+
         const configuration = await exportConfiguration(configId);
         await generateAndSaveDataItemMappings(metadata, configId, options);
+        
         await pushToQueue(configId, 'metadataUpload', {
             metadata,
             configId,
+            totalItems: uploadItemCount,
             downloadedAt: new Date().toISOString()
         });
         await pushToQueue(configId, 'metadataUpload', {
@@ -83,6 +99,7 @@ export async function downloadAndQueueMetadata(options: MetadataDownloadOptions)
             timestamp: new Date().toISOString()
         });
 
+        await completeJob(configId, 'metadata-download');
         logger.info(`Metadata successfully downloaded and queued for upload (config: ${configId})`);
     } catch (error) {
         logger.error(`Error during download and queue process for config ${options.configId}:`, error);
@@ -106,25 +123,20 @@ async function generateAndSaveDataItemMappings(
             return;
         }
         logger.info(`Generating mappings for ${dataElementIds.length} data elements and ${programIndicatorIds.length} program indicators`);
-        // Get the route ID from config
         const configUrl = `dataStore/${DatastoreNamespaces.DATA_SERVICE_CONFIG}/${configId}`;
         const { data: config } = await dhis2Client.get(configUrl);
         const routeId = config.source?.routeId;
-        // Generate mappings
         const mappings = await generateDataItemMappings(
             dataElementIds,
             programIndicatorIds,
             configId,
             routeId
         );
-        // Save mappings to datastore
         await saveDataItemMappings(mappings, configId, routeId);
         metadata.mappings = {
             dataItems: mappings
         };
-
         logger.info(`Successfully generated and saved ${mappings.length} data item mappings`);
-
     } catch (error) {
         logger.error(`Error generating and saving data item mappings:`, error);
         logger.warn(`Continuing with metadata download despite mapping error`);
@@ -142,7 +154,6 @@ export async function downloadMetadata(options: MetadataDownloadOptions): Promis
         if (!config?.source?.routeId) {
             throw new Error(`No routeId found in config ${configId}`);
         }
-        // Fetch default category values dynamically
         logger.info("Fetching default category system values...");
         const sourceDefaults = await getDefaultCategoryValues(routeId);
         const destinationDefaults = await getDestinationDefaultCategoryValues();
@@ -163,7 +174,6 @@ export async function downloadMetadata(options: MetadataDownloadOptions): Promis
         } else if (metadataSource === 'source') {
             logger.info("Processing selected metadata items...");
             const selectedVisualizationIds = options.selectedVisualizations?.map(v => v.id) || [];
-
             const selectedMapIds = options.selectedMaps?.map(m => m.id) || [];
 
             let dashboardExtractedIds: { visualizationIds: string[]; mapIds: string[] } = { visualizationIds: [], mapIds: [] };
@@ -187,6 +197,13 @@ export async function downloadMetadata(options: MetadataDownloadOptions): Promis
 
             visualizations = allVisualizationIds.map(id => ({ id }));
             maps = allMapIds.map(id => ({ id }));
+
+            const totalSelected = (options.selectedVisualizations?.length || 0) + 
+                                (options.selectedMaps?.length || 0) + 
+                                (options.selectedDashboards?.length || 0);
+            if (totalSelected > 0) {
+                await updateProgress(configId, 'metadata-download', totalSelected, totalSelected);
+            }
         }
 
         logger.info("Fetching Map Configs...");
@@ -200,20 +217,14 @@ export async function downloadMetadata(options: MetadataDownloadOptions): Promis
             ...(getIndicatorIdsFromMaps(mapsConfig ?? []) ?? []),
             ...getIndicatorIdsFromVisualizations(visualizationConfig ?? []),
         ];
-        logger.info(`Collected ${indicatorIds.length} unique indicator IDs`, {
-            indicatorIds: indicatorIds.slice(0, 10),
-            totalCount: indicatorIds.length
-        });
+        logger.info(`Collected ${indicatorIds.length} unique indicator IDs`);
 
         logger.info("Collecting Data Element IDs...");
         const dataElementIds = [
             ...(getDataElementIdsFromMaps(mapsConfig ?? []) ?? []),
             ...getDataElementIdsFromVisualizations(visualizationConfig ?? []),
         ];
-        logger.info(`Collected ${dataElementIds.length} unique data element IDs`, {
-            dataElementIds: dataElementIds.slice(0, 10),
-            totalCount: dataElementIds.length
-        });
+        logger.info(`Collected ${dataElementIds.length} unique data element IDs`);
 
         logger.info("Fetching Indicators...");
         const indicators = await getIndicatorConfigs(indicatorIds, configId);
@@ -280,7 +291,6 @@ export async function downloadMetadata(options: MetadataDownloadOptions): Promis
         logger.info("Fetching LegendSets...");
         const legendSets = legendSetIds.length > 0 ? await getLegendSets(uniq(legendSetIds), routeId) : [];
         logger.info(`Total LegendSets fetched: ${legendSets}`);
-        // Process and return metadata
         const processedMetadata: ProcessedMetadata = {
             legendSets,
             visualizations: {

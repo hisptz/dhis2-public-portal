@@ -3,18 +3,11 @@ import { uploadMetadataFile } from "@/clients/dhis2";
 import { ProcessedMetadata } from "./metadata-download";
 import { processConfigurationFromQueue } from "./utils/configuration-import";
 import * as fs from "node:fs";
+import { updateProgress, completeJob } from "@/utils/progress-tracker";
 
 export async function uploadMetadataFromQueue(jobData: any): Promise<void> {
   try {
-    const { metadata, configId, downloadedAt, type, configuration } = jobData;
-
-    logger.info(`Processing upload job for config: ${configId}`, {
-      type: type || 'metadata',
-      hasMetadata: !!metadata,
-      hasConfiguration: !!configuration,
-      downloadedAt,
-      jobDataKeys: Object.keys(jobData || {}),
-    });
+    const { metadata, configId, type, configuration, totalItems = 0 } = jobData;
 
     if (!configId) {
       throw new Error(`No configId provided in job data. Job data keys: ${Object.keys(jobData || {}).join(', ')}`);
@@ -27,14 +20,7 @@ export async function uploadMetadataFromQueue(jobData: any): Promise<void> {
         throw new Error(`No configuration provided in job data for config: ${configId}`);
       }
 
-      const summary = await processConfigurationFromQueue(configId, jobData);
-
-      logger.info(`Configuration upload completed for config: ${configId}`, {
-        totalNamespaces: summary.totalNamespaces,
-        successfulNamespaces: summary.successfulNamespaces,
-        duration: summary.duration
-      });
-
+      await processConfigurationFromQueue(configId, jobData);
       return;
     }
 
@@ -48,8 +34,9 @@ export async function uploadMetadataFromQueue(jobData: any): Promise<void> {
       throw new Error(`Invalid metadata structure for config: ${configId}`);
     }
 
-    await uploadMetadata(metadata, configId);
+    await uploadMetadata(metadata, configId, totalItems);
 
+    await completeJob(configId, 'metadata-upload');
     logger.info(`Metadata upload job completed successfully for config: ${configId}`);
 
   } catch (error: any) {
@@ -58,14 +45,6 @@ export async function uploadMetadataFromQueue(jobData: any): Promise<void> {
         message: error.message,
         stack: error.stack,
         name: error.name,
-      },
-      jobData: {
-        configId: jobData?.configId,
-        type: jobData?.type,
-        hasMetadata: !!jobData?.metadata,
-        hasConfiguration: !!jobData?.configuration,
-        downloadedAt: jobData?.downloadedAt,
-        jobDataKeys: Object.keys(jobData || {}),
       }
     });
     throw error;
@@ -76,7 +55,6 @@ export async function uploadMetadataFromQueue(jobData: any): Promise<void> {
 async function uploadCategoriesMetadata(categories: any, tempDir: string): Promise<void> {
   const maxItemsPerUpload = 500; 
 
-  // Check total items count
   const totalCategories = categories.categories?.length || 0;
   const totalCategoryOptions = categories.categoryOptions?.length || 0;
   const totalCategoryCombos = categories.categoryCombos?.length || 0;
@@ -84,11 +62,7 @@ async function uploadCategoriesMetadata(categories: any, tempDir: string): Promi
 
   const totalItems = totalCategories + totalCategoryOptions + totalCategoryCombos + totalCategoryOptionCombos;
 
-  logger.info(`Categories metadata summary: ${totalCategories} categories, ${totalCategoryOptions} categoryOptions, ${totalCategoryCombos} categoryCombos, ${totalCategoryOptionCombos} categoryOptionCombos (${totalItems} total items)`);
-
   if (totalItems <= maxItemsPerUpload) {
-    // Upload as single file if small enough
-    logger.info("Categories metadata is small enough for single upload");
     const categoriesPath = `${tempDir}/categories.json`;
     await fs.promises.writeFile(
       categoriesPath,
@@ -97,10 +71,6 @@ async function uploadCategoriesMetadata(categories: any, tempDir: string): Promi
     );
     await uploadMetadataFile(categoriesPath);
   } else {
-    // Split into separate uploads by type
-    logger.info("Categories metadata is large, splitting into separate uploads");
-
-    // Upload categories first
     if (categories.categories?.length > 0) {
       const categoriesPath = `${tempDir}/categories-only.json`;
       await fs.promises.writeFile(
@@ -146,7 +116,7 @@ async function uploadCategoriesMetadata(categories: any, tempDir: string): Promi
   }
 }
 
-export async function uploadMetadata(metadata: ProcessedMetadata, configId?: string): Promise<void> {
+export async function uploadMetadata(metadata: ProcessedMetadata, configId?: string, totalItems: number = 5): Promise<void> {
    let tempDir: string | undefined;
 
   try {
@@ -196,20 +166,32 @@ export async function uploadMetadata(metadata: ProcessedMetadata, configId?: str
     // Upload files in the correct order (dependencies first)
     logger.info("Starting upload of metadata files...");
 
+    let currentStep = 0;
+
     // Upload legend sets first (they don't depend on anything)
+    currentStep++;
+    if (configId) await updateProgress(configId, 'metadata-upload', totalItems, currentStep);
     await uploadMetadataFile(legendSetsPath);
 
     // Upload indicator types (needed for indicators)
+    currentStep++;
+    if (configId) await updateProgress(configId, 'metadata-upload', totalItems, currentStep);
     await uploadMetadataFile(indicatorTypesPath);
 
     // Upload categories (needed for data elements) - split if too large
     logger.info("Uploading Categories, CategoryCombos, CategoryOptions & CategoryOptionCombos...");
+    currentStep++;
+    if (configId) await updateProgress(configId, 'metadata-upload', totalItems, currentStep);
     await uploadCategoriesMetadata(metadata.categories, tempDir);
 
     // Upload data items (indicators and data elements)
+    currentStep++;
+    if (configId) await updateProgress(configId, 'metadata-upload', totalItems, currentStep);
     await uploadMetadataFile(dataItemsPath);
 
     // Upload visualizations last (they depend on data items)
+    currentStep++;
+    if (configId) await updateProgress(configId, 'metadata-upload', totalItems, currentStep);
     await uploadMetadataFile(visualizationsPath);
 
     logger.info("Cleaning up temporary files...");
