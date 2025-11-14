@@ -173,11 +173,6 @@ export async function getDataElementsForProgramIndicators(
     };
   }
 
-  logger.info(`getDataElementsForProgramIndicators called with ${programIndicatorIds.length} program indicator IDs`, {
-    programIndicatorIds: programIndicatorIds.slice(0, 10),
-    totalCount: programIndicatorIds.length
-  });
-
   const destinationDefaults = await getDestinationDefaults();
 
   const programIndicators = await fetchItemsInParallel(
@@ -324,11 +319,6 @@ export async function getCategoryCombosFromDataElements(
   }>,
   routeId?: string
 ) {
-  logger.info(`getCategoryCombosFromDataElements called with ${dataElements.length} data elements`, {
-    dataElementIds: dataElements.slice(0, 10).map(de => de.id),
-    totalCount: dataElements.length,
-    routeId
-  });
 
   const sourceDefaults = await getSourceDefaults(routeId);
   logger.info(`Source default category combo id: ${sourceDefaults.defaultCategoryComboId}`);
@@ -343,10 +333,6 @@ export async function getCategoryCombosFromDataElements(
       .map((dataElement) => dataElement.categoryCombo.id)
       .filter((val) => val != sourceDefaults.defaultCategoryComboId)
   );
-
-  logger.info(`Extracted ${categoryComboIds.length} non-default category combo IDs`, {
-    categoryComboIds: categoryComboIds.slice(0, 10)
-  });
 
   if (categoryComboIds.length === 0) {
     logger.info("No non-default category combos found, returning empty results");
@@ -438,12 +424,6 @@ export async function getIndicatorTypes(indicatorTypeIds: string[], routeId?: st
 }
 
 export async function getIndicatorsSources(indicators: Array<Indicator>, routeId?: string) {
-  logger.info(`getIndicatorsSources called with ${indicators.length} indicators`, {
-    indicatorIds: indicators.slice(0, 10).map(i => i.id),
-    totalCount: indicators.length,
-    routeId
-  });
-
   const dataElementIds: string[] = [];
   const programIndicatorIds: string[] = [];
   const categoryOptionComboIds: string[] = [];
@@ -463,23 +443,10 @@ export async function getIndicatorsSources(indicators: Array<Indicator>, routeId
     dataSetIds.push(...indicatorSources.dataSets);
   }
 
-  logger.info(`Extracted IDs from indicator expressions:`, {
-    dataElementIds: dataElementIds.length,
-    categoryOptionComboIds: categoryOptionComboIds.length,
-    programIndicatorIds: programIndicatorIds.length,
-    indicatorTypes: indicatorTypes.length
-  });
-
   const dataElements = await getDataElements(uniq(dataElementIds), routeId);
   logger.info(`Successfully fetched ${dataElements.length} data elements`);
 
   const categoryMeta = await getCategoryCombos(uniq(categoryOptionComboIds), routeId);
-  logger.info(`Successfully fetched category metadata:`, {
-    categories: categoryMeta.categories.length,
-    categoryOptions: categoryMeta.categoryOptions.length,
-    categoryCombos: categoryMeta.categoryCombos.length,
-    categoryOptionCombos: categoryMeta.categoryOptionCombos.length
-  });
 
   const { dataElements: dataElementsFromProgramIndicators } =
     await getDataElementsForProgramIndicators(uniq(programIndicatorIds));
@@ -496,12 +463,6 @@ export async function getIndicatorsSources(indicators: Array<Indicator>, routeId
 }
 
 export async function getLegendSets(legendSetIds: string[], routeId?: string) {
-  logger.info(`getLegendSets called with ${legendSetIds.length} legend set IDs`, {
-    legendSetIds: legendSetIds.slice(0, 10),
-    totalCount: legendSetIds.length,
-    routeId
-  });
-
   const client = routeId ? await createSourceClient(routeId) : dhis2Client;
 
   const legendSets = await fetchItemsInParallel(

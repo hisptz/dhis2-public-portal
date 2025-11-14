@@ -97,16 +97,14 @@ async function importNamespace(
             logger.info(`Key ${namespace}/${key} already exists - updating`);
           }
         } catch (error) {
-          // Key doesn't exist - that's fine, we'll create it
-          if (error instanceof Error && error.message.includes('404')) {
+           if (error instanceof Error && error.message.includes('404')) {
             logger.info(`Key ${namespace}/${key} doesn't exist - creating`);
           } else {
-            throw error; // Re-throw unexpected errors
+            throw error;  
           }
         }
 
-        // Create or update the key
-        if (shouldUpdate) {
+         if (shouldUpdate) {
           await client.put(`dataStore/${namespace}/${key}`, value);
           logger.info(`✓ Imported key: ${namespace}/${key}`);
         }
@@ -187,7 +185,7 @@ export async function validateNamespaceAccess(
   } catch (error) {
     if (error instanceof Error && error.message.includes('404')) {
       logger.info(`Namespace ${namespace} does not exist - will be created during import`);
-      return true; // Namespace will be created when we add keys
+      return true;  
     }
     logger.warn(`Error accessing namespace ${namespace}: ${error}`);
     return false;

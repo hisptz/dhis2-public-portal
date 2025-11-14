@@ -5,8 +5,8 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
-"POT-Creation-Date: 2025-11-13T04:17:20.449Z\n"
-"PO-Revision-Date: 2025-11-13T04:17:20.449Z\n"
+"POT-Creation-Date: 2025-11-13T12:26:48.839Z\n"
+"PO-Revision-Date: 2025-11-13T12:26:48.839Z\n"
 
 msgid "Could not get Appearance configurations"
 msgstr "Could not get Appearance configurations"
@@ -471,15 +471,6 @@ msgstr "An unexpected error occurred"
 msgid "Debug Info"
 msgstr "Debug Info"
 
-msgid "Showing only {{processType}} failures"
-msgstr "Showing only {{processType}} failures"
-
-msgid "Clear {{processType}} Failed"
-msgstr "Clear {{processType}} Failed"
-
-msgid "Clear All Failed"
-msgstr "Clear All Failed"
-
 msgid "Error Message"
 msgstr "Error Message"
 
@@ -507,20 +498,14 @@ msgstr "No failed messages found"
 msgid "All processes completed successfully!"
 msgstr "All processes completed successfully!"
 
-msgid "Retrying All..."
-msgstr "Retrying All..."
-
-msgid "Retry All Failed"
-msgstr "Retry All Failed"
-
 msgid "Retrying..."
 msgstr "Retrying..."
 
-msgid "Retry {{processType}}"
-msgstr "Retry {{processType}}"
+msgid "Retry All"
+msgstr "Retry All"
 
-msgid "Clear Queue"
-msgstr "Clear Queue"
+msgid "Clear All"
+msgstr "Clear All"
 
 msgid "Close"
 msgstr "Close"
@@ -1518,11 +1503,3 @@ msgstr "Error deleting file"
 msgctxt "Follows either create or update"
 msgid " menu item"
 msgstr " menu item"
-
-msgctxt "Application title"
-msgid "__MANIFEST_APP_TITLE"
-msgstr "FlexiPortal Manager"
-
-msgctxt "Application description"
-msgid "__MANIFEST_APP_DESCRIPTION"
-msgstr ""

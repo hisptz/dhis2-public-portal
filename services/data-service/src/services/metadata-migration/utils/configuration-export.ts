@@ -128,8 +128,7 @@ async function exportNamespace(
         logger.info(`✓ Exported key: ${namespace}/${key}`);
       } catch (error) {
         logger.warn(`Failed to export key ${namespace}/${key}:`, error);
-        // Continue with other keys
-      }
+       }
     }
 
     return {
@@ -156,8 +155,7 @@ async function extractStaticModuleNamespaces(moduleKeys: { [key: string]: any })
   try {
     for (const [moduleId, moduleData] of Object.entries(moduleKeys)) {
       if (moduleData && typeof moduleData === 'object') {
-        // Check if this is a STATIC module
-        if (moduleData.type === 'STATIC' && moduleData.config?.namespace) {
+         if (moduleData.type === 'STATIC' && moduleData.config?.namespace) {
           const namespace = moduleData.config.namespace;
           logger.info(`Found STATIC module "${moduleId}" with namespace: ${namespace}`);
           staticNamespaces.push(namespace);
@@ -170,7 +168,7 @@ async function extractStaticModuleNamespaces(moduleKeys: { [key: string]: any })
 
   } catch (error) {
     logger.error("Error extracting STATIC module namespaces:", error);
-    return staticNamespaces; // Return what we have so far
+    return staticNamespaces;  
   }
 }
 

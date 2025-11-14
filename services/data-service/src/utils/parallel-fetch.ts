@@ -63,7 +63,7 @@ export async function fetchItemsInParallel<T = any>(
     logger.info(`Batch ${batchIndex + 1} completed: ${successCount}/${batch.length} successful`);
     
     if (batchIndex < chunks.length - 1) {
-      await new Promise(resolve => setTimeout(resolve, 100));  // 100ms delay
+      await new Promise(resolve => setTimeout(resolve, 100));   
     }
   }
 

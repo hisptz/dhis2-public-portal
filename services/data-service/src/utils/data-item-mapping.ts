@@ -12,9 +12,6 @@ export interface DataItemMapping {
 
 export interface DataItemMappings {
     dataItems: DataItemMapping[];
-    // createdAt: string;
-    // configId: string;
-    // sourceInstanceId: string;
 }
 
 /**
@@ -45,11 +42,10 @@ export async function generateDataItemMappings(
                 logger.info(`Successfully generated ${dataElementMappings.length} data element mappings`);
             } catch (error) {
                 logger.error(`Failed to generate data element mappings:`, error);
-                // Continue with program indicators even if data element mapping fails
             }
         }
 
-        // Generate program indicator mappings (they use default category combo)
+        // Generate program indicator mappings 
         if (programIndicatorIds.length > 0) {
             try {
                 const programIndicatorMappings = generateProgramIndicatorMappings(programIndicatorIds);
@@ -210,7 +206,7 @@ function generateProgramIndicatorMappings(programIndicatorIds: string[]): DataIt
 
 /**
  * Save data item mappings to the destination datastore
- */ 
+ */
 export async function saveDataItemMappings(
     mappings: DataItemMapping[],
     configId: string,
@@ -238,7 +234,6 @@ export async function saveDataItemMappings(
             logger.warn(`No existing mappings found for ${datastoreKey}, creating new entry.`);
         }
 
-        // Merge existing dataItems with new ones
         const existingItems = existingData?.dataItems || [];
         const mergedItems = [...existingItems, ...mappings];
 
@@ -268,7 +263,7 @@ export async function saveDataItemMappings(
 
 /**
  * Retrieve data item mappings from the destination datastore
- */ 
+ */
 export async function getDataItemMappings(configId: string): Promise<DataItemMappings | null> {
     const datastoreKey = `${configId}`;
     const url = `dataStore/${DatastoreNamespaces.DATA_SERVICE_CONFIG}/${datastoreKey}`;
@@ -299,7 +294,7 @@ export async function getDataItemMappings(configId: string): Promise<DataItemMap
 
 /**
  * Update existing data item mappings in the datastore
- */ 
+ */
 export async function updateDataItemMappings(
     mappings: DataItemMapping[],
     configId: string,
@@ -327,13 +322,12 @@ export async function updateDataItemMappings(
             logger.warn(`No existing mappings found for ${datastoreKey}, creating new entry.`);
         }
 
-        // Merge: keep existing items + new ones
-        const existingItems = existingData?.dataItems || [];
+         const existingItems = existingData?.dataItems || [];
         const mergedItems = [...existingItems, ...mappings];
 
         const updatedData: DataItemMappings = {
             ...existingData,
-            dataItems: mergedItems 
+            dataItems: mergedItems
         };
 
         if (existingData) {

@@ -17,8 +17,7 @@ export async function getDefaultCategoryValues(routeId?: string): Promise<Defaul
     }
 
     try {
-        logger.info(`Fetching default category system values from ${routeId ? 'source' : 'destination'} DHIS2...`);
-
+ 
         const client = routeId ? await createSourceClient(routeId) : dhis2Client;
 
         const allCombosResponse = await client.get<{
