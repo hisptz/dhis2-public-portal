@@ -7,7 +7,7 @@ import { updateProgress, completeJob } from "@/utils/progress-tracker";
 
 export async function uploadMetadataFromQueue(jobData: any): Promise<void> {
   try {
-    const { metadata, configId, type, configuration, totalItems = 0 } = jobData;
+    const { metadata, configId, type, totalItems = 0 } = jobData;
 
     if (!configId) {
       throw new Error(`No configId provided in job data. Job data keys: ${Object.keys(jobData || {}).join(', ')}`);
@@ -15,10 +15,6 @@ export async function uploadMetadataFromQueue(jobData: any): Promise<void> {
 
     if (type === 'configuration') {
       logger.info(`Processing configuration upload for config: ${configId}`);
-
-      if (!configuration) {
-        throw new Error(`No configuration provided in job data for config: ${configId}`);
-      }
 
       await processConfigurationFromQueue(configId, jobData);
       return;

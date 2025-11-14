@@ -151,8 +151,6 @@ export const GET: Operation = async (
                 if (!onlyQueues && messages.length > 0) {
                     const totalMessages = messages.length;
                     messages = messages.slice(offset, offset + limit);
-
-                    console.log(`Pagination applied: showing ${messages.length} messages (${offset + 1}-${offset + messages.length} of ${totalMessages} filtered)`);
                 }
             }
 

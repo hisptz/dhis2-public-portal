@@ -53,7 +53,7 @@ export interface ProcessedMetadata {
     mappings?: {
         dataItems: DataItemMapping[];
     };
-    programIndicatorIds?: string[]; 
+    programIndicatorIds?: string[];
 }
 
 export interface MetadataDownloadOptions {
@@ -67,10 +67,10 @@ export interface MetadataDownloadOptions {
 
 export async function downloadAndQueueMetadata(options: MetadataDownloadOptions): Promise<void> {
     try {
-        const { configId, selectedVisualizations = [], selectedMaps = [], selectedDashboards = [], totalItems = 0 } = options;
+        const { configId, metadataSource, selectedVisualizations = [], selectedMaps = [], selectedDashboards = [], totalItems = 0 } = options;
         logger.info(`Starting metadata download and queue process for config: ${configId}`);
 
-        
+
         let actualTotalItems = totalItems;
         if (actualTotalItems === 0) {
             actualTotalItems = selectedVisualizations.length + selectedMaps.length + selectedDashboards.length;
@@ -84,20 +84,25 @@ export async function downloadAndQueueMetadata(options: MetadataDownloadOptions)
         const uploadItemCount = 5;
         await startJob(configId, 'metadata-upload', uploadItemCount);
 
-        const configuration = await exportConfiguration(configId);
         await generateAndSaveDataItemMappings(metadata, configId, options);
-        
+
         await pushToQueue(configId, 'metadataUpload', {
             metadata,
             configId,
             totalItems: uploadItemCount,
             downloadedAt: new Date().toISOString()
         });
-        await pushToQueue(configId, 'metadataUpload', {
-            type: 'configuration',
-            configuration,
-            timestamp: new Date().toISOString()
-        });
+        
+        if (metadataSource === 'flexiportal-config') {
+            const configuration = await exportConfiguration(configId);
+
+            await pushToQueue(configId, 'metadataUpload', {
+                type: 'configuration',
+                configuration,
+                timestamp: new Date().toISOString()
+            });
+        }
+
 
         await completeJob(configId, 'metadata-download');
         logger.info(`Metadata successfully downloaded and queued for upload (config: ${configId})`);
@@ -198,9 +203,9 @@ export async function downloadMetadata(options: MetadataDownloadOptions): Promis
             visualizations = allVisualizationIds.map(id => ({ id }));
             maps = allMapIds.map(id => ({ id }));
 
-            const totalSelected = (options.selectedVisualizations?.length || 0) + 
-                                (options.selectedMaps?.length || 0) + 
-                                (options.selectedDashboards?.length || 0);
+            const totalSelected = (options.selectedVisualizations?.length || 0) +
+                (options.selectedMaps?.length || 0) +
+                (options.selectedDashboards?.length || 0);
             if (totalSelected > 0) {
                 await updateProgress(configId, 'metadata-download', totalSelected, totalSelected);
             }
