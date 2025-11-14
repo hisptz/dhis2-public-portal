@@ -1,0 +1,276 @@
+import { Channel, ConsumeMessage } from "amqplib";
+import figlet from "figlet";
+import logger from "@/logging";
+import { connectRabbit, getChannel } from "./connection";
+import { uploadDataFromQueue } from "@/services/data-migration/data-upload";
+import { uploadMetadataFromQueue } from "@/services/metadata-migration/metadata-upload";
+import { downloadAndQueueMetadata } from "@/services/metadata-migration/metadata-download";
+import { deleteData } from "@/services/data-migration/data-delete";
+import { getQueueNames } from "@/variables/queue-names";
+import { DatastoreNamespaces } from "@packages/shared/constants";
+import { dhis2Client } from "@/clients/dhis2";
+import axios from "axios";
+import { downloadData } from "@/services/data-migration/data-download";
+
+let isConnecting = false;
+const RECONNECT_DELAY = 5000;
+const MAX_RETRIES = 1;
+
+// Handler map for different queue types
+const handlerMap: Record<string, (messageContent: any) => Promise<void>> = {
+  "dataDownload": async (messageContent) => {
+    const { mainConfigId } = messageContent;
+    logger.info(`Processing data download for config: ${mainConfigId}`);
+    await downloadData(messageContent);
+  },
+
+  "dataDeletion": async (messageContent) => {
+    const { mainConfigId } = messageContent;
+    logger.info(`Processing data deletion for config: ${mainConfigId}`);
+    await deleteData(messageContent);
+  },
+
+  "dataUpload": async (messageContent) => {
+    const { mainConfigId, filename } = messageContent;
+    logger.info(`Processing data upload for config: ${mainConfigId}, file: ${filename}`);
+    await uploadDataFromQueue(messageContent);
+  },
+
+  "metadataDownload": async (messageContent) => {
+    const { configId } = messageContent;
+    logger.info(`Processing metadata download for config: ${configId}`);
+    await downloadAndQueueMetadata(messageContent);
+  },
+
+  "metadataUpload": async (messageContent) => {
+    const { configId } = messageContent;
+    logger.info(`Processing metadata upload for config: ${configId}`);
+    await uploadMetadataFromQueue(messageContent);
+  },
+};
+
+export const startWorker = async () => {
+  console.log(
+    figlet.textSync("DHIS2 Data Service Worker", {
+      horizontalLayout: "default",
+      verticalLayout: "default",
+      whitespaceBreak: true,
+    }),
+  );
+
+  if (isConnecting) {
+    logger.info("[Worker] A connection attempt is already in progress.");
+    return;
+  }
+  isConnecting = true;
+  try {
+    await connectRabbit();
+    const channel = getChannel();
+
+    if (!channel) {
+      throw new Error("Failed to get RabbitMQ channel");
+    }
+
+    isConnecting = false;
+
+    // Setup reconnection on connection close
+    channel.connection.once("close", () => {
+      logger.error(
+        "[Worker] RabbitMQ connection closed! Attempting to reconnect...",
+      );
+      setTimeout(startWorker, RECONNECT_DELAY);
+    });
+
+    logger.info("[Worker] Setting up consumers...");
+    await setupConsumer(channel);
+
+  } catch (error) {
+    logger.error(
+      "[Worker] Failed to connect during startup. Retrying...",
+      error,
+    );
+    isConnecting = false;
+    setTimeout(startWorker, RECONNECT_DELAY);
+  }
+};
+
+const handleMessage = async (
+  channel: Channel,
+  msg: ConsumeMessage,
+  queueType: string
+) => {
+  const handler = handlerMap[queueType];
+
+  if (!handler) {
+    logger.warn(
+      `[Worker] No handler for queue type: ${queueType}. Discarding.`,
+    );
+    channel.ack(msg);
+    return;
+  }
+
+  try {
+    const messageContent = JSON.parse(msg.content.toString());
+    await handler(messageContent);
+
+    channel.ack(msg);
+    logger.info(
+      `[Worker] <==> Message Processed & Acknowledged for ${queueType}.`,
+    );
+  } catch (error: any) {
+    let retryCount = parseInt(msg.properties.headers?.["x-retry-count"] || "0");
+
+    if (!msg.properties.headers) {
+      msg.properties.headers = {};
+    }
+
+    // Enhanced failure reason - handle axios errors specially
+    const failureReason = axios.isAxiosError(error) && error.response
+      ? error.response.data
+      : { message: error.message };
+
+    msg.properties.headers['x-failure-reason'] = JSON.stringify(failureReason);
+    msg.properties.headers['x-error-message'] = error.message;
+    msg.properties.headers['x-error-name'] = error.name;
+    msg.properties.headers['x-error-timestamp'] = new Date().toISOString();
+    msg.properties.headers['x-queue-type'] = queueType;
+
+    if (axios.isAxiosError(error)) {
+      msg.properties.headers['x-axios-status'] = error.response?.status?.toString() || 'unknown';
+      msg.properties.headers['x-axios-code'] = error.code || 'unknown';
+      msg.properties.headers['x-axios-url'] = error.config?.url || 'unknown';
+    }
+
+    if (retryCount < MAX_RETRIES) {
+      logger.warn(`[Worker] Retrying message (attempt ${retryCount + 1}/${MAX_RETRIES}). Requeuing...`);
+
+      try {
+        const messageContent = JSON.parse(msg.content.toString());
+        const configId = messageContent.configId;
+
+        if (!configId) {
+          logger.error(`[Worker] No configId found in message content for retry. Cannot determine queue name.`);
+          channel.nack(msg, false, false); 
+          return;
+        }
+
+        const queueNames = getQueueNames(configId);
+        const actualQueueName = queueNames[queueType as keyof typeof queueNames];
+
+        if (!actualQueueName) {
+          logger.error(`[Worker] No queue name found for type: ${queueType} and config: ${configId}`);
+          channel.nack(msg, false, false); 
+          return;
+        }
+
+        const updatedHeaders = {
+          ...msg.properties.headers,
+          'x-retry-count': retryCount + 1,
+          'x-retry-timestamp': new Date().toISOString(),
+        };
+
+        await channel.sendToQueue(actualQueueName, msg.content, {
+          ...msg.properties,
+          headers: updatedHeaders,
+        });
+
+        channel.ack(msg);
+      } catch (republishError) {
+        logger.error(`[Worker] Failed to republish message:`, republishError);
+        channel.nack(msg, false, false);
+      }
+    } else {
+      logger.error(
+        `[Worker] Max retries (${MAX_RETRIES}) reached. Sending message to DLQ.`,
+        {
+          errorDetails: {
+            message: error.message,
+            stack: error.stack,
+            name: error.name,
+          }
+        }
+      );
+
+      // false = don't requeue, send to DLQ
+      channel.nack(msg, false, false);
+    }
+  }
+};
+
+const setupConsumer = async (channel: Channel) => {
+  try {
+    logger.info("[ConsumerSetup] Starting to discover configs from datastore...");
+    const configIds = await getAllConfigIds();
+    logger.info(`[ConsumerSetup] Found ${configIds.length} configurations`);
+
+    const prefetchCount = parseInt(process.env.RABBITMQ_PREFETCH_COUNT || "2");
+    channel.prefetch(prefetchCount);
+
+    // Set up queues and consumers for each config
+    for (const configId of configIds) {
+      const queueNames = getQueueNames(configId);
+
+      // Create DLQ first
+      await channel.assertQueue(queueNames.failed, { durable: true });
+
+      // Queue configuration with DLQ
+      const queueOptions = {
+        durable: true,
+        arguments: {
+          'x-dead-letter-exchange': '',
+          'x-dead-letter-routing-key': queueNames.failed
+        }
+      };
+
+      // Setup work queues for this config
+      const queuesToSetup = [
+        { queueName: queueNames.metadataDownload, handlerType: "metadataDownload" },
+        { queueName: queueNames.metadataUpload, handlerType: "metadataUpload" },
+        { queueName: queueNames.dataDownload, handlerType: "dataDownload" },
+        { queueName: queueNames.dataUpload, handlerType: "dataUpload" },
+        { queueName: queueNames.dataDeletion, handlerType: "dataDeletion" },
+      ];
+
+      for (const { queueName, handlerType } of queuesToSetup) {
+        // Assert the queue
+        await channel.assertQueue(queueName, queueOptions);
+
+        // Start consuming from the queue
+        await channel.consume(queueName, (msg) => {
+          if (msg) {
+            handleMessage(channel, msg, handlerType);
+          }
+        });
+
+        logger.info(`[ConsumerSetup] Setup consumer for queue: ${queueName} (${handlerType})`);
+      }
+    }
+
+
+
+    logger.info("================================================================");
+    logger.info(`[Worker] Setup complete. Waiting for messages...`);
+    logger.info(`[Worker] Monitoring ${configIds.length} configurations`);
+    logger.info(`[Worker] Registered handlers: ${Object.keys(handlerMap).join(', ')}`);
+    logger.info("================================================================");
+
+  } catch (error) {
+    logger.error(
+      "[ConsumerSetup] A critical error occurred during setup:",
+      error,
+    );
+  }
+};
+
+// Helper function to get all config IDs from datastore
+const getAllConfigIds = async (): Promise<string[]> => {
+  try {
+    const keysUrl = `dataStore/${DatastoreNamespaces.DATA_SERVICE_CONFIG}`;
+    const response = await dhis2Client.get<string[]>(keysUrl);
+    return response.data || [];
+  } catch (error) {
+    logger.error("Failed to fetch config IDs from datastore:", error);
+    return [];
+  }
+};
+

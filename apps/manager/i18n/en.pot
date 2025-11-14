@@ -5,8 +5,8 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
-"POT-Creation-Date: 2025-11-10T12:38:51.500Z\n"
-"PO-Revision-Date: 2025-11-10T12:38:51.501Z\n"
+"POT-Creation-Date: 2025-11-14T07:05:37.666Z\n"
+"PO-Revision-Date: 2025-11-14T07:05:37.666Z\n"
 
 msgid "Could not get Appearance configurations"
 msgstr "Could not get Appearance configurations"
@@ -16,6 +16,12 @@ msgstr "Error"
 
 msgid "Import/Export Configuration"
 msgstr "Import/Export Configuration"
+
+msgid "Back"
+msgstr "Back"
+
+msgid "Data service configuration"
+msgstr "Data service configuration"
 
 msgid "General configuration"
 msgstr "General configuration"
@@ -53,9 +59,6 @@ msgstr "Failed to save section"
 msgid "This visualization is already added"
 msgstr "This visualization is already added"
 
-msgid "Back"
-msgstr "Back"
-
 msgid "Manage visualization"
 msgstr "Manage visualization"
 
@@ -91,6 +94,488 @@ msgstr "Detail"
 
 msgid "Remove visualization"
 msgstr "Remove visualization"
+
+msgid "Confirm delete"
+msgstr "Confirm delete"
+
+msgid "Are you sure you want to delete the configuration "
+msgstr "Are you sure you want to delete the configuration "
+
+msgid "This action cannot be undone."
+msgstr "This action cannot be undone."
+
+msgid "Delete"
+msgstr "Delete"
+
+msgid "Edit connenction"
+msgstr "Edit connenction"
+
+msgid "Run migration"
+msgstr "Run migration"
+
+msgid "View overview"
+msgstr "View overview"
+
+msgid "Delete connection"
+msgstr "Delete connection"
+
+msgid "Add data configuration"
+msgstr "Add data configuration"
+
+msgid "Please provide either a PAT or username and password"
+msgstr "Please provide either a PAT or username and password"
+
+msgid ""
+"Could not connect to the DHIS2 instance. Please check the URL, and "
+"authentication, and try again."
+msgstr ""
+"Could not connect to the DHIS2 instance. Please check the URL, and "
+"authentication, and try again."
+
+msgid "Add data service configuration"
+msgstr "Add data service configuration"
+
+msgid "Name"
+msgstr "Name"
+
+msgid "ID"
+msgstr "ID"
+
+msgid "URL"
+msgstr "URL"
+
+msgid "Validating..."
+msgstr "Validating..."
+
+msgid "Create"
+msgstr "Create"
+
+msgid "Add visualization"
+msgstr "Add visualization"
+
+msgid "Use basic authentication"
+msgstr "Use basic authentication"
+
+msgid "Username"
+msgstr "Username"
+
+msgid "Password"
+msgstr "Password"
+
+msgid "Personal Access Token (PAT)"
+msgstr "Personal Access Token (PAT)"
+
+msgid "Latest Migration Status"
+msgstr "Latest Migration Status"
+
+msgid "Actions"
+msgstr "Actions"
+
+msgid "Could not save form, check the logs for more information"
+msgstr "Could not save form, check the logs for more information"
+
+msgid "Add data item"
+msgstr "Add data item"
+
+msgid "Could not get attribute options"
+msgstr "Could not get attribute options"
+
+msgid "Attribute Options"
+msgstr "Attribute Options"
+
+msgid "Select all"
+msgstr "Select all"
+
+msgid "Clear values"
+msgstr "Clear values"
+
+msgid "Could not get attributes dimensions"
+msgstr "Could not get attributes dimensions"
+
+msgid "Attribute"
+msgstr "Attribute"
+
+msgid "Update"
+msgstr "Update"
+
+msgid "data item configuration"
+msgstr "data item configuration"
+
+msgid "Type"
+msgstr "Type"
+
+msgid "Period type"
+msgstr "Period type"
+
+msgid "Parent organisation unit"
+msgstr "Parent organisation unit"
+
+msgid "The top level organisation unit on the source to fetch data from"
+msgstr "The top level organisation unit on the source to fetch data from"
+
+msgid "Organisation unit level"
+msgstr "Organisation unit level"
+
+msgid "Organisation unit level at the source to pull data from"
+msgstr "Organisation unit level at the source to pull data from"
+
+msgid "Data items"
+msgstr "Data items"
+
+msgid ""
+"Select data items from the pre-mapped items created during metadata "
+"migration"
+msgstr ""
+"Select data items from the pre-mapped items created during metadata "
+"migration"
+
+msgid "Source ID"
+msgstr "Source ID"
+
+msgid ""
+"A valid analytics dimension item from the source (data element, data "
+"element and category option)"
+msgstr ""
+"A valid analytics dimension item from the source (data element, data "
+"element and category option)"
+
+msgid ""
+"A valid analytics dimension item (data element, data element and category "
+"option)"
+msgstr ""
+"A valid analytics dimension item (data element, data element and category "
+"option)"
+
+msgid "At least one data item is required"
+msgstr "At least one data item is required"
+
+msgid "Loading..."
+msgstr "Loading..."
+
+msgid "Failed to Load Mapped Data Items"
+msgstr "Failed to Load Mapped Data Items"
+
+msgid ""
+"Error loading configuration. Ensure metadata migration is complete and "
+"config exists."
+msgstr ""
+"Error loading configuration. Ensure metadata migration is complete and "
+"config exists."
+
+msgid "No Mapped Data Items"
+msgstr "No Mapped Data Items"
+
+msgid "Run metadata migration to generate mappings."
+msgstr "Run metadata migration to generate mappings."
+
+msgid "Select from mapped data items from metadata migration"
+msgstr "Select from mapped data items from metadata migration"
+
+msgid "Search and select data items..."
+msgstr "Search and select data items..."
+
+msgid "Period Type"
+msgstr "Period Type"
+
+msgid "There are no data items present"
+msgstr "There are no data items present"
+
+msgid "Delete configuration"
+msgstr "Delete configuration"
+
+msgid "Edit connection"
+msgstr "Edit connection"
+
+msgid "Please provide either a PAT or both username and password"
+msgstr "Please provide either a PAT or both username and password"
+
+msgid "Update Authentication (Optional)"
+msgstr "Update Authentication (Optional)"
+
+msgid ""
+"Credentials are already set. Only fill these fields if you want to update "
+"them."
+msgstr ""
+"Credentials are already set. Only fill these fields if you want to update "
+"them."
+
+msgid "Save"
+msgstr "Save"
+
+msgid "Connection successful"
+msgstr "Connection successful"
+
+msgid "Connection failed"
+msgstr "Connection failed"
+
+msgid "Testing..."
+msgstr "Testing..."
+
+msgid "Test connection"
+msgstr "Test connection"
+
+msgid "Run configuration"
+msgstr "Run configuration"
+
+msgid "Service started successfully"
+msgstr "Service started successfully"
+
+msgid "Data deletion process started successfully. Check the queue for progress."
+msgstr "Data deletion process started successfully. Check the queue for progress."
+
+msgid "Failed to start service"
+msgstr "Failed to start service"
+
+msgid "Run"
+msgstr "Run"
+
+msgid "Analytics Required"
+msgstr "Analytics Required"
+
+msgid ""
+"Please ensure analytics have been run on the source instance before "
+"proceeding with validation. Running analytics ensures the data is "
+"up-to-date for accurate validation results."
+msgstr ""
+"Please ensure analytics have been run on the source instance before "
+"proceeding with validation. Running analytics ensures the data is "
+"up-to-date for accurate validation results."
+
+msgid "Destructive Operation"
+msgstr "Destructive Operation"
+
+msgid ""
+"This operation will permanently delete all data files for the selected "
+"configuration items and periods. This action cannot be undone."
+msgstr ""
+"This operation will permanently delete all data files for the selected "
+"configuration items and periods. This action cannot be undone."
+
+msgid "Service Type"
+msgstr "Service Type"
+
+msgid "Select service type"
+msgstr "Select service type"
+
+msgid "Metadata Migration"
+msgstr "Metadata Migration"
+
+msgid "Data Migration"
+msgstr "Data Migration"
+
+msgid "Data Validation"
+msgstr "Data Validation"
+
+msgid "Data Deletion"
+msgstr "Data Deletion"
+
+msgid "Metadata Source"
+msgstr "Metadata Source"
+
+msgid "Select metadata source"
+msgstr "Select metadata source"
+
+msgid "Browse from Source"
+msgstr "Browse from Source"
+
+msgid "Extract from FlexiPortal Configuration"
+msgstr "Extract from FlexiPortal Configuration"
+
+msgid "Metadata Types"
+msgstr "Metadata Types"
+
+msgid "Select metadata types"
+msgstr "Select metadata types"
+
+msgid "Visualizations"
+msgstr "Visualizations"
+
+msgid "Maps"
+msgstr "Maps"
+
+msgid "Dashboards"
+msgstr "Dashboards"
+
+msgid "Select Visualizations"
+msgstr "Select Visualizations"
+
+msgid "Select Maps"
+msgstr "Select Maps"
+
+msgid "Select Dashboards"
+msgstr "Select Dashboards"
+
+msgid "Page size"
+msgstr "Page size"
+
+msgid "Paginate by data"
+msgstr "Paginate by data"
+
+msgid "Deleting data..."
+msgstr "Deleting data..."
+
+msgid "Requesting run..."
+msgstr "Requesting run..."
+
+msgid "Delete Data"
+msgstr "Delete Data"
+
+msgid "Configuration items"
+msgstr "Configuration items"
+
+msgid "Clear selection"
+msgstr "Clear selection"
+
+msgid "Periods"
+msgstr "Periods"
+
+msgid "N/A"
+msgstr "N/A"
+
+msgid "Idle"
+msgstr "Idle"
+
+msgid "Running"
+msgstr "Running"
+
+msgid "Queued"
+msgstr "Queued"
+
+msgid "Not started"
+msgstr "Not started"
+
+msgid "Unknown"
+msgstr "Unknown"
+
+msgid "Completed"
+msgstr "Completed"
+
+msgid "Unknown error"
+msgstr "Unknown error"
+
+msgid "View service overview"
+msgstr "View service overview"
+
+msgid "Failed {{processType}} Details"
+msgstr "Failed {{processType}} Details"
+
+msgid "Failed Processes Details"
+msgstr "Failed Processes Details"
+
+msgid "Error Loading Failed Messages"
+msgstr "Error Loading Failed Messages"
+
+msgid "An unexpected error occurred"
+msgstr "An unexpected error occurred"
+
+msgid "Debug Info"
+msgstr "Debug Info"
+
+msgid "Error Message"
+msgstr "Error Message"
+
+msgid "Process Type"
+msgstr "Process Type"
+
+msgid "Failed Endpoint"
+msgstr "Failed Endpoint"
+
+msgid "Failed At"
+msgstr "Failed At"
+
+msgid "Details"
+msgstr "Details"
+
+msgid "Retry"
+msgstr "Retry"
+
+msgid "Detailed Error Information"
+msgstr "Detailed Error Information"
+
+msgid "No failed messages found"
+msgstr "No failed messages found"
+
+msgid "All processes completed successfully!"
+msgstr "All processes completed successfully!"
+
+msgid "Retrying..."
+msgstr "Retrying..."
+
+msgid "Retry All"
+msgstr "Retry All"
+
+msgid "Clear All"
+msgstr "Clear All"
+
+msgid "Close"
+msgstr "Close"
+
+msgid "Click for details"
+msgstr "Click for details"
+
+msgid "Error loading process data"
+msgstr "Error loading process data"
+
+msgid "Unknown error occurred"
+msgstr "Unknown error occurred"
+
+msgid "Download Process"
+msgstr "Download Process"
+
+msgid "Upload Process"
+msgstr "Upload Process"
+
+msgid "Data Deletion Process"
+msgstr "Data Deletion Process"
+
+msgid "Error logs"
+msgstr "Error logs"
+
+msgid "Dismiss"
+msgstr "Dismiss"
+
+msgid "Show error logs"
+msgstr "Show error logs"
+
+msgid "Service Processing Overview"
+msgstr "Service Processing Overview"
+
+msgid "Loading connection details..."
+msgstr "Loading connection details..."
+
+msgid "Could not get source information"
+msgstr "Could not get source information"
+
+msgid ""
+"Configuration saved, but queue creation failed. Queues will be created "
+"automatically when needed."
+msgstr ""
+"Configuration saved, but queue creation failed. Queues will be created "
+"automatically when needed."
+
+msgid "Configuration saved successfully"
+msgstr "Configuration saved successfully"
+
+msgid "Failed to save configuration"
+msgstr "Failed to save configuration"
+
+msgid "Configuration updated successfully"
+msgstr "Configuration updated successfully"
+
+msgid "Could not save changes"
+msgstr "Could not save changes"
+
+msgid "Connection updated successfully"
+msgstr "Connection updated successfully"
+
+msgid "Failed to update connection"
+msgstr "Failed to update connection"
+
+msgid "Configuration deleted successfully"
+msgstr "Configuration deleted successfully"
+
+msgid "Failed to delete configuration"
+msgstr "Failed to delete configuration"
 
 msgid "Add document"
 msgstr "Add document"
@@ -137,20 +622,11 @@ msgstr "Document is being uploaded, please wait..."
 msgid "This will be a part of the url. It should not contain spaces"
 msgstr "This will be a part of the url. It should not contain spaces"
 
-msgid "ID"
-msgstr "ID"
-
 msgid "Group"
 msgstr "Group"
 
 msgid "Files"
 msgstr "Files"
-
-msgid "Actions"
-msgstr "Actions"
-
-msgid "N/A"
-msgstr "N/A"
 
 msgid "Groups"
 msgstr "Groups"
@@ -176,9 +652,6 @@ msgstr "This action is irreversible."
 msgid "Deleting..."
 msgstr "Deleting..."
 
-msgid "Delete"
-msgstr "Delete"
-
 msgid "Delete group"
 msgstr "Delete group"
 
@@ -188,20 +661,11 @@ msgstr "Edit document group"
 msgid "Add document group"
 msgstr "Add document group"
 
-msgid "Update"
-msgstr "Update"
-
-msgid "Save"
-msgstr "Save"
-
 msgid "Title"
 msgstr "Title"
 
 msgid "Edit group"
 msgstr "Edit group"
-
-msgid "Type"
-msgstr "Type"
 
 msgid "There are no files present"
 msgstr "There are no files present"
@@ -294,6 +758,12 @@ msgstr "Reload"
 msgid "Upload Icon"
 msgstr "Upload Icon"
 
+msgid "This field is required"
+msgstr "This field is required"
+
+msgid "Select organisation unit"
+msgstr "Select organisation unit"
+
 msgid "Application name"
 msgstr "Application name"
 
@@ -329,9 +799,6 @@ msgstr "Short name"
 
 msgid "Short description"
 msgstr "Short description"
-
-msgid "Visualizations"
-msgstr "Visualizations"
 
 msgid "Manage visualizations"
 msgstr "Manage visualizations"
@@ -417,9 +884,6 @@ msgstr "to get started"
 msgid "Add menu item"
 msgstr "Add menu item"
 
-msgid "Confirm delete"
-msgstr "Confirm delete"
-
 msgid "Are you sure you want to delete the menu item "
 msgstr "Are you sure you want to delete the menu item "
 
@@ -437,9 +901,6 @@ msgstr "A menu item with this path already exists. Please choose a different one
 
 msgid "A menu item with this module ID already exists."
 msgstr "A menu item with this module ID already exists."
-
-msgid "Create"
-msgstr "Create"
 
 msgid "Are you sure you want to close this form?. All changes will be lost"
 msgstr "Are you sure you want to close this form?. All changes will be lost"
@@ -461,9 +922,6 @@ msgstr "There are no sub menus defined"
 
 msgid " sub menu item"
 msgstr " sub menu item"
-
-msgid "Name"
-msgstr "Name"
 
 msgid "Menu Position"
 msgstr "Menu Position"
@@ -560,9 +1018,6 @@ msgstr "documentation"
 
 msgid "to add more modules"
 msgstr "to add more modules"
-
-msgid "Could not save changes"
-msgstr "Could not save changes"
 
 msgid "Section"
 msgstr "Section"
@@ -1023,6 +1478,16 @@ msgstr ""
 msgid "Import or export configuration"
 msgstr "Import or export configuration"
 
+msgid ""
+"Configure the data service for the web portal application, including data "
+"sources and synchronization settings"
+msgstr ""
+"Configure the data service for the web portal application, including data "
+"sources and synchronization settings"
+
+msgid "Configure data service"
+msgstr "Configure data service"
+
 msgid "Menu"
 msgstr "Menu"
 
@@ -1038,11 +1503,3 @@ msgstr "Error deleting file"
 msgctxt "Follows either create or update"
 msgid " menu item"
 msgstr " menu item"
-
-msgctxt "Application title"
-msgid "__MANIFEST_APP_TITLE"
-msgstr "FlexiPortal Manager"
-
-msgctxt "Application description"
-msgid "__MANIFEST_APP_DESCRIPTION"
-msgstr ""

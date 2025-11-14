@@ -68,6 +68,7 @@
     "lodash": "^4.17.21",
     "react": "19.2.0",
     "react-dom": "19.2.0",
+    "react-countup": "^6.5.3",
     "react-error-boundary": "^6.0.0",
     "react-full-screen": "^1.1.1",
     "react-grid-layout": "^1.5.1",

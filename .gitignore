@@ -40,3 +40,5 @@ yarn-error.log*
 /apps/manager/src/routes.gen.ts
 /apps/manager/.env
 /apps/manager/cypress.env.json
+/services/data-service/logs
+/services/data-service/outputs
