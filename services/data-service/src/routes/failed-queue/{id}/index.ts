@@ -65,7 +65,7 @@ export const GET: Operation = async (
                     `${baseURL}/api/queues/${rabbitMQConfig.vhost}/${failedQueueName}/get`,
                     {
                         count: fetchCount,
-                        ackmode: "ack_requeue_true", // Requeue messages to avoid consumption
+                        ackmode: "ack_requeue_true",  
                         encoding: "auto",
                         truncate: 50000
                     },
@@ -269,8 +269,7 @@ export const DELETE: Operation = async (
         });
 
     } catch (error) {
-        console.error('Error in failed-queue DELETE:', error);
-        res.status(500).json({
+         res.status(500).json({
             success: false,
             configId: req.params.id,
             error: "Internal server error",
@@ -296,32 +295,33 @@ GET.apiDoc = {
         {
             in: "query",
             name: "includeMessages",
-            schema: { type: "boolean", default: false },
-            description: "Whether to include full message details in the response"
+            schema: { type: "string" },
+            description: "Whether to include full message details in the response (true/false)"
         },
         {
             in: "query",
             name: "onlyQueues",
-            schema: { type: "boolean", default: false },
-            description: "Return only source queue information without message details (lightweight mode)"
+            schema: { type: "string" },
+            description: "Return only source queue information without message details (true/false)"
         },
         {
             in: "query",
             name: "queue",
             schema: { type: "string" },
+            required: false,
             description: "Filter messages by specific source queue name"
         },
         {
             in: "query",
             name: "limit",
-            schema: { type: "integer", minimum: 1, maximum: 100, default: 50 },
-            description: "Maximum number of messages to return per page"
+            schema: { type: "string" },
+            description: "Maximum number of messages to return per page (1-100, default: 50)"
         },
         {
             in: "query",
             name: "offset",
-            schema: { type: "integer", minimum: 0, default: 0 },
-            description: "Number of messages to skip for pagination"
+            schema: { type: "string" },
+            description: "Number of messages to skip for pagination (minimum: 0, default: 0)"
         }
     ],
     responses: {
