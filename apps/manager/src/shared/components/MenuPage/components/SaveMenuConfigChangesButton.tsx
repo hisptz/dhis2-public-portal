@@ -49,6 +49,7 @@ export function SaveMenuConfigChangesButton() {
 				{i18n.t("Reset")}
 			</Button>
 			<Button
+				dataTest="save-menu-config-changes-button"
 				loading={isSubmitting}
 				primary
 				disabled={!isDirty}

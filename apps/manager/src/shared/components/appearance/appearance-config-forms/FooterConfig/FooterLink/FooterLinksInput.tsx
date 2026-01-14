@@ -66,7 +66,7 @@ export function FooterLinksInput(props: InputFieldProps) {
 				</div>
 
 				<div className="w-auto">
-					<Button small onClick={onShow} icon={<IconAdd24 />}>
+					<Button small onClick={onShow} icon={<IconAdd24 />} data-test="add-footer-link-button">
 						{i18n.t("Add footer link")}
 					</Button>
 				</div>
