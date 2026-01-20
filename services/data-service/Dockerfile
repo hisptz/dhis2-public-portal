@@ -39,7 +39,7 @@ VOLUME ["/app/logs", "/app/outputs"]
 
 RUN bun install
 
-COPY --from=builder --chown=data-service:data-service /app/services/data-service/node_modules/@packages ./node_modules/
+COPY --from=builder --chown=data-service:data-service /app/services/data-service/node_modules/@packages ./node_modules/@packages
 
 RUN chown -R data-service:data-service /app
 
