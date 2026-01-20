@@ -3,6 +3,7 @@ import { access, copyFile, mkdir, rm } from "node:fs/promises";
 import config from "./package.json";
 //@ts-expect-error missing types for bestzip
 import bestzip from "bestzip";
+import { replaceTscAliasPaths } from "tsc-alias";
 
 const outDir = "app";
 
@@ -23,20 +24,23 @@ async function bundleApp() {
 }
 
 export default defineConfig({
-	entry: ["src/app.ts", "src/routes/**/*.ts", "src/rabbit/worker.ts"],
+	entry: ["src/**/*.ts"],
 	minify: false,
 	format: ["esm"],
 	splitting: false,
 	outDir,
 	sourcemap: false,
-	bundle: true,
+	bundle: false,
 	clean: true,
-	treeshake: "safest",
+	treeshake: "recommended",
 	platform: "node",
 	target: "esnext",
-	skipNodeModulesBundle: true,
 	noExternal: ["@packages/shared"],
+
 	onSuccess: async () => {
+		await replaceTscAliasPaths({
+			outDir,
+		});
 		await copyFile("package.prod.json", `${outDir}/package.json`);
 		await bundleApp();
 	},
