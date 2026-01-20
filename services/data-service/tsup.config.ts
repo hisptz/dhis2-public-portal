@@ -24,13 +24,13 @@ async function bundleApp() {
 }
 
 export default defineConfig({
-	entry: ["src/**/*.ts"],
+	entry: ["src/app.ts", "src/routes/**/*.ts", "src/rabbit/worker.ts"],
 	minify: false,
 	format: ["esm"],
-	splitting: false,
+	splitting: true,
 	outDir,
 	sourcemap: false,
-	bundle: false,
+	bundle: true,
 	clean: true,
 	treeshake: "recommended",
 	platform: "node",

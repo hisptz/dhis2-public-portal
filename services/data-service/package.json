@@ -4,12 +4,15 @@
 	"description": "Service to transfer data from source DHIS2 instances to the portal",
 	"main": "index.js",
 	"private": true,
+	"type": "module",
 	"license": "MIT",
 	"scripts": {
 		"dev:worker": "bun run src/rabbit/worker.ts --watch --hot",
 		"dev:api": "bun run src/app.ts --watch --hot",
+		"start:api": "bun run src/app.ts",
+		"start:worker": "bun run src/rabbit/worker.ts",
 		"dev": "concurrently --names 'worker,api' -c 'blue,green' 'pnpm  run dev:worker' 'pnpm run dev:api'  ",
-		"build": "tsup",
+		"build": "bun run build.ts",
 		"check-types": "tsc --noEmit"
 	},
 	"dependencies": {

@@ -89,6 +89,10 @@ web_modules/
 .next
 out
 
+**/.next
+**/.d2
+**/build
+
 # Nuxt.js build / generate output
 .nuxt
 dist
@@ -104,7 +108,6 @@ dist
 
 # vuepress v2.x temp and cache directory
 .temp
-.cache
 
 # Docusaurus cache and generated files
 .docusaurus

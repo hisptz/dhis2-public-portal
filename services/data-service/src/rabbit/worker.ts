@@ -13,6 +13,9 @@ import { dhis2Client } from "@/clients/dhis2";
 import axios from "axios";
 import { downloadData } from "@/services/data-migration/data-download";
 import { REFRESH_EXCHANGE } from "@/rabbit/constants";
+import standard from "figlet/fonts/Standard";
+
+figlet.parseFont("Standard", standard);
 
 let isConnecting = false;
 const RECONNECT_DELAY = 5000;
