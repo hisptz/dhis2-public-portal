@@ -8,10 +8,12 @@ export function RHFIDField({
 	name,
 	dependsOn,
 	label,
+	disabled,
 }: {
 	name: string;
 	dependsOn: string;
 	label: string;
+	disabled?: boolean;
 }) {
 	const { setValue } = useFormContext();
 	const title = useWatch({
@@ -30,6 +32,7 @@ export function RHFIDField({
 			helpText={i18n.t(
 				"This will be a part of the url. It should not contain spaces",
 			)}
+			disabled = {!!disabled}
 			name={name}
 			label={label}
 		/>

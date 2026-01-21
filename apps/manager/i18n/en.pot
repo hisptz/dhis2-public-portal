@@ -5,8 +5,8 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
-"POT-Creation-Date: 2026-01-15T15:32:48.006Z\n"
-"PO-Revision-Date: 2026-01-15T15:32:48.007Z\n"
+"POT-Creation-Date: 2026-01-21T06:58:04.148Z\n"
+"PO-Revision-Date: 2026-01-21T06:58:04.149Z\n"
 
 msgid "Could not get Appearance configurations"
 msgstr "Could not get Appearance configurations"
@@ -98,8 +98,8 @@ msgstr "Delete"
 msgid "Edit configuration"
 msgstr "Edit configuration"
 
-msgid "Run migration"
-msgstr "Run migration"
+msgid "Run Service"
+msgstr "Run Service"
 
 msgid "View overview"
 msgstr "View overview"
@@ -209,6 +209,12 @@ msgstr "Organisation unit level"
 
 msgid "Organisation unit level at the source to pull data from"
 msgstr "Organisation unit level at the source to pull data from"
+
+msgid "Organisation unit level is required"
+msgstr "Organisation unit level is required"
+
+msgid "Organisation unit level must be at least 1"
+msgstr "Organisation unit level must be at least 1"
 
 msgid "Data items"
 msgstr "Data items"
@@ -327,8 +333,8 @@ msgstr ""
 msgid "Failed to start service"
 msgstr "Failed to start service"
 
-msgid "Run"
-msgstr "Run"
+msgid "Run Service -"
+msgstr "Run Service -"
 
 msgid "Analytics Required"
 msgstr "Analytics Required"
@@ -420,6 +426,9 @@ msgstr "Requesting run..."
 
 msgid "Delete Data"
 msgstr "Delete Data"
+
+msgid "Run"
+msgstr "Run"
 
 msgid "Configuration items"
 msgstr "Configuration items"
@@ -1579,11 +1588,3 @@ msgstr "Error deleting file"
 msgctxt "Follows either create or update"
 msgid " menu item"
 msgstr " menu item"
-
-msgctxt "Application title"
-msgid "__MANIFEST_APP_TITLE"
-msgstr "FlexiPortal Manager"
-
-msgctxt "Application description"
-msgid "__MANIFEST_APP_DESCRIPTION"
-msgstr ""
