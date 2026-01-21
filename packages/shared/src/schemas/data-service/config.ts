@@ -33,7 +33,8 @@ export const baseDataItemsSourceSchema = z.object({
 		.min(1, i18n.t("At least one data item is required")),
 	periodTypeId: z.string(),
 	parentOrgUnitId: z.string(),
-	orgUnitLevel: z.number(),
+	orgUnitLevel: z.number().min(1, "Organisation unit level must be at least 1")
+		.max(7, "Organisation unit level must be at most 7"),
 });
 
 export const attributeValuesDataItemsSourceSchema =
@@ -98,7 +99,7 @@ export const dataDownloadBodySchema = z.object({
 export type DataDownloadBody = z.infer<typeof dataDownloadBodySchema>;
 
 export const dataUploadBodySchema = z.object({
-	filename: z.string().min(1).optional(), 
+	filename: z.string().min(1).optional(),
 	payload: z.any().optional(),
 	queuedAt: z.string().optional(),
 	downloadedFrom: z.string().optional(),
@@ -118,4 +119,3 @@ export const dataItemMappingSchema = z.object({
 });
 
 export type DataItemMapping = z.infer<typeof dataItemMappingSchema>;
- 
