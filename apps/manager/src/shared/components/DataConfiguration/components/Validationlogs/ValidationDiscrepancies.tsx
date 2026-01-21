@@ -132,50 +132,50 @@ export function ValidationDiscrepancies({ discrepancies, summary, isLoading, err
                 </Button>
             </div>
             {(() => {
-                const periodDataMap = new Map<string, Map<string, { source: any; destination: any; hasDiscrepancy: boolean }>>();
-                const dataElements = new Set<string>();
+                const dataElementDataMap = new Map<string, Map<string, { source: any; destination: any; hasDiscrepancy: boolean }>>();
+                const periods = new Set<string>();
                 const dataElementNames = new Map<string, string>();
 
                 discrepancies.forEach((discrepancy) => {
                     const dataElementCombo = discrepancy.dataElement;
 
-                    dataElements.add(dataElementCombo);
+                    periods.add(discrepancy.period);
                     dataElementNames.set(dataElementCombo, discrepancy.dataElementName);
 
-                    if (!periodDataMap.has(discrepancy.period)) {
-                        periodDataMap.set(discrepancy.period, new Map());
+                    if (!dataElementDataMap.has(dataElementCombo)) {
+                        dataElementDataMap.set(dataElementCombo, new Map());
                     }
 
-                    const periodMap = periodDataMap.get(discrepancy.period)!;
+                    const dataElementMap = dataElementDataMap.get(dataElementCombo)!;
                     const hasDiscrepancy = discrepancy.discrepancyType === 'value_mismatch' ||
                         discrepancy.discrepancyType === 'missing_in_destination';
 
-                    periodMap.set(dataElementCombo, {
+                    dataElementMap.set(discrepancy.period, {
                         source: discrepancy.sourceValue,
                         destination: discrepancy.destinationValue,
                         hasDiscrepancy
                     });
                 });
 
-                const dataElementsList = Array.from(dataElements);
-                const periods = Array.from(periodDataMap.keys()).sort();
+                const dataElementsList = Array.from(dataElementDataMap.keys());
+                const periodsList = Array.from(periods).sort();
 
                 return (
                     <div className="w-full overflow-x-auto ">
-                        <div style={{ minWidth: `${Math.max(1200, dataElementsList.length * 200)}px` }}>
+                        <div style={{ minWidth: `${Math.max(1200, periodsList.length * 200)}px` }}>
                             <Table>
                                 <TableHead>
                                     <TableRowHead>
-                                        <TableCellHead>{i18n.t('Period')}</TableCellHead>
-                                        {dataElementsList.map((dataElementCombo) => {
+                                        <TableCellHead>{i18n.t('Data Elements')}</TableCellHead>
+                                        {periodsList.map((period) => {
                                             return (
                                                 <TableCellHead
-                                                    key={dataElementCombo}
+                                                    key={period}
                                                     colSpan="2"
                                                     className="text-center"
                                                 >
                                                     <div className="whitespace-nowrap text-xs min-w-44">
-                                                        <div className="font-medium">{dataElementNames.get(dataElementCombo)}</div>
+                                                        <div className="font-medium">{formatPeriod(period)}</div>
 
                                                     </div>
                                                 </TableCellHead>
@@ -184,8 +184,8 @@ export function ValidationDiscrepancies({ discrepancies, summary, isLoading, err
                                     </TableRowHead>
                                     <TableRowHead>
                                         <TableCellHead></TableCellHead>
-                                        {dataElementsList.map((dataElementCombo) => (
-                                            <React.Fragment key={dataElementCombo}>
+                                        {periodsList.map((period) => (
+                                            <React.Fragment key={period}>
                                                 <TableCellHead className="text-center text-xs">
                                                     <div className="min-w-20 whitespace-nowrap">{i18n.t('Source')}</div>
                                                 </TableCellHead>
@@ -197,15 +197,19 @@ export function ValidationDiscrepancies({ discrepancies, summary, isLoading, err
                                     </TableRowHead>
                                 </TableHead>
                                 <TableBody>
-                                    {periods.map((period) => {
-                                        const periodData = periodDataMap.get(period)!;
+                                    {dataElementsList.map((dataElementCombo) => {
+                                        const dataElementData = dataElementDataMap.get(dataElementCombo)!;
                                         return (
-                                            <TableRow key={period}>
+                                            <TableRow key={dataElementCombo}>
                                                 <TableCell className="font-medium">
-                                                    <div className="whitespace-nowrap">{formatPeriod(period)}</div>
+                                                    <div className="whitespace-nowrap max-w-60">
+                                                        <div title={dataElementNames.get(dataElementCombo)}>
+                                                            {dataElementNames.get(dataElementCombo)}
+                                                        </div>
+                                                    </div>
                                                 </TableCell>
-                                                {dataElementsList.map((dataElementCombo) => {
-                                                    const data = periodData.get(dataElementCombo);
+                                                {periodsList.map((period) => {
+                                                    const data = dataElementData.get(period);
                                                     const sourceValue = data?.source ?? null;
                                                     const destinationValue = data?.destination ?? null;
                                                     const hasDiscrepancy = data?.hasDiscrepancy ?? false;
@@ -217,7 +221,7 @@ export function ValidationDiscrepancies({ discrepancies, summary, isLoading, err
                                                     const severity = discrepancy?.severity || 'minor';
 
                                                     return (
-                                                        <React.Fragment key={dataElementCombo}>
+                                                        <React.Fragment key={period}>
                                                             <TableCell className="text-center">
                                                                 <div className="whitespace-nowrap min-w-20 px-2">
                                                                     {formatValue(sourceValue)}

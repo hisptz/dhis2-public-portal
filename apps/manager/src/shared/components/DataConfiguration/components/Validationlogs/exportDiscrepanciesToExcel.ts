@@ -41,24 +41,24 @@ export async function exportDiscrepanciesToExcel(discrepancies: ValidationDiscre
         views: [{ state: 'frozen', xSplit: 1, ySplit: 2 }]
     });
 
-    const periodDataMap = new Map<string, Map<string, { source: any; destination: any }>>();
-    const dataElements = new Set<string>();
+    const dataElementDataMap = new Map<string, Map<string, { source: any; destination: any }>>();
+    const periods = new Set<string>();
     const dataElementNames = new Map<string, string>();
     const discrepancyMap = new Map<string, ValidationDiscrepancy>();
 
     discrepancies.forEach((discrepancy) => {
         const dataElementCombo = discrepancy.dataElement;
-        dataElements.add(dataElementCombo);
+        periods.add(discrepancy.period);
         dataElementNames.set(dataElementCombo, discrepancy.dataElementName);
 
-        if (!periodDataMap.has(discrepancy.period)) {
-            periodDataMap.set(discrepancy.period, new Map());
+        if (!dataElementDataMap.has(dataElementCombo)) {
+            dataElementDataMap.set(dataElementCombo, new Map());
         }
 
-        const periodMap = periodDataMap.get(discrepancy.period)!;
+        const dataElementMap = dataElementDataMap.get(dataElementCombo)!;
         const key = `${discrepancy.period}-${dataElementCombo}`;
 
-        periodMap.set(dataElementCombo, {
+        dataElementMap.set(discrepancy.period, {
             source: discrepancy.sourceValue,
             destination: discrepancy.destinationValue
         });
@@ -66,19 +66,19 @@ export async function exportDiscrepanciesToExcel(discrepancies: ValidationDiscre
         discrepancyMap.set(key, discrepancy);
     });
 
-    const dataElementsList = Array.from(dataElements);
-    const periods = Array.from(periodDataMap.keys()).sort();
+    const dataElementsList = Array.from(dataElementDataMap.keys());
+    const periodsList = Array.from(periods).sort();
 
-    // Build header row 1 (Data Element Names)
-    const headerRow1: string[] = ['Period'];
-    dataElementsList.forEach(de => {
-        headerRow1.push(dataElementNames.get(de) || de);
+    // Build header row 1 (Period Names)
+    const headerRow1: string[] = ['Data Elements'];
+    periodsList.forEach(period => {
+        headerRow1.push(formatPeriod(period));
         headerRow1.push('');
     });
 
     // Build header row 2 (Source/Destination)
     const headerRow2: string[] = [''];
-    dataElementsList.forEach(() => {
+    periodsList.forEach(() => {
         headerRow2.push('Source');
         headerRow2.push('Destination');
     });
@@ -119,36 +119,36 @@ export async function exportDiscrepanciesToExcel(discrepancies: ValidationDiscre
         };
     });
 
-    for (let i = 0; i < dataElementsList.length; i++) {
+    for (let i = 0; i < periodsList.length; i++) {
         const startCol = 2 + (i * 2);
         const endCol = startCol + 1;
         dataSheet.mergeCells(1, startCol, 1, endCol);
     }
 
-    periods.forEach((period, periodIndex) => {
-        const periodMap = periodDataMap.get(period)!;
-        const rowData: (string | number | null)[] = [formatPeriod(period)];
+    dataElementsList.forEach((dataElementCombo, deIndex) => {
+        const dataElementMap = dataElementDataMap.get(dataElementCombo)!;
+        const rowData: (string | number | null)[] = [dataElementNames.get(dataElementCombo) || dataElementCombo];
 
-        dataElementsList.forEach(de => {
-            const data = periodMap.get(de);
+        periodsList.forEach(period => {
+            const data = dataElementMap.get(period);
             rowData.push(data?.source ?? '');
             rowData.push(data?.destination ?? '');
         });
 
         const dataRow = dataSheet.addRow(rowData);
-        const rowNumber = periodIndex + 3;
+        const rowNumber = deIndex + 3;
 
-        const periodCell = dataRow.getCell(1);
-        periodCell.font = { bold: true };
-        periodCell.border = {
+        const dataElementCell = dataRow.getCell(1);
+        dataElementCell.font = { bold: true };
+        dataElementCell.border = {
             top: { style: 'thin', color: { argb: 'FFCCCCCC' } },
             left: { style: 'thin', color: { argb: 'FFCCCCCC' } },
             bottom: { style: 'thin', color: { argb: 'FFCCCCCC' } },
             right: { style: 'thin', color: { argb: 'FFCCCCCC' } }
         };
 
-        dataElementsList.forEach((de, deIndex) => {
-            const sourceColNum = 2 + (deIndex * 2);
+        periodsList.forEach((period, periodIndex) => {
+            const sourceColNum = 2 + (periodIndex * 2);
             const destColNum = sourceColNum + 1;
 
             const sourceCell = dataRow.getCell(sourceColNum);
@@ -164,7 +164,7 @@ export async function exportDiscrepanciesToExcel(discrepancies: ValidationDiscre
                 };
             });
 
-            const key = `${period}-${de}`;
+            const key = `${period}-${dataElementCombo}`;
             const discrepancy = discrepancyMap.get(key);
 
             if (discrepancy && (discrepancy.discrepancyType === 'value_mismatch' || discrepancy.discrepancyType === 'missing_in_destination')) {
@@ -188,8 +188,8 @@ export async function exportDiscrepanciesToExcel(discrepancies: ValidationDiscre
         });
     });
 
-    dataSheet.getColumn(1).width = 20;
-    for (let i = 2; i <= 1 + dataElementsList.length * 2; i++) {
+    dataSheet.getColumn(1).width = 30;
+    for (let i = 2; i <= 1 + periodsList.length * 2; i++) {
         dataSheet.getColumn(i).width = 15;
     }
 
