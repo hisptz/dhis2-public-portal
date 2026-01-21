@@ -124,30 +124,6 @@ export async function downloadData(engine: any, configId: string, data: any, ser
     }
 }
 
-export async function startDataDeletion(engine: any, configId: string, data: any, serverVersion?: any): Promise<ApiResponse> {
-    const useQueryParams = isVersion42OrHigher(serverVersion);
-
-    if (useQueryParams) {
-        const queryParams = new URLSearchParams();
-
-        if (data.dataItemsConfigIds && Array.isArray(data.dataItemsConfigIds)) {
-            queryParams.set('dataItemsConfigIds', JSON.stringify(data.dataItemsConfigIds));
-        }
-
-        if (data.runtimeConfig) {
-            queryParams.set('runtimeConfig', JSON.stringify(data.runtimeConfig));
-        }
-
-        const endpoint = `/data-delete/${configId}?${queryParams.toString()}`;
-        return queryDataServiceRoute(engine, endpoint);
-    } else {
-        return executeDataServiceRoute(engine, `/data-delete/${configId}`, {
-            dataItemsConfigIds: data.dataItemsConfigIds || [],
-            runtimeConfig: data.runtimeConfig || {}
-        }, 'create');
-    }
-}
-
 export async function createQueues(engine: any, configId: string): Promise<ApiResponse> {
     return executeDataServiceRoute(engine, `/queues/${configId}`);
 }
