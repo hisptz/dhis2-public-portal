@@ -87,8 +87,8 @@ export function RunConfigForm({
 			selectedMaps: [],
 			selectedDashboards: [],
 			runtimeConfig: {
-				pageSize: 10,
-				paginateByData: false,
+				pageSize: 1,
+				paginateByData: true,
 				timeout: 1000 * 60 * 5,
 				periods: [],
 			},
@@ -256,7 +256,7 @@ export function RunConfigForm({
 		<FormProvider {...form}>
 			<Modal hide={hide} onClose={onClose} position="middle">
 				<ModalTitle>
-					{`${i18n.t("Run")} ${config.source.name}`}
+					{`${i18n.t("Run Service -")} ${config.source.name}`}
 				</ModalTitle>
 				<ModalContent>
 					<form className="flex flex-col gap-2">
