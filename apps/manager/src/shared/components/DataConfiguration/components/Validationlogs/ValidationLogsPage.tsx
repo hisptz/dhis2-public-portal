@@ -6,8 +6,10 @@ import {
     CircularLoader,
     Tab,
     TabBar,
+    IconArrowLeft16,
 } from '@dhis2/ui';
 import i18n from '@dhis2/d2-i18n';
+import { useNavigate } from '@tanstack/react-router';
 import { useValidationLogs, useValidationStatus, useValidationDiscrepancies, useRerunValidation, useAnalyticsLastRun } from './hooks/validation';
 import { DataServiceRunStatus } from '@packages/shared/schemas';
 import { useAlert } from '@dhis2/app-runtime';
@@ -21,6 +23,10 @@ interface ValidationLogsPageProps {
 
 export function ValidationLogsPage({ configId }: ValidationLogsPageProps) {
     const [activeTab, setActiveTab] = useState('logs');
+
+    const navigate = useNavigate({
+        from: '/data-service-configuration/$configId/validation-logs'
+    });
 
     const { show } = useAlert(
         ({ message }) => message,
@@ -62,7 +68,11 @@ export function ValidationLogsPage({ configId }: ValidationLogsPageProps) {
         }
     };
 
-
+    const handleGoBack = () => {
+        navigate({
+            to: '/data-service-configuration',
+        });
+    };
 
     const isValidationRunning = validationStatus.data?.status === DataServiceRunStatus.RUNNING ||
         validationStatus.data?.status === DataServiceRunStatus.QUEUED;
@@ -87,6 +97,17 @@ export function ValidationLogsPage({ configId }: ValidationLogsPageProps) {
 
     return (
         <div className="space-y-4">
+            <div className="flex items-center gap-4 mb-4">
+                <Button
+                    secondary
+                    onClick={handleGoBack}
+                    icon={<IconArrowLeft16 />}
+
+                >
+                    {i18n.t('Back')}
+                </Button>
+            </div>
+
             <Card className="p-4">
                 <div className="flex items-center justify-between mb-4">
                     <div>
