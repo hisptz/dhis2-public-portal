@@ -40,22 +40,27 @@ export function TestConnection() {
 					message: i18n.t("Connection successful"),
 					type: { success: true },
 				});
+			} else if (response.status === 401)  {
+				show({
+					message: `${i18n.t("Unauthorized - Bad credentials")}`,
+					type: { critical: true },
+				});
 			} else {
 				show({
 					message: `${i18n.t("Connection failed")}:${response.statusText}`,
-					type: { info: true },
+					type: { critical: true },
 				});
 			}
 		} catch (e) {
 			if (e instanceof Error) {
 				show({
 					message: `${i18n.t("Connection failed")}:${e.message}`,
-					type: { info: true },
+					type: { critical: true },
 				});
 			} else {
 				show({
 					message: `${i18n.t("Connection failed")}: Unknown error`,
-					type: { info: true },
+					type: { critical: true },
 				});
 			}
 		} finally {
