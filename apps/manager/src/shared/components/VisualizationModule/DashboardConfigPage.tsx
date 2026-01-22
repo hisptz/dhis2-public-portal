@@ -1,4 +1,3 @@
-import React from 'react'
 import { DashboardGroupsConfig } from './components/DashboardGroupsConfig/DashboardGroupsConfig'
 import { ModuleVisualizationsConfig } from './components/DashboardVisualizationsConfig/ModuleVisualizationsConfig'
 import { DashboardGeneralConfig } from './components/DashboardGeneralConfig'

@@ -1,6 +1,6 @@
 import { NoticeBox } from '@dhis2/ui'
 import i18n from '@dhis2/d2-i18n'
-import React, { RefObject, useRef } from 'react'
+import {RefObject, useRef } from 'react'
 import { LogEntry } from '../utils/configurationUtils'
 import { useResizeObserver } from 'usehooks-ts'
 

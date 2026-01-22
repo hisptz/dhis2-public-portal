@@ -1,4 +1,3 @@
-import React from 'react'
 import { colors, Menu } from '@dhis2/ui'
 import { appMenus } from '../../constants/menu'
 import { SideMenuItem } from './components/SideMenuItem'

@@ -1,4 +1,4 @@
-import React, { createContext, useContext } from 'react'
+import { createContext, useContext } from 'react'
 import { useDataQuery } from '@dhis2/app-runtime'
 import { FullLoader } from './FullLoader'
 import { DatastoreKeys, DatastoreNamespaces } from '@packages/shared/constants'

@@ -1,6 +1,6 @@
 import { RHFCheckboxField, RHFTextInputField } from '@hisptz/dhis2-ui'
 import i18n from '@dhis2/d2-i18n'
-import React, { useEffect } from 'react'
+import { useEffect } from 'react'
 import { ItemDisplayConfig } from './ItemDisplay'
 import { useFormContext, useWatch } from 'react-hook-form'
 

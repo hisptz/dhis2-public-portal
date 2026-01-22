@@ -3,7 +3,7 @@ import {
     VisualizationChartType,
     YearOverYearVisualizationConfig,
 } from '../../schemas'
-import React, { RefObject, useMemo } from 'react'
+import {RefObject, useMemo } from 'react'
 import HighchartsReact from 'highcharts-react-official'
 import Highcharts from 'highcharts'
 import { PeriodUtility } from '@hisptz/dhis2-utils'

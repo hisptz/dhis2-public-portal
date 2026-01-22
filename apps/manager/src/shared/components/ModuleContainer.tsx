@@ -1,4 +1,3 @@
-import React from 'react'
 import { ModuleTitle } from './ModuleTitle'
 
 export function ModuleContainer({

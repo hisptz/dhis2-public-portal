@@ -1,5 +1,4 @@
 import { CircularLoader } from '@dhis2/ui'
-import React from 'react'
 
 export function FullLoader() {
     return (

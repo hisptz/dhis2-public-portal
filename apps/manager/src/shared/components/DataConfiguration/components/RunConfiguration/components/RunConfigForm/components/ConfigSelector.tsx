@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react'
+import { useMemo } from 'react'
 import { Button, ButtonStrip, Field } from '@dhis2/ui'
 import i18n from '@dhis2/d2-i18n'
 import { useController } from 'react-hook-form'
@@ -13,7 +13,7 @@ export function ConfigSelector({ config }: { config: DataServiceConfig }) {
 
     const options = useMemo(() => {
         return config.itemsConfig.map(
-            ({ id, name, dataItems, type, periodTypeId }) => {
+            ({ id, name, dataItems, periodTypeId }) => {
                 return {
                     label: `${name} (items: ${dataItems.length} period type: ${periodTypeId})`,
                     value: id,

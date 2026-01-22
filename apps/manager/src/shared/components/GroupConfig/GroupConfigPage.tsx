@@ -1,4 +1,3 @@
-import React from 'react'
 import { GroupGeneralConfig } from './components/GroupGeneralConfig'
 import { GroupVisualizationsConfig } from './components/GroupVisualizationsConfig/GroupVisualizationsConfig'
 import { Button, IconArrowLeft24 } from '@dhis2/ui'

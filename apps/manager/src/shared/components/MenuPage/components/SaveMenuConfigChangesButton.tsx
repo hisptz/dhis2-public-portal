@@ -3,7 +3,7 @@ import { AppMenuConfig } from '@packages/shared/schemas'
 import { Button, ButtonStrip } from '@dhis2/ui'
 import i18n from '@dhis2/d2-i18n'
 import { useSaveMenuConfig } from '../hooks/data'
-import React from 'react'
+
 import { useDialog } from '@hisptz/dhis2-ui'
 import { useAlert } from '@dhis2/app-runtime'
 

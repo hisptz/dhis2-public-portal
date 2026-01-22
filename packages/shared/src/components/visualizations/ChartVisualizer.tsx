@@ -3,7 +3,7 @@ import {
     LegendSetConfig,
     VisualizationConfig,
 } from '../../schemas'
-import React, { memo, RefObject, useRef } from 'react'
+import {memo, RefObject, useRef } from 'react'
 import HighchartsReact from 'highcharts-react-official'
 import { DHIS2Chart } from '@hisptz/dhis2-analytics'
 import {

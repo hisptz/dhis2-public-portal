@@ -1,5 +1,5 @@
 import { createFileRoute, Outlet } from '@tanstack/react-router'
-import React from 'react'
+
 import { ModuleProvider } from '@/shared/components/ModulesPage/providers/ModuleProvider'
 import { ModuleFormProvider } from '@/shared/components/ModulesPage/providers/ModuleFormProvider'
 

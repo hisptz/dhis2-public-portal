@@ -1,7 +1,7 @@
 import { useFormContext } from 'react-hook-form'
 import { Button, ButtonStrip } from '@dhis2/ui'
 import i18n from '@dhis2/d2-i18n'
-import React from 'react'
+
 import { useNavigate, useParams } from '@tanstack/react-router'
 import { useAlert } from '@dhis2/app-runtime'
 import { AppModule } from '@packages/shared/schemas'

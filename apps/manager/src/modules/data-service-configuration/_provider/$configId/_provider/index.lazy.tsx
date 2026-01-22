@@ -1,9 +1,6 @@
 import { createLazyFileRoute, useNavigate } from '@tanstack/react-router'
-import React from 'react'
-import { useWatch } from 'react-hook-form'
-import { DataServiceConfig } from '@packages/shared/schemas'
-import { SourceConfiguration } from '../../../../../shared/components/DataConfiguration/components/SourceConfiguration'
-import { DataItemsConfig } from '../../../../../shared/components/DataConfiguration/components/DataItemsConfig/DataItemsConfig'
+import { SourceConfiguration } from '@/shared/components/DataConfiguration/components/SourceConfiguration'
+import { DataItemsConfig } from '@/shared/components/DataConfiguration/components/DataItemsConfig/DataItemsConfig'
 import { Button, IconArrowLeft24 } from '@dhis2/ui'
 import i18n from '@dhis2/d2-i18n'
 
@@ -14,10 +11,6 @@ export const Route = createLazyFileRoute(
 })
 
 function RouteComponent() {
-    const source = useWatch<DataServiceConfig, 'source'>({
-        name: 'source',
-    })
-
     const navigate = useNavigate({
         from: '/data-service-configuration/$configId',
     })

@@ -1,7 +1,7 @@
 import { useBoolean } from 'usehooks-ts'
 import { AddFeedbackForm } from './componets/AddFeedbackForm'
 import { Button, IconAdd24 } from '@dhis2/ui'
-import React from 'react'
+
 import i18n from '@dhis2/d2-i18n'
 import { FeedbackRecipient } from '@packages/shared/schemas'
 

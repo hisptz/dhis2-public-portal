@@ -1,6 +1,6 @@
 import { useBoolean } from 'usehooks-ts'
 import { Button, IconEdit16 } from '@dhis2/ui'
-import React from 'react'
+
 import { MenuItemForm } from './MenuItemForm/MenuItemForm'
 import { MenuItem } from '@packages/shared/schemas'
 

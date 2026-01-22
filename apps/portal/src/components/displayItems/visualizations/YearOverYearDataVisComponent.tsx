@@ -25,7 +25,6 @@ import { ActionMenu } from './ActionMenu'
 import { CustomOrgUnitModal } from './CustomOrgUnitModal'
 import { CustomPeriodModal } from '@/components/displayItems/visualizations/CustomPeriodModal'
 
-import React from 'react'
 import { useSearchParams } from 'next/navigation'
 import { useYearOverYearAnalytics } from '@/hooks/charts'
 

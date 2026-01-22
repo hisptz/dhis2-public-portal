@@ -1,4 +1,4 @@
-import React, { RefObject, useCallback, useRef, useState } from 'react'
+import {RefObject, useCallback, useRef, useState } from 'react'
 import { Map as LeafletMap } from 'leaflet'
 import { useResizeObserver } from 'usehooks-ts'
 import { MapConfig } from '@packages/shared/schemas'

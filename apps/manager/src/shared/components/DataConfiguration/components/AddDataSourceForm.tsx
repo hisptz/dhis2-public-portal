@@ -1,6 +1,6 @@
 import { FormProvider, useForm } from 'react-hook-form'
 import { dataServiceConfigSchema } from '@packages/shared/schemas'
-import React, { useMemo } from 'react'
+import { useMemo } from 'react'
 import { z, ZodIssueCode } from 'zod'
 import {
     Button,
@@ -110,7 +110,10 @@ function useFormValidation() {
                         context.addIssue({
                             code: ZodIssueCode.custom,
                             message: i18n.t(
-                                'Could not connect to the DHIS2 instance. Please check the URL, and authentication, and try again.'
+                                'Could not connect to the DHIS2 instance. Please check the URL, and authentication, and try again. Error message: {{errorMessage}}',
+                                {
+                                    errorMessage: error.message,
+                                }
                             ),
                             path: ['source', 'url'],
                         })

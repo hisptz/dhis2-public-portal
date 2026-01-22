@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import {useState } from 'react'
 import { Button, Card, CircularLoader, NoticeBox, Tab, TabBar } from '@dhis2/ui'
 import i18n from '@dhis2/d2-i18n'
 import {

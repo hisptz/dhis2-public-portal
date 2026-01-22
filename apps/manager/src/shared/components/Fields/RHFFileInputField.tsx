@@ -1,5 +1,5 @@
 import { FileInputField, FileInputFieldProps, FileListItem } from '@dhis2/ui'
-import React from 'react'
+
 import { useController } from 'react-hook-form'
 
 export interface RHFFileInputFieldProps extends Omit<

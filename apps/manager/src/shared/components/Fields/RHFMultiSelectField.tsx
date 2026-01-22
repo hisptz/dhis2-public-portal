@@ -3,7 +3,7 @@ import {
     MultiSelectFieldProps,
     MultiSelectOption,
 } from '@dhis2/ui'
-import React from 'react'
+
 import { RegisterOptions, useController } from 'react-hook-form'
 import { isEmpty } from 'lodash'
 

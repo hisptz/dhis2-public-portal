@@ -1,6 +1,6 @@
 import { useGetDatastoreEntries } from '../../../../hooks/datastore'
 import { DatastoreNamespaces } from '@packages/shared/constants'
-import React, { useMemo } from 'react'
+import {useMemo } from 'react'
 import { AppModule } from '@packages/shared/schemas'
 import { capitalize, startCase } from 'lodash'
 import { RHFSingleSelectField } from '@hisptz/dhis2-ui'

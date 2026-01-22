@@ -1,6 +1,6 @@
 import { useBoolean } from 'usehooks-ts'
 import { Button, IconAdd24 } from '@dhis2/ui'
-import React from 'react'
+
 import { AddDataSourceForm } from './AddDataSourceForm'
 import i18n from '@dhis2/d2-i18n'
 

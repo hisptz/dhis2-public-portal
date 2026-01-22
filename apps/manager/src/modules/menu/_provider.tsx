@@ -1,6 +1,6 @@
 import { createFileRoute, Outlet } from '@tanstack/react-router'
 import { MenuProvider } from '@/shared/components/MenuPage/providers/MenuProvider'
-import React from 'react'
+
 import { InitConfigProvider } from '@/shared/components/InitConfigProvider'
 import { DatastoreKeys } from '@packages/shared/constants'
 

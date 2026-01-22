@@ -1,7 +1,7 @@
 import { DocumentGroup } from '@packages/shared/schemas'
 import { useBoolean } from 'usehooks-ts'
 import { Button, IconEdit16 } from '@dhis2/ui'
-import React from 'react'
+
 import { DocumentGroupForm } from './DocumentGroupForm'
 import i18n from '@dhis2/d2-i18n'
 

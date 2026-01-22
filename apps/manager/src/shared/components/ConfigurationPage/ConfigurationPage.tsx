@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import {useState } from 'react'
 import { Divider } from '@dhis2/ui'
 import { ImportSection } from './components/ImportSection'
 import { ExportSection } from './components/ExportSection'

@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react'
+import {useEffect, useMemo, useState } from 'react'
 import { Box, MultiSelect, Select } from '@mantine/core'
 
 export function SelectInputField({

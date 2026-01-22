@@ -10,7 +10,7 @@ import {
     ModalTitle,
     Tooltip,
 } from '@dhis2/ui'
-import React, { useMemo } from 'react'
+import { useMemo } from 'react'
 import { ProcessSummary } from '@packages/shared/schemas'
 
 function RunConfigSummaryModal({

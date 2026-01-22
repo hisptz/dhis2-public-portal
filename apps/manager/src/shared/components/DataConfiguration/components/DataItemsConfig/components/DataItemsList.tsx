@@ -5,7 +5,7 @@ import i18n from '@dhis2/d2-i18n'
 import { startCase } from 'lodash'
 import { FixedPeriodType } from '@hisptz/dhis2-utils'
 import { ButtonStrip, Divider } from '@dhis2/ui'
-import React from 'react'
+
 import { AddDataItemConfig } from './AddDataItemConfig/AddDataItemConfig'
 import { EditDataItemConfig } from './AddDataItemConfig/EditDataItemConfig'
 

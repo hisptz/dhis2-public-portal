@@ -1,7 +1,7 @@
 import { useWatch } from 'react-hook-form'
 import { MenuItem, MenuItemType } from '@packages/shared/schemas'
 import { ModuleSelector } from './ModuleSelector'
-import React from 'react'
+
 import { ModulesSelector } from './ModulesSelector'
 
 export function MenuTypeSelector() {

@@ -10,7 +10,7 @@ import {
     ModalTitle,
 } from '@dhis2/ui'
 import i18n from '@dhis2/d2-i18n'
-import React, { useCallback, useState } from 'react'
+import {useCallback, useState } from 'react'
 import JSZip from 'jszip'
 import { DatastoreKeys, DatastoreNamespaces } from '@packages/shared/constants'
 import {

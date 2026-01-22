@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react'
+import { useCallback, useState } from 'react'
 import i18n from '@dhis2/d2-i18n'
 import {
     Button,

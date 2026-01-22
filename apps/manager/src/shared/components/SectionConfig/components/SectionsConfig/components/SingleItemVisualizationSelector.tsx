@@ -1,6 +1,6 @@
 import { useDataQuery } from '@dhis2/app-runtime'
 import { useWatch } from 'react-hook-form'
-import React, { useEffect, useMemo, useState } from 'react'
+import {useEffect, useMemo, useState } from 'react'
 import { RHFSingleSelectField, RHFTextInputField } from '@hisptz/dhis2-ui'
 import { capitalize, startCase } from 'lodash'
 import i18n from '@dhis2/d2-i18n'

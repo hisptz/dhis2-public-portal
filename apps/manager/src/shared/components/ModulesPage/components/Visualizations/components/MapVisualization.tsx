@@ -1,5 +1,5 @@
 import { ChartVisualizationItem } from '@packages/shared/schemas'
-import React from 'react'
+
 import { useMapConfig } from '../../../hooks/map'
 import { FullLoader } from '../../../../FullLoader'
 import { MapVisComponent } from './MapComponents/MapVisComponent'

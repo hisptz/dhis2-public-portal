@@ -1,5 +1,5 @@
 import { createFileRoute } from '@tanstack/react-router'
-import React from 'react'
+
 import { StaticConfig } from '@/shared/components/StaticModule/components/StaticConfig/StaticConfig'
 
 export const Route = createFileRoute(

@@ -1,4 +1,3 @@
-import React from 'react'
 import CountUp from 'react-countup'
 import i18n from '@dhis2/d2-i18n'
 

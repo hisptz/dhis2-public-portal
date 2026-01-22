@@ -4,7 +4,7 @@ import {
     YearOverYearVisualizationConfig,
 } from '@packages/shared/schemas'
 import { useVisualizationConfig } from '../../../hooks/visualization'
-import React from 'react'
+
 import { useAppearance } from '../../../hooks/appearance'
 import { FullLoader } from '../../../../FullLoader'
 import { YearOverYearDataVisComponent } from './YearOverYearComponent/YearOverYearDataVisComponent'

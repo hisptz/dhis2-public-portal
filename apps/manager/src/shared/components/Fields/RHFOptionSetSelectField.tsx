@@ -1,8 +1,8 @@
-import React, { useMemo } from 'react'
+import { useMemo } from 'react'
 import { useDataQuery } from '@dhis2/app-runtime'
 import { RHFSingleSelectField } from '@hisptz/dhis2-ui'
 import { SingleSelectFieldProps } from '@dhis2/ui'
-import { RHFFieldProps } from '../../interfaces/interface'
+import { RHFFieldProps } from '../../interfaces/interface' // import { RHFFieldProps } from "@hisptz/dhis2-ui/dist/types/forms/interfaces";
 // import { RHFFieldProps } from "@hisptz/dhis2-ui/dist/types/forms/interfaces";
 
 export type RHFOptionSetSelectFieldProps = RHFFieldProps &

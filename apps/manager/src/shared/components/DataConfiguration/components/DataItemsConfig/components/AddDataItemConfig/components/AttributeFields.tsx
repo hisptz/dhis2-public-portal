@@ -1,7 +1,7 @@
 import { useController, useWatch } from 'react-hook-form'
 import { DataServiceDataSourceItemsConfig } from '@packages/shared/schemas'
 import { useDataQuery } from '@dhis2/app-runtime'
-import React, { useEffect, useMemo } from 'react'
+import { useEffect, useMemo } from 'react'
 import { RHFSingleSelectField } from '@hisptz/dhis2-ui'
 import i18n from '@dhis2/d2-i18n'
 import { Button, ButtonStrip, Field } from '@dhis2/ui'
@@ -30,7 +30,7 @@ interface AttributeQueryResponse {
     }
 }
 
-const attributeItemsQuery: any = {
+const attributeItemsQuery = {
     attributeItems: {
         resource: 'dimensions',
         id: ({ id }: { id: string }) => `${id}/items`,

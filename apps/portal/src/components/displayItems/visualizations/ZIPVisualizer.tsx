@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Box, List, LoadingOverlay, Text } from '@mantine/core'
 import {
     IconCircleX,

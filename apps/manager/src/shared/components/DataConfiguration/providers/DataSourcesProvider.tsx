@@ -1,4 +1,4 @@
-import React, { createContext, useContext } from 'react'
+import { createContext, useContext } from 'react'
 import { DataServiceConfig } from '@packages/shared/schemas'
 import { useGetDataSources } from '../hooks/data'
 import { FullLoader } from '../../FullLoader'

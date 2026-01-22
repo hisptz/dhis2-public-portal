@@ -1,4 +1,3 @@
-import React from 'react'
 import { SectionGeneralConfig } from './components/SectionGeneralConfig'
 import { SectionVisualizationsConfig } from './components/SectionsConfig/SectionVisualizationsConfig'
 import { Button, IconArrowLeft24 } from '@dhis2/ui'

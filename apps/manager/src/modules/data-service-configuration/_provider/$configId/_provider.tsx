@@ -1,5 +1,5 @@
 import { createFileRoute, Outlet, useParams } from '@tanstack/react-router'
-import React from 'react'
+
 import { FormProvider, useForm } from 'react-hook-form'
 import { useGetDataSource } from '../../../../shared/components/DataConfiguration/hooks/data'
 import {

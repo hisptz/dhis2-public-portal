@@ -1,5 +1,5 @@
 import { createLazyFileRoute } from '@tanstack/react-router'
-import React from 'react'
+
 import i18n from '@dhis2/d2-i18n'
 import { ConfigurationList } from '@/shared/components/DataConfiguration/components/ConfigurationList'
 import { ModuleContainer } from '@/shared/components/ModuleContainer'

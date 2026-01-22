@@ -1,5 +1,5 @@
 import { Button, IconEdit16 } from '@dhis2/ui'
-import React from 'react'
+
 import { DataServiceDataSourceItemsConfig } from '@packages/shared/schemas'
 import { useBoolean } from 'usehooks-ts'
 import { DataItemConfigForm } from './components/DataItemConfigForm'

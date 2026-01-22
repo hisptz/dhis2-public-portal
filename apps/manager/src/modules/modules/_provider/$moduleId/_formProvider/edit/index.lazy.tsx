@@ -1,5 +1,5 @@
 import { createLazyFileRoute, useNavigate } from '@tanstack/react-router'
-import React from 'react'
+
 import i18n from '@dhis2/d2-i18n'
 import { Button, IconArrowLeft24 } from '@dhis2/ui'
 import { useModule } from '@/shared/components/ModulesPage/providers/ModuleProvider'

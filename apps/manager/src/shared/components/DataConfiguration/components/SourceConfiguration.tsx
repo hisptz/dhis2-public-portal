@@ -1,6 +1,6 @@
 import { useWatch } from 'react-hook-form'
 import { DataServiceConfig } from '@packages/shared/schemas'
-import React, { useEffect } from 'react'
+import { useEffect } from 'react'
 import i18n from '@dhis2/d2-i18n'
 import { CircularLoader } from '@dhis2/ui'
 import { FormTestConnection } from './FormTestConnection'

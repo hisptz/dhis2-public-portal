@@ -1,5 +1,5 @@
 import { createFileRoute, Outlet } from '@tanstack/react-router'
-import React from 'react'
+
 import { InitConfigProvider } from '@/shared/components/InitConfigProvider'
 import { DatastoreKeys } from '@packages/shared/constants'
 import { defaultAppearanceConfig } from '@/shared/constants/defaults/appearance'

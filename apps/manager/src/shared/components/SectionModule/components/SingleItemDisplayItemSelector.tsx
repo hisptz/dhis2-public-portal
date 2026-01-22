@@ -1,5 +1,5 @@
 import { DisplayItemType, SectionModuleConfig } from '@packages/shared/schemas'
-import React from 'react'
+
 import { useWatch } from 'react-hook-form'
 import i18n from '@dhis2/d2-i18n'
 import { RHFRichTextAreaField } from '../../Fields/RHFRichTextAreaField'

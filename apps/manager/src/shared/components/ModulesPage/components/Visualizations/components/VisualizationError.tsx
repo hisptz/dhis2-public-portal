@@ -1,6 +1,6 @@
 import { FallbackProps } from 'react-error-boundary'
 import { Button, IconError24 } from '@dhis2/ui'
-import React from 'react'
+
 import i18n from '@dhis2/d2-i18n'
 
 export function VisualizationError({

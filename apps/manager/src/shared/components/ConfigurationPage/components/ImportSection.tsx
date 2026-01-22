@@ -1,5 +1,5 @@
 import { Button, FileInputField, IconArrowUp16 } from '@dhis2/ui'
-import React, { useCallback, useState } from 'react'
+import { useCallback, useState } from 'react'
 import JSZip from 'jszip'
 import { DatastoreKeys, DatastoreNamespaces } from '@packages/shared/constants'
 import i18n from '@dhis2/d2-i18n'

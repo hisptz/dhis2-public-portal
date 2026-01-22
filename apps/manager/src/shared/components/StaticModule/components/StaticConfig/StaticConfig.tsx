@@ -1,4 +1,3 @@
-import React from 'react'
 import i18n from '@dhis2/d2-i18n'
 import { useItemById } from '../../hooks/data'
 import { useNavigate, useParams } from '@tanstack/react-router'

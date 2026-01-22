@@ -1,4 +1,4 @@
-import React, { RefObject, useMemo } from 'react'
+import { RefObject, useMemo } from 'react'
 
 import { AnalyticsData, VisualizationConfig } from '../../schemas'
 import { isArray, isEmpty } from 'lodash'

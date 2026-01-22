@@ -1,4 +1,3 @@
-import React from 'react'
 import { SectionModuleGeneralConfig } from './components/SectionModuleGeneralConfig'
 import { SectionsConfig } from './components/SectionsConfig/SectionsConfig'
 

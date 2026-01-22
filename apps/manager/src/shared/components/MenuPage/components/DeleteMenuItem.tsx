@@ -1,5 +1,5 @@
 import { Button, IconDelete16 } from '@dhis2/ui'
-import React from 'react'
+
 import { MenuItem } from '@packages/shared/schemas'
 import { useDialog } from '@hisptz/dhis2-ui'
 import i18n from '@dhis2/d2-i18n'

@@ -1,4 +1,3 @@
-import React from 'react'
 import { useController, useFormContext } from 'react-hook-form'
 import { OrgUnitSelectField } from '@hisptz/dhis2-ui'
 import i18n from '@dhis2/d2-i18n'

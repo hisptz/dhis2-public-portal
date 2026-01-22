@@ -1,7 +1,7 @@
 import { useBoolean } from 'usehooks-ts'
 import { AddVisualizationForm } from './AddVisualizationForm'
 import { Button, IconEdit16 } from '@dhis2/ui'
-import React from 'react'
+
 import i18n from '@dhis2/d2-i18n'
 import { VisualizationItem } from '@packages/shared/schemas'
 

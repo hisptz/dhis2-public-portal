@@ -1,4 +1,3 @@
-import React from 'react'
 import { useController } from 'react-hook-form'
 import { RichTextEditor, RichTextEditorProps } from '@hisptz/dhis2-ui'
 

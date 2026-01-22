@@ -1,7 +1,7 @@
 import { ModuleMenuItem } from '@packages/shared/schemas'
 import { useBoolean } from 'usehooks-ts'
 import { SubMenuForm } from './SubMenuForm'
-import React from 'react'
+
 import { Chip } from '@dhis2/ui'
 
 export function SubMenuItem({

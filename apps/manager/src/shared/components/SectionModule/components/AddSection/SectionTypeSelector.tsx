@@ -1,6 +1,6 @@
 import i18n from '@dhis2/d2-i18n'
 import { RHFSingleSelectField } from '@hisptz/dhis2-ui'
-import React from 'react'
+
 import { SectionDisplay, SectionType } from '@packages/shared/schemas'
 import { startCase } from 'lodash'
 

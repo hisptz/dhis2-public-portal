@@ -8,7 +8,7 @@ import {
     ModalTitle,
 } from '@dhis2/ui'
 import i18n from '@dhis2/d2-i18n'
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { useNavigate, useParams } from '@tanstack/react-router'
 import { FetchError, useAlert, useDataMutation } from '@dhis2/app-runtime'
 import { StaticItemConfig, StaticModule } from '@packages/shared/schemas'

@@ -5,7 +5,7 @@ import {
 } from 'react-grid-layout'
 import { FlexibleLayoutConfig } from '@packages/shared/schemas'
 import { Container } from '@mantine/core'
-import React from 'react'
+
 import { fromPairs } from 'lodash'
 import {
     ScreenSizeId,

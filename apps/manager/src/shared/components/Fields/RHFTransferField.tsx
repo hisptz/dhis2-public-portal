@@ -1,5 +1,5 @@
 import { Field, Transfer, TransferProps } from '@dhis2/ui'
-import React from 'react'
+
 import { useController } from 'react-hook-form'
 
 interface RHFTransferFieldProps extends Omit<

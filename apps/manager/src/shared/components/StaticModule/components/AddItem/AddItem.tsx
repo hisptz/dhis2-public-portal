@@ -1,5 +1,5 @@
 import { useBoolean } from 'usehooks-ts'
-import React from 'react'
+
 import { Button } from '@dhis2/ui'
 import i18n from '@dhis2/d2-i18n'
 import { StaticItemConfig } from '@packages/shared/schemas'

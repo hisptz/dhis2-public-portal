@@ -1,4 +1,3 @@
-import React from 'react'
 import i18n from '@dhis2/d2-i18n'
 import { Button, ButtonStrip, Divider, IconLayoutColumns24 } from '@dhis2/ui'
 import { DashboardVisualizations } from './components/DashboardVisualizations'

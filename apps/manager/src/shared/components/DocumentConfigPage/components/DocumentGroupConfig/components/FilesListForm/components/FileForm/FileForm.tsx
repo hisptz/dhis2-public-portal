@@ -7,7 +7,7 @@ import {
     ModalContent,
     ModalTitle,
 } from '@dhis2/ui'
-import React from 'react'
+
 import i18n from '@dhis2/d2-i18n'
 import { FormProvider, useForm } from 'react-hook-form'
 import { DocumentItem, documentItemSchema } from '@packages/shared/schemas'

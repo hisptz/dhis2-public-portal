@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Box, Button, Loader, Modal, Text, Title } from '@mantine/core'
 import { OrgUnitSelector } from '@hisptz/dhis2-ui'
 import { OrganisationUnit, OrgUnitSelection } from '@hisptz/dhis2-utils'

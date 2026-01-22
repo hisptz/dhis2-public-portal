@@ -1,4 +1,3 @@
-import React from 'react'
 import { RHFTextInputField } from '@hisptz/dhis2-ui'
 import i18n from '@dhis2/d2-i18n'
 import { useGroupNamePrefix } from '../hooks/route'

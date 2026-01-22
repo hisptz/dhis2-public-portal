@@ -3,7 +3,7 @@
         "noEmit": true,
         "skipLibCheck": true,
         "allowJs": true,
-        "jsx": "react",
+        "jsx": "react-jsx",
         "esModuleInterop": true,
         "target": "ESNext",
         "module": "esnext",

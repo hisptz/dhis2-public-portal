@@ -1,4 +1,3 @@
-import React from 'react'
 import { useFormContext } from 'react-hook-form'
 import { Field, InputField } from '@dhis2/ui'
 

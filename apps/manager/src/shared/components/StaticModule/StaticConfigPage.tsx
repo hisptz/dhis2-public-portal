@@ -1,4 +1,3 @@
-import React from 'react'
 import { StaticItemList } from './components/StaticItemList'
 import { GeneralConfig } from './components/GeneralConfig'
 

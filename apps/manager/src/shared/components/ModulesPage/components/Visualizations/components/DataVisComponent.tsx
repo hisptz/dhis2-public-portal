@@ -5,7 +5,7 @@ import {
 } from '@packages/shared/schemas'
 import { FullScreen, useFullScreenHandle } from 'react-full-screen'
 import { useAnalytics } from '@packages/shared/hooks'
-import React, { useMemo } from 'react'
+import {useMemo } from 'react'
 import { FullLoader } from '../../../../FullLoader'
 import {
     ChartSelector,

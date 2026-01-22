@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react'
+import { useCallback } from 'react'
 import i18n from '@dhis2/d2-i18n'
 import { Button, ButtonStrip, Divider, IconDelete16 } from '@dhis2/ui'
 import { useFieldArray, useFormContext, useWatch } from 'react-hook-form'

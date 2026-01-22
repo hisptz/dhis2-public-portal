@@ -1,6 +1,6 @@
 import { useBoolean } from 'usehooks-ts'
 import { AddDocumentForm } from './components/AddDocumentForm'
-import React from 'react'
+
 import { Button, IconAdd24 } from '@dhis2/ui'
 import i18n from '@dhis2/d2-i18n'
 import { DocumentItem } from '@packages/shared/schemas'

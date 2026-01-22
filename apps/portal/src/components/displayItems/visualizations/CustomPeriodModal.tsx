@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { Box, Button, Group, Modal, Text, Title } from '@mantine/core'
 import { PeriodTypeCategory, PeriodUtility } from '@hisptz/dhis2-utils'
 import {

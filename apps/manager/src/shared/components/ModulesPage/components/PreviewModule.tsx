@@ -1,4 +1,3 @@
-import React from 'react'
 import { Button, IconLaunch16 } from '@dhis2/ui'
 import i18n from '@dhis2/d2-i18n'
 import { useParams } from '@tanstack/react-router'

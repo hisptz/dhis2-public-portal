@@ -1,4 +1,3 @@
-import React from 'react'
 import { useController } from 'react-hook-form'
 import { DocumentsModule, ItemsDisplay } from '@packages/shared/schemas'
 import { Field, Radio } from '@dhis2/ui'

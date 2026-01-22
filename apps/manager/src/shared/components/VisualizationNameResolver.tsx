@@ -1,6 +1,5 @@
 import { useDataQuery } from '@dhis2/app-runtime'
 import { CircularLoader } from '@dhis2/ui'
-import React from 'react'
 
 const visQuery = {
     vis: {

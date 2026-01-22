@@ -1,6 +1,6 @@
 import { createLazyFileRoute } from '@tanstack/react-router'
 import i18n from '@dhis2/d2-i18n'
-import React from 'react'
+
 import { ModuleContainer } from '@/shared/components/ModuleContainer'
 import { Button, ButtonStrip } from '@dhis2/ui'
 import { useFormContext, useFormState } from 'react-hook-form'

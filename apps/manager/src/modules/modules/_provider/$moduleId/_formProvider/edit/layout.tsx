@@ -1,5 +1,5 @@
 import { createFileRoute, useNavigate, useParams } from '@tanstack/react-router'
-import React from 'react'
+
 import { useFormContext } from 'react-hook-form'
 import { AppModule } from '@packages/shared/schemas'
 import { VisualizationManager } from '@/shared/components/VisualizationModule/components/VisualizationManager'

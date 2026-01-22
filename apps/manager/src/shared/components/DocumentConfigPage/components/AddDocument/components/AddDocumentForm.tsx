@@ -8,7 +8,7 @@ import {
     ModalContent,
     ModalTitle,
 } from '@dhis2/ui'
-import React from 'react'
+
 import i18n from '@dhis2/d2-i18n'
 import { RHFSingleSelectField, RHFTextInputField } from '@hisptz/dhis2-ui'
 import { FetchError, useAlert } from '@dhis2/app-runtime'

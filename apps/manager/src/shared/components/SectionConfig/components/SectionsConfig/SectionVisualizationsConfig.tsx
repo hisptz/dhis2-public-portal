@@ -1,4 +1,3 @@
-import React from 'react'
 import { useWatch } from 'react-hook-form'
 import { useParams } from '@tanstack/react-router'
 import { SectionType } from '@packages/shared/schemas'

@@ -1,4 +1,3 @@
-import React from 'react'
 import { AppAppearanceConfig } from '@packages/shared/schemas'
 import { AppColorConfig } from './components/AppColorConfig'
 import { HeaderConfig } from './components/HeaderConfig'

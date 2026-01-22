@@ -1,9 +1,11 @@
 import { useDataQuery } from '@dhis2/app-runtime'
 import { Field, Transfer } from '@dhis2/ui'
 import { debounce, find, uniqBy } from 'lodash'
-import React, { useCallback, useEffect, useMemo, useState } from 'react'
+import { useCallback, useEffect, useMemo, useState } from 'react'
 import { Controller } from 'react-hook-form'
 import { DataServiceConfig } from '@packages/shared/schemas'
+import { DHIS2Resource } from '@hisptz/dhis2-utils'
+import { Pager } from '@hisptz/dhis2-ui'
 
 export interface SourceMetadataSelectorProps {
     name: string
@@ -13,10 +15,17 @@ export interface SourceMetadataSelectorProps {
     resourceType: 'visualizations' | 'maps' | 'dashboards'
 }
 
-const createMetadataQuery = (resourceType: string, routeId: string) => ({
+const metadataQuery = {
     metadata: {
-        resource: `routes/${routeId}/run/${resourceType}`,
-        params: ({ page, keyword }: any) => {
+        resource: `routes`,
+        id: ({
+            routeId,
+            resourceType,
+        }: {
+            routeId: string
+            resourceType: string
+        }) => `/${routeId}/run/${resourceType}`,
+        params: ({ page, keyword }: { page: number; keyword?: string }) => {
             return {
                 fields: ['id', 'displayName'],
                 page,
@@ -26,7 +35,16 @@ const createMetadataQuery = (resourceType: string, routeId: string) => ({
             }
         },
     },
-})
+}
+
+type MetadataQueryResponse = {
+    metadata: {
+        pager: Pager
+        visualizations?: Array<DHIS2Resource>
+        maps?: Array<DHIS2Resource>
+        dashboards?: Array<DHIS2Resource>
+    }
+}
 
 export function SourceMetadataSelector({
     name,
@@ -38,23 +56,29 @@ export function SourceMetadataSelector({
     const [options, setOptions] = useState<
         Array<{ label: string; value: string }>
     >([])
-    const { data, loading, refetch } = useDataQuery<{
-        metadata: { pager: any; [key: string]: any }
-    }>(createMetadataQuery(resourceType, config.source.routeId), {
-        variables: {
-            page: 1,
-        },
-    })
+    const { data, loading, refetch } = useDataQuery<MetadataQueryResponse>(
+        metadataQuery,
+        {
+            variables: {
+                page: 1,
+                resourceType,
+                routeId: config.source.routeId,
+            },
+        }
+    )
 
     useEffect(() => {
         if (data) {
-            const items = data?.metadata?.[resourceType] || []
-            const newData: any[] = items?.map((item: any) => {
-                return {
-                    label: item.displayName,
-                    value: item.id,
+            const items: Array<DHIS2Resource> =
+                data?.metadata?.[resourceType] ?? []
+            const newData: Array<{ label: string; value: string }> = items.map(
+                (item) => {
+                    return {
+                        label: item.displayName ?? '',
+                        value: item.id,
+                    }
                 }
-            })
+            )
             setOptions((prevState) =>
                 uniqBy([...prevState, ...newData], 'value')
             )
@@ -62,11 +86,11 @@ export function SourceMetadataSelector({
     }, [data, resourceType])
 
     const onNextPage = useCallback(() => {
-        const page = parseInt(data?.metadata?.pager?.page)
-        const totalPages = parseInt(data?.metadata?.pager?.pageCount)
+        const page = data?.metadata?.pager?.page ?? 1
+        const totalPages = data?.metadata?.pager?.pageCount ?? 50
         if (page !== totalPages) {
             refetch({
-                page: parseInt(data?.metadata?.pager?.page ?? '0') + 1,
+                page: (data?.metadata?.pager?.page ?? 1) + 1,
             })
         }
     }, [refetch, data])
@@ -76,19 +100,19 @@ export function SourceMetadataSelector({
             return refetch({
                 keyword,
                 page: 1,
-            })
+            }) as Promise<MetadataQueryResponse>
         },
         [refetch]
     )
 
     const onFilterChange = debounce(async ({ value }) => {
         const { metadata: metadataResponse } = await onFilter(value)
-        const items = (metadataResponse as any)?.[resourceType] ?? []
+        const items = metadataResponse?.[resourceType] ?? []
         setOptions(
             uniqBy(
                 [
-                    ...items.map((item: any) => ({
-                        label: item.displayName,
+                    ...items.map((item) => ({
+                        label: item.displayName!,
                         value: item.id,
                     })),
                 ],
@@ -104,7 +128,7 @@ export function SourceMetadataSelector({
                     return uniqBy(
                         [
                             ...(options ?? []),
-                            ...(field.value?.map(({ id, name }: any) => ({
+                            ...(field.value?.map(({ id, name }) => ({
                                 label: name,
                                 value: id,
                             })) ?? []),

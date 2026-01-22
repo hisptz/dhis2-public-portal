@@ -1,5 +1,5 @@
 import { createFileRoute } from '@tanstack/react-router'
-import React from 'react'
+
 import { SectionConfigPage } from '../../../../../../../../shared/components/SectionConfig/SectionConfigPage'
 
 export const Route = createFileRoute(

@@ -1,7 +1,7 @@
 'use client'
 
 import { useFormContext } from 'react-hook-form'
-import React, { useState } from 'react'
+import { useState } from 'react'
 import i18n from '@dhis2/d2-i18n'
 import { Button, IconAdd16, IconDelete16 } from '@dhis2/ui'
 import { ColorSelectorModal } from './ColorSelectorModal'

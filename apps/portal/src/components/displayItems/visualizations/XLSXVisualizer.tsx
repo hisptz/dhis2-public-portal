@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Box, LoadingOverlay, Table, Text } from '@mantine/core'
 import { IconCircleX, IconFileSpreadsheet } from '@tabler/icons-react'
 import * as XLSX from 'xlsx'

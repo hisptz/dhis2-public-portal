@@ -3,7 +3,6 @@ import {
     YearOverYearVisualizationConfig,
 } from '@packages/shared/schemas'
 
-import React from 'react'
 import { useYearOverYearAnalytics } from '@packages/shared/hooks'
 import {
     VisualizationTitle,

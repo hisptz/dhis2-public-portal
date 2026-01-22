@@ -9,7 +9,7 @@ import {
 } from '@dhis2/ui'
 import i18n from '@dhis2/d2-i18n'
 import { DataServiceConfig } from '@packages/shared/schemas'
-import React, { Suspense } from 'react'
+import {Suspense } from 'react'
 import { useDataConfigRunStatus } from '../../RunConfigStatus/hooks/status'
 import { StatusIndicator } from '../../RunConfigStatus/RunConfigStatus'
 import { RunConfigSummaryDetails } from './RunConfigSummaryDetails'

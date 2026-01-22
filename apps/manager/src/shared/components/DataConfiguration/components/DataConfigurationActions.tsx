@@ -1,7 +1,7 @@
 import { Button, ButtonStrip } from '@dhis2/ui'
 import i18n from '@dhis2/d2-i18n'
-import React from 'react'
-import { useFormContext } from 'react-hook-form'
+
+import { SubmitErrorHandler, useFormContext } from 'react-hook-form'
 import { DataServiceConfig } from '@packages/shared/schemas'
 import { useNavigate } from '@tanstack/react-router'
 import { useAlert } from '@dhis2/app-runtime'
@@ -19,7 +19,7 @@ export function DataConfigurationActions() {
 
     const { save } = useUpdateDataSource()
 
-    const onError = (errors: any) => {
+    const onError: SubmitErrorHandler<DataServiceConfig> = (errors) => {
         console.error(errors)
         show({
             message: `${i18n.t('Could not save form, check the logs for more information')} `,

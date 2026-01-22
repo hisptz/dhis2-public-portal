@@ -7,7 +7,7 @@ import {
 } from '@hisptz/dhis2-analytics'
 import { Map as LeafletMap } from 'leaflet'
 import { MapConfig, MapLayerType } from '../../schemas'
-import React, { memo, useMemo } from 'react'
+import {memo, useMemo } from 'react'
 import { forEach, head, isEmpty, set } from 'lodash'
 import { OrgUnitSelection } from '@hisptz/dhis2-utils'
 

@@ -1,5 +1,5 @@
 import { createLazyFileRoute } from '@tanstack/react-router'
-import React from 'react'
+
 import { ModuleContainer } from '@/shared/components/ModuleContainer'
 import { MenuList } from '@/shared/components/MenuPage/components/MenuList'
 import { FormProvider, useForm } from 'react-hook-form'

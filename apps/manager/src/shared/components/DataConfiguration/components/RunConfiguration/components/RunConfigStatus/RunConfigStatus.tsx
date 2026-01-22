@@ -1,4 +1,3 @@
-import React from 'react'
 import { useDataConfigRunStatus } from './hooks/status'
 import { CircularLoader, Tag } from '@dhis2/ui'
 import { DataServiceRunStatus } from '@packages/shared/schemas'

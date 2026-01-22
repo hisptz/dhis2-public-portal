@@ -9,7 +9,7 @@ import {
     ModalTitle,
 } from '@dhis2/ui'
 import i18n from '@dhis2/d2-i18n'
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useDialog } from '@hisptz/dhis2-ui'
 import {
     DragDropContext,

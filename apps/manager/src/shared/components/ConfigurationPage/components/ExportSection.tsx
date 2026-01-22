@@ -1,5 +1,5 @@
 import { Button, IconArrowDown16 } from '@dhis2/ui'
-import React, { useCallback, useState } from 'react'
+import { useCallback, useState } from 'react'
 import JSZip from 'jszip'
 import { DatastoreKeys, DatastoreNamespaces } from '@packages/shared/constants'
 import {

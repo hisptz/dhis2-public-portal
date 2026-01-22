@@ -1,5 +1,5 @@
 import { createFileRoute, useNavigate, useSearch } from '@tanstack/react-router'
-import React, { useDeferredValue } from 'react'
+import { useDeferredValue } from 'react'
 import { ModuleContainer } from '@/shared/components/ModuleContainer'
 import i18n from '@dhis2/d2-i18n'
 import { Header } from '@/shared/components/ModulesPage/components/Header'

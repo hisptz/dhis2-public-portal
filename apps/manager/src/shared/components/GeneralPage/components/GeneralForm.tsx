@@ -1,7 +1,7 @@
 import { RHFTextInputField } from '@hisptz/dhis2-ui'
 import i18n from '@dhis2/d2-i18n'
 import { RHFTextAreaField } from '../../Fields/RHFTextAreaField'
-import React from 'react'
+
 import { RHFIconInput } from '../../Fields/RHFIconInput'
 
 export function GeneralForm() {

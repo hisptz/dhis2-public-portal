@@ -1,7 +1,7 @@
 import { useController, useFieldArray, useWatch } from 'react-hook-form'
 import { MenuItem } from '@packages/shared/schemas'
 import { ButtonStrip, Field } from '@dhis2/ui'
-import React from 'react'
+
 import i18n from '@dhis2/d2-i18n'
 import { SubMenuItem } from './SubMenuItem'
 import { AddSubMenuItem } from './AddSubMenuItem'

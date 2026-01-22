@@ -12,7 +12,7 @@ import {
     ModalTitle,
     NoticeBox,
 } from '@dhis2/ui'
-import React from 'react'
+
 import i18n from '@dhis2/d2-i18n'
 import { PeriodSelector } from './components/PeriodSelector'
 import { z } from 'zod'
@@ -26,9 +26,10 @@ import { SourceMetadataSelector } from './components/SourceMetadataSelector'
 import {
     downloadData,
     downloadMetadata,
-} from '../../../../../../services/dataServiceClient'
+} from '@/shared/services/dataServiceClient'
 import { useNavigate } from '@tanstack/react-router'
 import { useStartValidation } from '../../../../../DataConfiguration/components/Validationlogs/hooks/validation'
+import { zodResolver } from '@hookform/resolvers/zod'
 
 const runConfigSchema = z.object({
     service: z.enum([
@@ -79,6 +80,7 @@ export function RunConfigForm({
         ({ type }) => ({ ...type, duration: 3000 })
     )
     const form = useForm<RunConfigFormValues>({
+        resolver: zodResolver(runConfigSchema),
         defaultValues: {
             service: 'metadata-migration',
             metadataSource: 'source',

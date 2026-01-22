@@ -1,4 +1,3 @@
-import React from 'react'
 import { Divider } from '@dhis2/ui'
 import { useFieldArray } from 'react-hook-form'
 import { SectionModuleConfig } from '@packages/shared/schemas'

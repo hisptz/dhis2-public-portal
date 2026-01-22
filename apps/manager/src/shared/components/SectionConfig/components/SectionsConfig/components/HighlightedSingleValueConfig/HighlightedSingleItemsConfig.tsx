@@ -1,4 +1,3 @@
-import React from 'react'
 import i18n from '@dhis2/d2-i18n'
 import { Button, ButtonStrip, Divider, Field, IconDelete16 } from '@dhis2/ui'
 

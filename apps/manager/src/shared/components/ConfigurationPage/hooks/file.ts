@@ -22,7 +22,9 @@ export const useFile = () => {
     ): Promise<string | null> => {
         try {
             const fileObject = new File([file], filename, { type: file.type })
-            const response = (await mutate({ file: fileObject })) as any
+            const response = (await mutate({ file: fileObject })) as {
+                response: { fileResource: { id: string } }
+            }
             const fileResourceId = response?.response?.fileResource?.id
 
             if (!fileResourceId) {

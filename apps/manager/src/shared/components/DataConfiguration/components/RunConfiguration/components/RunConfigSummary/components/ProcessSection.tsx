@@ -1,4 +1,3 @@
-import React from 'react'
 import { MetricCard } from './MetricCard'
 
 interface ProcessStatus {

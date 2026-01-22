@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import {useEffect } from 'react'
 import { useDataMutation, useDataQuery } from '@dhis2/app-runtime'
 import { FullLoader } from './FullLoader'
 import { DatastoreNamespaces } from '@packages/shared/constants'

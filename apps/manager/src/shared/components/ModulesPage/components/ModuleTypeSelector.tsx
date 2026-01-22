@@ -1,4 +1,3 @@
-import React from 'react'
 import { RHFSingleSelectField } from '@hisptz/dhis2-ui'
 import i18n from '@dhis2/d2-i18n'
 import { ModuleType } from '@packages/shared/schemas'

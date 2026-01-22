@@ -1,7 +1,7 @@
 import { useDataQuery } from '@dhis2/app-runtime'
 import { Field, Transfer } from '@dhis2/ui'
 import { debounce, find, uniqBy } from 'lodash'
-import React, { useCallback, useEffect, useMemo, useState } from 'react'
+import { useCallback, useEffect, useMemo, useState } from 'react'
 import { Controller } from 'react-hook-form'
 
 export interface VisualizationSelectorProps {

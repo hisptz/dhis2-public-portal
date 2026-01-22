@@ -1,5 +1,5 @@
 import { Button, IconLaunch16, Tooltip } from '@dhis2/ui'
-import React from 'react'
+
 import { useBoolean } from 'usehooks-ts'
 import { DataServiceConfig } from '@packages/shared/schemas'
 import { RunConfigForm } from './components/RunConfigForm/RunConfigForm'

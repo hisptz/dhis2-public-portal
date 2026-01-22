@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react'
+import {useMemo } from 'react'
 import { useFieldArray, useWatch } from 'react-hook-form'
 import { DocumentGroup, DocumentsModule } from '@packages/shared/schemas'
 import { SimpleTable, SimpleTableColumn } from '@hisptz/dhis2-ui'
