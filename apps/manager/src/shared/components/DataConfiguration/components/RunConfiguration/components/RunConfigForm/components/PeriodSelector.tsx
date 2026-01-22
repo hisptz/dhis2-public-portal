@@ -12,13 +12,15 @@ import {
 	SingleSelectOption,
 } from "@dhis2/ui";
 import i18n from "@dhis2/d2-i18n";
-import { useController } from "react-hook-form";
+import { useController, useFormContext, useWatch } from "react-hook-form";
 import { RunConfigFormValues } from "../RunConfigForm";
 import { RHFMultiSelectField } from "../../../../../../Fields/RHFMultiSelectField";
 
 export function PeriodSelector({ minPeriodType }: { minPeriodType: string }) {
 	const [year, setYear] = useState<number>(new Date().getFullYear());
-	const [periodType, setPeriodType] = useState<string>();
+	const periodType = useWatch<RunConfigFormValues, "runtimeConfig.periodType">({
+		name: "runtimeConfig.periodType",
+	});
 	const periodTypes = useMemo(() => {
 		const minimumPeriodType = FixedPeriodType.getFromId(minPeriodType, {});
 		return PeriodUtility.fromObject({
@@ -50,22 +52,36 @@ export function PeriodSelector({ minPeriodType }: { minPeriodType: string }) {
 		name: "runtimeConfig.periods",
 	});
 
+	const { field: periodTypeField } = useController<
+		RunConfigFormValues,
+		"runtimeConfig.periodType"
+	>({
+		name: "runtimeConfig.periodType",
+	});
+
+	const { setValue } = useFormContext<RunConfigFormValues>();
+
 	return (
 		<div className="flex flex-col gap-2">
 			<SingleSelectField
 				required
-				selected={periodType}
+				selected={periodTypeField.value}
 				label="Period Type"
-				onChange={({ selected }) => setPeriodType(selected)}
+				onChange={({ selected }) => {
+					periodTypeField.onChange(selected);
+					setValue("runtimeConfig.periods", []);
+					setValue("dataItemsConfigIds", []);
+				}}
 			>
-				{periodTypes.map((type) => (
+				{periodTypes.map((periodType) => (
 					<SingleSelectOption
-						key={type.id}
-						label={type.config.name}
-						value={type.id}
+						key={periodType.id}
+						label={periodType.config.name}
+						value={periodType.id}
 					/>
 				))}
 			</SingleSelectField>
+
 			<div className="flex gap-2 items-end">
 				<div className="flex-1">
 					<Field required label={i18n.t("Periods")}>
@@ -91,6 +107,7 @@ export function PeriodSelector({ minPeriodType }: { minPeriodType: string }) {
 								</Button>
 							</ButtonStrip>
 							<RHFMultiSelectField
+								key={`${periodType}-${year}`}
 								options={periods.map((period) => ({
 									label: period.name,
 									value: period.id,
@@ -104,7 +121,10 @@ export function PeriodSelector({ minPeriodType }: { minPeriodType: string }) {
 					required
 					selected={year.toString()}
 					label="Year"
-					onChange={({ selected }) => setYear(+selected)}
+					onChange={({ selected }) => {
+						field.onChange([]);
+						setYear(+selected)
+					}}
 				>
 					{Array.from(
 						{ length: 10 },

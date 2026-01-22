@@ -51,6 +51,7 @@ const runConfigSchema = z.object({
 		.array(z.object({ id: z.string(), name: z.string() }))
 		.optional(),
 	runtimeConfig: dataServiceRuntimeConfig.extend({
+	    periodType: z.string().optional(),
 		periods: z.array(z.string()).optional(),
 	}),
 	dataItemsConfigIds: z.array(z.string()).min(1, i18n.t("")),
@@ -91,6 +92,7 @@ export function RunConfigForm({
 				paginateByData: true,
 				timeout: 1000 * 60 * 5,
 				periods: [],
+				periodType: ''
 			},
 			dataItemsConfigIds: [],
 		},
