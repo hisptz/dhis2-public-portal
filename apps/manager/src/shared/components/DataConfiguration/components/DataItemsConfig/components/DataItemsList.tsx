@@ -4,7 +4,7 @@ import { SimpleTable, SimpleTableColumn } from "@hisptz/dhis2-ui";
 import i18n from "@dhis2/d2-i18n";
 import { startCase } from "lodash";
 import { FixedPeriodType } from "@hisptz/dhis2-utils";
-import { ButtonStrip, Divider } from "@dhis2/ui";
+import { ButtonStrip, Divider, Button, IconDelete16 } from "@dhis2/ui";
 import React from "react";
 import { AddDataItemConfig } from "./AddDataItemConfig/AddDataItemConfig";
 import { EditDataItemConfig } from "./AddDataItemConfig/EditDataItemConfig";
@@ -30,7 +30,7 @@ const columns: SimpleTableColumn[] = [
 ];
 
 export function DataItemsList() {
-	const { fields, append, update } = useFieldArray<
+	const { fields, append, update, remove } = useFieldArray<
 		DataServiceConfig,
 		"itemsConfig"
 	>({
@@ -48,6 +48,11 @@ export function DataItemsList() {
 				<EditDataItemConfig
 					config={item}
 					onUpdate={(data) => update(index, data)}
+				/>
+				<Button
+					small
+					icon={<IconDelete16 />}
+					onClick={() => remove(index)}
 				/>
 			</ButtonStrip>
 		),

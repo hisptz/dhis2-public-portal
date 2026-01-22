@@ -25,7 +25,7 @@ export function AddDataItemConfig({
 				/>
 			)}
 			<Button onClick={onShow} icon={<IconAdd24 />}>
-				{i18n.t("Add data item")}
+				{i18n.t("Add config")}
 			</Button>
 		</>
 	);

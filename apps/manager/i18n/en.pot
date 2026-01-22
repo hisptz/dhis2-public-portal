@@ -5,8 +5,8 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
-"POT-Creation-Date: 2026-01-21T06:58:04.148Z\n"
-"PO-Revision-Date: 2026-01-21T06:58:04.149Z\n"
+"POT-Creation-Date: 2026-01-22T05:09:20.268Z\n"
+"PO-Revision-Date: 2026-01-22T05:09:20.268Z\n"
 
 msgid "Could not get Appearance configurations"
 msgstr "Could not get Appearance configurations"
@@ -165,8 +165,8 @@ msgstr "Actions"
 msgid "Could not save form, check the logs for more information"
 msgstr "Could not save form, check the logs for more information"
 
-msgid "Add data item"
-msgstr "Add data item"
+msgid "Add config"
+msgstr "Add config"
 
 msgid "Could not get attribute options"
 msgstr "Could not get attribute options"
@@ -210,12 +210,6 @@ msgstr "Organisation unit level"
 msgid "Organisation unit level at the source to pull data from"
 msgstr "Organisation unit level at the source to pull data from"
 
-msgid "Organisation unit level is required"
-msgstr "Organisation unit level is required"
-
-msgid "Organisation unit level must be at least 1"
-msgstr "Organisation unit level must be at least 1"
-
 msgid "Data items"
 msgstr "Data items"
 
@@ -242,6 +236,9 @@ msgid ""
 msgstr ""
 "A valid analytics dimension item (data element, data element and category "
 "option)"
+
+msgid "Add data item"
+msgstr "Add data item"
 
 msgid "At least one data item is required"
 msgstr "At least one data item is required"
@@ -589,8 +586,8 @@ msgstr "When source data is greater than destination data"
 msgid "Download Excel"
 msgstr "Download Excel"
 
-msgid "Period"
-msgstr "Period"
+msgid "Data Elements"
+msgstr "Data Elements"
 
 msgid "Source"
 msgstr "Source"
