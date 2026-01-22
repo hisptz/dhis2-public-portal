@@ -1,27 +1,27 @@
-import { baseModuleSchema, ModuleType } from "./base";
-import { z } from "zod";
+import { baseModuleSchema, ModuleType } from './base'
+import { z } from 'zod'
 
 export const staticItemSchema = z.object({
-	id: z.string(),
-	title: z.string(),
-	icon: z.string().optional(),
-	shortDescription: z.string(),
-	sortOrder: z.number().optional(),
-	content: z.string(),
-});
+    id: z.string(),
+    title: z.string(),
+    icon: z.string().optional(),
+    shortDescription: z.string(),
+    sortOrder: z.number().optional(),
+    content: z.string(),
+})
 
-export type StaticItemConfig = z.infer<typeof staticItemSchema>;
+export type StaticItemConfig = z.infer<typeof staticItemSchema>
 
 export const staticModuleConfigSchema = z.object({
-	namespace: z.string(),
-	title: z.string(),
-});
+    namespace: z.string(),
+    title: z.string(),
+})
 
-export type StaticModuleConfig = z.infer<typeof staticModuleConfigSchema>;
+export type StaticModuleConfig = z.infer<typeof staticModuleConfigSchema>
 
 export const staticModuleSchema = baseModuleSchema.extend({
-	type: z.literal(ModuleType.STATIC),
-	config: staticModuleConfigSchema,
-});
+    type: z.literal(ModuleType.STATIC),
+    config: staticModuleConfigSchema,
+})
 
-export type StaticModule = z.infer<typeof staticModuleSchema>;
+export type StaticModule = z.infer<typeof staticModuleSchema>

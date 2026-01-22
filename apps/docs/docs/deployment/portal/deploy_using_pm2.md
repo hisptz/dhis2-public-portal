@@ -21,30 +21,35 @@ To deploy the portal app using PM2:
 # Make sure to replace `<app-version>` with the intended version of the app.
    wget https://github.com/hisptz/dhis2-public-portal/releases/download/v<app-version>/portal-<app-version>.zip -O portal.zip
 ```
+
 ### 2. Unzip the portal app
 
 ```bash
    unzip portal.zip -d portal
 ```
+
 ### 3. Navigate to the portal folder
 
 ```bash
 cd portal
 ```
+
 ### 4. Install PM2
 
 ```bash
-   corepack enable 
+   corepack enable
    yarn global add pm2
 ```
+
 ### 5. Start the application using the provided PM2 configuration
 
 ```bash
   pm2 start pm2.config.js
 ```
+
 ### 6. Save pm2 running configuration
 
-```bash  
+```bash
    pm2 save
 ```
 

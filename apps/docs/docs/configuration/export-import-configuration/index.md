@@ -3,14 +3,14 @@
 The **Export/Import configuration** section in **FlexiPortal Manager** allows you to exports or imports your configurations.
 ![Configuration Management UI](../../../static/img/configuration-management/ex-impo.jpg)
 
-
-###  Export Configuration
+### Export Configuration
 
 This feature allows you to export the current configuration of your FlexiPortal instance into a `.zip` file. It is especially useful for:
+
 - Creating backups
 - Transferring configurations between instances
 
-###  Import Configuration
+### Import Configuration
 
 This functionality enables you to restore or apply an existing configuration from a `.zip` file.
 
@@ -29,7 +29,8 @@ For example, the configuration may reference specific document IDs (such as icon
 :::
 
 ### Logs
-:::tip  
+
+:::tip
 
 You can refer to the log information to verify the success or failure of the export/import process.
 

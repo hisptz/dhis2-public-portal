@@ -8,846 +8,849 @@
 // You should NOT make any changes in this file as it will be overwritten.
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
-import { createFileRoute } from "@tanstack/react-router"
+import { createFileRoute } from '@tanstack/react-router'
 
-import { Route as rootRouteImport } from "./modules/__root"
-import { Route as ConfigurationIndexRouteImport } from "./modules/configuration/index"
-import { Route as ModulesProviderRouteImport } from "./modules/modules/_provider"
-import { Route as MenuProviderRouteImport } from "./modules/menu/_provider"
-import { Route as GeneralProviderRouteImport } from "./modules/general/_provider"
-import { Route as DataServiceConfigurationProviderRouteImport } from "./modules/data-service-configuration/_provider"
-import { Route as AppearanceProviderRouteImport } from "./modules/appearance/_provider"
-import { Route as ModulesProviderIndexRouteImport } from "./modules/modules/_provider/index"
-import { Route as ModulesProviderModuleIdFormProviderRouteImport } from "./modules/modules/_provider/$moduleId/_formProvider"
-import { Route as DataServiceConfigurationProviderConfigIdProviderRouteImport } from "./modules/data-service-configuration/_provider/$configId/_provider"
-import { Route as ModulesProviderModuleIdFormProviderEditLayoutRouteImport } from "./modules/modules/_provider/$moduleId/_formProvider/edit/layout"
-import { Route as ModulesProviderModuleIdFormProviderEditGroupIndexIndexRouteImport } from "./modules/modules/_provider/$moduleId/_formProvider/edit/$groupIndex/index"
-import { Route as ModulesProviderModuleIdFormProviderEditGroupIndexLayoutRouteImport } from "./modules/modules/_provider/$moduleId/_formProvider/edit/$groupIndex/layout"
-import { Route as ModulesProviderModuleIdFormProviderEditStaticItemIdIndexRouteImport } from "./modules/modules/_provider/$moduleId/_formProvider/edit/static/$itemId/index"
-import { Route as ModulesProviderModuleIdFormProviderEditSectionSectionIndexIndexRouteImport } from "./modules/modules/_provider/$moduleId/_formProvider/edit/section/$sectionIndex/index"
-import { Route as ModulesProviderModuleIdFormProviderEditSectionSectionIndexLayoutRouteImport } from "./modules/modules/_provider/$moduleId/_formProvider/edit/section/$sectionIndex/layout"
+import { Route as rootRouteImport } from './modules/__root'
+import { Route as ConfigurationIndexRouteImport } from './modules/configuration/index'
+import { Route as ModulesProviderRouteImport } from './modules/modules/_provider'
+import { Route as MenuProviderRouteImport } from './modules/menu/_provider'
+import { Route as GeneralProviderRouteImport } from './modules/general/_provider'
+import { Route as DataServiceConfigurationProviderRouteImport } from './modules/data-service-configuration/_provider'
+import { Route as AppearanceProviderRouteImport } from './modules/appearance/_provider'
+import { Route as ModulesProviderIndexRouteImport } from './modules/modules/_provider/index'
+import { Route as ModulesProviderModuleIdFormProviderRouteImport } from './modules/modules/_provider/$moduleId/_formProvider'
+import { Route as DataServiceConfigurationProviderConfigIdProviderRouteImport } from './modules/data-service-configuration/_provider/$configId/_provider'
+import { Route as ModulesProviderModuleIdFormProviderEditLayoutRouteImport } from './modules/modules/_provider/$moduleId/_formProvider/edit/layout'
+import { Route as ModulesProviderModuleIdFormProviderEditGroupIndexIndexRouteImport } from './modules/modules/_provider/$moduleId/_formProvider/edit/$groupIndex/index'
+import { Route as ModulesProviderModuleIdFormProviderEditGroupIndexLayoutRouteImport } from './modules/modules/_provider/$moduleId/_formProvider/edit/$groupIndex/layout'
+import { Route as ModulesProviderModuleIdFormProviderEditStaticItemIdIndexRouteImport } from './modules/modules/_provider/$moduleId/_formProvider/edit/static/$itemId/index'
+import { Route as ModulesProviderModuleIdFormProviderEditSectionSectionIndexIndexRouteImport } from './modules/modules/_provider/$moduleId/_formProvider/edit/section/$sectionIndex/index'
+import { Route as ModulesProviderModuleIdFormProviderEditSectionSectionIndexLayoutRouteImport } from './modules/modules/_provider/$moduleId/_formProvider/edit/section/$sectionIndex/layout'
 
-const ModulesRouteImport = createFileRoute("/modules")()
-const MenuRouteImport = createFileRoute("/menu")()
-const GeneralRouteImport = createFileRoute("/general")()
+const ModulesRouteImport = createFileRoute('/modules')()
+const MenuRouteImport = createFileRoute('/menu')()
+const GeneralRouteImport = createFileRoute('/general')()
 const DataServiceConfigurationRouteImport = createFileRoute(
-  "/data-service-configuration",
+    '/data-service-configuration'
 )()
-const AppearanceRouteImport = createFileRoute("/appearance")()
-const IndexLazyRouteImport = createFileRoute("/")()
+const AppearanceRouteImport = createFileRoute('/appearance')()
+const IndexLazyRouteImport = createFileRoute('/')()
 const ModulesProviderModuleIdRouteImport = createFileRoute(
-  "/modules/_provider/$moduleId",
+    '/modules/_provider/$moduleId'
 )()
 const DataServiceConfigurationProviderConfigIdRouteImport = createFileRoute(
-  "/data-service-configuration/_provider/$configId",
+    '/data-service-configuration/_provider/$configId'
 )()
-const MenuProviderIndexLazyRouteImport = createFileRoute("/menu/_provider/")()
+const MenuProviderIndexLazyRouteImport = createFileRoute('/menu/_provider/')()
 const GeneralProviderIndexLazyRouteImport = createFileRoute(
-  "/general/_provider/",
+    '/general/_provider/'
 )()
 const DataServiceConfigurationProviderIndexLazyRouteImport = createFileRoute(
-  "/data-service-configuration/_provider/",
+    '/data-service-configuration/_provider/'
 )()
 const AppearanceProviderIndexLazyRouteImport = createFileRoute(
-  "/appearance/_provider/",
+    '/appearance/_provider/'
 )()
 const DataServiceConfigurationProviderConfigIdValidationLogsIndexLazyRouteImport =
-  createFileRoute(
-    "/data-service-configuration/_provider/$configId/validation-logs/",
-  )()
+    createFileRoute(
+        '/data-service-configuration/_provider/$configId/validation-logs/'
+    )()
 const DataServiceConfigurationProviderConfigIdProviderIndexLazyRouteImport =
-  createFileRoute(
-    "/data-service-configuration/_provider/$configId/_provider/",
-  )()
+    createFileRoute(
+        '/data-service-configuration/_provider/$configId/_provider/'
+    )()
 const ModulesProviderModuleIdFormProviderEditIndexLazyRouteImport =
-  createFileRoute("/modules/_provider/$moduleId/_formProvider/edit/")()
+    createFileRoute('/modules/_provider/$moduleId/_formProvider/edit/')()
 
 const ModulesRoute = ModulesRouteImport.update({
-  id: "/modules",
-  path: "/modules",
-  getParentRoute: () => rootRouteImport,
+    id: '/modules',
+    path: '/modules',
+    getParentRoute: () => rootRouteImport,
 } as any)
 const MenuRoute = MenuRouteImport.update({
-  id: "/menu",
-  path: "/menu",
-  getParentRoute: () => rootRouteImport,
+    id: '/menu',
+    path: '/menu',
+    getParentRoute: () => rootRouteImport,
 } as any)
 const GeneralRoute = GeneralRouteImport.update({
-  id: "/general",
-  path: "/general",
-  getParentRoute: () => rootRouteImport,
+    id: '/general',
+    path: '/general',
+    getParentRoute: () => rootRouteImport,
 } as any)
 const DataServiceConfigurationRoute =
-  DataServiceConfigurationRouteImport.update({
-    id: "/data-service-configuration",
-    path: "/data-service-configuration",
-    getParentRoute: () => rootRouteImport,
-  } as any)
+    DataServiceConfigurationRouteImport.update({
+        id: '/data-service-configuration',
+        path: '/data-service-configuration',
+        getParentRoute: () => rootRouteImport,
+    } as any)
 const AppearanceRoute = AppearanceRouteImport.update({
-  id: "/appearance",
-  path: "/appearance",
-  getParentRoute: () => rootRouteImport,
+    id: '/appearance',
+    path: '/appearance',
+    getParentRoute: () => rootRouteImport,
 } as any)
 const IndexLazyRoute = IndexLazyRouteImport.update({
-  id: "/",
-  path: "/",
-  getParentRoute: () => rootRouteImport,
-} as any).lazy(() => import("./modules/index.lazy").then((d) => d.Route))
+    id: '/',
+    path: '/',
+    getParentRoute: () => rootRouteImport,
+} as any).lazy(() => import('./modules/index.lazy').then((d) => d.Route))
 const ConfigurationIndexRoute = ConfigurationIndexRouteImport.update({
-  id: "/configuration/",
-  path: "/configuration/",
-  getParentRoute: () => rootRouteImport,
+    id: '/configuration/',
+    path: '/configuration/',
+    getParentRoute: () => rootRouteImport,
 } as any)
 const ModulesProviderRoute = ModulesProviderRouteImport.update({
-  id: "/_provider",
-  getParentRoute: () => ModulesRoute,
+    id: '/_provider',
+    getParentRoute: () => ModulesRoute,
 } as any)
 const MenuProviderRoute = MenuProviderRouteImport.update({
-  id: "/_provider",
-  getParentRoute: () => MenuRoute,
+    id: '/_provider',
+    getParentRoute: () => MenuRoute,
 } as any)
 const GeneralProviderRoute = GeneralProviderRouteImport.update({
-  id: "/_provider",
-  getParentRoute: () => GeneralRoute,
+    id: '/_provider',
+    getParentRoute: () => GeneralRoute,
 } as any)
 const DataServiceConfigurationProviderRoute =
-  DataServiceConfigurationProviderRouteImport.update({
-    id: "/_provider",
-    getParentRoute: () => DataServiceConfigurationRoute,
-  } as any)
+    DataServiceConfigurationProviderRouteImport.update({
+        id: '/_provider',
+        getParentRoute: () => DataServiceConfigurationRoute,
+    } as any)
 const AppearanceProviderRoute = AppearanceProviderRouteImport.update({
-  id: "/_provider",
-  getParentRoute: () => AppearanceRoute,
+    id: '/_provider',
+    getParentRoute: () => AppearanceRoute,
 } as any)
 const ModulesProviderModuleIdRoute = ModulesProviderModuleIdRouteImport.update({
-  id: "/$moduleId",
-  path: "/$moduleId",
-  getParentRoute: () => ModulesProviderRoute,
+    id: '/$moduleId',
+    path: '/$moduleId',
+    getParentRoute: () => ModulesProviderRoute,
 } as any)
 const DataServiceConfigurationProviderConfigIdRoute =
-  DataServiceConfigurationProviderConfigIdRouteImport.update({
-    id: "/$configId",
-    path: "/$configId",
-    getParentRoute: () => DataServiceConfigurationProviderRoute,
-  } as any)
+    DataServiceConfigurationProviderConfigIdRouteImport.update({
+        id: '/$configId',
+        path: '/$configId',
+        getParentRoute: () => DataServiceConfigurationProviderRoute,
+    } as any)
 const MenuProviderIndexLazyRoute = MenuProviderIndexLazyRouteImport.update({
-  id: "/",
-  path: "/",
-  getParentRoute: () => MenuProviderRoute,
+    id: '/',
+    path: '/',
+    getParentRoute: () => MenuProviderRoute,
 } as any).lazy(() =>
-  import("./modules/menu/_provider/index.lazy").then((d) => d.Route),
+    import('./modules/menu/_provider/index.lazy').then((d) => d.Route)
 )
 const GeneralProviderIndexLazyRoute =
-  GeneralProviderIndexLazyRouteImport.update({
-    id: "/",
-    path: "/",
-    getParentRoute: () => GeneralProviderRoute,
-  } as any).lazy(() =>
-    import("./modules/general/_provider/index.lazy").then((d) => d.Route),
-  )
+    GeneralProviderIndexLazyRouteImport.update({
+        id: '/',
+        path: '/',
+        getParentRoute: () => GeneralProviderRoute,
+    } as any).lazy(() =>
+        import('./modules/general/_provider/index.lazy').then((d) => d.Route)
+    )
 const DataServiceConfigurationProviderIndexLazyRoute =
-  DataServiceConfigurationProviderIndexLazyRouteImport.update({
-    id: "/",
-    path: "/",
-    getParentRoute: () => DataServiceConfigurationProviderRoute,
-  } as any).lazy(() =>
-    import("./modules/data-service-configuration/_provider/index.lazy").then(
-      (d) => d.Route,
-    ),
-  )
+    DataServiceConfigurationProviderIndexLazyRouteImport.update({
+        id: '/',
+        path: '/',
+        getParentRoute: () => DataServiceConfigurationProviderRoute,
+    } as any).lazy(() =>
+        import('./modules/data-service-configuration/_provider/index.lazy').then(
+            (d) => d.Route
+        )
+    )
 const AppearanceProviderIndexLazyRoute =
-  AppearanceProviderIndexLazyRouteImport.update({
-    id: "/",
-    path: "/",
-    getParentRoute: () => AppearanceProviderRoute,
-  } as any).lazy(() =>
-    import("./modules/appearance/_provider/index.lazy").then((d) => d.Route),
-  )
+    AppearanceProviderIndexLazyRouteImport.update({
+        id: '/',
+        path: '/',
+        getParentRoute: () => AppearanceProviderRoute,
+    } as any).lazy(() =>
+        import('./modules/appearance/_provider/index.lazy').then((d) => d.Route)
+    )
 const ModulesProviderIndexRoute = ModulesProviderIndexRouteImport.update({
-  id: "/",
-  path: "/",
-  getParentRoute: () => ModulesProviderRoute,
+    id: '/',
+    path: '/',
+    getParentRoute: () => ModulesProviderRoute,
 } as any)
 const ModulesProviderModuleIdFormProviderRoute =
-  ModulesProviderModuleIdFormProviderRouteImport.update({
-    id: "/_formProvider",
-    getParentRoute: () => ModulesProviderModuleIdRoute,
-  } as any)
+    ModulesProviderModuleIdFormProviderRouteImport.update({
+        id: '/_formProvider',
+        getParentRoute: () => ModulesProviderModuleIdRoute,
+    } as any)
 const DataServiceConfigurationProviderConfigIdProviderRoute =
-  DataServiceConfigurationProviderConfigIdProviderRouteImport.update({
-    id: "/_provider",
-    getParentRoute: () => DataServiceConfigurationProviderConfigIdRoute,
-  } as any)
+    DataServiceConfigurationProviderConfigIdProviderRouteImport.update({
+        id: '/_provider',
+        getParentRoute: () => DataServiceConfigurationProviderConfigIdRoute,
+    } as any)
 const DataServiceConfigurationProviderConfigIdValidationLogsIndexLazyRoute =
-  DataServiceConfigurationProviderConfigIdValidationLogsIndexLazyRouteImport.update(
-    {
-      id: "/validation-logs/",
-      path: "/validation-logs/",
-      getParentRoute: () => DataServiceConfigurationProviderConfigIdRoute,
-    } as any,
-  ).lazy(() =>
-    import(
-      "./modules/data-service-configuration/_provider/$configId/validation-logs/index.lazy"
-    ).then((d) => d.Route),
-  )
+    DataServiceConfigurationProviderConfigIdValidationLogsIndexLazyRouteImport.update(
+        {
+            id: '/validation-logs/',
+            path: '/validation-logs/',
+            getParentRoute: () => DataServiceConfigurationProviderConfigIdRoute,
+        } as any
+    ).lazy(() =>
+        import('./modules/data-service-configuration/_provider/$configId/validation-logs/index.lazy').then(
+            (d) => d.Route
+        )
+    )
 const DataServiceConfigurationProviderConfigIdProviderIndexLazyRoute =
-  DataServiceConfigurationProviderConfigIdProviderIndexLazyRouteImport.update({
-    id: "/",
-    path: "/",
-    getParentRoute: () => DataServiceConfigurationProviderConfigIdProviderRoute,
-  } as any).lazy(() =>
-    import(
-      "./modules/data-service-configuration/_provider/$configId/_provider/index.lazy"
-    ).then((d) => d.Route),
-  )
+    DataServiceConfigurationProviderConfigIdProviderIndexLazyRouteImport.update(
+        {
+            id: '/',
+            path: '/',
+            getParentRoute: () =>
+                DataServiceConfigurationProviderConfigIdProviderRoute,
+        } as any
+    ).lazy(() =>
+        import('./modules/data-service-configuration/_provider/$configId/_provider/index.lazy').then(
+            (d) => d.Route
+        )
+    )
 const ModulesProviderModuleIdFormProviderEditIndexLazyRoute =
-  ModulesProviderModuleIdFormProviderEditIndexLazyRouteImport.update({
-    id: "/edit/",
-    path: "/edit/",
-    getParentRoute: () => ModulesProviderModuleIdFormProviderRoute,
-  } as any).lazy(() =>
-    import(
-      "./modules/modules/_provider/$moduleId/_formProvider/edit/index.lazy"
-    ).then((d) => d.Route),
-  )
+    ModulesProviderModuleIdFormProviderEditIndexLazyRouteImport.update({
+        id: '/edit/',
+        path: '/edit/',
+        getParentRoute: () => ModulesProviderModuleIdFormProviderRoute,
+    } as any).lazy(() =>
+        import('./modules/modules/_provider/$moduleId/_formProvider/edit/index.lazy').then(
+            (d) => d.Route
+        )
+    )
 const ModulesProviderModuleIdFormProviderEditLayoutRoute =
-  ModulesProviderModuleIdFormProviderEditLayoutRouteImport.update({
-    id: "/edit/layout",
-    path: "/edit/layout",
-    getParentRoute: () => ModulesProviderModuleIdFormProviderRoute,
-  } as any)
+    ModulesProviderModuleIdFormProviderEditLayoutRouteImport.update({
+        id: '/edit/layout',
+        path: '/edit/layout',
+        getParentRoute: () => ModulesProviderModuleIdFormProviderRoute,
+    } as any)
 const ModulesProviderModuleIdFormProviderEditGroupIndexIndexRoute =
-  ModulesProviderModuleIdFormProviderEditGroupIndexIndexRouteImport.update({
-    id: "/edit/$groupIndex/",
-    path: "/edit/$groupIndex/",
-    getParentRoute: () => ModulesProviderModuleIdFormProviderRoute,
-  } as any)
+    ModulesProviderModuleIdFormProviderEditGroupIndexIndexRouteImport.update({
+        id: '/edit/$groupIndex/',
+        path: '/edit/$groupIndex/',
+        getParentRoute: () => ModulesProviderModuleIdFormProviderRoute,
+    } as any)
 const ModulesProviderModuleIdFormProviderEditGroupIndexLayoutRoute =
-  ModulesProviderModuleIdFormProviderEditGroupIndexLayoutRouteImport.update({
-    id: "/edit/$groupIndex/layout",
-    path: "/edit/$groupIndex/layout",
-    getParentRoute: () => ModulesProviderModuleIdFormProviderRoute,
-  } as any)
+    ModulesProviderModuleIdFormProviderEditGroupIndexLayoutRouteImport.update({
+        id: '/edit/$groupIndex/layout',
+        path: '/edit/$groupIndex/layout',
+        getParentRoute: () => ModulesProviderModuleIdFormProviderRoute,
+    } as any)
 const ModulesProviderModuleIdFormProviderEditStaticItemIdIndexRoute =
-  ModulesProviderModuleIdFormProviderEditStaticItemIdIndexRouteImport.update({
-    id: "/edit/static/$itemId/",
-    path: "/edit/static/$itemId/",
-    getParentRoute: () => ModulesProviderModuleIdFormProviderRoute,
-  } as any)
+    ModulesProviderModuleIdFormProviderEditStaticItemIdIndexRouteImport.update({
+        id: '/edit/static/$itemId/',
+        path: '/edit/static/$itemId/',
+        getParentRoute: () => ModulesProviderModuleIdFormProviderRoute,
+    } as any)
 const ModulesProviderModuleIdFormProviderEditSectionSectionIndexIndexRoute =
-  ModulesProviderModuleIdFormProviderEditSectionSectionIndexIndexRouteImport.update(
-    {
-      id: "/edit/section/$sectionIndex/",
-      path: "/edit/section/$sectionIndex/",
-      getParentRoute: () => ModulesProviderModuleIdFormProviderRoute,
-    } as any,
-  )
+    ModulesProviderModuleIdFormProviderEditSectionSectionIndexIndexRouteImport.update(
+        {
+            id: '/edit/section/$sectionIndex/',
+            path: '/edit/section/$sectionIndex/',
+            getParentRoute: () => ModulesProviderModuleIdFormProviderRoute,
+        } as any
+    )
 const ModulesProviderModuleIdFormProviderEditSectionSectionIndexLayoutRoute =
-  ModulesProviderModuleIdFormProviderEditSectionSectionIndexLayoutRouteImport.update(
-    {
-      id: "/edit/section/$sectionIndex/layout",
-      path: "/edit/section/$sectionIndex/layout",
-      getParentRoute: () => ModulesProviderModuleIdFormProviderRoute,
-    } as any,
-  )
+    ModulesProviderModuleIdFormProviderEditSectionSectionIndexLayoutRouteImport.update(
+        {
+            id: '/edit/section/$sectionIndex/layout',
+            path: '/edit/section/$sectionIndex/layout',
+            getParentRoute: () => ModulesProviderModuleIdFormProviderRoute,
+        } as any
+    )
 
 export interface FileRoutesByFullPath {
-  "/": typeof IndexLazyRoute
-  "/appearance": typeof AppearanceProviderRouteWithChildren
-  "/data-service-configuration": typeof DataServiceConfigurationProviderRouteWithChildren
-  "/general": typeof GeneralProviderRouteWithChildren
-  "/menu": typeof MenuProviderRouteWithChildren
-  "/modules": typeof ModulesProviderRouteWithChildren
-  "/configuration": typeof ConfigurationIndexRoute
-  "/modules/": typeof ModulesProviderIndexRoute
-  "/appearance/": typeof AppearanceProviderIndexLazyRoute
-  "/data-service-configuration/": typeof DataServiceConfigurationProviderIndexLazyRoute
-  "/general/": typeof GeneralProviderIndexLazyRoute
-  "/menu/": typeof MenuProviderIndexLazyRoute
-  "/data-service-configuration/$configId": typeof DataServiceConfigurationProviderConfigIdProviderRouteWithChildren
-  "/modules/$moduleId": typeof ModulesProviderModuleIdFormProviderRouteWithChildren
-  "/data-service-configuration/$configId/": typeof DataServiceConfigurationProviderConfigIdProviderIndexLazyRoute
-  "/data-service-configuration/$configId/validation-logs": typeof DataServiceConfigurationProviderConfigIdValidationLogsIndexLazyRoute
-  "/modules/$moduleId/edit/layout": typeof ModulesProviderModuleIdFormProviderEditLayoutRoute
-  "/modules/$moduleId/edit": typeof ModulesProviderModuleIdFormProviderEditIndexLazyRoute
-  "/modules/$moduleId/edit/$groupIndex/layout": typeof ModulesProviderModuleIdFormProviderEditGroupIndexLayoutRoute
-  "/modules/$moduleId/edit/$groupIndex": typeof ModulesProviderModuleIdFormProviderEditGroupIndexIndexRoute
-  "/modules/$moduleId/edit/section/$sectionIndex/layout": typeof ModulesProviderModuleIdFormProviderEditSectionSectionIndexLayoutRoute
-  "/modules/$moduleId/edit/section/$sectionIndex": typeof ModulesProviderModuleIdFormProviderEditSectionSectionIndexIndexRoute
-  "/modules/$moduleId/edit/static/$itemId": typeof ModulesProviderModuleIdFormProviderEditStaticItemIdIndexRoute
+    '/': typeof IndexLazyRoute
+    '/appearance': typeof AppearanceProviderRouteWithChildren
+    '/data-service-configuration': typeof DataServiceConfigurationProviderRouteWithChildren
+    '/general': typeof GeneralProviderRouteWithChildren
+    '/menu': typeof MenuProviderRouteWithChildren
+    '/modules': typeof ModulesProviderRouteWithChildren
+    '/configuration': typeof ConfigurationIndexRoute
+    '/modules/': typeof ModulesProviderIndexRoute
+    '/appearance/': typeof AppearanceProviderIndexLazyRoute
+    '/data-service-configuration/': typeof DataServiceConfigurationProviderIndexLazyRoute
+    '/general/': typeof GeneralProviderIndexLazyRoute
+    '/menu/': typeof MenuProviderIndexLazyRoute
+    '/data-service-configuration/$configId': typeof DataServiceConfigurationProviderConfigIdProviderRouteWithChildren
+    '/modules/$moduleId': typeof ModulesProviderModuleIdFormProviderRouteWithChildren
+    '/data-service-configuration/$configId/': typeof DataServiceConfigurationProviderConfigIdProviderIndexLazyRoute
+    '/data-service-configuration/$configId/validation-logs': typeof DataServiceConfigurationProviderConfigIdValidationLogsIndexLazyRoute
+    '/modules/$moduleId/edit/layout': typeof ModulesProviderModuleIdFormProviderEditLayoutRoute
+    '/modules/$moduleId/edit': typeof ModulesProviderModuleIdFormProviderEditIndexLazyRoute
+    '/modules/$moduleId/edit/$groupIndex/layout': typeof ModulesProviderModuleIdFormProviderEditGroupIndexLayoutRoute
+    '/modules/$moduleId/edit/$groupIndex': typeof ModulesProviderModuleIdFormProviderEditGroupIndexIndexRoute
+    '/modules/$moduleId/edit/section/$sectionIndex/layout': typeof ModulesProviderModuleIdFormProviderEditSectionSectionIndexLayoutRoute
+    '/modules/$moduleId/edit/section/$sectionIndex': typeof ModulesProviderModuleIdFormProviderEditSectionSectionIndexIndexRoute
+    '/modules/$moduleId/edit/static/$itemId': typeof ModulesProviderModuleIdFormProviderEditStaticItemIdIndexRoute
 }
 export interface FileRoutesByTo {
-  "/": typeof IndexLazyRoute
-  "/appearance": typeof AppearanceProviderIndexLazyRoute
-  "/data-service-configuration": typeof DataServiceConfigurationProviderIndexLazyRoute
-  "/general": typeof GeneralProviderIndexLazyRoute
-  "/menu": typeof MenuProviderIndexLazyRoute
-  "/modules": typeof ModulesProviderIndexRoute
-  "/configuration": typeof ConfigurationIndexRoute
-  "/data-service-configuration/$configId": typeof DataServiceConfigurationProviderConfigIdProviderIndexLazyRoute
-  "/modules/$moduleId": typeof ModulesProviderModuleIdFormProviderRouteWithChildren
-  "/data-service-configuration/$configId/validation-logs": typeof DataServiceConfigurationProviderConfigIdValidationLogsIndexLazyRoute
-  "/modules/$moduleId/edit/layout": typeof ModulesProviderModuleIdFormProviderEditLayoutRoute
-  "/modules/$moduleId/edit": typeof ModulesProviderModuleIdFormProviderEditIndexLazyRoute
-  "/modules/$moduleId/edit/$groupIndex/layout": typeof ModulesProviderModuleIdFormProviderEditGroupIndexLayoutRoute
-  "/modules/$moduleId/edit/$groupIndex": typeof ModulesProviderModuleIdFormProviderEditGroupIndexIndexRoute
-  "/modules/$moduleId/edit/section/$sectionIndex/layout": typeof ModulesProviderModuleIdFormProviderEditSectionSectionIndexLayoutRoute
-  "/modules/$moduleId/edit/section/$sectionIndex": typeof ModulesProviderModuleIdFormProviderEditSectionSectionIndexIndexRoute
-  "/modules/$moduleId/edit/static/$itemId": typeof ModulesProviderModuleIdFormProviderEditStaticItemIdIndexRoute
+    '/': typeof IndexLazyRoute
+    '/appearance': typeof AppearanceProviderIndexLazyRoute
+    '/data-service-configuration': typeof DataServiceConfigurationProviderIndexLazyRoute
+    '/general': typeof GeneralProviderIndexLazyRoute
+    '/menu': typeof MenuProviderIndexLazyRoute
+    '/modules': typeof ModulesProviderIndexRoute
+    '/configuration': typeof ConfigurationIndexRoute
+    '/data-service-configuration/$configId': typeof DataServiceConfigurationProviderConfigIdProviderIndexLazyRoute
+    '/modules/$moduleId': typeof ModulesProviderModuleIdFormProviderRouteWithChildren
+    '/data-service-configuration/$configId/validation-logs': typeof DataServiceConfigurationProviderConfigIdValidationLogsIndexLazyRoute
+    '/modules/$moduleId/edit/layout': typeof ModulesProviderModuleIdFormProviderEditLayoutRoute
+    '/modules/$moduleId/edit': typeof ModulesProviderModuleIdFormProviderEditIndexLazyRoute
+    '/modules/$moduleId/edit/$groupIndex/layout': typeof ModulesProviderModuleIdFormProviderEditGroupIndexLayoutRoute
+    '/modules/$moduleId/edit/$groupIndex': typeof ModulesProviderModuleIdFormProviderEditGroupIndexIndexRoute
+    '/modules/$moduleId/edit/section/$sectionIndex/layout': typeof ModulesProviderModuleIdFormProviderEditSectionSectionIndexLayoutRoute
+    '/modules/$moduleId/edit/section/$sectionIndex': typeof ModulesProviderModuleIdFormProviderEditSectionSectionIndexIndexRoute
+    '/modules/$moduleId/edit/static/$itemId': typeof ModulesProviderModuleIdFormProviderEditStaticItemIdIndexRoute
 }
 export interface FileRoutesById {
-  __root__: typeof rootRouteImport
-  "/": typeof IndexLazyRoute
-  "/appearance": typeof AppearanceRouteWithChildren
-  "/appearance/_provider": typeof AppearanceProviderRouteWithChildren
-  "/data-service-configuration": typeof DataServiceConfigurationRouteWithChildren
-  "/data-service-configuration/_provider": typeof DataServiceConfigurationProviderRouteWithChildren
-  "/general": typeof GeneralRouteWithChildren
-  "/general/_provider": typeof GeneralProviderRouteWithChildren
-  "/menu": typeof MenuRouteWithChildren
-  "/menu/_provider": typeof MenuProviderRouteWithChildren
-  "/modules": typeof ModulesRouteWithChildren
-  "/modules/_provider": typeof ModulesProviderRouteWithChildren
-  "/configuration/": typeof ConfigurationIndexRoute
-  "/modules/_provider/": typeof ModulesProviderIndexRoute
-  "/appearance/_provider/": typeof AppearanceProviderIndexLazyRoute
-  "/data-service-configuration/_provider/": typeof DataServiceConfigurationProviderIndexLazyRoute
-  "/general/_provider/": typeof GeneralProviderIndexLazyRoute
-  "/menu/_provider/": typeof MenuProviderIndexLazyRoute
-  "/data-service-configuration/_provider/$configId": typeof DataServiceConfigurationProviderConfigIdRouteWithChildren
-  "/data-service-configuration/_provider/$configId/_provider": typeof DataServiceConfigurationProviderConfigIdProviderRouteWithChildren
-  "/modules/_provider/$moduleId": typeof ModulesProviderModuleIdRouteWithChildren
-  "/modules/_provider/$moduleId/_formProvider": typeof ModulesProviderModuleIdFormProviderRouteWithChildren
-  "/data-service-configuration/_provider/$configId/_provider/": typeof DataServiceConfigurationProviderConfigIdProviderIndexLazyRoute
-  "/data-service-configuration/_provider/$configId/validation-logs/": typeof DataServiceConfigurationProviderConfigIdValidationLogsIndexLazyRoute
-  "/modules/_provider/$moduleId/_formProvider/edit/layout": typeof ModulesProviderModuleIdFormProviderEditLayoutRoute
-  "/modules/_provider/$moduleId/_formProvider/edit/": typeof ModulesProviderModuleIdFormProviderEditIndexLazyRoute
-  "/modules/_provider/$moduleId/_formProvider/edit/$groupIndex/layout": typeof ModulesProviderModuleIdFormProviderEditGroupIndexLayoutRoute
-  "/modules/_provider/$moduleId/_formProvider/edit/$groupIndex/": typeof ModulesProviderModuleIdFormProviderEditGroupIndexIndexRoute
-  "/modules/_provider/$moduleId/_formProvider/edit/section/$sectionIndex/layout": typeof ModulesProviderModuleIdFormProviderEditSectionSectionIndexLayoutRoute
-  "/modules/_provider/$moduleId/_formProvider/edit/section/$sectionIndex/": typeof ModulesProviderModuleIdFormProviderEditSectionSectionIndexIndexRoute
-  "/modules/_provider/$moduleId/_formProvider/edit/static/$itemId/": typeof ModulesProviderModuleIdFormProviderEditStaticItemIdIndexRoute
+    __root__: typeof rootRouteImport
+    '/': typeof IndexLazyRoute
+    '/appearance': typeof AppearanceRouteWithChildren
+    '/appearance/_provider': typeof AppearanceProviderRouteWithChildren
+    '/data-service-configuration': typeof DataServiceConfigurationRouteWithChildren
+    '/data-service-configuration/_provider': typeof DataServiceConfigurationProviderRouteWithChildren
+    '/general': typeof GeneralRouteWithChildren
+    '/general/_provider': typeof GeneralProviderRouteWithChildren
+    '/menu': typeof MenuRouteWithChildren
+    '/menu/_provider': typeof MenuProviderRouteWithChildren
+    '/modules': typeof ModulesRouteWithChildren
+    '/modules/_provider': typeof ModulesProviderRouteWithChildren
+    '/configuration/': typeof ConfigurationIndexRoute
+    '/modules/_provider/': typeof ModulesProviderIndexRoute
+    '/appearance/_provider/': typeof AppearanceProviderIndexLazyRoute
+    '/data-service-configuration/_provider/': typeof DataServiceConfigurationProviderIndexLazyRoute
+    '/general/_provider/': typeof GeneralProviderIndexLazyRoute
+    '/menu/_provider/': typeof MenuProviderIndexLazyRoute
+    '/data-service-configuration/_provider/$configId': typeof DataServiceConfigurationProviderConfigIdRouteWithChildren
+    '/data-service-configuration/_provider/$configId/_provider': typeof DataServiceConfigurationProviderConfigIdProviderRouteWithChildren
+    '/modules/_provider/$moduleId': typeof ModulesProviderModuleIdRouteWithChildren
+    '/modules/_provider/$moduleId/_formProvider': typeof ModulesProviderModuleIdFormProviderRouteWithChildren
+    '/data-service-configuration/_provider/$configId/_provider/': typeof DataServiceConfigurationProviderConfigIdProviderIndexLazyRoute
+    '/data-service-configuration/_provider/$configId/validation-logs/': typeof DataServiceConfigurationProviderConfigIdValidationLogsIndexLazyRoute
+    '/modules/_provider/$moduleId/_formProvider/edit/layout': typeof ModulesProviderModuleIdFormProviderEditLayoutRoute
+    '/modules/_provider/$moduleId/_formProvider/edit/': typeof ModulesProviderModuleIdFormProviderEditIndexLazyRoute
+    '/modules/_provider/$moduleId/_formProvider/edit/$groupIndex/layout': typeof ModulesProviderModuleIdFormProviderEditGroupIndexLayoutRoute
+    '/modules/_provider/$moduleId/_formProvider/edit/$groupIndex/': typeof ModulesProviderModuleIdFormProviderEditGroupIndexIndexRoute
+    '/modules/_provider/$moduleId/_formProvider/edit/section/$sectionIndex/layout': typeof ModulesProviderModuleIdFormProviderEditSectionSectionIndexLayoutRoute
+    '/modules/_provider/$moduleId/_formProvider/edit/section/$sectionIndex/': typeof ModulesProviderModuleIdFormProviderEditSectionSectionIndexIndexRoute
+    '/modules/_provider/$moduleId/_formProvider/edit/static/$itemId/': typeof ModulesProviderModuleIdFormProviderEditStaticItemIdIndexRoute
 }
 export interface FileRouteTypes {
-  fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths:
-    | "/"
-    | "/appearance"
-    | "/data-service-configuration"
-    | "/general"
-    | "/menu"
-    | "/modules"
-    | "/configuration"
-    | "/modules/"
-    | "/appearance/"
-    | "/data-service-configuration/"
-    | "/general/"
-    | "/menu/"
-    | "/data-service-configuration/$configId"
-    | "/modules/$moduleId"
-    | "/data-service-configuration/$configId/"
-    | "/data-service-configuration/$configId/validation-logs"
-    | "/modules/$moduleId/edit/layout"
-    | "/modules/$moduleId/edit"
-    | "/modules/$moduleId/edit/$groupIndex/layout"
-    | "/modules/$moduleId/edit/$groupIndex"
-    | "/modules/$moduleId/edit/section/$sectionIndex/layout"
-    | "/modules/$moduleId/edit/section/$sectionIndex"
-    | "/modules/$moduleId/edit/static/$itemId"
-  fileRoutesByTo: FileRoutesByTo
-  to:
-    | "/"
-    | "/appearance"
-    | "/data-service-configuration"
-    | "/general"
-    | "/menu"
-    | "/modules"
-    | "/configuration"
-    | "/data-service-configuration/$configId"
-    | "/modules/$moduleId"
-    | "/data-service-configuration/$configId/validation-logs"
-    | "/modules/$moduleId/edit/layout"
-    | "/modules/$moduleId/edit"
-    | "/modules/$moduleId/edit/$groupIndex/layout"
-    | "/modules/$moduleId/edit/$groupIndex"
-    | "/modules/$moduleId/edit/section/$sectionIndex/layout"
-    | "/modules/$moduleId/edit/section/$sectionIndex"
-    | "/modules/$moduleId/edit/static/$itemId"
-  id:
-    | "__root__"
-    | "/"
-    | "/appearance"
-    | "/appearance/_provider"
-    | "/data-service-configuration"
-    | "/data-service-configuration/_provider"
-    | "/general"
-    | "/general/_provider"
-    | "/menu"
-    | "/menu/_provider"
-    | "/modules"
-    | "/modules/_provider"
-    | "/configuration/"
-    | "/modules/_provider/"
-    | "/appearance/_provider/"
-    | "/data-service-configuration/_provider/"
-    | "/general/_provider/"
-    | "/menu/_provider/"
-    | "/data-service-configuration/_provider/$configId"
-    | "/data-service-configuration/_provider/$configId/_provider"
-    | "/modules/_provider/$moduleId"
-    | "/modules/_provider/$moduleId/_formProvider"
-    | "/data-service-configuration/_provider/$configId/_provider/"
-    | "/data-service-configuration/_provider/$configId/validation-logs/"
-    | "/modules/_provider/$moduleId/_formProvider/edit/layout"
-    | "/modules/_provider/$moduleId/_formProvider/edit/"
-    | "/modules/_provider/$moduleId/_formProvider/edit/$groupIndex/layout"
-    | "/modules/_provider/$moduleId/_formProvider/edit/$groupIndex/"
-    | "/modules/_provider/$moduleId/_formProvider/edit/section/$sectionIndex/layout"
-    | "/modules/_provider/$moduleId/_formProvider/edit/section/$sectionIndex/"
-    | "/modules/_provider/$moduleId/_formProvider/edit/static/$itemId/"
-  fileRoutesById: FileRoutesById
+    fileRoutesByFullPath: FileRoutesByFullPath
+    fullPaths:
+        | '/'
+        | '/appearance'
+        | '/data-service-configuration'
+        | '/general'
+        | '/menu'
+        | '/modules'
+        | '/configuration'
+        | '/modules/'
+        | '/appearance/'
+        | '/data-service-configuration/'
+        | '/general/'
+        | '/menu/'
+        | '/data-service-configuration/$configId'
+        | '/modules/$moduleId'
+        | '/data-service-configuration/$configId/'
+        | '/data-service-configuration/$configId/validation-logs'
+        | '/modules/$moduleId/edit/layout'
+        | '/modules/$moduleId/edit'
+        | '/modules/$moduleId/edit/$groupIndex/layout'
+        | '/modules/$moduleId/edit/$groupIndex'
+        | '/modules/$moduleId/edit/section/$sectionIndex/layout'
+        | '/modules/$moduleId/edit/section/$sectionIndex'
+        | '/modules/$moduleId/edit/static/$itemId'
+    fileRoutesByTo: FileRoutesByTo
+    to:
+        | '/'
+        | '/appearance'
+        | '/data-service-configuration'
+        | '/general'
+        | '/menu'
+        | '/modules'
+        | '/configuration'
+        | '/data-service-configuration/$configId'
+        | '/modules/$moduleId'
+        | '/data-service-configuration/$configId/validation-logs'
+        | '/modules/$moduleId/edit/layout'
+        | '/modules/$moduleId/edit'
+        | '/modules/$moduleId/edit/$groupIndex/layout'
+        | '/modules/$moduleId/edit/$groupIndex'
+        | '/modules/$moduleId/edit/section/$sectionIndex/layout'
+        | '/modules/$moduleId/edit/section/$sectionIndex'
+        | '/modules/$moduleId/edit/static/$itemId'
+    id:
+        | '__root__'
+        | '/'
+        | '/appearance'
+        | '/appearance/_provider'
+        | '/data-service-configuration'
+        | '/data-service-configuration/_provider'
+        | '/general'
+        | '/general/_provider'
+        | '/menu'
+        | '/menu/_provider'
+        | '/modules'
+        | '/modules/_provider'
+        | '/configuration/'
+        | '/modules/_provider/'
+        | '/appearance/_provider/'
+        | '/data-service-configuration/_provider/'
+        | '/general/_provider/'
+        | '/menu/_provider/'
+        | '/data-service-configuration/_provider/$configId'
+        | '/data-service-configuration/_provider/$configId/_provider'
+        | '/modules/_provider/$moduleId'
+        | '/modules/_provider/$moduleId/_formProvider'
+        | '/data-service-configuration/_provider/$configId/_provider/'
+        | '/data-service-configuration/_provider/$configId/validation-logs/'
+        | '/modules/_provider/$moduleId/_formProvider/edit/layout'
+        | '/modules/_provider/$moduleId/_formProvider/edit/'
+        | '/modules/_provider/$moduleId/_formProvider/edit/$groupIndex/layout'
+        | '/modules/_provider/$moduleId/_formProvider/edit/$groupIndex/'
+        | '/modules/_provider/$moduleId/_formProvider/edit/section/$sectionIndex/layout'
+        | '/modules/_provider/$moduleId/_formProvider/edit/section/$sectionIndex/'
+        | '/modules/_provider/$moduleId/_formProvider/edit/static/$itemId/'
+    fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
-  IndexLazyRoute: typeof IndexLazyRoute
-  AppearanceRoute: typeof AppearanceRouteWithChildren
-  DataServiceConfigurationRoute: typeof DataServiceConfigurationRouteWithChildren
-  GeneralRoute: typeof GeneralRouteWithChildren
-  MenuRoute: typeof MenuRouteWithChildren
-  ModulesRoute: typeof ModulesRouteWithChildren
-  ConfigurationIndexRoute: typeof ConfigurationIndexRoute
+    IndexLazyRoute: typeof IndexLazyRoute
+    AppearanceRoute: typeof AppearanceRouteWithChildren
+    DataServiceConfigurationRoute: typeof DataServiceConfigurationRouteWithChildren
+    GeneralRoute: typeof GeneralRouteWithChildren
+    MenuRoute: typeof MenuRouteWithChildren
+    ModulesRoute: typeof ModulesRouteWithChildren
+    ConfigurationIndexRoute: typeof ConfigurationIndexRoute
 }
 
-declare module "@tanstack/react-router" {
-  interface FileRoutesByPath {
-    "/modules": {
-      id: "/modules"
-      path: "/modules"
-      fullPath: "/modules"
-      preLoaderRoute: typeof ModulesRouteImport
-      parentRoute: typeof rootRouteImport
+declare module '@tanstack/react-router' {
+    interface FileRoutesByPath {
+        '/modules': {
+            id: '/modules'
+            path: '/modules'
+            fullPath: '/modules'
+            preLoaderRoute: typeof ModulesRouteImport
+            parentRoute: typeof rootRouteImport
+        }
+        '/menu': {
+            id: '/menu'
+            path: '/menu'
+            fullPath: '/menu'
+            preLoaderRoute: typeof MenuRouteImport
+            parentRoute: typeof rootRouteImport
+        }
+        '/general': {
+            id: '/general'
+            path: '/general'
+            fullPath: '/general'
+            preLoaderRoute: typeof GeneralRouteImport
+            parentRoute: typeof rootRouteImport
+        }
+        '/data-service-configuration': {
+            id: '/data-service-configuration'
+            path: '/data-service-configuration'
+            fullPath: '/data-service-configuration'
+            preLoaderRoute: typeof DataServiceConfigurationRouteImport
+            parentRoute: typeof rootRouteImport
+        }
+        '/appearance': {
+            id: '/appearance'
+            path: '/appearance'
+            fullPath: '/appearance'
+            preLoaderRoute: typeof AppearanceRouteImport
+            parentRoute: typeof rootRouteImport
+        }
+        '/': {
+            id: '/'
+            path: '/'
+            fullPath: '/'
+            preLoaderRoute: typeof IndexLazyRouteImport
+            parentRoute: typeof rootRouteImport
+        }
+        '/configuration/': {
+            id: '/configuration/'
+            path: '/configuration'
+            fullPath: '/configuration'
+            preLoaderRoute: typeof ConfigurationIndexRouteImport
+            parentRoute: typeof rootRouteImport
+        }
+        '/modules/_provider': {
+            id: '/modules/_provider'
+            path: '/modules'
+            fullPath: '/modules'
+            preLoaderRoute: typeof ModulesProviderRouteImport
+            parentRoute: typeof ModulesRoute
+        }
+        '/menu/_provider': {
+            id: '/menu/_provider'
+            path: '/menu'
+            fullPath: '/menu'
+            preLoaderRoute: typeof MenuProviderRouteImport
+            parentRoute: typeof MenuRoute
+        }
+        '/general/_provider': {
+            id: '/general/_provider'
+            path: '/general'
+            fullPath: '/general'
+            preLoaderRoute: typeof GeneralProviderRouteImport
+            parentRoute: typeof GeneralRoute
+        }
+        '/data-service-configuration/_provider': {
+            id: '/data-service-configuration/_provider'
+            path: '/data-service-configuration'
+            fullPath: '/data-service-configuration'
+            preLoaderRoute: typeof DataServiceConfigurationProviderRouteImport
+            parentRoute: typeof DataServiceConfigurationRoute
+        }
+        '/appearance/_provider': {
+            id: '/appearance/_provider'
+            path: '/appearance'
+            fullPath: '/appearance'
+            preLoaderRoute: typeof AppearanceProviderRouteImport
+            parentRoute: typeof AppearanceRoute
+        }
+        '/modules/_provider/$moduleId': {
+            id: '/modules/_provider/$moduleId'
+            path: '/$moduleId'
+            fullPath: '/modules/$moduleId'
+            preLoaderRoute: typeof ModulesProviderModuleIdRouteImport
+            parentRoute: typeof ModulesProviderRoute
+        }
+        '/data-service-configuration/_provider/$configId': {
+            id: '/data-service-configuration/_provider/$configId'
+            path: '/$configId'
+            fullPath: '/data-service-configuration/$configId'
+            preLoaderRoute: typeof DataServiceConfigurationProviderConfigIdRouteImport
+            parentRoute: typeof DataServiceConfigurationProviderRoute
+        }
+        '/menu/_provider/': {
+            id: '/menu/_provider/'
+            path: '/'
+            fullPath: '/menu/'
+            preLoaderRoute: typeof MenuProviderIndexLazyRouteImport
+            parentRoute: typeof MenuProviderRoute
+        }
+        '/general/_provider/': {
+            id: '/general/_provider/'
+            path: '/'
+            fullPath: '/general/'
+            preLoaderRoute: typeof GeneralProviderIndexLazyRouteImport
+            parentRoute: typeof GeneralProviderRoute
+        }
+        '/data-service-configuration/_provider/': {
+            id: '/data-service-configuration/_provider/'
+            path: '/'
+            fullPath: '/data-service-configuration/'
+            preLoaderRoute: typeof DataServiceConfigurationProviderIndexLazyRouteImport
+            parentRoute: typeof DataServiceConfigurationProviderRoute
+        }
+        '/appearance/_provider/': {
+            id: '/appearance/_provider/'
+            path: '/'
+            fullPath: '/appearance/'
+            preLoaderRoute: typeof AppearanceProviderIndexLazyRouteImport
+            parentRoute: typeof AppearanceProviderRoute
+        }
+        '/modules/_provider/': {
+            id: '/modules/_provider/'
+            path: '/'
+            fullPath: '/modules/'
+            preLoaderRoute: typeof ModulesProviderIndexRouteImport
+            parentRoute: typeof ModulesProviderRoute
+        }
+        '/modules/_provider/$moduleId/_formProvider': {
+            id: '/modules/_provider/$moduleId/_formProvider'
+            path: '/$moduleId'
+            fullPath: '/modules/$moduleId'
+            preLoaderRoute: typeof ModulesProviderModuleIdFormProviderRouteImport
+            parentRoute: typeof ModulesProviderModuleIdRoute
+        }
+        '/data-service-configuration/_provider/$configId/_provider': {
+            id: '/data-service-configuration/_provider/$configId/_provider'
+            path: '/$configId'
+            fullPath: '/data-service-configuration/$configId'
+            preLoaderRoute: typeof DataServiceConfigurationProviderConfigIdProviderRouteImport
+            parentRoute: typeof DataServiceConfigurationProviderConfigIdRoute
+        }
+        '/data-service-configuration/_provider/$configId/validation-logs/': {
+            id: '/data-service-configuration/_provider/$configId/validation-logs/'
+            path: '/validation-logs'
+            fullPath: '/data-service-configuration/$configId/validation-logs'
+            preLoaderRoute: typeof DataServiceConfigurationProviderConfigIdValidationLogsIndexLazyRouteImport
+            parentRoute: typeof DataServiceConfigurationProviderConfigIdRoute
+        }
+        '/data-service-configuration/_provider/$configId/_provider/': {
+            id: '/data-service-configuration/_provider/$configId/_provider/'
+            path: '/'
+            fullPath: '/data-service-configuration/$configId/'
+            preLoaderRoute: typeof DataServiceConfigurationProviderConfigIdProviderIndexLazyRouteImport
+            parentRoute: typeof DataServiceConfigurationProviderConfigIdProviderRoute
+        }
+        '/modules/_provider/$moduleId/_formProvider/edit/': {
+            id: '/modules/_provider/$moduleId/_formProvider/edit/'
+            path: '/edit'
+            fullPath: '/modules/$moduleId/edit'
+            preLoaderRoute: typeof ModulesProviderModuleIdFormProviderEditIndexLazyRouteImport
+            parentRoute: typeof ModulesProviderModuleIdFormProviderRoute
+        }
+        '/modules/_provider/$moduleId/_formProvider/edit/layout': {
+            id: '/modules/_provider/$moduleId/_formProvider/edit/layout'
+            path: '/edit/layout'
+            fullPath: '/modules/$moduleId/edit/layout'
+            preLoaderRoute: typeof ModulesProviderModuleIdFormProviderEditLayoutRouteImport
+            parentRoute: typeof ModulesProviderModuleIdFormProviderRoute
+        }
+        '/modules/_provider/$moduleId/_formProvider/edit/$groupIndex/': {
+            id: '/modules/_provider/$moduleId/_formProvider/edit/$groupIndex/'
+            path: '/edit/$groupIndex'
+            fullPath: '/modules/$moduleId/edit/$groupIndex'
+            preLoaderRoute: typeof ModulesProviderModuleIdFormProviderEditGroupIndexIndexRouteImport
+            parentRoute: typeof ModulesProviderModuleIdFormProviderRoute
+        }
+        '/modules/_provider/$moduleId/_formProvider/edit/$groupIndex/layout': {
+            id: '/modules/_provider/$moduleId/_formProvider/edit/$groupIndex/layout'
+            path: '/edit/$groupIndex/layout'
+            fullPath: '/modules/$moduleId/edit/$groupIndex/layout'
+            preLoaderRoute: typeof ModulesProviderModuleIdFormProviderEditGroupIndexLayoutRouteImport
+            parentRoute: typeof ModulesProviderModuleIdFormProviderRoute
+        }
+        '/modules/_provider/$moduleId/_formProvider/edit/static/$itemId/': {
+            id: '/modules/_provider/$moduleId/_formProvider/edit/static/$itemId/'
+            path: '/edit/static/$itemId'
+            fullPath: '/modules/$moduleId/edit/static/$itemId'
+            preLoaderRoute: typeof ModulesProviderModuleIdFormProviderEditStaticItemIdIndexRouteImport
+            parentRoute: typeof ModulesProviderModuleIdFormProviderRoute
+        }
+        '/modules/_provider/$moduleId/_formProvider/edit/section/$sectionIndex/': {
+            id: '/modules/_provider/$moduleId/_formProvider/edit/section/$sectionIndex/'
+            path: '/edit/section/$sectionIndex'
+            fullPath: '/modules/$moduleId/edit/section/$sectionIndex'
+            preLoaderRoute: typeof ModulesProviderModuleIdFormProviderEditSectionSectionIndexIndexRouteImport
+            parentRoute: typeof ModulesProviderModuleIdFormProviderRoute
+        }
+        '/modules/_provider/$moduleId/_formProvider/edit/section/$sectionIndex/layout': {
+            id: '/modules/_provider/$moduleId/_formProvider/edit/section/$sectionIndex/layout'
+            path: '/edit/section/$sectionIndex/layout'
+            fullPath: '/modules/$moduleId/edit/section/$sectionIndex/layout'
+            preLoaderRoute: typeof ModulesProviderModuleIdFormProviderEditSectionSectionIndexLayoutRouteImport
+            parentRoute: typeof ModulesProviderModuleIdFormProviderRoute
+        }
     }
-    "/menu": {
-      id: "/menu"
-      path: "/menu"
-      fullPath: "/menu"
-      preLoaderRoute: typeof MenuRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    "/general": {
-      id: "/general"
-      path: "/general"
-      fullPath: "/general"
-      preLoaderRoute: typeof GeneralRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    "/data-service-configuration": {
-      id: "/data-service-configuration"
-      path: "/data-service-configuration"
-      fullPath: "/data-service-configuration"
-      preLoaderRoute: typeof DataServiceConfigurationRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    "/appearance": {
-      id: "/appearance"
-      path: "/appearance"
-      fullPath: "/appearance"
-      preLoaderRoute: typeof AppearanceRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    "/": {
-      id: "/"
-      path: "/"
-      fullPath: "/"
-      preLoaderRoute: typeof IndexLazyRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    "/configuration/": {
-      id: "/configuration/"
-      path: "/configuration"
-      fullPath: "/configuration"
-      preLoaderRoute: typeof ConfigurationIndexRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    "/modules/_provider": {
-      id: "/modules/_provider"
-      path: "/modules"
-      fullPath: "/modules"
-      preLoaderRoute: typeof ModulesProviderRouteImport
-      parentRoute: typeof ModulesRoute
-    }
-    "/menu/_provider": {
-      id: "/menu/_provider"
-      path: "/menu"
-      fullPath: "/menu"
-      preLoaderRoute: typeof MenuProviderRouteImport
-      parentRoute: typeof MenuRoute
-    }
-    "/general/_provider": {
-      id: "/general/_provider"
-      path: "/general"
-      fullPath: "/general"
-      preLoaderRoute: typeof GeneralProviderRouteImport
-      parentRoute: typeof GeneralRoute
-    }
-    "/data-service-configuration/_provider": {
-      id: "/data-service-configuration/_provider"
-      path: "/data-service-configuration"
-      fullPath: "/data-service-configuration"
-      preLoaderRoute: typeof DataServiceConfigurationProviderRouteImport
-      parentRoute: typeof DataServiceConfigurationRoute
-    }
-    "/appearance/_provider": {
-      id: "/appearance/_provider"
-      path: "/appearance"
-      fullPath: "/appearance"
-      preLoaderRoute: typeof AppearanceProviderRouteImport
-      parentRoute: typeof AppearanceRoute
-    }
-    "/modules/_provider/$moduleId": {
-      id: "/modules/_provider/$moduleId"
-      path: "/$moduleId"
-      fullPath: "/modules/$moduleId"
-      preLoaderRoute: typeof ModulesProviderModuleIdRouteImport
-      parentRoute: typeof ModulesProviderRoute
-    }
-    "/data-service-configuration/_provider/$configId": {
-      id: "/data-service-configuration/_provider/$configId"
-      path: "/$configId"
-      fullPath: "/data-service-configuration/$configId"
-      preLoaderRoute: typeof DataServiceConfigurationProviderConfigIdRouteImport
-      parentRoute: typeof DataServiceConfigurationProviderRoute
-    }
-    "/menu/_provider/": {
-      id: "/menu/_provider/"
-      path: "/"
-      fullPath: "/menu/"
-      preLoaderRoute: typeof MenuProviderIndexLazyRouteImport
-      parentRoute: typeof MenuProviderRoute
-    }
-    "/general/_provider/": {
-      id: "/general/_provider/"
-      path: "/"
-      fullPath: "/general/"
-      preLoaderRoute: typeof GeneralProviderIndexLazyRouteImport
-      parentRoute: typeof GeneralProviderRoute
-    }
-    "/data-service-configuration/_provider/": {
-      id: "/data-service-configuration/_provider/"
-      path: "/"
-      fullPath: "/data-service-configuration/"
-      preLoaderRoute: typeof DataServiceConfigurationProviderIndexLazyRouteImport
-      parentRoute: typeof DataServiceConfigurationProviderRoute
-    }
-    "/appearance/_provider/": {
-      id: "/appearance/_provider/"
-      path: "/"
-      fullPath: "/appearance/"
-      preLoaderRoute: typeof AppearanceProviderIndexLazyRouteImport
-      parentRoute: typeof AppearanceProviderRoute
-    }
-    "/modules/_provider/": {
-      id: "/modules/_provider/"
-      path: "/"
-      fullPath: "/modules/"
-      preLoaderRoute: typeof ModulesProviderIndexRouteImport
-      parentRoute: typeof ModulesProviderRoute
-    }
-    "/modules/_provider/$moduleId/_formProvider": {
-      id: "/modules/_provider/$moduleId/_formProvider"
-      path: "/$moduleId"
-      fullPath: "/modules/$moduleId"
-      preLoaderRoute: typeof ModulesProviderModuleIdFormProviderRouteImport
-      parentRoute: typeof ModulesProviderModuleIdRoute
-    }
-    "/data-service-configuration/_provider/$configId/_provider": {
-      id: "/data-service-configuration/_provider/$configId/_provider"
-      path: "/$configId"
-      fullPath: "/data-service-configuration/$configId"
-      preLoaderRoute: typeof DataServiceConfigurationProviderConfigIdProviderRouteImport
-      parentRoute: typeof DataServiceConfigurationProviderConfigIdRoute
-    }
-    "/data-service-configuration/_provider/$configId/validation-logs/": {
-      id: "/data-service-configuration/_provider/$configId/validation-logs/"
-      path: "/validation-logs"
-      fullPath: "/data-service-configuration/$configId/validation-logs"
-      preLoaderRoute: typeof DataServiceConfigurationProviderConfigIdValidationLogsIndexLazyRouteImport
-      parentRoute: typeof DataServiceConfigurationProviderConfigIdRoute
-    }
-    "/data-service-configuration/_provider/$configId/_provider/": {
-      id: "/data-service-configuration/_provider/$configId/_provider/"
-      path: "/"
-      fullPath: "/data-service-configuration/$configId/"
-      preLoaderRoute: typeof DataServiceConfigurationProviderConfigIdProviderIndexLazyRouteImport
-      parentRoute: typeof DataServiceConfigurationProviderConfigIdProviderRoute
-    }
-    "/modules/_provider/$moduleId/_formProvider/edit/": {
-      id: "/modules/_provider/$moduleId/_formProvider/edit/"
-      path: "/edit"
-      fullPath: "/modules/$moduleId/edit"
-      preLoaderRoute: typeof ModulesProviderModuleIdFormProviderEditIndexLazyRouteImport
-      parentRoute: typeof ModulesProviderModuleIdFormProviderRoute
-    }
-    "/modules/_provider/$moduleId/_formProvider/edit/layout": {
-      id: "/modules/_provider/$moduleId/_formProvider/edit/layout"
-      path: "/edit/layout"
-      fullPath: "/modules/$moduleId/edit/layout"
-      preLoaderRoute: typeof ModulesProviderModuleIdFormProviderEditLayoutRouteImport
-      parentRoute: typeof ModulesProviderModuleIdFormProviderRoute
-    }
-    "/modules/_provider/$moduleId/_formProvider/edit/$groupIndex/": {
-      id: "/modules/_provider/$moduleId/_formProvider/edit/$groupIndex/"
-      path: "/edit/$groupIndex"
-      fullPath: "/modules/$moduleId/edit/$groupIndex"
-      preLoaderRoute: typeof ModulesProviderModuleIdFormProviderEditGroupIndexIndexRouteImport
-      parentRoute: typeof ModulesProviderModuleIdFormProviderRoute
-    }
-    "/modules/_provider/$moduleId/_formProvider/edit/$groupIndex/layout": {
-      id: "/modules/_provider/$moduleId/_formProvider/edit/$groupIndex/layout"
-      path: "/edit/$groupIndex/layout"
-      fullPath: "/modules/$moduleId/edit/$groupIndex/layout"
-      preLoaderRoute: typeof ModulesProviderModuleIdFormProviderEditGroupIndexLayoutRouteImport
-      parentRoute: typeof ModulesProviderModuleIdFormProviderRoute
-    }
-    "/modules/_provider/$moduleId/_formProvider/edit/static/$itemId/": {
-      id: "/modules/_provider/$moduleId/_formProvider/edit/static/$itemId/"
-      path: "/edit/static/$itemId"
-      fullPath: "/modules/$moduleId/edit/static/$itemId"
-      preLoaderRoute: typeof ModulesProviderModuleIdFormProviderEditStaticItemIdIndexRouteImport
-      parentRoute: typeof ModulesProviderModuleIdFormProviderRoute
-    }
-    "/modules/_provider/$moduleId/_formProvider/edit/section/$sectionIndex/": {
-      id: "/modules/_provider/$moduleId/_formProvider/edit/section/$sectionIndex/"
-      path: "/edit/section/$sectionIndex"
-      fullPath: "/modules/$moduleId/edit/section/$sectionIndex"
-      preLoaderRoute: typeof ModulesProviderModuleIdFormProviderEditSectionSectionIndexIndexRouteImport
-      parentRoute: typeof ModulesProviderModuleIdFormProviderRoute
-    }
-    "/modules/_provider/$moduleId/_formProvider/edit/section/$sectionIndex/layout": {
-      id: "/modules/_provider/$moduleId/_formProvider/edit/section/$sectionIndex/layout"
-      path: "/edit/section/$sectionIndex/layout"
-      fullPath: "/modules/$moduleId/edit/section/$sectionIndex/layout"
-      preLoaderRoute: typeof ModulesProviderModuleIdFormProviderEditSectionSectionIndexLayoutRouteImport
-      parentRoute: typeof ModulesProviderModuleIdFormProviderRoute
-    }
-  }
 }
 
 interface AppearanceProviderRouteChildren {
-  AppearanceProviderIndexLazyRoute: typeof AppearanceProviderIndexLazyRoute
+    AppearanceProviderIndexLazyRoute: typeof AppearanceProviderIndexLazyRoute
 }
 
 const AppearanceProviderRouteChildren: AppearanceProviderRouteChildren = {
-  AppearanceProviderIndexLazyRoute: AppearanceProviderIndexLazyRoute,
+    AppearanceProviderIndexLazyRoute: AppearanceProviderIndexLazyRoute,
 }
 
 const AppearanceProviderRouteWithChildren =
-  AppearanceProviderRoute._addFileChildren(AppearanceProviderRouteChildren)
+    AppearanceProviderRoute._addFileChildren(AppearanceProviderRouteChildren)
 
 interface AppearanceRouteChildren {
-  AppearanceProviderRoute: typeof AppearanceProviderRouteWithChildren
+    AppearanceProviderRoute: typeof AppearanceProviderRouteWithChildren
 }
 
 const AppearanceRouteChildren: AppearanceRouteChildren = {
-  AppearanceProviderRoute: AppearanceProviderRouteWithChildren,
+    AppearanceProviderRoute: AppearanceProviderRouteWithChildren,
 }
 
 const AppearanceRouteWithChildren = AppearanceRoute._addFileChildren(
-  AppearanceRouteChildren,
+    AppearanceRouteChildren
 )
 
 interface DataServiceConfigurationProviderConfigIdProviderRouteChildren {
-  DataServiceConfigurationProviderConfigIdProviderIndexLazyRoute: typeof DataServiceConfigurationProviderConfigIdProviderIndexLazyRoute
+    DataServiceConfigurationProviderConfigIdProviderIndexLazyRoute: typeof DataServiceConfigurationProviderConfigIdProviderIndexLazyRoute
 }
 
 const DataServiceConfigurationProviderConfigIdProviderRouteChildren: DataServiceConfigurationProviderConfigIdProviderRouteChildren =
-  {
-    DataServiceConfigurationProviderConfigIdProviderIndexLazyRoute:
-      DataServiceConfigurationProviderConfigIdProviderIndexLazyRoute,
-  }
+    {
+        DataServiceConfigurationProviderConfigIdProviderIndexLazyRoute:
+            DataServiceConfigurationProviderConfigIdProviderIndexLazyRoute,
+    }
 
 const DataServiceConfigurationProviderConfigIdProviderRouteWithChildren =
-  DataServiceConfigurationProviderConfigIdProviderRoute._addFileChildren(
-    DataServiceConfigurationProviderConfigIdProviderRouteChildren,
-  )
+    DataServiceConfigurationProviderConfigIdProviderRoute._addFileChildren(
+        DataServiceConfigurationProviderConfigIdProviderRouteChildren
+    )
 
 interface DataServiceConfigurationProviderConfigIdRouteChildren {
-  DataServiceConfigurationProviderConfigIdProviderRoute: typeof DataServiceConfigurationProviderConfigIdProviderRouteWithChildren
-  DataServiceConfigurationProviderConfigIdValidationLogsIndexLazyRoute: typeof DataServiceConfigurationProviderConfigIdValidationLogsIndexLazyRoute
+    DataServiceConfigurationProviderConfigIdProviderRoute: typeof DataServiceConfigurationProviderConfigIdProviderRouteWithChildren
+    DataServiceConfigurationProviderConfigIdValidationLogsIndexLazyRoute: typeof DataServiceConfigurationProviderConfigIdValidationLogsIndexLazyRoute
 }
 
 const DataServiceConfigurationProviderConfigIdRouteChildren: DataServiceConfigurationProviderConfigIdRouteChildren =
-  {
-    DataServiceConfigurationProviderConfigIdProviderRoute:
-      DataServiceConfigurationProviderConfigIdProviderRouteWithChildren,
-    DataServiceConfigurationProviderConfigIdValidationLogsIndexLazyRoute:
-      DataServiceConfigurationProviderConfigIdValidationLogsIndexLazyRoute,
-  }
+    {
+        DataServiceConfigurationProviderConfigIdProviderRoute:
+            DataServiceConfigurationProviderConfigIdProviderRouteWithChildren,
+        DataServiceConfigurationProviderConfigIdValidationLogsIndexLazyRoute:
+            DataServiceConfigurationProviderConfigIdValidationLogsIndexLazyRoute,
+    }
 
 const DataServiceConfigurationProviderConfigIdRouteWithChildren =
-  DataServiceConfigurationProviderConfigIdRoute._addFileChildren(
-    DataServiceConfigurationProviderConfigIdRouteChildren,
-  )
+    DataServiceConfigurationProviderConfigIdRoute._addFileChildren(
+        DataServiceConfigurationProviderConfigIdRouteChildren
+    )
 
 interface DataServiceConfigurationProviderRouteChildren {
-  DataServiceConfigurationProviderIndexLazyRoute: typeof DataServiceConfigurationProviderIndexLazyRoute
-  DataServiceConfigurationProviderConfigIdRoute: typeof DataServiceConfigurationProviderConfigIdRouteWithChildren
+    DataServiceConfigurationProviderIndexLazyRoute: typeof DataServiceConfigurationProviderIndexLazyRoute
+    DataServiceConfigurationProviderConfigIdRoute: typeof DataServiceConfigurationProviderConfigIdRouteWithChildren
 }
 
 const DataServiceConfigurationProviderRouteChildren: DataServiceConfigurationProviderRouteChildren =
-  {
-    DataServiceConfigurationProviderIndexLazyRoute:
-      DataServiceConfigurationProviderIndexLazyRoute,
-    DataServiceConfigurationProviderConfigIdRoute:
-      DataServiceConfigurationProviderConfigIdRouteWithChildren,
-  }
+    {
+        DataServiceConfigurationProviderIndexLazyRoute:
+            DataServiceConfigurationProviderIndexLazyRoute,
+        DataServiceConfigurationProviderConfigIdRoute:
+            DataServiceConfigurationProviderConfigIdRouteWithChildren,
+    }
 
 const DataServiceConfigurationProviderRouteWithChildren =
-  DataServiceConfigurationProviderRoute._addFileChildren(
-    DataServiceConfigurationProviderRouteChildren,
-  )
+    DataServiceConfigurationProviderRoute._addFileChildren(
+        DataServiceConfigurationProviderRouteChildren
+    )
 
 interface DataServiceConfigurationRouteChildren {
-  DataServiceConfigurationProviderRoute: typeof DataServiceConfigurationProviderRouteWithChildren
+    DataServiceConfigurationProviderRoute: typeof DataServiceConfigurationProviderRouteWithChildren
 }
 
 const DataServiceConfigurationRouteChildren: DataServiceConfigurationRouteChildren =
-  {
-    DataServiceConfigurationProviderRoute:
-      DataServiceConfigurationProviderRouteWithChildren,
-  }
+    {
+        DataServiceConfigurationProviderRoute:
+            DataServiceConfigurationProviderRouteWithChildren,
+    }
 
 const DataServiceConfigurationRouteWithChildren =
-  DataServiceConfigurationRoute._addFileChildren(
-    DataServiceConfigurationRouteChildren,
-  )
+    DataServiceConfigurationRoute._addFileChildren(
+        DataServiceConfigurationRouteChildren
+    )
 
 interface GeneralProviderRouteChildren {
-  GeneralProviderIndexLazyRoute: typeof GeneralProviderIndexLazyRoute
+    GeneralProviderIndexLazyRoute: typeof GeneralProviderIndexLazyRoute
 }
 
 const GeneralProviderRouteChildren: GeneralProviderRouteChildren = {
-  GeneralProviderIndexLazyRoute: GeneralProviderIndexLazyRoute,
+    GeneralProviderIndexLazyRoute: GeneralProviderIndexLazyRoute,
 }
 
 const GeneralProviderRouteWithChildren = GeneralProviderRoute._addFileChildren(
-  GeneralProviderRouteChildren,
+    GeneralProviderRouteChildren
 )
 
 interface GeneralRouteChildren {
-  GeneralProviderRoute: typeof GeneralProviderRouteWithChildren
+    GeneralProviderRoute: typeof GeneralProviderRouteWithChildren
 }
 
 const GeneralRouteChildren: GeneralRouteChildren = {
-  GeneralProviderRoute: GeneralProviderRouteWithChildren,
+    GeneralProviderRoute: GeneralProviderRouteWithChildren,
 }
 
 const GeneralRouteWithChildren =
-  GeneralRoute._addFileChildren(GeneralRouteChildren)
+    GeneralRoute._addFileChildren(GeneralRouteChildren)
 
 interface MenuProviderRouteChildren {
-  MenuProviderIndexLazyRoute: typeof MenuProviderIndexLazyRoute
+    MenuProviderIndexLazyRoute: typeof MenuProviderIndexLazyRoute
 }
 
 const MenuProviderRouteChildren: MenuProviderRouteChildren = {
-  MenuProviderIndexLazyRoute: MenuProviderIndexLazyRoute,
+    MenuProviderIndexLazyRoute: MenuProviderIndexLazyRoute,
 }
 
 const MenuProviderRouteWithChildren = MenuProviderRoute._addFileChildren(
-  MenuProviderRouteChildren,
+    MenuProviderRouteChildren
 )
 
 interface MenuRouteChildren {
-  MenuProviderRoute: typeof MenuProviderRouteWithChildren
+    MenuProviderRoute: typeof MenuProviderRouteWithChildren
 }
 
 const MenuRouteChildren: MenuRouteChildren = {
-  MenuProviderRoute: MenuProviderRouteWithChildren,
+    MenuProviderRoute: MenuProviderRouteWithChildren,
 }
 
 const MenuRouteWithChildren = MenuRoute._addFileChildren(MenuRouteChildren)
 
 interface ModulesProviderModuleIdFormProviderRouteChildren {
-  ModulesProviderModuleIdFormProviderEditLayoutRoute: typeof ModulesProviderModuleIdFormProviderEditLayoutRoute
-  ModulesProviderModuleIdFormProviderEditIndexLazyRoute: typeof ModulesProviderModuleIdFormProviderEditIndexLazyRoute
-  ModulesProviderModuleIdFormProviderEditGroupIndexLayoutRoute: typeof ModulesProviderModuleIdFormProviderEditGroupIndexLayoutRoute
-  ModulesProviderModuleIdFormProviderEditGroupIndexIndexRoute: typeof ModulesProviderModuleIdFormProviderEditGroupIndexIndexRoute
-  ModulesProviderModuleIdFormProviderEditSectionSectionIndexLayoutRoute: typeof ModulesProviderModuleIdFormProviderEditSectionSectionIndexLayoutRoute
-  ModulesProviderModuleIdFormProviderEditSectionSectionIndexIndexRoute: typeof ModulesProviderModuleIdFormProviderEditSectionSectionIndexIndexRoute
-  ModulesProviderModuleIdFormProviderEditStaticItemIdIndexRoute: typeof ModulesProviderModuleIdFormProviderEditStaticItemIdIndexRoute
+    ModulesProviderModuleIdFormProviderEditLayoutRoute: typeof ModulesProviderModuleIdFormProviderEditLayoutRoute
+    ModulesProviderModuleIdFormProviderEditIndexLazyRoute: typeof ModulesProviderModuleIdFormProviderEditIndexLazyRoute
+    ModulesProviderModuleIdFormProviderEditGroupIndexLayoutRoute: typeof ModulesProviderModuleIdFormProviderEditGroupIndexLayoutRoute
+    ModulesProviderModuleIdFormProviderEditGroupIndexIndexRoute: typeof ModulesProviderModuleIdFormProviderEditGroupIndexIndexRoute
+    ModulesProviderModuleIdFormProviderEditSectionSectionIndexLayoutRoute: typeof ModulesProviderModuleIdFormProviderEditSectionSectionIndexLayoutRoute
+    ModulesProviderModuleIdFormProviderEditSectionSectionIndexIndexRoute: typeof ModulesProviderModuleIdFormProviderEditSectionSectionIndexIndexRoute
+    ModulesProviderModuleIdFormProviderEditStaticItemIdIndexRoute: typeof ModulesProviderModuleIdFormProviderEditStaticItemIdIndexRoute
 }
 
 const ModulesProviderModuleIdFormProviderRouteChildren: ModulesProviderModuleIdFormProviderRouteChildren =
-  {
-    ModulesProviderModuleIdFormProviderEditLayoutRoute:
-      ModulesProviderModuleIdFormProviderEditLayoutRoute,
-    ModulesProviderModuleIdFormProviderEditIndexLazyRoute:
-      ModulesProviderModuleIdFormProviderEditIndexLazyRoute,
-    ModulesProviderModuleIdFormProviderEditGroupIndexLayoutRoute:
-      ModulesProviderModuleIdFormProviderEditGroupIndexLayoutRoute,
-    ModulesProviderModuleIdFormProviderEditGroupIndexIndexRoute:
-      ModulesProviderModuleIdFormProviderEditGroupIndexIndexRoute,
-    ModulesProviderModuleIdFormProviderEditSectionSectionIndexLayoutRoute:
-      ModulesProviderModuleIdFormProviderEditSectionSectionIndexLayoutRoute,
-    ModulesProviderModuleIdFormProviderEditSectionSectionIndexIndexRoute:
-      ModulesProviderModuleIdFormProviderEditSectionSectionIndexIndexRoute,
-    ModulesProviderModuleIdFormProviderEditStaticItemIdIndexRoute:
-      ModulesProviderModuleIdFormProviderEditStaticItemIdIndexRoute,
-  }
+    {
+        ModulesProviderModuleIdFormProviderEditLayoutRoute:
+            ModulesProviderModuleIdFormProviderEditLayoutRoute,
+        ModulesProviderModuleIdFormProviderEditIndexLazyRoute:
+            ModulesProviderModuleIdFormProviderEditIndexLazyRoute,
+        ModulesProviderModuleIdFormProviderEditGroupIndexLayoutRoute:
+            ModulesProviderModuleIdFormProviderEditGroupIndexLayoutRoute,
+        ModulesProviderModuleIdFormProviderEditGroupIndexIndexRoute:
+            ModulesProviderModuleIdFormProviderEditGroupIndexIndexRoute,
+        ModulesProviderModuleIdFormProviderEditSectionSectionIndexLayoutRoute:
+            ModulesProviderModuleIdFormProviderEditSectionSectionIndexLayoutRoute,
+        ModulesProviderModuleIdFormProviderEditSectionSectionIndexIndexRoute:
+            ModulesProviderModuleIdFormProviderEditSectionSectionIndexIndexRoute,
+        ModulesProviderModuleIdFormProviderEditStaticItemIdIndexRoute:
+            ModulesProviderModuleIdFormProviderEditStaticItemIdIndexRoute,
+    }
 
 const ModulesProviderModuleIdFormProviderRouteWithChildren =
-  ModulesProviderModuleIdFormProviderRoute._addFileChildren(
-    ModulesProviderModuleIdFormProviderRouteChildren,
-  )
+    ModulesProviderModuleIdFormProviderRoute._addFileChildren(
+        ModulesProviderModuleIdFormProviderRouteChildren
+    )
 
 interface ModulesProviderModuleIdRouteChildren {
-  ModulesProviderModuleIdFormProviderRoute: typeof ModulesProviderModuleIdFormProviderRouteWithChildren
+    ModulesProviderModuleIdFormProviderRoute: typeof ModulesProviderModuleIdFormProviderRouteWithChildren
 }
 
 const ModulesProviderModuleIdRouteChildren: ModulesProviderModuleIdRouteChildren =
-  {
-    ModulesProviderModuleIdFormProviderRoute:
-      ModulesProviderModuleIdFormProviderRouteWithChildren,
-  }
+    {
+        ModulesProviderModuleIdFormProviderRoute:
+            ModulesProviderModuleIdFormProviderRouteWithChildren,
+    }
 
 const ModulesProviderModuleIdRouteWithChildren =
-  ModulesProviderModuleIdRoute._addFileChildren(
-    ModulesProviderModuleIdRouteChildren,
-  )
+    ModulesProviderModuleIdRoute._addFileChildren(
+        ModulesProviderModuleIdRouteChildren
+    )
 
 interface ModulesProviderRouteChildren {
-  ModulesProviderIndexRoute: typeof ModulesProviderIndexRoute
-  ModulesProviderModuleIdRoute: typeof ModulesProviderModuleIdRouteWithChildren
+    ModulesProviderIndexRoute: typeof ModulesProviderIndexRoute
+    ModulesProviderModuleIdRoute: typeof ModulesProviderModuleIdRouteWithChildren
 }
 
 const ModulesProviderRouteChildren: ModulesProviderRouteChildren = {
-  ModulesProviderIndexRoute: ModulesProviderIndexRoute,
-  ModulesProviderModuleIdRoute: ModulesProviderModuleIdRouteWithChildren,
+    ModulesProviderIndexRoute: ModulesProviderIndexRoute,
+    ModulesProviderModuleIdRoute: ModulesProviderModuleIdRouteWithChildren,
 }
 
 const ModulesProviderRouteWithChildren = ModulesProviderRoute._addFileChildren(
-  ModulesProviderRouteChildren,
+    ModulesProviderRouteChildren
 )
 
 interface ModulesRouteChildren {
-  ModulesProviderRoute: typeof ModulesProviderRouteWithChildren
+    ModulesProviderRoute: typeof ModulesProviderRouteWithChildren
 }
 
 const ModulesRouteChildren: ModulesRouteChildren = {
-  ModulesProviderRoute: ModulesProviderRouteWithChildren,
+    ModulesProviderRoute: ModulesProviderRouteWithChildren,
 }
 
 const ModulesRouteWithChildren =
-  ModulesRoute._addFileChildren(ModulesRouteChildren)
+    ModulesRoute._addFileChildren(ModulesRouteChildren)
 
 const rootRouteChildren: RootRouteChildren = {
-  IndexLazyRoute: IndexLazyRoute,
-  AppearanceRoute: AppearanceRouteWithChildren,
-  DataServiceConfigurationRoute: DataServiceConfigurationRouteWithChildren,
-  GeneralRoute: GeneralRouteWithChildren,
-  MenuRoute: MenuRouteWithChildren,
-  ModulesRoute: ModulesRouteWithChildren,
-  ConfigurationIndexRoute: ConfigurationIndexRoute,
+    IndexLazyRoute: IndexLazyRoute,
+    AppearanceRoute: AppearanceRouteWithChildren,
+    DataServiceConfigurationRoute: DataServiceConfigurationRouteWithChildren,
+    GeneralRoute: GeneralRouteWithChildren,
+    MenuRoute: MenuRouteWithChildren,
+    ModulesRoute: ModulesRouteWithChildren,
+    ConfigurationIndexRoute: ConfigurationIndexRoute,
 }
 export const routeTree = rootRouteImport
-  ._addFileChildren(rootRouteChildren)
-  ._addFileTypes<FileRouteTypes>()
+    ._addFileChildren(rootRouteChildren)
+    ._addFileTypes<FileRouteTypes>()

@@ -1,39 +1,39 @@
-import { useBoolean } from "usehooks-ts";
-import { Button } from "@dhis2/ui"; 
-import i18n from "@dhis2/d2-i18n";
-import React from "react";
-import { DocumentGroup } from "@packages/shared/schemas";
-import { SortDocumentGroupForm } from "./components/SortDocumentGroupForm";
+import { useBoolean } from 'usehooks-ts'
+import { Button } from '@dhis2/ui'
+import i18n from '@dhis2/d2-i18n'
+import React from 'react'
+import { DocumentGroup } from '@packages/shared/schemas'
+import { SortDocumentGroupForm } from './components/SortDocumentGroupForm'
 
 export function SortDocumentGroup({
     items,
-    onSortSubmit, 
+    onSortSubmit,
 }: {
-    items: DocumentGroup[];
-    onSortSubmit: (updatedItems: DocumentGroup[]) => void; 
+    items: DocumentGroup[]
+    onSortSubmit: (updatedItems: DocumentGroup[]) => void
 }) {
     const {
-        value: hideModal, 
+        value: hideModal,
         setTrue: closeModal,
         setFalse: openModal,
-    } = useBoolean(true);
+    } = useBoolean(true)
 
     return (
         <>
-            {!hideModal && (  
+            {!hideModal && (
                 <SortDocumentGroupForm
-                    hide={hideModal}  
+                    hide={hideModal}
                     items={items}
-                    onClose={closeModal} 
+                    onClose={closeModal}
                     onSubmit={(updatedItems) => {
-                        onSortSubmit(updatedItems);
-                        closeModal();  
+                        onSortSubmit(updatedItems)
+                        closeModal()
                     }}
                 />
             )}
-            <Button onClick={openModal} disabled={items.length === 0}> 
-                {i18n.t("Sort document groups")}
+            <Button onClick={openModal} disabled={items.length === 0}>
+                {i18n.t('Sort document groups')}
             </Button>
         </>
-    );
+    )
 }

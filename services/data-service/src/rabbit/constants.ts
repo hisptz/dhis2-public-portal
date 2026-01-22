@@ -1,1 +1,1 @@
-export const REFRESH_EXCHANGE = "refresh";
+export const REFRESH_EXCHANGE = 'refresh'

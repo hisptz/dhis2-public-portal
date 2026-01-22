@@ -21,7 +21,7 @@ The data service operates as a background worker that processes migration tasks 
 Before setting up data service configurations, ensure you have:
 
 1. **Data Service**: A running instance of the Data Service with RabbitMQ
-2. **Access Credentials**: Valid DHIS2 credentials for both source and destination instances 
+2. **Access Credentials**: Valid DHIS2 credentials for both source and destination instances
 3. **Router Configuration**: Data service route configured in the destination instance's router manager
 
 ## Initial Setup
@@ -31,11 +31,12 @@ Before setting up data service configurations, ensure you have:
 Before creating any data configurations, you must set up a data service route in the router manager of your destination DHIS2 instance:
 
 1. **Access Router Manager**: Log in to your destination DHIS2 instance and navigate to the Router Manager app
-2. **Create New Route**: 
-   - **Code**: Set to `data-service`
-   - **URL**: Set to your data service URL
-     - **Production**: Use your actual data service URL (e.g., `https://data-service.yourdomain.com`)
-     - **Development**: Use tunnel URL or port forwarding (e.g., `https://tunnel-url.ngrok.io` or `http://localhost:****`)
+2. **Create New Route**:
+    - **Code**: Set to `data-service`
+    - **URL**: Set to your data service URL
+        - **Production**: Use your actual data service URL (e.g., `https://data-service.yourdomain.com`)
+        - **Development**: Use tunnel URL or port forwarding (e.g., `https://tunnel-url.ngrok.io` or
+          `http://localhost:****`)
 
 :::warning Important
 
@@ -64,13 +65,14 @@ Ensure your data service is running and accessible:
 ### Metadata Migration
 
 #### Download Metadata
+
 Metadata download fetches dashboards, visualizations, maps and their dependencies from the source instance:
 
 1. **Select Configuration**: Choose your data configuration
 2. **Navigate to Metadata**: Go to Actions and click Run migration
-3. **Service type**: 
-   - Choose metadata migration (source instance or FlexiPortal config)
-   - Select specific items or use bulk selection
+3. **Service type**:
+    - Choose metadata migration (source instance or FlexiPortal config)
+    - Select specific items or use bulk selection
 4. **Initiate Download**: Click "Run"
 
 The system will queue the download request and process it in the background.
@@ -78,6 +80,7 @@ The system will queue the download request and process it in the background.
 ### Data Migration
 
 #### Download Data
+
 Data download transfers aggregate data from the source:
 
 1. After metadata migration open the configuration the click "Add data item"
@@ -85,9 +88,9 @@ Data download transfers aggregate data from the source:
     - Select type and name of your data item configuration
     - Select period type
     - Choose organisation unit and organisation unit level
-    - Select data items that were downloaded from source 
-3. Create and save your data item configurations   
-4. **Initiate Download**: 
+   - Select data items that were downloaded from source
+3. Create and save your data item configurations
+4. **Initiate Download**:
     - Afterwards head back and run migration
     - Service type as "Data Migration"
     - Select period type and periods
@@ -100,8 +103,8 @@ Data download transfers aggregate data from the source:
 Remove data from the destination instance based on specified criteria:
 
 1. **Configure Deletion Parameters**:
-   - Select Period type and periods
-   - Select configuration items to be deleted
+    - Select Period type and periods
+    - Select configuration items to be deleted
 2. **Safety Check**: Review deletion criteria carefully
 3. **Execute Deletion**: Start the deletion process
 
@@ -118,11 +121,13 @@ Data deletion is irreversible. Always verify your deletion criteria and test in 
 The system provides real-time monitoring of migration processes:
 
 #### Queue Status
+
 - **Queued**: Number of pending operations
 - **Processing**: Currently running operations
 - **Failed**: Operations that encountered errors
 
 #### Process Types
+
 - **Metadata Download**: Fetching metadata from source
 - **Metadata Upload**: Importing metadata to destination
 - **Data Download**: Retrieving data from source
@@ -130,16 +135,19 @@ The system provides real-time monitoring of migration processes:
 - **Data Deletion**: Removing data from destination
 
 #### Managing Failed Operations
+
 When operations fail:
 
 1. **View Failed Messages**: Click on failed count to see detailed errors
 2. **Analyze Failures**: Review error messages and failure reasons
 3. **Retry Operations**:
-   - Retry individual failed messages
-   - Retry all failed operations
+    - Retry individual failed messages
+    - Retry all failed operations
 
 #### Clearing Queues
+
 When necessary, you can clear queue contents:
+
 - Clear specific queue types
 - Clear all failed messages
 
@@ -154,10 +162,11 @@ Clearing queues will permanently remove pending operations. Ensure this is the i
 The data validation provide data comparison and verification between source and destination instances. This feature helps identify discrepancies and ensures data integrity after migration operations.
 
 #### Accessing Data Validation
+
 1. Navigate to your configuration
 2. Click on Run migration then service type "Data Validation"
 3. Select the configurations you would like to compare then click "Run"
-3. Review the comparison results in a tabular format
+4. Review the comparison results in a tabular format
 
 #### Data Validation Features
 
@@ -166,7 +175,6 @@ The data validation provide data comparison and verification between source and 
 #### Discrepancy Detection
 
 The data validation table highlights discrepancies such as:
+
 - **Missing Items**: Items present in source but absent in destination
 - **Value Differences**: Data values that don't match between instances
-
- 

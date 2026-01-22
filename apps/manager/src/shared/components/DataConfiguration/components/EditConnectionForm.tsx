@@ -1,25 +1,16 @@
-import { FormProvider, useForm, useFormContext } from "react-hook-form";
-import { DataServiceConfig } from "@packages/shared/schemas";
-import React, { useEffect } from "react";
-import { z, ZodIssueCode } from "zod";
-import {
-	Button,
-	ButtonStrip,
-	Modal,
-	ModalActions,
-	ModalContent,
-	ModalTitle,
-	CircularLoader,
-} from "@dhis2/ui";
-import i18n from "@dhis2/d2-i18n";
-import { RHFTextInputField } from "@hisptz/dhis2-ui";
-import { AuthFields } from "./AuthFields";
-import { TestConnection } from "./TestConnection";
-import { testDataSource } from "../utils";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useUpdateConnection } from "../hooks/save";
-import { useWatch } from "react-hook-form";
-import { useRoute } from "../hooks/useRoute";
+import { FormProvider, useForm, useFormContext, useWatch } from 'react-hook-form'
+import { DataServiceConfig } from '@packages/shared/schemas'
+import React, { useEffect } from 'react'
+import { z, ZodIssueCode } from 'zod'
+import { Button, ButtonStrip, CircularLoader, Modal, ModalActions, ModalContent, ModalTitle, } from '@dhis2/ui'
+import i18n from '@dhis2/d2-i18n'
+import { RHFTextInputField } from '@hisptz/dhis2-ui'
+import { AuthFields } from './AuthFields'
+import { TestConnection } from './TestConnection'
+import { testDataSource } from '../utils'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { useUpdateConnection } from '../hooks/save'
+import { useRoute } from '../hooks/useRoute'
 
 const editConnectionFormSchema = z
 	.object({
@@ -33,8 +24,9 @@ const editConnectionFormSchema = z
 				routeId: z.string(),
 			})
 			.superRefine((data, context) => {
-				const hasAnyCred = !!data.pat || !!data.username || !!data.password;
-				
+				const hasAnyCred =
+					!!data.pat || !!data.username || !!data.password;
+
 				if (hasAnyCred) {
 					if (!(!!data.pat || (!!data.username && !!data.password))) {
 						if (!data.pat) {
@@ -60,8 +52,10 @@ const editConnectionFormSchema = z
 			}),
 	})
 	.superRefine(async (data, context) => {
-		const hasCredentials = !!data.source.pat || (!!data.source.username && !!data.source.password);
-		
+		const hasCredentials =
+			!!data.source.pat ||
+			(!!data.source.username && !!data.source.password);
+
 		if (hasCredentials) {
 			try {
 				const response = await testDataSource({
@@ -79,7 +73,7 @@ const editConnectionFormSchema = z
 						path: ["source", "url"],
 					});
 				}
-			} catch (error) {
+			} catch () {
 				context.addIssue({
 					code: ZodIssueCode.custom,
 					message: i18n.t(
@@ -101,7 +95,7 @@ export function EditConnectionForm({
 	onClose: () => void;
 }) {
 	const parentForm = useFormContext<DataServiceConfig>();
-	
+
 	const currentSource = useWatch<DataServiceConfig, "source">({
 		name: "source",
 	});
@@ -143,10 +137,13 @@ export function EditConnectionForm({
 			},
 			{
 				onSuccess: (updatedConfig) => {
-					parentForm.setValue("source.name", updatedConfig.source.name);
+					parentForm.setValue(
+						"source.name",
+						updatedConfig.source.name,
+					);
 					refetch();
 				},
-			}
+			},
 		);
 		onClose();
 	};
@@ -188,7 +185,7 @@ export function EditConnectionForm({
 							</p>
 							<p>
 								{i18n.t(
-									"Credentials are already set. Only fill these fields if you want to update them."
+									"Credentials are already set. Only fill these fields if you want to update them.",
 								)}
 							</p>
 						</div>

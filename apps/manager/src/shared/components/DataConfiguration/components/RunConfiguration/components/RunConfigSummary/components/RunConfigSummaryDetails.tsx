@@ -1,94 +1,125 @@
-import React, { useState } from "react";
-import {
-    DataServiceConfig,
-} from "@packages/shared/schemas";
-import {
-    CircularLoader,
-    SegmentedControl,
-    Tag,
-} from "@dhis2/ui";
-import i18n from "@dhis2/d2-i18n";
-import { useProcessMonitoring } from "../hooks/process-monitoring";
-import { FailedQueueModal } from "./FailedQueueModal";
-import { ProcessSection } from "./ProcessSection";
+import React, { useState } from 'react'
+import { DataServiceConfig } from '@packages/shared/schemas'
+import { CircularLoader, SegmentedControl } from '@dhis2/ui'
+import i18n from '@dhis2/d2-i18n'
+import { useProcessMonitoring } from '../hooks/process-monitoring'
+import { FailedQueueModal } from './FailedQueueModal'
+import { ProcessSection } from './ProcessSection'
 
 export function RunConfigSummaryDetails({
     config,
     onCloseParent,
     onOpenFailedModal,
 }: {
-    config: DataServiceConfig;
-    onCloseParent?: () => void;
-    onOpenFailedModal?: (processType: string) => void;
+    config: DataServiceConfig
+    onCloseParent?: () => void
+    onOpenFailedModal?: (processType: string) => void
 }) {
-    const [activeTab, setActiveTab] = useState<"metadata" | "data" | "deletion">("metadata");
-    const [showFailedModal, setShowFailedModal] = useState(false);
-    const [selectedProcessType, setSelectedProcessType] = useState<string | undefined>(undefined);
+    const [activeTab, setActiveTab] = useState<
+        'metadata' | 'data' | 'deletion'
+    >('metadata')
+    const [showFailedModal, setShowFailedModal] = useState(false)
+    const [selectedProcessType, setSelectedProcessType] = useState<
+        string | undefined
+    >(undefined)
 
-    const { data: processData, isLoading, isError, error } = useProcessMonitoring(config.id);
+    const {
+        data: processData,
+        isLoading,
+        isError,
+        error,
+    } = useProcessMonitoring(config.id)
 
     if (isError) {
         return (
-            <div style={{
-                padding: '24px',
-                background: 'var(--colors-red050)',
-                border: '1px solid var(--colors-red200)',
-                borderRadius: '8px',
-                color: 'var(--colors-red700)'
-            }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+            <div
+                style={{
+                    padding: '24px',
+                    background: 'var(--colors-red050)',
+                    border: '1px solid var(--colors-red200)',
+                    borderRadius: '8px',
+                    color: 'var(--colors-red700)',
+                }}
+            >
+                <div
+                    style={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '8px',
+                    }}
+                >
                     <span>!</span>
                     <strong>{i18n.t('Error loading process data')}</strong>
                 </div>
                 <div style={{ marginTop: '8px', fontSize: '14px' }}>
-                    {(error as any)?.message ?? i18n.t("Unknown error occurred")}
+                    {(error as any)?.message ??
+                        i18n.t('Unknown error occurred')}
                 </div>
             </div>
-        );
+        )
     }
 
     if (isLoading) {
         return (
-            <div style={{ display: 'flex', justifyContent: 'center', padding: '48px' }}>
+            <div
+                style={{
+                    display: 'flex',
+                    justifyContent: 'center',
+                    padding: '48px',
+                }}
+            >
                 <CircularLoader />
             </div>
-        );
+        )
     }
 
     const handleFailedClick = (processType: string) => {
         if (onOpenFailedModal) {
-            onOpenFailedModal(processType);
+            onOpenFailedModal(processType)
         } else {
-            setSelectedProcessType(processType);
-            setShowFailedModal(true);
+            setSelectedProcessType(processType)
+            setShowFailedModal(true)
             if (onCloseParent) {
-                onCloseParent();
+                onCloseParent()
             }
         }
-    };
+    }
 
     const handleCloseModal = () => {
-        setShowFailedModal(false);
-        setSelectedProcessType(undefined);
-    };
+        setShowFailedModal(false)
+        setSelectedProcessType(undefined)
+    }
 
     return (
-        <div className="p-4" style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
+        <div
+            className="p-4"
+            style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}
+        >
             <div className="bg-white">
                 <SegmentedControl
                     selected={activeTab}
-                    onChange={({ value }) => setActiveTab(value as "metadata" | "data" | "deletion")}
+                    onChange={({ value }) =>
+                        setActiveTab(value as 'metadata' | 'data' | 'deletion')
+                    }
                     options={[
-                        { label: i18n.t("Metadata Migration"), value: "metadata" },
-                        { label: i18n.t("Data Migration"), value: "data" },
-                        { label: i18n.t("Data Deletion"), value: "deletion" },
+                        {
+                            label: i18n.t('Metadata Migration'),
+                            value: 'metadata',
+                        },
+                        { label: i18n.t('Data Migration'), value: 'data' },
+                        { label: i18n.t('Data Deletion'), value: 'deletion' },
                     ]}
                 />
             </div>
 
-            {activeTab === "metadata" && processData && (
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
-
+            {activeTab === 'metadata' && processData && (
+                <div
+                    style={{
+                        display: 'flex',
+                        flexDirection: 'column',
+                        gap: '24px',
+                    }}
+                >
                     <ProcessSection
                         title={i18n.t('Download Process')}
                         icon="↓"
@@ -107,9 +138,14 @@ export function RunConfigSummaryDetails({
                 </div>
             )}
 
-            {activeTab === "data" && processData && (
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
-
+            {activeTab === 'data' && processData && (
+                <div
+                    style={{
+                        display: 'flex',
+                        flexDirection: 'column',
+                        gap: '24px',
+                    }}
+                >
                     <ProcessSection
                         title={i18n.t('Download Process')}
                         icon="↓"
@@ -128,9 +164,14 @@ export function RunConfigSummaryDetails({
                 </div>
             )}
 
-            {activeTab === "deletion" && processData && (
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
-
+            {activeTab === 'deletion' && processData && (
+                <div
+                    style={{
+                        display: 'flex',
+                        flexDirection: 'column',
+                        gap: '24px',
+                    }}
+                >
                     <ProcessSection
                         title={i18n.t('Data Deletion Process')}
                         icon="↑"
@@ -150,5 +191,5 @@ export function RunConfigSummaryDetails({
                 />
             )}
         </div>
-    );
+    )
 }

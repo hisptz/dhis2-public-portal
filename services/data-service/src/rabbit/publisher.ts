@@ -1,6 +1,6 @@
-import logger from "@/logging";
-import { getChannel, getWorkerPublishChannel } from "./connection";
-import { getQueueNames, QueueType } from "../variables/queue-names";
+import logger from '@/logging'
+import { getChannel } from './connection'
+import { getQueueNames, QueueType } from '@/variables/queue-names'
 
 export async function pushToQueue(
     configId: string,
@@ -8,13 +8,13 @@ export async function pushToQueue(
     jobData: any,
     error?: any
 ) {
-    const currentChannel = getChannel();
+    const currentChannel = getChannel()
     if (!currentChannel) {
-        throw new Error("Channel not initialized");
+        throw new Error('Channel not initialized')
     }
 
-    const queueNames = getQueueNames(configId);
-    const queueName = queueNames[queueType];
+    const queueNames = getQueueNames(configId)
+    const queueName = queueNames[queueType]
 
     const messageData = {
         ...jobData,
@@ -29,16 +29,13 @@ export async function pushToQueue(
         //         name: error.name
         //     }
         // })
-    };
+    }
 
-    const messageBuffer = Buffer.from(JSON.stringify(messageData));
+    const messageBuffer = Buffer.from(JSON.stringify(messageData))
 
     currentChannel.sendToQueue(queueName, messageBuffer, {
         persistent: true,
-    });
+    })
 
-    logger.info(`Message pushed to ${queueType} queue: ${queueName}`);
+    logger.info(`Message pushed to ${queueType} queue: ${queueName}`)
 }
-
-
-

@@ -1,20 +1,17 @@
-@import "tailwindcss";
+@import 'tailwindcss';
 
-
-@theme{
+@theme {
     --color-primary-500: rgb(44, 102, 147);
 }
 
-
 body {
-    background: #F8F9FA;
+    background: #f8f9fa;
 }
 
 li.active {
-    background: #D5DDE5 !important;
+    background: #d5dde5 !important;
     font-weight: bold;
 }
-
 
 .icon-size-48 > svg {
     width: 48px !important;

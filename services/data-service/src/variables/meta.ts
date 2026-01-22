@@ -1,3 +1,3 @@
-import { CategoryMetadata } from "@/utils/metadata";
+import { CategoryMetadata } from '@/utils/metadata'
 
-export const categoriesMeta: { [key: string]: CategoryMetadata } = {};
+export const categoriesMeta: { [key: string]: CategoryMetadata } = {}

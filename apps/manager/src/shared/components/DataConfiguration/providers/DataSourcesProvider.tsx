@@ -1,40 +1,40 @@
-import React, { createContext, useContext } from "react";
-import { DataServiceConfig } from "@packages/shared/schemas";
-import { useGetDataSources } from "../hooks/data";
-import { FullLoader } from "../../FullLoader";
-import ErrorPage from "../../ErrorPage/ErrorPage";
+import React, { createContext, useContext } from 'react'
+import { DataServiceConfig } from '@packages/shared/schemas'
+import { useGetDataSources } from '../hooks/data'
+import { FullLoader } from '../../FullLoader'
+import ErrorPage from '../../ErrorPage/ErrorPage'
 
-const DataSourcesContext = createContext<DataServiceConfig[]>([]);
-const RefreshDataSourcesContext = createContext<() => void>(() => {});
+const DataSourcesContext = createContext<DataServiceConfig[]>([])
+const RefreshDataSourcesContext = createContext<() => void>(() => {})
 
 export function useDataSources() {
-	return useContext(DataSourcesContext);
+    return useContext(DataSourcesContext)
 }
 
 export function useRefreshDataSources() {
-	return useContext(RefreshDataSourcesContext);
+    return useContext(RefreshDataSourcesContext)
 }
 
 export function DataSourcesProvider({
-	children,
+    children,
 }: {
-	children: React.ReactNode;
+    children: React.ReactNode
 }) {
-	const { dataSources, loading, refetch, error } = useGetDataSources();
+    const { dataSources, loading, refetch, error } = useGetDataSources()
 
-	if (loading) {
-		return <FullLoader />;
-	}
+    if (loading) {
+        return <FullLoader />
+    }
 
-	if (error) {
-		return <ErrorPage error={error} resetErrorBoundary={() => refetch()} />;
-	}
+    if (error) {
+        return <ErrorPage error={error} resetErrorBoundary={() => refetch()} />
+    }
 
-	return (
-		<DataSourcesContext.Provider value={dataSources ?? []}>
-			<RefreshDataSourcesContext.Provider value={refetch}>
-				{children}
-			</RefreshDataSourcesContext.Provider>
-		</DataSourcesContext.Provider>
-	);
+    return (
+        <DataSourcesContext.Provider value={dataSources ?? []}>
+            <RefreshDataSourcesContext.Provider value={refetch}>
+                {children}
+            </RefreshDataSourcesContext.Provider>
+        </DataSourcesContext.Provider>
+    )
 }

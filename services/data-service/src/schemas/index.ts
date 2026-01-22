@@ -1,16 +1,16 @@
 export interface Pager {
-    page: number,
+    page: number
     total: number
-    pageSize: number;
-    nextPage?: string;
-    pageCount: number;
+    pageSize: number
+    nextPage?: string
+    pageCount: number
 }
 
 export interface OrgUnit {
-    id: string;
+    id: string
     geometry: {
-        type: string;
+        type: string
         coordinates: number[]
     }
-    displayName: string;
+    displayName: string
 }

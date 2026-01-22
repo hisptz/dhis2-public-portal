@@ -1,9 +1,9 @@
-import React from "react";
+import React from 'react'
 
 type Props = {
-	key: string;
-};
+    key: string
+}
 
 export function StyleConfig({ key }: Props) {
-	return <></>;
+    return <></>
 }

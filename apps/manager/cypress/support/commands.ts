@@ -1,3 +1,3 @@
 /// <reference types="cypress" />
 
-import "@dhis2/cypress-commands";
+import '@dhis2/cypress-commands'

@@ -34,7 +34,8 @@ The Portal Manager can be deployed in two main ways:
 
 1. **Download the App**
 
-   Download the latest version of the Portal Manager app from the [releases page](https://github.com/hisptz/dhis2-public-portal/releases) or build it yourself.
+   Download the latest version of the Portal Manager app from
+   the [releases page](https://github.com/hisptz/dhis2-public-portal/releases) or build it yourself.
 
 2. **Upload to DHIS2**
 
@@ -60,16 +61,16 @@ For development purposes, you can deploy directly to a DHIS2 instance:
 
    Create a `.env` file in the `apps/manager` directory with:
 
-   ```
-   DHIS2_BASE_URL=https://your-dhis2-instance.org
-   ```
+    ```
+    DHIS2_BASE_URL=https://your-dhis2-instance.org
+    ```
 
 2. **Deploy**
 
-   ```bash
-   cd apps/manager
-   yarn deploy --username YOUR_USERNAME https://your-dhis2-instance.org
-   ```
+    ```bash
+    cd apps/manager
+    yarn deploy --username YOUR_USERNAME https://your-dhis2-instance.org
+    ```
 
    You will be prompted for your password.
 

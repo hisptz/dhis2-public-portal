@@ -22,7 +22,7 @@ Vercel is a cloud platform for static sites and Serverless Functions that's opti
 provides a simple deployment process with automatic CI/CD.
 
 If you need to deploy the Portal on a non-root path (e.g., example.com/portal instead of
-example.com), [this guide](./deploying_on_non_root.md)  provides instructions for configuring the application
+example.com), [this guide](./deploying_on_non_root.md) provides instructions for configuring the application
 accordingly.
 
 ## Choosing a Deployment Method

@@ -1,28 +1,28 @@
 import {
-	AppModule,
-	DisplayItemType,
-	ModuleType,
-	SectionDisplay,
-	SectionType,
-} from "@packages/shared/schemas";
+    AppModule,
+    DisplayItemType,
+    ModuleType,
+    SectionDisplay,
+    SectionType,
+} from '@packages/shared/schemas'
 
 export const defaultHomeModule: AppModule = {
-	type: ModuleType.SECTION as const,
-	id: "home",
-	sectionDisplay: SectionDisplay.VERTICAL,
-	config: {
-		sections: [
-			{
-				label: "welcome note",
-				sortOrder: 0,
-				type: SectionType.SINGLE_ITEM,
-				title: "Welcome to DHIS2 FlexiPortal",
-				id: "welcome-note",
-				item: {
-					type: DisplayItemType.RICH_TEXT,
-					item: {
-						id: "welcome-note",
-						content: `
+    type: ModuleType.SECTION as const,
+    id: 'home',
+    sectionDisplay: SectionDisplay.VERTICAL,
+    config: {
+        sections: [
+            {
+                label: 'welcome note',
+                sortOrder: 0,
+                type: SectionType.SINGLE_ITEM,
+                title: 'Welcome to DHIS2 FlexiPortal',
+                id: 'welcome-note',
+                item: {
+                    type: DisplayItemType.RICH_TEXT,
+                    item: {
+                        id: 'welcome-note',
+                        content: `
 <h1><strong style="font-size: 24pt;">Welcome to DHIS2 FlexiPortal!</strong></h1>
 
 <p>Thank you for using the DHIS2 FlexiPortal! This platform is designed to transform how DHIS2 data is publicly shared, accessed, and understood.</p>
@@ -70,10 +70,10 @@ export const defaultHomeModule: AppModule = {
 
 <p><em>Enjoy using the DHIS2 FlexiPortal!</em></p>
 `,
-					},
-				},
-			},
-		],
-	},
-	label: "Home",
-};
+                    },
+                },
+            },
+        ],
+    },
+    label: 'Home',
+}
