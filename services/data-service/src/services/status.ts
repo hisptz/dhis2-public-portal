@@ -1,16 +1,13 @@
-import axios from 'axios'
-import { DataServiceRunStatus } from '@packages/shared/schemas'
+import {
+    DataServiceRunStatus,
+    QueueDetails,
+    QueueStatusResult,
+    SystemHealth,
+} from '@packages/shared/schemas'
 import logger from '@/logging'
 import { getQueueNames } from '@/variables/queue-names'
-
-export interface QueueStatusResult {
-    queue: string
-    messages: number
-    messages_ready: number
-    messages_unacknowledged: number
-    dlq_messages: number
-    status: DataServiceRunStatus
-}
+import { rabbitmqClient } from '@/clients/rabbitmq'
+import { AxiosError } from 'axios'
 
 const queueActivityMap: Map<
     string,
@@ -26,32 +23,29 @@ export const getQueueStatus = async (
     queueName: string,
     configId: string
 ): Promise<QueueStatusResult | null> => {
-    const host = process.env.RABBITMQ_HOST
-    const username = process.env.RABBITMQ_USER
-    const password = process.env.RABBITMQ_PASS
     const vhost = encodeURIComponent(process.env.RABBITMQ_VHOST || '/')
 
-    if (!host || !username || !password) return null
-
-    const url = `${host}/api/queues/${vhost}/${queueName}`
-
+    const url = `/api/queues/${vhost}/${queueName}`
     const dlqName = getQueueNames(configId).failed
-    const dlqUrl = `${host}/api/queues/${vhost}/${dlqName}`
+    const dlqUrl = `/api/queues/${vhost}/${dlqName}`
 
     try {
-        const { data } = await axios.get(url, {
-            auth: { username, password },
-        })
-
+        const { data } = await rabbitmqClient.get<QueueDetails>(url)
         let dlqMessages = 0
-
         try {
-            const { data: dlqData } = await axios.get(dlqUrl, {
-                auth: { username, password },
-            })
+            const { data: dlqData } = await rabbitmqClient.get(dlqUrl)
             dlqMessages = dlqData.messages || 0
-        } catch (dlqError: any) {
-            logger.warn(`No DLQ found for queue "${queueName}"`)
+        } catch (dlqError) {
+            if (dlqError instanceof AxiosError) {
+                if (dlqError.status === 404) {
+                    logger.warn(`No DLQ found for queue "${queueName}"`)
+                } else {
+                    logger.warn(
+                        `Failed to fetch DLQ for queue "${queueName}":`,
+                        dlqError.message
+                    )
+                }
+            }
         }
 
         const { messages, messages_ready, messages_unacknowledged } = data
@@ -105,8 +99,10 @@ export const getQueueStatus = async (
             dlq_messages: dlqMessages,
             status,
         }
-    } catch (error: any) {
-        logger.error(`Failed to fetch queue "${queueName}":`, error.message)
+    } catch (error) {
+        if (error instanceof Error) {
+            logger.error(`Failed to fetch queue "${queueName}":`, error.message)
+        }
         return {
             queue: queueName,
             messages: 0,
@@ -152,13 +148,7 @@ export const getMultipleQueueStatus = async (
  */
 export const getSystemHealth = async (
     configIds: string[]
-): Promise<{
-    healthy: boolean
-    totalQueues: number
-    activeQueues: number
-    failedQueues: number
-    issues: string[]
-}> => {
+): Promise<SystemHealth> => {
     const allResults = await Promise.all(
         configIds.map(async (configId) => {
             const queueNames = getQueueNames(configId)
@@ -210,7 +200,6 @@ export const getSystemHealth = async (
  */
 export const markQueueAsCompleted = (queueName: string): void => {
     const now = new Date()
-    const previousActivity = queueActivityMap.get(queueName)
 
     queueActivityMap.set(queueName, {
         hasActivity: true,

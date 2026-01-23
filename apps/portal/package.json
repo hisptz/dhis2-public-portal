@@ -58,7 +58,7 @@
         "styled-jsx": "^4.0.1",
         "usehooks-ts": "^3.1.1",
         "xlsx": "^0.18.5",
-        "zod": "^3.25.76"
+        "zod": "^4.3.6"
     },
     "devDependencies": {
         "@cypress/code-coverage": "^3.14.0",

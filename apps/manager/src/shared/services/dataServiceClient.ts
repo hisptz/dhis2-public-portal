@@ -1,38 +1,63 @@
-export interface ApiResponse {
-    success: boolean
-    message: string
-    data?: any
-    filesDeleted?: number
-    totalSizeDeleted?: string
-    queues?: string[]
-}
+import { useDataEngine } from '@dhis2/app-runtime'
+import { set } from 'lodash'
+import { StatusPayload } from '@packages/shared/schemas'
 
-function isVersion42OrHigher(serverVersion?: any): boolean {
+type DataEngine = ReturnType<typeof useDataEngine>
+// export interface ApiResponse<
+//     DataType extends Record<symbol | number | string, unknown> = Record<
+//         string,
+//         unknown
+//     >,
+// > {
+//     success: boolean
+//     message: string
+//     data?: DataType
+//     filesDeleted?: number
+//     totalSizeDeleted?: string
+//     queues?: string[]
+// }
+
+type ServerVersion = {
+    major?: number
+    minor?: number
+    patch?: number
+}
+function isVersion42OrHigher(serverVersion?: ServerVersion): boolean {
     if (!serverVersion) return false
     const minor = serverVersion.minor || 0
     const major = serverVersion.major || 0
     if (major >= 2 && minor >= 42) return true
-    if (major >= 3) return true
-
-    return false
+    return major >= 3
 }
 
-export async function executeDataServiceRoute(
-    engine: any,
+export async function executeDataServiceRoute<
+    ResponseDataType extends Record<symbol | number | string, unknown> = Record<
+        string,
+        unknown
+    >,
+    RequestDataType extends Record<symbol | number | string, unknown> = Record<
+        string,
+        unknown
+    >,
+>(
+    engine: DataEngine,
     endpoint: string,
-    data?: any,
+    data?: RequestDataType,
     method: 'create' | 'delete' = 'create'
-): Promise<ApiResponse> {
+): Promise<ResponseDataType> {
     try {
-        const mutationConfig: any = {
+        const mutationConfig = {
             type: method,
             resource: `routes/data-service/run${endpoint}`,
         }
         if (method !== 'delete' && data !== undefined) {
-            mutationConfig.data = data
+            set(mutationConfig, 'data', data)
         }
-        const result = await engine.mutate(mutationConfig)
-        return result as ApiResponse
+
+        return (await engine.mutate(
+            // @ts-expect-error delete mutation
+            mutationConfig
+        )) as unknown as ResponseDataType
     } catch (error) {
         if (error instanceof Error) {
             throw error
@@ -42,17 +67,19 @@ export async function executeDataServiceRoute(
 }
 
 // Helper function to query DHIS2 engine for data service routes
-export async function queryDataServiceRoute(
-    engine: any,
-    endpoint: string
-): Promise<ApiResponse> {
+export async function queryDataServiceRoute<
+    ResponseDataType extends Record<symbol | number | string, unknown> = Record<
+        string,
+        unknown
+    >,
+>(engine: DataEngine, endpoint: string): Promise<ResponseDataType> {
     try {
-        const result = await engine.query({
+        const result = (await engine.query({
             result: {
                 resource: `routes/data-service/run${endpoint}`,
             },
-        })
-        return result.result as ApiResponse
+        })) as unknown as { result: ResponseDataType }
+        return result.result
     } catch (error) {
         if (error instanceof Error) {
             throw error
@@ -61,19 +88,27 @@ export async function queryDataServiceRoute(
     }
 }
 
-export async function downloadMetadata(
-    engine: any,
+export async function downloadMetadata<
+    ResponseDataType extends Record<symbol | number | string, unknown> = Record<
+        string,
+        unknown
+    >,
+    RequestDataType extends Record<symbol | number | string, unknown> = Record<
+        string,
+        unknown
+    >,
+>(
+    engine: DataEngine,
     configId: string,
-    data: any,
-    serverVersion?: any
-): Promise<ApiResponse> {
+    data: RequestDataType,
+    serverVersion?: ServerVersion
+): Promise<ResponseDataType> {
     const useQueryParams = isVersion42OrHigher(serverVersion)
 
     if (useQueryParams) {
         const queryParams = new URLSearchParams()
-
         if (data.metadataSource) {
-            queryParams.set('metadataSource', data.metadataSource)
+            queryParams.set('metadataSource', data.metadataSource as string)
         }
 
         if (
@@ -107,9 +142,9 @@ export async function downloadMetadata(
         }
 
         const endpoint = `/metadata-download/${configId}?${queryParams.toString()}`
-        return queryDataServiceRoute(engine, endpoint)
+        return queryDataServiceRoute<ResponseDataType>(engine, endpoint)
     } else {
-        return executeDataServiceRoute(
+        return executeDataServiceRoute<ResponseDataType>(
             engine,
             `/metadata-download/${configId}`,
             {
@@ -123,14 +158,22 @@ export async function downloadMetadata(
     }
 }
 
-export async function downloadData(
-    engine: any,
+export async function downloadData<
+    ResponseDataType extends Record<symbol | number | string, unknown> = Record<
+        string,
+        unknown
+    >,
+    RequestDataType extends Record<symbol | number | string, unknown> = Record<
+        string,
+        unknown
+    >,
+>(
+    engine: DataEngine,
     configId: string,
-    data: any,
-    serverVersion?: any
-): Promise<ApiResponse> {
+    data: RequestDataType,
+    serverVersion?: ServerVersion
+): Promise<ResponseDataType> {
     const useQueryParams = isVersion42OrHigher(serverVersion)
-
     if (useQueryParams) {
         const queryParams = new URLSearchParams()
 
@@ -151,7 +194,7 @@ export async function downloadData(
         const endpoint = `/data-download/${configId}?${queryParams.toString()}`
         return queryDataServiceRoute(engine, endpoint)
     } else {
-        return executeDataServiceRoute(
+        return executeDataServiceRoute<ResponseDataType>(
             engine,
             `/data-download/${configId}`,
             {
@@ -164,75 +207,93 @@ export async function downloadData(
     }
 }
 
-export async function startDataDeletion(
-    engine: any,
-    configId: string,
-    data: any,
-    serverVersion?: any
-): Promise<ApiResponse> {
-    const useQueryParams = isVersion42OrHigher(serverVersion)
+//TODO: @Allen please delete this if it is not used anymore
 
-    if (useQueryParams) {
-        const queryParams = new URLSearchParams()
+// export async function startDataDeletion(
+//     engine: DataEngine,
+//     configId: string,
+//     data: any,
+//     serverVersion?: ServerVersion
+// ): Promise<ApiResponse> {
+//     const useQueryParams = isVersion42OrHigher(serverVersion)
+//
+//     if (useQueryParams) {
+//         const queryParams = new URLSearchParams()
+//
+//         if (data.dataItemsConfigIds && Array.isArray(data.dataItemsConfigIds)) {
+//             queryParams.set(
+//                 'dataItemsConfigIds',
+//                 JSON.stringify(data.dataItemsConfigIds)
+//             )
+//         }
+//
+//         if (data.runtimeConfig) {
+//             queryParams.set('runtimeConfig', JSON.stringify(data.runtimeConfig))
+//         }
+//
+//         const endpoint = `/data-delete/${configId}?${queryParams.toString()}`
+//         return queryDataServiceRoute(engine, endpoint)
+//     } else {
+//         return executeDataServiceRoute(
+//             engine,
+//             `/data-delete/${configId}`,
+//             {
+//                 dataItemsConfigIds: data.dataItemsConfigIds || [],
+//                 runtimeConfig: data.runtimeConfig || {},
+//             },
+//             'create'
+//         )
+//     }
+// }
 
-        if (data.dataItemsConfigIds && Array.isArray(data.dataItemsConfigIds)) {
-            queryParams.set(
-                'dataItemsConfigIds',
-                JSON.stringify(data.dataItemsConfigIds)
-            )
-        }
-
-        if (data.runtimeConfig) {
-            queryParams.set('runtimeConfig', JSON.stringify(data.runtimeConfig))
-        }
-
-        const endpoint = `/data-delete/${configId}?${queryParams.toString()}`
-        return queryDataServiceRoute(engine, endpoint)
-    } else {
-        return executeDataServiceRoute(
-            engine,
-            `/data-delete/${configId}`,
-            {
-                dataItemsConfigIds: data.dataItemsConfigIds || [],
-                runtimeConfig: data.runtimeConfig || {},
-            },
-            'create'
-        )
-    }
+export async function createQueues<
+    ResponseDataType extends Record<symbol | number | string, unknown> = Record<
+        string,
+        unknown
+    >,
+>(engine: DataEngine, configId: string): Promise<ResponseDataType> {
+    return executeDataServiceRoute<ResponseDataType>(
+        engine,
+        `/queues/${configId}`
+    )
 }
 
-export async function createQueues(
-    engine: any,
-    configId: string
-): Promise<ApiResponse> {
-    return executeDataServiceRoute(engine, `/queues/${configId}`)
-}
-
-export async function deleteQueues(
-    engine: any,
-    configId: string
-): Promise<ApiResponse> {
-    return executeDataServiceRoute(engine, `/queues/${configId}`, {}, 'delete')
+export async function deleteQueues<
+    ResponseDataType extends Record<symbol | number | string, unknown> = Record<
+        string,
+        unknown
+    >,
+>(engine: DataEngine, configId: string): Promise<ResponseDataType> {
+    return executeDataServiceRoute<ResponseDataType>(
+        engine,
+        `/queues/${configId}`,
+        {},
+        'delete'
+    )
 }
 
 export async function getConfigStatus(
-    engine: any,
+    engine: DataEngine,
     configId: string
-): Promise<ApiResponse> {
+): Promise<StatusPayload> {
     try {
-        const response = await queryDataServiceRoute(
+        return await queryDataServiceRoute<StatusPayload>(
             engine,
             `/status/${configId}`
         )
-        return response
     } catch (error) {
         console.error(`getConfigStatus error for ${configId}:`, error)
         throw error
     }
 }
 
-export async function getFailedQueue(
-    engine: any,
+export async function getFailedQueue<
+    ResponseDataType extends Record<symbol | number | string, unknown> = Record<
+        string,
+        unknown
+    >,
+>(
+    engine: DataEngine,
     configId: string,
     options: {
         limit?: number
@@ -241,7 +302,7 @@ export async function getFailedQueue(
         queue?: string
         onlyQueues?: boolean
     } = {}
-): Promise<ApiResponse> {
+): Promise<ResponseDataType> {
     try {
         const {
             limit = 50,
@@ -267,11 +328,10 @@ export async function getFailedQueue(
             queryParams.set('queue', queue)
         }
 
-        const response = await queryDataServiceRoute(
+        return await queryDataServiceRoute<ResponseDataType>(
             engine,
             `/failed-queue/${configId}?${queryParams}`
         )
-        return response
     } catch (error) {
         console.error(`getFailedQueue error for ${configId}:`, error)
         throw error
@@ -279,25 +339,27 @@ export async function getFailedQueue(
 }
 
 export async function getFailedQueueSources(
-    engine: any,
+    engine: DataEngine,
     configId: string
-): Promise<ApiResponse> {
+): Promise<Record<string, unknown>> {
     try {
-        const response = await queryDataServiceRoute(
+        return await queryDataServiceRoute(
             engine,
             `/failed-queue/${configId}?onlyQueues=true`
         )
-        return response
     } catch (error) {
+        console.error(`getFailedQueueSources error for ${configId}:`, error)
         throw error
     }
 }
 
-export async function clearFailedQueue(
-    engine: any,
-    configId: string
-): Promise<ApiResponse> {
-    return executeDataServiceRoute(
+export async function clearFailedQueue<
+    ResponseDataType extends Record<symbol | number | string, unknown> = Record<
+        string,
+        unknown
+    >,
+>(engine: DataEngine, configId: string): Promise<ResponseDataType> {
+    return executeDataServiceRoute<ResponseDataType>(
         engine,
         `/failed-queue/${configId}`,
         undefined,
@@ -305,8 +367,13 @@ export async function clearFailedQueue(
     )
 }
 
-export async function retryByProcessType(
-    engine: any,
+export async function retryByProcessType<
+    ResponseDataType extends Record<symbol | number | string, unknown> = Record<
+        string,
+        unknown
+    >,
+>(
+    engine: DataEngine,
     configId: string,
     processType:
         | 'data-upload'
@@ -315,7 +382,7 @@ export async function retryByProcessType(
         | 'metadata-download'
         | 'data-delete',
     maxRetries?: number
-): Promise<ApiResponse> {
+): Promise<ResponseDataType> {
     const queryParams = new URLSearchParams({
         retryType: 'process-type',
         processType,
@@ -325,18 +392,23 @@ export async function retryByProcessType(
         queryParams.set('maxRetries', maxRetries.toString())
     }
 
-    return queryDataServiceRoute(
+    return queryDataServiceRoute<ResponseDataType>(
         engine,
         `/retry/${configId}?${queryParams.toString()}`
     )
 }
 
-export async function retrySingleMessage(
-    engine: any,
+export async function retrySingleMessage<
+    ResponseDataType extends Record<symbol | number | string, unknown> = Record<
+        string,
+        unknown
+    >,
+>(
+    engine: DataEngine,
     configId: string,
     messageId: string
-): Promise<ApiResponse> {
-    return executeDataServiceRoute(
+): Promise<ResponseDataType> {
+    return executeDataServiceRoute<ResponseDataType>(
         engine,
         `/retry/${configId}/message/${messageId}`,
         undefined

@@ -102,13 +102,10 @@ export function useProcessMonitoring(configId: string) {
                 )
             }
 
-            const baseProcesses = (statusResponse as any)
-                .processes as ProcessMonitoringData
+            const baseProcesses =
+                statusResponse.processes as ProcessMonitoringData
 
-            const failedQueueData = failedQueueResponse.success
-                ? failedQueueResponse.data
-                : failedQueueResponse.data
-
+            const failedQueueData = failedQueueResponse.data
             const totalFailedMessages =
                 failedQueueData?.totalFailedMessages || 0
             const failedCounts = countFailedMessagesBySourceQueues(

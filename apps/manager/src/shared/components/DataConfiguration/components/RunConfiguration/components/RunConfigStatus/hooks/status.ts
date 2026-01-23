@@ -1,8 +1,8 @@
-import { DataServiceRunStatus } from '@packages/shared/schemas'
+import { DataServiceRunStatus, StatusPayload } from '@packages/shared/schemas'
 import { useQuery } from '@tanstack/react-query'
 import { useMemo } from 'react'
 import { useDataEngine } from '@dhis2/app-runtime'
-import { getConfigStatus } from '../../../../../../../services/dataServiceClient'
+import { getConfigStatus } from '@/shared/services/dataServiceClient'
 import { usePollingControl } from '../../../../../providers/PollingProvider'
 
 export interface QueueStatusResult {
@@ -16,27 +16,8 @@ export interface QueueStatusResult {
     consumers?: number
 }
 
-export interface ConfigStatusResponse {
-    success: boolean
-    configId: string
-    queues: {
-        metadataDownload?: QueueStatusResult
-        metadataUpload?: QueueStatusResult
-        dataDownload?: QueueStatusResult
-        dataUpload?: QueueStatusResult
-        dataDeletion?: QueueStatusResult
-    }
-    health: {
-        healthy: boolean
-        totalQueues: number
-        activeQueues: number
-        failedQueues: number
-        issues: string[]
-    }
-    timestamp: string
-}
-
-function getRunStatus(data: ConfigStatusResponse | null | undefined) {
+function getRunStatus(data?: StatusPayload | null) {
+    if (!data?.success) return null
     if (!data || !data.queues) {
         return null
     }
@@ -85,10 +66,10 @@ export function useDataConfigRunStatus(id: string) {
     const engine = useDataEngine()
     const { isPollingPaused } = usePollingControl()
 
-    async function fetchStatus(): Promise<ConfigStatusResponse> {
+    async function fetchStatus(): Promise<StatusPayload> {
         const response = await getConfigStatus(engine, id)
         if (response.success) {
-            return response as any as ConfigStatusResponse
+            return response
         } else {
             throw new Error(response.message || 'Failed to fetch status')
         }

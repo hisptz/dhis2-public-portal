@@ -46,7 +46,7 @@ export function RunConfigStatus({ configId }: { configId: string }) {
             <div className="flex items-center gap-2">
                 <Tag negative>{i18n.t('Error')}</Tag>
                 <span className="text-sm text-red-600">
-                    {(error as any)?.message ?? i18n.t('Unknown error')}
+                    {error?.message ?? i18n.t('Unknown error')}
                 </span>
             </div>
         )

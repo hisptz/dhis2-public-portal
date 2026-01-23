@@ -4,11 +4,7 @@ import { getChannel } from '@/rabbit/connection'
 import { getQueueNames } from '@/variables/queue-names'
 import axios from 'axios'
 
-export const GET: Operation = async (
-    req: Request,
-    res: Response,
-    next: NextFunction
-) => {
+export const GET: Operation = async (req: Request, res: Response) => {
     try {
         const { id: configId } = req.params
         const includeMessages = req.query.includeMessages === 'true'

@@ -144,7 +144,7 @@ importers:
         version: 18.0.1(@types/react@19.2.8)(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
       '@hisptz/dhis2-analytics':
         specifier: ^2.1.34
-        version: 2.1.34(@dhis2/d2-i18n@1.2.0)(@react-three/fiber@9.5.0(@types/react@19.2.8)(react-dom@19.2.3(react@19.2.3))(react-native@0.83.1(@babel/core@7.28.6)(@types/react@19.2.8)(react@19.2.3))(react@19.2.3)(three@0.182.0))(@types/node@24.10.9)(@types/react@19.2.8)(classnames@2.5.1)(highcharts-react-official@3.2.3(highcharts@12.5.0)(react@19.2.3))(highcharts@12.5.0)(konva@10.2.0)(lodash@4.17.21)(prop-types@15.8.1)(react-dom@19.2.3(react@19.2.3))(react-konva@18.2.14(@types/react@19.2.8)(konva@10.2.0)(react-dom@19.2.3(react@19.2.3))(react@19.2.3))(react-native@0.83.1(@babel/core@7.28.6)(@types/react@19.2.8)(react@19.2.3))(react-zdog@1.2.2)(react@19.2.3)(redux@5.0.1)(three@0.182.0)(usehooks-ts@3.1.1(react@19.2.3))(zdog@1.1.3)(zod@3.25.76)
+        version: 2.1.34(@dhis2/d2-i18n@1.2.0)(@react-three/fiber@9.5.0(@types/react@19.2.8)(react-dom@19.2.3(react@19.2.3))(react-native@0.83.1(@babel/core@7.28.6)(@types/react@19.2.8)(react@19.2.3))(react@19.2.3)(three@0.182.0))(@types/node@24.10.9)(@types/react@19.2.8)(classnames@2.5.1)(highcharts-react-official@3.2.3(highcharts@12.5.0)(react@19.2.3))(highcharts@12.5.0)(konva@10.2.0)(lodash@4.17.21)(prop-types@15.8.1)(react-dom@19.2.3(react@19.2.3))(react-konva@18.2.14(@types/react@19.2.8)(konva@10.2.0)(react-dom@19.2.3(react@19.2.3))(react@19.2.3))(react-native@0.83.1(@babel/core@7.28.6)(@types/react@19.2.8)(react@19.2.3))(react-zdog@1.2.2)(react@19.2.3)(redux@5.0.1)(three@0.182.0)(usehooks-ts@3.1.1(react@19.2.3))(zdog@1.1.3)(zod@4.3.6)
       '@hisptz/dhis2-ui':
         specifier: ^2.0.51
         version: 2.0.51(@dhis2/d2-i18n@1.2.0)(classnames@2.5.1)(prop-types@15.8.1)(react-dom@19.2.3(react@19.2.3))(react-native@0.83.1(@babel/core@7.28.6)(@types/react@19.2.8)(react@19.2.3))(react@19.2.3)(usehooks-ts@3.1.1(react@19.2.3))
@@ -152,8 +152,8 @@ importers:
         specifier: ^2.0.19
         version: 2.0.19(@dhis2/d2-i18n@1.2.0)(lodash@4.17.21)(react-dom@19.2.3(react@19.2.3))(react@19.2.3)(usehooks-ts@3.1.1(react@19.2.3))
       '@hookform/resolvers':
-        specifier: 5.1.0
-        version: 5.1.0(react-hook-form@7.71.1(react@19.2.3))
+        specifier: ^5.2.2
+        version: 5.2.2(react-hook-form@7.71.1(react@19.2.3))
       '@packages/shared':
         specifier: workspace:*
         version: link:../../packages/shared
@@ -248,8 +248,8 @@ importers:
         specifier: ^0.18.5
         version: 0.18.5
       zod:
-        specifier: ^3.25.76
-        version: 3.25.76
+        specifier: ^4.3.6
+        version: 4.3.6
     devDependencies:
       '@dhis2/cli-app-scripts':
         specifier: ^12.8.0-alpha.1
@@ -328,7 +328,7 @@ importers:
         version: 10.11.0(@dhis2/app-runtime@3.15.1(react-dom@19.2.3(react@19.2.3))(react-native@0.83.1(@babel/core@7.28.6)(@types/react@19.2.8)(react@19.2.3))(react@19.2.3))(@dhis2/d2-i18n@1.2.0)(react-dom@19.2.3(react@19.2.3))(react@19.2.3)(styled-jsx@4.0.1(@babel/core@7.28.6)(react@19.2.3))
       '@hisptz/dhis2-analytics':
         specifier: ^2.1.34
-        version: 2.1.34(@dhis2/d2-i18n@1.2.0)(@react-three/fiber@9.5.0(@types/react@19.2.8)(react-dom@19.2.3(react@19.2.3))(react-native@0.83.1(@babel/core@7.28.6)(@types/react@19.2.8)(react@19.2.3))(react@19.2.3)(three@0.182.0))(@types/node@20.19.30)(@types/react@19.2.8)(classnames@2.5.1)(highcharts-react-official@3.2.3(highcharts@12.5.0)(react@19.2.3))(highcharts@12.5.0)(konva@10.2.0)(lodash@4.17.21)(prop-types@15.8.1)(react-dom@19.2.3(react@19.2.3))(react-native@0.83.1(@babel/core@7.28.6)(@types/react@19.2.8)(react@19.2.3))(react-zdog@1.2.2)(react@19.2.3)(redux@5.0.1)(three@0.182.0)(usehooks-ts@3.1.1(react@19.2.3))(zdog@1.1.3)(zod@3.25.76)
+        version: 2.1.34(@dhis2/d2-i18n@1.2.0)(@react-three/fiber@9.5.0(@types/react@19.2.8)(react-dom@19.2.3(react@19.2.3))(react-native@0.83.1(@babel/core@7.28.6)(@types/react@19.2.8)(react@19.2.3))(react@19.2.3)(three@0.182.0))(@types/node@20.19.30)(@types/react@19.2.8)(classnames@2.5.1)(highcharts-react-official@3.2.3(highcharts@12.5.0)(react@19.2.3))(highcharts@12.5.0)(konva@10.2.0)(lodash@4.17.21)(prop-types@15.8.1)(react-dom@19.2.3(react@19.2.3))(react-native@0.83.1(@babel/core@7.28.6)(@types/react@19.2.8)(react@19.2.3))(react-zdog@1.2.2)(react@19.2.3)(redux@5.0.1)(three@0.182.0)(usehooks-ts@3.1.1(react@19.2.3))(zdog@1.1.3)(zod@4.3.6)
       '@hisptz/dhis2-ui':
         specifier: ^2.0.51
         version: 2.0.51(@dhis2/d2-i18n@1.2.0)(classnames@2.5.1)(prop-types@15.8.1)(react-dom@19.2.3(react@19.2.3))(react-native@0.83.1(@babel/core@7.28.6)(@types/react@19.2.8)(react@19.2.3))(react@19.2.3)(usehooks-ts@3.1.1(react@19.2.3))
@@ -453,8 +453,8 @@ importers:
         specifier: ^0.18.5
         version: 0.18.5
       zod:
-        specifier: ^3.25.76
-        version: 3.25.76
+        specifier: ^4.3.6
+        version: 4.3.6
     devDependencies:
       '@cypress/code-coverage':
         specifier: ^3.14.0
@@ -530,7 +530,7 @@ importers:
         version: 2.1.2(react-dom@19.2.0(react@19.2.0))(react@19.2.0)
       '@hisptz/dhis2-analytics':
         specifier: ^2.1.29
-        version: 2.1.34(@dhis2/d2-i18n@1.2.0)(@react-three/fiber@9.5.0(@types/react@19.2.8)(react-dom@19.2.0(react@19.2.0))(react-native@0.83.1(@babel/core@7.28.6)(@types/react@19.2.8)(react@19.2.0))(react@19.2.0)(three@0.182.0))(@types/node@25.0.10)(@types/react@19.2.8)(classnames@2.5.1)(highcharts-react-official@3.2.3(highcharts@12.5.0)(react@19.2.0))(highcharts@12.5.0)(konva@10.2.0)(lodash@4.17.21)(prop-types@15.8.1)(react-dom@19.2.0(react@19.2.0))(react-konva@18.2.14(@types/react@19.2.8)(konva@10.2.0)(react-dom@19.2.0(react@19.2.0))(react@19.2.0))(react-native@0.83.1(@babel/core@7.28.6)(@types/react@19.2.8)(react@19.2.0))(react-zdog@1.2.2)(react@19.2.0)(redux@5.0.1)(three@0.182.0)(usehooks-ts@3.1.1(react@19.2.0))(zdog@1.1.3)(zod@3.25.76)
+        version: 2.1.34(@dhis2/d2-i18n@1.2.0)(@react-three/fiber@9.5.0(@types/react@19.2.8)(react-dom@19.2.0(react@19.2.0))(react-native@0.83.1(@babel/core@7.28.6)(@types/react@19.2.8)(react@19.2.0))(react@19.2.0)(three@0.182.0))(@types/node@25.0.10)(@types/react@19.2.8)(classnames@2.5.1)(highcharts-react-official@3.2.3(highcharts@12.5.0)(react@19.2.0))(highcharts@12.5.0)(konva@10.2.0)(lodash@4.17.21)(prop-types@15.8.1)(react-dom@19.2.0(react@19.2.0))(react-konva@18.2.14(@types/react@19.2.8)(konva@10.2.0)(react-dom@19.2.0(react@19.2.0))(react@19.2.0))(react-native@0.83.1(@babel/core@7.28.6)(@types/react@19.2.8)(react@19.2.0))(react-zdog@1.2.2)(react@19.2.0)(redux@5.0.1)(three@0.182.0)(usehooks-ts@3.1.1(react@19.2.0))(zdog@1.1.3)(zod@4.3.6)
       '@hisptz/dhis2-ui':
         specifier: ^2
         version: 2.0.51(@dhis2/d2-i18n@1.2.0)(classnames@2.5.1)(prop-types@15.8.1)(react-dom@19.2.0(react@19.2.0))(react-native@0.83.1(@babel/core@7.28.6)(@types/react@19.2.8)(react@19.2.0))(react@19.2.0)(usehooks-ts@3.1.1(react@19.2.0))
@@ -571,8 +571,8 @@ importers:
         specifier: 0.18.5
         version: 0.18.5
       zod:
-        specifier: ^3
-        version: 3.25.76
+        specifier: ^4.3.6
+        version: 4.3.6
     devDependencies:
       '@types/leaflet':
         specifier: ^1.9.20
@@ -606,6 +606,9 @@ importers:
       '@dhis2/multi-calendar-dates':
         specifier: ^2.1.0
         version: 2.1.2(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
+      '@openapi-contrib/json-schema-to-openapi-schema':
+        specifier: ^4.3.0
+        version: 4.3.0(@types/json-schema@7.0.15)(openapi-types@12.1.3)
       '@packages/shared':
         specifier: workspace:*
         version: link:../../packages/shared
@@ -667,11 +670,11 @@ importers:
         specifier: ^3.17.0
         version: 3.19.0
       zod:
-        specifier: ^3.24.4
-        version: 3.25.76
+        specifier: ^4.3.6
+        version: 4.3.6
       zod-validation-error:
-        specifier: ^3.4.0
-        version: 3.5.4(zod@3.25.76)
+        specifier: ^5.0.0
+        version: 5.0.0(zod@4.3.6)
     devDependencies:
       '@types/amqplib':
         specifier: ^0.10.7
@@ -838,6 +841,12 @@ packages:
     engines: {node: '>=10'}
     peerDependencies:
       ajv: '>=8'
+
+  '@apidevtools/json-schema-ref-parser@15.2.1':
+    resolution: {integrity: sha512-XaFfxKmYHUlYla8VMG1sOaX+uZwX2Bbk51pC7D4Oy723HVmzTrJuh5oEFAeFfPQX3HkILXabuvlXzs1YcQmvJQ==}
+    engines: {node: '>=20'}
+    peerDependencies:
+      '@types/json-schema': ^7.0.15
 
   '@babel/code-frame@7.28.6':
     resolution: {integrity: sha512-JYgintcMjRiCvS8mMECzaEn+m3PfoQiyqukOMCCVQtoJGYJw8j/8LBJEiqkHLkfwCcs74E3pbAUFNg7d9VNJ+Q==}
@@ -3160,6 +3169,11 @@ packages:
     peerDependencies:
       react-hook-form: ^7.55.0
 
+  '@hookform/resolvers@5.2.2':
+    resolution: {integrity: sha512-A/IxlMLShx3KjV/HeTcTfaMxdwy690+L/ZADoeaTltLx+CVuzkeVIPuybK3jrRfw7YZnmdKsVVHAlEPIAEUNlA==}
+    peerDependencies:
+      react-hook-form: ^7.55.0
+
   '@humanfs/core@0.19.1':
     resolution: {integrity: sha512-5DyQ4+1JEUzejeK1JGICcideyfUbGixgS9jNgex5nqkW+cY7WZhxBigmieN5Qnw9ZosSNVC9KQKyb+GUaGyKUA==}
     engines: {node: '>=18.18.0'}
@@ -3761,6 +3775,13 @@ packages:
 
   '@octokit/types@16.0.0':
     resolution: {integrity: sha512-sKq+9r1Mm4efXW1FCk7hFSeJo4QKreL/tTbR0rz/qx/r1Oa2VV83LTA/H/MuCOX7uCIJmQVRKBcbmWoySjAnSg==}
+
+  '@openapi-contrib/json-schema-to-openapi-schema@4.3.0':
+    resolution: {integrity: sha512-LtGP3j8cvO87R8zUdZ5ZSN9XhLm6a8m47qQ3kbzQNlzQDwAtUQhtw2DRdhdz0Xr9dTcOuTEdI9xQNLaVI7LP1A==}
+    engines: {node: '>=18'}
+    hasBin: true
+    peerDependencies:
+      openapi-types: '*'
 
   '@opentelemetry/api@1.9.0':
     resolution: {integrity: sha512-3giAOQvZiH5F9bMlMiv8+GSPMeqg0dbaeo58/0SlA9sxSqZhnUtxzX9/2FzyhS9sWQf5S0GJE0AKBrFqjpeYcg==}
@@ -6675,6 +6696,10 @@ packages:
   cliui@8.0.1:
     resolution: {integrity: sha512-BSeNnyus75C4//NQ9gQt1/csTXyo/8Sb+afLAkzAptFuMsod9HFokGNudZpi/oQV73hnVK+sR+5PVRMd+Dr7YQ==}
     engines: {node: '>=12'}
+
+  cliui@9.0.1:
+    resolution: {integrity: sha512-k7ndgKhwoQveBL+/1tqGJYNz097I7WOvwbmmU2AR5+magtbjPWQTS1C5vzGkBC8Ym8UWRzfKUzUUqFLypY4Q+w==}
+    engines: {node: '>=20'}
 
   clone-buffer@1.0.0:
     resolution: {integrity: sha512-KLLTJWrvwIP+OPfMn0x2PheDEP20RPUcGXj/ERegTgdmPEZylALQldygiqrPPu8P45uNuPs7ckmReLY6v/iA5g==}
@@ -9878,6 +9903,10 @@ packages:
 
   json-schema-traverse@1.0.0:
     resolution: {integrity: sha512-NM8/P9n3XjXhIZn1lLhkFaACTOURQXjWhV4BA/RnOv8xvgqtqpAX9IO4mRQxSx1Rlo4tqzeqb0sOlruaOy3dug==}
+
+  json-schema-walker@3.2.0:
+    resolution: {integrity: sha512-a2ofwoUbmij0NIQQHp9oRxd9hZm5/uobeui+jCbdXtBHdr0ViokdzNzd3Do/VamObyXJVTDOc1t/7DuVTGwucQ==}
+    engines: {node: '>=17'}
 
   json-schema@0.4.0:
     resolution: {integrity: sha512-es94M3nTIfsEPisRafak+HDLfHXnKBhV3vU5eqPcS3flIWqcxJWgXHXiey3YrpaNsanY5ei1VoYEbOzijuq9BA==}
@@ -15072,6 +15101,10 @@ packages:
     resolution: {integrity: sha512-tVpsJW7DdjecAiFpbIB1e3qxIQsE6NoPc5/eTdrbbIC4h0LVsWhnoa3g+m2HclBIujHzsxZ4VJVA+GUuc2/LBw==}
     engines: {node: '>=12'}
 
+  yargs-parser@22.0.0:
+    resolution: {integrity: sha512-rwu/ClNdSMpkSrUb+d6BRsSkLUq1fmfsY6TOpYzTwvwkg1/NRG85KBy3kq++A8LKQwX6lsu+aWad+2khvuXrqw==}
+    engines: {node: ^20.19.0 || ^22.12.0 || >=23}
+
   yargs@13.3.2:
     resolution: {integrity: sha512-AX3Zw5iPruN5ie6xGRIDgqkT+ZhnRlZMLMHAs8tg7nRruy2Nb+i5o9bwghAogtM08q1dpr2LVoS8KSTMYpWXUw==}
 
@@ -15086,6 +15119,10 @@ packages:
   yargs@17.7.2:
     resolution: {integrity: sha512-7dSzzRQ++CKnNI/krKnYRV7JKKPUXMEh61soaHKg9mrWEhzFWhFnxPxGl+69cD1Ou63C13NUPCnmIcrvqCuM6w==}
     engines: {node: '>=12'}
+
+  yargs@18.0.0:
+    resolution: {integrity: sha512-4UEqdc2RYGHZc7Doyqkrqiln3p9X2DZVxaGbwhn2pi7MrRagKaOcIKe8L3OxYcbhXLgLFUS3zAYuQjKBQgmuNg==}
+    engines: {node: ^20.19.0 || ^22.12.0 || >=23}
 
   yauzl@2.10.0:
     resolution: {integrity: sha512-p4a9I6X6nu6IhoGmBqAcbJy1mlC4j27vEPZX9F4L4/vZT3Lyq1VkFHw/V/PUcB9Buo+DG3iHkT0x3Qya58zc3g==}
@@ -15125,11 +15162,17 @@ packages:
     peerDependencies:
       zod: ^3.24.4
 
+  zod-validation-error@5.0.0:
+    resolution: {integrity: sha512-hmk+pkyKq7Q71PiWVSDUc3VfpzpvcRHZ3QPw9yEMVvmtCekaMeOHnbr3WbxfrgEnQTv6haGP4cmv0Ojmihzsxw==}
+    engines: {node: '>=18.0.0'}
+    peerDependencies:
+      zod: ^3.25.0 || ^4.0.0
+
   zod@3.25.76:
     resolution: {integrity: sha512-gzUt/qt81nXsFGKIFcC3YnfEAx5NkunCfnDlvuBSSFS02bcXu4Lmea0AFIUwbLWxWPx3d9p8S5QoaujKcNQxcQ==}
 
-  zod@4.3.5:
-    resolution: {integrity: sha512-k7Nwx6vuWx1IJ9Bjuf4Zt1PEllcwe7cls3VNzm4CQ1/hgtFUK2bRNG3rvnpPUhFjmqJKAKtjV576KnUkHocg/g==}
+  zod@4.3.6:
+    resolution: {integrity: sha512-rftlrkhHZOcjDwkGlnUtZZkvaPHCsDATp4pGpuOOMDaTdDDXF91wuVDJoWoPsKX/3YPQ5fHuF3STjcYyKr+Qhg==}
 
   zustand@5.0.10:
     resolution: {integrity: sha512-U1AiltS1O9hSy3rul+Ub82ut2fqIAefiSuwECWt6jlMVUGejvf+5omLcRBSzqbRagSM3hQZbtzdeRc6QVScXTg==}
@@ -15154,33 +15197,33 @@ packages:
 
 snapshots:
 
-  '@ai-sdk/gateway@2.0.27(zod@4.3.5)':
+  '@ai-sdk/gateway@2.0.27(zod@4.3.6)':
     dependencies:
       '@ai-sdk/provider': 2.0.1
-      '@ai-sdk/provider-utils': 3.0.20(zod@4.3.5)
+      '@ai-sdk/provider-utils': 3.0.20(zod@4.3.6)
       '@vercel/oidc': 3.1.0
-      zod: 4.3.5
+      zod: 4.3.6
 
-  '@ai-sdk/provider-utils@3.0.20(zod@4.3.5)':
+  '@ai-sdk/provider-utils@3.0.20(zod@4.3.6)':
     dependencies:
       '@ai-sdk/provider': 2.0.1
       '@standard-schema/spec': 1.1.0
       eventsource-parser: 3.0.6
-      zod: 4.3.5
+      zod: 4.3.6
 
   '@ai-sdk/provider@2.0.1':
     dependencies:
       json-schema: 0.4.0
 
-  '@ai-sdk/react@2.0.123(react@19.2.0)(zod@4.3.5)':
+  '@ai-sdk/react@2.0.123(react@19.2.0)(zod@4.3.6)':
     dependencies:
-      '@ai-sdk/provider-utils': 3.0.20(zod@4.3.5)
-      ai: 5.0.121(zod@4.3.5)
+      '@ai-sdk/provider-utils': 3.0.20(zod@4.3.6)
+      ai: 5.0.121(zod@4.3.6)
       react: 19.2.0
       swr: 2.3.8(react@19.2.0)
       throttleit: 2.1.0
     optionalDependencies:
-      zod: 4.3.5
+      zod: 4.3.6
 
   '@algolia/abtesting@1.12.3':
     dependencies:
@@ -15299,6 +15342,11 @@ snapshots:
       jsonpointer: 5.0.1
       leven: 3.1.0
 
+  '@apidevtools/json-schema-ref-parser@15.2.1(@types/json-schema@7.0.15)':
+    dependencies:
+      '@types/json-schema': 7.0.15
+      js-yaml: 4.1.1
+
   '@babel/code-frame@7.28.6':
     dependencies:
       '@babel/helper-validator-identifier': 7.28.5
@@ -15320,7 +15368,7 @@ snapshots:
       '@babel/types': 7.28.6
       '@jridgewell/remapping': 2.3.5
       convert-source-map: 2.0.0
-      debug: 4.4.3(supports-color@5.5.0)
+      debug: 4.4.3(supports-color@8.1.1)
       gensync: 1.0.0-beta.2
       json5: 2.2.3
       semver: 6.3.1
@@ -15372,7 +15420,7 @@ snapshots:
       '@babel/core': 7.28.6
       '@babel/helper-compilation-targets': 7.28.6
       '@babel/helper-plugin-utils': 7.28.6
-      debug: 4.4.3(supports-color@5.5.0)
+      debug: 4.4.3(supports-color@8.1.1)
       lodash.debounce: 4.0.8
       resolve: 1.22.11
     transitivePeerDependencies:
@@ -16190,7 +16238,7 @@ snapshots:
       '@babel/parser': 7.28.6
       '@babel/template': 7.28.6
       '@babel/types': 7.28.6
-      debug: 4.4.3(supports-color@5.5.0)
+      debug: 4.4.3(supports-color@8.1.1)
     transitivePeerDependencies:
       - supports-color
 
@@ -18324,14 +18372,14 @@ snapshots:
 
   '@docsearch/react@4.4.0(@algolia/client-search@5.46.3)(@types/react@19.2.8)(react-dom@19.2.0(react@19.2.0))(react@19.2.0)(search-insights@2.17.3)':
     dependencies:
-      '@ai-sdk/react': 2.0.123(react@19.2.0)(zod@4.3.5)
+      '@ai-sdk/react': 2.0.123(react@19.2.0)(zod@4.3.6)
       '@algolia/autocomplete-core': 1.19.2(@algolia/client-search@5.46.3)(algoliasearch@5.46.3)(search-insights@2.17.3)
       '@docsearch/core': 4.4.0(@types/react@19.2.8)(react-dom@19.2.0(react@19.2.0))(react@19.2.0)
       '@docsearch/css': 4.4.0
-      ai: 5.0.121(zod@4.3.5)
+      ai: 5.0.121(zod@4.3.6)
       algoliasearch: 5.46.3
       marked: 16.4.2
-      zod: 4.3.5
+      zod: 4.3.6
     optionalDependencies:
       '@types/react': 19.2.8
       react: 19.2.0
@@ -19356,7 +19404,7 @@ snapshots:
   '@eslint/config-array@0.21.1':
     dependencies:
       '@eslint/object-schema': 2.1.7
-      debug: 4.4.3(supports-color@5.5.0)
+      debug: 4.4.3(supports-color@8.1.1)
       minimatch: 3.1.2
     transitivePeerDependencies:
       - supports-color
@@ -19376,7 +19424,7 @@ snapshots:
   '@eslint/eslintrc@3.3.3':
     dependencies:
       ajv: 6.12.6
-      debug: 4.4.3(supports-color@5.5.0)
+      debug: 4.4.3(supports-color@8.1.1)
       espree: 10.4.0
       globals: 14.0.0
       ignore: 5.3.2
@@ -19472,7 +19520,7 @@ snapshots:
     transitivePeerDependencies:
       - '@types/react'
 
-  '@hisptz/dhis2-analytics@2.1.34(@dhis2/d2-i18n@1.2.0)(@react-three/fiber@9.5.0(@types/react@19.2.8)(react-dom@19.2.0(react@19.2.0))(react-native@0.83.1(@babel/core@7.28.6)(@types/react@19.2.8)(react@19.2.0))(react@19.2.0)(three@0.182.0))(@types/node@25.0.10)(@types/react@19.2.8)(classnames@2.5.1)(highcharts-react-official@3.2.3(highcharts@12.5.0)(react@19.2.0))(highcharts@12.5.0)(konva@10.2.0)(lodash@4.17.21)(prop-types@15.8.1)(react-dom@19.2.0(react@19.2.0))(react-konva@18.2.14(@types/react@19.2.8)(konva@10.2.0)(react-dom@19.2.0(react@19.2.0))(react@19.2.0))(react-native@0.83.1(@babel/core@7.28.6)(@types/react@19.2.8)(react@19.2.0))(react-zdog@1.2.2)(react@19.2.0)(redux@5.0.1)(three@0.182.0)(usehooks-ts@3.1.1(react@19.2.0))(zdog@1.1.3)(zod@3.25.76)':
+  '@hisptz/dhis2-analytics@2.1.34(@dhis2/d2-i18n@1.2.0)(@react-three/fiber@9.5.0(@types/react@19.2.8)(react-dom@19.2.0(react@19.2.0))(react-native@0.83.1(@babel/core@7.28.6)(@types/react@19.2.8)(react@19.2.0))(react@19.2.0)(three@0.182.0))(@types/node@25.0.10)(@types/react@19.2.8)(classnames@2.5.1)(highcharts-react-official@3.2.3(highcharts@12.5.0)(react@19.2.0))(highcharts@12.5.0)(konva@10.2.0)(lodash@4.17.21)(prop-types@15.8.1)(react-dom@19.2.0(react@19.2.0))(react-konva@18.2.14(@types/react@19.2.8)(konva@10.2.0)(react-dom@19.2.0(react@19.2.0))(react@19.2.0))(react-native@0.83.1(@babel/core@7.28.6)(@types/react@19.2.8)(react@19.2.0))(react-zdog@1.2.2)(react@19.2.0)(redux@5.0.1)(three@0.182.0)(usehooks-ts@3.1.1(react@19.2.0))(zdog@1.1.3)(zod@4.3.6)':
     dependencies:
       '@hisptz/dhis2-ui': 2.0.51(@dhis2/d2-i18n@1.2.0)(classnames@2.5.1)(prop-types@15.8.1)(react-dom@19.2.0(react@19.2.0))(react-native@0.83.1(@babel/core@7.28.6)(@types/react@19.2.8)(react@19.2.0))(react@19.2.0)(usehooks-ts@3.1.1(react@19.2.0))
       '@hisptz/dhis2-utils': 2.0.19(@dhis2/d2-i18n@1.2.0)(lodash@4.17.21)(react-dom@19.2.0(react@19.2.0))(react@19.2.0)(usehooks-ts@3.1.1(react@19.2.0))
@@ -19504,7 +19552,7 @@ snapshots:
       react-to-print: 3.2.0(react@19.2.0)
       screenfull: 6.0.2
       xlsx: 0.18.5
-      zod: 3.25.76
+      zod: 4.3.6
     transitivePeerDependencies:
       - '@dhis2/d2-i18n'
       - '@react-three/fiber'
@@ -19523,7 +19571,7 @@ snapshots:
       - usehooks-ts
       - zdog
 
-  '@hisptz/dhis2-analytics@2.1.34(@dhis2/d2-i18n@1.2.0)(@react-three/fiber@9.5.0(@types/react@19.2.8)(react-dom@19.2.3(react@19.2.3))(react-native@0.83.1(@babel/core@7.28.6)(@types/react@19.2.8)(react@19.2.3))(react@19.2.3)(three@0.182.0))(@types/node@20.19.30)(@types/react@19.2.8)(classnames@2.5.1)(highcharts-react-official@3.2.3(highcharts@12.5.0)(react@19.2.3))(highcharts@12.5.0)(konva@10.2.0)(lodash@4.17.21)(prop-types@15.8.1)(react-dom@19.2.3(react@19.2.3))(react-native@0.83.1(@babel/core@7.28.6)(@types/react@19.2.8)(react@19.2.3))(react-zdog@1.2.2)(react@19.2.3)(redux@5.0.1)(three@0.182.0)(usehooks-ts@3.1.1(react@19.2.3))(zdog@1.1.3)(zod@3.25.76)':
+  '@hisptz/dhis2-analytics@2.1.34(@dhis2/d2-i18n@1.2.0)(@react-three/fiber@9.5.0(@types/react@19.2.8)(react-dom@19.2.3(react@19.2.3))(react-native@0.83.1(@babel/core@7.28.6)(@types/react@19.2.8)(react@19.2.3))(react@19.2.3)(three@0.182.0))(@types/node@20.19.30)(@types/react@19.2.8)(classnames@2.5.1)(highcharts-react-official@3.2.3(highcharts@12.5.0)(react@19.2.3))(highcharts@12.5.0)(konva@10.2.0)(lodash@4.17.21)(prop-types@15.8.1)(react-dom@19.2.3(react@19.2.3))(react-native@0.83.1(@babel/core@7.28.6)(@types/react@19.2.8)(react@19.2.3))(react-zdog@1.2.2)(react@19.2.3)(redux@5.0.1)(three@0.182.0)(usehooks-ts@3.1.1(react@19.2.3))(zdog@1.1.3)(zod@4.3.6)':
     dependencies:
       '@hisptz/dhis2-ui': 2.0.51(@dhis2/d2-i18n@1.2.0)(classnames@2.5.1)(prop-types@15.8.1)(react-dom@19.2.3(react@19.2.3))(react-native@0.83.1(@babel/core@7.28.6)(@types/react@19.2.8)(react@19.2.3))(react@19.2.3)(usehooks-ts@3.1.1(react@19.2.3))
       '@hisptz/dhis2-utils': 2.0.19(@dhis2/d2-i18n@1.2.0)(lodash@4.17.21)(react-dom@19.2.3(react@19.2.3))(react@19.2.3)(usehooks-ts@3.1.1(react@19.2.3))
@@ -19555,7 +19603,7 @@ snapshots:
       react-to-print: 3.2.0(react@19.2.3)
       screenfull: 6.0.2
       xlsx: 0.18.5
-      zod: 3.25.76
+      zod: 4.3.6
     transitivePeerDependencies:
       - '@dhis2/d2-i18n'
       - '@react-three/fiber'
@@ -19574,7 +19622,7 @@ snapshots:
       - usehooks-ts
       - zdog
 
-  '@hisptz/dhis2-analytics@2.1.34(@dhis2/d2-i18n@1.2.0)(@react-three/fiber@9.5.0(@types/react@19.2.8)(react-dom@19.2.3(react@19.2.3))(react-native@0.83.1(@babel/core@7.28.6)(@types/react@19.2.8)(react@19.2.3))(react@19.2.3)(three@0.182.0))(@types/node@24.10.9)(@types/react@19.2.8)(classnames@2.5.1)(highcharts-react-official@3.2.3(highcharts@12.5.0)(react@19.2.3))(highcharts@12.5.0)(konva@10.2.0)(lodash@4.17.21)(prop-types@15.8.1)(react-dom@19.2.3(react@19.2.3))(react-konva@18.2.14(@types/react@19.2.8)(konva@10.2.0)(react-dom@19.2.3(react@19.2.3))(react@19.2.3))(react-native@0.83.1(@babel/core@7.28.6)(@types/react@19.2.8)(react@19.2.3))(react-zdog@1.2.2)(react@19.2.3)(redux@5.0.1)(three@0.182.0)(usehooks-ts@3.1.1(react@19.2.3))(zdog@1.1.3)(zod@3.25.76)':
+  '@hisptz/dhis2-analytics@2.1.34(@dhis2/d2-i18n@1.2.0)(@react-three/fiber@9.5.0(@types/react@19.2.8)(react-dom@19.2.3(react@19.2.3))(react-native@0.83.1(@babel/core@7.28.6)(@types/react@19.2.8)(react@19.2.3))(react@19.2.3)(three@0.182.0))(@types/node@24.10.9)(@types/react@19.2.8)(classnames@2.5.1)(highcharts-react-official@3.2.3(highcharts@12.5.0)(react@19.2.3))(highcharts@12.5.0)(konva@10.2.0)(lodash@4.17.21)(prop-types@15.8.1)(react-dom@19.2.3(react@19.2.3))(react-konva@18.2.14(@types/react@19.2.8)(konva@10.2.0)(react-dom@19.2.3(react@19.2.3))(react@19.2.3))(react-native@0.83.1(@babel/core@7.28.6)(@types/react@19.2.8)(react@19.2.3))(react-zdog@1.2.2)(react@19.2.3)(redux@5.0.1)(three@0.182.0)(usehooks-ts@3.1.1(react@19.2.3))(zdog@1.1.3)(zod@4.3.6)':
     dependencies:
       '@hisptz/dhis2-ui': 2.0.51(@dhis2/d2-i18n@1.2.0)(classnames@2.5.1)(prop-types@15.8.1)(react-dom@19.2.3(react@19.2.3))(react-native@0.83.1(@babel/core@7.28.6)(@types/react@19.2.8)(react@19.2.3))(react@19.2.3)(usehooks-ts@3.1.1(react@19.2.3))
       '@hisptz/dhis2-utils': 2.0.19(@dhis2/d2-i18n@1.2.0)(lodash@4.17.21)(react-dom@19.2.3(react@19.2.3))(react@19.2.3)(usehooks-ts@3.1.1(react@19.2.3))
@@ -19606,7 +19654,7 @@ snapshots:
       react-to-print: 3.2.0(react@19.2.3)
       screenfull: 6.0.2
       xlsx: 0.18.5
-      zod: 3.25.76
+      zod: 4.3.6
     transitivePeerDependencies:
       - '@dhis2/d2-i18n'
       - '@react-three/fiber'
@@ -19690,6 +19738,11 @@ snapshots:
       - react-dom
 
   '@hookform/resolvers@5.1.0(react-hook-form@7.71.1(react@19.2.3))':
+    dependencies:
+      '@standard-schema/utils': 0.3.0
+      react-hook-form: 7.71.1(react@19.2.3)
+
+  '@hookform/resolvers@5.2.2(react-hook-form@7.71.1(react@19.2.3))':
     dependencies:
       '@standard-schema/utils': 0.3.0
       react-hook-form: 7.71.1(react@19.2.3)
@@ -20408,6 +20461,15 @@ snapshots:
     dependencies:
       '@octokit/openapi-types': 27.0.0
 
+  '@openapi-contrib/json-schema-to-openapi-schema@4.3.0(@types/json-schema@7.0.15)(openapi-types@12.1.3)':
+    dependencies:
+      '@apidevtools/json-schema-ref-parser': 15.2.1(@types/json-schema@7.0.15)
+      json-schema-walker: 3.2.0(@types/json-schema@7.0.15)
+      openapi-types: 12.1.3
+      yargs: 18.0.0
+    transitivePeerDependencies:
+      - '@types/json-schema'
+
   '@opentelemetry/api@1.9.0': {}
 
   '@parcel/watcher-android-arm64@2.5.4':
@@ -20681,7 +20743,7 @@ snapshots:
   '@react-native/community-cli-plugin@0.83.1':
     dependencies:
       '@react-native/dev-middleware': 0.83.1
-      debug: 4.4.3(supports-color@5.5.0)
+      debug: 4.4.3(supports-color@8.1.1)
       invariant: 2.2.4
       metro: 0.83.3
       metro-config: 0.83.3
@@ -20707,7 +20769,7 @@ snapshots:
       chrome-launcher: 0.15.2
       chromium-edge-launcher: 0.2.0
       connect: 3.7.0
-      debug: 4.4.3(supports-color@5.5.0)
+      debug: 4.4.3(supports-color@8.1.1)
       invariant: 2.2.4
       nullthrows: 1.1.1
       open: 7.4.2
@@ -21278,7 +21340,7 @@ snapshots:
       conventional-changelog-writer: 8.2.0
       conventional-commits-filter: 5.0.0
       conventional-commits-parser: 6.2.1
-      debug: 4.4.3(supports-color@5.5.0)
+      debug: 4.4.3(supports-color@8.1.1)
       import-from-esm: 2.0.0
       lodash-es: 4.17.22
       micromatch: 4.0.8
@@ -21294,7 +21356,7 @@ snapshots:
     dependencies:
       '@semantic-release/error': 4.0.0
       aggregate-error: 3.1.0
-      debug: 4.4.3(supports-color@5.5.0)
+      debug: 4.4.3(supports-color@8.1.1)
       execa: 9.6.1
       lodash-es: 4.17.22
       parse-json: 8.3.0
@@ -21306,7 +21368,7 @@ snapshots:
     dependencies:
       '@semantic-release/error': 3.0.0
       aggregate-error: 3.1.0
-      debug: 4.4.3(supports-color@5.5.0)
+      debug: 4.4.3(supports-color@8.1.1)
       dir-glob: 3.0.1
       execa: 5.1.1
       lodash: 4.17.21
@@ -21324,7 +21386,7 @@ snapshots:
       '@octokit/plugin-throttling': 11.0.3(@octokit/core@7.0.6)
       '@semantic-release/error': 4.0.0
       aggregate-error: 5.0.0
-      debug: 4.4.3(supports-color@5.5.0)
+      debug: 4.4.3(supports-color@8.1.1)
       dir-glob: 3.0.1
       http-proxy-agent: 7.0.2
       https-proxy-agent: 7.0.6
@@ -21361,7 +21423,7 @@ snapshots:
       conventional-changelog-writer: 8.2.0
       conventional-commits-filter: 5.0.0
       conventional-commits-parser: 6.2.1
-      debug: 4.4.3(supports-color@5.5.0)
+      debug: 4.4.3(supports-color@8.1.1)
       get-stream: 7.0.1
       import-from-esm: 2.0.0
       into-stream: 7.0.0
@@ -22192,7 +22254,7 @@ snapshots:
       '@typescript-eslint/types': 8.53.0
       '@typescript-eslint/typescript-estree': 8.53.0(typescript@5.6.3)
       '@typescript-eslint/visitor-keys': 8.53.0
-      debug: 4.4.3(supports-color@5.5.0)
+      debug: 4.4.3(supports-color@8.1.1)
       eslint: 9.39.2(jiti@2.6.1)
       typescript: 5.6.3
     transitivePeerDependencies:
@@ -22204,7 +22266,7 @@ snapshots:
       '@typescript-eslint/types': 8.53.0
       '@typescript-eslint/typescript-estree': 8.53.0(typescript@5.8.3)
       '@typescript-eslint/visitor-keys': 8.53.0
-      debug: 4.4.3(supports-color@5.5.0)
+      debug: 4.4.3(supports-color@8.1.1)
       eslint: 9.39.2(jiti@2.6.1)
       typescript: 5.8.3
     transitivePeerDependencies:
@@ -22214,7 +22276,7 @@ snapshots:
     dependencies:
       '@typescript-eslint/tsconfig-utils': 8.53.0(typescript@5.6.3)
       '@typescript-eslint/types': 8.53.0
-      debug: 4.4.3(supports-color@5.5.0)
+      debug: 4.4.3(supports-color@8.1.1)
       typescript: 5.6.3
     transitivePeerDependencies:
       - supports-color
@@ -22223,7 +22285,7 @@ snapshots:
     dependencies:
       '@typescript-eslint/tsconfig-utils': 8.53.0(typescript@5.8.3)
       '@typescript-eslint/types': 8.53.0
-      debug: 4.4.3(supports-color@5.5.0)
+      debug: 4.4.3(supports-color@8.1.1)
       typescript: 5.8.3
     transitivePeerDependencies:
       - supports-color
@@ -22246,7 +22308,7 @@ snapshots:
       '@typescript-eslint/types': 8.53.0
       '@typescript-eslint/typescript-estree': 8.53.0(typescript@5.6.3)
       '@typescript-eslint/utils': 8.53.0(eslint@9.39.2(jiti@2.6.1))(typescript@5.6.3)
-      debug: 4.4.3(supports-color@5.5.0)
+      debug: 4.4.3(supports-color@8.1.1)
       eslint: 9.39.2(jiti@2.6.1)
       ts-api-utils: 2.4.0(typescript@5.6.3)
       typescript: 5.6.3
@@ -22258,7 +22320,7 @@ snapshots:
       '@typescript-eslint/types': 8.53.0
       '@typescript-eslint/typescript-estree': 8.53.0(typescript@5.8.3)
       '@typescript-eslint/utils': 8.53.0(eslint@9.39.2(jiti@2.6.1))(typescript@5.8.3)
-      debug: 4.4.3(supports-color@5.5.0)
+      debug: 4.4.3(supports-color@8.1.1)
       eslint: 9.39.2(jiti@2.6.1)
       ts-api-utils: 2.4.0(typescript@5.8.3)
       typescript: 5.8.3
@@ -22273,7 +22335,7 @@ snapshots:
       '@typescript-eslint/tsconfig-utils': 8.53.0(typescript@5.6.3)
       '@typescript-eslint/types': 8.53.0
       '@typescript-eslint/visitor-keys': 8.53.0
-      debug: 4.4.3(supports-color@5.5.0)
+      debug: 4.4.3(supports-color@8.1.1)
       minimatch: 9.0.5
       semver: 7.7.3
       tinyglobby: 0.2.15
@@ -22288,7 +22350,7 @@ snapshots:
       '@typescript-eslint/tsconfig-utils': 8.53.0(typescript@5.8.3)
       '@typescript-eslint/types': 8.53.0
       '@typescript-eslint/visitor-keys': 8.53.0
-      debug: 4.4.3(supports-color@5.5.0)
+      debug: 4.4.3(supports-color@8.1.1)
       minimatch: 9.0.5
       semver: 7.7.3
       tinyglobby: 0.2.15
@@ -22602,7 +22664,7 @@ snapshots:
 
   agent-base@6.0.2:
     dependencies:
-      debug: 4.4.3(supports-color@5.5.0)
+      debug: 4.4.3(supports-color@8.1.1)
     transitivePeerDependencies:
       - supports-color
 
@@ -22618,13 +22680,13 @@ snapshots:
       clean-stack: 5.3.0
       indent-string: 5.0.0
 
-  ai@5.0.121(zod@4.3.5):
+  ai@5.0.121(zod@4.3.6):
     dependencies:
-      '@ai-sdk/gateway': 2.0.27(zod@4.3.5)
+      '@ai-sdk/gateway': 2.0.27(zod@4.3.6)
       '@ai-sdk/provider': 2.0.1
-      '@ai-sdk/provider-utils': 3.0.20(zod@4.3.5)
+      '@ai-sdk/provider-utils': 3.0.20(zod@4.3.6)
       '@opentelemetry/api': 1.9.0
-      zod: 4.3.5
+      zod: 4.3.6
 
   ajv-formats@2.1.1(ajv@8.17.1):
     optionalDependencies:
@@ -23801,7 +23863,7 @@ snapshots:
     dependencies:
       bytes: 3.1.2
       content-type: 1.0.5
-      debug: 4.4.3(supports-color@5.5.0)
+      debug: 4.4.3(supports-color@8.1.1)
       http-errors: 2.0.1
       iconv-lite: 0.7.2
       on-finished: 2.4.1
@@ -24272,6 +24334,12 @@ snapshots:
       string-width: 4.2.3
       strip-ansi: 6.0.1
       wrap-ansi: 7.0.0
+
+  cliui@9.0.1:
+    dependencies:
+      string-width: 7.2.0
+      strip-ansi: 7.1.2
+      wrap-ansi: 9.0.2
 
   clone-buffer@1.0.0: {}
 
@@ -25075,7 +25143,7 @@ snapshots:
   detect-port@1.6.1:
     dependencies:
       address: 1.2.2
-      debug: 4.4.3(supports-color@5.5.0)
+      debug: 4.4.3(supports-color@8.1.1)
     transitivePeerDependencies:
       - supports-color
 
@@ -25587,7 +25655,7 @@ snapshots:
   eslint-import-resolver-typescript@3.10.1(eslint-plugin-import@2.32.0(@typescript-eslint/parser@8.53.0(eslint@9.39.2(jiti@2.6.1))(typescript@5.8.3))(eslint@9.39.2(jiti@2.6.1)))(eslint@9.39.2(jiti@2.6.1)):
     dependencies:
       '@nolyfill/is-core-module': 1.0.39
-      debug: 4.4.3(supports-color@5.5.0)
+      debug: 4.4.3(supports-color@8.1.1)
       eslint: 9.39.2(jiti@2.6.1)
       get-tsconfig: 4.13.0
       is-bun-module: 2.0.0
@@ -25664,8 +25732,8 @@ snapshots:
       '@babel/parser': 7.28.6
       eslint: 9.39.2(jiti@2.6.1)
       hermes-parser: 0.25.1
-      zod: 3.25.76
-      zod-validation-error: 3.5.4(zod@3.25.76)
+      zod: 4.3.6
+      zod-validation-error: 3.5.4(zod@4.3.6)
     transitivePeerDependencies:
       - supports-color
 
@@ -25722,7 +25790,7 @@ snapshots:
       ajv: 6.12.6
       chalk: 4.1.2
       cross-spawn: 7.0.6
-      debug: 4.4.3(supports-color@5.5.0)
+      debug: 4.4.3(supports-color@8.1.1)
       escape-string-regexp: 4.0.0
       eslint-scope: 8.4.0
       eslint-visitor-keys: 4.2.1
@@ -26039,7 +26107,7 @@ snapshots:
       content-type: 1.0.5
       cookie: 0.7.2
       cookie-signature: 1.2.2
-      debug: 4.4.3(supports-color@5.5.0)
+      debug: 4.4.3(supports-color@8.1.1)
       depd: 2.0.0
       encodeurl: 2.0.0
       escape-html: 1.0.3
@@ -26262,7 +26330,7 @@ snapshots:
 
   finalhandler@2.1.1:
     dependencies:
-      debug: 4.4.3(supports-color@5.5.0)
+      debug: 4.4.3(supports-color@8.1.1)
       encodeurl: 2.0.0
       escape-html: 1.0.3
       on-finished: 2.4.1
@@ -27090,14 +27158,14 @@ snapshots:
     dependencies:
       '@tootallnate/once': 1.1.2
       agent-base: 6.0.2
-      debug: 4.4.3(supports-color@5.5.0)
+      debug: 4.4.3(supports-color@8.1.1)
     transitivePeerDependencies:
       - supports-color
 
   http-proxy-agent@7.0.2:
     dependencies:
       agent-base: 7.1.4
-      debug: 4.4.3(supports-color@5.5.0)
+      debug: 4.4.3(supports-color@8.1.1)
     transitivePeerDependencies:
       - supports-color
 
@@ -27141,14 +27209,14 @@ snapshots:
   https-proxy-agent@5.0.1:
     dependencies:
       agent-base: 6.0.2
-      debug: 4.4.3(supports-color@5.5.0)
+      debug: 4.4.3(supports-color@8.1.1)
     transitivePeerDependencies:
       - supports-color
 
   https-proxy-agent@7.0.6:
     dependencies:
       agent-base: 7.1.4
-      debug: 4.4.3(supports-color@5.5.0)
+      debug: 4.4.3(supports-color@8.1.1)
     transitivePeerDependencies:
       - supports-color
 
@@ -27257,7 +27325,7 @@ snapshots:
 
   import-from-esm@2.0.0:
     dependencies:
-      debug: 4.4.3(supports-color@5.5.0)
+      debug: 4.4.3(supports-color@8.1.1)
       import-meta-resolve: 4.2.0
     transitivePeerDependencies:
       - supports-color
@@ -28340,6 +28408,12 @@ snapshots:
 
   json-schema-traverse@1.0.0: {}
 
+  json-schema-walker@3.2.0(@types/json-schema@7.0.15):
+    dependencies:
+      '@apidevtools/json-schema-ref-parser': 15.2.1(@types/json-schema@7.0.15)
+    transitivePeerDependencies:
+      - '@types/json-schema'
+
   json-schema@0.4.0: {}
 
   json-stable-stringify-without-jsonify@1.0.1: {}
@@ -29137,7 +29211,7 @@ snapshots:
 
   metro-file-map@0.83.3:
     dependencies:
-      debug: 4.4.3(supports-color@5.5.0)
+      debug: 4.4.3(supports-color@8.1.1)
       fb-watchman: 2.0.2
       flow-enums-runtime: 0.0.6
       graceful-fs: 4.2.11
@@ -29233,7 +29307,7 @@ snapshots:
       chalk: 4.1.2
       ci-info: 2.0.0
       connect: 3.7.0
-      debug: 4.4.3(supports-color@5.5.0)
+      debug: 4.4.3(supports-color@8.1.1)
       error-stack-parser: 2.1.4
       flow-enums-runtime: 0.0.6
       graceful-fs: 4.2.11
@@ -29543,7 +29617,7 @@ snapshots:
   micromark@4.0.2:
     dependencies:
       '@types/debug': 4.1.12
-      debug: 4.4.3(supports-color@5.5.0)
+      debug: 4.4.3(supports-color@8.1.1)
       decode-named-character-reference: 1.2.0
       devlop: 1.1.0
       micromark-core-commonmark: 2.0.3
@@ -32343,7 +32417,7 @@ snapshots:
 
   router@2.2.0:
     dependencies:
-      debug: 4.4.3(supports-color@5.5.0)
+      debug: 4.4.3(supports-color@8.1.1)
       depd: 2.0.0
       is-promise: 4.0.0
       parseurl: 1.3.3
@@ -32465,7 +32539,7 @@ snapshots:
       '@semantic-release/release-notes-generator': 14.1.0(semantic-release@24.2.9(typescript@5.8.3))
       aggregate-error: 5.0.0
       cosmiconfig: 9.0.0(typescript@5.8.3)
-      debug: 4.4.3(supports-color@5.5.0)
+      debug: 4.4.3(supports-color@8.1.1)
       env-ci: 11.2.0
       execa: 9.6.1
       figures: 6.1.0
@@ -32549,7 +32623,7 @@ snapshots:
 
   send@1.2.1:
     dependencies:
-      debug: 4.4.3(supports-color@5.5.0)
+      debug: 4.4.3(supports-color@8.1.1)
       encodeurl: 2.0.0
       escape-html: 1.0.3
       etag: 1.8.1
@@ -32917,7 +32991,7 @@ snapshots:
 
   spdy-transport@3.0.0:
     dependencies:
-      debug: 4.4.3(supports-color@5.5.0)
+      debug: 4.4.3(supports-color@8.1.1)
       detect-node: 2.1.0
       hpack.js: 2.1.6
       obuf: 1.1.2
@@ -32928,7 +33002,7 @@ snapshots:
 
   spdy@4.0.2:
     dependencies:
-      debug: 4.4.3(supports-color@5.5.0)
+      debug: 4.4.3(supports-color@8.1.1)
       handle-thing: 2.0.1
       http-deceiver: 1.2.7
       select-hose: 2.0.0
@@ -33698,7 +33772,7 @@ snapshots:
       cac: 6.7.14
       chokidar: 4.0.3
       consola: 3.4.2
-      debug: 4.4.3(supports-color@5.5.0)
+      debug: 4.4.3(supports-color@8.1.1)
       esbuild: 0.27.2
       fix-dts-default-cjs-exports: 1.0.1
       joycon: 3.1.1
@@ -34319,7 +34393,7 @@ snapshots:
   vite-node@3.2.4(@types/node@25.0.10)(jiti@2.6.1)(lightningcss@1.30.2)(sugarss@5.0.1(postcss@8.5.6))(terser@5.46.0)(tsx@4.21.0)(yaml@2.8.2):
     dependencies:
       cac: 6.7.14
-      debug: 4.4.3(supports-color@5.5.0)
+      debug: 4.4.3(supports-color@8.1.1)
       es-module-lexer: 1.7.0
       pathe: 2.0.3
       vite: 7.2.7(@types/node@25.0.10)(jiti@2.6.1)(lightningcss@1.30.2)(sugarss@5.0.1(postcss@8.5.6))(terser@5.46.0)(tsx@4.21.0)(yaml@2.8.2)
@@ -34403,7 +34477,7 @@ snapshots:
       '@vitest/spy': 3.2.4
       '@vitest/utils': 3.2.4
       chai: 5.3.3
-      debug: 4.4.3(supports-color@5.5.0)
+      debug: 4.4.3(supports-color@8.1.1)
       expect-type: 1.3.0
       magic-string: 0.30.21
       pathe: 2.0.3
@@ -34946,6 +35020,8 @@ snapshots:
 
   yargs-parser@21.1.1: {}
 
+  yargs-parser@22.0.0: {}
+
   yargs@13.3.2:
     dependencies:
       cliui: 5.0.0
@@ -34993,6 +35069,15 @@ snapshots:
       y18n: 5.0.8
       yargs-parser: 21.1.1
 
+  yargs@18.0.0:
+    dependencies:
+      cliui: 9.0.1
+      escalade: 3.2.0
+      get-caller-file: 2.0.5
+      string-width: 7.2.0
+      y18n: 5.0.8
+      yargs-parser: 22.0.0
+
   yauzl@2.10.0:
     dependencies:
       buffer-crc32: 0.2.13
@@ -35022,13 +35107,17 @@ snapshots:
       compress-commons: 6.0.2
       readable-stream: 4.7.0
 
-  zod-validation-error@3.5.4(zod@3.25.76):
+  zod-validation-error@3.5.4(zod@4.3.6):
     dependencies:
-      zod: 3.25.76
+      zod: 4.3.6
+
+  zod-validation-error@5.0.0(zod@4.3.6):
+    dependencies:
+      zod: 4.3.6
 
   zod@3.25.76: {}
 
-  zod@4.3.5: {}
+  zod@4.3.6: {}
 
   zustand@5.0.10(@types/react@19.2.8)(react@19.2.0)(use-sync-external-store@1.6.0(react@19.2.0)):
     optionalDependencies:

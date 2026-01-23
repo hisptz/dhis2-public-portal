@@ -1,14 +1,19 @@
-import { NextFunction, Request, Response } from 'express'
+import { Request, Response } from 'express'
 import { Operation } from 'express-openapi'
 import logger from '@/logging'
 import { getMultipleQueueStatus, getSystemHealth } from '@/services/status'
 import { getQueueNames } from '@/variables/queue-names'
+import {
+    FailureStatusPayload,
+    QueueStatusResult,
+    statusPayloadSchema,
+    SuccessStatusPayload,
+} from '@packages/shared/schemas'
 
-export const GET: Operation = async (
-    req: Request,
-    res: Response,
-    next: NextFunction
-) => {
+import { z } from 'zod'
+import { convertSync } from '@openapi-contrib/json-schema-to-openapi-schema'
+
+export const GET: Operation = async (req: Request, res: Response) => {
     try {
         const { id: configId } = req.params
 
@@ -38,28 +43,36 @@ export const GET: Operation = async (
 
         const statusByType = {
             metadataDownload: queueStatuses.find(
-                (q: any) => q.queue === queueNames.metadataDownload
+                (q) => q.queue === queueNames.metadataDownload
             ),
             metadataUpload: queueStatuses.find(
-                (q: any) => q.queue === queueNames.metadataUpload
+                (q) => q.queue === queueNames.metadataUpload
             ),
             dataDownload: queueStatuses.find(
-                (q: any) => q.queue === queueNames.dataDownload
+                (q) => q.queue === queueNames.dataDownload
             ),
             dataUpload: queueStatuses.find(
-                (q: any) => q.queue === queueNames.dataUpload
+                (q) => q.queue === queueNames.dataUpload
             ),
             dataDeletion: queueStatuses.find(
-                (q: any) => q.queue === queueNames.dataDeletion
+                (q) => q.queue === queueNames.dataDeletion
             ),
-            dlq: queueStatuses.find((q: any) => q.queue === queueNames.failed),
+            dlq: queueStatuses.find((q) => q.queue === queueNames.failed),
         }
 
-        const buildProcessStatusFromQueue = (queueData: any) => ({
-            queued: queueData?.messages_ready || 0,
-            processing: queueData?.messages_unacknowledged || 0,
-            failed: 0,
-        })
+        const buildProcessStatusFromQueue = (queueData?: QueueStatusResult) => {
+            if (!queueData)
+                return {
+                    queued: 0,
+                    processing: 0,
+                    failed: 0,
+                }
+            return {
+                queued: queueData?.messages_ready || 0,
+                processing: queueData?.messages_unacknowledged || 0,
+                failed: 0,
+            }
+        }
 
         const processes = {
             metadataDownload: buildProcessStatusFromQueue(
@@ -77,26 +90,30 @@ export const GET: Operation = async (
             ),
         }
 
-        res.json({
+        const statusPayload: SuccessStatusPayload = {
             success: true,
             configId,
             queues: statusByType,
             processes,
             health,
             timestamp: new Date().toISOString(),
-        })
-    } catch (error: any) {
+        }
+
+        res.json(statusPayload)
+    } catch (error) {
         logger.error(`Failed to get status for config ${req.params.id}:`, error)
 
         const errorMessage =
             error instanceof Error ? error.message : String(error)
 
-        res.status(500).json({
+        const errorResponse: FailureStatusPayload = {
             success: false,
-            configId: req.params.id,
-            error: errorMessage,
+            message: errorMessage,
             timestamp: new Date().toISOString(),
-        })
+            configId: req.params.id,
+        }
+
+        res.status(500).json(errorResponse)
     }
 }
 
@@ -120,50 +137,11 @@ GET.apiDoc = {
             description: 'Configuration status retrieved successfully',
             content: {
                 'application/json': {
-                    schema: {
-                        type: 'object',
-                        properties: {
-                            success: { type: 'boolean' },
-                            configId: { type: 'string' },
-                            queues: {
-                                type: 'object',
-                                properties: {
-                                    metadataDownload: {
-                                        type: 'object',
-                                        properties: {
-                                            queue: { type: 'string' },
-                                            messages: { type: 'number' },
-                                            messages_ready: { type: 'number' },
-                                            messages_unacknowledged: {
-                                                type: 'number',
-                                            },
-                                            dlq_messages: { type: 'number' },
-                                            status: { type: 'string' },
-                                            last_activity: { type: 'string' },
-                                            consumers: { type: 'number' },
-                                        },
-                                    },
-                                    metadataUpload: { type: 'object' },
-                                    dataDownload: { type: 'object' },
-                                    dataUpload: { type: 'object' },
-                                },
-                            },
-                            health: {
-                                type: 'object',
-                                properties: {
-                                    healthy: { type: 'boolean' },
-                                    totalQueues: { type: 'number' },
-                                    activeQueues: { type: 'number' },
-                                    failedQueues: { type: 'number' },
-                                    issues: {
-                                        type: 'array',
-                                        items: { type: 'string' },
-                                    },
-                                },
-                            },
-                            timestamp: { type: 'string' },
-                        },
-                    },
+                    schema: convertSync(
+                        z.toJSONSchema(statusPayloadSchema, {
+                            io: 'input',
+                        })
+                    ),
                 },
             },
         },
