@@ -88,7 +88,7 @@ Data download transfers aggregate data from the source:
     - Select type and name of your data item configuration
     - Select period type
     - Choose organisation unit and organisation unit level
-   - Select data items that were downloaded from source
+    - Select data items that were downloaded from source
 3. Create and save your data item configurations
 4. **Initiate Download**:
     - Afterwards head back and run migration

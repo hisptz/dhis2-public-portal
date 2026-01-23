@@ -1,6 +1,6 @@
 import { useWatch } from 'react-hook-form'
 import { AddSourceFormValues } from './AddDataSourceForm'
-import {useState } from 'react'
+import { useState } from 'react'
 import { Button, ButtonStrip } from '@dhis2/ui'
 import i18n from '@dhis2/d2-i18n'
 import { useAlert } from '@dhis2/app-runtime'

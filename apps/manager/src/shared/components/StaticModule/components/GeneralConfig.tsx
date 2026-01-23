@@ -1,4 +1,4 @@
-import {useEffect } from 'react'
+import { useEffect } from 'react'
 import { RHFTextInputField } from '@hisptz/dhis2-ui'
 import i18n from '@dhis2/d2-i18n'
 import { useFormContext, useWatch } from 'react-hook-form'

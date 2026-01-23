@@ -89,7 +89,7 @@ Each item functions like a standalone article inside a module.
 ## 5. Summary
 
 | Feature                | Description                                |
-|------------------------|--------------------------------------------|
+| ---------------------- | ------------------------------------------ |
 | **Create Module**      | Define label and static type               |
 | **Add Items**          | Add articles with title, content, and icon |
 | **Save & Edit**        | Make changes and persist them              |

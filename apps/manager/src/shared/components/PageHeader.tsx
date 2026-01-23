@@ -1,5 +1,5 @@
 import { Divider } from '@dhis2/ui'
-import {ReactNode } from 'react'
+import { ReactNode } from 'react'
 
 export function PageHeader({
     title,

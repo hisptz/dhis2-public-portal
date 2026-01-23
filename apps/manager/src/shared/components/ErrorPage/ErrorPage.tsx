@@ -1,5 +1,5 @@
 import { Button, ButtonStrip, colors } from '@dhis2/ui'
-import {useState } from 'react'
+import { useState } from 'react'
 import i18n from '@dhis2/d2-i18n'
 import { isEmpty } from 'lodash'
 import { CustomError, ErrorAction } from './models/custom-error'

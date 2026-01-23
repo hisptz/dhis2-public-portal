@@ -64,11 +64,11 @@ Fill in the form:
 - **Title** (required): Name of the section as it appears in the Module page
 - **Type**: Select the type of section.
 
-  | Type                | Description                                                                                                                                                                                 |
-              | ------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-  | **Flexible Layout** | - This section type allows admin to add multiple visualizations such as charts and maps and to configure the layout of how the visualizations will be displayed in various screen sizes     |
-  | **Grid Layout**     | - This section type allows admin to add multiple visualizations such as charts and maps but the layout of the visualizations can not be configured, it will be in a grid layout by default. |
-  | **Single Item**     | - This section type allows admin to add only one item in the section, this item can be either of type Rich Text, Visualization, Single Value or Feedback                                    |
+    | Type                | Description                                                                                                                                                                                 |
+    | ------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+    | **Flexible Layout** | - This section type allows admin to add multiple visualizations such as charts and maps and to configure the layout of how the visualizations will be displayed in various screen sizes     |
+    | **Grid Layout**     | - This section type allows admin to add multiple visualizations such as charts and maps but the layout of the visualizations can not be configured, it will be in a grid layout by default. |
+    | **Single Item**     | - This section type allows admin to add only one item in the section, this item can be either of type Rich Text, Visualization, Single Value or Feedback                                    |
 
 Click the **Create section** button to proceed
 
@@ -103,11 +103,11 @@ This guide explains how to configure a **Flexible Layout Section** in your secti
 
 Each row in the **Items** table shows:
 
-| Column      | Description                                                   |
-|-------------|---------------------------------------------------------------|
-| **ID**      | Unique ID of the visualization.                               |
-| **Type**    | Type of visualization (e.g., CHART, MAP).                     |
-| **Caption** | Caption for the visualization.                                |
+| Column      | Description                                                  |
+| ----------- | ------------------------------------------------------------ |
+| **ID**      | Unique ID of the visualization.                              |
+| **Type**    | Type of visualization (e.g., CHART, MAP).                    |
+| **Caption** | Caption for the visualization.                               |
 | **Actions** | Edit (✏️) or Delete (🗑️) icons to modify or remove the item. |
 
 ### 4. Configure Layout
@@ -160,12 +160,12 @@ This guide explains how to configure a **Grid Layout Section** in your section m
 Each row in the **Items** table shows:
 
 | Column      | Description                               |
-|-------------|-------------------------------------------|
+| ----------- | ----------------------------------------- |
 | **ID**      | Unique ID of the visualization.           |
 | **Type**    | Type of visualization (e.g., CHART, MAP). |
 | **Caption** | Caption for the visualization.            |
 | **Icon**    | Icon for the visualization.               |
-| **Action**  | Delete (🗑️) icon to remove the item.     |
+| **Action**  | Delete (🗑️) icon to remove the item.      |
 
 ### 4. Save Changes
 

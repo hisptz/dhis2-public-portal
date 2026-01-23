@@ -43,11 +43,11 @@ Use this option if you already have a configuration `.zip` file to apply.
 
 1. Click the **“Import Configuration”** button.
 
-   ![Import Option](../../../docs/static/img/configuration-management/initialSetupsCroped.png)
+    ![Import Option](../../../docs/static/img/configuration-management/initialSetupsCroped.png)
 
 2. Select your `.zip` configuration file.
 
-   ![Import Dialog](../../../docs/static/img/configuration-management/initialImportDialog.png)
+    ![Import Dialog](../../../docs/static/img/configuration-management/initialImportDialog.png)
 
 3. The configuration will be applied to your instance.
 

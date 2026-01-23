@@ -2,7 +2,7 @@ import {
     VisualizationDisplayItemType,
     VisualizationItem,
 } from '@packages/shared/schemas'
-import {memo } from 'react'
+import { memo } from 'react'
 import { DataVisualization } from './components/DataVisualization'
 import { MapVisualization } from './components/MapVisualization'
 import { BannerVisualization } from './components/BannerVisualization'

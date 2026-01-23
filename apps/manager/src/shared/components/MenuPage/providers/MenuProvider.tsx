@@ -1,4 +1,4 @@
-import {createContext, useContext } from 'react'
+import { createContext, useContext } from 'react'
 import { FullLoader } from '../../FullLoader'
 import ErrorPage from '../../ErrorPage/ErrorPage'
 import { useMenuQuery } from '../hooks/data'

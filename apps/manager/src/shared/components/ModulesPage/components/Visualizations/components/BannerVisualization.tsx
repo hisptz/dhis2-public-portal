@@ -5,7 +5,7 @@ import {
 import { find, findIndex } from 'lodash'
 import { SingleValue } from '@hisptz/dhis2-analytics'
 import { mainColors } from '@packages/shared/constants'
-import {useMemo } from 'react'
+import { useMemo } from 'react'
 import { useDataQuery } from '@dhis2/app-runtime'
 import { FullLoader } from '../../../../FullLoader'
 

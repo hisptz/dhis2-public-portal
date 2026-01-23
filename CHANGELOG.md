@@ -527,8 +527,7 @@
 
 ### Bug Fixes
 
--
-  - ([3ac777d](https://github.com/hisptz/dhis2-public-portal/commit/3ac777d1a8cde8f210361a0759e23878aeba98b9))
+-   - ([3ac777d](https://github.com/hisptz/dhis2-public-portal/commit/3ac777d1a8cde8f210361a0759e23878aeba98b9))
 - **AddDashboardForm:** remove console error logging on dashboard creation
   failure ([a96bc58](https://github.com/hisptz/dhis2-public-portal/commit/a96bc5825f4121e130c2e7761ebfe6a67069d33b))
 - **app-runtime:**
@@ -645,14 +644,14 @@
   paths ([218d0be](https://github.com/hisptz/dhis2-public-portal/commit/218d0bef6807ecd656243b4c4d5f0fd8d0b49085))
 -
 
-package.json ([d42cffb](https://github.com/hisptz/dhis2-public-portal/commit/d42cffb4ca01ba68ae098f40ac570ac02ebc9c58))
--
-package.json ([3c9db2d](https://github.com/hisptz/dhis2-public-portal/commit/3c9db2d6b552b0a425d852fbf3bb83cbb6b4cc9f))
--
-package.json ([f99adba](https://github.com/hisptz/dhis2-public-portal/commit/f99adbad56aaa6c9299879f3633755fd826380bf))
--
-package.json ([37c45aa](https://github.com/hisptz/dhis2-public-portal/commit/37c45aac09d57da5b834fbb76b176389bd7b1acd))
--
+## package.json ([d42cffb](https://github.com/hisptz/dhis2-public-portal/commit/d42cffb4ca01ba68ae098f40ac570ac02ebc9c58))
+
+## package.json ([3c9db2d](https://github.com/hisptz/dhis2-public-portal/commit/3c9db2d6b552b0a425d852fbf3bb83cbb6b4cc9f))
+
+## package.json ([f99adba](https://github.com/hisptz/dhis2-public-portal/commit/f99adbad56aaa6c9299879f3633755fd826380bf))
+
+## package.json ([37c45aa](https://github.com/hisptz/dhis2-public-portal/commit/37c45aac09d57da5b834fbb76b176389bd7b1acd))
+
 package.json ([44aa27d](https://github.com/hisptz/dhis2-public-portal/commit/44aa27d0892c672e97ab1bfe9d8a571275972e03))
 
 - **pdf-viewer:** Fixed issues with PDF viewer not working in

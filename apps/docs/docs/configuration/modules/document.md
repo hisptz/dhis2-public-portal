@@ -112,7 +112,7 @@ At the top of the module page, you will find buttons to:
 ## 6. Summary
 
 | Feature                  | Description                                                     |
-|--------------------------|-----------------------------------------------------------------|
+| ------------------------ | --------------------------------------------------------------- |
 | **Create Module**        | Define label, type (`Document`), and ID                         |
 | **Item Display**         | Choose between Segmented or Dropdown view for grouped documents |
 | **Flat Mode**            | List of documents without grouping                              |

@@ -1,50 +1,50 @@
 name: Deploy Manager App to Development
 
 env:
-  DHIS2_BASE_URL: ${{ vars.DHIS2_BASE_URL }}
-  D2_USERNAME: ${{ secrets.D2_USERNAME }}
-  D2_PASSWORD: ${{ secrets.D2_PASSWORD }}
+    DHIS2_BASE_URL: ${{ vars.DHIS2_BASE_URL }}
+    D2_USERNAME: ${{ secrets.D2_USERNAME }}
+    D2_PASSWORD: ${{ secrets.D2_PASSWORD }}
 
 # Controls when the action will run
 on:
-  # Triggers the workflow on push events to the develop branch
-  push:
-    branches: [ develop ]
-    paths:
-      - '.github/workflows/manager-dev-deploy.yml'
-      - 'apps/manager/**'
-      - 'packages/shared/**'
-      - 'packages/ui/**'
-      - 'package.json'
-      - 'pnpm.lock'
+    # Triggers the workflow on push events to the develop branch
+    push:
+        branches: [develop]
+        paths:
+            - '.github/workflows/manager-dev-deploy.yml'
+            - 'apps/manager/**'
+            - 'packages/shared/**'
+            - 'packages/ui/**'
+            - 'package.json'
+            - 'pnpm.lock'
 
-  # Allows you to run this workflow manually from the Actions tab
-  workflow_dispatch:
+    # Allows you to run this workflow manually from the Actions tab
+    workflow_dispatch:
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  deploy:
-    # Wait for test to succeed before deploying
-    runs-on: ubuntu-latest
-    steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v3
-      - uses: pnpm/action-setup@v4
-        name: Install pnpm
-        with:
-          run_install: false
+    deploy:
+        # Wait for test to succeed before deploying
+        runs-on: ubuntu-latest
+        steps:
+            # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+            - uses: actions/checkout@v3
+            - uses: pnpm/action-setup@v4
+              name: Install pnpm
+              with:
+                  run_install: false
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: '22'
-          cache: 'pnpm'
-      - name: Install JS dependencies
-        run: pnpm install --frozen-lockfile
+            - name: Setup Node.js
+              uses: actions/setup-node@v4
+              with:
+                  node-version: '22'
+                  cache: 'pnpm'
+            - name: Install JS dependencies
+              run: pnpm install --frozen-lockfile
 
-      - name: Build Manager App
-        run: pnpm build --filter manager
+            - name: Build Manager App
+              run: pnpm build --filter manager
 
-      # Deploy to development DHIS2 instance
-      - name: Deploy to Development DHIS2 Instance
-        run: pnpm run --filter manager deploy   --username ${{ env.D2_USERNAME }} ${{env.DHIS2_BASE_URL}}
+            # Deploy to development DHIS2 instance
+            - name: Deploy to Development DHIS2 Instance
+              run: pnpm run --filter manager deploy   --username ${{ env.D2_USERNAME }} ${{env.DHIS2_BASE_URL}}

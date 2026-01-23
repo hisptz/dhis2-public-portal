@@ -1,4 +1,4 @@
-import {DetailedHTMLProps, forwardRef, HTMLAttributes } from 'react'
+import { DetailedHTMLProps, forwardRef, HTMLAttributes } from 'react'
 import { useController, useWatch } from 'react-hook-form'
 import { IconCross24 } from '@dhis2/ui'
 import i18n from '@dhis2/d2-i18n'

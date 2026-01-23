@@ -1,7 +1,7 @@
 import { SimpleTable, SimpleTableColumn } from '@hisptz/dhis2-ui'
 import { useFieldArray } from 'react-hook-form'
 import { DocumentGroup } from '@packages/shared/schemas'
-import {useMemo } from 'react'
+import { useMemo } from 'react'
 import i18n from '@dhis2/d2-i18n'
 import { ButtonStrip, Field } from '@dhis2/ui'
 import { AddFile } from './components/AddFile'

@@ -85,7 +85,7 @@ If you need to customize the Portal, you can build your own Docker image.
 The Portal Docker container can be configured using the following environment variables:
 
 | Variable             | Description                                              | Default | Required |
-|----------------------|----------------------------------------------------------|---------|----------|
+| -------------------- | -------------------------------------------------------- | ------- | -------- |
 | DHIS2_BASE_URL       | URL of your DHIS2 instance                               | -       | Yes      |
 | DHIS2_BASE_PAT_TOKEN | DHIS2 PAT for authenticating your DHIS2 instance         | -       | Yes      |
 | CONTEXT_PATH         | Base path for the application (for non-root deployments) | /       | No       |

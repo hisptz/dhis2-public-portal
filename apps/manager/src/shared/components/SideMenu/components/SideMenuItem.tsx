@@ -1,6 +1,6 @@
 import classnames from 'classnames'
 import { MenuItem, MenuItemProps } from '@dhis2/ui'
-import {forwardRef } from 'react'
+import { forwardRef } from 'react'
 import { createLink } from '@tanstack/react-router'
 
 export const SideMenuItem = createLink(

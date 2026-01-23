@@ -1,6 +1,6 @@
 import { SimpleTable, SimpleTableColumn } from '@hisptz/dhis2-ui'
 import { useDataSources } from '../providers/DataSourcesProvider'
-import {useEffect } from 'react'
+import { useEffect } from 'react'
 import i18n from '@dhis2/d2-i18n'
 import { RunConfigStatus } from './RunConfiguration/components/RunConfigStatus/RunConfigStatus'
 import { AddDataSource } from './AddDataSource'

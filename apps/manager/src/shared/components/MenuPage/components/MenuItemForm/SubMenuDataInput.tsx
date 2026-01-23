@@ -1,6 +1,6 @@
 import { RHFTextInputField } from '@hisptz/dhis2-ui'
 import i18n from '@dhis2/d2-i18n'
-import {useEffect } from 'react'
+import { useEffect } from 'react'
 import { useFormContext, useWatch } from 'react-hook-form'
 import { AppModule, ModuleMenuItem } from '@packages/shared/schemas'
 import { useGetDatastoreEntries } from '../../../../hooks/datastore'

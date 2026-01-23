@@ -1,4 +1,4 @@
-import {useState } from 'react'
+import { useState } from 'react'
 import { DataServiceConfig } from '@packages/shared/schemas'
 import { CircularLoader, SegmentedControl } from '@dhis2/ui'
 import i18n from '@dhis2/d2-i18n'
