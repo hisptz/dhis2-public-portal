@@ -5,8 +5,8 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
-"POT-Creation-Date: 2026-01-22T05:09:20.268Z\n"
-"PO-Revision-Date: 2026-01-22T05:09:20.268Z\n"
+"POT-Creation-Date: 2026-01-23T05:36:41.927Z\n"
+"PO-Revision-Date: 2026-01-23T05:36:41.929Z\n"
 
 msgid "Could not get Appearance configurations"
 msgstr "Could not get Appearance configurations"
@@ -561,6 +561,9 @@ msgstr "Loading connection details..."
 
 msgid "Could not get source information"
 msgstr "Could not get source information"
+
+msgid "Unauthorized - Bad credentials"
+msgstr "Unauthorized - Bad credentials"
 
 msgid "No value"
 msgstr "No value"

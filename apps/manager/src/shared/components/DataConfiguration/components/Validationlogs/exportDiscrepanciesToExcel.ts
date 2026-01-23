@@ -140,6 +140,7 @@ export async function exportDiscrepanciesToExcel(discrepancies: ValidationDiscre
 
         const dataElementCell = dataRow.getCell(1);
         dataElementCell.font = { bold: true };
+        dataElementCell.alignment = { wrapText: true, vertical: 'middle' };
         dataElementCell.border = {
             top: { style: 'thin', color: { argb: 'FFCCCCCC' } },
             left: { style: 'thin', color: { argb: 'FFCCCCCC' } },
@@ -188,7 +189,7 @@ export async function exportDiscrepanciesToExcel(discrepancies: ValidationDiscre
         });
     });
 
-    dataSheet.getColumn(1).width = 30;
+    dataSheet.getColumn(1).width = 45;
     for (let i = 2; i <= 1 + periodsList.length * 2; i++) {
         dataSheet.getColumn(i).width = 15;
     }

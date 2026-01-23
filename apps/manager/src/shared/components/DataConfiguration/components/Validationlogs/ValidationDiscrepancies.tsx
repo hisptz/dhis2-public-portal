@@ -202,7 +202,7 @@ export function ValidationDiscrepancies({ discrepancies, summary, isLoading, err
                                         return (
                                             <TableRow key={dataElementCombo}>
                                                 <TableCell className="font-medium">
-                                                    <div className="whitespace-nowrap max-w-60">
+                                                    <div className="max-w-60 break-words min-w-60">
                                                         <div title={dataElementNames.get(dataElementCombo)}>
                                                             {dataElementNames.get(dataElementCombo)}
                                                         </div>
