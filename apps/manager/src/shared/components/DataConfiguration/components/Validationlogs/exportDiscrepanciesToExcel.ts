@@ -1,6 +1,7 @@
 import ExcelJS from 'exceljs';
 import { PeriodUtility, PeriodTypeCategory } from '@hisptz/dhis2-utils';
 import { ValidationDiscrepancy } from './interfaces/interfaces';
+import { areValuesEquivalent } from './ValidationDiscrepancies';
 
 
 
@@ -168,7 +169,9 @@ export async function exportDiscrepanciesToExcel(discrepancies: ValidationDiscre
             const key = `${period}-${dataElementCombo}`;
             const discrepancy = discrepancyMap.get(key);
 
-            if (discrepancy && (discrepancy.discrepancyType === 'value_mismatch' || discrepancy.discrepancyType === 'missing_in_destination')) {
+            if (discrepancy && 
+                (discrepancy.discrepancyType === 'value_mismatch' || discrepancy.discrepancyType === 'missing_in_destination') &&
+                !areValuesEquivalent(discrepancy.sourceValue, discrepancy.destinationValue)) {
                 const sourceValue = parseFloat(String(discrepancy.sourceValue ?? '0')) || 0;
                 const destValue = parseFloat(String(discrepancy.destinationValue ?? '0')) || 0;
                 

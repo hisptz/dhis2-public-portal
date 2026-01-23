@@ -33,6 +33,21 @@ interface ValidationDiscrepanciesProps {
     error: Error | null;
 }
 
+export function areValuesEquivalent(value1: any, value2: any): boolean {
+    const normalize = (val: any) => {
+        if (val === null || val === undefined || val === '') return null;
+        const num = Number(val);
+        return isNaN(num) ? val : num;
+    };
+    const norm1 = normalize(value1);
+    const norm2 = normalize(value2);
+    if ((norm1 === 0 && norm2 === null) || (norm1 === null && norm2 === 0)) {
+        return true;
+    }
+
+    return norm1 === norm2;
+}
+
 export function ValidationDiscrepancies({ discrepancies, summary, isLoading, error }: ValidationDiscrepanciesProps) {
     const handleDownloadExcel = async () => {
         await exportDiscrepanciesToExcel(discrepancies);
@@ -147,13 +162,13 @@ export function ValidationDiscrepancies({ discrepancies, summary, isLoading, err
                     }
 
                     const dataElementMap = dataElementDataMap.get(dataElementCombo)!;
-                    const hasDiscrepancy = discrepancy.discrepancyType === 'value_mismatch' ||
-                        discrepancy.discrepancyType === 'missing_in_destination';
+                    const hasRealDiscrepancy = !areValuesEquivalent(discrepancy.sourceValue, discrepancy.destinationValue) &&
+                        (discrepancy.discrepancyType === 'value_mismatch' || discrepancy.discrepancyType === 'missing_in_destination');
 
                     dataElementMap.set(discrepancy.period, {
                         source: discrepancy.sourceValue,
                         destination: discrepancy.destinationValue,
-                        hasDiscrepancy
+                        hasDiscrepancy: hasRealDiscrepancy
                     });
                 });
 
