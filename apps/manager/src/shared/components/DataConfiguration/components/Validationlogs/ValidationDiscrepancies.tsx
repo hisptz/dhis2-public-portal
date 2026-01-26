@@ -35,7 +35,10 @@ interface ValidationDiscrepanciesProps {
 
 export function areValuesEquivalent(value1: any, value2: any): boolean {
     const normalize = (val: any) => {
-        if (val === null || val === undefined || val === '') return null;
+        if (val === null || val === undefined) return null;
+        if (typeof val === 'string' && val.trim() === '') return null;
+        if (typeof val === 'boolean') return val;
+
         const num = Number(val);
         return isNaN(num) ? val : num;
     };

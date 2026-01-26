@@ -13,6 +13,7 @@ import {
 	ValidationSession,
 	ValidationSummary,
 } from "../interfaces/interfaces";
+import { areValuesEquivalent } from "../ValidationDiscrepancies";
 
 export type ValidationPhase =
 	| "initializing"
@@ -1005,7 +1006,7 @@ const performValidation = async (
 				});
 			} else {
 				const destValue = destinationMap.get(key);
-				if (sourceValue.value !== destValue.value) {
+				if (!areValuesEquivalent(sourceValue.value, destValue.value)) {
 					const source = parseFloat(sourceValue.value || "0");
 					const destination = parseFloat(destValue.value || "0");
 					const numericDiff = Math.abs(source - destination);
