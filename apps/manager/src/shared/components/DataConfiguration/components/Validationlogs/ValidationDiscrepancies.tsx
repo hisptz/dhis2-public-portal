@@ -175,7 +175,10 @@ export function ValidationDiscrepancies({ discrepancies, summary, isLoading, err
                     });
                 });
 
-                const dataElementsList = Array.from(dataElementDataMap.keys());
+                 const dataElementsList = Array.from(dataElementDataMap.keys()).filter((dataElementCombo) => {
+                    const dataElementData = dataElementDataMap.get(dataElementCombo)!;
+                     return Array.from(dataElementData.values()).some(data => data.hasDiscrepancy);
+                });
                 const periodsList = Array.from(periods).sort();
 
                 return (
