@@ -1,41 +1,29 @@
 import logger from '@/logging'
 import { getChannel } from './connection'
-import { getQueueNames, QueueType } from '@/variables/queue-names'
+import { Queues } from '@/rabbit/constants'
 
-export async function pushToQueue(
-    configId: string,
-    queueType: QueueType,
-    jobData: any,
-    error?: any
-) {
+export function pushToQueue({
+    queue,
+    reference,
+}: {
+    queue: Queues
+    reference: string
+}) {
     const currentChannel = getChannel()
     if (!currentChannel) {
         throw new Error('Channel not initialized')
     }
-
-    const queueNames = getQueueNames(configId)
-    const queueName = queueNames[queueType]
-
-    const messageData = {
-        ...jobData,
-        configId,
-        queueType,
-        timestamp: new Date().toISOString(),
-        //TODO: Refactor error handling
-        // ...(error && queueType === 'failed' && {
-        //     error: {
-        //         message: error.message,
-        //         stack: error.stack,
-        //         name: error.name
-        //     }
-        // })
+    const successful = currentChannel.sendToQueue(
+        queue,
+        Buffer.from(reference),
+        {
+            persistent: true,
+        }
+    )
+    if (!successful) {
+        logger.error(`Failed to push ${reference} to queue ${queue}`)
+    } else {
+        logger.info(`Message pushed to ${queue}`)
     }
-
-    const messageBuffer = Buffer.from(JSON.stringify(messageData))
-
-    currentChannel.sendToQueue(queueName, messageBuffer, {
-        persistent: true,
-    })
-
-    logger.info(`Message pushed to ${queueType} queue: ${queueName}`)
+    return successful
 }

@@ -1,40 +1,39 @@
 import { createDownloadClient, dhis2Client } from '@/clients/dhis2'
 import logger from '@/logging'
-import { DatastoreNamespaces } from '@packages/shared/constants'
 import {
     DataServiceAttributeValuesDataItemsSource,
     DataServiceConfig,
     DataServiceDataSourceItemsConfig,
     DataServiceRuntimeConfig,
 } from '@packages/shared/schemas'
-import { AxiosError } from 'axios'
+import { AxiosInstance } from 'axios'
 import { chunk, compact, head, isEmpty } from 'lodash'
 import { pushToQueue } from '@/rabbit/publisher'
-import { checkOrCreateFolder } from '@/utils/files'
 import {
     fetchPagedData,
     processAttributeComboData,
     processData,
-    processDataItems,
     saveDataFile,
 } from '@/utils/data'
-import pLimit from 'p-limit'
 import { getDimensions } from '@/utils/dimensions'
+import { dbClient } from '@/clients/prisma'
+import { Queues } from '@/rabbit/constants'
+import { DataDownload, DataRun } from '@/generated/prisma/client'
+import {
+    createDownloadJob,
+    createUploadJob,
+} from '@/services/data-migration/utils/db'
+import { logWorker } from '@/rabbit/utils'
+import { categoriesMeta } from '@/variables/meta'
+import { getCategoryMetadata } from '@/utils/metadata'
+import { Dimensions } from '@/schemas/metadata'
+import { handleError, QueuedJobError } from '@/utils/error'
+import { fetchMainConfiguration } from '@/services/data-migration/utils/meta'
 
 export interface DataDownloadOptions {
     mainConfigId: string
     dataItemsConfigIds: Array<string>
     runtimeConfig: DataServiceRuntimeConfig
-    isDelete?: boolean
-}
-
-export interface DataProcessingJob {
-    mainConfigId: string
-    mainConfig: DataServiceConfig
-    periodId: string
-    config: DataServiceDataSourceItemsConfig
-    runtimeConfig: DataServiceRuntimeConfig
-    overrideDimensions?: any
     isDelete?: boolean
 }
 
@@ -48,23 +47,29 @@ export async function downloadAndQueueData(
             `Starting data download and queue process for config: ${mainConfigId}`
         )
 
-        const mainConfig = await fetchMainConfiguration(mainConfigId)
-        const dataItemConfigs = compact(
-            dataItemsConfigIds.map((id) => {
-                return mainConfig.itemsConfig.find(
-                    ({ id: configId }) => configId === id
-                )
-            })
-        )
-
-        checkOrCreateFolder(`outputs/${mainConfigId}`)
-
-        await enqueueDownloadTasks({
-            mainConfig,
-            runtimeConfig,
-            configs: dataItemConfigs,
-            isDelete,
+        const createdRun = await dbClient.dataRun.create({
+            data: {
+                mainConfigId,
+                periods: runtimeConfig.periods,
+                configIds: dataItemsConfigIds,
+                timeout: runtimeConfig.timeout,
+                isDelete: isDelete,
+            },
         })
+
+        const accepted = pushToQueue({
+            queue: Queues.DATA_CHUNK,
+            reference: createdRun.uid,
+        })
+
+        if (!accepted) {
+            await dbClient.dataRun.delete({
+                where: {
+                    id: createdRun.id,
+                },
+            })
+            throw new Error('Could not accept data download job')
+        }
     } catch (error) {
         logger.error(
             `Error during download and queue process for config ${options.mainConfigId}:`,
@@ -74,218 +79,270 @@ export async function downloadAndQueueData(
     }
 }
 
-async function fetchMainConfiguration(
-    configId: string
-): Promise<DataServiceConfig> {
-    try {
-        logger.info(`Getting configuration from server for ${configId}...`)
-        const url = `dataStore/${DatastoreNamespaces.DATA_SERVICE_CONFIG}/${configId}`
-        const response = await dhis2Client.get<DataServiceConfig>(url)
-        return response.data
-    } catch (error) {
-        if (error instanceof AxiosError) {
-            logger.error(
-                `Could not get configuration ${configId} from server:`,
-                error.message
-            )
-            if (error.response?.data) {
-                logger.error(JSON.stringify(error.response?.data))
-            }
-        }
-        throw error
-    }
-}
-
 export async function enqueueDownloadTasks({
-    mainConfig,
-    runtimeConfig,
-    configs,
-    isDelete,
-}: {
-    mainConfig: DataServiceConfig
-    runtimeConfig: DataServiceRuntimeConfig
-    configs: DataServiceDataSourceItemsConfig[]
-    isDelete?: boolean
-}) {
-    const configId = mainConfig.id
-
-    const sourceClient = createDownloadClient({ config: mainConfig })
-
-    checkOrCreateFolder(`outputs/${configId}`)
-
-    const pushPromises: Promise<void>[] = []
-
-    const sanitezedConfigs: DataServiceDataSourceItemsConfig[] = []
-
-    for (const config of configs) {
-        logger.info(
-            `Processing configuration ${config.id} data items, please wait...`
-        )
-        const expandedDataItems = await processDataItems({
-            mappings: config.dataItems,
-            sourceClient,
-            destinationClient: dhis2Client,
-            timeout: runtimeConfig.timeout,
+    mainConfigId,
+    configIds,
+    periods,
+    uid,
+}: DataRun) {
+    const mainConfig = await fetchMainConfiguration(mainConfigId)
+    const dataItemConfigs = compact(
+        configIds.map((id) => {
+            return mainConfig.itemsConfig.find(
+                ({ id: configId }) => configId === id
+            )
         })
-        const sanitezedConfig = { ...config, dataItems: expandedDataItems }
-
-        if (isEmpty(sanitezedConfig.dataItems)) {
-            logger.warn(
-                `Configuration ${config.id} has no data items after dissaggregation. Skipping...`
-            )
-        }
-
-        logger.info(
-            `Configuration ${config.id} has ${expandedDataItems.length} data items after dissaggregation.`
-        )
-
-        sanitezedConfigs.push(sanitezedConfig)
-    }
-
-    for (const periodId of runtimeConfig.periods) {
-        for (const config of sanitezedConfigs) {
-            const message: DataProcessingJob = {
-                mainConfigId: configId,
-                mainConfig,
-                periodId,
+    )
+    for (const periodId of periods) {
+        for (const config of dataItemConfigs) {
+            await downloadDataPerConfig({
                 config,
-                runtimeConfig,
-                isDelete: isDelete || false,
-            }
-
-            pushPromises.push(
-                pushToQueue(configId, 'dataDownload', message, {
-                    queuedAt: new Date().toISOString(),
-                })
-            )
+                meta: {
+                    periodId,
+                    mainConfig,
+                    runId: uid,
+                    runtimeConfig: {
+                        paginateByData: true,
+                        pageSize: 1,
+                        periods,
+                    },
+                },
+            })
         }
     }
-
-    await Promise.all(pushPromises)
 }
 
-export async function downloadData(jobData: any): Promise<void> {
+async function downloadDataForDxItems({
+    config,
+    meta,
+}: {
+    config: DataServiceDataSourceItemsConfig
+    meta: {
+        runtimeConfig: DataServiceRuntimeConfig
+        mainConfig: DataServiceConfig
+        periodId: string
+        runId: string
+    }
+}) {
     try {
-        const { mainConfigId, isDelete } = jobData
-        const mainConfigForClient = await fetchMainConfiguration(mainConfigId)
-        const client = isDelete
+        const dimensions = getDimensions({
+            runtimeConfig: meta.runtimeConfig,
+            mappingConfig: config,
+            periodId: meta.periodId,
+        })
+        const heavyDimension = meta.runtimeConfig.paginateByData
+            ? 'dx'
+            : Object.keys(dimensions).reduce((acc, value) => {
+                  if (
+                      (dimensions[acc]?.length ?? 0) >
+                      (dimensions[value]?.length ?? 0)
+                  )
+                      return acc
+                  return value
+              }, Object.keys(dimensions)[0])
+        const pageSize = meta.runtimeConfig.pageSize ?? 50
+
+        if (dimensions[heavyDimension]!.length <= pageSize) {
+            logger.info(
+                `Heavy dimension is small enough to download all at once`
+            )
+            const downloadJob = await createDownloadJob({
+                dimensions: dimensions,
+                config,
+                runId: meta.runId,
+            })
+            pushToQueue({
+                queue: Queues.DATA_DOWNLOAD,
+                reference: downloadJob.uid,
+            })
+            return
+        }
+        logger.info(
+            `Done. Heavy dimension is ${heavyDimension}. Data will be fetched by paginating ${heavyDimension} in chunks of ${pageSize}`
+        )
+        const iterations = chunk(dimensions[heavyDimension], pageSize)
+        for (const iteration of iterations) {
+            const paginatedDimensions = {
+                ...dimensions,
+                [heavyDimension]: iteration,
+            }
+            const downloadJob = await createDownloadJob({
+                dimensions: paginatedDimensions,
+                config,
+                runId: meta.runId,
+            })
+            pushToQueue({
+                queue: Queues.DATA_DOWNLOAD,
+                reference: downloadJob.uid,
+            })
+        }
+    } catch (e) {
+        if (e instanceof Error) {
+            logWorker(
+                'error',
+                `Could not download data for ${config.id}: ${e.message}`
+            )
+        }
+        throw e
+    }
+}
+
+async function downloadDataForAttributeItems({
+    config,
+    meta,
+}: {
+    config: DataServiceAttributeValuesDataItemsSource
+    meta: {
+        runtimeConfig: DataServiceRuntimeConfig
+        mainConfig: DataServiceConfig
+        periodId: string
+        runId: string
+    }
+}) {
+    try {
+        logger.info(`Getting details for category ${config.attributeId}`)
+        categoriesMeta[config.attributeId] = await getCategoryMetadata(
+            config.attributeId
+        )
+        if (!categoriesMeta[config.attributeId]) {
+            logger.error(`Could not get metadata for ${config.attributeId}`)
+            throw Error(`Could not get metadata for ${config.attributeId}`)
+        }
+        logger.info(`Details retrieved for category ${config.attributeId}`)
+        const dimensions = getDimensions({
+            runtimeConfig: meta.runtimeConfig,
+            mappingConfig: config,
+            periodId: meta.periodId,
+        })
+        const heavyDimension = meta.runtimeConfig.paginateByData
+            ? 'dx'
+            : Object.keys(dimensions).reduce((acc, value) => {
+                  if (
+                      (dimensions[acc]?.length ?? 0) >
+                      (dimensions[value]?.length ?? 0)
+                  )
+                      return acc
+                  return value
+              }, Object.keys(dimensions)[0])
+        const pageSize = meta.runtimeConfig.pageSize ?? 50
+        const categoryOptions = config.attributeOptions
+        const iterations = chunk(dimensions[heavyDimension], pageSize)
+
+        logger.info(
+            `Expected iterations ${iterations.length} for ${heavyDimension} with ${categoryOptions.length} options`
+        )
+        for (const categoryOption of categoryOptions) {
+            logger.info(`Downloading data for ${categoryOption}`)
+            for (const iteration of iterations) {
+                const paginatedDimensions = {
+                    ...dimensions,
+                    [heavyDimension]: iteration,
+                }
+                logger.info(
+                    `Downloading data for dimensions ${JSON.stringify(paginatedDimensions)} and filter ${JSON.stringify(
+                        {
+                            [config.attributeId]: [categoryOption],
+                        }
+                    )}`
+                )
+                const downloadJob = await createDownloadJob({
+                    dimensions: paginatedDimensions,
+                    config,
+                    filters: {
+                        [config.attributeId]: [categoryOption],
+                    },
+                    runId: meta.runId,
+                })
+                pushToQueue({
+                    queue: Queues.DATA_DOWNLOAD,
+                    reference: downloadJob.uid,
+                })
+            }
+        }
+    } catch (e) {
+        if (e instanceof Error) {
+            logger.error(
+                `Could not download data for ${config.id}: ${e.message}`
+            )
+        }
+        throw e
+    }
+}
+
+export async function downloadDataPerConfig({
+    config,
+    meta,
+}: {
+    config: DataServiceDataSourceItemsConfig
+    meta: {
+        runtimeConfig: DataServiceRuntimeConfig
+        mainConfig: DataServiceConfig
+        periodId: string
+        runId: string
+    }
+}) {
+    switch (config.type) {
+        case 'ATTRIBUTE_VALUES':
+            return downloadDataForAttributeItems({ config, meta })
+        case 'DX_VALUES':
+            return downloadDataForDxItems({ config, meta })
+    }
+}
+export async function downloadData(
+    dataDownloadTask: DataDownload & { run: DataRun }
+): Promise<void> {
+    try {
+        const { run, configId } = dataDownloadTask
+        const mainConfigForClient = await fetchMainConfiguration(
+            run.mainConfigId
+        )
+        const config = mainConfigForClient.itemsConfig.find(
+            ({ id }) => id === configId
+        )
+
+        if (!config) {
+            throw new QueuedJobError(
+                `Config ${configId} not found for run ${run.id}`,
+                false
+            )
+        }
+
+        const client = run.isDelete
             ? dhis2Client
             : createDownloadClient({ config: mainConfigForClient })
 
-        const shouldPaginate = await handlePagination(jobData)
-        if (shouldPaginate) {
-            return
-        }
-
-        await processDataDownload(jobData, client)
-    } catch (error: any) {
-        logger.error(`Error processing data download job:`, {
-            error: {
-                message: error.message,
-                stack: error.stack,
-                name: error.name,
-            },
-        })
-        throw error
-    }
-}
-
-async function handlePagination(jobData: any): Promise<boolean> {
-    const {
-        mainConfigId,
-        mainConfig,
-        periodId,
-        config,
-        runtimeConfig,
-        overrideDimensions,
-        isDelete,
-    } = jobData
-
-    const baseDimensions: any = getDimensions({
-        runtimeConfig,
-        mappingConfig: config,
-        periodId,
-    })
-
-    const heavyDimension = runtimeConfig.paginateByData
-        ? 'dx'
-        : Object.keys(baseDimensions).reduce((acc, key) =>
-              (baseDimensions[acc]?.length || 0) >
-              (baseDimensions[key]?.length || 0)
-                  ? acc
-                  : key
-          )
-
-    const pageSize = runtimeConfig.pageSize ?? 50
-
-    if (
-        overrideDimensions ||
-        baseDimensions[heavyDimension].length <= pageSize
-    ) {
-        return false
-    }
-
-    const chunks = chunk(baseDimensions[heavyDimension], pageSize)
-    const limit = pLimit(10)
-
-    await Promise.all(
-        chunks.map((part) =>
-            limit(async () => {
-                const paginatedDimensions = {
-                    ...baseDimensions,
-                    [heavyDimension]: part,
-                }
-
-                await pushToQueue(
-                    mainConfigId,
-                    'dataDownload',
-                    {
-                        mainConfigId,
-                        mainConfig,
-                        periodId,
-                        config,
-                        runtimeConfig,
-                        isDelete: isDelete || false,
-                        overrideDimensions: paginatedDimensions,
-                    },
-                    {
-                        queuedAt: new Date().toISOString(),
-                        paginatedFrom: heavyDimension,
-                    }
-                )
-            })
-        )
-    )
-
-    logger.info(`Successfully queued ${chunks.length} paginated download jobs`)
-    return true
-}
-
-async function processDataDownload(jobData: any, client: any): Promise<void> {
-    try {
-        const {
-            mainConfigId,
-            mainConfig,
-            periodId,
+        await processDataDownload({
+            client,
+            timeout: run.timeout,
             config,
-            runtimeConfig,
-            overrideDimensions,
-            isDelete,
-        } = jobData
+            task: dataDownloadTask,
+        })
+    } catch (error) {
+        if (error instanceof Error) {
+            handleError(error)
+        }
+    }
+}
 
-        const dimensions =
-            overrideDimensions ||
-            getDimensions({
-                runtimeConfig,
-                mappingConfig: config,
-                periodId,
-            })
-
+async function processDataDownload({
+    client,
+    timeout,
+    config,
+    task,
+}: {
+    client: AxiosInstance
+    timeout?: number | null
+    config: DataServiceDataSourceItemsConfig
+    task: DataDownload & { run: DataRun }
+}): Promise<void> {
+    const dimensions = task.dimensions as Dimensions
+    const filters = (task.filters as Dimensions | null) ?? undefined
+    try {
         const data = await fetchPagedData({
             dimensions,
-            filters: config.filters,
+            filters,
             client,
-            timeout: runtimeConfig.timeout,
+            timeout: timeout ?? undefined,
         })
 
         if (isEmpty(data.dataValues)) {
@@ -301,7 +358,7 @@ async function processDataDownload(jobData: any, client: any): Promise<void> {
                       data,
                       dataItemsConfig: config,
                       categoryOptionId: head(
-                          config.filters![
+                          filters![
                               (
                                   config as DataServiceAttributeValuesDataItemsSource
                               ).attributeId
@@ -318,29 +375,27 @@ async function processDataDownload(jobData: any, client: any): Promise<void> {
         if (!isEmpty(processedData.dataValues)) {
             const filename = await saveDataFile({
                 data: processedData.dataValues,
-                config: mainConfig,
                 itemsConfig: config,
             })
-            const jobData = {
-                mainConfigId,
+            const createdUploadTask = await createUploadJob({
                 filename,
-                isDelete: isDelete ? true : false,
-                payload: processedData,
-            }
-
-            if (isDelete) {
-                pushToQueue(mainConfigId, 'dataDeletion', jobData, {
-                    queuedAt: new Date().toISOString(),
-                    downloadedFrom: config.id,
-                })
-            } else {
-                pushToQueue(mainConfigId, 'dataUpload', jobData, {
-                    queuedAt: new Date().toISOString(),
-                    downloadedFrom: config.id,
-                })
-            }
+                runId: task.runId,
+                downloadId: task.id,
+                isDelete: task.run.isDelete,
+            })
+            pushToQueue({
+                queue: Queues.DATA_UPLOAD,
+                reference: createdUploadTask.uid,
+            })
         }
     } catch (error) {
-        throw error
+        if (error instanceof QueuedJobError) {
+            throw error
+        }
+        if (error instanceof Error) {
+            throw new QueuedJobError(error.message, false)
+        } else {
+            throw new QueuedJobError('Unknown error', false)
+        }
     }
 }

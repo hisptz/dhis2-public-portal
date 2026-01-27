@@ -1,112 +1,13 @@
-import { NextFunction, Request, Response } from 'express'
+import { Request, Response } from 'express'
 import logger from '@/logging'
 import { Operation } from 'express-openapi'
 import { dataDownloadBodySchema } from '@packages/shared/schemas'
 import { AxiosError } from 'axios'
 import { fromError } from 'zod-validation-error'
 import { downloadAndQueueData } from '@/services/data-migration/data-download'
+import { ZodError } from 'zod'
 
-function parseDataDownloadRequestData(query: any) {
-    const data: any = {
-        dataItemsConfigIds: [],
-        isDelete: false,
-        runtimeConfig: {
-            periods: [],
-            pageSize: 1000,
-            timeout: 30000,
-            paginateByData: false,
-        },
-    }
-
-    try {
-        if (query.dataItemsConfigIds) {
-            const decoded = decodeURIComponent(query.dataItemsConfigIds)
-            data.dataItemsConfigIds = JSON.parse(decoded)
-        }
-        if (query.runtimeConfig) {
-            const decoded = decodeURIComponent(query.runtimeConfig)
-            data.runtimeConfig = {
-                ...data.runtimeConfig,
-                ...JSON.parse(decoded),
-            }
-        }
-        if (query.isDelete) {
-            const decoded = decodeURIComponent(query.isDelete)
-            data.isDelete = JSON.parse(decoded)
-        }
-    } catch (parseError) {
-        logger.warn('Failed to parse JSON from query parameters:', parseError)
-    }
-
-    return data
-}
-
-export const GET: Operation = async (
-    req: Request,
-    res: Response,
-    next: NextFunction
-) => {
-    try {
-        const { id: configId } = req.params
-
-        logger.info('GET request for data download:', {
-            configId,
-            query: req.query,
-        })
-
-        const requestData = parseDataDownloadRequestData(req.query)
-        const parsedBody = dataDownloadBodySchema.parse(requestData)
-
-        await downloadAndQueueData({
-            mainConfigId: configId,
-            dataItemsConfigIds: parsedBody.dataItemsConfigIds,
-            runtimeConfig: parsedBody.runtimeConfig,
-            isDelete: parsedBody.isDelete,
-        })
-
-        logger.info(
-            `Data download jobs successfully queued for config: ${configId}`
-        )
-
-        res.json({
-            status: 'queued',
-            message: `Data download process started for config ${configId}`,
-        })
-    } catch (e: any) {
-        logger.error(
-            `Error in data download GET endpoint for config ${req.params.id}:`,
-            e
-        )
-
-        if (e instanceof AxiosError) {
-            res.status(e.status ?? 500).json({
-                status: 'failed',
-                message: e.message,
-                details: e.response?.data,
-            })
-            return
-        } else if (e.errors) {
-            logger.error(`Invalid request body: ${e.message}`)
-            res.status(400).json({
-                status: 'failed',
-                message: fromError(e).toString(),
-                details: e.errors,
-            })
-            return
-        } else {
-            res.status(500).json({
-                status: 'failed',
-                message: e.message,
-            })
-        }
-    }
-}
-
-export const POST: Operation = async (
-    req: Request,
-    res: Response,
-    next: NextFunction
-) => {
+export const POST: Operation = async (req: Request, res: Response) => {
     try {
         const { id: configId } = req.params
         const parsedBody = dataDownloadBodySchema.parse(req.body)
@@ -126,7 +27,20 @@ export const POST: Operation = async (
             status: 'queued',
             message: `Data download process started for config ${configId}`,
         })
-    } catch (e: any) {
+    } catch (e) {
+        if (e instanceof ZodError) {
+            res.status(400).json({
+                status: 'failed',
+                message: fromError(e).toString(),
+                details: e.issues.map((issue) => ({
+                    code: issue.code,
+                    path: issue.path.join('.'),
+                    message: issue.message,
+                })),
+            })
+            return
+        }
+
         logger.error(
             `Error in data download endpoint for config ${req.params.id}:`,
             e
@@ -139,20 +53,18 @@ export const POST: Operation = async (
                 details: e.response?.data,
             })
             return
-        } else if (e.errors) {
-            logger.error(`Invalid request body: ${e.message}`)
-            res.status(400).json({
-                status: 'failed',
-                message: fromError(e).toString(),
-                details: e.errors,
-            })
-            return
-        } else {
+        }
+        if (e instanceof Error) {
             res.status(500).json({
                 status: 'failed',
                 message: e.message,
             })
+            return
         }
+        res.status(500).json({
+            status: 'failed',
+            message: `Unknown Error: ${e}`,
+        })
     }
 }
 
@@ -387,67 +299,6 @@ POST.apiDoc = {
                     },
                 },
             },
-        },
-    },
-}
-
-GET.apiDoc = {
-    summary: 'Start data download process (using query parameters)',
-    description:
-        'Initiates the data download process using query parameters. This method is preferred when using DHIS2 routes.',
-    operationId: 'startDataDownloadWithQueryParams',
-    tags: ['DATA MIGRATION'],
-    parameters: [
-        {
-            in: 'path',
-            name: 'id',
-            required: true,
-            schema: { type: 'string' },
-            description: 'Configuration ID for the data source',
-        },
-        {
-            in: 'query',
-            name: 'dataItemsConfigIds',
-            required: true,
-            schema: { type: 'string' },
-            description: 'JSON string of data items configuration IDs array',
-        },
-        {
-            in: 'query',
-            name: 'runtimeConfig',
-            required: true,
-            schema: { type: 'string' },
-            description: 'JSON string of runtime configuration object',
-        },
-    ],
-    responses: {
-        '200': {
-            description: 'Data download process started successfully',
-            content: {
-                'application/json': {
-                    schema: {
-                        type: 'object',
-                        properties: {
-                            status: {
-                                type: 'string',
-                                enum: ['queued'],
-                                example: 'queued',
-                            },
-                            message: {
-                                type: 'string',
-                                example:
-                                    'Data download process started for config config-123',
-                            },
-                        },
-                    },
-                },
-            },
-        },
-        '400': {
-            description: 'Bad request - invalid request parameters',
-        },
-        '500': {
-            description: 'Internal server error',
         },
     },
 }

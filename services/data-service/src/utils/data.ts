@@ -2,7 +2,6 @@ import logger from '../logging'
 import { AxiosError, AxiosInstance } from 'axios'
 import {
     DataServiceAttributeValuesDataItemsSource,
-    DataServiceConfig,
     DataServiceDataItemConfig,
     DataServiceDataSourceItemsConfig,
 } from '@packages/shared/schemas'
@@ -13,6 +12,7 @@ import { categoriesMeta } from '@/variables/meta'
 import * as fs from 'node:fs'
 import * as path from 'node:path'
 import { seq } from 'async'
+import { handleError } from '@/utils/error'
 
 export interface DataResponse {
     dataValues: Array<{
@@ -79,20 +79,8 @@ export async function fetchPagedData({
             ),
         }
     } catch (e) {
-        if (e instanceof AxiosError) {
-            logger.error(`Axios Error fetching data: ${e.message}`)
-            logger.error(
-                `Axios Status code: ${e.response?.status} - ${e.response?.data.message}`
-            )
-            throw e
-        } else {
-            if (e instanceof Error) {
-                logger.error(`Error fetching data: ${e.message}`)
-            } else {
-                logger.error(`Error fetching data: Unknown error`)
-                logger.error(`Error: ${JSON.stringify(e)}`)
-            }
-            throw e
+        if (e instanceof Error) {
+            handleError(e)
         }
     }
 }
@@ -340,13 +328,11 @@ export async function processData({
 
 export async function saveDataFile({
     data,
-    config,
 }: {
     data: DataValuePayload[]
-    config: DataServiceConfig
     itemsConfig: DataServiceDataSourceItemsConfig
 }): Promise<string> {
-    const fileLocation = `outputs/${config.id}/${v4()}.json`
+    const fileLocation = `outputs/data/${v4()}.json`
     const payload = {
         dataValues: data,
     }

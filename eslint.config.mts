@@ -6,6 +6,7 @@ import { defineConfig, globalIgnores } from 'eslint/config'
 import prettier from 'eslint-config-prettier/flat'
 import { fileURLToPath } from 'url'
 import { includeIgnoreFile } from '@eslint/compat'
+// import reactHooks from 'eslint-plugin-react-hooks'
 
 const gitignorePath = fileURLToPath(new URL('.gitignore', import.meta.url))
 

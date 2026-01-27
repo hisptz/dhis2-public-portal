@@ -15,7 +15,6 @@ onlyBuiltDependencies:
     - '@dhis2/cli-helpers-engine'
     - '@tailwindcss/oxide'
     - core-js-pure
-    - cypress
     - esbuild
 
 publicHoistPattern:

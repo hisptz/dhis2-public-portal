@@ -12,6 +12,7 @@ import {
 
 import { z } from 'zod'
 import { convertSync } from '@openapi-contrib/json-schema-to-openapi-schema'
+import { dbClient } from '@/clients/prisma'
 
 export const GET: Operation = async (req: Request, res: Response) => {
     try {
@@ -24,6 +25,25 @@ export const GET: Operation = async (req: Request, res: Response) => {
                 timestamp: new Date().toISOString(),
             })
         }
+
+        const [data, meta] = await Promise.all([
+            await dbClient.dataRun.findFirst({
+                where: {
+                    mainConfigId: configId,
+                },
+                orderBy: {
+                    startedAt: 'desc',
+                },
+            }),
+            await dbClient.metadataRun.findFirst({
+                where: {
+                    mainConfigId: configId,
+                },
+                orderBy: {
+                    startedAt: 'desc',
+                },
+            }),
+        ])
 
         const queueNames = getQueueNames(configId)
         const allQueueNames = [

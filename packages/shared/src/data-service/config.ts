@@ -70,6 +70,8 @@ export const dataServiceConfigSchema = z.object({
     source: dataSourceSchema,
     itemsConfig: z.array(dataSourceItemsConfigSchema),
     visualizations: z.array(z.object({ id: z.string() })),
+    maps: z.array(z.object({ id: z.string() })),
+    dashboards: z.array(z.object({ id: z.string() })),
 })
 
 export type DataServiceConfig = z.infer<typeof dataServiceConfigSchema>

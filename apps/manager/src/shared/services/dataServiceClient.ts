@@ -103,59 +103,17 @@ export async function downloadMetadata<
     data: RequestDataType,
     serverVersion?: ServerVersion
 ): Promise<ResponseDataType> {
-    const useQueryParams = isVersion42OrHigher(serverVersion)
-
-    if (useQueryParams) {
-        const queryParams = new URLSearchParams()
-        if (data.metadataSource) {
-            queryParams.set('metadataSource', data.metadataSource as string)
-        }
-
-        if (
-            data.selectedVisualizations &&
-            Array.isArray(data.selectedVisualizations) &&
-            data.selectedVisualizations.length > 0
-        ) {
-            queryParams.set(
-                'selectedVisualizations',
-                JSON.stringify(data.selectedVisualizations)
-            )
-        }
-
-        if (
-            data.selectedMaps &&
-            Array.isArray(data.selectedMaps) &&
-            data.selectedMaps.length > 0
-        ) {
-            queryParams.set('selectedMaps', JSON.stringify(data.selectedMaps))
-        }
-
-        if (
-            data.selectedDashboards &&
-            Array.isArray(data.selectedDashboards) &&
-            data.selectedDashboards.length > 0
-        ) {
-            queryParams.set(
-                'selectedDashboards',
-                JSON.stringify(data.selectedDashboards)
-            )
-        }
-
-        const endpoint = `/metadata-download/${configId}?${queryParams.toString()}`
-        return queryDataServiceRoute<ResponseDataType>(engine, endpoint)
-    } else {
-        return executeDataServiceRoute<ResponseDataType>(
-            engine,
-            `/metadata-download/${configId}`,
-            {
-                metadataSource: data.metadataSource || 'source',
-                selectedVisualizations: data.selectedVisualizations || [],
-                selectedMaps: data.selectedMaps || [],
-                selectedDashboards: data.selectedDashboards || [],
-            },
-            'create'
-        )
-    }
+    return executeDataServiceRoute<ResponseDataType>(
+        engine,
+        `/metadata-download/${configId}`,
+        {
+            metadataSource: data.metadataSource || 'source',
+            selectedVisualizations: data.selectedVisualizations || [],
+            selectedMaps: data.selectedMaps || [],
+            selectedDashboards: data.selectedDashboards || [],
+        },
+        'create'
+    )
 }
 
 export async function downloadData<
@@ -173,78 +131,17 @@ export async function downloadData<
     data: RequestDataType,
     serverVersion?: ServerVersion
 ): Promise<ResponseDataType> {
-    const useQueryParams = isVersion42OrHigher(serverVersion)
-    if (useQueryParams) {
-        const queryParams = new URLSearchParams()
-
-        if (data.dataItemsConfigIds && Array.isArray(data.dataItemsConfigIds)) {
-            queryParams.set(
-                'dataItemsConfigIds',
-                JSON.stringify(data.dataItemsConfigIds)
-            )
-        }
-
-        if (data.runtimeConfig) {
-            queryParams.set('runtimeConfig', JSON.stringify(data.runtimeConfig))
-        }
-        if (data.isDelete) {
-            queryParams.set('isDelete', JSON.stringify(data.isDelete))
-        }
-
-        const endpoint = `/data-download/${configId}?${queryParams.toString()}`
-        return queryDataServiceRoute(engine, endpoint)
-    } else {
-        return executeDataServiceRoute<ResponseDataType>(
-            engine,
-            `/data-download/${configId}`,
-            {
-                dataItemsConfigIds: data.dataItemsConfigIds || [],
-                runtimeConfig: data.runtimeConfig || {},
-                isDelete: data.isDelete || false,
-            },
-            'create'
-        )
-    }
+    return executeDataServiceRoute<ResponseDataType>(
+        engine,
+        `/data-download/${configId}`,
+        {
+            dataItemsConfigIds: data.dataItemsConfigIds || [],
+            runtimeConfig: data.runtimeConfig || {},
+            isDelete: data.isDelete || false,
+        },
+        'create'
+    )
 }
-
-//TODO: @Allen please delete this if it is not used anymore
-
-// export async function startDataDeletion(
-//     engine: DataEngine,
-//     configId: string,
-//     data: any,
-//     serverVersion?: ServerVersion
-// ): Promise<ApiResponse> {
-//     const useQueryParams = isVersion42OrHigher(serverVersion)
-//
-//     if (useQueryParams) {
-//         const queryParams = new URLSearchParams()
-//
-//         if (data.dataItemsConfigIds && Array.isArray(data.dataItemsConfigIds)) {
-//             queryParams.set(
-//                 'dataItemsConfigIds',
-//                 JSON.stringify(data.dataItemsConfigIds)
-//             )
-//         }
-//
-//         if (data.runtimeConfig) {
-//             queryParams.set('runtimeConfig', JSON.stringify(data.runtimeConfig))
-//         }
-//
-//         const endpoint = `/data-delete/${configId}?${queryParams.toString()}`
-//         return queryDataServiceRoute(engine, endpoint)
-//     } else {
-//         return executeDataServiceRoute(
-//             engine,
-//             `/data-delete/${configId}`,
-//             {
-//                 dataItemsConfigIds: data.dataItemsConfigIds || [],
-//                 runtimeConfig: data.runtimeConfig || {},
-//             },
-//             'create'
-//         )
-//     }
-// }
 
 export async function createQueues<
     ResponseDataType extends Record<symbol | number | string, unknown> = Record<

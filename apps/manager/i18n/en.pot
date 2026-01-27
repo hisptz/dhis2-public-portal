@@ -5,8 +5,8 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
-"POT-Creation-Date: 2026-01-22T09:46:45.673Z\n"
-"PO-Revision-Date: 2026-01-22T09:46:45.674Z\n"
+"POT-Creation-Date: 2026-01-27T14:03:24.989Z\n"
+"PO-Revision-Date: 2026-01-27T14:03:24.989Z\n"
 
 msgid "Could not get Appearance configurations"
 msgstr "Could not get Appearance configurations"
@@ -308,6 +308,9 @@ msgstr "Test connection"
 msgid "Run configuration"
 msgstr "Run configuration"
 
+msgid "Please select at least one metadata type"
+msgstr "Please select at least one metadata type"
+
 msgid "Please select at least one period for validation"
 msgstr "Please select at least one period for validation"
 
@@ -326,6 +329,9 @@ msgstr ""
 
 msgid "Failed to start service"
 msgstr "Failed to start service"
+
+msgid "There are errors with your form. Please fix them before submitting again"
+msgstr "There are errors with your form. Please fix them before submitting again"
 
 msgid "Run"
 msgstr "Run"

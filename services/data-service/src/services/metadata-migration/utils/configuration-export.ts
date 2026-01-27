@@ -1,7 +1,6 @@
 import logger from '@/logging'
 import { getSourceClientFromConfig } from '@/clients/dhis2'
 import { DatastoreNamespaces } from '@packages/shared/constants'
-import { pushToQueue } from '../../../rabbit/publisher'
 
 export interface ConfigurationData {
     namespace: string
@@ -27,11 +26,11 @@ export async function exportAndQueueConfiguration(
         const configuration = await exportConfiguration(configId)
 
         // Queue the entire configuration for upload using metadataUpload queue
-        await pushToQueue(configId, 'metadataUpload', {
-            type: 'configuration',
-            configuration,
-            timestamp: new Date().toISOString(),
-        })
+        // await pushToQueue(configId, 'metadataUpload', {
+        //     type: 'configuration',
+        //     configuration,
+        //     timestamp: new Date().toISOString(),
+        // })
 
         logger.info(
             `Configuration successfully exported and queued for upload (config: ${configId})`

@@ -2,7 +2,12 @@ import {
     DataServiceConfig,
     dataServiceRuntimeConfig,
 } from '@packages/shared/schemas'
-import { FormProvider, useForm, useWatch } from 'react-hook-form'
+import {
+    FormProvider,
+    SubmitErrorHandler,
+    useForm,
+    useWatch,
+} from 'react-hook-form'
 import {
     Button,
     ButtonStrip,
@@ -30,32 +35,75 @@ import {
 import { useNavigate } from '@tanstack/react-router'
 import { useStartValidation } from '../../../../../DataConfiguration/components/Validationlogs/hooks/validation'
 import { zodResolver } from '@hookform/resolvers/zod'
+import { capitalize } from 'lodash'
 
-const runConfigSchema = z.object({
+const baseRunConfigSchema = z.object({
     service: z.enum([
         'metadata-migration',
         'data-migration',
         'data-validation',
         'data-deletion',
     ]),
-    metadataSource: z.enum(['source', 'flexiportal-config']).optional(),
-    metadataTypes: z
-        .array(z.enum(['visualizations', 'maps', 'dashboards']))
-        .optional(),
-    selectedVisualizations: z
-        .array(z.object({ id: z.string(), name: z.string() }))
-        .optional(),
-    selectedMaps: z
-        .array(z.object({ id: z.string(), name: z.string() }))
-        .optional(),
-    selectedDashboards: z
-        .array(z.object({ id: z.string(), name: z.string() }))
-        .optional(),
+})
+
+const baseMetaMigrationSchema = baseRunConfigSchema.extend({
+    service: z.literal('metadata-migration'),
+    metadataSource: z.enum(['source', 'flexiportal-config']),
+})
+
+const sourceMetaMigrationSchema = baseMetaMigrationSchema
+    .extend({
+        metadataSource: z.literal('source'),
+        metadataTypes: z
+            .array(z.enum(['visualizations', 'maps', 'dashboards']))
+            .optional(),
+        selectedVisualizations: z
+            .array(z.object({ id: z.string(), name: z.string() }))
+            .optional(),
+        selectedMaps: z
+            .array(z.object({ id: z.string(), name: z.string() }))
+            .optional(),
+        selectedDashboards: z
+            .array(z.object({ id: z.string(), name: z.string() }))
+            .optional(),
+    })
+    .superRefine((data, context) => {
+        const hasAnyMeta =
+            !!data.selectedVisualizations?.length ||
+            !!data.selectedMaps?.length ||
+            !!data.selectedDashboards?.length
+        if (!hasAnyMeta) {
+            data.metadataTypes?.forEach((type) => {
+                context.addIssue({
+                    code: 'custom',
+                    message: i18n.t('Please select at least one metadata type'),
+                    path: [`selected${capitalize(type)}`],
+                })
+            })
+        }
+    })
+
+const flexiPortalMetaMigrationSchema = baseMetaMigrationSchema.extend({
+    metadataSource: z.literal('flexiportal-config'),
+})
+
+const metadataMigrationSchema = z.discriminatedUnion('metadataSource', [
+    sourceMetaMigrationSchema,
+    flexiPortalMetaMigrationSchema,
+])
+
+const dataMigrationSchema = baseRunConfigSchema.extend({
+    service: z.enum(['data-migration', 'data-validation', 'data-deletion']),
     runtimeConfig: dataServiceRuntimeConfig.extend({
         periods: z.array(z.string()).optional(),
     }),
     dataItemsConfigIds: z.array(z.string()).min(1, i18n.t('')),
 })
+
+const runConfigSchema = z.discriminatedUnion('service', [
+    metadataMigrationSchema,
+    dataMigrationSchema,
+])
 
 export type RunConfigFormValues = z.infer<typeof runConfigSchema>
 
@@ -75,7 +123,7 @@ export function RunConfigForm({
         from: '/data-service-configuration/',
     })
     const startValidation = useStartValidation(config.id, config)
-    const { show } = useAlert(
+    const { show, hide: hideAlert } = useAlert(
         ({ message }) => message,
         ({ type }) => ({ ...type, duration: 3000 })
     )
@@ -88,13 +136,6 @@ export function RunConfigForm({
             selectedVisualizations: [],
             selectedMaps: [],
             selectedDashboards: [],
-            runtimeConfig: {
-                pageSize: 10,
-                paginateByData: false,
-                timeout: 1000 * 60 * 5,
-                periods: [],
-            },
-            dataItemsConfigIds: [],
         },
     })
 
@@ -113,20 +154,28 @@ export function RunConfigForm({
 
     const onSubmit = async (data: RunConfigFormValues) => {
         try {
+            hideAlert()
             let result
             if (data.service === 'metadata-migration') {
-                const metadataRequest = {
-                    metadataSource: data.metadataSource || 'source',
-                    selectedVisualizations: data.selectedVisualizations || [],
-                    selectedMaps: data.selectedMaps || [],
-                    selectedDashboards: data.selectedDashboards || [],
+                if (data.metadataSource === 'source') {
+                    const metadataRequest = {
+                        metadataSource: data.metadataSource,
+                        selectedVisualizations:
+                            data.selectedVisualizations || [],
+                        selectedMaps: data.selectedMaps || [],
+                        selectedDashboards: data.selectedDashboards || [],
+                    }
+                    result = await downloadMetadata(
+                        engine,
+                        config.id,
+                        metadataRequest,
+                        serverVersion
+                    )
                 }
-                result = await downloadMetadata(
-                    engine,
-                    config.id,
-                    metadataRequest,
-                    serverVersion
-                )
+
+                if (data.metadataSource === 'flexiportal-config') {
+                    //TODO: handle this
+                }
             } else if (data.service === 'data-deletion') {
                 const deletionRequest = {
                     dataItemsConfigIds: data.dataItemsConfigIds,
@@ -253,6 +302,15 @@ export function RunConfigForm({
                 type: { critical: true },
             })
         }
+    }
+    const onError: SubmitErrorHandler<RunConfigFormValues> = (errors) => {
+        console.error(errors)
+        show({
+            message: i18n.t(
+                'There are errors with your form. Please fix them before submitting again'
+            ),
+            type: { critical: true },
+        })
     }
     return (
         <FormProvider {...form}>
@@ -424,7 +482,9 @@ export function RunConfigForm({
                         <Button onClick={onClose}>{i18n.t('Cancel')}</Button>
                         <Button
                             loading={form.formState.isSubmitting}
-                            onClick={(_, e) => form.handleSubmit(onSubmit)(e)}
+                            onClick={(_, e) =>
+                                form.handleSubmit(onSubmit, onError)(e)
+                            }
                             primary
                         >
                             {form.formState.isSubmitting

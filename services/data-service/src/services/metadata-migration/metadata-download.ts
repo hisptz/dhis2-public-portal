@@ -22,7 +22,6 @@ import {
     getDefaultCategoryValues,
     getDestinationDefaultCategoryValues,
 } from '../../utils/default-categories'
-import { pushToQueue } from '../../rabbit/publisher'
 import { exportConfiguration } from './utils/configuration-export'
 import { getMetadataFromDashboards } from '../../utils/dashboard'
 import { DatastoreNamespaces } from '@packages/shared/constants'
@@ -73,20 +72,20 @@ export async function downloadAndQueueMetadata(
         )
         const metadata = await downloadMetadata(options)
 
-        await pushToQueue(configId, 'metadataUpload', {
-            metadata,
-            configId,
-            downloadedAt: new Date().toISOString(),
-        })
+        // await pushToQueue(configId, 'metadataUpload', {
+        //     metadata,
+        //     configId,
+        //     downloadedAt: new Date().toISOString(),
+        // })
 
         if (metadataSource === 'flexiportal-config') {
             const configuration = await exportConfiguration(configId)
 
-            await pushToQueue(configId, 'metadataUpload', {
-                type: 'configuration',
-                configuration,
-                timestamp: new Date().toISOString(),
-            })
+            // await pushToQueue(configId, 'metadataUpload', {
+            //     type: 'configuration',
+            //     configuration,
+            //     timestamp: new Date().toISOString(),
+            // })
         }
         logger.info(
             `Metadata successfully downloaded and queued for upload (config: ${configId})`

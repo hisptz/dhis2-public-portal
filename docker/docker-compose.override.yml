@@ -9,6 +9,7 @@ services:
             timeout: 10s
             retries: 5
             start_period: 10s
+        restart: unless-stopped
     data-service-api:
         image: hisptanzania/dhis2-public-portal-data-service:${TAG:-latest}
         depends_on:

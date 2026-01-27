@@ -4,11 +4,17 @@ import { useGetDataSources } from '../hooks/data'
 import { FullLoader } from '../../FullLoader'
 import ErrorPage from '../../ErrorPage/ErrorPage'
 
-const DataSourcesContext = createContext<DataServiceConfig[]>([])
+const DataSourcesContext = createContext<DataServiceConfig[] | null>(null)
 const RefreshDataSourcesContext = createContext<() => void>(() => {})
 
 export function useDataSources() {
-    return useContext(DataSourcesContext)
+    const dataSources = useContext(DataSourcesContext)
+    if (dataSources === null) {
+        throw new Error(
+            `useDataSources must be used within a DataSourcesProvider`
+        )
+    }
+    return dataSources
 }
 
 export function useRefreshDataSources() {
