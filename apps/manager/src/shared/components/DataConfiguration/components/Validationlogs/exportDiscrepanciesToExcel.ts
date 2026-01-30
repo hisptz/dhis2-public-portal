@@ -12,7 +12,7 @@ const COMPARISON_COLORS = {
     },
     sourceGreater: {
         fill: 'FFFEF3C7',  // Yellow background
-        font: 'FFDC2626'   // Orange-red text
+        font: 'FFEA580C'   // Orange text
     }
 };
 
@@ -42,7 +42,7 @@ export async function exportDiscrepanciesToExcel(discrepancies: ValidationDiscre
         views: [{ state: 'frozen', xSplit: 1, ySplit: 2 }]
     });
 
-    const dataElementDataMap = new Map<string, Map<string, { source: any; destination: any }>>();
+    const dataElementDataMap = new Map<string, Map<string, { source: any; destination: any; hasDiscrepancy: boolean }>>();
     const periods = new Set<string>();
     const dataElementNames = new Map<string, string>();
     const discrepancyMap = new Map<string, ValidationDiscrepancy>();
@@ -59,16 +59,27 @@ export async function exportDiscrepanciesToExcel(discrepancies: ValidationDiscre
         const dataElementMap = dataElementDataMap.get(dataElementCombo)!;
         const key = `${discrepancy.period}-${dataElementCombo}`;
 
+        const hasRealDiscrepancy = !areValuesEquivalent(discrepancy.sourceValue, discrepancy.destinationValue) &&
+            (discrepancy.discrepancyType === 'value_mismatch' || discrepancy.discrepancyType === 'missing_in_destination');
+
         dataElementMap.set(discrepancy.period, {
             source: discrepancy.sourceValue,
-            destination: discrepancy.destinationValue
+            destination: discrepancy.destinationValue,
+            hasDiscrepancy: hasRealDiscrepancy
         });
 
         discrepancyMap.set(key, discrepancy);
     });
 
-    const dataElementsList = Array.from(dataElementDataMap.keys());
+     const dataElementsList = Array.from(dataElementDataMap.keys()).filter((dataElementCombo) => {
+        const dataElementData = dataElementDataMap.get(dataElementCombo)!;
+         return Array.from(dataElementData.values()).some(data => data.hasDiscrepancy);
+    });
     const periodsList = Array.from(periods).sort();
+
+     if (dataElementsList.length === 0) {
+        return;
+    }
 
     // Build header row 1 (Period Names)
     const headerRow1: string[] = ['Data Elements'];
