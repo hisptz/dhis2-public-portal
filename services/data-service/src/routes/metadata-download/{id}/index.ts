@@ -1,16 +1,15 @@
 import { Request, Response } from 'express'
 import logger from '@/logging'
 import { Operation } from 'express-openapi'
+import { metadataMigrationSchema } from '@packages/shared/schemas'
+import { dbClient } from '@/clients/prisma'
+import { MetadataSourceType } from '@/generated/prisma/enums'
+import { pushToQueue } from '@/rabbit/publisher'
+import { Queues } from '@/rabbit/constants'
 
 export const POST: Operation = async (req: Request, res: Response) => {
     try {
         const { id: configId } = req.params
-        const {
-            metadataSource,
-            selectedVisualizations,
-            selectedMaps,
-            selectedDashboards,
-        } = req.body
 
         if (!configId) {
             return res.status(400).json({
@@ -20,49 +19,89 @@ export const POST: Operation = async (req: Request, res: Response) => {
             })
         }
 
-        const data: any = {
-            metadataSource: metadataSource || 'flexiportal-config',
-            selectedVisualizations: selectedVisualizations || [],
-            selectedMaps: selectedMaps || [],
-            selectedDashboards: selectedDashboards || [],
+        const { success, data, error } = metadataMigrationSchema.safeParse(
+            req.body
+        )
+        if (!success || !data) {
+            res.status(400).json({
+                message: 'Invalid request body',
+                errors: error.issues.map((issue) => ({
+                    path: issue.path.join('.'),
+                    message: issue.message,
+                    code: issue.code,
+                })),
+            })
+            return
         }
-
         logger.info(`Metadata download POST request for config: ${configId}`, {
             data,
         })
-
-        const totalItems =
-            data.selectedVisualizations.length +
-            data.selectedMaps.length +
-            data.selectedDashboards.length
-        // await pushToQueue(configId, 'metadataDownload', {
-        //     configId,
-        //     metadataSource: data.metadataSource,
-        //     selectedVisualizations: data.selectedVisualizations,
-        //     selectedMaps: data.selectedMaps,
-        //     selectedDashboards: data.selectedDashboards,
-        //     totalItems,
-        //     requestedAt: new Date().toISOString(),
-        // })
-
-        res.status(202).json({
-            message: 'Metadata download initiated successfully',
-            configId,
-            metadataSource: data.metadataSource,
-            totalItems,
-            status: 'processing',
-            description: `Metadata download queued: ${totalItems} items to process`,
+        const createdDownloadRun = await dbClient.metadataRun.create({
+            data: {
+                mainConfigId: configId,
+                sourceType:
+                    data!.metadataSource === 'source'
+                        ? MetadataSourceType.SOURCE_INSTANCE
+                        : MetadataSourceType.FLEXIPORTAL_CONFIG,
+                ...(data!.metadataSource === 'source'
+                    ? {
+                          visualizations:
+                              data!.selectedVisualizations?.map(
+                                  (viz) => viz.id
+                              ) ?? [],
+                          dashboards:
+                              data!.selectedDashboards?.map(
+                                  (dashboard) => dashboard.id
+                              ) ?? [],
+                          maps: data!.selectedMaps?.map((map) => map.id) ?? [],
+                      }
+                    : {}),
+            },
         })
-    } catch (error: any) {
-        logger.error('Error in metadata download POST endpoint:', error)
-
-        res.status(500).json({
-            error: 'Metadata download failed',
-            message:
-                error.message ||
-                'An unexpected error occurred during metadata download',
-            configId: req.params.id,
+        const queueSuccessful = pushToQueue({
+            queue: Queues.METADATA_PROCESSING,
+            reference: createdDownloadRun.uid,
         })
+        if (queueSuccessful) {
+            logger.info(`Metadata download created for config: ${configId}`, {})
+            res.status(202).json({
+                message: 'Metadata download initiated successfully',
+                configId,
+                status: 'queued',
+            })
+        } else {
+            await dbClient.metadataRun.delete({
+                where: {
+                    uid: createdDownloadRun.uid,
+                },
+            })
+            logger.error(
+                `Failed to queue metadata download for config: ${configId}`,
+                {}
+            )
+            res.status(500).json({
+                error: 'Metadata download failed',
+                message: 'Failed to queue metadata download',
+            })
+        }
+    } catch (error) {
+        if (error instanceof Error) {
+            logger.error('Error in metadata download POST endpoint:', error)
+            res.status(500).json({
+                error: 'Metadata download failed',
+                message:
+                    error.message ||
+                    'An unexpected error occurred during metadata download',
+                configId: req.params.id,
+            })
+        } else {
+            logger.error('Error in metadata download POST endpoint:', error)
+            res.status(500).json({
+                error: 'Metadata download failed',
+                message:
+                    'An unexpected error occurred during metadata download',
+            })
+        }
     }
 }
 

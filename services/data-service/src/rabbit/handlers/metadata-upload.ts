@@ -1,13 +1,8 @@
-import { z } from 'zod'
 import { Channel, ConsumeMessage } from 'amqplib'
 import logger from '@/logging'
 import { uploadMetadataFromQueue } from '@/services/metadata-migration/metadata-upload'
-
-const metadataUploadMessageSchema = z.object({
-    configId: z.string(),
-})
-
-export type MetadataUploadMessage = z.infer<typeof metadataUploadMessageSchema>
+import { dbClient } from '@/clients/prisma'
+import { ProcessStatus } from '@/generated/prisma/enums'
 
 export async function metadataUploadHandler({
     message,
@@ -20,17 +15,68 @@ export async function metadataUploadHandler({
         logger.error('Message content is empty')
         return
     }
-    const { success, data, error } = metadataUploadMessageSchema.safeParse(
-        JSON.parse(message.content.toString())
-    )
+    const metadataUploadTaskUid = message.content.toString()
+    try {
+        logger.info(
+            `Processing metadata upload for task: ${metadataUploadTaskUid}`
+        )
+        const metaUploadTask = await dbClient.metadataUpload.findUnique({
+            where: { uid: metadataUploadTaskUid },
+            include: {
+                run: true,
+            },
+        })
 
-    if (!success) {
-        logger.error(`Failed to parse message content: ${error?.message}`)
-        channel.nack(message, false)
-        return
+        if (!metaUploadTask) {
+            logger.error(
+                `Metadata upload task not found: ${metadataUploadTaskUid}`
+            )
+            channel.nack(message, false, false)
+            return
+        }
+        await dbClient.metadataUpload.update({
+            where: {
+                uid: metadataUploadTaskUid,
+            },
+            data: { status: ProcessStatus.INIT, startedAt: new Date() },
+        })
+        await uploadMetadataFromQueue({ task: metaUploadTask })
+        await dbClient.metadataUpload.update({
+            where: {
+                uid: metadataUploadTaskUid,
+            },
+            data: { status: ProcessStatus.DONE, finishedAt: new Date() },
+        })
+        channel.ack(message)
+    } catch (error) {
+        if (error instanceof Error) {
+            logger.error(
+                `Failed to upload data for config ${metadataUploadTaskUid}: ${error.message}`
+            )
+            await dbClient.metadataUpload.update({
+                where: {
+                    uid: metadataUploadTaskUid,
+                },
+                data: {
+                    status: 'FAILED',
+                    error: error.message,
+                    finishedAt: new Date(),
+                },
+            })
+            channel.nack(message, false, false)
+        } else {
+            logger.error(
+                `Failed to upload data for config ${metadataUploadTaskUid}: Unknown error ${error}`
+            )
+            await dbClient.metadataUpload.update({
+                where: {
+                    uid: metadataUploadTaskUid,
+                },
+                data: {
+                    status: 'FAILED',
+                },
+            })
+            channel.nack(message, false, false)
+        }
     }
-
-    const { configId } = data
-    logger.info(`Processing metadata upload for config: ${configId}`)
-    await uploadMetadataFromQueue(data)
 }

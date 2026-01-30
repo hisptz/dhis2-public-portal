@@ -14,12 +14,10 @@ datasource db {
 }
 
 enum RunStatus {
-  NOT_STARTED
-  IDLE
-  RUNNING
-  UNKNOWN
-  COMPLETED
+  QUEUED
+  PROCESSING
   FAILED
+  PROCESSED
 }
 
 enum ProcessStatus {
@@ -40,17 +38,24 @@ enum MetadataDownloadType {
   DASHBOARD
 }
 
+enum MetadataSourceType {
+  SOURCE_INSTANCE
+  FLEXIPORTAL_CONFIG
+}
+
 model DataRun {
-  id            Int      @id @default(autoincrement())
-  uid           String   @unique @default(cuid())
-  startedAt     DateTime @default(now())
+  id            Int       @id @default(autoincrement())
+  uid           String    @unique @default(cuid())
+  startedAt     DateTime  @default(now())
+  status        RunStatus @default(QUEUED)
   periods       String[]
   timeout       Int?
   parentOrgUnit String?
   orgUnitLevel  Int?
   configIds     String[]
   mainConfigId  String
-  isDelete      Boolean  @default(false)
+  isDelete      Boolean   @default(false)
+  error         String?
 
   downloads DataDownload[]
   uploads   DataUpload[]
@@ -94,10 +99,16 @@ model DataUpload {
 }
 
 model MetadataRun {
-  id           Int      @id @default(autoincrement())
-  uid          String   @unique @default(cuid())
-  mainConfigId String
-  startedAt    DateTime @default(now())
+  id             Int                @id @default(autoincrement())
+  uid            String             @unique @default(cuid())
+  status         RunStatus          @default(QUEUED)
+  mainConfigId   String
+  startedAt      DateTime           @default(now())
+  sourceType     MetadataSourceType
+  visualizations String[]           @default([])
+  dashboards     String[]           @default([])
+  maps           String[]           @default([])
+  error          String?
 
   uploads   MetadataUpload[]
   downloads MetadataDownload[]
@@ -114,6 +125,8 @@ model MetadataDownload {
   error       String?
   errorObject Json?
   uploads     MetadataUpload[]
+  startedAt   DateTime?
+  finishedAt  DateTime?
 }
 
 model MetadataUpload {
@@ -127,4 +140,6 @@ model MetadataUpload {
   status      ProcessStatus    @default(QUEUED)
   error       String?
   errorObject Json?
+  startedAt   DateTime?
+  finishedAt  DateTime?
 }

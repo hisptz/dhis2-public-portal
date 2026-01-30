@@ -1,6 +1,7 @@
 import {
     DataServiceConfig,
-    dataServiceRuntimeConfig,
+    RunConfigFormValues,
+    runConfigSchema,
 } from '@packages/shared/schemas'
 import {
     FormProvider,
@@ -20,7 +21,6 @@ import {
 
 import i18n from '@dhis2/d2-i18n'
 import { PeriodSelector } from './components/PeriodSelector'
-import { z } from 'zod'
 import { useAlert, useConfig, useDataEngine } from '@dhis2/app-runtime'
 import { ConfigSelector } from './components/ConfigSelector'
 import { useQueryClient } from '@tanstack/react-query'
@@ -35,77 +35,6 @@ import {
 import { useNavigate } from '@tanstack/react-router'
 import { useStartValidation } from '../../../../../DataConfiguration/components/Validationlogs/hooks/validation'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { capitalize } from 'lodash'
-
-const baseRunConfigSchema = z.object({
-    service: z.enum([
-        'metadata-migration',
-        'data-migration',
-        'data-validation',
-        'data-deletion',
-    ]),
-})
-
-const baseMetaMigrationSchema = baseRunConfigSchema.extend({
-    service: z.literal('metadata-migration'),
-    metadataSource: z.enum(['source', 'flexiportal-config']),
-})
-
-const sourceMetaMigrationSchema = baseMetaMigrationSchema
-    .extend({
-        metadataSource: z.literal('source'),
-        metadataTypes: z
-            .array(z.enum(['visualizations', 'maps', 'dashboards']))
-            .optional(),
-        selectedVisualizations: z
-            .array(z.object({ id: z.string(), name: z.string() }))
-            .optional(),
-        selectedMaps: z
-            .array(z.object({ id: z.string(), name: z.string() }))
-            .optional(),
-        selectedDashboards: z
-            .array(z.object({ id: z.string(), name: z.string() }))
-            .optional(),
-    })
-    .superRefine((data, context) => {
-        const hasAnyMeta =
-            !!data.selectedVisualizations?.length ||
-            !!data.selectedMaps?.length ||
-            !!data.selectedDashboards?.length
-        if (!hasAnyMeta) {
-            data.metadataTypes?.forEach((type) => {
-                context.addIssue({
-                    code: 'custom',
-                    message: i18n.t('Please select at least one metadata type'),
-                    path: [`selected${capitalize(type)}`],
-                })
-            })
-        }
-    })
-
-const flexiPortalMetaMigrationSchema = baseMetaMigrationSchema.extend({
-    metadataSource: z.literal('flexiportal-config'),
-})
-
-const metadataMigrationSchema = z.discriminatedUnion('metadataSource', [
-    sourceMetaMigrationSchema,
-    flexiPortalMetaMigrationSchema,
-])
-
-const dataMigrationSchema = baseRunConfigSchema.extend({
-    service: z.enum(['data-migration', 'data-validation', 'data-deletion']),
-    runtimeConfig: dataServiceRuntimeConfig.extend({
-        periods: z.array(z.string()).optional(),
-    }),
-    dataItemsConfigIds: z.array(z.string()).min(1, i18n.t('')),
-})
-
-const runConfigSchema = z.discriminatedUnion('service', [
-    metadataMigrationSchema,
-    dataMigrationSchema,
-])
-
-export type RunConfigFormValues = z.infer<typeof runConfigSchema>
 
 export function RunConfigForm({
     hide,
@@ -158,19 +87,11 @@ export function RunConfigForm({
             let result
             if (data.service === 'metadata-migration') {
                 if (data.metadataSource === 'source') {
-                    const metadataRequest = {
-                        metadataSource: data.metadataSource,
-                        selectedVisualizations:
-                            data.selectedVisualizations || [],
-                        selectedMaps: data.selectedMaps || [],
-                        selectedDashboards: data.selectedDashboards || [],
-                    }
-                    result = await downloadMetadata(
+                    result = await downloadMetadata({
                         engine,
-                        config.id,
-                        metadataRequest,
-                        serverVersion
-                    )
+                        configId: config.id,
+                        data,
+                    })
                 }
 
                 if (data.metadataSource === 'flexiportal-config') {

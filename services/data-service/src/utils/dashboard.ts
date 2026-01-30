@@ -1,6 +1,7 @@
 import { createSourceClient } from '../clients/dhis2'
 import logger from '@/logging'
 import { fetchItemsInParallel } from './parallel-fetch'
+import { isEmpty } from 'lodash'
 
 export interface ExtractedMetadataIds {
     visualizationIds: string[]
@@ -11,7 +12,7 @@ export async function getMetadataFromDashboards(
     dashboardIds: string[],
     routeId: string
 ): Promise<ExtractedMetadataIds> {
-    if (!dashboardIds || dashboardIds.length === 0) {
+    if (isEmpty(dashboardIds)) {
         return { visualizationIds: [], mapIds: [] }
     }
 
@@ -19,8 +20,7 @@ export async function getMetadataFromDashboards(
         logger.info(
             `Extracting metadata from ${dashboardIds.length} dashboards`
         )
-
-        const client = await createSourceClient(routeId)
+        const client = createSourceClient(routeId)
         const dashboards = await fetchItemsInParallel(
             client,
             'dashboards',

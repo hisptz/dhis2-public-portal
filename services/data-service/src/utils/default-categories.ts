@@ -1,5 +1,6 @@
-import { createSourceClient, dhis2Client } from '@/clients/dhis2'
 import logger from '@/logging'
+import { AxiosInstance } from 'axios'
+import { dhis2Client } from '@/clients/dhis2'
 
 export interface DefaultCategoryValues {
     defaultCategoryComboId: string
@@ -7,19 +8,10 @@ export interface DefaultCategoryValues {
     defaultCategoryOptionId: string
 }
 
-let cachedSourceDefaults: DefaultCategoryValues | null = null
-let cachedDestinationDefaults: DefaultCategoryValues | null = null
-
 export async function getDefaultCategoryValues(
-    routeId?: string
+    client: AxiosInstance
 ): Promise<DefaultCategoryValues> {
-    if (cachedSourceDefaults) {
-        return cachedSourceDefaults
-    }
-
     try {
-        const client = routeId ? await createSourceClient(routeId) : dhis2Client
-
         const allCombosResponse = await client.get<{
             categoryCombos: Array<{
                 id: string
@@ -132,17 +124,10 @@ export async function getDefaultCategoryValues(
             defaultCategoryOptionId: defaultCategoryOption.id,
         }
 
-        if (routeId) {
-            cachedSourceDefaults = defaultValues
-        } else {
-            cachedDestinationDefaults = defaultValues
-        }
-
         logger.info('Default category system values fetched successfully:', {
             defaultCategoryComboId: defaultValues.defaultCategoryComboId,
             defaultCategoryId: defaultValues.defaultCategoryId,
             defaultCategoryOptionId: defaultValues.defaultCategoryOptionId,
-            source: routeId ? 'source' : 'destination',
         })
 
         return defaultValues
@@ -153,14 +138,5 @@ export async function getDefaultCategoryValues(
 }
 
 export async function getDestinationDefaultCategoryValues(): Promise<DefaultCategoryValues> {
-    if (cachedDestinationDefaults) {
-        return cachedDestinationDefaults
-    }
-    return getDefaultCategoryValues()
-}
-
-export function clearDefaultCategoryCache(): void {
-    cachedSourceDefaults = null
-    cachedDestinationDefaults = null
-    logger.info('Default category values cache cleared')
+    return getDefaultCategoryValues(dhis2Client)
 }

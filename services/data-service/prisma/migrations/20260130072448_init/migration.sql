@@ -1,5 +1,5 @@
 -- CreateEnum
-CREATE TYPE "RunStatus" AS ENUM ('NOT_STARTED', 'IDLE', 'RUNNING', 'UNKNOWN', 'COMPLETED', 'FAILED');
+CREATE TYPE "RunStatus" AS ENUM ('QUEUED', 'PROCESSING', 'PROCESSED');
 
 -- CreateEnum
 CREATE TYPE "ProcessStatus" AS ENUM ('QUEUED', 'INIT', 'FAILED', 'DONE');
@@ -10,19 +10,22 @@ CREATE TYPE "UploadStrategy" AS ENUM ('CREATE_AND_UPDATE', 'DELETE');
 -- CreateEnum
 CREATE TYPE "MetadataDownloadType" AS ENUM ('VISUALIZATION', 'MAP', 'DASHBOARD');
 
+-- CreateEnum
+CREATE TYPE "MetadataSourceType" AS ENUM ('SOURCE_INSTANCE', 'FLEXIPORTAL_CONFIG');
+
 -- CreateTable
 CREATE TABLE "DataRun" (
     "id" SERIAL NOT NULL,
     "uid" TEXT NOT NULL,
     "startedAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "status" "RunStatus" NOT NULL DEFAULT 'QUEUED',
     "periods" TEXT[],
-    "pageSize" INTEGER,
     "timeout" INTEGER,
-    "dataItems" TEXT[],
     "parentOrgUnit" TEXT,
     "orgUnitLevel" INTEGER,
     "configIds" TEXT[],
     "mainConfigId" TEXT NOT NULL,
+    "isDelete" BOOLEAN NOT NULL DEFAULT false,
 
     CONSTRAINT "DataRun_pkey" PRIMARY KEY ("id")
 );
@@ -70,7 +73,13 @@ CREATE TABLE "DataUpload" (
 CREATE TABLE "MetadataRun" (
     "id" SERIAL NOT NULL,
     "uid" TEXT NOT NULL,
-    "configId" TEXT NOT NULL,
+    "status" "RunStatus" NOT NULL DEFAULT 'QUEUED',
+    "mainConfigId" TEXT NOT NULL,
+    "startedAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "sourceType" "MetadataSourceType" NOT NULL,
+    "visualizations" TEXT[] DEFAULT ARRAY[]::TEXT[],
+    "dashboards" TEXT[] DEFAULT ARRAY[]::TEXT[],
+    "maps" TEXT[] DEFAULT ARRAY[]::TEXT[],
 
     CONSTRAINT "MetadataRun_pkey" PRIMARY KEY ("id")
 );

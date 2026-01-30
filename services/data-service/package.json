@@ -10,6 +10,7 @@
         "prisma:generate": "prisma generate",
         "prisma:migrate": "prisma migrate dev",
         "prisma:studio": "prisma studio",
+        "prisma:reset": "prisma migrate reset",
         "dev:worker": "bun run src/rabbit/worker.ts --watch --hot",
         "dev:api": "bun run src/app.ts --watch --hot",
         "start:api": "bun run src/app.ts",
@@ -20,6 +21,7 @@
     },
     "dependencies": {
         "@dhis2/multi-calendar-dates": "^2.1.0",
+        "@hisptz/dhis2-utils": "^2.0.19",
         "@openapi-contrib/json-schema-to-openapi-schema": "^4.3.0",
         "@packages/shared": "workspace:*",
         "@prisma/adapter-pg": "^7.3.0",

@@ -4,6 +4,7 @@ import { dataUploadHandler } from '@/rabbit/handlers/data-upload'
 import { metadataDownloadHandler } from '@/rabbit/handlers/metadata-download'
 import { metadataUploadHandler } from '@/rabbit/handlers/metadata-upload'
 import { dataChunkHandler } from '@/rabbit/handlers/data-chunk'
+import { metadataProcessingHandler } from '@/rabbit/handlers/metadata-processing'
 
 export const REFRESH_EXCHANGE = 'refresh'
 
@@ -11,6 +12,7 @@ export const PROCESS_NAME = 'Worker'
 
 export enum Queues {
     METADATA_DOWNLOAD = 'metadata_download',
+    METADATA_PROCESSING = 'metadata_processing',
     METADATA_UPLOAD = 'metadata_upload',
     DATA_DOWNLOAD = 'data_download',
     DATA_CHUNK = 'data_chunk',
@@ -38,5 +40,6 @@ export const queueHandlers: Map<Queues, QueueHandler> = new Map<
     [Queues.DATA_DOWNLOAD, dataDownloadHandler],
     [Queues.DATA_UPLOAD, dataUploadHandler],
     [Queues.METADATA_DOWNLOAD, metadataDownloadHandler],
+    [Queues.METADATA_PROCESSING, metadataProcessingHandler],
     [Queues.METADATA_UPLOAD, metadataUploadHandler],
 ])

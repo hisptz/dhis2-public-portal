@@ -606,6 +606,9 @@ importers:
       '@dhis2/multi-calendar-dates':
         specifier: ^2.1.0
         version: 2.1.2(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
+      '@hisptz/dhis2-utils':
+        specifier: ^2.0.19
+        version: 2.0.19(@dhis2/d2-i18n@1.2.0)(lodash@4.17.23)(react-dom@19.2.3(react@19.2.3))(react@19.2.3)(usehooks-ts@3.1.1(react@19.2.3))
       '@openapi-contrib/json-schema-to-openapi-schema':
         specifier: ^4.3.0
         version: 4.3.0(@types/json-schema@7.0.15)(openapi-types@12.1.3)

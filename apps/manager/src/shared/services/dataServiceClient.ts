@@ -1,6 +1,9 @@
 import { useDataEngine } from '@dhis2/app-runtime'
 import { set } from 'lodash'
-import { StatusPayload } from '@packages/shared/schemas'
+import {
+    MetadataMigrationConfig,
+    StatusPayload,
+} from '@packages/shared/schemas'
 
 type DataEngine = ReturnType<typeof useDataEngine>
 // export interface ApiResponse<
@@ -88,32 +91,22 @@ export async function queryDataServiceRoute<
     }
 }
 
-export async function downloadMetadata<
-    ResponseDataType extends Record<symbol | number | string, unknown> = Record<
-        string,
-        unknown
-    >,
-    RequestDataType extends Record<symbol | number | string, unknown> = Record<
-        string,
-        unknown
-    >,
->(
-    engine: DataEngine,
-    configId: string,
-    data: RequestDataType,
-    serverVersion?: ServerVersion
-): Promise<ResponseDataType> {
-    return executeDataServiceRoute<ResponseDataType>(
-        engine,
-        `/metadata-download/${configId}`,
-        {
-            metadataSource: data.metadataSource || 'source',
-            selectedVisualizations: data.selectedVisualizations || [],
-            selectedMaps: data.selectedMaps || [],
-            selectedDashboards: data.selectedDashboards || [],
-        },
-        'create'
-    )
+export async function downloadMetadata({
+    engine,
+    configId,
+    data,
+}: {
+    engine: DataEngine
+    configId: string
+    data: MetadataMigrationConfig
+}): Promise<{
+    message: string
+    status: string
+}> {
+    return executeDataServiceRoute<{
+        message: string
+        status: string
+    }>(engine, `/metadata-download/${configId}`, data, 'create')
 }
 
 export async function downloadData<

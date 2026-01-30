@@ -5,8 +5,8 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
-"POT-Creation-Date: 2026-01-27T14:03:24.989Z\n"
-"PO-Revision-Date: 2026-01-27T14:03:24.989Z\n"
+"POT-Creation-Date: 2026-01-30T13:51:22.458Z\n"
+"PO-Revision-Date: 2026-01-30T13:51:22.458Z\n"
 
 msgid "Could not get Appearance configurations"
 msgstr "Could not get Appearance configurations"
@@ -307,9 +307,6 @@ msgstr "Test connection"
 
 msgid "Run configuration"
 msgstr "Run configuration"
-
-msgid "Please select at least one metadata type"
-msgstr "Please select at least one metadata type"
 
 msgid "Please select at least one period for validation"
 msgstr "Please select at least one period for validation"

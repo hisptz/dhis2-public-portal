@@ -1,4 +1,4 @@
-import { dhis2Client } from '../clients/dhis2'
+import { dhis2Client } from '@/clients/dhis2'
 
 async function getAttributeOptionCombo(categoryOption: string) {
     const url = `categoryOptions/${categoryOption}`
