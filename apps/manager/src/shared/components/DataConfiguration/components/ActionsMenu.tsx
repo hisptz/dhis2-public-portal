@@ -177,7 +177,7 @@ export function ActionsMenu({ config }: { config: DataServiceConfig }) {
                             onClick={handleEdit}
                         />
                         <MenuItem
-                            label={i18n.t('Run migration')}
+                            label={i18n.t('Run Service')}
                             icon={<IconImportItems24 />}
                             onClick={handleRun}
                         />

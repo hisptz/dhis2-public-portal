@@ -1,6 +1,7 @@
 import { useState } from 'react'
-import { Button, Card, CircularLoader, NoticeBox, Tab, TabBar } from '@dhis2/ui'
+import { Button, Card, CircularLoader, NoticeBox, Tab, TabBar, IconArrowLeft16 } from '@dhis2/ui'
 import i18n from '@dhis2/d2-i18n'
+import { useNavigate } from '@tanstack/react-router';
 import {
     useAnalyticsLastRun,
     useRerunValidation,
@@ -20,6 +21,11 @@ interface ValidationLogsPageProps {
 
 export function ValidationLogsPage({ configId }: ValidationLogsPageProps) {
     const [activeTab, setActiveTab] = useState('logs')
+
+    const navigate = useNavigate({
+        from: '/data-service-configuration/$configId/validation-logs'
+    });
+
 
     const { show } = useAlert(
         ({ message }) => message,
@@ -44,13 +50,13 @@ export function ValidationLogsPage({ configId }: ValidationLogsPageProps) {
             const params = lastValidationParams
                 ? JSON.parse(lastValidationParams)
                 : {
-                      dataItemsConfigIds: [],
-                      runtimeConfig: {
-                          pageSize: 10,
-                          paginateByData: false,
-                          timeout: 1000 * 60 * 5,
-                      },
-                  }
+                    dataItemsConfigIds: [],
+                    runtimeConfig: {
+                        pageSize: 10,
+                        paginateByData: false,
+                        timeout: 1000 * 60 * 5,
+                    },
+                }
 
             await rerunValidation.mutateAsync(params)
             show({
@@ -67,6 +73,12 @@ export function ValidationLogsPage({ configId }: ValidationLogsPageProps) {
             })
         }
     }
+
+    const handleGoBack = () => {
+        navigate({
+            to: '/data-service-configuration',
+        });
+    };
 
     const isValidationRunning =
         validationStatus.data?.status === DataServiceRunStatus.RUNNING ||
@@ -96,6 +108,16 @@ export function ValidationLogsPage({ configId }: ValidationLogsPageProps) {
 
     return (
         <div className="space-y-4">
+            <div className="flex items-center gap-4 mb-4">
+                <Button
+                    secondary
+                    onClick={handleGoBack}
+                    icon={<IconArrowLeft16 />}
+
+                >
+                    {i18n.t('Back')}
+                </Button>
+            </div>
             <Card className="p-4">
                 <div className="flex items-center justify-between mb-4">
                     <div>

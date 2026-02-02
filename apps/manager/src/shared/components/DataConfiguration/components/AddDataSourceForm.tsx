@@ -161,6 +161,7 @@ export function AddDataSourceForm({
                             dependsOn={'source.name'}
                             label={i18n.t('ID')}
                             name={'id'}
+                            disabled={true}
                         />
                         <RHFTextInputField
                             label={i18n.t('URL')}

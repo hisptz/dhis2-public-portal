@@ -14,7 +14,7 @@ export function FormTestConnection({
 }: {
     routeConfig: { name: string; url: string; id: string }
 }) {
-    const { show } = useAlert(
+    const { show, hide } = useAlert(
         ({ message }) => message,
         ({ type }) => ({ ...type, duration: 3000 })
     )
@@ -27,7 +27,6 @@ export function FormTestConnection({
             })
         },
         onError: (error) => {
-            console.log('error is', error)
             if (
                 error.message?.includes('Unexpected end of JSON input') ||
                 error.details?.httpStatusCode === 302 ||
@@ -38,10 +37,10 @@ export function FormTestConnection({
                     type: { success: true },
                 })
             } else {
-                show({
-                    message: `${i18n.t('Connection failed')}:${error.message}`,
-                    type: { info: true },
-                })
+             show({
+					message: `${i18n.t("Connection failed")}: ${error.details?.message || error.message}`,
+					type: { critical: true },
+				});
             }
         },
         variables: {
@@ -51,6 +50,7 @@ export function FormTestConnection({
     })
 
     const test = async () => {
+        hide();
         await refetch()
     }
 

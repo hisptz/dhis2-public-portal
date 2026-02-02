@@ -33,7 +33,8 @@ export const baseDataItemsSourceSchema = z.object({
         .min(1, i18n.t('At least one data item is required')),
     periodTypeId: z.string(),
     parentOrgUnitId: z.string(),
-    orgUnitLevel: z.number(),
+    orgUnitLevel: z.number().min(1, "Organisation unit level must be at least 1")
+        .max(7, "Organisation unit level must be at most 7"),
 })
 
 export const attributeValuesDataItemsSourceSchema =

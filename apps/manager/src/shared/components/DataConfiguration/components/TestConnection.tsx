@@ -8,7 +8,7 @@ import { testDataSource } from '../utils'
 
 export function TestConnection() {
     const [testing, setTesting] = useState(false)
-    const { show } = useAlert(
+    const { show, hide } = useAlert(
         ({ message }) => message,
         ({ type }) => ({ ...type, duration: 3000 })
     )
@@ -27,6 +27,7 @@ export function TestConnection() {
     const enabled = !!url && (!!pat || (!!username && !!password))
 
     const test = async () => {
+        hide();
         try {
             setTesting(true)
             const response = await testDataSource({
@@ -40,22 +41,27 @@ export function TestConnection() {
                     message: i18n.t('Connection successful'),
                     type: { success: true },
                 })
+            } else if (response.status === 401) {
+                show({
+                    message: `${i18n.t("Unauthorized - Bad credentials")}`,
+                    type: { critical: true },
+                });
             } else {
                 show({
-                    message: `${i18n.t('Connection failed')}:${response.statusText}`,
-                    type: { info: true },
-                })
+                    message: `${i18n.t("Connection failed")}:${response.statusText}`,
+                    type: { critical: true },
+                });
             }
         } catch (e) {
             if (e instanceof Error) {
                 show({
                     message: `${i18n.t('Connection failed')}:${e.message}`,
-                    type: { info: true },
+                    type: { critical: true },
                 })
             } else {
                 show({
                     message: `${i18n.t('Connection failed')}: Unknown error`,
-                    type: { info: true },
+                    type: { critical: true },
                 })
             }
         } finally {

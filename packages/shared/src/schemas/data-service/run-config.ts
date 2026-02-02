@@ -64,6 +64,7 @@ export type MetadataMigrationConfig = z.infer<typeof metadataMigrationSchema>
 export const dataMigrationSchema = baseRunConfigSchema.extend({
     service: z.enum(['data-migration', 'data-validation', 'data-deletion']),
     runtimeConfig: dataServiceRuntimeConfig.extend({
+        periodType: z.string().optional(),
         periods: z.array(z.string()).optional(),
     }),
     dataItemsConfigIds: z.array(z.string()).min(1, i18n.t('')),

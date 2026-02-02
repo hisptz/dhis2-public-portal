@@ -24,8 +24,7 @@ import { PeriodSelector } from './components/PeriodSelector'
 import { useAlert, useConfig, useDataEngine } from '@dhis2/app-runtime'
 import { ConfigSelector } from './components/ConfigSelector'
 import { useQueryClient } from '@tanstack/react-query'
-import { RHFCheckboxField, RHFSingleSelectField } from '@hisptz/dhis2-ui'
-import { RHFNumberField } from '../../../../../Fields/RHFNumberField'
+import { RHFSingleSelectField } from '@hisptz/dhis2-ui'
 import { RHFMultiSelectField } from '../../../../../Fields/RHFMultiSelectField'
 import { SourceMetadataSelector } from './components/SourceMetadataSelector'
 import {
@@ -237,7 +236,7 @@ export function RunConfigForm({
         <FormProvider {...form}>
             <Modal hide={hide} onClose={onClose} position="middle">
                 <ModalTitle>
-                    {`${i18n.t('Run')} ${config.source.name}`}
+                    {`${i18n.t('Run Service')} ${config.source.name}`}
                 </ModalTitle>
                 <ModalContent>
                     <form className="flex flex-col gap-2">
@@ -380,20 +379,6 @@ export function RunConfigForm({
                             <>
                                 <PeriodSelector minPeriodType={'MONTHLY'} />
                                 <ConfigSelector config={config} />
-                                {selectedService !== 'data-validation' && (
-                                    <>
-                                        <RHFNumberField
-                                            name={'runtimeConfig.pageSize'}
-                                            label={i18n.t('Page size')}
-                                        />
-                                        <RHFCheckboxField
-                                            name={
-                                                'runtimeConfig.paginateByData'
-                                            }
-                                            label={i18n.t('Paginate by data')}
-                                        />
-                                    </>
-                                )}
                             </>
                         )}
                     </form>

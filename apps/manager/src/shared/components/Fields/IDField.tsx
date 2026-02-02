@@ -8,10 +8,12 @@ export function RHFIDField({
     name,
     dependsOn,
     label,
+    disabled
 }: {
     name: string
     dependsOn: string
     label: string
+    disabled?: boolean
 }) {
     const { setValue } = useFormContext()
     const title = useWatch({
@@ -32,6 +34,7 @@ export function RHFIDField({
             )}
             name={name}
             label={label}
+            disabled={disabled}
         />
     )
 }
