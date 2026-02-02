@@ -1,7 +1,8 @@
 import { AxiosInstance } from 'axios'
-import { capitalize, flattenDeep, truncate } from 'lodash'
+import { capitalize, flattenDeep, isEmpty, truncate } from 'lodash'
 import { uid } from '@hisptz/dhis2-utils'
 import { DataElement } from '@/utils/visualizations'
+import { logWorker } from '@/rabbit/utils'
 
 enum ReportingRateType {
     REPORTING_RATE = 'REPORTING_RATE',
@@ -24,23 +25,34 @@ export async function getDatasetsConfig({
     client: AxiosInstance
     items: string[]
 }) {
+    if (isEmpty(items)) {
+        return []
+    }
+    logWorker('info', `Fetching configurations for ${items.length} datasets...`)
     const response = await client.get<{
-        datasets: Array<Dataset>
-    }>(`datasets`, {
+        dataSets: Array<Dataset>
+    }>(`dataSets`, {
         params: {
             filter: `id:in:[${items.join(',')}]`,
             fields: ':owner,!sharing,!createdBy,!lastUpdatedBy,!created,!lastUpdated',
             paging: false,
         },
     })
-
-    return response.data.datasets
+    logWorker('info', `Fetched ${response.data.dataSets.length} datasets`)
+    return response.data.dataSets
 }
 
 export function generateDataElementsForDatasetItems(
     datasetItems: Array<Dataset>,
     defaultCategoryComboId: string
 ): Array<DataElement> {
+    if (isEmpty(datasetItems)) {
+        return []
+    }
+    logWorker(
+        'info',
+        `Generating data elements for ${datasetItems.length} datasets...`
+    )
     return flattenDeep(
         datasetItems.map((item) => {
             return Object.keys(ReportingRateType).map((key) => {

@@ -41,7 +41,7 @@ export type DataElement = {
     valueType: string
     categoryCombo: {
         id: string
-        category?: { id: string }
+        categories?: Array<{ id: string; name: string }>
     }
     aggregationType: string
     legendSets: Array<{ id: string }>
@@ -283,9 +283,7 @@ export async function getDataElementConfigs({
     client: AxiosInstance
     items: string[]
 }) {
-    logger.info(
-        `getDataElementConfigs called with ${items.length} data element IDs`
-    )
+    logger.info(`Getting ${items.length} data elements...`)
 
     if (isEmpty(items)) {
         logger.warn('No data element IDs provided — skipping fetch')
@@ -297,10 +295,12 @@ export async function getDataElementConfigs({
     }>(`dataElements`, {
         params: {
             filter: `id:in:[${items.join(',')}]`,
-            fields: ':owner,!sharing,!createdBy,!lastUpdatedBy,!created,!lastUpdated,categoryCombo[id,category[id]]',
+            fields: ':owner,!sharing,!createdBy,!lastUpdatedBy,!created,!lastUpdated,categoryCombo[id,categories[id,name]]',
             paging: false,
         },
     })
+
+    logger.info(`Fetched ${response.data.dataElements.length} data elements`)
 
     return response.data.dataElements
 }
@@ -312,6 +312,13 @@ export function sanitizeVisualizationsWithDatasetReferences({
     visualizations: Array<Visualization>
     datasetDataElements: Array<DataElement>
 }): Array<Visualization> {
+    if (isEmpty(visualizations)) {
+        return []
+    }
+    logWorker(
+        'info',
+        `Sanitizing ${visualizations.length} visualizations with dataset references`
+    )
     return visualizations.map((visualization) => {
         const hasDatasetReference = visualization.dataDimensionItems.some(
             (item) => {
@@ -353,6 +360,10 @@ export function sanitizeMapsWithDatasetReferences({
     maps: Array<D2Map>
     datasetDataElements: Array<DataElement>
 }): Array<D2Map> {
+    if (isEmpty(maps)) {
+        return []
+    }
+    logWorker('info', `Sanitizing ${maps.length} maps with dataset references`)
     return maps.map((map) => {
         const hasDatasetReference = map.mapViews.map((view) =>
             view.dataDimensionItems.some((item) => {

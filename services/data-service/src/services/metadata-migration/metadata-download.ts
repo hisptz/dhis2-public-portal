@@ -20,7 +20,7 @@ import {
     sanitizeVisualizationsWithDatasetReferences,
     Visualization,
 } from '@/utils/visualizations'
-import { flattenDeep, isEmpty, uniq, uniqBy } from 'lodash'
+import { compact, isEmpty, uniq, uniqBy } from 'lodash'
 import {
     getCategories,
     getIndicatorsConfig,
@@ -56,6 +56,7 @@ import { saveMetadataFile } from '@/services/metadata-migration/utils/file'
 import { dbClient } from '@/clients/prisma'
 import { pushToQueue } from '@/rabbit/publisher'
 import { Queues } from '@/rabbit/constants'
+import { logWorker } from '@/rabbit/utils'
 
 export interface ProcessedMetadata {
     metadata: {
@@ -142,7 +143,7 @@ function extractLegendSets(
         }>
     }>
 ) {
-    const legendSets = items.flatMap((item) => item.legendSets)
+    const legendSets = compact(items.flatMap((item) => item.legendSets))
     return uniq(legendSets.map((legendSet) => legendSet.id))
 }
 
@@ -153,6 +154,13 @@ async function getLegendSets({
     items: string[]
     client: AxiosInstance
 }) {
+    if (isEmpty(items)) {
+        return []
+    }
+    logWorker(
+        'info',
+        `Fetching configurations for ${items.length} legend sets...`
+    )
     const response = await client.get<{
         legendSets: Array<LegendSet>
     }>(`legendSets`, {
@@ -162,61 +170,69 @@ async function getLegendSets({
             paging: false,
         },
     })
-
+    logWorker('info', `Fetched configurations for ${items.length} legend sets`)
     return response.data.legendSets
 }
 
-function generateDataItemsMapping({
-    dataElements,
-    datasetDataElements,
-    defaultCategoryComboId,
-    categoryCombos,
-}: {
-    dataElements: Array<DataElement>
-    datasetDataElements: Array<DataElement>
-    categoryCombos: Array<{
-        id: string
-        categoryOptionCombos: Array<{ id: string }>
-    }>
-    defaultCategoryComboId?: string
-}): Array<DataItemMapping> {
-    const dataElementDataItems = flattenDeep(
-        dataElements.map((dataElement) => {
-            if (dataElement.categoryCombo.id === defaultCategoryComboId) {
-                return {
-                    id: dataElement.id,
-                    sourceId: dataElement.id,
-                }
-            } else {
-                const categoryCombo = categoryCombos.find(
-                    ({ id }) => id === dataElement.categoryCombo.id
-                )
+// function generateDataItemsMapping({
+//     dataElements,
+//     datasetDataElements,
+//     defaultCategoryComboId,
+//     categoryCombos,
+// }: {
+//     dataElements: Array<DataElement>
+//     datasetDataElements: Array<DataElement>
+//     categoryCombos: Array<{
+//         id: string
+//         categoryOptionCombos: Array<{ id: string }>
+//     }>
+//     defaultCategoryComboId?: string
+// }): Array<DataItemMapping> {
+//     const dataElementDataItems = flattenDeep(
+//         dataElements.map((dataElement) => {
+//             if (dataElement.categoryCombo.id === defaultCategoryComboId) {
+//                 return {
+//                     id: dataElement.id,
+//                     sourceId: dataElement.id,
+//                 }
+//             } else {
+//                 const categoryCombo = categoryCombos.find(
+//                     ({ id }) => id === dataElement.categoryCombo.id
+//                 )
+//
+//                 return (
+//                     categoryCombo?.categoryOptionCombos.map(
+//                         (categoryOptionCombo) => ({
+//                             id: `${dataElement.id}.${categoryOptionCombo.id}`,
+//                             sourceId: `${dataElement.id}.${categoryOptionCombo.id}`,
+//                         })
+//                     ) ?? []
+//                 )
+//             }
+//         })
+//     )
+//     const datasetDataItems = datasetDataElements.map((dataElement) => ({
+//         id: dataElement.id,
+//         sourceId: dataElement.code,
+//     }))
+//
+//     return uniqBy([...dataElementDataItems, ...datasetDataItems], 'id')
+// }
 
-                return (
-                    categoryCombo?.categoryOptionCombos.map(
-                        (categoryOptionCombo) => ({
-                            id: `${dataElement.id}.${categoryOptionCombo.id}`,
-                            sourceId: `${dataElement.id}.${categoryOptionCombo.id}`,
-                        })
-                    ) ?? []
-                )
-            }
-        })
-    )
-    const datasetDataItems = datasetDataElements.map((dataElement) => ({
-        id: dataElement.id,
-        sourceId: dataElement.code,
-    }))
-
-    return uniqBy([...dataElementDataItems, ...datasetDataItems], 'id')
-}
-
-function extractCategories(
-    items: Array<{ categoryCombo: { id: string; category?: { id: string } } }>,
-    sourceDefaultCategoryId: string
+function extractCategoryCombos(
+    items: Array<DataElement>,
+    sourceDefaultCategoryComboId: string
 ) {
-    return uniq(items.map((item) => item.categoryCombo.category!.id)).filter(
-        (comboId) => comboId !== sourceDefaultCategoryId
+    logWorker(
+        'info',
+        `Extracting category combos for ${items.length} data elements`
+    )
+    return uniq(
+        compact(
+            items
+                .flatMap((item) => item.categoryCombo.id)
+                .filter((comboId) => comboId !== sourceDefaultCategoryComboId)
+        )
     )
 }
 
@@ -229,6 +245,10 @@ function replaceDefaultCategoryCombo({
     defaultSourceCategoryCombo: string
     defaultDestinationCategoryCombo: string
 }) {
+    logWorker(
+        'info',
+        `Replacing default category combo for ${dataElements.length} data elements`
+    )
     return dataElements.map((dataElement) => {
         if (dataElement.categoryCombo.id === defaultSourceCategoryCombo) {
             return {
@@ -354,9 +374,9 @@ export async function downloadMetadata(
             client,
             items: legendSetIds,
         })
-        const categoryIds = extractCategories(
+        const categoryIds = extractCategoryCombos(
             dataElements,
-            sourceDefaults.defaultCategoryId
+            sourceDefaults.defaultCategoryComboId
         )
         const {
             categories,
@@ -406,12 +426,6 @@ export async function downloadMetadata(
             'id'
         )
 
-        const dataItemsMapping = generateDataItemsMapping({
-            dataElements: sanitizedDataElements,
-            datasetDataElements: createdDataSetDataElements,
-            categoryCombos: categoryCombos,
-        })
-
         return {
             metadata: {
                 maps: sanitizedMaps,
@@ -425,7 +439,7 @@ export async function downloadMetadata(
                 categoryOptionCombos,
                 legendSets,
             },
-            mapping: dataItemsMapping,
+            mapping: [],
         }
     } catch (error) {
         logger.error('Error during metadata download:', error)

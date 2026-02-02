@@ -50,7 +50,7 @@ export async function metadataDownloadHandler({
         channel.ack(message)
     } catch (error) {
         if (error instanceof AxiosError) {
-            if ([400, 409].includes(error.response?.status ?? 400)) {
+            if ([400, 409, 404].includes(error.response?.status ?? 400)) {
                 console.log(error.request)
                 console.log(error.response)
                 await dbClient.metadataDownload.update({

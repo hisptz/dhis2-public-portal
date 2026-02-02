@@ -136,6 +136,7 @@ model MetadataUpload {
   runId       Int
   run         MetadataRun      @relation(fields: [runId], references: [id])
   downloadId  Int
+  summary     Json?
   download    MetadataDownload @relation(fields: [downloadId], references: [id])
   status      ProcessStatus    @default(QUEUED)
   error       String?

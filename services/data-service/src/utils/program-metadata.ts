@@ -1,8 +1,11 @@
 import { AxiosInstance } from 'axios'
 import { DataElement } from '@/utils/visualizations'
+import { isEmpty } from 'lodash'
+import { logWorker } from '@/rabbit/utils'
 
 type ProgramIndicator = {
     id: string
+    code: string
     name: string
     shortName: string
     legendSets: Array<{ id: string }>
@@ -17,8 +20,15 @@ export async function getProgramIndicatorsConfig({
     items: Array<string>
     client: AxiosInstance
 }) {
+    if (isEmpty(items)) {
+        return []
+    }
+    logWorker(
+        'info',
+        `Fetching configurations for ${items.length} indicators...`
+    )
     const response = await client.get<{
-        indicators: Array<ProgramIndicator>
+        programIndicators: Array<ProgramIndicator>
     }>(`programIndicators`, {
         params: {
             filter: `id:in:[${items.join(',')}]`,
@@ -26,12 +36,16 @@ export async function getProgramIndicatorsConfig({
             paging: false,
         },
     })
-
-    return response.data.indicators
+    logWorker(
+        'info',
+        `Fetched ${response.data.programIndicators.length} indicators`
+    )
+    return response.data.programIndicators
 }
 
 type ProgramTrackedEntityAttribute = {
     id: string
+    code: string
     name: string
     shortName: string
     valueType: string
@@ -46,6 +60,13 @@ export async function getProgramAttributesConfig({
     items: Array<string>
     client: AxiosInstance
 }) {
+    if (isEmpty(items)) {
+        return []
+    }
+    logWorker(
+        'info',
+        `Fetching configurations for ${items.length} attributes...`
+    )
     const response = await client.get<{
         programTrackedEntityAttributes: Array<ProgramTrackedEntityAttribute>
     }>(`programTrackedEntityAttributes`, {
@@ -55,13 +76,17 @@ export async function getProgramAttributesConfig({
             paging: false,
         },
     })
-
+    logWorker(
+        'info',
+        `Fetched ${response.data.programTrackedEntityAttributes.length} attributes`
+    )
     return response.data.programTrackedEntityAttributes
 }
 
 type ProgramDataElement = {
     id: string
     name: string
+    code: string
     shortName: string
     valueType: string
     aggregationType: string
@@ -75,6 +100,13 @@ export async function getProgramDataElementsConfig({
     items: Array<string>
     client: AxiosInstance
 }) {
+    if (isEmpty(items)) {
+        return []
+    }
+    logWorker(
+        'info',
+        `Fetching configurations for ${items.length} data elements...`
+    )
     const response = await client.get<{
         programTrackedEntityAttributes: Array<ProgramDataElement>
     }>(`dataElements`, {
@@ -84,6 +116,10 @@ export async function getProgramDataElementsConfig({
             paging: false,
         },
     })
+    logWorker(
+        'info',
+        `Fetched ${response.data.programTrackedEntityAttributes.length} data elements`
+    )
     return response.data.programTrackedEntityAttributes
 }
 
@@ -93,10 +129,18 @@ export function generateDataElementsForProgramItems(
     >,
     defaultCategoryComboId: string
 ): Array<DataElement> {
+    if (isEmpty(programItems)) {
+        return []
+    }
+    logWorker(
+        'info',
+        `Generating data elements for ${programItems.length} program items...`
+    )
     return programItems.map((item) => {
         return {
             id: item.id,
             name: item.name,
+            code: item.code,
             shortName: item.shortName,
             legendSets: item.legendSets ?? [],
             valueType: item.valueType ?? 'NUMBER',

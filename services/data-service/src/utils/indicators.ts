@@ -1,10 +1,11 @@
-import { chunk, compact, uniq } from 'lodash'
+import { chunk, compact, isEmpty, uniq } from 'lodash'
 import { mapSeries } from 'async'
 import { createSourceClient, dhis2Client } from '@/clients/dhis2'
 import logger from '@/logging'
 import { fetchItemsInParallel } from './parallel-fetch'
 import { AxiosInstance } from 'axios'
 import { DataElement } from '@/utils/visualizations'
+import { logWorker } from '@/rabbit/utils'
 
 type Indicator = {
     id: string
@@ -21,6 +22,13 @@ export async function getIndicatorsConfig({
     items: Array<string>
     client: AxiosInstance
 }) {
+    if (isEmpty(items)) {
+        return []
+    }
+    logWorker(
+        'info',
+        `Fetching configurations for ${items.length} indicators...`
+    )
     const indicators = await client.get<{
         indicators: Array<Indicator>
     }>(`indicators`, {
@@ -30,7 +38,10 @@ export async function getIndicatorsConfig({
             paging: false,
         },
     })
-
+    logWorker(
+        'info',
+        `Fetched configurations for ${indicators.data.indicators.length} indicators`
+    )
     return indicators.data.indicators
 }
 
@@ -100,6 +111,10 @@ export async function getCategories({
         categoryOptionCombos: Array<{ id: string }>
     }> = []
     const categoryOptionCombos: Array<{ id: string }> = []
+    logWorker(
+        'info',
+        `Fetching categories and related metadata for ${items.length} category combos...`
+    )
 
     for (const item of items) {
         const response = await client.get<{
@@ -113,15 +128,14 @@ export async function getCategories({
             }>
             categoryOptions: Array<{ id: string }>
             categoryOptionCombos: Array<{ id: string }>
-        }>(`categories/${item}/metadata.json`)
-
+        }>(`categoryCombos/${item}/metadata.json`)
         const data = response.data
-        categories.push(...data.categories)
-        categoryOptions.push(...data.categoryOptions)
-        categoryCombos.push(...data.categoryCombos)
-        categoryOptionCombos.push(...data.categoryOptionCombos)
+        categories.push(...(data.categories ?? []))
+        categoryOptions.push(...(data.categoryOptions ?? []))
+        categoryCombos.push(...(data.categoryCombos ?? []))
+        categoryOptionCombos.push(...(data.categoryOptionCombos ?? []))
     }
-
+    logWorker('info', `Fetched categories metadata`)
     return {
         categories,
         categoryOptions,
@@ -233,15 +247,23 @@ export async function getIndicatorTypes({
     client: AxiosInstance
     items: string[]
 }) {
+    if (isEmpty(items)) {
+        return []
+    }
+    logWorker('info', `Fetching ${items.length} indicator types...`)
     const response = await client.get<{
         indicatorTypes: Array<{ id: string }>
     }>(`indicatorTypes`, {
         params: {
             filter: `id:in:[${items.join(',')}]`,
             fields: ':owner,!sharing,!createdBy,!lastUpdatedBy,!created,!lastUpdated',
+            paging: false,
         },
     })
-
+    logWorker(
+        'info',
+        `Fetched ${response.data.indicatorTypes.length} indicator types`
+    )
     return response.data.indicatorTypes
 }
 
@@ -275,6 +297,13 @@ export function sanitizeIndicatorsWithDatasetReferences({
     indicators: Array<Indicator>
     datasetDataElements: Array<DataElement>
 }) {
+    if (isEmpty(indicators)) {
+        return []
+    }
+    logWorker(
+        'info',
+        `Sanitizing ${indicators.length} indicators with dataset references`
+    )
     const reportingRatePattern = /R{([^}]+)}/g
     return indicators.map(({ numerator, denominator, ...indicator }) => {
         const hasDatasetReference =

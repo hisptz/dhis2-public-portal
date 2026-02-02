@@ -3,12 +3,13 @@ import {
     MetadataUpload,
     ProcessStatus,
 } from '@/generated/prisma/client'
-import { readFile } from 'node:fs/promises'
+import { readFile, rm } from 'node:fs/promises'
 import { dbClient } from '@/clients/prisma'
 import { ProcessedMetadata } from '@/services/metadata-migration/metadata-download'
 import { existsSync } from 'node:fs'
 import { AxiosInstance } from 'axios'
 import { createSourceClient } from '@/clients/dhis2'
+import { logWorker } from '@/rabbit/utils'
 
 export async function uploadMetadata({
     metadata,
@@ -17,6 +18,7 @@ export async function uploadMetadata({
     metadata: ProcessedMetadata['metadata']
     client: AxiosInstance
 }) {
+    logWorker('info', `Uploading metadata to DHIS2...`)
     const url = `metadata`
     const response = await client.post<{
         status: string
@@ -31,6 +33,7 @@ export async function uploadMetadata({
             userOverrideMode: 'CURRENT',
         },
     })
+    logWorker('info', `Metadata upload done`)
     return response.data
 }
 
@@ -47,6 +50,7 @@ export async function uploadMetadataFromQueue({
         })
         return
     }
+    logWorker('info', `Fetching metadata file for task: ${task.uid}`)
     const fileContent = await readFile(filename, 'utf8')
     const payload = JSON.parse(fileContent) as ProcessedMetadata
     const client = createSourceClient(task.run.mainConfigId)
@@ -54,4 +58,20 @@ export async function uploadMetadataFromQueue({
         metadata: payload.metadata,
         client,
     })
+    await dbClient.metadataUpload.update({
+        where: {
+            uid: task.uid,
+        },
+        data: {
+            status: ProcessStatus.DONE,
+            finishedAt: new Date(),
+            summary: uploadResponse,
+        },
+    })
+    logWorker(
+        'info',
+        `Deleting file ${filename} for metadata upload task ${task.uid}`
+    )
+    await rm(filename, { force: true })
+    logWorker('info', `Metadata upload for task ${task.uid} done`)
 }

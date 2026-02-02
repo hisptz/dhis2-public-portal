@@ -3,6 +3,8 @@ import logger from '@/logging'
 import { uploadMetadataFromQueue } from '@/services/metadata-migration/metadata-upload'
 import { dbClient } from '@/clients/prisma'
 import { ProcessStatus } from '@/generated/prisma/enums'
+import { AxiosError } from 'axios'
+import { logWorker } from '@/rabbit/utils'
 
 export async function metadataUploadHandler({
     message,
@@ -26,7 +28,6 @@ export async function metadataUploadHandler({
                 run: true,
             },
         })
-
         if (!metaUploadTask) {
             logger.error(
                 `Metadata upload task not found: ${metadataUploadTaskUid}`
@@ -41,16 +42,29 @@ export async function metadataUploadHandler({
             data: { status: ProcessStatus.INIT, startedAt: new Date() },
         })
         await uploadMetadataFromQueue({ task: metaUploadTask })
-        await dbClient.metadataUpload.update({
-            where: {
-                uid: metadataUploadTaskUid,
-            },
-            data: { status: ProcessStatus.DONE, finishedAt: new Date() },
-        })
         channel.ack(message)
     } catch (error) {
-        if (error instanceof Error) {
-            logger.error(
+        if (error instanceof AxiosError) {
+            logWorker(
+                'error',
+                `Failed to upload data for config ${metadataUploadTaskUid}: ${error.message}`
+            )
+            if ([400, 409, 404].includes(error.response?.status ?? 400)) {
+                await dbClient.metadataUpload.update({
+                    where: {
+                        uid: metadataUploadTaskUid,
+                    },
+                    data: {
+                        status: ProcessStatus.FAILED,
+                        error: error.message,
+                        errorObject: error.response?.data,
+                    },
+                })
+            }
+            channel.nack(message, false, false)
+        } else if (error instanceof Error) {
+            logWorker(
+                'error',
                 `Failed to upload data for config ${metadataUploadTaskUid}: ${error.message}`
             )
             await dbClient.metadataUpload.update({
@@ -58,14 +72,15 @@ export async function metadataUploadHandler({
                     uid: metadataUploadTaskUid,
                 },
                 data: {
-                    status: 'FAILED',
+                    status: ProcessStatus.FAILED,
                     error: error.message,
                     finishedAt: new Date(),
                 },
             })
             channel.nack(message, false, false)
         } else {
-            logger.error(
+            logWorker(
+                'error',
                 `Failed to upload data for config ${metadataUploadTaskUid}: Unknown error ${error}`
             )
             await dbClient.metadataUpload.update({
@@ -73,7 +88,8 @@ export async function metadataUploadHandler({
                     uid: metadataUploadTaskUid,
                 },
                 data: {
-                    status: 'FAILED',
+                    status: ProcessStatus.FAILED,
+                    finishedAt: new Date(),
                 },
             })
             channel.nack(message, false, false)
