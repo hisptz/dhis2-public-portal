@@ -1,5 +1,5 @@
 -- CreateEnum
-CREATE TYPE "RunStatus" AS ENUM ('QUEUED', 'PROCESSING', 'PROCESSED');
+CREATE TYPE "RunStatus" AS ENUM ('QUEUED', 'PROCESSING', 'FAILED', 'PROCESSED');
 
 -- CreateEnum
 CREATE TYPE "ProcessStatus" AS ENUM ('QUEUED', 'INIT', 'FAILED', 'DONE');
@@ -26,6 +26,7 @@ CREATE TABLE "DataRun" (
     "configIds" TEXT[],
     "mainConfigId" TEXT NOT NULL,
     "isDelete" BOOLEAN NOT NULL DEFAULT false,
+    "error" TEXT,
 
     CONSTRAINT "DataRun_pkey" PRIMARY KEY ("id")
 );
@@ -80,6 +81,7 @@ CREATE TABLE "MetadataRun" (
     "visualizations" TEXT[] DEFAULT ARRAY[]::TEXT[],
     "dashboards" TEXT[] DEFAULT ARRAY[]::TEXT[],
     "maps" TEXT[] DEFAULT ARRAY[]::TEXT[],
+    "error" TEXT,
 
     CONSTRAINT "MetadataRun_pkey" PRIMARY KEY ("id")
 );
@@ -94,6 +96,8 @@ CREATE TABLE "MetadataDownload" (
     "status" "ProcessStatus" NOT NULL DEFAULT 'QUEUED',
     "error" TEXT,
     "errorObject" JSONB,
+    "startedAt" TIMESTAMP(3),
+    "finishedAt" TIMESTAMP(3),
 
     CONSTRAINT "MetadataDownload_pkey" PRIMARY KEY ("id")
 );
@@ -105,9 +109,12 @@ CREATE TABLE "MetadataUpload" (
     "filename" TEXT NOT NULL,
     "runId" INTEGER NOT NULL,
     "downloadId" INTEGER NOT NULL,
+    "summary" JSONB,
     "status" "ProcessStatus" NOT NULL DEFAULT 'QUEUED',
     "error" TEXT,
     "errorObject" JSONB,
+    "startedAt" TIMESTAMP(3),
+    "finishedAt" TIMESTAMP(3),
 
     CONSTRAINT "MetadataUpload_pkey" PRIMARY KEY ("id")
 );
