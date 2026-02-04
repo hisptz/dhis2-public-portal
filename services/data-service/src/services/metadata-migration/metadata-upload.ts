@@ -8,7 +8,7 @@ import { dbClient } from '@/clients/prisma'
 import { ProcessedMetadata } from '@/services/metadata-migration/metadata-download'
 import { existsSync } from 'node:fs'
 import { AxiosInstance } from 'axios'
-import { createSourceClient } from '@/clients/dhis2'
+import { dhis2Client } from '@/clients/dhis2'
 import { logWorker } from '@/rabbit/utils'
 
 export async function uploadMetadata({
@@ -53,10 +53,9 @@ export async function uploadMetadataFromQueue({
     logWorker('info', `Fetching metadata file for task: ${task.uid}`)
     const fileContent = await readFile(filename, 'utf8')
     const payload = JSON.parse(fileContent) as ProcessedMetadata
-    const client = createSourceClient(task.run.mainConfigId)
     const uploadResponse = await uploadMetadata({
         metadata: payload.metadata,
-        client,
+        client: dhis2Client,
     })
     await dbClient.metadataUpload.update({
         where: {
