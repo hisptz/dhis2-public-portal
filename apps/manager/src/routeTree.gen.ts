@@ -21,6 +21,7 @@ import { Route as ModulesProviderIndexRouteImport } from './modules/modules/_pro
 import { Route as ModulesProviderModuleIdFormProviderRouteImport } from './modules/modules/_provider/$moduleId/_formProvider'
 import { Route as DataServiceConfigurationProviderConfigIdProviderRouteImport } from './modules/data-service-configuration/_provider/$configId/_provider'
 import { Route as ModulesProviderModuleIdFormProviderEditLayoutRouteImport } from './modules/modules/_provider/$moduleId/_formProvider/edit/layout'
+import { Route as DataServiceConfigurationProviderConfigIdProviderEditProviderRouteImport } from './modules/data-service-configuration/_provider/$configId/_provider/edit/_provider'
 import { Route as ModulesProviderModuleIdFormProviderEditGroupIndexIndexRouteImport } from './modules/modules/_provider/$moduleId/_formProvider/edit/$groupIndex/index'
 import { Route as ModulesProviderModuleIdFormProviderEditGroupIndexLayoutRouteImport } from './modules/modules/_provider/$moduleId/_formProvider/edit/$groupIndex/layout'
 import { Route as ModulesProviderModuleIdFormProviderEditStaticItemIdIndexRouteImport } from './modules/modules/_provider/$moduleId/_formProvider/edit/static/$itemId/index'
@@ -48,6 +49,10 @@ const DataServiceConfigurationProviderConfigIdProviderIndexLazyRouteImport =
   )()
 const ModulesProviderModuleIdFormProviderEditIndexLazyRouteImport =
   createFileRoute('/modules/_provider/$moduleId/_formProvider/edit/')()
+const DataServiceConfigurationProviderConfigIdProviderEditProviderIndexLazyRouteImport =
+  createFileRoute(
+    '/data-service-configuration/_provider/$configId/_provider/edit/_provider/',
+  )()
 
 const IndexLazyRoute = IndexLazyRouteImport.update({
   id: '/',
@@ -173,6 +178,28 @@ const ModulesProviderModuleIdFormProviderEditLayoutRoute =
     path: '/edit/layout',
     getParentRoute: () => ModulesProviderModuleIdFormProviderRoute,
   } as any)
+const DataServiceConfigurationProviderConfigIdProviderEditProviderRoute =
+  DataServiceConfigurationProviderConfigIdProviderEditProviderRouteImport.update(
+    {
+      id: '/edit/_provider',
+      path: '/edit',
+      getParentRoute: () =>
+        DataServiceConfigurationProviderConfigIdProviderRoute,
+    } as any,
+  )
+const DataServiceConfigurationProviderConfigIdProviderEditProviderIndexLazyRoute =
+  DataServiceConfigurationProviderConfigIdProviderEditProviderIndexLazyRouteImport.update(
+    {
+      id: '/',
+      path: '/',
+      getParentRoute: () =>
+        DataServiceConfigurationProviderConfigIdProviderEditProviderRoute,
+    } as any,
+  ).lazy(() =>
+    import('./modules/data-service-configuration/_provider/$configId/_provider/edit/_provider/index.lazy').then(
+      (d) => d.Route,
+    ),
+  )
 const ModulesProviderModuleIdFormProviderEditGroupIndexIndexRoute =
   ModulesProviderModuleIdFormProviderEditGroupIndexIndexRouteImport.update({
     id: '/edit/$groupIndex/',
@@ -225,10 +252,12 @@ export interface FileRoutesByFullPath {
   '/modules/$moduleId': typeof ModulesProviderModuleIdFormProviderRouteWithChildren
   '/data-service-configuration/$configId/': typeof DataServiceConfigurationProviderConfigIdProviderIndexLazyRoute
   '/data-service-configuration/$configId/validation-logs': typeof DataServiceConfigurationProviderConfigIdValidationLogsIndexLazyRoute
+  '/data-service-configuration/$configId/edit': typeof DataServiceConfigurationProviderConfigIdProviderEditProviderRouteWithChildren
   '/modules/$moduleId/edit/layout': typeof ModulesProviderModuleIdFormProviderEditLayoutRoute
   '/modules/$moduleId/edit': typeof ModulesProviderModuleIdFormProviderEditIndexLazyRoute
   '/modules/$moduleId/edit/$groupIndex/layout': typeof ModulesProviderModuleIdFormProviderEditGroupIndexLayoutRoute
   '/modules/$moduleId/edit/$groupIndex': typeof ModulesProviderModuleIdFormProviderEditGroupIndexIndexRoute
+  '/data-service-configuration/$configId/edit/': typeof DataServiceConfigurationProviderConfigIdProviderEditProviderIndexLazyRoute
   '/modules/$moduleId/edit/section/$sectionIndex/layout': typeof ModulesProviderModuleIdFormProviderEditSectionSectionIndexLayoutRoute
   '/modules/$moduleId/edit/section/$sectionIndex': typeof ModulesProviderModuleIdFormProviderEditSectionSectionIndexIndexRoute
   '/modules/$moduleId/edit/static/$itemId': typeof ModulesProviderModuleIdFormProviderEditStaticItemIdIndexRoute
@@ -248,6 +277,7 @@ export interface FileRoutesByTo {
   '/modules/$moduleId/edit': typeof ModulesProviderModuleIdFormProviderEditIndexLazyRoute
   '/modules/$moduleId/edit/$groupIndex/layout': typeof ModulesProviderModuleIdFormProviderEditGroupIndexLayoutRoute
   '/modules/$moduleId/edit/$groupIndex': typeof ModulesProviderModuleIdFormProviderEditGroupIndexIndexRoute
+  '/data-service-configuration/$configId/edit': typeof DataServiceConfigurationProviderConfigIdProviderEditProviderIndexLazyRoute
   '/modules/$moduleId/edit/section/$sectionIndex/layout': typeof ModulesProviderModuleIdFormProviderEditSectionSectionIndexLayoutRoute
   '/modules/$moduleId/edit/section/$sectionIndex': typeof ModulesProviderModuleIdFormProviderEditSectionSectionIndexIndexRoute
   '/modules/$moduleId/edit/static/$itemId': typeof ModulesProviderModuleIdFormProviderEditStaticItemIdIndexRoute
@@ -270,10 +300,12 @@ export interface FileRoutesById {
   '/modules/_provider/$moduleId/_formProvider': typeof ModulesProviderModuleIdFormProviderRouteWithChildren
   '/data-service-configuration/_provider/$configId/_provider/': typeof DataServiceConfigurationProviderConfigIdProviderIndexLazyRoute
   '/data-service-configuration/_provider/$configId/validation-logs/': typeof DataServiceConfigurationProviderConfigIdValidationLogsIndexLazyRoute
+  '/data-service-configuration/_provider/$configId/_provider/edit/_provider': typeof DataServiceConfigurationProviderConfigIdProviderEditProviderRouteWithChildren
   '/modules/_provider/$moduleId/_formProvider/edit/layout': typeof ModulesProviderModuleIdFormProviderEditLayoutRoute
   '/modules/_provider/$moduleId/_formProvider/edit/': typeof ModulesProviderModuleIdFormProviderEditIndexLazyRoute
   '/modules/_provider/$moduleId/_formProvider/edit/$groupIndex/layout': typeof ModulesProviderModuleIdFormProviderEditGroupIndexLayoutRoute
   '/modules/_provider/$moduleId/_formProvider/edit/$groupIndex/': typeof ModulesProviderModuleIdFormProviderEditGroupIndexIndexRoute
+  '/data-service-configuration/_provider/$configId/_provider/edit/_provider/': typeof DataServiceConfigurationProviderConfigIdProviderEditProviderIndexLazyRoute
   '/modules/_provider/$moduleId/_formProvider/edit/section/$sectionIndex/layout': typeof ModulesProviderModuleIdFormProviderEditSectionSectionIndexLayoutRoute
   '/modules/_provider/$moduleId/_formProvider/edit/section/$sectionIndex/': typeof ModulesProviderModuleIdFormProviderEditSectionSectionIndexIndexRoute
   '/modules/_provider/$moduleId/_formProvider/edit/static/$itemId/': typeof ModulesProviderModuleIdFormProviderEditStaticItemIdIndexRoute
@@ -297,10 +329,12 @@ export interface FileRouteTypes {
     | '/modules/$moduleId'
     | '/data-service-configuration/$configId/'
     | '/data-service-configuration/$configId/validation-logs'
+    | '/data-service-configuration/$configId/edit'
     | '/modules/$moduleId/edit/layout'
     | '/modules/$moduleId/edit'
     | '/modules/$moduleId/edit/$groupIndex/layout'
     | '/modules/$moduleId/edit/$groupIndex'
+    | '/data-service-configuration/$configId/edit/'
     | '/modules/$moduleId/edit/section/$sectionIndex/layout'
     | '/modules/$moduleId/edit/section/$sectionIndex'
     | '/modules/$moduleId/edit/static/$itemId'
@@ -320,6 +354,7 @@ export interface FileRouteTypes {
     | '/modules/$moduleId/edit'
     | '/modules/$moduleId/edit/$groupIndex/layout'
     | '/modules/$moduleId/edit/$groupIndex'
+    | '/data-service-configuration/$configId/edit'
     | '/modules/$moduleId/edit/section/$sectionIndex/layout'
     | '/modules/$moduleId/edit/section/$sectionIndex'
     | '/modules/$moduleId/edit/static/$itemId'
@@ -341,10 +376,12 @@ export interface FileRouteTypes {
     | '/modules/_provider/$moduleId/_formProvider'
     | '/data-service-configuration/_provider/$configId/_provider/'
     | '/data-service-configuration/_provider/$configId/validation-logs/'
+    | '/data-service-configuration/_provider/$configId/_provider/edit/_provider'
     | '/modules/_provider/$moduleId/_formProvider/edit/layout'
     | '/modules/_provider/$moduleId/_formProvider/edit/'
     | '/modules/_provider/$moduleId/_formProvider/edit/$groupIndex/layout'
     | '/modules/_provider/$moduleId/_formProvider/edit/$groupIndex/'
+    | '/data-service-configuration/_provider/$configId/_provider/edit/_provider/'
     | '/modules/_provider/$moduleId/_formProvider/edit/section/$sectionIndex/layout'
     | '/modules/_provider/$moduleId/_formProvider/edit/section/$sectionIndex/'
     | '/modules/_provider/$moduleId/_formProvider/edit/static/$itemId/'
@@ -488,6 +525,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ModulesProviderModuleIdFormProviderEditLayoutRouteImport
       parentRoute: typeof ModulesProviderModuleIdFormProviderRoute
     }
+    '/data-service-configuration/_provider/$configId/_provider/edit/_provider': {
+      id: '/data-service-configuration/_provider/$configId/_provider/edit/_provider'
+      path: '/edit'
+      fullPath: '/data-service-configuration/$configId/edit'
+      preLoaderRoute: typeof DataServiceConfigurationProviderConfigIdProviderEditProviderRouteImport
+      parentRoute: typeof DataServiceConfigurationProviderConfigIdProviderRoute
+    }
+    '/data-service-configuration/_provider/$configId/_provider/edit/_provider/': {
+      id: '/data-service-configuration/_provider/$configId/_provider/edit/_provider/'
+      path: '/'
+      fullPath: '/data-service-configuration/$configId/edit/'
+      preLoaderRoute: typeof DataServiceConfigurationProviderConfigIdProviderEditProviderIndexLazyRouteImport
+      parentRoute: typeof DataServiceConfigurationProviderConfigIdProviderEditProviderRoute
+    }
     '/modules/_provider/$moduleId/_formProvider/edit/$groupIndex/': {
       id: '/modules/_provider/$moduleId/_formProvider/edit/$groupIndex/'
       path: '/edit/$groupIndex'
@@ -537,14 +588,32 @@ const AppearanceProviderRouteChildren: AppearanceProviderRouteChildren = {
 const AppearanceProviderRouteWithChildren =
   AppearanceProviderRoute._addFileChildren(AppearanceProviderRouteChildren)
 
+interface DataServiceConfigurationProviderConfigIdProviderEditProviderRouteChildren {
+  DataServiceConfigurationProviderConfigIdProviderEditProviderIndexLazyRoute: typeof DataServiceConfigurationProviderConfigIdProviderEditProviderIndexLazyRoute
+}
+
+const DataServiceConfigurationProviderConfigIdProviderEditProviderRouteChildren: DataServiceConfigurationProviderConfigIdProviderEditProviderRouteChildren =
+  {
+    DataServiceConfigurationProviderConfigIdProviderEditProviderIndexLazyRoute:
+      DataServiceConfigurationProviderConfigIdProviderEditProviderIndexLazyRoute,
+  }
+
+const DataServiceConfigurationProviderConfigIdProviderEditProviderRouteWithChildren =
+  DataServiceConfigurationProviderConfigIdProviderEditProviderRoute._addFileChildren(
+    DataServiceConfigurationProviderConfigIdProviderEditProviderRouteChildren,
+  )
+
 interface DataServiceConfigurationProviderConfigIdProviderRouteChildren {
   DataServiceConfigurationProviderConfigIdProviderIndexLazyRoute: typeof DataServiceConfigurationProviderConfigIdProviderIndexLazyRoute
+  DataServiceConfigurationProviderConfigIdProviderEditProviderRoute: typeof DataServiceConfigurationProviderConfigIdProviderEditProviderRouteWithChildren
 }
 
 const DataServiceConfigurationProviderConfigIdProviderRouteChildren: DataServiceConfigurationProviderConfigIdProviderRouteChildren =
   {
     DataServiceConfigurationProviderConfigIdProviderIndexLazyRoute:
       DataServiceConfigurationProviderConfigIdProviderIndexLazyRoute,
+    DataServiceConfigurationProviderConfigIdProviderEditProviderRoute:
+      DataServiceConfigurationProviderConfigIdProviderEditProviderRouteWithChildren,
   }
 
 const DataServiceConfigurationProviderConfigIdProviderRouteWithChildren =

@@ -1,23 +1,26 @@
 import { createFileRoute, Outlet, useParams } from '@tanstack/react-router'
 
 import { FormProvider, useForm } from 'react-hook-form'
-import { useGetDataSource } from '../../../../shared/components/DataConfiguration/hooks/data'
 import {
     DataServiceConfig,
     dataServiceConfigSchema,
 } from '@packages/shared/schemas'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { FullLoader } from '../../../../shared/components/FullLoader'
+import { useGetDataSource } from '@/shared/components/DataConfiguration/hooks/data'
+import { FullLoader } from '@/shared/components/FullLoader'
+import { DataConfigurationActions } from '@/shared/components/DataConfiguration/components/DataConfigurationActions'
+
+
 
 export const Route = createFileRoute(
-    '/data-service-configuration/_provider/$configId/_provider'
+    '/data-service-configuration/_provider/$configId/_provider/edit/_provider'
 )({
     component: RouteComponent,
 })
 
 function RouteComponent() {
     const { configId } = useParams({
-        from: '/data-service-configuration/_provider/$configId/_provider',
+        from: '/data-service-configuration/_provider/$configId/_provider/edit/_provider/'
     })
     const { refetch } = useGetDataSource(configId)
     const form = useForm<DataServiceConfig>({
@@ -38,7 +41,7 @@ function RouteComponent() {
                 <div className="flex-1 w-full">
                     <Outlet />
                 </div>
-               
+                <DataConfigurationActions />
             </div>
         </FormProvider>
     )

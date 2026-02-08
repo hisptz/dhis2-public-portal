@@ -5,7 +5,7 @@ import { DataServiceConfig } from '@packages/shared/schemas'
 import { RunConfigForm } from './components/RunConfigForm/RunConfigForm'
 import i18n from '@dhis2/d2-i18n'
 
-export function RunConfiguration({ config }: { config: DataServiceConfig }) {
+export function RunConfiguration({ config, label }: { config: DataServiceConfig, label?: string }) {
     const { value: hide, setTrue: onClose, setFalse: onShow } = useBoolean(true)
     return (
         <>
@@ -13,7 +13,7 @@ export function RunConfiguration({ config }: { config: DataServiceConfig }) {
                 <RunConfigForm config={config} hide={hide} onClose={onClose} />
             )}
             <Tooltip content={i18n.t('Run configuration')}>
-                <Button icon={<IconLaunch16 />} onClick={onShow} small />
+                <Button icon={<IconLaunch16 />} onClick={onShow} small={!label}>{label}</Button>
             </Tooltip>
         </>
     )

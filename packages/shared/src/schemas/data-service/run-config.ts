@@ -67,7 +67,7 @@ export const dataMigrationSchema = baseRunConfigSchema.extend({
         periodType: z.string().optional(),
         periods: z.array(z.string()).optional(),
     }),
-    dataItemsConfigIds: z.array(z.string()).min(1, i18n.t('')),
+    dataItemsConfigIds: z.array(z.string()).min(1, i18n.t('Please select at least one data configuration')),
 })
 
 export const runConfigSchema = z.discriminatedUnion('service', [

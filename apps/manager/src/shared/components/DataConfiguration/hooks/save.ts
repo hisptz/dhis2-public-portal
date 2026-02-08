@@ -137,10 +137,10 @@ const updateDataSourceMutation: any = {
 
 export function useUpdateDataSource() {
     const navigate = useNavigate({
-        from: '/data-service-configuration/$configId/',
+        from: '/data-service-configuration/$configId/edit/',
     })
     const { configId } = useParams({
-        from: '/data-service-configuration/_provider/$configId/_provider/',
+        from: '/data-service-configuration/_provider/$configId/_provider/edit/_provider/',
     })
     const refreshList = useRefreshDataSources()
     const { show } = useAlert(
@@ -201,7 +201,10 @@ export function useUpdateDataSource() {
 
         refreshList()
         await navigate({
-            to: '/data-service-configuration',
+            to: '/data-service-configuration/$configId',
+            params: {
+                configId,
+            },
         })
     }
 
@@ -218,7 +221,7 @@ export function useUpdateConnection() {
     )
     const engine = useDataEngine()
     const { configId } = useParams({
-        from: '/data-service-configuration/_provider/$configId/_provider/',
+        from: '/data-service-configuration/_provider/$configId/_provider/edit/_provider/',
     })
 
     const updateConnection = async (

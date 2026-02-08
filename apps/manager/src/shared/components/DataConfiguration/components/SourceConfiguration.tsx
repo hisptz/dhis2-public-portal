@@ -3,7 +3,6 @@ import { DataServiceConfig } from '@packages/shared/schemas'
 import { useEffect } from 'react'
 import i18n from '@dhis2/d2-i18n'
 import { CircularLoader } from '@dhis2/ui'
-import { FormTestConnection } from './FormTestConnection'
 import { EditConnectionButton } from './EditConnectionButton'
 import { useRoute } from '../hooks/useRoute'
 
@@ -58,7 +57,6 @@ export function SourceConfiguration() {
                     </div>
                     <div className="flex gap-2 items-center pt-2 ">
                         <EditConnectionButton />
-                        {route && <FormTestConnection routeConfig={route} />}
                     </div>
                 </>
             )}

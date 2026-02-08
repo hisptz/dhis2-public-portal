@@ -1,6 +1,6 @@
-import { Button, ButtonStrip } from '@dhis2/ui'
 import i18n from '@dhis2/d2-i18n'
 import { useAlert, useDataQuery } from '@dhis2/app-runtime'
+import { useMemo } from 'react'
 
 const query = {
     routeTest: {
@@ -37,10 +37,11 @@ export function FormTestConnection({
                     type: { success: true },
                 })
             } else {
-             show({
-					message: `${i18n.t("Connection failed")}: ${error.details?.message || error.message}`,
-					type: { critical: true },
-				});
+                show({
+                    message: `${i18n.t('Connection failed')}: ${error.details?.message || error.message
+                        }`,
+                    type: { critical: true },
+                })
             }
         },
         variables: {
@@ -50,22 +51,58 @@ export function FormTestConnection({
     })
 
     const test = async () => {
-        hide();
+        hide()
         await refetch()
     }
 
+    const busy = loading || fetching
+
+    const label = useMemo(
+        () => (busy ? i18n.t('Testing') : i18n.t('Test Connection')),
+        [busy]
+    )
+
     return (
-        <ButtonStrip>
-            <Button
-                onClick={() => {
-                    test()
-                }}
-                loading={loading || fetching}
-            >
-                {loading || fetching
-                    ? i18n.t('Testing...')
-                    : i18n.t('Test connection')}
-            </Button>
-        </ButtonStrip>
+
+        <span
+            onClick={test}
+            className={`
+                group
+                inline-flex items-center gap-1.5
+                px-2.5 py-1
+                rounded-full
+                text-xs font-medium
+                cursor-pointer select-none
+                border
+                transition-all duration-200
+                ${busy
+                    ? 'bg-green-50 border-green-500 text-green-700 hover:text-green-700 cursor-wait'
+                    : 'bg-gray-100 border-gray-300 text-gray-700 hover:border-green-500'
+                }
+                hover:-translate-y-[1px]
+                hover:text-green-700 text-bold
+                active:scale-100
+            `}
+        >
+
+               {/* Icon */}
+            {busy ? (
+                <span
+                    className="
+                        w-3 h-3
+                        rounded-full
+                        border-2 border-green-300
+                        border-t-green-600
+                        animate-spin
+                    "
+                />
+            ) : <></>}
+
+            <span className="tracking-wide">{label}</span>
+        </span>
+
+
+
+
     )
 }
