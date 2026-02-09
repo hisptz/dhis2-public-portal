@@ -38,7 +38,7 @@ export const GET: Operation = async (req: Request, res: Response) => {
             });
             return;
         }
-        const response = await getRunStatus({ runId });
+        const response = await getRunStatus({ runId, runType});
         res.json(response);
     } catch (error) {
         logger.error(`Failed to get run status for ${req.params.runType} run ${req.params.runId}:`, error)
@@ -51,5 +51,106 @@ export const GET: Operation = async (req: Request, res: Response) => {
             timestamp: new Date().toISOString(),
         })
     }
+}
+
+GET.apiDoc = {
+    summary: 'Get the status of a specific run',
+    description: 'Retrieves the current status of a metadata or data run for a given configuration.',
+    tags: ['Data Service Runs'],
+    parameters: [
+        {
+            name: 'configId',
+            in: 'path',
+            required: true,
+            schema: {
+                type: 'string',
+            },
+            description: 'The ID of the data service configuration',
+        },
+        {
+            name: 'runType',
+            in: 'path',
+            required: true,
+            schema: {
+                type: 'string',
+                enum: ['metadata', 'data'],
+            },
+            description: 'The type of run (metadata or data)',
+        },
+        {
+            name: 'runId',
+            in: 'path',
+            required: true,
+            schema: {
+                type: 'string',
+            },
+            description: 'The ID of the run to retrieve the status for',
+        },
+    ],
+    responses: {
+        200: {
+            description: 'Run status retrieved successfully',
+            content: {
+                'application/json': {
+                    schema: {
+                        type: 'object',
+                        properties: {
+                            status: {
+                                type: 'string',
+                                description: 'The current status of the run (e.g., RUNNING, SUCCESS, FAILED)',
+                            },
+                        },
+                    },
+                },
+            },
+        },
+        400: {
+            description: 'Bad request - missing or invalid parameters',
+            content: {
+                'application/json': {
+                    schema: {
+                        type: 'object',
+                        properties: {
+                            success: { type: 'boolean' },
+                            error: { type: 'string' },
+                            timestamp: { type: 'string', format: 'date-time' },
+                        },
+                    },
+                },
+            },
+        },
+        404: {
+            description: 'Run not found',
+            content: {
+                'application/json': {
+                    schema: {
+                        type: 'object',
+                        properties: {
+                            status: { type: 'string' },
+                            message: { type: 'string' },
+                        },
+                    },
+                },
+            },
+        },
+        500: {
+            description: 'Internal server error',
+            content: {
+                'application/json': {
+                    schema: {
+                        type: 'object',
+                        properties: {
+                            success: { type: 'boolean' },
+                            error: { type: 'string' },
+                            configId: { type: 'string' },
+                            runType: { type: 'string' },
+                            runId: { type: 'string' },
+                            timestamp: { type: 'string', format: 'date-time' },
+                        },
+                    },
+                },
+            },
+        },
+    },
 }
 

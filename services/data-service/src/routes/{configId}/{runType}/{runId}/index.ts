@@ -35,7 +35,7 @@ export const GET: Operation = async (req: Request, res: Response) => {
         }
         res.json({
             ...run,
-            status: await getRunStatus({ runId }),
+            status: await getRunStatus({ runId, runType }),
         });
     } catch (error) {
         logger.error(`Failed to get ${req.params.runType} run ${req.params.runId} for config ${req.params.configId}:`, error)

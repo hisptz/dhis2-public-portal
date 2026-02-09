@@ -59,7 +59,6 @@ export const POST: Operation = async (req: Request, res: Response) => {
                             queue: Queues.METADATA_DOWNLOAD,
                             reference: download.id,
                         })
-
                     );
                 }
             }

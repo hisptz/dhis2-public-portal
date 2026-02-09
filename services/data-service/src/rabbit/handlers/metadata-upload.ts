@@ -58,6 +58,7 @@ export async function metadataUploadHandler({
                         status: ProcessStatus.FAILED,
                         error: error.message,
                         errorObject: error.response?.data,
+                        finishedAt: new Date()
                     },
                 })
             }

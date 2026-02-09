@@ -110,6 +110,7 @@ export async function downloadAndQueueMetadata({
             data: {
                 status: ProcessStatus.FAILED,
                 error: 'Unsupported metadata download',
+                finishedAt: new Date()
             },
         })
         return
@@ -132,6 +133,7 @@ export async function downloadAndQueueMetadata({
         where: { uid: task.uid },
         data: {
             status: ProcessStatus.DONE,
+            finishedAt: new Date()
         },
     })
 }

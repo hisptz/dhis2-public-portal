@@ -46,7 +46,7 @@ export async function uploadMetadataFromQueue({
     if (!existsSync(filename)) {
         await dbClient.metadataUpload.update({
             where: { id: task.id },
-            data: { status: ProcessStatus.FAILED, error: 'File not found' },
+            data: { status: ProcessStatus.FAILED, error: 'File not found', finishedAt: new Date() },
         })
         return
     }

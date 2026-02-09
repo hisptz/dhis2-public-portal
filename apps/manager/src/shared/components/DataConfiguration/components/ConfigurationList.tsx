@@ -8,6 +8,7 @@ import { Button, ButtonStrip, IconDelete16, IconView16, Tooltip } from '@dhis2/u
 import { useNavigate } from '@tanstack/react-router'
 import { useDeleteDataSource } from '../hooks/save'
 import { DataServiceConfig } from '@packages/shared/schemas'
+import { ConfigStatus } from './RunStatus'
 
 const columns: SimpleTableColumn[] = [
     {
@@ -71,7 +72,7 @@ export function ConfigurationList() {
             ...configuration,
             name: configuration.source.name,
             url,
-            status: <>Status</>,
+            status: <ConfigStatus configId={configuration.id} />,
             actions: (<ButtonStrip>
                 <Tooltip content={i18n.t("View connection")}>
 

@@ -2,9 +2,9 @@ import { dbClient } from "@/clients/prisma";
 import { compact } from "lodash";
 
 
-export async function getRunStatus({ runId }: { runId: string }) {
-	const [downloads, uploads] = await Promise.all([
-		await dbClient.dataDownload.findMany({
+export async function getRunStatus({ runId, runType }: { runId: string, runType: string }) {
+	const [downloads, uploads] = runType === 'metadata' ? await Promise.all(
+		[await dbClient.metadataDownload.findMany({
 			where: {
 				run: {
 					uid: runId,
@@ -14,7 +14,7 @@ export async function getRunStatus({ runId }: { runId: string }) {
 				status: true,
 			},
 		}),
-		await dbClient.dataUpload.findMany({
+		await dbClient.metadataUpload.findMany({
 			where: {
 				run: {
 					uid: runId,
@@ -24,7 +24,30 @@ export async function getRunStatus({ runId }: { runId: string }) {
 				status: true,
 			},
 		}),
-	]);
+		]) :
+		await Promise.all(
+			[
+				await dbClient.dataDownload.findMany({
+					where: {
+						run: {
+							uid: runId,
+						},
+					},
+					select: {
+						status: true,
+					},
+				}),
+				await dbClient.dataUpload.findMany({
+					where: {
+						run: {
+							uid: runId,
+						},
+					},
+					select: {
+						status: true,
+					},
+				}),
+			]);
 
 	const statuses = compact([
 		...downloads.map((download) => download.status),

@@ -22,6 +22,17 @@ const query = {
 	},
 }
 
+const configStatusQuery = {
+	status: {
+		resource: "routes/data-service/run/",
+		id: ({
+			configId,
+		}: {
+			configId: string	
+		}) => `${configId}/status`,
+	},
+}
+
 export function RunStatus({
 	runId,
 	type,
@@ -43,6 +54,56 @@ export function RunStatus({
 					configId: config.id,
 					runId,
 					type,
+				},
+			})
+
+			return data.status as { status: RunStatus }
+		},
+		refetchInterval: (query) =>
+			query?.status === "RUNNING" ? 1000 : false,
+	})
+
+
+	if (isLoading) {
+		return <CircularLoader extrasmall />
+	}
+
+	if (error || !data) {
+		return <span>{i18n.t("N/A")}</span>
+	}
+
+	switch (data.status) {
+		case "DONE":
+			return <Tag positive>{i18n.t("Done")}</Tag>
+		case "ERRORED":
+			return <Tag negative>{i18n.t("Has errors")}</Tag>
+		case "RUNNING":
+			return <Tag neutral>{i18n.t("Running")}</Tag>
+		case "QUEUED":
+			return <Tag>{i18n.t("Queued")}</Tag>
+		case "IGNORED":
+			return <Tag>{i18n.t("Not ran")}</Tag>
+		default:
+			return <span>{i18n.t("N/A")}</span>
+	}
+}
+
+
+export function ConfigStatus({
+	configId,
+}: {
+	configId: string
+}) {
+	const engine = useDataEngine()
+	const enabled = Boolean(configId)
+
+	const { data, isLoading, error } = useQuery({
+		queryKey: [configId, "status"],
+		enabled,
+		queryFn: async () => {
+			const data = await engine.query(configStatusQuery, {
+				variables: {
+					configId: configId,
 				},
 			})
 
