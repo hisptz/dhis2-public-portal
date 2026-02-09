@@ -1,4 +1,4 @@
-import { SimpleTable, SimpleTableColumn, useDialog } from '@hisptz/dhis2-ui'
+import { SimpleDataTable, SimpleTableColumn, useDialog } from '@hisptz/dhis2-ui'
 import { useDataSources } from '../providers/DataSourcesProvider'
 import { useEffect } from 'react'
 import i18n from '@dhis2/d2-i18n'
@@ -74,7 +74,7 @@ export function ConfigurationList() {
             url,
             status: <ConfigStatus configId={configuration.id} />,
             actions: (<ButtonStrip>
-                <Tooltip content={i18n.t("View connection")}>
+                <Tooltip content={i18n.t("View runs")}>
 
                     <Button small secondary onClick={() => {
                         navigate({
@@ -85,7 +85,7 @@ export function ConfigurationList() {
                         });
                     }}  icon={<IconView16 />} />
                 </Tooltip>
-                <Tooltip content={i18n.t("Delete connection")}>
+                <Tooltip content={i18n.t("Delete configuration")}>
                     <Button small secondary onClick={() => handleDelete(configuration)} icon={<IconDelete16 color='red' />} />
 
                 </Tooltip>
@@ -99,7 +99,7 @@ export function ConfigurationList() {
             <div className="flex justify-end">
                 <AddDataSource />
             </div>
-            <SimpleTable
+            <SimpleDataTable
                 rows={rows}
                 emptyLabel="There are no configuration present"
                 columns={columns}
