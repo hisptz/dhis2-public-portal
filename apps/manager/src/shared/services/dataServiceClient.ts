@@ -8,16 +8,6 @@ export interface ApiResponse {
     queues?: string[];
 }
 
-function isVersion42OrHigher(serverVersion?: any): boolean {
-    if (!serverVersion) return false;
-    const minor = serverVersion.minor || 0;
-    const major = serverVersion.major || 0;
-    if (major >= 2 && minor >= 42) return true;
-    if (major >= 3) return true;
-
-    return false;
-}
-
 export async function executeDataServiceRoute(
     engine: any,
     endpoint: string,
@@ -63,65 +53,20 @@ export async function queryDataServiceRoute(
 }
 
 export async function downloadMetadata(engine: any, configId: string, data: any, serverVersion?: any): Promise<ApiResponse> {
-    const useQueryParams = isVersion42OrHigher(serverVersion);
-
-    if (useQueryParams) {
-        const queryParams = new URLSearchParams();
-
-        if (data.metadataSource) {
-            queryParams.set('metadataSource', data.metadataSource);
-        }
-
-        if (data.selectedVisualizations && Array.isArray(data.selectedVisualizations) && data.selectedVisualizations.length > 0) {
-            queryParams.set('selectedVisualizations', JSON.stringify(data.selectedVisualizations));
-        }
-
-        if (data.selectedMaps && Array.isArray(data.selectedMaps) && data.selectedMaps.length > 0) {
-            queryParams.set('selectedMaps', JSON.stringify(data.selectedMaps));
-        }
-
-        if (data.selectedDashboards && Array.isArray(data.selectedDashboards) && data.selectedDashboards.length > 0) {
-            queryParams.set('selectedDashboards', JSON.stringify(data.selectedDashboards));
-        }
-
-        const endpoint = `/metadata-download/${configId}?${queryParams.toString()}`;
-        return queryDataServiceRoute(engine, endpoint);
-    } else {
         return executeDataServiceRoute(engine, `/metadata-download/${configId}`, {
             metadataSource: data.metadataSource || 'source',
             selectedVisualizations: data.selectedVisualizations || [],
             selectedMaps: data.selectedMaps || [],
             selectedDashboards: data.selectedDashboards || []
         }, 'create');
-    }
 }
 
 export async function downloadData(engine: any, configId: string, data: any, serverVersion?: any): Promise<ApiResponse> {
-    const useQueryParams = isVersion42OrHigher(serverVersion);
-
-    if (useQueryParams) {
-        const queryParams = new URLSearchParams();
-
-        if (data.dataItemsConfigIds && Array.isArray(data.dataItemsConfigIds)) {
-            queryParams.set('dataItemsConfigIds', JSON.stringify(data.dataItemsConfigIds));
-        }
-
-        if (data.runtimeConfig) {
-            queryParams.set('runtimeConfig', JSON.stringify(data.runtimeConfig));
-        }
-        if (data.isDelete) {
-            queryParams.set('isDelete', JSON.stringify(data.isDelete));
-        }
-
-        const endpoint = `/data-download/${configId}?${queryParams.toString()}`;
-        return queryDataServiceRoute(engine, endpoint);
-    } else {
         return executeDataServiceRoute(engine, `/data-download/${configId}`, {
             dataItemsConfigIds: data.dataItemsConfigIds || [],
             runtimeConfig: data.runtimeConfig || {},
             isDelete: data.isDelete || false,
         }, 'create');
-    }
 }
 
 export async function createQueues(engine: any, configId: string): Promise<ApiResponse> {
