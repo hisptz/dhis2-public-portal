@@ -2,7 +2,7 @@ import { FetchError, useDataEngine } from "@dhis2/app-runtime";
 import { RunStatus } from "@/shared/components/DataConfiguration/components/RunConfiguration/components/RunConfigStatus/RunConfigStatus";
 import { useQueries } from "@tanstack/react-query";
 import { useState } from "react";
-import { DataServiceConfig } from "@packages/shared/schemas";
+import { DataServiceConfig, ErrorObject, ImportSummary } from "@packages/shared/schemas";
 import { useWatch } from "react-hook-form";
 
 
@@ -11,7 +11,7 @@ enum MetadataSourceType {
 	FLEXIPORTAL_CONFIG
 }
 
-enum ProcessStatus {
+export enum ProcessStatus {
 	QUEUED,
 	INIT,
 	FAILED,
@@ -55,7 +55,7 @@ export interface Job {
 	finishedAt?: string
 	status: ProcessStatus;
 	error?: string;
-	errorObject?: Record<string, unknown>;
+	errorObject?: ErrorObject;
 }
 
 export interface MetadataDownloadJob extends Job {
@@ -65,7 +65,7 @@ export interface MetadataDownloadJob extends Job {
 
 export interface MetadataUploadJob extends Job {
 	filename: string;
-	summary?: Record<string, unknown>;
+	summary?: ImportSummary;
 }
 
 export interface DataDownloadJob extends Job {
@@ -78,6 +78,7 @@ export interface DataUploadJob extends Job {
 	ignored?: number;
 	imported?: number;
 	updated?: number;
+	deleted?: number;
 }
 
 export interface MetadataRunDetails extends MetadataRun {

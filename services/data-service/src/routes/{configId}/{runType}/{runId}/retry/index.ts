@@ -140,6 +140,81 @@ export const POST: Operation = async (req: Request, res: Response) => {
         return;
 
     } catch (error) {
+        const { runType } = req.params;
+        const { uploads, downloads } = req.body;
+
+        if (runType === 'metadata') {
+            if (!isEmpty(downloads)) {
+                for (const download of downloads) {
+                    await dbClient.metadataDownload.update({
+                        where: {
+                            uid: download.id,
+                        },
+                        data: {
+                            finishedAt: new Date(),
+                            error: "Failed to retry download",
+                            errorObject: {
+                                message: "Failed to retry download",
+                                details: error instanceof Error ? error.stack : String(error),
+                            } as unknown as NullableJsonNullValueInput,
+                        },
+                    });
+                }
+            }
+            if (!isEmpty(uploads)) {
+                for (const upload of uploads) {
+                    await dbClient.metadataUpload.update({
+                        where: {
+                            uid: upload.id,
+                        },
+                        data: {
+                            finishedAt: new Date(),
+                            error: "Failed to retry upload",
+                            errorObject: {
+                                message: "Failed to retry upload",
+                                details: error instanceof Error ? error.stack : String(error),
+                            } as unknown as NullableJsonNullValueInput,
+                        },
+                    });
+                }
+            }
+
+        } else {
+            if (!isEmpty(downloads)) {
+                for (const download of downloads) {
+                    await dbClient.dataDownload.update({
+                        where: {
+                            uid: download.id,
+                        },
+                        data: {
+                            finishedAt: new Date(),
+                            error: "Failed to retry download",
+                            errorObject: {
+                                message: "Failed to retry download",
+                                details: error instanceof Error ? error.stack : String(error),
+                            } as unknown as NullableJsonNullValueInput,
+                        },
+                    });
+                }
+            }
+            if (!isEmpty(uploads)) {
+                for (const upload of uploads) {
+                    await dbClient.dataUpload.update({
+                        where: {
+                            uid: upload.id,
+                        },
+                        data: {
+                            finishedAt: new Date(),
+                            error: "Failed to retry upload",
+                            errorObject: {
+                                message: "Failed to retry upload",
+                                details: error instanceof Error ? error.stack : String(error),
+                            } as unknown as NullableJsonNullValueInput,
+                        },
+                    });
+                }
+            }
+        }
         logger.error(`Failed to retry ${req.params.runType} run ${req.params.runId} for config ${req.params.configId}`, error)
         res.status(500).json({
             success: false,

@@ -7,7 +7,7 @@ import {
 	SingleSelectField,
 	SingleSelectOption,
 } from "@dhis2/ui";
-import { DataRunDetails, MetadataRunDetails} from "@/shared/components/DataConfiguration/components/RunList/hooks/data";
+import { DataDownloadJob, DataRunDetails, DataUploadJob, MetadataDownloadJob, MetadataRunDetails, MetadataUploadJob} from "@/shared/components/DataConfiguration/components/RunList/hooks/data";
 import {
 	RunStatus,
 	StatusIndicator,
@@ -73,6 +73,14 @@ const uploadColumns: SimpleDataTableColumn[] = [
 		key: "imported",
 	},
 	{
+		label: i18n.t("Updated items"),
+		key: "updated",
+	},
+	{
+		label: i18n.t("Deleted items"),
+		key: "deleted",
+	},
+	{
 		key: "statusComponent",
 		label: i18n.t("Status"),
 	},
@@ -115,10 +123,10 @@ export function RunConfigSummaryDetails({ run, runType }: { run: MetadataRunDeta
 	const rows = useMemo(() => {
 		switch (type) {
 			case "download":
-				return downloads?.map((summary) => ({
+				return downloads?.map((summary: MetadataDownloadJob | DataDownloadJob) => ({
 					...summary,
 					id: summary.uid!,
-					count: summary.count ?? "",
+					count: (summary as DataDownloadJob).count ?? "",
 					startedAt: DateTime.fromISO(summary.startedAt).toFormat(
 						"yyyy-MM-dd HH:mm:ss",
 					),
@@ -130,9 +138,9 @@ export function RunConfigSummaryDetails({ run, runType }: { run: MetadataRunDeta
 						summary.finishedAt,
 					),
 					statusComponent: (
-						<StatusIndicator status={summary.status} />
+						<StatusIndicator status={String(summary.status) as RunStatus} />
 					),
-					details: <TaskDetails task={summary} type="download" />,
+					details: <TaskDetails task={summary} type="download" runType={runType} />,
 					errors: (
 						<RunConfigSummaryLogs
 							type="download"
@@ -145,11 +153,11 @@ export function RunConfigSummaryDetails({ run, runType }: { run: MetadataRunDeta
 					),
 				}));
 			case "upload":
-				return uploads?.map((summary) => ({
+				return uploads?.map((summary: MetadataUploadJob | DataUploadJob) => ({
 					...summary,
 					id: summary.uid!,
 					statusComponent: (
-						<StatusIndicator status={summary.status} />
+						<StatusIndicator status={String(summary.status) as RunStatus} />
 					),
 					startedAt: DateTime.fromISO(summary.startedAt).toFormat(
 						"yyyy-MM-dd HH:mm:ss",
@@ -161,10 +169,11 @@ export function RunConfigSummaryDetails({ run, runType }: { run: MetadataRunDeta
 						summary.startedAt,
 						summary.finishedAt,
 					),
-					imported: summary.imported ?? "",
-					ignored: summary.ignored ?? "",
-					updated: summary.updated ?? "",
-					details: <TaskDetails task={summary} type="upload" />,
+					imported: (summary as MetadataUploadJob).summary?.response.stats.created ?? (summary as DataUploadJob).imported ?? "",
+					ignored: (summary as MetadataUploadJob).summary?.response.stats.ignored ??  (summary as DataUploadJob).ignored ?? "",
+					updated: (summary as MetadataUploadJob).summary?.response.stats.updated ?? (summary as DataUploadJob).updated ?? "",
+					deleted: (summary as MetadataUploadJob).summary?.response.stats.deleted ?? (summary as DataUploadJob).deleted ?? "",
+					details: <TaskDetails task={summary} type="upload" runType={runType} />,
 					errors: (
 						<RunConfigSummaryLogs
 							type="upload"
@@ -191,7 +200,7 @@ export function RunConfigSummaryDetails({ run, runType }: { run: MetadataRunDeta
 	const filteredRows = useMemo(() => {
 		return rows?.filter((row) => {
 			if (!statusFilter) return true;
-			return row.status === statusFilter;
+			return String(row.status) === statusFilter;
 		});
 	}, [rows, statusFilter]);
 
@@ -205,11 +214,11 @@ export function RunConfigSummaryDetails({ run, runType }: { run: MetadataRunDeta
 					}}
 					options={[
 						{
-							label: i18n.t("Download"),
+							label: i18n.t(`${runType === "data" ? "Data" : "Metadata"} download`),
 							value: "download",
 						},
 						{
-							label: i18n.t("Upload"),
+							label: i18n.t(`${runType === "data" ? "Data" : "Metadata"} upload`),
 							value: "upload",
 						},
 					]}

@@ -23,89 +23,69 @@ import {
 import { useAlert, useDataMutation } from "@dhis2/app-runtime";
 import { useQueryClient } from "@tanstack/react-query";
 import { useWatch } from "react-hook-form";
-import { DataServiceConfig } from "@packages/shared/schemas";
+import { DataServiceConfig, ErrorObject } from "@packages/shared/schemas";
 
-function ErrorSummary({ errorObject }: { errorObject?: Record<string, any> }) {
+function ErrorSummary({ errorObject }: { errorObject?: ErrorObject }) {
 	if (!errorObject) {
 		return null;
 	}
 
-	// Prefer explicit message
-	const message = (errorObject.message ||
-		errorObject.error ||
-		errorObject.description) as string | undefined;
+	const { status, message, httpStatus, httpStatusCode, response } = errorObject;
 
-	// Conflicts may be present as an array
-	const conflicts = Array.isArray(errorObject.conflicts)
-		? (errorObject.conflicts as Array<{
-				value?: string;
-				object?: string;
-				property?: string;
-				errorCode?: string;
-			}>)
-		: undefined;
+	const errorReports =
+		response?.typeReports
+			.flatMap(tr => tr.objectReports ?? [])
+			.flatMap(or => or.errorReports ?? []) ?? [];
 
-	// If single error-like object (no conflicts array), try to surface its known fields
-	const isSingleError =
-		!conflicts &&
-		(errorObject.errorCode ||
-			errorObject.value ||
-			errorObject.property ||
-			message);
+	const isSingleError = !response && status && message;
 
-	if (conflicts && conflicts.length > 0) {
+	if (errorReports.length > 0) {
 		return (
 			<div className="flex flex-col gap-8">
-				{message && (
-					<NoticeBox
-						error
-						title={i18n.t("Upload completed with conflicts")}
-					>
-						<span style={{ color: colors.grey700 }}>{message}</span>
-					</NoticeBox>
-				)}
+				<NoticeBox
+					error={status === "ERROR"}
+					warning={status === "WARNING"}
+					title={i18n.t("Upload completed with errors")}
+				>
+					<span style={{ color: colors.grey700 }}>
+						{message}
+					</span>
+				</NoticeBox>
+
 				<div className="flex flex-col gap-4">
 					<h6 className="text-base font-semibold">
-						{i18n.t("Conflicts {{count}}", {
-							count: conflicts.length,
+						{i18n.t("Errors {{count}}", {
+							count: errorReports.length,
 						})}
 					</h6>
+
 					<Table>
 						<TableHead>
 							<TableRow>
 								<TableCell>{i18n.t("Error code")}</TableCell>
-								<TableCell>{i18n.t("Value")}</TableCell>
-								<TableCell>{i18n.t("Property")}</TableCell>
-								<TableCell>{i18n.t("Object")}</TableCell>
+								<TableCell>{i18n.t("Message")}</TableCell>
+								<TableCell>{i18n.t("Properties")}</TableCell>
 							</TableRow>
 						</TableHead>
+
 						<TableBody>
-							{conflicts.map((c, idx) => (
+							{errorReports.map((e, idx) => (
 								<TableRow key={idx}>
 									<TableCell>
-										<div className="flex items-center gap-2">
-											<span
-												style={{
-													color: colors.grey700,
-												}}
-											>
-												{c.errorCode ?? "-"}
-											</span>
-										</div>
-									</TableCell>
-									<TableCell>
 										<span style={{ color: colors.grey700 }}>
-											{c.value ?? "-"}
+											{e.errorCode ?? "-"}
 										</span>
 									</TableCell>
+
 									<TableCell>
 										<span style={{ color: colors.grey700 }}>
-											{c.property ?? "-"}
+											{e.message}
 										</span>
 									</TableCell>
+
 									<TableCell>
 										<span style={{ color: colors.grey700 }}>
-											{c.object ?? "-"}
+											{e.errorProperties.join(', ') ?? "-"}
 										</span>
 									</TableCell>
 								</TableRow>
@@ -119,46 +99,38 @@ function ErrorSummary({ errorObject }: { errorObject?: Record<string, any> }) {
 
 	if (isSingleError) {
 		return (
-			<NoticeBox error title={i18n.t("An error occurred")}>
+			<NoticeBox
+				error={status === "ERROR"}
+				warning={status === "WARNING"}
+				title={i18n.t("An error occurred")}
+			>
 				<div className="flex flex-col gap-1">
-					{errorObject.errorCode && (
-						<div>
-							<strong>{i18n.t("Code")}:</strong>{" "}
-							<span style={{ color: colors.grey700 }}>
-								{String(errorObject.errorCode)}
-							</span>
-						</div>
-					)}
-					{errorObject.property && (
-						<div>
-							<strong>{i18n.t("Property")}:</strong>{" "}
-							<span style={{ color: colors.grey700 }}>
-								{String(errorObject.property)}
-							</span>
-						</div>
-					)}
-					{errorObject.value && (
-						<div>
-							<strong>{i18n.t("Value")}:</strong>{" "}
-							<span style={{ color: colors.grey700 }}>
-								{String(errorObject.value)}
-							</span>
-						</div>
-					)}
-					{message && (
-						<div>
-							<strong>{i18n.t("Message")}:</strong>{" "}
-							<span style={{ color: colors.grey700 }}>
-								{message}
-							</span>
-						</div>
-					)}
+					<div>
+						<strong>{i18n.t("Status")}:</strong>{" "}
+						<span style={{ color: colors.grey700 }}>
+							{status}
+						</span>
+					</div>
+
+					<div>
+						<strong>{i18n.t("HTTP Status")}:</strong>{" "}
+						<span style={{ color: colors.grey700 }}>
+							{httpStatus} ({httpStatusCode})
+						</span>
+					</div>
+
+					<div>
+						<strong>{i18n.t("Message")}:</strong>{" "}
+						<span style={{ color: colors.grey700 }}>
+							{message}
+						</span>
+					</div>
 				</div>
 			</NoticeBox>
 		);
 	}
 
-	// Fallback: show raw JSON, but in a styled container
+	//Fallback: show raw JSON, but in a styled container
 	return (
 		<div className="flex flex-col gap-2">
 			{message && (
@@ -181,7 +153,7 @@ function RunConfigSummaryModal({
 	onClose,
 }: {
 	error: string;
-	errorObject?: Record<string, unknown>;
+	errorObject?: ErrorObject;
 	hide: boolean;
 	onClose: () => void;
 }) {
@@ -235,14 +207,14 @@ function RetryButton({
 	runType: "metadata" | "data";
 	type: "download" | "upload";
 }) {
-	const config= useWatch<DataServiceConfig>();
+	const config = useWatch<DataServiceConfig>();
 	const queryClient = useQueryClient();
 	const { show } = useAlert(
 		({ message }) => message,
 		({ type }) => ({ ...type, duration: 3000 }),
 	);
 
-	if(!config || !config.id) {
+	if (!config || !config.id) {
 		return;
 	}
 
@@ -313,23 +285,23 @@ export function MultipleRetryButton({
 	onComplete,
 }: {
 	runId: string;
-	type:'metadata' | 'data';
+	type: 'metadata' | 'data';
 	uploads?: string[];
 	downloads?: string[];
 	onComplete(): void;
 }) {
-	const config= useWatch<DataServiceConfig>();
+	const config = useWatch<DataServiceConfig>();
 	const queryClient = useQueryClient();
 	const { show } = useAlert(
 		({ message }) => message,
 		({ type }) => ({ ...type, duration: 3000 }),
 	);
 
-	if(!config || !config.id) {
+	if (!config || !config.id) {
 		return;
 	}
 
-	
+
 	const [mutate, { loading }] = useDataMutation(
 		generateRetryMutation({ runId, configId: config.id!, type }),
 		{
@@ -385,7 +357,7 @@ export function RunConfigSummaryLogs({
 	taskId,
 }: {
 	error?: string;
-	errorObject?: Record<string, unknown>;
+	errorObject?: ErrorObject;
 	runId: string;
 	taskId: string;
 	runType: "metadata" | "data";

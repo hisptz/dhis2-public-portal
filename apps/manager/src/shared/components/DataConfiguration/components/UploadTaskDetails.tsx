@@ -6,25 +6,15 @@ import {
 	RunStatus,
 	StatusIndicator,
 } from "@/shared/components/DataConfiguration/components/RunConfiguration/components/RunConfigStatus/RunConfigStatus";
+import { MetadataUploadJob, DataUploadJob } from "./RunList/hooks/data";
 
-export interface UploadTaskDetailsData {
-	uid: string;
-	startedAt: string;
-	finishedAt: string;
-	status: RunStatus | null;
-	error?: string;
-	errorObject?: Record<string, unknown>;
-	ignored?: number;
-	imported?: number;
-	updated?: number;
-}
 
 export function UploadTaskDetails({
 	task,
-	title,
+	runType,
 }: {
-	task: UploadTaskDetailsData;
-	title?: string;
+	task: MetadataUploadJob | DataUploadJob;
+	runType: 'metadata' | 'data'
 }) {
 	const [showError, setShowError] = useState(false);
 	const startedAtFmt = useMemo(
@@ -67,7 +57,7 @@ export function UploadTaskDetails({
 						label={i18n.t("Status")}
 						value={
 							<StatusIndicator
-								status={task.status as RunStatus}
+								status={String(task.status) as RunStatus}
 							/>
 						}
 					/>
@@ -78,20 +68,26 @@ export function UploadTaskDetails({
 						value={finishedAtFmt}
 					/>
 					<Detail label={i18n.t("Time taken")} value={timeTaken} />
-					<div className="grid grid-cols-3 gap-4 col-span-2">
-						<Detail
-							label={i18n.t("Imported")}
-							value={num(task.imported)}
-						/>
-						<Detail
-							label={i18n.t("Updated")}
-							value={num(task.updated)}
-						/>
-						<Detail
-							label={i18n.t("Ignored")}
-							value={num(task.ignored)}
-						/>
-					</div>
+					{runType === 'data' && (
+						<div className="grid grid-cols-3 gap-4 col-span-2">
+							<Detail
+								label={i18n.t("Imported")}
+								value={num((task as DataUploadJob).imported)}
+							/>
+							<Detail
+								label={i18n.t("Updated")}
+								value={num((task as DataUploadJob).updated)}
+							/>
+							<Detail
+								label={i18n.t("Ignored")}
+								value={num((task as DataUploadJob).ignored)}
+							/>
+								<Detail
+								label={i18n.t("Deleted")}
+								value={num((task as DataUploadJob).deleted)}
+							/>
+						</div>
+					)}
 				</div>
 
 				{(task.error || task.errorObject) && (

@@ -1,10 +1,8 @@
 import {
 	DownloadTaskDetails,
-	DownloadTaskDetailsData,
 } from "@/shared/components/DataConfiguration/components/DownloadTaskDetails";
 import {
 	UploadTaskDetails,
-	UploadTaskDetailsData,
 } from "@/shared/components/DataConfiguration/components/UploadTaskDetails";
 import {
 	Button,
@@ -16,15 +14,18 @@ import {
 } from "@dhis2/ui";
 import i18n from "@dhis2/d2-i18n";
 import { useBoolean } from "usehooks-ts";
+import { MetadataDownloadJob, DataDownloadJob, MetadataUploadJob, DataUploadJob } from "./RunList/hooks/data";
 
 function TaskDetailsModal({
 	task,
 	type,
+	runType,
 	open,
 	onClose,
 }: {
-	task: DownloadTaskDetailsData | UploadTaskDetailsData;
+	task: MetadataDownloadJob | DataDownloadJob | MetadataUploadJob | DataUploadJob;
 	type: "download" | "upload";
+	runType: "metadata" | "data";
 	open: boolean;
 	onClose: () => void;
 }) {
@@ -32,8 +33,8 @@ function TaskDetailsModal({
 		<Modal position="middle" hide={!open} onClose={onClose}>
 			<ModalTitle>{i18n.t("Task details")}</ModalTitle>
 			<ModalContent>
-				{type === "download" && <DownloadTaskDetails task={task} />}
-				{type === "upload" && <UploadTaskDetails task={task} />}
+				{type === "download" && <DownloadTaskDetails task={task as MetadataDownloadJob | DataDownloadJob} runType={runType} />}
+				{type === "upload" && <UploadTaskDetails task={task as MetadataUploadJob | DataUploadJob} runType={runType} />}
 			</ModalContent>
 			<ModalActions>
 				<Button onClick={onClose}>{i18n.t("Dismiss")}</Button>
@@ -44,9 +45,11 @@ function TaskDetailsModal({
 
 export function TaskDetails({
 	task,
+	runType,
 	type,
 }: {
-	task: DownloadTaskDetailsData | UploadTaskDetailsData;
+	task: MetadataDownloadJob | DataDownloadJob | MetadataUploadJob | DataUploadJob;
+	runType: "metadata" | "data";
 	type: "download" | "upload";
 }) {
 	const { value: open, toggle } = useBoolean(false);
@@ -58,6 +61,7 @@ export function TaskDetails({
 				<TaskDetailsModal
 					task={task}
 					type={type}
+					runType={runType}
 					open={open}
 					onClose={toggle}
 				/>

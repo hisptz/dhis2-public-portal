@@ -6,26 +6,14 @@ import {
 	RunStatus,
 	StatusIndicator,
 } from "@/shared/components/DataConfiguration/components/RunConfiguration/components/RunConfigStatus/RunConfigStatus";
-
-// Mirrors what we have in RunList hooks, but kept local to avoid tight coupling
-export interface DownloadTaskDetailsData {
-	uid: string;
-	startedAt: string;
-	finishedAt: string;
-	status: RunStatus | null;
-	error?: string;
-	errorObject?: Record<string, unknown>;
-	dimensions?: Record<string, unknown>;
-	filters?: Record<string, unknown>;
-	count?: number;
-}
+import { MetadataDownloadJob, DataDownloadJob } from "./RunList/hooks/data";
 
 export function DownloadTaskDetails({
 	task,
-	title,
+	runType
 }: {
-	task: DownloadTaskDetailsData;
-	title?: string;
+	task: MetadataDownloadJob | DataDownloadJob ;
+	runType: "metadata" | "data";
 }) {
 	const [showAdvanced, setShowAdvanced] = useState(false);
 	const [showError, setShowError] = useState(false);
@@ -70,7 +58,7 @@ export function DownloadTaskDetails({
 						label={i18n.t("Status")}
 						value={
 							<StatusIndicator
-								status={task.status as RunStatus}
+								status={String(task.status) as RunStatus}
 							/>
 						}
 					/>
@@ -81,14 +69,16 @@ export function DownloadTaskDetails({
 						value={finishedAtFmt}
 					/>
 					<Detail label={i18n.t("Time taken")} value={timeTaken} />
-					<Detail
-						label={i18n.t("Items")}
-						value={
-							typeof task.count === "number"
-								? String(task.count)
-								: "-"
-						}
-					/>
+					{runType === "data" && (
+						<Detail
+							label={i18n.t("Items")}
+							value={
+								typeof (task as DataDownloadJob).count === "number"
+									? String((task as DataDownloadJob).count)
+									: "-"
+							}
+						/>
+					)}
 				</div>
 
 				{(task.error || task.errorObject) && (
@@ -126,7 +116,7 @@ export function DownloadTaskDetails({
 					</div>
 				)}
 
-				{(task.dimensions || task.filters) && (
+				{runType === "data" && ((task as DataDownloadJob).dimensions || (task as DataDownloadJob).filters) && (
 					<div className="flex flex-col gap-2">
 						<button
 							type="button"
@@ -146,16 +136,16 @@ export function DownloadTaskDetails({
 						</button>
 						{showAdvanced && (
 							<div className="flex flex-col gap-2 w-full">
-								{task.dimensions && (
+								{(task as DataDownloadJob).dimensions && (
 									<JsonBlock
 										label={i18n.t("Dimensions")}
-										value={task.dimensions}
+										value={(task as DataDownloadJob).dimensions}
 									/>
 								)}
-								{task.filters && (
+								{(task as DataDownloadJob).filters && (
 									<JsonBlock
 										label={i18n.t("Filters")}
-										value={task.filters}
+										value={(task as DataDownloadJob).filters??{}}
 									/>
 								)}
 							</div>
