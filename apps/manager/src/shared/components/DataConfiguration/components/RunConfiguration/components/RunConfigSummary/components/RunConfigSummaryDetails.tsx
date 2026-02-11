@@ -7,13 +7,13 @@ import {
 	SingleSelectField,
 	SingleSelectOption,
 } from "@dhis2/ui";
-import { DataDownloadJob, DataRunDetails, DataUploadJob, MetadataDownloadJob, MetadataRunDetails, MetadataUploadJob} from "@/shared/components/DataConfiguration/components/RunList/hooks/data";
+import { DataDownloadJob, DataRunDetails, DataUploadJob, MetadataDownloadJob, MetadataRunDetails, MetadataUploadJob } from "@/shared/components/DataConfiguration/components/RunList/hooks/data";
 import {
 	RunStatus,
 	StatusIndicator,
 } from "@/shared/components/DataConfiguration/components/RunConfiguration/components/RunConfigStatus/RunConfigStatus";
 import { DateTime } from "luxon";
-import { capitalize, compact, isEmpty } from "lodash";
+import { capitalize, isEmpty } from "lodash";
 import {
 	MultipleRetryButton,
 	RunConfigSummaryLogs,
@@ -170,7 +170,7 @@ export function RunConfigSummaryDetails({ run, runType }: { run: MetadataRunDeta
 						summary.finishedAt,
 					),
 					imported: (summary as MetadataUploadJob).summary?.response.stats.created ?? (summary as DataUploadJob).imported ?? "",
-					ignored: (summary as MetadataUploadJob).summary?.response.stats.ignored ??  (summary as DataUploadJob).ignored ?? "",
+					ignored: (summary as MetadataUploadJob).summary?.response.stats.ignored ?? (summary as DataUploadJob).ignored ?? "",
 					updated: (summary as MetadataUploadJob).summary?.response.stats.updated ?? (summary as DataUploadJob).updated ?? "",
 					deleted: (summary as MetadataUploadJob).summary?.response.stats.deleted ?? (summary as DataUploadJob).deleted ?? "",
 					details: <TaskDetails task={summary} type="upload" runType={runType} />,
@@ -203,6 +203,11 @@ export function RunConfigSummaryDetails({ run, runType }: { run: MetadataRunDeta
 			return String(row.status) === statusFilter;
 		});
 	}, [rows, statusFilter]);
+
+	const isRetryable = (rowId: string) => {
+		const row = rows?.find(r => r.id === rowId);
+		return String(row?.status) === "FAILED";
+	};
 
 	return (
 		<div className="h-[500px] flex flex-col gap-4">
@@ -278,16 +283,22 @@ export function RunConfigSummaryDetails({ run, runType }: { run: MetadataRunDeta
 			<div className="flex-1 w-full">
 				<SimpleDataTable
 					selectable
-					selectedRows={[...selectedDownloads, ...selectedUploads]}
+					selectedRows={[
+						...selectedDownloads.filter(isRetryable),
+						...selectedUploads.filter(isRetryable),
+					]}
 					onRowSelect={(selected) => {
+						const retryable = selected.filter(id => isRetryable(id));
+
 						if (type === "download") {
-							setSelectedDownloads((prevState) =>
-								compact([...prevState, ...selected]),
+							setSelectedDownloads(prev =>
+								Array.from(new Set([...prev, ...retryable]))
 							);
 						}
+
 						if (type === "upload") {
-							setSelectedUploads((prevState) =>
-								compact([...prevState, ...selected]),
+							setSelectedUploads(prev =>
+								Array.from(new Set([...prev, ...retryable]))
 							);
 						}
 					}}
@@ -313,15 +324,15 @@ export function RunConfigSummaryDetails({ run, runType }: { run: MetadataRunDeta
 					emptyLabel={
 						statusFilter
 							? i18n.t(
-									"There are no {{type}} with the status {{status}}",
-									{
-										type,
-										status: capitalize(statusFilter),
-									},
-								)
-							: i18n.t("There are no {{type}} for this run", {
+								"There are no {{type}} with the status {{status}}",
+								{
 									type,
-								})
+									status: capitalize(statusFilter),
+								},
+							)
+							: i18n.t("There are no {{type}} for this run", {
+								type,
+							})
 					}
 					rows={filteredRows}
 					columns={columns}
