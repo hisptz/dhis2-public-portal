@@ -76,8 +76,8 @@ export function FormTestConnection({
                 border
                 transition-all duration-200
                 ${busy
-                    ? 'bg-green-50 border-green-500 text-green-700 hover:text-green-700 cursor-wait'
-                    : 'bg-gray-100 border-gray-300 text-gray-700 hover:border-green-500'
+                    ? 'bg-green-50 border-green-700 text-green-700 hover:text-green-700 cursor-wait'
+                    : 'bg-gray-100 border-gray-300 text-gray-700 hover:border-green-700'
                 }
                 hover:-translate-y-[1px]
                 hover:text-green-700 text-bold
@@ -85,14 +85,14 @@ export function FormTestConnection({
             `}
         >
 
-               {/* Icon */}
             {busy ? (
                 <span
                     className="
-                        w-3 h-3
+                        w-3.5 h-3.5
                         rounded-full
-                        border-2 border-green-300
-                        border-t-green-600
+                        border-2 border-gray-300
+                        border-t-green-700
+                        border-b-
                         animate-spin
                     "
                 />

@@ -19,14 +19,14 @@ function Content({ runId, type }: { runId: string, type: "metadata" | "data" }) 
 	const { error, isLoading, isError, data } = useRunDetails({runId, type});
 	if (isLoading) {
 		return (
-			<div className="flex items-center justify-center h-full min-h-[600px]">
+			<div className="flex items-center justify-center h-full min-h-[600px] min-w-[700px]">
 				<CircularLoader small />
 			</div>
 		);
 	}
 	if (isError) {
 		return (
-			<div className="flex items-center justify-center h-full min-h-[600px]">
+			<div className="flex items-center justify-center h-full min-h-[600px] min-w-[700px]">
 				<IconError24 />
 				<span>{(error as FetchError)!.message}</span>
 			</div>
@@ -49,7 +49,7 @@ function Content({ runId, type }: { runId: string, type: "metadata" | "data" }) 
 				</div>
 			</ModalTitle>
 			<ModalContent>
-				<div className="flex flex-col gap-4 h-full min-h-[600px]">
+				<div className="flex flex-col gap-4 h-full min-h-[600px] min-w-[700px]">
 					<div className="flex flex-col gap-2">
 						<h6 className="text-lg font-bold">
 							{i18n.t("Summaries")}
@@ -74,7 +74,7 @@ export function RunConfigSummaryModal({
 	type: "metadata" | "data"
 }) {
 	return (
-		<Modal large hide={hide} onClose={onClose} position="middle">
+		<Modal fluid hide={hide} onClose={onClose} position="middle">
 			<Content runId={runId} type={type} />
 			<ModalActions>
 				<ButtonStrip>
