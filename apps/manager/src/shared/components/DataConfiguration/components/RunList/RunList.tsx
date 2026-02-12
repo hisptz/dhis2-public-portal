@@ -9,6 +9,83 @@ import { DataServiceConfig } from "@packages/shared/schemas";
 import { useWatch } from "react-hook-form";
 import { RunStatus } from "../RunStatus";
 import { useMemo, useState } from "react";
+import { capitalize } from "lodash";
+
+const metadataColumns = [
+	{
+		key: "uid",
+		label: i18n.t("Run ID"),
+	},
+	{
+		key: "serviceType",
+		label: i18n.t("Service type"),
+	},
+	{
+		key: "startedAt",
+		label: i18n.t("Initialized at"),
+	},
+
+	{
+		key: "sourceType",
+		label: i18n.t("Source type"),
+	},
+	{
+		key: "visualizations",
+		label: i18n.t("Visualizations"),
+	},
+	{
+		key: "maps",
+		label: i18n.t("Maps"),
+	},
+	{
+		key: "dashboards",
+		label: i18n.t("Dashboards"),
+	},
+	{
+		key: "status",
+		label: i18n.t("Status"),
+	},
+	{
+		key: "actions",
+		label: i18n.t("Actions"),
+	},
+]
+
+const dataColumns = [
+	{
+		key: "uid",
+		label: i18n.t("Run ID"),
+	},
+	{
+		key: "serviceType",
+		label: i18n.t("Service type"),
+	},
+	{
+		key: "startedAt",
+		label: i18n.t("Initialized at"),
+	},
+
+	{
+		key: "periods",
+		label: i18n.t("Period(s)"),
+	},
+	{
+		key: "orgUnitLevel",
+		label: i18n.t("Org Unit Level"),
+	},
+	{
+		key: "configurations",
+		label: i18n.t("Configuration(s)"),
+	},
+	{
+		key: "status",
+		label: i18n.t("Status"),
+	},
+	{
+		key: "actions",
+		label: i18n.t("Actions"),
+	},
+]
 
 export function RunList() {
 	const config = useWatch<DataServiceConfig>()
@@ -16,17 +93,26 @@ export function RunList() {
 	const { loading, dataRuns, metadataRuns, fetching, pagination, error } =
 		useConfigurationRuns();
 
-	const transformRun = (run: MetadataRun|DataRun, configurationsValue: string) => ({
+	const transformRun = (run: MetadataRun | DataRun, configurationsValue: string) => ({
 		id: run.uid,
 		...run,
+		serviceType: "isDelete" in run
+			? run.isDelete
+				? i18n.t("Data Deletion")
+				: i18n.t("Data Migration")
+			: i18n.t("Metadata Migration"),
 		startedAt: DateTime.fromISO(run.startedAt).toFormat(
 			"yyyy-MM-dd HH:mm:ss",
 		),
 		periods: run.periods?.map((period: string) => {
-				return PeriodUtility.getPeriodById(period).name;
-			})
+			return PeriodUtility.getPeriodById(period).name;
+		})
 			.join(", "),
 		configurations: configurationsValue,
+		sourceType: capitalize((run as MetadataRun).sourceType.toString().split("_").join(" ")),
+		visualizations: (run as MetadataRun).visualizations?.length ?? 0,
+		maps: (run as MetadataRun).maps?.length ?? 0,
+		dashboards: (run as MetadataRun).dashboards?.length ?? 0,
 		status: (
 			<>
 				<RunStatus runId={run.uid} type={activeTab} />
@@ -34,7 +120,7 @@ export function RunList() {
 		),
 		actions: (
 			<>
-				<RunConfigSummary runId={run.uid} type={activeTab}/>
+				<RunConfigSummary runId={run.uid} type={activeTab} />
 			</>
 		),
 	});
@@ -55,6 +141,14 @@ export function RunList() {
 		}
 	}, [dataRuns, metadataRuns, config, activeTab]);
 
+	const columns = useMemo(() => {
+		switch (activeTab) {
+			case "metadata":
+				return metadataColumns;
+			case "data":
+				return dataColumns;
+		}
+	}, [activeTab]);
 
 	if (loading) {
 		return (
@@ -98,32 +192,7 @@ export function RunList() {
 				emptyLabel={i18n.t(`There are no ${activeTab === 'metadata' ? 'metadata' : 'data'} runs for this configuration`)}
 				loading={fetching}
 				rows={rows}
-				columns={[
-					{
-						key: "uid",
-						label: i18n.t("Run ID"),
-					},
-					{
-						key: "startedAt",
-						label: i18n.t("Initialized at"),
-					},
-					{
-						key: "periods",
-						label: i18n.t("Period(s)"),
-					},
-					{
-						key: "configurations",
-						label: i18n.t("Configuration(s)"),
-					},
-					{
-						key: "status",
-						label: i18n.t("Status"),
-					},
-					{
-						key: "actions",
-						label: i18n.t("Actions"),
-					},
-				]}
+				columns={columns}
 			/>
 
 		</>

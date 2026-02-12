@@ -7,7 +7,7 @@ import {
 	SingleSelectField,
 	SingleSelectOption,
 } from "@dhis2/ui";
-import { DataDownloadJob, DataRunDetails, DataUploadJob, MetadataDownloadJob, MetadataRunDetails, MetadataUploadJob } from "@/shared/components/DataConfiguration/components/RunList/hooks/data";
+import { DataDownloadJob, DataRun, DataRunDetails, DataUploadJob, MetadataDownloadJob, MetadataRunDetails, MetadataUploadJob } from "@/shared/components/DataConfiguration/components/RunList/hooks/data";
 import {
 	RunStatus,
 	StatusIndicator,
@@ -36,6 +36,10 @@ const downloadColumns: SimpleDataTableColumn[] = [
 	{
 		label: i18n.t("Items"),
 		key: "count",
+	},
+	{
+		label: i18n.t("Type"),
+		key: "type",
 	},
 	{
 		label: i18n.t("Status"),
@@ -126,7 +130,8 @@ export function RunConfigSummaryDetails({ run, runType }: { run: MetadataRunDeta
 				return downloads?.map((summary: MetadataDownloadJob | DataDownloadJob) => ({
 					...summary,
 					id: summary.uid!,
-					count: (summary as DataDownloadJob).count ?? "",
+					count: runType === 'metadata'? (summary as MetadataDownloadJob).items.length ?? 0 : (summary as DataDownloadJob).count ?? 0,
+					type: runType === 'metadata'? capitalize((summary as MetadataDownloadJob).type.toString() ?? "") : "",
 					startedAt: DateTime.fromISO(summary.startedAt).toFormat(
 						"yyyy-MM-dd HH:mm:ss",
 					),
@@ -223,7 +228,13 @@ export function RunConfigSummaryDetails({ run, runType }: { run: MetadataRunDeta
 							value: "download",
 						},
 						{
-							label: i18n.t(`${runType === "data" ? "Data" : "Metadata"} upload`),
+							label: i18n.t(
+								runType === "data"
+									? (run as DataRun).isDelete
+										? "Data Deletion"
+										: "Data upload"
+									: "Metadata upload"
+							),
 							value: "upload",
 						},
 					]}
