@@ -1,4 +1,4 @@
-import { DataRun, MetadataRun, useConfigurationRuns } from "@/shared/components/DataConfiguration/components/RunList/hooks/data";
+import { DataRun, MetadataRun} from "@/shared/components/DataConfiguration/components/RunList/hooks/data";
 import { CircularLoader, colors, IconError24, SegmentedControl } from "@dhis2/ui";
 import { SimpleDataTable } from "@hisptz/dhis2-ui";
 import i18n from "@dhis2/d2-i18n";
@@ -10,6 +10,7 @@ import { useWatch } from "react-hook-form";
 import { RunStatus } from "../RunStatus";
 import { useMemo, useState } from "react";
 import { capitalize } from "lodash";
+import { FetchError } from "@dhis2/app-runtime";
 
 const metadataColumns = [
 	{
@@ -87,11 +88,18 @@ const dataColumns = [
 	},
 ]
 
-export function RunList() {
+export function RunList({ loading, dataRuns, metadataRuns, fetching, pagination, error }: {
+	loading: boolean, dataRuns: DataRun[], metadataRuns: MetadataRun[], fetching: boolean, pagination: {
+		page: number;
+		pageSize: number;
+		total: number;
+		pageCount: number;
+		onPageChange: (page: number) => void;
+		onPageSizeChange: (pageSize: number) => void;
+	}, error: FetchError, refetch: () => void
+}) {
 	const config = useWatch<DataServiceConfig>()
 	const [activeTab, setActiveTab] = useState<'metadata' | 'data'>('metadata')
-	const { loading, dataRuns, metadataRuns, fetching, pagination, error } =
-		useConfigurationRuns();
 
 	const transformRun = (run: MetadataRun | DataRun, configurationsValue: string) => ({
 		id: run.uid,

@@ -7,6 +7,7 @@ import { PageHeader } from '@/shared/components/PageHeader'
 import { DataServiceConfig } from '@packages/shared/schemas'
 import { useWatch } from 'react-hook-form'
 import { RunList } from '@/shared/components/DataConfiguration/components/RunList/RunList'
+import { useConfigurationRuns } from '@/shared/components/DataConfiguration/components/RunList/hooks/data'
 
 export const Route = createLazyFileRoute(
     '/data-service-configuration/_provider/$configId/_provider/'
@@ -21,6 +22,9 @@ function RouteComponent() {
 
     const config = useWatch<DataServiceConfig>()
     const source = config?.source;
+
+    const { loading, dataRuns, metadataRuns, fetching, pagination, error, refetch } =
+        useConfigurationRuns();
 
     return (
         <div className="h-full w-full flex flex-col gap-4 ">
@@ -58,6 +62,9 @@ function RouteComponent() {
                             <RunConfiguration
                                 label={i18n.t("Run")}
                                 config={config as Required<DataServiceConfig>}
+                                onRunComplete={() => {
+                                    refetch();
+                                }}
                             />
                         </ButtonStrip>
                     }
@@ -70,7 +77,13 @@ function RouteComponent() {
                         }}
                     />}
                 />
-                    <RunList />
+                <RunList loading={loading}
+                    dataRuns={dataRuns}
+                    metadataRuns={metadataRuns}
+                    fetching={fetching}
+                    pagination={pagination}
+                    error={error}
+                    refetch={refetch} />
             </>}
 
         </div>

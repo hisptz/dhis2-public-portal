@@ -39,9 +39,11 @@ export function RunConfigForm({
     hide,
     config,
     onClose,
+    onRunComplete
 }: {
     config: DataServiceConfig
     hide: boolean
+    onRunComplete: () => void
     onClose: () => void
 }) {
     const queryClient = useQueryClient()
@@ -194,7 +196,7 @@ export function RunConfigForm({
                     'Data validation process started successfully. Redirecting to validation logs...'
                 )
             }
-
+            onRunComplete();
             show({
                 message: successMessage,
                 type: { success: true },
