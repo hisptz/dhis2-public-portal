@@ -79,6 +79,7 @@ export interface DataUploadJob extends Job {
 	imported?: number;
 	updated?: number;
 	deleted?: number;
+	count?: number;
 }
 
 export interface MetadataRunDetails extends MetadataRun {

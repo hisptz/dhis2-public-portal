@@ -7,12 +7,13 @@ import {
 	StatusIndicator,
 } from "@/shared/components/DataConfiguration/components/RunConfiguration/components/RunConfigStatus/RunConfigStatus";
 import { MetadataDownloadJob, DataDownloadJob } from "./RunList/hooks/data";
+import { capitalize } from "lodash";
 
 export function DownloadTaskDetails({
 	task,
 	runType
 }: {
-	task: MetadataDownloadJob | DataDownloadJob ;
+	task: MetadataDownloadJob | DataDownloadJob;
 	runType: "metadata" | "data";
 }) {
 	const [showAdvanced, setShowAdvanced] = useState(false);
@@ -22,8 +23,8 @@ export function DownloadTaskDetails({
 		() =>
 			task?.startedAt
 				? DateTime.fromISO(task.startedAt).toFormat(
-						"yyyy-MM-dd HH:mm:ss",
-					)
+					"yyyy-MM-dd HH:mm:ss",
+				)
 				: "-",
 		[task?.startedAt],
 	);
@@ -32,8 +33,8 @@ export function DownloadTaskDetails({
 		() =>
 			task?.finishedAt
 				? DateTime.fromISO(task.finishedAt).toFormat(
-						"yyyy-MM-dd HH:mm:ss",
-					)
+					"yyyy-MM-dd HH:mm:ss",
+				)
 				: "-",
 		[task?.finishedAt],
 	);
@@ -69,6 +70,21 @@ export function DownloadTaskDetails({
 						value={finishedAtFmt}
 					/>
 					<Detail label={i18n.t("Time taken")} value={timeTaken} />
+					{runType === "metadata" && (
+						<>
+							<Detail
+								label={i18n.t("Type")}
+								value={capitalize(String((task as MetadataDownloadJob).type))}
+							/>
+							<Detail
+								label={i18n.t("Items")}
+								value={
+									(task as MetadataDownloadJob).items.length ? String((task as MetadataDownloadJob).items.length) : "-"
+								}
+							/>
+						</>
+					)}
+
 					{runType === "data" && (
 						<Detail
 							label={i18n.t("Items")}
@@ -145,7 +161,7 @@ export function DownloadTaskDetails({
 								{(task as DataDownloadJob).filters && (
 									<JsonBlock
 										label={i18n.t("Filters")}
-										value={(task as DataDownloadJob).filters??{}}
+										value={(task as DataDownloadJob).filters ?? {}}
 									/>
 								)}
 							</div>

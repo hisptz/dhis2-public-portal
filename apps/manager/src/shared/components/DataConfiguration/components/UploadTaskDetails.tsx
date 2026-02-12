@@ -21,8 +21,8 @@ export function UploadTaskDetails({
 		() =>
 			task?.startedAt
 				? DateTime.fromISO(task.startedAt).toFormat(
-						"yyyy-MM-dd HH:mm:ss",
-					)
+					"yyyy-MM-dd HH:mm:ss",
+				)
 				: "-",
 		[task?.startedAt],
 	);
@@ -31,8 +31,8 @@ export function UploadTaskDetails({
 		() =>
 			task?.finishedAt
 				? DateTime.fromISO(task.finishedAt).toFormat(
-						"yyyy-MM-dd HH:mm:ss",
-					)
+					"yyyy-MM-dd HH:mm:ss",
+				)
 				: "-",
 		[task?.finishedAt],
 	);
@@ -68,23 +68,50 @@ export function UploadTaskDetails({
 						value={finishedAtFmt}
 					/>
 					<Detail label={i18n.t("Time taken")} value={timeTaken} />
-					{runType === 'data' && (
-						<div className="grid grid-cols-3 gap-4 col-span-2">
+					{runType === 'metadata' && (
+						<div className="grid grid-cols-5 gap-4 col-span-2">
+							<Detail
+								label={i18n.t("Total")}
+								value={num((task as MetadataUploadJob).summary?.response?.stats?.total??0)}
+							/>
 							<Detail
 								label={i18n.t("Imported")}
-								value={num((task as DataUploadJob).imported)}
+								value={num((task as MetadataUploadJob).summary?.response?.stats?.created??0)}
 							/>
 							<Detail
 								label={i18n.t("Updated")}
-								value={num((task as DataUploadJob).updated)}
+								value={num((task as MetadataUploadJob).summary?.response?.stats?.updated??0)}
 							/>
 							<Detail
 								label={i18n.t("Ignored")}
-								value={num((task as DataUploadJob).ignored)}
+								value={num((task as MetadataUploadJob).summary?.response?.stats?.ignored??0)}
 							/>
-								<Detail
+							<Detail
 								label={i18n.t("Deleted")}
-								value={num((task as DataUploadJob).deleted)}
+								value={num((task as MetadataUploadJob).summary?.response?.stats?.deleted??0)}
+							/>
+						</div>
+					)}
+					{runType === 'data' && (
+						<div className="grid grid-cols-5 gap-4 col-span-2">
+							<Detail
+								label={i18n.t("Total")}
+								value={num((task as DataUploadJob).count??0)} />
+							<Detail
+								label={i18n.t("Imported")}
+								value={num((task as DataUploadJob).imported??0)}
+							/>
+							<Detail
+								label={i18n.t("Updated")}
+								value={num((task as DataUploadJob).updated??0)}
+							/>
+							<Detail
+								label={i18n.t("Ignored")}
+								value={num((task as DataUploadJob).ignored??0)}
+							/>
+							<Detail
+								label={i18n.t("Deleted")}
+								value={num((task as DataUploadJob).deleted??0)}
 							/>
 						</div>
 					)}
