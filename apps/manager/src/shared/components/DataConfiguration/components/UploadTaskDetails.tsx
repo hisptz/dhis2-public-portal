@@ -1,22 +1,28 @@
 import React, { useMemo, useState } from "react";
 import i18n from "@dhis2/d2-i18n";
-import { IconChevronDown16, IconChevronUp16 } from "@dhis2/ui";
+import { Button, IconChevronDown16, IconChevronUp16 } from "@dhis2/ui";
 import { DateTime } from "luxon";
 import {
 	RunStatus,
 	StatusIndicator,
 } from "@/shared/components/DataConfiguration/components/RunConfiguration/components/RunConfigStatus/RunConfigStatus";
 import { MetadataUploadJob, DataUploadJob } from "./RunList/hooks/data";
+import { useFailedTaskDownload } from "./RunList/RunDetails/hooks/file";
 
 
 export function UploadTaskDetails({
 	task,
 	runType,
+	runID,
 }: {
 	task: MetadataUploadJob | DataUploadJob;
+	runID: string;
 	runType: 'metadata' | 'data'
 }) {
 	const [showError, setShowError] = useState(false);
+	const { download, loading } = useFailedTaskDownload({ taskId: task.uid, type: runType, runId: runID });
+
+
 	const startedAtFmt = useMemo(
 		() =>
 			task?.startedAt
@@ -51,7 +57,7 @@ export function UploadTaskDetails({
 
 	return (
 		<div className="w-full">
-			<div className="flex flex-col gap-4 max-h-[60vh] overflow-y-auto pr-1">
+			<div className="flex flex-col gap-4 max-h-[60vh] min-h-[30vh] overflow-y-auto pr-1">
 				<div className="grid grid-cols-2 gap-4">
 					<Detail
 						label={i18n.t("Status")}
@@ -68,27 +74,30 @@ export function UploadTaskDetails({
 						value={finishedAtFmt}
 					/>
 					<Detail label={i18n.t("Time taken")} value={timeTaken} />
+					<div>
+						<Button secondary hidden={String(task.status) !== "FAILED"} loading={loading} onClick={download}>{i18n.t(loading ? "Downloading" : "Download File")}</Button>
+					</div>
 					{runType === 'metadata' && (
 						<div className="grid grid-cols-5 gap-4 col-span-2">
 							<Detail
 								label={i18n.t("Total")}
-								value={num((task as MetadataUploadJob).summary?.response?.stats?.total??0)}
+								value={num((task as MetadataUploadJob).summary?.response?.stats?.total ?? 0)}
 							/>
 							<Detail
 								label={i18n.t("Imported")}
-								value={num((task as MetadataUploadJob).summary?.response?.stats?.created??0)}
+								value={num((task as MetadataUploadJob).summary?.response?.stats?.created ?? 0)}
 							/>
 							<Detail
 								label={i18n.t("Updated")}
-								value={num((task as MetadataUploadJob).summary?.response?.stats?.updated??0)}
+								value={num((task as MetadataUploadJob).summary?.response?.stats?.updated ?? 0)}
 							/>
 							<Detail
 								label={i18n.t("Ignored")}
-								value={num((task as MetadataUploadJob).summary?.response?.stats?.ignored??0)}
+								value={num((task as MetadataUploadJob).summary?.response?.stats?.ignored ?? 0)}
 							/>
 							<Detail
 								label={i18n.t("Deleted")}
-								value={num((task as MetadataUploadJob).summary?.response?.stats?.deleted??0)}
+								value={num((task as MetadataUploadJob).summary?.response?.stats?.deleted ?? 0)}
 							/>
 						</div>
 					)}
@@ -96,22 +105,22 @@ export function UploadTaskDetails({
 						<div className="grid grid-cols-5 gap-4 col-span-2">
 							<Detail
 								label={i18n.t("Total")}
-								value={num((task as DataUploadJob).count??0)} />
+								value={num((task as DataUploadJob).count ?? 0)} />
 							<Detail
 								label={i18n.t("Imported")}
-								value={num((task as DataUploadJob).imported??0)}
+								value={num((task as DataUploadJob).imported ?? 0)}
 							/>
 							<Detail
 								label={i18n.t("Updated")}
-								value={num((task as DataUploadJob).updated??0)}
+								value={num((task as DataUploadJob).updated ?? 0)}
 							/>
 							<Detail
 								label={i18n.t("Ignored")}
-								value={num((task as DataUploadJob).ignored??0)}
+								value={num((task as DataUploadJob).ignored ?? 0)}
 							/>
 							<Detail
 								label={i18n.t("Deleted")}
-								value={num((task as DataUploadJob).deleted??0)}
+								value={num((task as DataUploadJob).deleted ?? 0)}
 							/>
 						</div>
 					)}

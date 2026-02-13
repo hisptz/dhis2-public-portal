@@ -145,7 +145,7 @@ export function RunConfigSummaryDetails({ run, runType }: { run: MetadataRunDeta
 					statusComponent: (
 						<StatusIndicator status={String(summary.status) as RunStatus} />
 					),
-					details: <TaskDetails task={summary} type="download" runType={runType} />,
+					details: <TaskDetails task={summary} type="download" runType={runType} runID={run.uid} />,
 					errors: (
 						<RunConfigSummaryLogs
 							type="download"
@@ -178,7 +178,7 @@ export function RunConfigSummaryDetails({ run, runType }: { run: MetadataRunDeta
 					ignored: (summary as MetadataUploadJob).summary?.response.stats.ignored ?? (summary as DataUploadJob).ignored ?? "",
 					updated: (summary as MetadataUploadJob).summary?.response.stats.updated ?? (summary as DataUploadJob).updated ?? "",
 					deleted: (summary as MetadataUploadJob).summary?.response.stats.deleted ?? (summary as DataUploadJob).deleted ?? "",
-					details: <TaskDetails task={summary} type="upload" runType={runType} />,
+					details: <TaskDetails task={summary} type="upload" runType={runType} runID={run.uid} />,
 					errors: (
 						<RunConfigSummaryLogs
 							type="upload"

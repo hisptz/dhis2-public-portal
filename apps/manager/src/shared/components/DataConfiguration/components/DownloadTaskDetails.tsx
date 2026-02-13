@@ -14,6 +14,7 @@ export function DownloadTaskDetails({
 	runType
 }: {
 	task: MetadataDownloadJob | DataDownloadJob;
+	runID: string;
 	runType: "metadata" | "data";
 }) {
 	const [showAdvanced, setShowAdvanced] = useState(false);
