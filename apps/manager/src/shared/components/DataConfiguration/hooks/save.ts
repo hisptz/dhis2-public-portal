@@ -10,7 +10,7 @@ import { DatastoreNamespaces } from '@packages/shared/constants'
 import i18n from '@dhis2/d2-i18n'
 import { useNavigate, useParams } from '@tanstack/react-router'
 import { useRefreshDataSources } from '../providers/DataSourcesProvider'
-import { createQueues, deleteQueues } from '../../../services/dataServiceClient'
+import { deleteQueues } from '../../../services/dataServiceClient'
 
 const createRouteMutation = {
     type: 'create' as const,
@@ -46,14 +46,14 @@ export function useCreateDataSource(onClose?: () => void) {
                 url: `${data.source.url}/api/**`,
                 auth: data.source.pat
                     ? {
-                          type: 'api-token',
-                          token: data.source.pat,
-                      }
+                        type: 'api-token',
+                        token: data.source.pat,
+                    }
                     : {
-                          type: 'http-basic',
-                          username: data.source.username,
-                          password: data.source.password,
-                      },
+                        type: 'http-basic',
+                        username: data.source.username,
+                        password: data.source.password,
+                    },
             }
 
             const response = (await createRoute({ data: routePayload })) as {
@@ -75,17 +75,6 @@ export function useCreateDataSource(onClose?: () => void) {
                     data: payload,
                 },
             })
-
-            try {
-                await createQueues(engine, data.id)
-            } catch (queueError) {
-                show({
-                    message: i18n.t(
-                        'Configuration saved, but queue creation failed. Queues will be created automatically when needed.'
-                    ),
-                    type: { warning: true },
-                })
-            }
 
             show({
                 message: i18n.t('Configuration saved successfully'),
@@ -187,8 +176,8 @@ export function useUpdateDataSource() {
                 ...data,
                 ...(!(data as any).dataItems &&
                     (currentConfig as any).config?.dataItems && {
-                        dataItems: (currentConfig as any).config.dataItems,
-                    }),
+                    dataItems: (currentConfig as any).config.dataItems,
+                }),
             }
             await mutate({ data: mergedData })
         } catch (error) {
@@ -255,7 +244,9 @@ export function useUpdateConnection() {
             const hasCredentials =
                 !!data.pat || (!!data.username && !!data.password)
 
+
             const routePayload: any = {
+                ...(existingRoute as any).route,
                 name: `[data service] ${data.name}`,
                 url: `${data.url}/api/**`,
             }
@@ -263,14 +254,14 @@ export function useUpdateConnection() {
             if (hasCredentials) {
                 routePayload.auth = data.pat
                     ? {
-                          type: 'api-token',
-                          token: data.pat,
-                      }
+                        type: 'api-token',
+                        token: data.pat,
+                    }
                     : {
-                          type: 'http-basic',
-                          username: data.username,
-                          password: data.password,
-                      }
+                        type: 'http-basic',
+                        username: data.username,
+                        password: data.password,
+                    }
             } else if ((existingRoute as any).route?.auth) {
                 routePayload.auth = (existingRoute as any).route.auth
             }

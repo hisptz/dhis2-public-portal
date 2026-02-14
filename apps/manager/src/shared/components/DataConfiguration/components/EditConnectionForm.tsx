@@ -101,6 +101,8 @@ const editConnectionFormSchema = z
 
 export type EditConnectionFormValues = z.infer<typeof editConnectionFormSchema>
 
+
+
 export function EditConnectionForm({
     hide,
     onClose,
@@ -123,19 +125,29 @@ export function EditConnectionForm({
                 name: currentSource?.name || '',
                 url: '',
                 routeId: currentSource?.routeId || '',
-                pat: '',
-                username: '',
-                password: '',
+                pat: undefined,
+                username: undefined,
+                password: undefined,
             },
         },
     })
 
     useEffect(() => {
-        if (route?.url) {
-            const cleanUrl = route.url.replace('/api/**', '')
-            form.setValue('source.url', cleanUrl)
-        }
-    }, [route, form])
+        if (!route?.url) return
+
+        const cleanUrl = route.url.replace('/api/**', '')
+
+        form.reset({
+            source: {
+                name: currentSource?.name || '',
+                url: cleanUrl,
+                routeId: currentSource?.routeId || '',
+                pat: undefined,
+                username: undefined,
+                password: undefined,
+            },
+        })
+    }, [route?.url, currentSource?.name, currentSource?.routeId, form])
 
     const { updateConnection } = useUpdateConnection()
 
@@ -155,10 +167,13 @@ export function EditConnectionForm({
                         'source.name',
                         updatedConfig.source.name
                     )
+                    form.reset(form.getValues())
+
                     refetch()
                 },
             }
         )
+
         onClose()
     }
 
@@ -179,20 +194,23 @@ export function EditConnectionForm({
         <FormProvider {...form}>
             <Modal position="middle" onClose={onClose} hide={hide}>
                 <ModalTitle>{i18n.t('Edit connection')}</ModalTitle>
+
                 <ModalContent>
                     <form className="flex flex-col gap-2">
                         <RHFTextInputField
                             label={i18n.t('Name')}
                             name="source.name"
-                            placeholder={'DHIS2 Playground'}
+                            placeholder="DHIS2 Playground"
                             required
                         />
+
                         <RHFTextInputField
                             label={i18n.t('URL')}
                             name="source.url"
-                            placeholder={'https://play.dhis2.org'}
+                            placeholder="https://play.dhis2.org"
                             required
                         />
+
                         <div className="p-3 bg-blue-50 border border-blue-200 rounded text-sm text-blue-800">
                             <p className="font-semibold mb-1">
                                 {i18n.t('Update Authentication (Optional)')}
@@ -203,26 +221,37 @@ export function EditConnectionForm({
                                 )}
                             </p>
                         </div>
+
                         <AuthFields />
                         <TestConnection />
                     </form>
                 </ModalContent>
+
                 <ModalActions>
                     <ButtonStrip>
-                        <Button onClick={onClose}>{i18n.t('Cancel')}</Button>
+                        <Button onClick={onClose}>
+                            {i18n.t('Cancel')}
+                        </Button>
+
                         <Button
+                            primary
                             loading={
                                 form.formState.isSubmitting ||
                                 form.formState.isValidating
                             }
-                            onClick={(_, e) => form.handleSubmit(onSubmit)(e)}
-                            primary
+                            disabled={
+                                !form.formState.isDirty ||
+                                form.formState.isSubmitting
+                            }
+                            onClick={(_, e) =>
+                                form.handleSubmit(onSubmit)(e)
+                            }
                         >
                             {form.formState.isValidating
                                 ? i18n.t('Validating...')
                                 : form.formState.isSubmitting
-                                  ? i18n.t('Saving...')
-                                  : i18n.t('Save')}
+                                    ? i18n.t('Saving...')
+                                    : i18n.t('Save')}
                         </Button>
                     </ButtonStrip>
                 </ModalActions>

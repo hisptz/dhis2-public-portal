@@ -8,6 +8,7 @@ import {
 } from '@packages/shared/schemas'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { FullLoader } from '../../../../shared/components/FullLoader'
+import { colors, IconError24 } from '@dhis2/ui'
 
 export const Route = createFileRoute(
     '/data-service-configuration/_provider/$configId/_provider'
@@ -19,7 +20,7 @@ function RouteComponent() {
     const { configId } = useParams({
         from: '/data-service-configuration/_provider/$configId/_provider',
     })
-    const { refetch } = useGetDataSource(configId)
+    const { refetch, error } = useGetDataSource(configId)
     const form = useForm<DataServiceConfig>({
         resolver: zodResolver(dataServiceConfigSchema),
         defaultValues: async () => {
@@ -28,9 +29,20 @@ function RouteComponent() {
         },
     })
 
+     if (error) {
+        return (
+            <div className="w-full h-full flex justify-center items-center">
+                <IconError24 />
+                <span style={{ color: colors.grey700 }}>{error.message}</span>
+            </div>
+        );
+    }
+
     if (form.formState.isLoading) {
         return <FullLoader />
     }
+
+  
 
     return (
         <FormProvider {...form}>
@@ -38,7 +50,7 @@ function RouteComponent() {
                 <div className="flex-1 w-full">
                     <Outlet />
                 </div>
-               
+
             </div>
         </FormProvider>
     )
