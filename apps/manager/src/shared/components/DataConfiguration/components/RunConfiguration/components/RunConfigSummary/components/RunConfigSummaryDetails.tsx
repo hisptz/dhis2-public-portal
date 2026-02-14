@@ -19,6 +19,7 @@ import {
 	RunConfigSummaryLogs,
 } from "@/shared/components/DataConfiguration/components/RunConfiguration/components/RunConfigSummary/components/RunConfigSummaryLogs";
 import { TaskDetails } from "@/shared/components/DataConfiguration/components/TaskDetails";
+import { formatDateTime } from "@/shared/hooks/config";
 
 const downloadColumns: SimpleDataTableColumn[] = [
 	{
@@ -111,6 +112,8 @@ function calculateTimeTaken(startedAt?: string, finishedAt?: string) {
 	});
 }
 
+
+
 export function RunConfigSummaryDetails({ run, runType }: { run: MetadataRunDetails | DataRunDetails, runType: "metadata" | "data" }) {
 	const [statusFilter, setStatusFilter] = useState<RunStatus | null>(null);
 	const [type, setType] = useState<"download" | "upload">("download");
@@ -132,12 +135,8 @@ export function RunConfigSummaryDetails({ run, runType }: { run: MetadataRunDeta
 					id: summary.uid!,
 					count: runType === 'metadata'? (summary as MetadataDownloadJob).items.length ?? 0 : (summary as DataDownloadJob).count ?? 0,
 					type: runType === 'metadata'? capitalize((summary as MetadataDownloadJob).type.toString() ?? "") : "",
-					startedAt: DateTime.fromISO(summary.startedAt).toFormat(
-						"yyyy-MM-dd HH:mm:ss",
-					),
-					finishedAt: DateTime.fromISO(summary.finishedAt).toFormat(
-						"yyyy-MM-dd HH:mm:ss",
-					),
+					startedAt: formatDateTime(summary.startedAt),
+					finishedAt: formatDateTime(summary.finishedAt),
 					timeTaken: calculateTimeTaken(
 						summary.startedAt,
 						summary.finishedAt,
@@ -164,12 +163,8 @@ export function RunConfigSummaryDetails({ run, runType }: { run: MetadataRunDeta
 					statusComponent: (
 						<StatusIndicator status={String(summary.status) as RunStatus} />
 					),
-					startedAt: DateTime.fromISO(summary.startedAt).toFormat(
-						"yyyy-MM-dd HH:mm:ss",
-					),
-					finishedAt: DateTime.fromISO(summary.finishedAt).toFormat(
-						"yyyy-MM-dd HH:mm:ss",
-					),
+					startedAt: formatDateTime(summary.startedAt),
+					finishedAt: formatDateTime(summary.finishedAt),
 					timeTaken: calculateTimeTaken(
 						summary.startedAt,
 						summary.finishedAt,

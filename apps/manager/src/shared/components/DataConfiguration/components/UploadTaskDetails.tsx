@@ -8,6 +8,7 @@ import {
 } from "@/shared/components/DataConfiguration/components/RunConfiguration/components/RunConfigStatus/RunConfigStatus";
 import { MetadataUploadJob, DataUploadJob } from "./RunList/hooks/data";
 import { useFailedTaskDownload } from "./RunList/RunDetails/hooks/file";
+import { formatDateTime } from "@/shared/hooks/config";
 
 
 export function UploadTaskDetails({
@@ -24,22 +25,12 @@ export function UploadTaskDetails({
 
 
 	const startedAtFmt = useMemo(
-		() =>
-			task?.startedAt
-				? DateTime.fromISO(task.startedAt).toFormat(
-					"yyyy-MM-dd HH:mm:ss",
-				)
-				: "-",
+		() => formatDateTime(task?.startedAt),
 		[task?.startedAt],
 	);
 
 	const finishedAtFmt = useMemo(
-		() =>
-			task?.finishedAt
-				? DateTime.fromISO(task.finishedAt).toFormat(
-					"yyyy-MM-dd HH:mm:ss",
-				)
-				: "-",
+		() => formatDateTime(task?.finishedAt),
 		[task?.finishedAt],
 	);
 

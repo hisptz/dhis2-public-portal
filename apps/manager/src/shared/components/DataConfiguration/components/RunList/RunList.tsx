@@ -3,7 +3,6 @@ import { CircularLoader, colors, IconError24, SegmentedControl } from "@dhis2/ui
 import { SimpleDataTable } from "@hisptz/dhis2-ui";
 import i18n from "@dhis2/d2-i18n";
 import { PeriodUtility } from "@hisptz/dhis2-utils";
-import { DateTime } from "luxon";
 import { RunConfigSummary } from "@/shared/components/DataConfiguration/components/RunConfiguration/components/RunConfigSummary/RunConfigSummary";
 import { DataServiceConfig } from "@packages/shared/schemas";
 import { useWatch } from "react-hook-form";
@@ -11,6 +10,7 @@ import { RunStatus } from "../RunStatus";
 import { useMemo, useState } from "react";
 import { capitalize } from "lodash";
 import { FetchError } from "@dhis2/app-runtime";
+import { formatDateTime } from "@/shared/hooks/config";
 
 const metadataColumns = [
 	{
@@ -109,9 +109,7 @@ export function RunList({ loading, dataRuns, metadataRuns, fetching, pagination,
 				? i18n.t("Data Deletion")
 				: i18n.t("Data Migration")
 			: i18n.t("Metadata Migration"),
-		startedAt: DateTime.fromISO(run.startedAt).toFormat(
-			"yyyy-MM-dd HH:mm:ss",
-		),
+		startedAt: formatDateTime(run.startedAt),
 		periods: run.periods?.map((period: string) => {
 			return PeriodUtility.getPeriodById(period).name;
 		})

@@ -12,8 +12,8 @@ import i18n from "@dhis2/d2-i18n";
 import { RunConfigSummaryDetails } from "./RunConfigSummaryDetails";
 import { useRunDetails } from "@/shared/components/DataConfiguration/components/RunList/RunDetails/hooks/data";
 import { FetchError } from "@dhis2/app-runtime";
-import { DateTime } from "luxon";
 import { RunStatus } from "@/shared/components/DataConfiguration/components/RunStatus";
+import { formatDateTime } from "@/shared/hooks/config";
 
 function Content({ runId, type }: { runId: string, type: "metadata" | "data" }) {
 	const { error, isLoading, isError, data } = useRunDetails({runId, type});
@@ -39,11 +39,7 @@ function Content({ runId, type }: { runId: string, type: "metadata" | "data" }) 
 				<div className="flex items-center gap-2 w-full justify-between">
 					<span>
 						{i18n.t("Run summary ")} -{" "}
-						{data?.startedAt
-							? DateTime.fromISO(data?.startedAt).toFormat(
-									"yyyy-MM-dd HH:mm:ss",
-								)
-							: "N/A"}
+						{formatDateTime(data?.startedAt) ?? "N/A"}
 					</span>
 					<RunStatus runId={runId} type={type} />
 				</div>

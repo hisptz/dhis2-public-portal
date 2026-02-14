@@ -8,6 +8,7 @@ import {
 } from "@/shared/components/DataConfiguration/components/RunConfiguration/components/RunConfigStatus/RunConfigStatus";
 import { MetadataDownloadJob, DataDownloadJob } from "./RunList/hooks/data";
 import { capitalize } from "lodash";
+import { formatDateTime } from "@/shared/hooks/config";
 
 export function DownloadTaskDetails({
 	task,
@@ -21,22 +22,12 @@ export function DownloadTaskDetails({
 	const [showError, setShowError] = useState(false);
 
 	const startedAtFmt = useMemo(
-		() =>
-			task?.startedAt
-				? DateTime.fromISO(task.startedAt).toFormat(
-					"yyyy-MM-dd HH:mm:ss",
-				)
-				: "-",
+		() => formatDateTime(task?.startedAt),
 		[task?.startedAt],
 	);
 
 	const finishedAtFmt = useMemo(
-		() =>
-			task?.finishedAt
-				? DateTime.fromISO(task.finishedAt).toFormat(
-					"yyyy-MM-dd HH:mm:ss",
-				)
-				: "-",
+		() => formatDateTime(task?.finishedAt),
 		[task?.finishedAt],
 	);
 
