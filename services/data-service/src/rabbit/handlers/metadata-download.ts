@@ -65,6 +65,7 @@ export async function metadataDownloadHandler({
                         finishedAt: new Date()
                     },
                 })
+                channel.nack(message, false, false)
             }
         } else if (error instanceof Error) {
             await dbClient.metadataDownload.update({
