@@ -125,9 +125,9 @@ export function EditConnectionForm({
                 name: currentSource?.name || '',
                 url: '',
                 routeId: currentSource?.routeId || '',
-                pat: undefined,
-                username: undefined,
-                password: undefined,
+                pat: '',
+                username: '',
+                password: '',
             },
         },
     })
@@ -142,9 +142,9 @@ export function EditConnectionForm({
                 name: currentSource?.name || '',
                 url: cleanUrl,
                 routeId: currentSource?.routeId || '',
-                pat: undefined,
-                username: undefined,
-                password: undefined,
+                pat: '',
+                username: '',
+                password: '',
             },
         })
     }, [route?.url, currentSource?.name, currentSource?.routeId, form])
