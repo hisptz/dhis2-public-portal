@@ -1,6 +1,6 @@
 import React, { useMemo, useState } from "react";
 import i18n from "@dhis2/d2-i18n";
-import { IconChevronDown16, IconChevronUp16, Tag } from "@dhis2/ui";
+import { IconChevronDown16, IconChevronUp16 } from "@dhis2/ui";
 import { DateTime } from "luxon";
 import {
 	RunStatus,
@@ -93,7 +93,7 @@ export function DownloadTaskDetails({
 					<div className="flex flex-col gap-2">
 						<button
 							type="button"
-							className="flex items-center gap-2 text-sm text-red-700 hover:underline self-start"
+							className="flex items-center gap-2 text-red-700 hover:underline self-start"
 							onClick={() => setShowError((s) => !s)}
 						>
 							{showError ? (
@@ -101,17 +101,23 @@ export function DownloadTaskDetails({
 							) : (
 								<IconChevronDown16 />
 							)}
-							<Tag negative>{i18n.t("Error details")}</Tag>
+							<span className="text-sm">{i18n.t("Show error details")}</span>
 						</button>
 						{showError && (
 							<div className="flex flex-col gap-2">
 								{task.error && (
-									<pre className="bg-gray-50 p-3 rounded border overflow-auto text-sm whitespace-pre-wrap max-h-48">
+									<pre
+										style={{ fontSize: 12 }}
+										className="bg-gray-50 p-3 border-gray-200 rounded border overflow-auto text-sm whitespace-pre-wrap max-h-48"
+									>
 										{task.error}
 									</pre>
 								)}
 								{task.errorObject && (
-									<pre className="bg-gray-50 p-3 rounded border overflow-auto text-sm max-h-48">
+									<pre
+										style={{ fontSize: 12 }}
+										className="bg-gray-50 p-3 rounded border border-gray-200 overflow-auto max-h-48 w-full"
+									>
 										{JSON.stringify(
 											task.errorObject,
 											null,

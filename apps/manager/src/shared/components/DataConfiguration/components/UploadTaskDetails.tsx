@@ -121,7 +121,7 @@ export function UploadTaskDetails({
 					<div className="flex flex-col gap-2">
 						<button
 							type="button"
-							className="flex items-center gap-2 text-sm text-blue-700 hover:underline self-start"
+							className="flex items-center gap-2 text-red-700 hover:underline self-start"
 							onClick={() => setShowError((s) => !s)}
 						>
 							{showError ? (
@@ -129,7 +129,7 @@ export function UploadTaskDetails({
 							) : (
 								<IconChevronDown16 />
 							)}
-							{i18n.t("Show error details")}
+							<span className="text-sm">{i18n.t("Show error details")}</span>
 						</button>
 						{showError && (
 							<div className="flex flex-col gap-2">
