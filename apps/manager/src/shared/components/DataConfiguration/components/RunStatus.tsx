@@ -4,6 +4,7 @@ import { CircularLoader, Tag } from "@dhis2/ui";
 import i18n from "@dhis2/d2-i18n";
 import { useWatch } from "react-hook-form";
 import { DataServiceConfig } from "@packages/shared/schemas";
+import { StickMan } from "./StickMan";
 
 export type RunStatus = "IGNORED" | "QUEUED" | "RUNNING" | "ERRORED" | "DONE";
 
@@ -28,7 +29,7 @@ const configStatusQuery = {
 		id: ({
 			configId,
 		}: {
-			configId: string	
+			configId: string
 		}) => `${configId}/status`,
 	},
 }
@@ -74,15 +75,29 @@ export function RunStatus({
 
 	switch (data.status) {
 		case "DONE":
-			return <Tag positive>{i18n.t("Done")}</Tag>
+			return <Tag positive><div style={{ display: "flex", alignItems: "center" }}>
+				{i18n.t("Done")}
+				<StickMan status={data.status} />
+			</div></Tag>
 		case "ERRORED":
-			return <Tag negative>{i18n.t("Has errors")}</Tag>
+			return <Tag negative><div style={{ display: "flex", alignItems: "center" }}>
+				{i18n.t("Has errors")}
+				<StickMan status={data.status} />
+			</div></Tag>
 		case "RUNNING":
-			return <Tag neutral>{i18n.t("Running")}</Tag>
+			return <Tag neutral><div style={{ display: "flex", alignItems: "center" }}>
+				{i18n.t("Running")}
+				<StickMan status={data.status} />
+			</div></Tag>
 		case "QUEUED":
-			return <Tag>{i18n.t("Queued")}</Tag>
+			return <Tag><div style={{ display: "flex", alignItems: "center" }}>
+				{i18n.t("Queued")}
+				<StickMan status={data.status} />
+			</div></Tag>
 		case "IGNORED":
-			return <Tag>{i18n.t("Not ran")}</Tag>
+			return <Tag ><div style={{ display: "flex", alignItems: "center" }}>
+				{i18n.t("Not ran")}
+			</div></Tag>
 		default:
 			return <span>{i18n.t("N/A")}</span>
 	}
@@ -124,15 +139,29 @@ export function ConfigStatus({
 
 	switch (data.status) {
 		case "DONE":
-			return <Tag positive>{i18n.t("Done")}</Tag>
+			return <Tag positive><div style={{ display: "flex", alignItems: "center" }}>
+				{i18n.t("Done")}
+				<StickMan status={data.status} />
+			</div></Tag>
 		case "ERRORED":
-			return <Tag negative>{i18n.t("Has errors")}</Tag>
+			return <Tag negative><div style={{ display: "flex", alignItems: "center" }}>
+				{i18n.t("Has errors")}
+				<StickMan status={data.status} />
+			</div></Tag>
 		case "RUNNING":
-			return <Tag neutral>{i18n.t("Running")}</Tag>
+			return <Tag neutral><div style={{ display: "flex", alignItems: "center" }}>
+				{i18n.t("Running")}
+				<StickMan status={data.status} />
+			</div></Tag>
 		case "QUEUED":
-			return <Tag>{i18n.t("Queued")}</Tag>
+			return <Tag><div style={{ display: "flex", alignItems: "center" }}>
+				{i18n.t("Queued")}
+				<StickMan status={data.status} />
+			</div></Tag>
 		case "IGNORED":
-			return <Tag>{i18n.t("Not ran")}</Tag>
+			return <Tag ><div style={{ display: "flex", alignItems: "center" }}>
+				{i18n.t("Not ran")}
+			</div></Tag>
 		default:
 			return <span>{i18n.t("N/A")}</span>
 	}
