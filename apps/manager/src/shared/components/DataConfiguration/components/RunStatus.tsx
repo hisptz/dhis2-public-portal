@@ -77,7 +77,6 @@ export function RunStatus({
 		case "DONE":
 			return <Tag positive><div style={{ display: "flex", alignItems: "center" }}>
 				{i18n.t("Done")}
-				<StickMan status={data.status} />
 			</div></Tag>
 		case "ERRORED":
 			return <Tag negative><div style={{ display: "flex", alignItems: "center" }}>
@@ -92,7 +91,6 @@ export function RunStatus({
 		case "QUEUED":
 			return <Tag><div style={{ display: "flex", alignItems: "center" }}>
 				{i18n.t("Queued")}
-				<StickMan status={data.status} />
 			</div></Tag>
 		case "IGNORED":
 			return <Tag ><div style={{ display: "flex", alignItems: "center" }}>
@@ -141,7 +139,6 @@ export function ConfigStatus({
 		case "DONE":
 			return <Tag positive><div style={{ display: "flex", alignItems: "center" }}>
 				{i18n.t("Done")}
-				<StickMan status={data.status} />
 			</div></Tag>
 		case "ERRORED":
 			return <Tag negative><div style={{ display: "flex", alignItems: "center" }}>
@@ -156,7 +153,6 @@ export function ConfigStatus({
 		case "QUEUED":
 			return <Tag><div style={{ display: "flex", alignItems: "center" }}>
 				{i18n.t("Queued")}
-				<StickMan status={data.status} />
 			</div></Tag>
 		case "IGNORED":
 			return <Tag ><div style={{ display: "flex", alignItems: "center" }}>

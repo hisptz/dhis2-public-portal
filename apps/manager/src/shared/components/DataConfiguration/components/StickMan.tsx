@@ -9,7 +9,7 @@ export function StickMan({ status }: { status: RunStatus }) {
     const hasError = status === "ERRORED"
     const done = status === "DONE"
 
-    const repeat = running || hasError
+    const repeat = running
         ? { duration: cycle, repeat: Infinity, ease: "easeInOut" }
         : {}
 
@@ -81,7 +81,7 @@ export function StickMan({ status }: { status: RunStatus }) {
                                 ? { rotate: [55, -105, 55] }
                                 : hasError ? { rotate: [75, 45, 75] } : { rotate: 15 }
                         }
-                        transition={repeat}
+                        transition={hasError? { duration: cycle, repeat: Infinity, ease: "easeInOut" }:repeat}
                     >
                         <line
                             x1={hasError || done ? "13" : "12"}
