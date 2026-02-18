@@ -110,7 +110,7 @@ export async function downloadAndQueueMetadata({
             data: {
                 status: ProcessStatus.FAILED,
                 error: 'Unsupported metadata download',
-                finishedAt: new Date()
+                finishedAt: new Date(),
             },
         })
         return
@@ -133,7 +133,7 @@ export async function downloadAndQueueMetadata({
         where: { uid: task.uid },
         data: {
             status: ProcessStatus.DONE,
-            finishedAt: new Date()
+            finishedAt: new Date(),
         },
     })
 }
@@ -369,8 +369,10 @@ export async function downloadMetadata(
         const legendSetIds = extractLegendSets([
             ...indicators,
             ...dataElements,
-            ...createdProgramDataElements,
-            ...createdDataSetDataElements,
+            ...uniqBy(
+                [...createdProgramDataElements, ...createdDataSetDataElements],
+                'code'
+            ),
         ])
         const legendSets = await getLegendSets({
             client,

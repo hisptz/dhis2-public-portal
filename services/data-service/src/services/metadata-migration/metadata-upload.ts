@@ -10,6 +10,8 @@ import { existsSync } from 'node:fs'
 import { AxiosInstance } from 'axios'
 import { dhis2Client } from '@/clients/dhis2'
 import { logWorker } from '@/rabbit/utils'
+import { DatastoreNamespaces } from '@packages/shared/constants'
+import { DataServiceConfig } from '@packages/shared/schemas'
 
 export async function uploadMetadata({
     metadata,
@@ -37,6 +39,44 @@ export async function uploadMetadata({
     return response.data
 }
 
+export async function updateMainConfigVisualizationList({
+    mainConfigId,
+    client,
+    metadata,
+}: {
+    mainConfigId: string
+    client: AxiosInstance
+    metadata: {
+        visualizations: Array<{ id: string }>
+        maps: Array<{ id: string }>
+    }
+}) {
+    logWorker(
+        'info',
+        `Updating main config visualization list for ${mainConfigId}...`
+    )
+    const response = await client.get<DataServiceConfig>(
+        `dataStore/${DatastoreNamespaces.DATA_SERVICE_CONFIG}/${mainConfigId}`
+    )
+    const config = response.data
+    const updatedConfig = {
+        ...config,
+        visualizations: [
+            ...config.visualizations,
+            ...metadata.visualizations.map(({ id }) => ({ id })),
+            ...metadata.maps.map(({ id }) => ({ id })),
+        ],
+    }
+    await client.put<DataServiceConfig>(
+        `dataStore/${DatastoreNamespaces.DATA_SERVICE_CONFIG}/${mainConfigId}`,
+        updatedConfig
+    )
+    logWorker(
+        'info',
+        `Updated main config visualization list for ${mainConfigId}`
+    )
+}
+
 export async function uploadMetadataFromQueue({
     task,
 }: {
@@ -46,7 +86,11 @@ export async function uploadMetadataFromQueue({
     if (!existsSync(filename)) {
         await dbClient.metadataUpload.update({
             where: { id: task.id },
-            data: { status: ProcessStatus.FAILED, error: 'File not found', finishedAt: new Date() },
+            data: {
+                status: ProcessStatus.FAILED,
+                error: 'File not found',
+                finishedAt: new Date(),
+            },
         })
         return
     }
@@ -57,6 +101,13 @@ export async function uploadMetadataFromQueue({
         metadata: payload.metadata,
         client: dhis2Client,
     })
+
+    await updateMainConfigVisualizationList({
+        client: dhis2Client,
+        metadata: payload.metadata,
+        mainConfigId: task.run.mainConfigId,
+    })
+
     await dbClient.metadataUpload.update({
         where: {
             uid: task.uid,

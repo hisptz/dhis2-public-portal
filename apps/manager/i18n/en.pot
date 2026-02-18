@@ -5,8 +5,8 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
-"POT-Creation-Date: 2026-02-02T05:15:37.037Z\n"
-"PO-Revision-Date: 2026-02-02T05:15:37.037Z\n"
+"POT-Creation-Date: 2026-02-12T09:19:02.294Z\n"
+"PO-Revision-Date: 2026-02-12T09:19:02.294Z\n"
 
 msgid "Could not get Appearance configurations"
 msgstr "Could not get Appearance configurations"
@@ -19,6 +19,15 @@ msgstr "Import/Export Configuration"
 
 msgid "Back"
 msgstr "Back"
+
+msgid "Edit configuration"
+msgstr "Edit configuration"
+
+msgid "Configure"
+msgstr "Configure"
+
+msgid "Run"
+msgstr "Run"
 
 msgid "Data service configuration"
 msgstr "Data service configuration"
@@ -83,30 +92,6 @@ msgstr "Detail"
 msgid "Remove visualization"
 msgstr "Remove visualization"
 
-msgid "Confirm delete"
-msgstr "Confirm delete"
-
-msgid "Are you sure you want to delete the configuration "
-msgstr "Are you sure you want to delete the configuration "
-
-msgid "This action cannot be undone."
-msgstr "This action cannot be undone."
-
-msgid "Delete"
-msgstr "Delete"
-
-msgid "Edit configuration"
-msgstr "Edit configuration"
-
-msgid "Run migration"
-msgstr "Run migration"
-
-msgid "View overview"
-msgstr "View overview"
-
-msgid "Delete connection"
-msgstr "Delete connection"
-
 msgid "Add data configuration"
 msgstr "Add data configuration"
 
@@ -162,11 +147,29 @@ msgstr "Latest Migration Status"
 msgid "Actions"
 msgstr "Actions"
 
+msgid "Confirm delete"
+msgstr "Confirm delete"
+
+msgid "Are you sure you want to delete the configuration "
+msgstr "Are you sure you want to delete the configuration "
+
+msgid "This action cannot be undone."
+msgstr "This action cannot be undone."
+
+msgid "Delete"
+msgstr "Delete"
+
+msgid "View runs"
+msgstr "View runs"
+
+msgid "Delete configuration"
+msgstr "Delete configuration"
+
 msgid "Could not save form, check the logs for more information"
 msgstr "Could not save form, check the logs for more information"
 
-msgid "Add data item"
-msgstr "Add data item"
+msgid "Add config"
+msgstr "Add config"
 
 msgid "Could not get attribute options"
 msgstr "Could not get attribute options"
@@ -237,6 +240,9 @@ msgstr ""
 "A valid analytics dimension item (data element, data element and category "
 "option)"
 
+msgid "Add data item"
+msgstr "Add data item"
+
 msgid "At least one data item is required"
 msgstr "At least one data item is required"
 
@@ -271,8 +277,41 @@ msgstr "Period Type"
 msgid "There are no data items present"
 msgstr "There are no data items present"
 
-msgid "Delete configuration"
-msgstr "Delete configuration"
+msgid "Status"
+msgstr "Status"
+
+msgid "Task ID"
+msgstr "Task ID"
+
+msgid "Started at"
+msgstr "Started at"
+
+msgid "Finished at"
+msgstr "Finished at"
+
+msgid "Time taken"
+msgstr "Time taken"
+
+msgid "Items"
+msgstr "Items"
+
+msgid "Error details"
+msgstr "Error details"
+
+msgid "Show {{state}} details"
+msgstr "Show {{state}} details"
+
+msgid "less"
+msgstr "less"
+
+msgid "more"
+msgstr "more"
+
+msgid "Dimensions"
+msgstr "Dimensions"
+
+msgid "Filters"
+msgstr "Filters"
 
 msgid "Edit connection"
 msgstr "Edit connection"
@@ -299,11 +338,11 @@ msgstr "Connection successful"
 msgid "Connection failed"
 msgstr "Connection failed"
 
-msgid "Testing..."
-msgstr "Testing..."
+msgid "Testing"
+msgstr "Testing"
 
-msgid "Test connection"
-msgstr "Test connection"
+msgid "Test Connection"
+msgstr "Test Connection"
 
 msgid "Run configuration"
 msgstr "Run configuration"
@@ -330,8 +369,8 @@ msgstr "Failed to start service"
 msgid "There are errors with your form. Please fix them before submitting again"
 msgstr "There are errors with your form. Please fix them before submitting again"
 
-msgid "Run"
-msgstr "Run"
+msgid "Run Service"
+msgstr "Run Service"
 
 msgid "Analytics Required"
 msgstr "Analytics Required"
@@ -409,12 +448,6 @@ msgstr "Select Maps"
 msgid "Select Dashboards"
 msgstr "Select Dashboards"
 
-msgid "Page size"
-msgstr "Page size"
-
-msgid "Paginate by data"
-msgstr "Paginate by data"
-
 msgid "Deleting data..."
 msgstr "Deleting data..."
 
@@ -439,107 +472,62 @@ msgstr "N/A"
 msgid "Idle"
 msgstr "Idle"
 
-msgid "Running"
-msgstr "Running"
+msgid "Initialized"
+msgstr "Initialized"
 
-msgid "Queued"
-msgstr "Queued"
+msgid "Failed"
+msgstr "Failed"
 
-msgid "Not started"
-msgstr "Not started"
+msgid "Done"
+msgstr "Done"
 
-msgid "Unknown"
-msgstr "Unknown"
+msgid "View last run summary"
+msgstr "View last run summary"
 
-msgid "Completed"
-msgstr "Completed"
-
-msgid "Unknown error"
-msgstr "Unknown error"
-
-msgid "View service overview"
-msgstr "View service overview"
-
-msgid "Failed queue cleared successfully"
-msgstr "Failed queue cleared successfully"
-
-msgid "Message retried successfully"
-msgstr "Message retried successfully"
-
-msgid "Failed {{processType}} Details"
-msgstr "Failed {{processType}} Details"
-
-msgid "Failed Processes Details"
-msgstr "Failed Processes Details"
-
-msgid "Error Loading Failed Messages"
-msgstr "Error Loading Failed Messages"
-
-msgid "An unexpected error occurred"
-msgstr "An unexpected error occurred"
-
-msgid "Debug Info"
-msgstr "Debug Info"
-
-msgid "Error Message"
-msgstr "Error Message"
-
-msgid "Process Type"
-msgstr "Process Type"
-
-msgid "Failed Endpoint"
-msgstr "Failed Endpoint"
-
-msgid "Failed At"
-msgstr "Failed At"
+msgid "Errors"
+msgstr "Errors"
 
 msgid "Details"
 msgstr "Details"
 
-msgid "Retry"
-msgstr "Retry"
+msgid "Ignored items"
+msgstr "Ignored items"
 
-msgid "Detailed Error Information"
-msgstr "Detailed Error Information"
+msgid "Imported items"
+msgstr "Imported items"
 
-msgid "No failed messages found"
-msgstr "No failed messages found"
+msgid "Updated items"
+msgstr "Updated items"
 
-msgid "All processes completed successfully!"
-msgstr "All processes completed successfully!"
+msgid "Deleted items"
+msgstr "Deleted items"
 
-msgid "Retrying..."
-msgstr "Retrying..."
+msgid "Filter by status"
+msgstr "Filter by status"
 
-msgid "Retry All"
-msgstr "Retry All"
+msgid "There are no {{type}} with the status {{status}}"
+msgstr "There are no {{type}} with the status {{status}}"
 
-msgid "Clearing..."
-msgstr "Clearing..."
+msgid "There are no {{type}} for this run"
+msgstr "There are no {{type}} for this run"
 
-msgid "Clear All"
-msgstr "Clear All"
+msgid "Upload completed with errors"
+msgstr "Upload completed with errors"
 
-msgid "Close"
-msgstr "Close"
+msgid "Error code"
+msgstr "Error code"
 
-msgid "Click for details"
-msgstr "Click for details"
+msgid "Message"
+msgstr "Message"
 
-msgid "Error loading process data"
-msgstr "Error loading process data"
+msgid "Properties"
+msgstr "Properties"
 
-msgid "Unknown error occurred"
-msgstr "Unknown error occurred"
+msgid "An error occurred"
+msgstr "An error occurred"
 
-msgid "Download Process"
-msgstr "Download Process"
-
-msgid "Upload Process"
-msgstr "Upload Process"
-
-msgid "Data Deletion Process"
-msgstr "Data Deletion Process"
+msgid "HTTP Status"
+msgstr "HTTP Status"
 
 msgid "Error logs"
 msgstr "Error logs"
@@ -547,17 +535,98 @@ msgstr "Error logs"
 msgid "Dismiss"
 msgstr "Dismiss"
 
+msgid "Retry request sent successfully"
+msgstr "Retry request sent successfully"
+
+msgid "Error retrying request"
+msgstr "Error retrying request"
+
+msgid "Retry"
+msgstr "Retry"
+
 msgid "Show error logs"
 msgstr "Show error logs"
 
-msgid "Service Processing Overview"
-msgstr "Service Processing Overview"
+msgid "Run summary "
+msgstr "Run summary "
+
+msgid "Summaries"
+msgstr "Summaries"
+
+msgid "Run ID"
+msgstr "Run ID"
+
+msgid "Service type"
+msgstr "Service type"
+
+msgid "Initialized at"
+msgstr "Initialized at"
+
+msgid "Source type"
+msgstr "Source type"
+
+msgid "Period(s)"
+msgstr "Period(s)"
+
+msgid "Org Unit Level"
+msgstr "Org Unit Level"
+
+msgid "Configuration(s)"
+msgstr "Configuration(s)"
+
+msgid "Unknown"
+msgstr "Unknown"
+
+msgid "Metadata Runs"
+msgstr "Metadata Runs"
+
+msgid "Data Runs"
+msgstr "Data Runs"
+
+msgid "Has errors"
+msgstr "Has errors"
+
+msgid "Running"
+msgstr "Running"
+
+msgid "Queued"
+msgstr "Queued"
+
+msgid "Not ran"
+msgstr "Not ran"
 
 msgid "Loading connection details..."
 msgstr "Loading connection details..."
 
 msgid "Could not get source information"
 msgstr "Could not get source information"
+
+msgid "Task details"
+msgstr "Task details"
+
+msgid "Unauthorized - Bad credentials"
+msgstr "Unauthorized - Bad credentials"
+
+msgid "Testing..."
+msgstr "Testing..."
+
+msgid "Test connection"
+msgstr "Test connection"
+
+msgid "Imported"
+msgstr "Imported"
+
+msgid "Updated"
+msgstr "Updated"
+
+msgid "Ignored"
+msgstr "Ignored"
+
+msgid "Deleted"
+msgstr "Deleted"
+
+msgid "Show error details"
+msgstr "Show error details"
 
 msgid "No value"
 msgstr "No value"
@@ -583,8 +652,8 @@ msgstr "When source data is greater than destination data"
 msgid "Download Excel"
 msgstr "Download Excel"
 
-msgid "Period"
-msgstr "Period"
+msgid "Data Elements"
+msgstr "Data Elements"
 
 msgid "Source"
 msgstr "Source"
@@ -622,8 +691,8 @@ msgstr "Discrepancies"
 msgid "No validation status available"
 msgstr "No validation status available"
 
-msgid "Failed"
-msgstr "Failed"
+msgid "Completed"
+msgstr "Completed"
 
 msgid "matched"
 msgstr "matched"
@@ -1146,14 +1215,8 @@ msgstr "No feedback items configured"
 msgid "Full Name"
 msgstr "Full Name"
 
-msgid "Message"
-msgstr "Message"
-
 msgid "icon"
 msgstr "icon"
-
-msgid "Items"
-msgstr "Items"
 
 msgid "Add item"
 msgstr "Add item"

@@ -9,7 +9,7 @@ export type Visualization = {
     type: string
     dataDimensionItems: Array<{
         dataDimensionItemType: string
-        reportingRate?: { id: string }
+        reportingRate?: { id: string; dimensionItem: string }
         indicator?: { id: string }
         dataElement?: { id: string }
         programIndicator?: { id: string }
@@ -23,7 +23,7 @@ export type D2Map = {
     mapViews: Array<{
         dataDimensionItems: Array<{
             dataDimensionItemType: string
-            reportingRate?: { id: string }
+            reportingRate?: { id: string; dimensionItem: string }
             indicator?: { id: string }
             dataElement?: { id: string }
             programIndicator?: { id: string }
@@ -43,6 +43,7 @@ export type DataElement = {
         id: string
         categories?: Array<{ id: string; name: string }>
     }
+    domainType: 'AGGREGATE' | 'TRACKER'
     aggregationType: string
     legendSets: Array<{ id: string }>
 }
@@ -331,8 +332,10 @@ export function sanitizeVisualizationsWithDatasetReferences({
                     if (item.reportingRate?.id) {
                         const datasetDataElement = datasetDataElements.find(
                             (dataElement) =>
-                                dataElement.id === item.reportingRate?.id
+                                dataElement.code ===
+                                item.reportingRate?.dimensionItem
                         )
+
                         return {
                             ...item,
                             reportingRate: undefined,
@@ -382,8 +385,8 @@ export function sanitizeMapsWithDatasetReferences({
                                 const datasetDataElement =
                                     datasetDataElements.find(
                                         (dataElement) =>
-                                            dataElement.id ===
-                                            item.reportingRate?.id
+                                            dataElement.code ===
+                                            item.reportingRate?.dimensionItem
                                     )
                                 return {
                                     ...item,

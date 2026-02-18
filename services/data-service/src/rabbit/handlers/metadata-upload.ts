@@ -49,7 +49,7 @@ export async function metadataUploadHandler({
                 'error',
                 `Failed to upload data for config ${metadataUploadTaskUid}: ${error.message}`
             )
-            if ([400, 409, 404].includes(error.response?.status ?? 400)) {
+            if ([400, 409, 404, 401].includes(error.response?.status ?? 400)) {
                 await dbClient.metadataUpload.update({
                     where: {
                         uid: metadataUploadTaskUid,
@@ -58,7 +58,7 @@ export async function metadataUploadHandler({
                         status: ProcessStatus.FAILED,
                         error: error.message,
                         errorObject: error.response?.data,
-                        finishedAt: new Date()
+                        finishedAt: new Date(),
                     },
                 })
             }
@@ -66,7 +66,7 @@ export async function metadataUploadHandler({
         } else if (error instanceof Error) {
             logWorker(
                 'error',
-                `Failed to upload data for config ${metadataUploadTaskUid}: ${error.message}`
+                `Failed to upload metadata for config ${metadataUploadTaskUid}: ${error.message}`
             )
             await dbClient.metadataUpload.update({
                 where: {
@@ -82,7 +82,7 @@ export async function metadataUploadHandler({
         } else {
             logWorker(
                 'error',
-                `Failed to upload data for config ${metadataUploadTaskUid}: Unknown error ${error}`
+                `Failed to upload metadata for config ${metadataUploadTaskUid}: Unknown error ${error}`
             )
             await dbClient.metadataUpload.update({
                 where: {

@@ -144,6 +144,7 @@ export function generateDataElementsForProgramItems(
             shortName: item.shortName,
             legendSets: item.legendSets ?? [],
             valueType: item.valueType ?? 'NUMBER',
+            domainType: 'AGGREGATE',
             aggregationType: item.aggregationType ?? 'SUM',
             categoryCombo: {
                 id: defaultCategoryComboId,

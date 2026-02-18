@@ -8,7 +8,7 @@ enum ReportingRateType {
     REPORTING_RATE = 'REPORTING_RATE',
     ACTUAL_REPORTS = 'ACTUAL_REPORTS',
     ACTUAL_REPORTS_ON_TIME = 'ACTUAL_REPORTS_ON_TIME',
-    EXPECTED_REPORT = 'EXPECTED_REPORTS',
+    EXPECTED_REPORTS = 'EXPECTED_REPORTS',
     REPORTING_RATE_ON_TIME = 'REPORTING_RATE_ON_TIME',
 }
 
@@ -62,6 +62,7 @@ export function generateDataElementsForDatasetItems(
                     code: `${item.id}.${key}`,
                     valueType: 'NUMBER',
                     aggregationType: 'SUM',
+                    domainType: 'AGGREGATE',
                     legendSets: item.legendSets ?? [],
                     name: `${item.name} - ${reportingRateLabel}`,
                     shortName: truncate(
