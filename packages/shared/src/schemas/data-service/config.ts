@@ -33,7 +33,11 @@ export const baseDataItemsSourceSchema = z.object({
 		.min(1, i18n.t("At least one data item is required")),
 	periodTypeId: z.string(),
 	parentOrgUnitId: z.string(),
-	orgUnitLevel: z.number().min(1, "Organisation unit level must be at least 1")
+	orgUnitLevel: z
+		.number({
+			error: "Organisation unit level is required",
+		})
+		.min(1, "Organisation unit level must be at least 1")
 		.max(7, "Organisation unit level must be at most 7"),
 });
 

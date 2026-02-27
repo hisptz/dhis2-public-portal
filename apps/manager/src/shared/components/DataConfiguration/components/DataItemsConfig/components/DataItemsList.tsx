@@ -1,6 +1,6 @@
 import { useFieldArray } from "react-hook-form";
 import { DataServiceConfig } from "@packages/shared/schemas";
-import { SimpleTable, SimpleTableColumn } from "@hisptz/dhis2-ui";
+import { SimpleTable, SimpleTableColumn, useDialog } from "@hisptz/dhis2-ui";
 import i18n from "@dhis2/d2-i18n";
 import { startCase } from "lodash";
 import { FixedPeriodType } from "@hisptz/dhis2-utils";
@@ -13,9 +13,6 @@ import {
 import React from "react";
 import { AddDataItemConfig } from "./AddDataItemConfig/AddDataItemConfig";
 import { EditDataItemConfig } from "./AddDataItemConfig/EditDataItemConfig";
-import { DeleteConfirmationAlert } from "../../DeleteConfirmationAlert";
-
-
 
 const columns: SimpleTableColumn[] = [
 	{
@@ -46,13 +43,10 @@ export function DataItemsList() {
 		keyName: "fieldId" as unknown as "id",
 	});
 
-	const [deleteStates, setDeleteStates] = React.useState<Record<number, boolean>>({});
+
 
 	const rows = fields.map((item, index) => {
-
-		const hide = deleteStates[index] ?? true;
-		const onClose = () => setDeleteStates(prev => ({ ...prev, [index]: true }));
-		const onShow = () => setDeleteStates(prev => ({ ...prev, [index]: false }));
+		const { confirm } = useDialog();
 
 		return {
 			...item,
@@ -65,25 +59,25 @@ export function DataItemsList() {
 						config={item}
 						onUpdate={(data) => update(index, data)}
 					/>
-
-					{!hide && (
-						<DeleteConfirmationAlert
-							title={i18n.t(`Delete ${item.name} config`)}
-							message={i18n.t(
-								`Are you sure you want to delete ${item.name} config?`
-							)}
-							onConfirm={() =>
-								remove(index)
-							}
-							hide={hide}
-							onClose={onClose}
-						/>
-
-					)}
 					<Button
 						small
 						icon={<IconDelete16 color="red" />}
-						onClick={onShow}
+						onClick={() => {
+							confirm({
+								title: i18n.t("Confirm delete"),
+								message: (
+									<span>
+										{i18n.t("Are you sure you want to delete the configuration ")}
+										<b>{item.name}</b>{"?"}
+									</span>
+								),
+								onConfirm: async () => {
+									remove(index)
+								},
+								confirmButtonText: i18n.t("Delete"),
+								confirmButtonColor: "destructive",
+							});
+						}}
 					/>
 				</ButtonStrip>
 			),
