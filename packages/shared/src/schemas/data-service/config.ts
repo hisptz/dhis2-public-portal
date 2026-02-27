@@ -35,7 +35,8 @@ export const baseDataItemsSourceSchema = z.object({
 	parentOrgUnitId: z.string(),
 	orgUnitLevel: z
 		.number({
-			error: "Organisation unit level is required",
+			required_error: "Organisation unit level is required",
+			invalid_type_error: "Organisation unit level must be a number",
 		})
 		.min(1, "Organisation unit level must be at least 1")
 		.max(7, "Organisation unit level must be at most 7"),
