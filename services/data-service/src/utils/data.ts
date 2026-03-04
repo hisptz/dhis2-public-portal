@@ -13,6 +13,7 @@ import * as fs from 'node:fs'
 import * as path from 'node:path'
 import { seq } from 'async'
 import { handleError } from '@/utils/error'
+import { dhis2Client } from '@/clients/dhis2'
 
 export interface DataResponse {
     dataValues: Array<{
@@ -133,7 +134,7 @@ async function expandDataElement(
 
         // Step 3: fetch each categoryOptionCombo details
         (input: { deId: string; optionCombos: { id: string }[] }, cb: any) => {
-            ;(async () => {
+            ; (async () => {
                 try {
                     const results: Expanded[] = []
                     for (const coc of input.optionCombos) {
@@ -243,6 +244,41 @@ export async function processDataItems({
     }
 }
 
+
+
+
+
+export async function createMapping({
+    dataElements,
+}: {
+    dataElements: string[]
+}): Promise<Mapping[]> {
+
+    if (!dataElements?.length) {
+        return []
+    }
+
+    const idsFilter = `id:in:[${dataElements.join(',')}]`
+
+    const response = await dhis2Client.get('/dataElements', {
+        params: {
+            fields: 'id,code,name',
+            filter: idsFilter,
+            paging: false,
+        },
+    })
+
+    const elements = response.data?.dataElements ?? []
+
+    const mapping: Mapping[] = elements.map(
+        (el: { id: string; code?: string | null }) => ({
+            id: el.id,
+            sourceId: el.code?.trim() ? el.code : el.id,
+        })
+    )
+
+    return mapping
+}
 /*
  * Processes data into values that include attributeOptionCombo
  *
@@ -291,11 +327,11 @@ export async function processData({
     dataItems,
 }: {
     data: DataResponse
-    dataItems: Array<DataServiceDataItemConfig>
+    dataItems?: Array<DataServiceDataItemConfig>
 }) {
     return {
         dataValues: data.dataValues.map((value) => {
-            const config = dataItems.find(({ sourceId }) => {
+            const config = dataItems?.find(({ sourceId }) => {
                 if (sourceId === value.dataElement) return true
 
                 if (sourceId.includes('.')) {

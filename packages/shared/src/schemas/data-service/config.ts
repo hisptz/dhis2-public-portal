@@ -31,6 +31,7 @@ export const baseDataItemsSourceSchema = z
         type: supportedDataSourcesType,
         periodTypeId: z.string(),
         parentOrgUnitId: z.string(),
+        dataItems:z.array(dataItemConfigSchema).optional(),
         orgUnitLevel: z
             .number()
             .min(1, 'Organisation unit level must be at least 1')

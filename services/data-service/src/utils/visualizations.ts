@@ -296,7 +296,7 @@ export async function getDataElementConfigs({
     }>(`dataElements`, {
         params: {
             filter: `id:in:[${items.join(',')}]`,
-            fields: ':owner,!sharing,!createdBy,!lastUpdatedBy,!created,!lastUpdated,categoryCombo[id,categories[id,name]]',
+            fields: ':owner,!sharing,!createdBy,!code,!lastUpdatedBy,!created,!lastUpdated,categoryCombo[id,categories[id,name]]',
             paging: false,
         },
     })
