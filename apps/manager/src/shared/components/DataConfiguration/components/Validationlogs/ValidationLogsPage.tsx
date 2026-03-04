@@ -76,8 +76,12 @@ export function ValidationLogsPage({ configId }: ValidationLogsPageProps) {
 
     const handleGoBack = () => {
         navigate({
-            to: '/data-service-configuration',
+            to: '/data-service-configuration/$configId',
+            params: {
+                configId,
+            },
         });
+
     };
 
     const isValidationRunning =

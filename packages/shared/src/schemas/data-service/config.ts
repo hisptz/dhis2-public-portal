@@ -24,22 +24,40 @@ export const supportedDataSourcesType = z.nativeEnum(
     DataServiceSupportedDataSourcesType
 )
 
-export const baseDataItemsSourceSchema = z.object({
-    id: z.string(),
-    name: z.string(),
-    type: supportedDataSourcesType,
-    dataItems: z
-        .array(dataItemConfigSchema)
-        .min(1, i18n.t('At least one data item is required')),
-    periodTypeId: z.string(),
-    parentOrgUnitId: z.string(),
-    orgUnitLevel: z.number().min(1, "Organisation unit level must be at least 1")
-        .max(7, "Organisation unit level must be at most 7"),
-})
+export const baseDataItemsSourceSchema = z
+    .object({
+        id: z.string(),
+        name: z.string(),
+        type: supportedDataSourcesType,
+        periodTypeId: z.string(),
+        parentOrgUnitId: z.string(),
+        orgUnitLevel: z
+            .number()
+            .min(1, 'Organisation unit level must be at least 1')
+            .max(7, 'Organisation unit level must be at most 7'),
+        visualizations: z.array(z.string()),
+        maps: z.array(z.string()),
+        dataElements: z
+            .array(z.string())
+            .min(1, 'At least one data element is required'),
+    }).superRefine((data, context) => {
+        const hasAnyData =
+            !!(data.visualizations?.length > 0) ||
+            !!(data.maps?.length > 0)
+        if (!hasAnyData) {
+            context.addIssue({
+                code: 'custom',
+                message: i18n.t('Please select at least one visualization or map'),
+                path: [`visualizations`],
+            })
+        }
+    })
 
 export const attributeValuesDataItemsSourceSchema =
-    baseDataItemsSourceSchema.extend({
-        type: z.literal('ATTRIBUTE_VALUES'),
+    baseDataItemsSourceSchema.safeExtend({
+        type: z.literal(
+            DataServiceSupportedDataSourcesType.ATTRIBUTE_VALUES
+        ),
         attributeId: z.string(),
         attributeOptions: z.array(z.string()),
     })
@@ -48,8 +66,10 @@ export type DataServiceAttributeValuesDataItemsSource = z.infer<
     typeof attributeValuesDataItemsSourceSchema
 >
 
-export const dxValuesDataItemsSourceSchema = baseDataItemsSourceSchema.extend({
-    type: z.literal('DX_VALUES'),
+export const dxValuesDataItemsSourceSchema = baseDataItemsSourceSchema.safeExtend({
+    type: z.literal(
+        DataServiceSupportedDataSourcesType.DX_VALUES
+    )
 })
 
 export type DataServiceDxValuesDataItemsSource = z.infer<
@@ -62,6 +82,7 @@ export const dataSourceItemsConfigSchema = z.discriminatedUnion(
     { message: i18n.t('This value is required') }
 )
 
+
 export type DataServiceDataSourceItemsConfig = z.infer<
     typeof dataSourceItemsConfigSchema
 >
@@ -70,7 +91,6 @@ export const dataServiceConfigSchema = z.object({
     id: z.string(),
     source: dataSourceSchema,
     itemsConfig: z.array(dataSourceItemsConfigSchema),
-    visualizations: z.array(z.object({ id: z.string() })),
 })
 
 export type DataServiceConfig = z.infer<typeof dataServiceConfigSchema>

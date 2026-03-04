@@ -11,21 +11,16 @@ import {
     ModalContent,
     ModalTitle,
 } from '@dhis2/ui'
-
 import i18n from '@dhis2/d2-i18n'
 import { RHFSingleSelectField, RHFTextInputField } from '@hisptz/dhis2-ui'
-
 import { startCase } from 'lodash'
-import { FormProvider, useForm } from 'react-hook-form'
+import { FormProvider, useForm,  } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { PeriodTypeCategory, PeriodUtility } from '@hisptz/dhis2-utils'
-
-import { AttributeFields } from './AttributeFields'
 import { RHFIDField } from '../../../../../../Fields/IDField'
-import { RHFNumberField } from '../../../../../../Fields/RHFNumberField'
 import { RHFOrgUnitField } from '../../../../../../Fields/RHFOrgUnitField'
-import { MappedDataItemsSelector } from './MappedDataItemsSelector'
-import { useParams } from '@tanstack/react-router'
+import { VisualizationDataSelector } from './VisualizationDataSelector'
+import { OrgUnitLevelSelector } from './OrgUnitLevelSelector'
 
 export function DataItemConfigForm({
     data,
@@ -44,10 +39,6 @@ export function DataItemConfigForm({
     })
     const action = data ? i18n.t('Update') : i18n.t('Create')
 
-    const { configId } = useParams({
-        from: '/data-service-configuration/_provider/$configId/_provider',
-    })
-
     const onFormSubmit = (data: DataServiceDataSourceItemsConfig) => {
         onSubmit(data)
         onClose()
@@ -65,7 +56,7 @@ export function DataItemConfigForm({
                             name={'type'}
                             options={Object.values(
                                 DataServiceSupportedDataSourcesType
-                            ).map((item) => ({
+                            ).filter((item) => item != DataServiceSupportedDataSourcesType.ATTRIBUTE_VALUES).map((item) => ({
                                 label: startCase(item.toLowerCase()),
                                 value: item,
                             }))}
@@ -80,7 +71,8 @@ export function DataItemConfigForm({
                             label={i18n.t('ID')}
                             name={'id'}
                         />
-                        <AttributeFields />
+                        {/* This is disabled for now */}
+                        {/* <AttributeFields /> */}
                         <RHFSingleSelectField
                             required
                             name="periodTypeId"
@@ -104,23 +96,27 @@ export function DataItemConfigForm({
                             )}
                             singleSelection={true}
                         />
-                        <RHFNumberField
+                        <OrgUnitLevelSelector
                             required
                             name="orgUnitLevel"
                             label={i18n.t('Organisation unit level')}
                             helpText={i18n.t(
                                 'Organisation unit level at the source to pull data from'
                             )}
-                        />
-                        <MappedDataItemsSelector
-                            configId={configId}
-                            name="dataItems"
-                            label={i18n.t('Data items')}
+                         />
+                        <VisualizationDataSelector
+                            nameVisualizations="visualizations"
+                            nameDataElements={'dataElements'}
+                            labelVisualizations={'Visualizations / Maps'}
+                            labelDataElements={'Data elements'}
+                            nameMaps='maps'
                             required
-                            helpText={i18n.t(
-                                'Select data items from the pre-mapped items created during metadata migration'
+                            helpTextVisualizations={i18n.t(
+                                'Select visualizations or maps obtained from the metadata migration'
                             )}
-                        />
+                            helpTextDataElements={i18n.t(
+                                'Select data elements from the selected visualizations / maps'
+                            )} />
                     </form>
                 </ModalContent>
                 <ModalActions>
