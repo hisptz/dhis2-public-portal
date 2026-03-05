@@ -133,8 +133,8 @@ export function RunConfigSummaryDetails({ run, runType }: { run: MetadataRunDeta
 				return downloads?.map((summary: MetadataDownloadJob | DataDownloadJob) => ({
 					...summary,
 					id: summary.uid!,
-					count: runType === 'metadata'? (summary as MetadataDownloadJob).items.length ?? 0 : (summary as DataDownloadJob).count ?? 0,
-					type: runType === 'metadata'? capitalize((summary as MetadataDownloadJob).type.toString() ?? "") : "",
+					count: runType === 'metadata' ? (summary as MetadataDownloadJob).items.length ?? 0 : (summary as DataDownloadJob).count ?? 0,
+					type: runType === 'metadata' ? capitalize((summary as MetadataDownloadJob).type.toString() ?? "") : "",
 					startedAt: formatDateTime(summary.startedAt),
 					finishedAt: formatDateTime(summary.finishedAt),
 					timeTaken: calculateTimeTaken(
@@ -191,11 +191,15 @@ export function RunConfigSummaryDetails({ run, runType }: { run: MetadataRunDeta
 	const columns = useMemo(() => {
 		switch (type) {
 			case "download":
-				return downloadColumns;
+				return runType === "metadata"
+					? downloadColumns
+					: downloadColumns.filter(col => col.key !== "type");
 			case "upload":
 				return uploadColumns;
+			default:
+				return [];
 		}
-	}, [type]);
+	}, [type, runType]);
 
 	const filteredRows = useMemo(() => {
 		return rows?.filter((row) => {

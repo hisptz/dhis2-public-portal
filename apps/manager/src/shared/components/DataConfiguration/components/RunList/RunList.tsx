@@ -65,14 +65,9 @@ const dataColumns = [
 		key: "startedAt",
 		label: i18n.t("Initialized at"),
 	},
-
 	{
 		key: "periods",
 		label: i18n.t("Period(s)"),
-	},
-	{
-		key: "orgUnitLevel",
-		label: i18n.t("Org Unit Level"),
 	},
 	{
 		key: "configurations",

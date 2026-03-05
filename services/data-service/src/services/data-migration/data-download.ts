@@ -24,6 +24,7 @@ import { DataDownload, DataRun } from '@/generated/prisma/client'
 import {
     createDownloadJob,
     createUploadJob,
+    updateDownloadStatus,
 } from '@/services/data-migration/utils/db'
 import { logWorker } from '@/rabbit/utils'
 import { categoriesMeta } from '@/variables/meta'
@@ -383,10 +384,10 @@ async function processDataDownload({
             dimensions,
             filters,
             client,
-            timeout: timeout ?? undefined,
+            timeout: timeout ?? 300000,
         })
 
-        if (isEmpty(data.dataValues)) {
+        if (isEmpty(data?.dataValues)) {
             logger.info(
                 `No data found for ${config.id}: ${JSON.stringify(dimensions.dx?.slice(0, 5) || 'no dx')}`
             )
@@ -418,6 +419,11 @@ async function processDataDownload({
                 data: processedData.dataValues,
                 itemsConfig: config,
             })
+
+            await updateDownloadStatus(task.uid, {
+                count: processedData.dataValues.length
+            })
+
             const createdUploadTask = await createUploadJob({
                 filename,
                 runId: task.runId,

@@ -36,14 +36,15 @@ export async function dataUploadHandler({
             status: 'INIT',
             startedAt: new Date(),
         })
-       const summary = await dataFromQueue(dataUploadTask)
+        const summary = await dataFromQueue(dataUploadTask)
+        const { imported, updated, deleted, ignored, } = summary.importCount
         await updateUploadStatus(dataUploadTaskUid, {
             status: 'DONE',
             finishedAt: new Date(),
-            count: summary.importCount.imported,
-            imported: summary.importCount.imported,
-            ignored: summary.importCount.ignored,
-            updated: summary.importCount.updated,
+            count: imported + updated + deleted + ignored,
+            imported: imported,
+            ignored: ignored,
+            updated: updated,
         })
         channel.ack(message)
     } catch (error) {
@@ -51,9 +52,26 @@ export async function dataUploadHandler({
             logger.error(
                 `Failed to upload data for config ${dataUploadTaskUid}: ${error.message}`
             )
+            const {
+                imported,
+                updated,
+                deleted,
+                ignored,
+            } = (error.errorObject?.response as unknown as {
+                importCount: {
+                    imported: number,
+                    updated: number,
+                    deleted: number,
+                    ignored: number,
+                }
+            }).importCount
             await updateUploadStatus(dataUploadTaskUid, {
                 status: 'FAILED',
                 error: error.message,
+                imported: imported,
+                ignored: ignored,
+                updated: updated,
+                count: imported + ignored + updated + deleted,
                 finishedAt: new Date(),
                 errorObject:
                     error.errorObject as unknown as NullableJsonNullValueInput,

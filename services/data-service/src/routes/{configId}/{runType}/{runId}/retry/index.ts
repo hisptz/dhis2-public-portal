@@ -95,6 +95,7 @@ export const POST: Operation = async (req: Request, res: Response) => {
                         data: {
                             finishedAt: null,
                             error: null,
+                            count: null,
                             errorObject:
                                 null as unknown as NullableJsonNullValueInput,
                         },
@@ -118,6 +119,10 @@ export const POST: Operation = async (req: Request, res: Response) => {
                         data: {
                             finishedAt: null,
                             error: null,
+                            count: null,
+                            imported: null,
+                            updated: null,
+                            ignored: null,
                             errorObject:
                                 null as unknown as NullableJsonNullValueInput,
                         },

@@ -75,7 +75,7 @@ export async function fetchPagedData({
             timeoutErrorMessage: `Data fetch timed out after ${timeout}ms for data items: ${dimensions.dx?.join(',')}, periods: ${dimensions.pe?.join(',')} and org unit ${dimensions.ou?.join(', ')} & filters: ${filters?.dx?.join(',')}`,
         })
         return {
-            dataValues: response.data.dataValues.filter(
+            dataValues: response.data.dataValues?.filter(
                 ({ value }) => !isNaN(Number(value))
             ),
         }
