@@ -93,6 +93,7 @@ model DataUpload {
   count          Int?
   imported       Int?
   ignored        Int?
+  deleted        Int?
   updated        Int?
   error          String?
   errorObject    Json?
