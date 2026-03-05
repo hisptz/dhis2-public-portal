@@ -108,6 +108,8 @@ export const DataErrorObjectSchema = z.object({
   status: z.union([z.literal("WARNING"), z.literal("ERROR")]),
   message: z.string(),
   response: DataImportResponseSchema,
+  httpStatus: z.string(),
+  httpStatusCode: z.number(),
 })
 
 export type DataErrorObject = z.infer<typeof DataErrorObjectSchema>

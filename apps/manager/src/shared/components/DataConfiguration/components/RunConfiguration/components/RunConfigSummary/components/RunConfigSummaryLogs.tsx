@@ -26,197 +26,202 @@ import { useWatch } from "react-hook-form";
 import { DataErrorObject, DataServiceConfig, MetadataErrorObject } from "@packages/shared/schemas";
 
 function ErrorSummary({
-  errorObject,
+	errorObject,
 }: {
-  errorObject?: MetadataErrorObject | DataErrorObject;
+	errorObject?: MetadataErrorObject | DataErrorObject;
 }) {
-  if (!errorObject) {
-    return null;
-  }
+	if (!errorObject) {
+		return null;
+	}
 
-  const { status, message } = errorObject;
+	const { httpStatus, httpStatusCode, status, message } = errorObject;
 
-  const isMetadataError = "httpStatusCode" in errorObject;
-  const isDataError = !isMetadataError && "response" in errorObject;
+	const response = errorObject.response;
 
-  if (isMetadataError) {
-    const { httpStatus, httpStatusCode, response } = errorObject;
+	const isMetadataError = !!response && "typeReports" in response;
+	const isDataError = !!response && "conflicts" in response;
 
-    const errorReports =
-      response?.typeReports
-        ?.flatMap(tr => tr.objectReports ?? [])
-        ?.flatMap(or => or.errorReports ?? []) ?? [];
+	const isSingleError = !response && status && message;
 
-    const isSingleError = !response && status && message;
+	if (isSingleError) {
+		return (
+			<NoticeBox
+				error={status === "ERROR"}
+				warning={status === "WARNING"}
+				title={i18n.t("An error occurred")}
+			>
+				<div className="flex flex-col gap-1">
+					<div>
+						<strong>{i18n.t("Status")}:</strong>{" "}
+						<span style={{ color: colors.grey700 }}>{status}</span>
+					</div>
 
-    if (errorReports.length > 0) {
-      return (
-        <div className="flex flex-col gap-8">
-          <NoticeBox
-            error={status === "ERROR"}
-            warning={status === "WARNING"}
-            title={i18n.t("Upload completed with errors")}
-          >
-            <span style={{ color: colors.grey700 }}>{message}</span>
-          </NoticeBox>
+					<div>
+						<strong>{i18n.t("HTTP Status")}:</strong>{" "}
+						<span style={{ color: colors.grey700 }}>
+							{httpStatus || httpStatusCode
+								? `${httpStatus ?? ""} ${httpStatusCode ? `(${httpStatusCode})` : ""}`
+								: "-"}
+						</span>
+					</div>
+					<div>
+						<strong>{i18n.t("Message")}:</strong>{" "}
+						<span style={{ color: colors.grey700 }}>{message}</span>
+					</div>
+				</div>
+			</NoticeBox>
+		);
+	}
 
-          <div className="flex flex-col gap-4">
-            <h6 className="text-base font-semibold">
-              {i18n.t("Errors {{count}}", {
-                count: errorReports.length,
-              })}
-            </h6>
+	if (isMetadataError) {
+		const { response } = errorObject as MetadataErrorObject;
 
-            <Table>
-              <TableHead>
-                <TableRow>
-                  <TableCell>{i18n.t("Error code")}</TableCell>
-                  <TableCell>{i18n.t("Message")}</TableCell>
-                  <TableCell>{i18n.t("Properties")}</TableCell>
-                </TableRow>
-              </TableHead>
+		const errorReports =
+			response?.typeReports
+				?.flatMap(tr => tr.objectReports ?? [])
+				?.flatMap(or => or.errorReports ?? []) ?? [];
 
-              <TableBody>
-                {errorReports.map((e, idx) => (
-                  <TableRow key={idx}>
-                    <TableCell>
-                      <span style={{ color: colors.grey700 }}>
-                        {e.errorCode ?? "-"}
-                      </span>
-                    </TableCell>
+		if (errorReports.length > 0) {
+			return (
+				<div className="flex flex-col gap-8">
+					<NoticeBox
+						error={status === "ERROR"}
+						warning={status === "WARNING"}
+						title={i18n.t("Upload completed with errors")}
+					>
+						<span style={{ color: colors.grey700 }}>{message}</span>
+					</NoticeBox>
 
-                    <TableCell>
-                      <span style={{ color: colors.grey700 }}>
-                        {e.message}
-                      </span>
-                    </TableCell>
+					<div className="flex flex-col gap-4">
+						<h6 className="text-base font-semibold">
+							{i18n.t("Errors {{count}}", {
+								count: errorReports.length,
+							})}
+						</h6>
 
-                    <TableCell>
-                      <span style={{ color: colors.grey700 }}>
-                        {e.errorProperties?.join(", ") ?? "-"}
-                      </span>
-                    </TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </div>
-        </div>
-      );
-    }
+						<Table>
+							<TableHead>
+								<TableRow>
+									<TableCell>{i18n.t("Error code")}</TableCell>
+									<TableCell>{i18n.t("Message")}</TableCell>
+									<TableCell>{i18n.t("Properties")}</TableCell>
+								</TableRow>
+							</TableHead>
 
-    if (isSingleError) {
-      return (
-        <NoticeBox
-          error={status === "ERROR"}
-          warning={status === "WARNING"}
-          title={i18n.t("An error occurred")}
-        >
-          <div className="flex flex-col gap-1">
-            <div>
-              <strong>{i18n.t("Status")}:</strong>{" "}
-              <span style={{ color: colors.grey700 }}>{status}</span>
-            </div>
+							<TableBody>
+								{errorReports.map((e, idx) => (
+									<TableRow key={idx}>
+										<TableCell>
+											<span style={{ color: colors.grey700 }}>
+												{e.errorCode ?? "-"}
+											</span>
+										</TableCell>
 
-            <div>
-              <strong>{i18n.t("HTTP Status")}:</strong>{" "}
-              <span style={{ color: colors.grey700 }}>
-                {httpStatus} ({httpStatusCode})
-              </span>
-            </div>
+										<TableCell>
+											<span style={{ color: colors.grey700 }}>
+												{e.message}
+											</span>
+										</TableCell>
 
-            <div>
-              <strong>{i18n.t("Message")}:</strong>{" "}
-              <span style={{ color: colors.grey700 }}>{message}</span>
-            </div>
-          </div>
-        </NoticeBox>
-      );
-    }
-  }
+										<TableCell>
+											<span style={{ color: colors.grey700 }}>
+												{e.errorProperties?.join(", ") ?? "-"}
+											</span>
+										</TableCell>
+									</TableRow>
+								))}
+							</TableBody>
+						</Table>
+					</div>
+				</div>
+			);
+		}
 
-  if (isDataError) {
-    const { response } = errorObject;
 
-    const conflicts = response?.conflicts ?? [];
+	}
 
-    if (conflicts.length > 0) {
-      return (
-        <div className="flex flex-col gap-8">
-          <NoticeBox
-            error={status === "ERROR"}
-            warning={status === "WARNING"}
-            title={i18n.t("Data import completed with conflicts")}
-          >
-            <span style={{ color: colors.grey700 }}>{message}</span>
-          </NoticeBox>
+	if (isDataError) {
+		const { response } = errorObject as DataErrorObject;
 
-          <div className="flex flex-col gap-4">
-            <h6 className="text-base font-semibold">
-              {i18n.t("Conflicts {{count}}", {
-                count: conflicts.length,
-              })}
-            </h6>
+		const conflicts = response?.conflicts ?? [];
 
-            <Table>
-              <TableHead>
-                <TableRow>
-                  <TableCell>{i18n.t("Error code")}</TableCell>
-                  <TableCell>{i18n.t("Property")}</TableCell>
-                  <TableCell>{i18n.t("Value")}</TableCell>
-                  <TableCell>{i18n.t("Object")}</TableCell>
-                </TableRow>
-              </TableHead>
+		if (conflicts.length > 0) {
+			return (
+				<div className="flex flex-col gap-8">
+					<NoticeBox
+						error={status === "ERROR"}
+						warning={status === "WARNING"}
+						title={i18n.t("Data import completed with conflicts")}
+					>
+						<span style={{ color: colors.grey700 }}>{message}</span>
+					</NoticeBox>
 
-              <TableBody>
-                {conflicts.map((c, idx) => (
-                  <TableRow key={idx}>
-                    <TableCell>
-                      <span style={{ color: colors.grey700 }}>
-                        {c.errorCode}
-                      </span>
-                    </TableCell>
+					<div className="flex flex-col gap-4">
+						<h6 className="text-base font-semibold">
+							{i18n.t("Conflicts {{count}}", {
+								count: conflicts.length,
+							})}
+						</h6>
 
-                    <TableCell>
-                      <span style={{ color: colors.grey700 }}>
-                        {c.property}
-                      </span>
-                    </TableCell>
+						<Table>
+							<TableHead>
+								<TableRow>
+									<TableCell>{i18n.t("Error code")}</TableCell>
+									<TableCell>{i18n.t("Property")}</TableCell>
+									<TableCell>{i18n.t("Value")}</TableCell>
+									<TableCell>{i18n.t("Object")}</TableCell>
+								</TableRow>
+							</TableHead>
 
-                    <TableCell>
-                      <span style={{ color: colors.grey700 }}>
-                        {c.value}
-                      </span>
-                    </TableCell>
+							<TableBody>
+								{conflicts.map((c, idx) => (
+									<TableRow key={idx}>
+										<TableCell>
+											<span style={{ color: colors.grey700 }}>
+												{c.errorCode}
+											</span>
+										</TableCell>
 
-                    <TableCell>
-                      <span style={{ color: colors.grey700 }}>
-                        {c.object}
-                      </span>
-                    </TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </div>
-        </div>
-      );
-    }
-  }
+										<TableCell>
+											<span style={{ color: colors.grey700 }}>
+												{c.property}
+											</span>
+										</TableCell>
 
-  return (
-    <div className="flex flex-col gap-2">
-      {message && (
-        <NoticeBox error title={i18n.t("An error occurred")}>
-          <span style={{ color: colors.grey700 }}>{message}</span>
-        </NoticeBox>
-      )}
-      <Divider />
-      <code className="whitespace-pre-wrap overflow-auto w-full border border-gray-200 rounded-md p-3 bg-gray-50 text-sm">
-        {JSON.stringify(errorObject, null, 2)}
-      </code>
-    </div>
-  );
+										<TableCell>
+											<span style={{ color: colors.grey700 }}>
+												{c.value}
+											</span>
+										</TableCell>
+
+										<TableCell>
+											<span style={{ color: colors.grey700 }}>
+												{c.object}
+											</span>
+										</TableCell>
+									</TableRow>
+								))}
+							</TableBody>
+						</Table>
+					</div>
+				</div>
+			);
+		}
+	}
+
+	return (
+		<div className="flex flex-col gap-2">
+			{message && (
+				<NoticeBox error title={i18n.t("An error occurred")}>
+					<span style={{ color: colors.grey700 }}>{message}</span>
+				</NoticeBox>
+			)}
+			<Divider />
+			<code className="whitespace-pre-wrap overflow-auto w-full border border-gray-200 rounded-md p-3 bg-gray-50 text-sm">
+				{JSON.stringify(errorObject, null, 2)}
+			</code>
+		</div>
+	);
 }
 
 function RunConfigSummaryModal({
