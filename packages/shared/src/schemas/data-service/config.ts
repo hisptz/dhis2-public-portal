@@ -31,7 +31,7 @@ export const baseDataItemsSourceSchema = z
         type: supportedDataSourcesType,
         periodTypeId: z.string(),
         parentOrgUnitId: z.string(),
-        dataItems:z.array(dataItemConfigSchema).optional(),
+        dataItems: z.array(dataItemConfigSchema).optional(),
         orgUnitLevel: z
             .number()
             .min(1, 'Organisation unit level must be at least 1')
@@ -92,6 +92,7 @@ export const dataServiceConfigSchema = z.object({
     id: z.string(),
     source: dataSourceSchema,
     itemsConfig: z.array(dataSourceItemsConfigSchema),
+    visualizations: z.array(z.object({ id: z.string() }))
 })
 
 export type DataServiceConfig = z.infer<typeof dataServiceConfigSchema>

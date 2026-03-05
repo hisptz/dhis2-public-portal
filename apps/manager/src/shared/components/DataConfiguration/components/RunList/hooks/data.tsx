@@ -2,7 +2,7 @@ import { FetchError, useDataEngine } from "@dhis2/app-runtime";
 import { RunStatus } from "@/shared/components/DataConfiguration/components/RunConfiguration/components/RunConfigStatus/RunConfigStatus";
 import { useQueries } from "@tanstack/react-query";
 import { useState } from "react";
-import { DataServiceConfig, ErrorObject, ImportSummary } from "@packages/shared/schemas";
+import { DataErrorObject, DataServiceConfig, ImportSummary, MetadataErrorObject } from "@packages/shared/schemas";
 import { useWatch } from "react-hook-form";
 
 
@@ -55,23 +55,25 @@ export interface Job {
 	finishedAt?: string
 	status: ProcessStatus;
 	error?: string;
-	errorObject?: ErrorObject;
 }
 
 export interface MetadataDownloadJob extends Job {
 	type: MetadataDownloadType;
 	items: string[];
+	errorObject?: MetadataErrorObject;
 }
 
 export interface MetadataUploadJob extends Job {
 	filename: string;
 	summary?: ImportSummary;
+	errorObject?: MetadataErrorObject;
 }
 
 export interface DataDownloadJob extends Job {
 	dimensions: Record<string, unknown>;
 	filters?: Record<string, unknown>;
 	count?: number;
+	errorObject?: DataErrorObject;
 }
 
 export interface DataUploadJob extends Job {
@@ -80,6 +82,7 @@ export interface DataUploadJob extends Job {
 	updated?: number;
 	deleted?: number;
 	count?: number;
+	errorObject?: DataErrorObject;
 }
 
 export interface MetadataRunDetails extends MetadataRun {

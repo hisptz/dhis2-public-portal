@@ -19,6 +19,15 @@ export const ImportStatsSchema = z.object({
 
 export type ImportStats = z.infer<typeof ImportStatsSchema>
 
+export const DataImportCountSchema = z.object({
+  imported: z.number(),
+  updated: z.number(),
+  deleted: z.number(),
+  ignored: z.number(),
+})
+
+export type DataImportCount = z.infer<typeof DataImportCountSchema>
+
 export const ErrorReportSchema = z.object({
   message: z.string(),
   errorCode: z.string(),
@@ -46,6 +55,25 @@ export const TypeReportSchema = z.object({
 
 export type TypeReport = z.infer<typeof TypeReportSchema>
 
+export const DataConflictSchema = z.object({
+  value: z.string(),
+  object: z.string(),
+  indexes: z.array(z.number()),
+  objects: z.record(z.string(), z.string()),
+  property: z.string(),
+  errorCode: z.string(),
+})
+
+export type DataConflict = z.infer<typeof DataConflictSchema>
+
+export const DataImportOptionsSchema = z.object({
+  async: z.boolean(),
+  force: z.boolean(),
+  dryRun: z.boolean(),
+  mergeMode: z.string(),
+  importStrategy: z.string(),
+}).catchall(z.any())
+
 export const ImportResponseSchema = z.object({
   stats: ImportStatsSchema,
   status: ImportStatusSchema,
@@ -55,6 +83,19 @@ export const ImportResponseSchema = z.object({
 
 export type ImportResponse = z.infer<typeof ImportResponseSchema>
 
+export const DataImportResponseSchema = z.object({
+  status: ImportStatusSchema,
+  conflicts: z.array(DataConflictSchema),
+  description: z.string(),
+  importCount: DataImportCountSchema,
+  responseType: z.string(),
+  importOptions: DataImportOptionsSchema,
+  dataSetComplete: z.string(),
+  rejectedIndexes: z.array(z.number()),
+})
+
+export type DataImportResponse = z.infer<typeof DataImportResponseSchema>
+
 export const ErrorObjectSchema = z.object({
   status: z.union([z.literal("WARNING"), z.literal("ERROR")]),
   message: z.string(),
@@ -63,7 +104,16 @@ export const ErrorObjectSchema = z.object({
   response: ImportResponseSchema.optional(),
 })
 
-export type ErrorObject = z.infer<typeof ErrorObjectSchema>
+export const DataErrorObjectSchema = z.object({
+  status: z.union([z.literal("WARNING"), z.literal("ERROR")]),
+  message: z.string(),
+  response: DataImportResponseSchema,
+})
+
+export type DataErrorObject = z.infer<typeof DataErrorObjectSchema>
+
+export type MetadataErrorObject = z.infer<typeof ErrorObjectSchema>
+
 
 export const ImportSummarySchema = z.object({
   status: z.literal("OK"),

@@ -52,6 +52,7 @@ export async function downloadAndQueueData(
         const createdRun = await dbClient.dataRun.create({
             data: {
                 mainConfigId,
+                orgUnitLevel: runtimeConfig.overrides?.orgUnitLevelId,
                 periods: runtimeConfig.periods,
                 configIds: dataItemsConfigIds,
                 timeout: runtimeConfig.timeout,

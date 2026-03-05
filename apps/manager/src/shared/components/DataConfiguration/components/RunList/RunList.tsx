@@ -115,7 +115,7 @@ export function RunList({ loading, dataRuns, metadataRuns, fetching, pagination,
 		})
 			.join(", "),
 		configurations: configurationsValue,
-		sourceType: capitalize((run as MetadataRun).sourceType.toString().split("_").join(" ")),
+		sourceType: 'sourceType' in run? capitalize((run as MetadataRun).sourceType.toString().split("_").join(" ")): '',
 		visualizations: (run as MetadataRun).visualizations?.length ?? 0,
 		maps: (run as MetadataRun).maps?.length ?? 0,
 		dashboards: (run as MetadataRun).dashboards?.length ?? 0,
