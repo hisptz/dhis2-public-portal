@@ -36,10 +36,14 @@ export async function dataUploadHandler({
             status: 'INIT',
             startedAt: new Date(),
         })
-        await dataFromQueue(dataUploadTask)
+       const summary = await dataFromQueue(dataUploadTask)
         await updateUploadStatus(dataUploadTaskUid, {
             status: 'DONE',
             finishedAt: new Date(),
+            count: summary.importCount.imported,
+            imported: summary.importCount.imported,
+            ignored: summary.importCount.ignored,
+            updated: summary.importCount.updated,
         })
         channel.ack(message)
     } catch (error) {

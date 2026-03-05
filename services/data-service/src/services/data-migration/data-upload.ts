@@ -7,14 +7,15 @@ import { DataRun, DataUpload, UploadStrategy } from '@/generated/prisma/client'
 
 export async function dataFromQueue(
     task: DataUpload & { run: DataRun }
-): Promise<void> {
+) {
     try {
         const fileLocation = task.filename
         if (existsSync(fileLocation)) {
-            await dataFromFile({
+            const summary = await dataFromFile({
                 filename: task.filename,
                 strategy: task.strategy,
             })
+            return summary
         } else {
             throw new QueuedJobError(
                 `No payload and file does not exist for data upload job: ${task.uid}`,
@@ -40,7 +41,7 @@ export async function dataFromFile({
 }: {
     filename: string
     strategy: UploadStrategy
-}): Promise<void> {
+}) {
     try {
         if (
             !(await fs.promises
@@ -63,7 +64,8 @@ export async function dataFromFile({
                 false
             )
         }
-        await uploadDataValues({ payload, filename, strategy })
+        const summary = await uploadDataValues({ payload, filename, strategy });
+        return summary;
     } catch (error) {
         if (error instanceof QueuedJobError) {
             throw error
@@ -106,7 +108,7 @@ async function uploadDataValues({
         }
         logger.info(`Deleting ${filename} file`)
         await cleanupDataFile(filename)
-        return
+        return importSummary
     } catch (e) {
         if (e instanceof Error) {
             handleError(e)
