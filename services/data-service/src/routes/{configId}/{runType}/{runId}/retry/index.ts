@@ -123,6 +123,7 @@ export const POST: Operation = async (req: Request, res: Response) => {
                             imported: null,
                             updated: null,
                             ignored: null,
+                            deleted: null,
                             errorObject:
                                 null as unknown as NullableJsonNullValueInput,
                         },

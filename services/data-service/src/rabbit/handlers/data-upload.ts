@@ -45,6 +45,7 @@ export async function dataUploadHandler({
             imported: imported,
             ignored: ignored,
             updated: updated,
+            deleted: deleted
         })
         channel.ack(message)
     } catch (error) {
@@ -71,6 +72,7 @@ export async function dataUploadHandler({
                 imported: imported,
                 ignored: ignored,
                 updated: updated,
+                deleted: deleted,
                 count: imported + ignored + updated + deleted,
                 finishedAt: new Date(),
                 errorObject:
