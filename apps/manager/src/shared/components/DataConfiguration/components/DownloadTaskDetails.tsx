@@ -80,11 +80,7 @@ export function DownloadTaskDetails({
 					{runType === "data" && (
 						<Detail
 							label={i18n.t("Items")}
-							value={
-								typeof (task as DataDownloadJob).count === "number"
-									? String((task as DataDownloadJob).count)
-									: "-"
-							}
+							value={(task as DataDownloadJob).count??0}
 						/>
 					)}
 				</div>

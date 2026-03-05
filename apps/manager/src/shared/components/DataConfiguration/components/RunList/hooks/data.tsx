@@ -136,7 +136,7 @@ export function useConfigurationRuns() {
 	const engine = useDataEngine()
 
 	const [page, setPage] = useState(1)
-	const [pageSize, setPageSize] = useState(20)
+	const [pageSize, setPageSize] = useState(10)
 
 	const enabled = Boolean(config?.id)
 

@@ -20,6 +20,7 @@ import {
 } from "@/shared/components/DataConfiguration/components/RunConfiguration/components/RunConfigSummary/components/RunConfigSummaryLogs";
 import { TaskDetails } from "@/shared/components/DataConfiguration/components/TaskDetails";
 import { formatDateTime } from "@/shared/hooks/config";
+import { useSearch, useNavigate } from "@tanstack/react-router";
 
 const downloadColumns: SimpleDataTableColumn[] = [
 	{
@@ -70,16 +71,16 @@ const uploadColumns: SimpleDataTableColumn[] = [
 		key: "timeTaken",
 	},
 	{
-		label: i18n.t("Ignored items"),
-		key: "ignored",
-	},
-	{
 		label: i18n.t("Imported items"),
 		key: "imported",
 	},
 	{
 		label: i18n.t("Updated items"),
 		key: "updated",
+	},
+	{
+		label: i18n.t("Ignored items"),
+		key: "ignored",
 	},
 	{
 		label: i18n.t("Deleted items"),
@@ -114,9 +115,30 @@ function calculateTimeTaken(startedAt?: string, finishedAt?: string) {
 
 
 
-export function RunConfigSummaryDetails({ run, runType }: { run: MetadataRunDetails | DataRunDetails, runType: "metadata" | "data" }) {
+export function RunConfigSummaryDetails({ run, runType, downloadsPagination, uploadsPagination }: {
+	run: MetadataRunDetails | DataRunDetails, runType: "metadata" | "data", downloadsPagination: {
+		page: number;
+		pageSize: number;
+		total: number;
+		pageCount: number;
+		onPageChange: (page: number) => void;
+		onPageSizeChange: (pageSize: number) => void;
+	}, uploadsPagination: {
+		page: number;
+		pageSize: number;
+		total: number;
+		pageCount: number;
+		onPageChange: (page: number) => void;
+		onPageSizeChange: (pageSize: number) => void;
+	}
+}) {
 	const [statusFilter, setStatusFilter] = useState<RunStatus | null>(null);
-	const [type, setType] = useState<"download" | "upload">("download");
+	const search = useSearch({ strict: false });
+	const navigate = useNavigate();
+
+	const [type, setType] = useState<"download" | "upload">(
+		(search.type as unknown as "download" | "upload") ?? "download"
+	);
 	const [selectedDownloads, setSelectedDownloads] = useState<string[]>([]);
 	const [selectedUploads, setSelectedUploads] = useState<string[]>([]);
 
@@ -219,7 +241,15 @@ export function RunConfigSummaryDetails({ run, runType }: { run: MetadataRunDeta
 				<SegmentedControl
 					selected={type}
 					onChange={({ value }) => {
-						setType(value as "download" | "upload");
+						const newType = value as "download" | "upload";
+						setType(newType);
+						navigate({
+							search: (prev) => ({
+								...prev,
+								type: newType,
+							}),
+							replace: true,
+						});
 					}}
 					options={[
 						{
@@ -344,6 +374,7 @@ export function RunConfigSummaryDetails({ run, runType }: { run: MetadataRunDeta
 								type,
 							})
 					}
+					pagination={type == 'download' ? downloadsPagination : uploadsPagination}
 					rows={filteredRows}
 					columns={columns}
 				/>

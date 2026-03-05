@@ -34,7 +34,7 @@ export function useDataConfigRunStatus(id: string) {
 		queryKey: ["status", id],
 		queryFn: fetchStatus,
 		refetchInterval: (query) => {
-			const queryData = query.state.data;
+			const queryData = query?.state.data;
 			if (!queryData) {
 				return 5000;
 			}

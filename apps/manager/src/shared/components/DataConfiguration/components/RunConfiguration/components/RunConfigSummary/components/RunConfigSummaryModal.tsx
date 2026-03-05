@@ -15,22 +15,24 @@ import { FetchError } from "@dhis2/app-runtime";
 import { RunStatus } from "@/shared/components/DataConfiguration/components/RunStatus";
 import { formatDateTime } from "@/shared/hooks/config";
 
-function Content({ runId, type }: { runId: string, type: "metadata" | "data" }) {
-	const { error, isLoading, isError, data } = useRunDetails({runId, type});
-	if (isLoading) {
+function Content({ runId, type }: { runId: string; type: "metadata" | "data" }) {
+	const { run, loading, error, downloadsPagination, uploadsPagination } = useRunDetails({ runId, type })
+
+	if (loading) {
 		return (
 			<div className="flex items-center justify-center h-full min-h-[600px] min-w-[700px]">
 				<CircularLoader small />
 			</div>
-		);
+		)
 	}
-	if (isError) {
+
+	if (error) {
 		return (
 			<div className="flex items-center justify-center h-full min-h-[600px] min-w-[700px]">
 				<IconError24 />
-				<span>{(error as FetchError)!.message}</span>
+				<span>{(error as FetchError).message}</span>
 			</div>
-		);
+		)
 	}
 
 	return (
@@ -39,23 +41,32 @@ function Content({ runId, type }: { runId: string, type: "metadata" | "data" }) 
 				<div className="flex items-center gap-2 w-full justify-between">
 					<span>
 						{i18n.t("Run summary ")} -{" "}
-						{formatDateTime(data?.startedAt) ?? "N/A"}
+						{formatDateTime(run?.startedAt) ?? "N/A"}
 					</span>
 					<RunStatus runId={runId} type={type} />
 				</div>
 			</ModalTitle>
+
 			<ModalContent>
 				<div className="flex flex-col gap-4 h-full min-h-[600px] min-w-[700px]">
 					<div className="flex flex-col gap-2">
 						<h6 className="text-lg font-bold">
 							{i18n.t("Summaries")}
 						</h6>
-						{data && <RunConfigSummaryDetails run={data} runType={type} />}
+
+						{run && (
+							<RunConfigSummaryDetails
+								run={run}
+								runType={type}
+								downloadsPagination={downloadsPagination}
+								uploadsPagination={uploadsPagination}
+							/>
+						)}
 					</div>
 				</div>
 			</ModalContent>
 		</>
-	);
+	)
 }
 
 export function RunConfigSummaryModal({
