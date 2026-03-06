@@ -30,7 +30,7 @@
         "@next/env": "16.1.1",
         "@packages/shared": "workspace:*",
         "@tabler/icons-react": "^3.31.0",
-        "@tanstack/react-query": "^4.41.0",
+        "@tanstack/react-query": "^5.90.21",
         "canvas": "^3.1.0",
         "chroma-js": "^3.1.2",
         "cypress": "^14.3.0",
