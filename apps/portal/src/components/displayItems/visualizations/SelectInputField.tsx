@@ -13,7 +13,7 @@ export function SelectInputField({
     label: string
     multiple?: boolean
     options: { value: string; label: string }[] | []
-    onChange: (val: any) => void
+    onChange: (val: string | string[]) => void
     disabled?: boolean
 }) {
     const extractValues = (val: string | string[]) => {

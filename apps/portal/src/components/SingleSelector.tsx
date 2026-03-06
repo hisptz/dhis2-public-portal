@@ -63,7 +63,6 @@ export function SingleSelector({
                     }
 
                     return (
-                        // @ts-ignore
                         <MenuItem
                             href={`?${link.toString()}`}
                             component={Link}

@@ -25,7 +25,7 @@ export function CustomPeriodModal({
     periodState?: string[]
     onReset: () => void
     handleClose: () => void
-    onUpdate: (val: any) => void
+    onUpdate: (val: string[]) => void
     title: string
     categories?: ('RELATIVE' | 'FIXED')[]
     periodTypes?: string[]
@@ -87,7 +87,7 @@ export function CustomPeriodModal({
 
     const [selectedYear, setYear] = useState<number>(currentYear)
 
-    const [selectedPeriods, setPeriods] = useState<any>()
+    const [selectedPeriods, setPeriods] = useState<string[]>([])
 
     const relativePeriods =
         periodUtility
@@ -105,7 +105,7 @@ export function CustomPeriodModal({
                           : selectedYear,
                   calendar: 'gregory',
                   periodType: currentPeriodType,
-              }).map((period: any) => ({
+              }).map((period: { id: string; displayName: string }) => ({
                   value: period.id,
                   label: period.displayName,
               }))
@@ -177,7 +177,9 @@ export function CustomPeriodModal({
                         key={`${title}-categories`}
                         label={i18n.t('Categories')}
                         value={currentCategory}
-                        onChange={setCategory}
+                        onChange={(val) =>
+                            setCategory(Array.isArray(val) ? val[0] : val)
+                        }
                         options={categoryOptions}
                     />
 
@@ -186,7 +188,9 @@ export function CustomPeriodModal({
                             key={`${title}-period-types`}
                             value={currentPeriodType}
                             label={i18n.t('Period Types')}
-                            onChange={setPeriodType}
+                            onChange={(val) =>
+                                setPeriodType(Array.isArray(val) ? val[0] : val)
+                            }
                             options={periodTypeOptions}
                         />
                         {currentCategory == PeriodTypeCategory.FIXED ? (
@@ -202,7 +206,9 @@ export function CustomPeriodModal({
                         key={`${title}-periods`}
                         label={i18n.t('Periods')}
                         value={sanitizedPeriodState}
-                        onChange={setPeriods}
+                        onChange={(val) =>
+                            setPeriods(Array.isArray(val) ? val : [val])
+                        }
                         options={periodOptions}
                         multiple
                     />

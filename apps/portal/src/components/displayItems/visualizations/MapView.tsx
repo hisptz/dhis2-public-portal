@@ -62,14 +62,16 @@ export function MapView(props: MapViewProps) {
         }
     }, [orgUnits, props.orgUnitSelection])
 
+    type LayerClickData = { orgUnit: { id: string; level?: number } }
+
     const onLayerClick = useCallback(
-        (_: unknown, data: any) => {
+        (_: unknown, data: LayerClickData) => {
             const orgUnit = data.orgUnit
-            if (orgUnit.level < 3) {
+            if (orgUnit.level !== undefined && orgUnit.level < 3) {
                 const params = new URLSearchParams(searchParams)
                 params.set(
                     'ou',
-                    `${data.orgUnit.id},LEVEL-${data.orgUnit.level + 1}`
+                    `${orgUnit.id},LEVEL-${orgUnit.level + 1}`
                 )
                 router.replace(`?${params.toString()}`)
             }

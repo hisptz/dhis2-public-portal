@@ -21,7 +21,6 @@ export function SurveyDataValue({ value }: { value: number }) {
 
     return (
         <b className="text-secondary-900 text-5xl">
-            {/*@ts-ignore*/}
             <animated.div>
                 {sanitizedValue.val.to((value) => numberFormatter(value))}
             </animated.div>

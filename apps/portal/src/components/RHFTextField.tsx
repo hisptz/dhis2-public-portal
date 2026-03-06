@@ -1,15 +1,8 @@
-import { TextInput } from '@mantine/core'
+import { TextInput, TextInputProps } from '@mantine/core'
 import { useController } from 'react-hook-form'
 
-interface RHFTextFieldProps {
+interface RHFTextFieldProps extends Omit<TextInputProps, 'name'> {
     name: string
-    label?: string
-    placeholder?: string
-    description?: string
-    size?: string
-    disabled?: boolean
-    required?: boolean
-    [key: string]: any
 }
 
 export function RHFTextField({ name, ...props }: RHFTextFieldProps) {

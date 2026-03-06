@@ -78,17 +78,15 @@ export function MapVisComponent({
     } | null = useMemo(() => {
         if (map) {
             map.scrollWheelZoom.disable()
-            return (L as any)
-                .easyPrint({
-                    sizeModes: ['A4Portrait', 'A4Landscape'],
-                    hidden: true,
-                    exportOnly: true,
-                    spinnerBgColor: '#FFFFFF',
-                    customSpinnerClass: 'color-primary',
-                    customWindowTitle: `${mapConfig.name}`,
-                    hideClasses: ['leaflet-control', 'leaflet-bar'],
-                })
-                .addTo(map)
+            return L.easyPrint({
+                sizeModes: ['A4Portrait', 'A4Landscape'],
+                hidden: true,
+                exportOnly: true,
+                spinnerBgColor: '#FFFFFF',
+                customSpinnerClass: 'color-primary',
+                customWindowTitle: `${mapConfig.name}`,
+                hideClasses: ['leaflet-control', 'leaflet-bar'],
+            }).addTo(map)
         }
         return null
     }, [map, mapConfig.name])

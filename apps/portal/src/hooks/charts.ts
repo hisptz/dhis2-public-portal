@@ -10,6 +10,7 @@ import {
 } from '@packages/shared/utils'
 import {
     AnalyticsData,
+    DimensionConfig,
     VisualizationConfig,
     YearOverYearVisualizationConfig,
 } from '@packages/shared/schemas'
@@ -17,7 +18,12 @@ import {
 const analyticsQuery = {
     analytics: {
         resource: 'analytics',
-        params: ({ filters, dimensions, relativePeriodDate }: any) => {
+        params: (variables: Record<string, any>) => {
+            const { filters, dimensions, relativePeriodDate } = variables as {
+                filters: Record<string, string[]>
+                dimensions: Record<string, string[]>
+                relativePeriodDate?: string
+            }
             return {
                 displayProperty: 'NAME',
                 filter: Object.keys(filters).map(
@@ -138,16 +144,16 @@ export function useYearOverYearAnalytics({
     const yearsToFetch = normalizeYears(years)
 
     const orgUnitFilter = (visualizationConfig.filters || []).find(
-        (filter: any) => filter.dimension === 'ou'
+        (filter: DimensionConfig) => filter.dimension === 'ou'
     )
     const orgUnits = orgUnitFilter
-        ? orgUnitFilter.items.map((item: any) => item.id)
+        ? orgUnitFilter.items.map((item: { id: string }) => item.id)
         : []
 
     const dataFilter = (visualizationConfig.filters || []).find(
-        (filter: any) => filter.dimension === 'dx'
+        (filter: DimensionConfig) => filter.dimension === 'dx'
     )
-    const dx = dataFilter ? dataFilter.items.map((item: any) => item.id) : []
+    const dx = dataFilter ? dataFilter.items.map((item: { id: string }) => item.id) : []
 
     // Prepare an analytics query per each year to fetch (dynamic)
     useEffect(() => {

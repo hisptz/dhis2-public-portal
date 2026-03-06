@@ -11,7 +11,8 @@ export function YearInputField({
     const currentYear = new Date().getFullYear()
     const [year, setYear] = useState<number>(currentYear)
 
-    const handleChange = (inputValue: any) => {
+    const handleChange = (inputValue: number | string) => {
+        if (typeof inputValue !== 'number') return
         const digits: number = inputValue.toString().length
 
         if (digits >= 4 && inputValue <= currentYear) {

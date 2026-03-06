@@ -5,7 +5,6 @@ import JsxParser from 'react-jsx-parser'
 export function RichContent({ content }: { content: string }) {
     return (
         <>
-            {/*@ts-ignore*/}
             <JsxParser
                 autoCloseVoidElements
                 renderError={({ error }) => {

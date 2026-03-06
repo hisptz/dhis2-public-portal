@@ -7,12 +7,12 @@ import {
 } from '@packages/shared/schemas'
 import { flattenDeep, head } from 'lodash'
 import { OrgUnitSelection } from '@hisptz/dhis2-utils'
-import { getOrgUnitsSelection } from '@/utils/orgUnits' // @ts-ignore
+import { getOrgUnitsSelection } from '@/utils/orgUnits'
 import { useDataQuery } from '@dhis2/app-runtime'
 import { Loader } from '@mantine/core'
 import i18n from '@dhis2/d2-i18n'
 import dynamic from 'next/dynamic'
-import { RefObject, useMemo } from 'react'
+import { useMemo } from 'react'
 import { getOrgUnitSelectionFromIds } from '@packages/shared/visualizations'
 
 const NoSSRDHIS2Table = dynamic(
@@ -32,18 +32,15 @@ const NoSSRDHIS2Table = dynamic(
     }
 )
 
-const query: any = {
+const query = {
     data: {
         resource: 'analytics',
-        params: ({
-            dx,
-            ou,
-            pe,
-        }: {
-            dx: string[]
-            ou: string[]
-            pe: string[]
-        }) => {
+        params: (variables: Record<string, any>) => {
+            const { dx, ou, pe } = variables as {
+                dx: string[]
+                ou: string[]
+                pe: string[]
+            }
             return {
                 dimension: `dx:${dx.join(';')},ou:${ou.join(';')}`,
                 filter: `pe:${pe.join(';')}`,
@@ -65,7 +62,7 @@ export function MapTableComponent({
     fullScreen,
 }: {
     mapConfig: MapConfig
-    setRef: RefObject<HTMLTableElement | null>
+    setRef: (el: HTMLTableElement | null) => void
     orgUnitSelection?: OrgUnitSelection
     fullScreen: boolean
     periodSelection?: {
@@ -140,11 +137,11 @@ export function MapTableComponent({
 
     return (
         <NoSSRDHIS2Table
-            setRef={setRef as any}
+            setRef={setRef}
             tableProps={{
                 scrollHeight: fullScreen ? `calc(100dvh - 96px)` : `600px`,
             }}
-            analytics={data?.data as any}
+            analytics={data!.data}
             config={{
                 options: {
                     fixColumnHeaders: true,
