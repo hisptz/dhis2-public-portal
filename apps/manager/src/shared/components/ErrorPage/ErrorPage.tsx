@@ -8,12 +8,16 @@ export default function ErrorPage({
     error,
     resetErrorBoundary,
 }: {
-    error: CustomError | Error
+    error: unknown
     resetErrorBoundary?: () => void
 }) {
     const [showStack, setShowStack] = useState(false)
     const refinedError =
-        error instanceof CustomError ? error : CustomError.fromError(error)
+        error instanceof CustomError
+            ? error
+            : CustomError.fromError(
+                  error instanceof Error ? error : new Error(String(error))
+              )
     const Icon = refinedError.icon
 
     return (
@@ -43,7 +47,7 @@ export default function ErrorPage({
                         border: `1px solid ${colors.grey400}`,
                     }}
                 >
-                    <code style={{ color: colors.red500 }}>{error.stack}</code>
+                    <code style={{ color: colors.red500 }}>{error instanceof Error ? error.stack : String(error)}</code>
                 </div>
             )}
 

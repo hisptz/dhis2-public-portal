@@ -1,11 +1,11 @@
 import { useDataMutation, useDataQuery } from '@dhis2/app-runtime'
 
-const updateMutation: any = {
-    type: 'update',
+const updateMutation = {
+    type: 'update' as const,
     resource: 'dataStore',
     id: ({ key, namespace }: { key: string; namespace: string }) =>
         `${namespace}/${key}`,
-    data: ({ data }: { data: Record<string, any> }) => data,
+    data: ({ data }: { data: Record<string, unknown> }) => data,
 }
 
 export function useUpdateDatastoreEntry<DataType>({
@@ -13,6 +13,7 @@ export function useUpdateDatastoreEntry<DataType>({
 }: {
     namespace: string
 }) {
+    // @ts-expect-error DHIS2 types incorrectly restrict id to string; function id is supported at runtime
     const [mutate, { loading, error }] = useDataMutation(updateMutation, {
         variables: {
             namespace,

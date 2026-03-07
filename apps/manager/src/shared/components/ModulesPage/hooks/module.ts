@@ -10,7 +10,7 @@ export function useModuleForm() {
         shouldFocusError: false,
         defaultValues: {
             ...module,
-            config: (module?.config as any) ?? {},
+            config: (module?.config as Record<string, unknown>) ?? {},
         },
     })
 }

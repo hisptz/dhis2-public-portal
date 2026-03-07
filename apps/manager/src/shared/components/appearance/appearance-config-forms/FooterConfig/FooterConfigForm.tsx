@@ -79,7 +79,7 @@ export function FooterConfigForm({
             }
             onComplete()
             onClose()
-        } catch (error: any) {
+        } catch (error: unknown) {
             console.error(error)
             showAlert({
                 message: i18n.t('Error updating footer configurations'),

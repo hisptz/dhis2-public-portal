@@ -210,7 +210,7 @@ export function MappedDataItemsSelector({
     }
 
     const selectedValues = useMemo(
-        () => (Array.isArray(value) ? value.map((v: MappedItem) => v.id) : []),
+        () => (Array.isArray(value) ? (value as MappedItem[]).map((v) => v.id) : []),
         [value]
     )
 

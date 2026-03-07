@@ -1,5 +1,20 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useDataEngine } from "@dhis2/app-runtime";
+
+type DataEngine = ReturnType<typeof useDataEngine>
+
+interface DataValue {
+	dataElement: string
+	period: string
+	orgUnit: string
+	categoryOptionCombo?: string
+	value: string
+}
+
+interface OrgUnit {
+	id: string
+	name: string
+}
 import { useNavigate } from "@tanstack/react-router";
 import {
 	DataServiceConfig,
@@ -45,7 +60,7 @@ const addLogEntry = (
 	configId: string,
 	level: ValidationLogEntry["level"],
 	message: string,
-	metadata?: any,
+	metadata?: Record<string, unknown>,
 ) => {
 	const session = validationSessions.get(configId);
 	if (session) {
@@ -316,12 +331,11 @@ const splitByUrlLength = (
 };
 
 const fetchDataFromSource = async (
-	engine: any,
+	engine: DataEngine,
 	sourceConfig: DataServiceConfig,
 	dataElements: string[],
 	periods: string[],
 	orgUnits: string[],
-	pageSize?: number,
 ) => {
 	try {
 		// Step 1: Group data elements by categoryOptionCombo
@@ -371,7 +385,7 @@ const fetchDataFromSource = async (
 };
 
 const fetchDataFromSourceBatch = async (
-	engine: any,
+	engine: DataEngine,
 	sourceConfig: DataServiceConfig,
 	dataElements: string[],
 	periods: string[],
@@ -421,12 +435,12 @@ const fetchDataFromSourceBatch = async (
 			);
 		});
 
-		const result = await Promise.race([
+		const result = (await Promise.race([
 			engine.query(query),
 			timeoutPromise,
-		]);
+		])) as { dataValues?: { dataValues?: DataValue[] } };
 		const fetchedDataValues = result.dataValues?.dataValues || [];
-		const transformedDataValues = fetchedDataValues.map((dv: any) => {
+		const transformedDataValues = fetchedDataValues.map((dv: DataValue) => {
 			const originalDataElement = dataElements.find((de) => {
 				if (de.includes(".")) {
 					const [deId, coId] = de.split(".");
@@ -458,12 +472,11 @@ const fetchDataFromSourceBatch = async (
 };
 
 const fetchDataFromDestination = async (
-	engine: any,
+	engine: DataEngine,
 	destinationConfig: DataServiceConfig,
 	dataElements: string[],
 	periods: string[],
 	orgUnits: string[],
-	pageSize?: number,
 ) => {
 	try {
 		// Step 1: Group data elements by categoryOptionCombo
@@ -513,7 +526,7 @@ const fetchDataFromDestination = async (
 };
 
 const fetchDataFromDestinationBatch = async (
-	engine: any,
+	engine: DataEngine,
 	destinationConfig: DataServiceConfig,
 	dataElements: string[],
 	periods: string[],
@@ -565,13 +578,13 @@ const fetchDataFromDestinationBatch = async (
 			);
 		});
 
-		const result = await Promise.race([
+		const result = (await Promise.race([
 			engine.query(query),
 			timeoutPromise,
-		]);
+		])) as { dataValues?: { dataValues?: DataValue[] } };
 		const fetchedDataValues = result.dataValues?.dataValues || [];
 
-		const transformedDataValues = fetchedDataValues.map((dv: any) => {
+		const transformedDataValues = fetchedDataValues.map((dv: DataValue) => {
 			const originalDataElement = dataElements.find((de) => {
 				if (de.includes(".")) {
 					const [deId, coId] = de.split(".");
@@ -603,11 +616,10 @@ const fetchDataFromDestinationBatch = async (
 
 // Main validation function
 const performValidation = async (
-	engine: any,
+	engine: DataEngine,
 	configId: string,
 	sourceConfig: DataServiceConfig,
 	dataItemsConfigIds: string[],
-	runtimeConfig: any,
 ) => {
 	const session = validationSessions.get(configId);
 	if (!session) throw new Error("Validation session not found");
@@ -656,14 +668,14 @@ const performValidation = async (
 				},
 			});
 			const rootOrgUnits =
-				(rootOrgUnitsResult.orgUnits as any)?.organisationUnits || [];
-			orgUnits = rootOrgUnits.map((ou: any) => ou.id);
+				(rootOrgUnitsResult.orgUnits as { organisationUnits?: OrgUnit[] })?.organisationUnits || [];
+			orgUnits = rootOrgUnits.map((ou: OrgUnit) => ou.id);
 			addLogEntry(
 				configId,
 				"info",
-				`Using root organization units: ${rootOrgUnits.map((ou: any) => ou.name).join(", ")}`,
+				`Using root organization units: ${rootOrgUnits.map((ou: OrgUnit) => ou.name).join(", ")}`,
 			);
-		} catch (error) {
+		} catch {
 			addLogEntry(
 				configId,
 				"warn",
@@ -690,7 +702,7 @@ const performValidation = async (
 			addLogEntry(
 				configId,
 				"info",
-				`Selected configurations: ${fullParams.configDetails.map((c: any) => `${c.name} (${c.dataItemsCount} items)`).join(", ")}`,
+				`Selected configurations: ${fullParams.configDetails.map((c: { name: string; dataItemsCount: number }) => `${c.name} (${c.dataItemsCount} items)`).join(", ")}`,
 			);
 		}
 		addLogEntry(configId, "info", `Periods: ${periods.join(", ")}`);
@@ -752,7 +764,7 @@ const performValidation = async (
 					},
 				})
 				.then(
-					(result: any) => result.orgUnits?.organisationUnits || [],
+					(result: Record<string, { organisationUnits?: OrgUnit[] }>) => result.orgUnits?.organisationUnits || [],
 				),
 
 			engine
@@ -766,7 +778,7 @@ const performValidation = async (
 						},
 					},
 				})
-				.then((result: any) => result.dataElements?.dataElements || []),
+				.then((result: Record<string, { dataElements?: OrgUnit[] }>) => result.dataElements?.dataElements || []),
 		];
 
 		if (categoryOptionComboIds.length > 0) {
@@ -783,7 +795,7 @@ const performValidation = async (
 						},
 					})
 					.then(
-						(result: any) =>
+						(result: Record<string, { categoryOptionCombos?: OrgUnit[] }>) =>
 							result.categoryOptionCombos?.categoryOptionCombos ||
 							[],
 					),
@@ -803,13 +815,13 @@ const performValidation = async (
 			"Metadata loaded successfully",
 		);
 		const orgUnitNamesMap = new Map(
-			orgUnitsMetadata.map((ou: any) => [ou.id, ou.name]),
+			orgUnitsMetadata.map((ou: OrgUnit) => [ou.id, ou.name]),
 		);
 		const dataElementNamesMap = new Map(
-			dataElementsMetadata.map((de: any) => [de.id, de.name]),
+			dataElementsMetadata.map((de: OrgUnit) => [de.id, de.name]),
 		);
 		const categoryOptionComboNamesMap = new Map(
-			categoryOptionCombosMetadata.map((coc: any) => [coc.id, coc.name]),
+			categoryOptionCombosMetadata.map((coc: OrgUnit) => [coc.id, coc.name]),
 		);
 		const buildDataElementDisplayName = (
 			dataElementId: string,
@@ -858,7 +870,7 @@ const performValidation = async (
 			`Source data fetched: ${sourceData.length} values`,
 		);
 		const skipDestination = fullParams.skipDestination || false;
-		let destinationData: any[] = [];
+		let destinationData: DataValue[] = [];
 		// Phase 4: Fetching destination data (45-75%)
 		if (skipDestination) {
 			updatePhase(
@@ -917,17 +929,17 @@ const performValidation = async (
 			);
 		}
 
-		const createDataKey = (dv: any) =>
+		const createDataKey = (dv: DataValue) =>
 			`${dv.dataElement}_${dv.period}_${dv.orgUnit}_${dv.categoryOptionCombo || "default"}`;
 
 		const sourceMap = new Map();
 		const destinationMap = new Map();
 
-		sourceData.forEach((dv: any) => {
+		sourceData.forEach((dv: DataValue) => {
 			sourceMap.set(createDataKey(dv), dv);
 		});
 
-		destinationData.forEach((dv: any) => {
+		destinationData.forEach((dv: DataValue) => {
 			destinationMap.set(createDataKey(dv), dv);
 		});
 
@@ -1149,7 +1161,7 @@ export function useStartValidation(
 	return useMutation({
 		mutationFn: async (validationRequest: {
 			dataItemsConfigIds: string[];
-			runtimeConfig: any;
+			runtimeConfig: Record<string, unknown>;
 		}) => {
 			// Initialize or reset validation session
 			const session: ValidationSession = {
@@ -1186,7 +1198,6 @@ export function useStartValidation(
 						configId,
 						sourceConfig,
 						validationRequest.dataItemsConfigIds,
-						validationRequest.runtimeConfig,
 					);
 				} catch (error) {
 					console.error("Validation failed:", error);
@@ -1270,7 +1281,6 @@ export function useRerunValidation(configId: string) {
 						configId,
 						session.config.sourceConfig,
 						session.config.dataItemsConfigIds,
-						session.config.runtimeConfig,
 					);
 				} catch (error) {
 					console.error("Validation failed:", error);
@@ -1307,7 +1317,7 @@ export function useRerunValidation(configId: string) {
 }
 
 // Export functions
-const exportToCSV = (data: any[]): string => {
+const exportToCSV = (data: Record<string, unknown>[]): string => {
 	if (data.length === 0) return "";
 
 	const headers = Object.keys(data[0]);
@@ -1332,7 +1342,7 @@ const exportToCSV = (data: any[]): string => {
 	return csvContent;
 };
 
-const exportToJSON = (data: any): string => {
+const exportToJSON = (data: Record<string, unknown>): string => {
 	return JSON.stringify(data, null, 2);
 };
 
@@ -1348,7 +1358,7 @@ export function useExportValidationResults(configId: string) {
 				throw new Error("Validation session not found");
 			}
 
-			const exportData: any = {
+			const exportData: Record<string, unknown> = {
 				summary: session.summary,
 				exportedAt: new Date().toISOString(),
 			};
@@ -1368,9 +1378,9 @@ export function useExportValidationResults(configId: string) {
 			switch (options.format) {
 				case "csv":
 					if (options.includeDiscrepancies) {
-						content = exportToCSV(session.discrepancies);
+						content = exportToCSV(session.discrepancies as unknown as Record<string, unknown>[]);
 					} else {
-						content = exportToCSV([session.summary]);
+						content = exportToCSV([session.summary] as unknown as Record<string, unknown>[]);
 					}
 					mimeType = "text/csv";
 					fileExtension = "csv";
@@ -1382,9 +1392,9 @@ export function useExportValidationResults(configId: string) {
 					break;
 				case "excel":
 					if (options.includeDiscrepancies) {
-						content = exportToCSV(session.discrepancies);
+						content = exportToCSV(session.discrepancies as unknown as Record<string, unknown>[]);
 					} else {
-						content = exportToCSV([session.summary]);
+						content = exportToCSV([session.summary] as unknown as Record<string, unknown>[]);
 					}
 					mimeType = "text/csv";
 					fileExtension = "csv";
@@ -1416,7 +1426,7 @@ export function useAnalyticsLastRun() {
 					},
 				});
 
-				const info = result.info as any;
+				const info = result.info as { lastAnalyticsTableSuccess?: string; lastAnalyticsTableRuntime?: string };
 				return {
 					lastAnalyticsTableSuccess: info.lastAnalyticsTableSuccess,
 					lastAnalyticsTableRuntime: info.lastAnalyticsTableRuntime,

@@ -1,7 +1,7 @@
 export interface RHFFieldProps {
     name: string
-    validations?: Record<string, any>
+    validations?: Record<string, unknown>
     label?: string
     warning?: string
-    [key: string]: any
+    [key: string]: unknown
 }

@@ -4,7 +4,7 @@ import { StaticItemConfig, StaticModule } from '@packages/shared/schemas'
 import { useModule } from '../../../../ModulesPage/providers/ModuleProvider'
 
 const getMutation = ({ namespace, id }: { namespace: string; id: string }) => ({
-    type: 'create',
+    type: 'create' as const,
     resource: `dataStore/${namespace}/${id}`,
     data: ({ data }: { data: StaticItemConfig }) => data,
 })
@@ -18,7 +18,7 @@ export function useCreateItem() {
                 getMutation({
                     namespace: module?.config?.namespace,
                     id: data.id,
-                }) as any,
+                }),
                 {
                     variables: {
                         data,
@@ -41,8 +41,9 @@ const getUpdateMutation = ({
     namespace: string
     id: string
 }) => ({
-    type: 'update',
-    resource: `dataStore/${namespace}/${id}`,
+    type: 'update' as const,
+    resource: `dataStore/${namespace}`,
+    id,
     data: ({ data }: { data: StaticItemConfig }) => data,
 })
 
@@ -55,7 +56,7 @@ export function useUpdateItem() {
                 getUpdateMutation({
                     namespace: module?.config?.namespace,
                     id: data.id,
-                }) as any,
+                }),
                 {
                     variables: {
                         data,

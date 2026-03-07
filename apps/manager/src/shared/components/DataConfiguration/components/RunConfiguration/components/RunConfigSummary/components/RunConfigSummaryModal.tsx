@@ -10,6 +10,7 @@ import {
 } from "@dhis2/ui";
 import i18n from "@dhis2/d2-i18n";
 import { RunConfigSummaryDetails } from "./RunConfigSummaryDetails";
+import type { DataRunDetails, MetadataRunDetails } from "@/shared/components/DataConfiguration/components/RunList/hooks/data";
 import { useRunDetails } from "@/shared/components/DataConfiguration/components/RunList/RunDetails/hooks/data";
 import { FetchError } from "@dhis2/app-runtime";
 import { RunStatus } from "@/shared/components/DataConfiguration/components/RunStatus";
@@ -56,7 +57,7 @@ function Content({ runId, type }: { runId: string; type: "metadata" | "data" }) 
 
 						{run && (
 							<RunConfigSummaryDetails
-								run={run}
+								run={run as unknown as MetadataRunDetails | DataRunDetails}
 								runType={type}
 								downloadsPagination={downloadsPagination}
 								uploadsPagination={uploadsPagination}

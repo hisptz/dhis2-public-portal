@@ -51,7 +51,7 @@ export async function getMetadataFormDefaultValues({
                       icon: response.metadata.icon,
                   },
               })
-              .catch((e) => {
+              .catch((_e) => {
                   console.error(`Could not get the app icon`)
               })) as { icon: { displayName: string; id: string } })
         : undefined

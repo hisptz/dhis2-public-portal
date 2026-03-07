@@ -144,7 +144,7 @@ function SaveButton({ onComplete, configurations, onClose }: props) {
             }
             onComplete()
             onClose()
-        } catch (error: any) {
+        } catch (error: unknown) {
             console.error(error)
             showAlert({
                 message: i18n.t('Error updating header configurations'),

@@ -82,7 +82,7 @@ export function AppColorConfigForm({
             }
             onComplete()
             onClose()
-        } catch (error: any) {
+        } catch (_error: unknown) {
             showAlert({
                 message: i18n.t('Error updating color configurations'),
                 type: { critical: true },

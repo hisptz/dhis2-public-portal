@@ -58,7 +58,7 @@ export function SectionsConfig() {
         }
     }
 
-    const { handleSubmit, formState } = useFormContext<AppModule>()
+    const { handleSubmit, formState: _formState } = useFormContext<AppModule>()
 
     const onError = (e) => {
         console.log(e)

@@ -1,4 +1,4 @@
-import { motion } from "framer-motion"
+import { motion, type Easing } from "framer-motion"
 import { RunStatus } from "./RunStatus"
 
 const cycle = 0.5
@@ -10,7 +10,7 @@ export function StickMan({ status }: { status: RunStatus }) {
     const done = status === "DONE"
 
     const repeat = running
-        ? { duration: cycle, repeat: Infinity, ease: "easeInOut" }
+        ? { duration: cycle, repeat: Infinity, ease: "easeInOut" as Easing }
         : {}
 
     return (
@@ -81,7 +81,7 @@ export function StickMan({ status }: { status: RunStatus }) {
                                 ? { rotate: [55, -105, 55] }
                                 : hasError ? { rotate: [75, 45, 75] } : { rotate: 15 }
                         }
-                        transition={hasError? { duration: cycle, repeat: Infinity, ease: "easeInOut" }:repeat}
+                        transition={hasError? { duration: cycle, repeat: Infinity, ease: "easeInOut" as Easing }:repeat}
                     >
                         <line
                             x1={hasError || done ? "13" : "12"}

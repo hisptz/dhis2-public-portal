@@ -47,14 +47,8 @@ function generateCreateConfigMutation({
     return {
         type: 'create' as const,
         resource: `dataStore/${namespace}/${key}`,
-        data: ({ data }: { data: any }) => data,
+        data: ({ data }: { data: Record<string, unknown> }) => data,
     }
-}
-
-interface CreateResponse {
-    httpStatusCode: number
-    message: number
-    status: string
 }
 
 export interface CreateStatus {
@@ -80,11 +74,11 @@ export function useInitializeConfig() {
         }): Promise<CreateStatus> {
             const mutation = generateCreateConfigMutation({ namespace, key })
             try {
-                const response = (await engine.mutate(mutation, {
+                await engine.mutate(mutation, {
                     variables: {
                         data,
                     },
-                })) as unknown as CreateResponse
+                })
                 return {
                     status: 'created',
                     label,

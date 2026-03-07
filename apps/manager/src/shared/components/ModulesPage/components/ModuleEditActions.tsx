@@ -2,16 +2,13 @@ import { useFormContext } from 'react-hook-form'
 import { Button, ButtonStrip } from '@dhis2/ui'
 import i18n from '@dhis2/d2-i18n'
 
-import { useNavigate, useParams } from '@tanstack/react-router'
+import { useNavigate } from '@tanstack/react-router'
 import { useAlert } from '@dhis2/app-runtime'
 import { AppModule } from '@packages/shared/schemas'
 import { useSaveModule } from '../../ModulesPage/hooks/save'
 import { useRefreshModules } from '../providers/ModulesProvider'
 
 export function ModuleEditActions({ onComplete }: { onComplete: () => void }) {
-    const { moduleId } = useParams({
-        from: '/modules/_provider/$moduleId/_formProvider/edit/',
-    })
     const { save } = useSaveModule()
     const { handleSubmit, formState } = useFormContext<AppModule>()
     const navigate = useNavigate()

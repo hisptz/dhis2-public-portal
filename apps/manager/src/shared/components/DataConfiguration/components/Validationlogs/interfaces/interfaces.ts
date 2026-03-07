@@ -9,7 +9,7 @@ export interface ValidationLogEntry {
     timestamp: string
     level: 'info' | 'warn' | 'error' | 'success'
     message: string
-    metadata?: any
+    metadata?: Record<string, unknown>
 }
 export interface ValidationSummary {
     configId: string
@@ -90,7 +90,7 @@ export interface ValidationSession {
     summary: ValidationSummary
     config: {
         dataItemsConfigIds: string[]
-        runtimeConfig: any
+        runtimeConfig: Record<string, unknown>
         sourceConfig: DataServiceConfig
     }
 }

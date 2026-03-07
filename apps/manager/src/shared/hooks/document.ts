@@ -2,20 +2,6 @@ import { useAlert, useDataMutation } from '@dhis2/app-runtime'
 import { useCallback } from 'react'
 import i18n from '@dhis2/d2-i18n'
 
-const documentDataQuery = {
-    document: {
-        resource: 'documents',
-        id: ({ id }: { id: string }) => `${id}/data`,
-    },
-}
-
-const documentUpdateMutation = {
-    type: 'update',
-    resource: 'documents',
-    id: ({ id }: { id: string }) => id,
-    data: ({ data }: { data: any }) => data,
-}
-
 const documentDeleteMutation = {
     type: 'delete' as const,
     resource: 'documents',

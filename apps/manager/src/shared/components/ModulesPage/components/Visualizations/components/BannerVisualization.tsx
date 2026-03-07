@@ -15,7 +15,7 @@ export interface BannerVisualizationProps {
     orgUnits?: string[]
 }
 
-const analyticsQuery: any = {
+const analyticsQuery = {
     analytics: {
         resource: 'analytics',
         params: ({

@@ -29,7 +29,7 @@ export function useGetDataSources() {
     }
 }
 
-const singleQuery: any = {
+const singleQuery = {
     config: {
         resource: `dataStore/${DatastoreNamespaces.DATA_SERVICE_CONFIG}`,
         id: ({ id }: { id: string }) => id,

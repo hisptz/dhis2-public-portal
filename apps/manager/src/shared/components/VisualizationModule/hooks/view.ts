@@ -66,7 +66,7 @@ export function useManageSectionVisualizations({
     const removeVisualizationToLayout = useCallback(
         (id: string) => {
             const layout = getValues(`${prefix}.layouts`)
-            const updatedLayout = mapValues(layout, (value, key) => {
+            const updatedLayout = mapValues(layout, (value, _key) => {
                 return value?.filter((item) => item.i !== id)
             })
             setValue(`${prefix}.layouts`, updatedLayout)
@@ -172,7 +172,7 @@ export function useManageVisualizations({
     const removeVisualizationToLayout = useCallback(
         (id: string) => {
             const layout = getValues(`${configPath}.layouts`)
-            const updatedLayout = mapValues(layout, (value, key) => {
+            const updatedLayout = mapValues(layout, (value, _key) => {
                 return value?.filter((item) => item.i !== id)
             })
             setValue(`${configPath}.layouts`, updatedLayout)

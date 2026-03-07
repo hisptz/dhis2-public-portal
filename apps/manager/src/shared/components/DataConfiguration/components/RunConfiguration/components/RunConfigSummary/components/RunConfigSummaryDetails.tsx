@@ -243,13 +243,7 @@ export function RunConfigSummaryDetails({ run, runType, downloadsPagination, upl
 					onChange={({ value }) => {
 						const newType = value as "download" | "upload";
 						setType(newType);
-						navigate({
-							search: (prev) => ({
-								...prev,
-								type: newType,
-							}),
-							replace: true,
-						});
+						(navigate as (opts: { search: (prev: Record<string, unknown>) => Record<string, unknown>; replace: boolean }) => void)({ search: (prev) => ({ ...prev, type: newType }), replace: true });
 					}}
 					options={[
 						{

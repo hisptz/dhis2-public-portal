@@ -15,7 +15,7 @@ import {
 const visQuery = {
     vis: {
         resource: 'visualizations',
-        params: ({ type }: { type: string }) => {
+        params: ({ type }: { type?: string }) => {
             return {
                 fields: ['id', 'displayName', 'type'],
                 order: 'name:asc',
@@ -39,7 +39,7 @@ type VisualizationQueryResponse = {
 const mapQuery = {
     maps: {
         resource: 'maps',
-        params: ({}) => {
+        params: () => {
             return {
                 fields: ['id', 'displayName'],
                 paging: false,
@@ -84,7 +84,7 @@ export function VisSelector() {
         string | undefined
     >(undefined)
     const { data, loading, refetch } = useDataQuery<VisualizationQueryResponse>(
-        visQuery as any,
+        visQuery,
         {
             variables: { type: visualizationType },
         }

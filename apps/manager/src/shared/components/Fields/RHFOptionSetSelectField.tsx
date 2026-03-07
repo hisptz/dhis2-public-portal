@@ -10,7 +10,7 @@ export type RHFOptionSetSelectFieldProps = RHFFieldProps &
         optionSetId: string
     }
 
-const query: any = {
+const query = {
     optionSet: {
         resource: 'optionSets',
         id: ({ id }: { id: string }) => id,

@@ -1,16 +1,16 @@
-import { useAlert, useDataMutation, useDataQuery } from '@dhis2/app-runtime'
+import { useAlert, useDataEngine, useDataMutation, useDataQuery } from '@dhis2/app-runtime'
 import i18n from '@dhis2/d2-i18n'
 
-const fileUploadMutation: any = {
+const fileUploadMutation = {
     resource: 'fileResources',
-    type: 'create',
+    type: 'create' as const,
     data: (data: { file: File }) => ({ ...data, domain: 'DOCUMENT' }),
 }
 
-const documentCreateMutation: any = {
-    type: 'create',
+const documentCreateMutation = {
+    type: 'create' as const,
     resource: 'documents',
-    data: ({ data }: any) => data,
+    data: ({ data }: { data: Record<string, unknown> }) => data,
 }
 
 export function useUploadFile() {
@@ -54,7 +54,7 @@ export function useUploadFile() {
         file: File
         label: string
     }): Promise<string | undefined> => {
-        const uploadResponse = (await mutate(data)) as any
+        const uploadResponse = (await mutate(data)) as { response?: { fileResource?: { id: string } } }
         const documentPayload = {
             name: data.label,
             external: false,
@@ -78,7 +78,7 @@ export function useUploadFile() {
     }
 }
 
-const fileQuery: any = {
+const fileQuery = {
     file: {
         resource: 'documents',
         id: ({ fileId }: { fileId: string }) => fileId,
@@ -128,31 +128,25 @@ export function useGetFile() {
     }
 }
 
-const documentDeleteMutation: any = {
-    type: 'delete',
-    resource: 'documents',
-    id: ({ fileId }: { fileId: string }) => fileId,
-}
-
 export function useDeleteDocument() {
     const { show, hide } = useAlert(
         ({ message }) => message,
         ({ type }) => ({ ...type, duration: 3000 })
     )
-    const [deleteDocument] = useDataMutation(documentDeleteMutation, {
-        onError: (error) => {
+    const engine = useDataEngine()
+
+    const deleteFile = async (fileId: string) => {
+        try {
+            await engine.mutate({ type: 'delete', resource: 'documents', id: fileId })
+        } catch (error) {
             show({
                 message: i18n.t('Could not delete file {{ errorMessage }}', {
-                    errorMessage: error.message,
+                    errorMessage: error instanceof Error ? error.message : String(error),
                 }),
                 type: { critical: true },
             })
             setTimeout(hide, 5000)
-        },
-    })
-
-    const deleteFile = async (fileId: string) => {
-        await deleteDocument({ fileId })
+        }
     }
 
     return {
@@ -165,21 +159,23 @@ export function useDeleteDocuments() {
         ({ message }) => message,
         ({ type }) => ({ ...type, duration: 3000 })
     )
-    const [deleteDocument] = useDataMutation(documentDeleteMutation, {
-        onError: (error) => {
-            show({
-                message: i18n.t('Could not delete file {{ errorMessage }}', {
-                    errorMessage: error.message,
-                }),
-                type: { critical: true },
-            })
-            setTimeout(hide, 5000)
-        },
-    })
+    const engine = useDataEngine()
 
     const deleteFiles = async (fileIds: string[]) => {
         return await Promise.all(
-            fileIds.map((fileId) => deleteDocument({ fileId }))
+            fileIds.map(async (fileId) => {
+                try {
+                    await engine.mutate({ type: 'delete', resource: 'documents', id: fileId })
+                } catch (error) {
+                    show({
+                        message: i18n.t('Could not delete file {{ errorMessage }}', {
+                            errorMessage: error instanceof Error ? error.message : String(error),
+                        }),
+                        type: { critical: true },
+                    })
+                    setTimeout(hide, 5000)
+                }
+            })
         )
     }
 

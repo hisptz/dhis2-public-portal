@@ -3,11 +3,11 @@ import { useDataMutation, useDataQuery } from '@dhis2/app-runtime'
 import { FullLoader } from './FullLoader'
 import { DatastoreNamespaces } from '@packages/shared/constants'
 
-function getMutation(key: string): any {
+function getMutation(key: string) {
     return {
-        type: 'create',
+        type: 'create' as const,
         resource: `dataStore/${DatastoreNamespaces.MAIN_CONFIG}/${key}`,
-        data: ({ data }: { data: Record<string, any> }) => data,
+        data: ({ data }: { data: Record<string, unknown> }) => data,
     }
 }
 
@@ -23,7 +23,7 @@ function getQuery(key: string) {
 type Props = {
     dataStoreKey: string
     children: React.ReactNode
-    defaultConfig?: any
+    defaultConfig?: Record<string, unknown> | unknown[]
 }
 
 export const InitConfigProvider = ({
@@ -40,7 +40,7 @@ export const InitConfigProvider = ({
     const [mutate, { loading: mutationLoading, error: mutationError }] =
         useDataMutation(getMutation(dataStoreKey))
 
-    const create = async ({ data }: { data: any }) => {
+    const create = async ({ data }: { data: Record<string, unknown> | unknown[] }) => {
         return await mutate({
             data,
         })

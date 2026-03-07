@@ -30,8 +30,9 @@ export const metadataSchema = z.object({
     icons: z.array(appIconSchema),
     name: z.string(),
     applicationURL: z
-        .string({ description: 'Where your public portal can be found' })
-        .url(),
+        .string()
+        .url()
+        .describe('Where your public portal can be found'),
 })
 
 export const metadataFormSchema = z.object({

@@ -29,7 +29,7 @@ type VisualizationQueryResponse = {
 
 export function VisSelector() {
     const { data, loading } = useDataQuery<VisualizationQueryResponse>(
-        visQuery as any
+        visQuery
     )
     const options = useMemo(
         () =>

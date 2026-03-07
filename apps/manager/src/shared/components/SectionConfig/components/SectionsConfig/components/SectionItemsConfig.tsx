@@ -24,7 +24,7 @@ export function SectionItemsConfig() {
     const namePrefix = useSectionNamePrefix()
     const navigate = useNavigate()
 
-    const { fields, remove, update, append } = useFieldArray<
+    const { fields, remove, update } = useFieldArray<
         {
             config: {
                 sections: Section[]

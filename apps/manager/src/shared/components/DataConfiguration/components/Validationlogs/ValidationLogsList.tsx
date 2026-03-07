@@ -7,7 +7,7 @@ interface ValidationLogEntry {
     timestamp: string
     level: 'info' | 'warn' | 'error' | 'success'
     message: string
-    metadata?: any
+    metadata?: Record<string, unknown>
 }
 
 interface ValidationLogsListProps {
@@ -104,7 +104,7 @@ export function ValidationLogsList({
         >
             {/* Log Entries */}
             <div className="space-y-1">
-                {logs.map((log, index) => (
+                {logs.map((log) => (
                     <div
                         key={log.id}
                         className="flex items-start gap-3 py-1 hover:bg-gray-100 px-2 -mx-2 rounded"

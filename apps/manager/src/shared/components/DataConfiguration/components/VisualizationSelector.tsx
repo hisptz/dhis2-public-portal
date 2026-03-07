@@ -13,7 +13,7 @@ export interface VisualizationSelectorProps {
 const visualizationQuery = {
     vis: {
         resource: 'visualizations',
-        params: ({ page, keyword }: any) => {
+        params: ({ page, keyword }: { page?: number; keyword?: string }) => {
             return {
                 fields: ['id', 'displayName'],
                 page,
@@ -34,7 +34,7 @@ export function VisualizationSelector({
         Array<{ label: string; value: string }>
     >([])
     const { data, loading, refetch } = useDataQuery<{
-        vis: { pager: any; visualizations: any[] }
+        vis: { pager: { page: string; pageCount: string }; visualizations: Array<{ id: string; displayName: string }> }
     }>(visualizationQuery, {
         variables: {
             page: 1,
@@ -43,14 +43,14 @@ export function VisualizationSelector({
 
     useEffect(() => {
         if (data) {
-            const newData: any[] = data?.vis?.visualizations?.map(
-                (visualization: any) => {
+            const newData = data?.vis?.visualizations?.map(
+                (visualization) => {
                     return {
                         label: visualization.displayName,
                         value: visualization.id,
                     }
                 }
-            )
+            ) ?? []
             setOptions((prevState) =>
                 uniqBy([...prevState, ...newData], 'value')
             )
@@ -58,8 +58,8 @@ export function VisualizationSelector({
     }, [data])
 
     const onNextPage = useCallback(() => {
-        const page = parseInt(data?.vis?.pager?.page)
-        const totalPages = parseInt(data?.vis?.pager?.pageCount)
+        const page = parseInt(data?.vis?.pager?.page ?? '1')
+        const totalPages = parseInt(data?.vis?.pager?.pageCount ?? '1')
         if (page !== totalPages) {
             refetch({
                 page: parseInt(data?.vis?.pager?.page ?? '0') + 1,
@@ -80,11 +80,11 @@ export function VisualizationSelector({
     const onFilterChange = debounce(async ({ value }) => {
         const { vis: visualizationResponse } = await onFilter(value)
         const visualizations =
-            (visualizationResponse as any)?.visualizations ?? []
+            (visualizationResponse as { visualizations?: Array<{ id: string; displayName: string }> })?.visualizations ?? []
         setOptions(
             uniqBy(
                 [
-                    ...visualizations.map((visualization: any) => ({
+                    ...visualizations.map((visualization) => ({
                         label: visualization.displayName,
                         value: visualization.id,
                     })),
@@ -101,7 +101,7 @@ export function VisualizationSelector({
                     return uniqBy(
                         [
                             ...(options ?? []),
-                            ...(field.value?.map(({ id, name }: any) => ({
+                            ...(field.value?.map(({ id, name }: { id: string; name: string }) => ({
                                 label: name,
                                 value: id,
                             })) ?? []),

@@ -12,7 +12,7 @@ export type RHFOptionSetMultiSelectFieldProps = Omit<
     optionSetId: string
 }
 
-const query: any = {
+const query = {
     optionSet: {
         resource: 'optionSets',
         id: ({ id }: { id: string }) => id,

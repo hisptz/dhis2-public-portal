@@ -10,7 +10,15 @@ type Dimension = 'ou' | 'pe' | 'dx' | string
 const analyticsQuery = {
     analytics: {
         resource: 'analytics',
-        params: ({ filters, dimensions, relativePeriodDate }: any) => {
+        params: ({
+            filters,
+            dimensions,
+            relativePeriodDate,
+        }: {
+            filters: Record<Dimension, string[]>
+            dimensions: Record<Dimension, string[]>
+            relativePeriodDate: string
+        }) => {
             return {
                 displayProperty: 'NAME',
                 filter: Object.keys(filters).map(

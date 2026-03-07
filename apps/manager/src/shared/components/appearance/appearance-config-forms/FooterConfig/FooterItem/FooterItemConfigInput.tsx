@@ -7,10 +7,10 @@ import { FooterItemConfig } from '@packages/shared/schemas'
 import { FooterItemTable } from './FooterItemTable'
 import { FooterItemForm } from './FooterItemForm'
 
-export interface InputFieldProps extends Omit<
+export type InputFieldProps = Omit<
     FieldProps,
     'warning' | 'error' | 'validationText'
-> {}
+>
 
 export function FooterItemConfigInput(props: InputFieldProps) {
     const [activeIndex, setActiveIndex] = useState<number | undefined>(
@@ -22,11 +22,8 @@ export function FooterItemConfigInput(props: InputFieldProps) {
 
     const { value: hide, setTrue: onHide, setFalse: onShow } = useBoolean(true)
 
-    const getSanitizedItems = (fields: any[]): FooterItemConfig[] => {
-        return fields.map((field) => ({
-            title: field.title,
-            type: field.type,
-        }))
+    const getSanitizedItems = (fields: { id?: string; title?: string; type?: string }[]): FooterItemConfig[] => {
+        return fields as unknown as FooterItemConfig[]
     }
 
     return (
@@ -63,7 +60,7 @@ export function FooterItemConfigInput(props: InputFieldProps) {
                 <div className="flex-1 ml-2">
                     <FooterItemTable
                         fields={getSanitizedItems(fields)}
-                        update={(index, config) => {
+                        update={(index, _config) => {
                             setActiveIndex(index)
                             onShow()
                         }}

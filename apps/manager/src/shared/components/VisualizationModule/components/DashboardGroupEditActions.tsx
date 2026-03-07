@@ -12,7 +12,7 @@ export function DashboardGroupEditActions() {
         from: '/modules/$moduleId/edit/$groupIndex',
     })
 
-    const { moduleId } = useParams({
+    useParams({
         from: '/modules/_provider/$moduleId/_formProvider/edit/$groupIndex/',
     })
     const { save } = useSaveModule()

@@ -163,9 +163,10 @@ export function EditConnectionForm({
             },
             {
                 onSuccess: (updatedConfig) => {
+                    const config = updatedConfig as { source: { name: string } }
                     parentForm.setValue(
                         'source.name',
-                        updatedConfig.source.name
+                        config.source.name
                     )
                     form.reset(form.getValues())
 

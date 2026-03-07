@@ -33,7 +33,7 @@ export function MultiColorPicker({ label, name, onColorChange }: Props) {
         setTempColors(updated)
     }
 
-    const handleBlur = (index: number) => {
+    const handleBlur = (_index: number) => {
         commitColor([...tempColors])
     }
 

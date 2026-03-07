@@ -8,15 +8,16 @@ import {
 } from '../../ModulesPage/providers/ModuleProvider'
 import { useCallback, useState } from 'react'
 
-const updateMutation: any = ({
+const updateMutation = ({
     namespace,
     id,
 }: {
     namespace: string
     id: string
 }) => ({
-    type: 'update',
-    resource: `dataStore/${namespace}/${id}`,
+    type: 'update' as const,
+    resource: `dataStore/${namespace}`,
+    id,
     data: ({ data }: { data: StaticItemConfig }) => data,
 })
 

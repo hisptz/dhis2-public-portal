@@ -60,8 +60,10 @@ export function RunStatus({
 
 			return data.status as { status: RunStatus }
 		},
-		refetchInterval: (query) =>
-			query?.status === "RUNNING" || query?.status === 'QUEUED' || !query?.status ? 1000 : false,
+		refetchInterval: (query) => {
+			const status = query.state.data?.status
+			return status === "RUNNING" || status === 'QUEUED' || !status ? 1000 : false
+		},
 	})
 
 
@@ -122,8 +124,10 @@ export function ConfigStatus({
 
 			return data.status as { status: RunStatus }
 		},
-		refetchInterval: (query) =>
-			query?.status === "RUNNING" || query?.status === "QUEUED" || !query?.status ? 1000 : false,
+		refetchInterval: (query) => {
+			const status = query.state.data?.status
+			return status === "RUNNING" || status === "QUEUED" || !status ? 1000 : false
+		},
 	})
 
 

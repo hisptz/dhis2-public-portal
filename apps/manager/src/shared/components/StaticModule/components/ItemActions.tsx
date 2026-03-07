@@ -10,17 +10,11 @@ import {
 import i18n from '@dhis2/d2-i18n'
 import { useState } from 'react'
 import { useNavigate, useParams } from '@tanstack/react-router'
-import { FetchError, useAlert, useDataMutation } from '@dhis2/app-runtime'
+import { FetchError, useAlert, useDataEngine } from '@dhis2/app-runtime'
 import { StaticItemConfig, StaticModule } from '@packages/shared/schemas'
 import { useSaveItem } from '../hooks/save'
 import { useModule } from '../../ModulesPage/providers/ModuleProvider'
 import { useRefreshModules } from '../../ModulesPage/providers/ModulesProvider'
-
-const deleteMutation: any = (namespace: string) => ({
-    type: 'delete',
-    resource: `dataStore/${namespace}`,
-    id: ({ itemId }: { itemId: string }) => itemId,
-})
 
 export function ItemActions() {
     const { itemId } = useParams({
@@ -31,10 +25,9 @@ export function ItemActions() {
     })
     const { save } = useSaveItem(itemId!)
     const module = useModule() as StaticModule
-    const [onDelete, { loading }] = useDataMutation(
-        deleteMutation(module?.config?.namespace)
-    )
+    const engine = useDataEngine()
     const refreshModules = useRefreshModules()
+    const [loading, setLoading] = useState(false)
     const [showDialog, setShowDialog] = useState(false)
     const { handleSubmit, formState } = useFormContext<StaticItemConfig>()
     const { show } = useAlert(
@@ -76,8 +69,13 @@ export function ItemActions() {
             return
         }
 
+        setLoading(true)
         try {
-            await onDelete({ itemId })
+            await engine.mutate({
+                type: 'delete',
+                resource: `dataStore/${module.config.namespace}`,
+                id: itemId,
+            })
             await refreshModules()
             show({
                 message: i18n.t('Item deleted successfully'),
@@ -93,9 +91,10 @@ export function ItemActions() {
                 message: `${i18n.t('Could not delete item')}: ${error.message}`,
                 type: { critical: true },
             })
+        } finally {
+            setLoading(false)
+            setShowDialog(false)
         }
-
-        setShowDialog(false)
     }
 
     const onCancel = () => {

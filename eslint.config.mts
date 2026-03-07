@@ -31,6 +31,18 @@ export default defineConfig([
     //     rules: { ...reactHooks.configs.recommended.rules },
     // },
     typescript.configs.recommended,
+    {
+        rules: {
+            '@typescript-eslint/no-unused-vars': [
+                'error',
+                {
+                    argsIgnorePattern: '^_',
+                    caughtErrorsIgnorePattern: '^_',
+                    varsIgnorePattern: '^_',
+                },
+            ],
+        },
+    },
     react.configs.flat['jsx-runtime'],
     prettier,
     includeIgnoreFile(gitignorePath, 'Imported .gitignore patterns'),

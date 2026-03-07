@@ -5,8 +5,8 @@ import { DatastoreNamespaces } from '@packages/shared/constants'
 import { AppModule } from '@packages/shared/schemas'
 import { useRefreshModule } from '../providers/ModuleProvider'
 
-const mutation: any = {
-    type: 'update',
+const mutation = {
+    type: 'update' as const,
     resource: `dataStore/${DatastoreNamespaces.MODULES}`,
     id: ({ id }: { id: string }) => id,
     data: ({ data }: { data: AppModule }) => data,
@@ -21,6 +21,7 @@ export function useSaveModule() {
         ({ message }) => message,
         ({ type }) => ({ ...type, duration: 3000 })
     )
+    // @ts-expect-error DHIS2 types incorrectly restrict id to string; function id is supported at runtime
     const [mutate, rest] = useDataMutation(mutation, {
         variables: {
             id: moduleId,

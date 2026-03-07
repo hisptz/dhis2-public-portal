@@ -39,7 +39,7 @@ type VisualizationQueryResponse = {
 const mapQuery = {
     maps: {
         resource: 'maps',
-        params: ({}) => {
+        params: () => {
             return {
                 fields: ['id', 'displayName'],
                 paging: false,
@@ -89,9 +89,8 @@ export function VisSelector({
     namePrefix: `config.sections.${number}.item`
 }) {
     const [visualizationType, setVisualizationType] = useState<string>()
-    const { data, loading, refetch } = useDataQuery<VisualizationQueryResponse>(
-        visQuery as any
-    )
+    const { data, loading, refetch } =
+        useDataQuery<VisualizationQueryResponse>(visQuery)
 
     const visId = useWatch<SectionModuleConfig>({
         name: `${namePrefix}.item.id`,

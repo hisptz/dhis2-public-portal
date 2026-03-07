@@ -1,4 +1,4 @@
-import { FormProvider, useForm } from 'react-hook-form'
+import { FieldErrors, FormProvider, useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import {
     Button,
@@ -64,14 +64,12 @@ export function AddDocumentForm({
         onClose()
     }
 
-    const onError = (error: any) => {
-        if (error instanceof FetchError || error instanceof Error) {
-            show({
-                message: `${i18n.t('Could not create new library')}: ${error.message ?? error.toString()}`,
-                type: { critical: true },
-            })
-        }
-        console.error(error)
+    const onError = (errors: FieldErrors<DocumentItemPayload>) => {
+        console.error(errors)
+        show({
+            message: i18n.t('Could not save the document. Please fix the form errors and try again'),
+            type: { critical: true },
+        })
     }
 
     const onSave = async (data: DocumentItemPayload) => {

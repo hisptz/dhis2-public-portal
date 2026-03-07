@@ -57,7 +57,7 @@ export function VisualizationManager({
     )
 
     const handleFormError = useCallback(
-        (errors: any) => {
+        (errors: Record<string, unknown>) => {
             console.error('Form validation errors:', errors)
             show({
                 message: i18n.t(

@@ -25,13 +25,6 @@ type ServerVersion = {
     minor?: number
     patch?: number
 }
-function isVersion42OrHigher(serverVersion?: ServerVersion): boolean {
-    if (!serverVersion) return false
-    const minor = serverVersion.minor || 0
-    const major = serverVersion.major || 0
-    if (major >= 2 && minor >= 42) return true
-    return major >= 3
-}
 
 export async function executeDataServiceRoute<
     ResponseDataType extends Record<symbol | number | string, unknown> = Record<
@@ -122,7 +115,7 @@ export async function downloadData<
     engine: DataEngine,
     configId: string,
     data: RequestDataType,
-    serverVersion?: ServerVersion
+    _serverVersion?: ServerVersion
 ): Promise<ResponseDataType> {
     return executeDataServiceRoute<ResponseDataType>(
         engine,

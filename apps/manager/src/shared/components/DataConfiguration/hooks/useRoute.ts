@@ -1,6 +1,6 @@
 import { useDataQuery } from '@dhis2/app-runtime'
 
-const routeQuery: any = {
+const routeQuery = {
     route: {
         resource: 'routes',
         id: ({ id }: { id: string }) => id,

@@ -12,8 +12,8 @@ import { FullLoader } from '../../../../../FullLoader'
 
 export function YearOverYearDataVisComponent({
     visualizationConfig,
-    config,
-    disableActions,
+    config: _config,
+    disableActions: _disableActions,
     colors,
 }: {
     visualizationConfig: YearOverYearVisualizationConfig

@@ -7,10 +7,10 @@ import { FooterLinkForm } from './FooterLinkForm'
 import { FooterLink } from '@packages/shared/schemas'
 import { FooterLinkTable } from './FooterLinkTable'
 
-export interface InputFieldProps extends Omit<
+export type InputFieldProps = Omit<
     FieldProps,
     'warning' | 'error' | 'validationText'
-> {}
+>
 
 export function FooterLinksInput(props: InputFieldProps) {
     const [activeIndex, setActiveIndex] = useState<number | undefined>(
@@ -22,10 +22,10 @@ export function FooterLinksInput(props: InputFieldProps) {
 
     const { value: hide, setTrue: onHide, setFalse: onShow } = useBoolean(true)
 
-    const getSanitizedLinks = (fields: any[]): FooterLink[] => {
+    const getSanitizedLinks = (fields: { id?: string; name?: string; url?: string }[]): FooterLink[] => {
         return fields.map((field) => ({
-            name: field.name,
-            url: field.url,
+            name: field.name ?? '',
+            url: field.url ?? '',
         }))
     }
 
@@ -59,7 +59,7 @@ export function FooterLinksInput(props: InputFieldProps) {
                 <div className="flex-1 ml-2">
                     <FooterLinkTable
                         fields={getSanitizedLinks(fields)}
-                        update={(index, config) => {
+                        update={(index, _config) => {
                             setActiveIndex(index)
                             onShow()
                         }}

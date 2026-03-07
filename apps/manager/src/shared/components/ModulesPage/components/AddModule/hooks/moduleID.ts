@@ -12,7 +12,7 @@ export function useValidateModuleId() {
                 },
             })
             return !!response.module
-        } catch (error) {
+        } catch (_error) {
             return false
         }
     }

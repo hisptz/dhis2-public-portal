@@ -15,7 +15,7 @@ import { deleteQueues } from '../../../services/dataServiceClient'
 const createRouteMutation = {
     type: 'create' as const,
     resource: 'routes',
-    data: ({ data }: { data: any }) => data,
+    data: ({ data }: { data: Record<string, unknown> }) => data,
 }
 
 function generateRouteMutation(id: string) {
@@ -110,14 +110,7 @@ export function useCreateDataSource(onClose?: () => void) {
     }
 }
 
-const updateRouteMutation: any = {
-    type: 'update' as const,
-    resource: 'routes',
-    id: ({ id }: { id: string }) => id,
-    data: ({ data }: { data: any }) => data,
-}
-
-const updateDataSourceMutation: any = {
+const updateDataSourceMutation = {
     type: 'update' as const,
     resource: `dataStore/${DatastoreNamespaces.DATA_SERVICE_CONFIG}`,
     id: ({ id }: { id: string }) => id,
@@ -137,6 +130,7 @@ export function useUpdateDataSource() {
         ({ type }) => ({ ...type, duration: 3000 })
     )
     const engine = useDataEngine()
+    // @ts-expect-error DHIS2 types incorrectly restrict id to string; function id is supported at runtime
     const [mutate] = useDataMutation(updateDataSourceMutation, {
         variables: {
             id: configId,
@@ -171,13 +165,13 @@ export function useUpdateDataSource() {
                 }
             )
 
+            type ConfigRecord = { config: Record<string, unknown> & { dataItems?: unknown } }
             const mergedData = {
-                ...(currentConfig as any).config,
+                ...(currentConfig as ConfigRecord).config,
                 ...data,
-                ...(!(data as any).dataItems &&
-                    (currentConfig as any).config?.dataItems && {
-                    dataItems: (currentConfig as any).config.dataItems,
-                }),
+                ...(!((data as Record<string, unknown>).dataItems) && (currentConfig as ConfigRecord).config?.dataItems
+                    ? { dataItems: (currentConfig as ConfigRecord).config.dataItems }
+                    : {}),
             }
             await mutate({ data: mergedData })
         } catch (error) {
@@ -223,7 +217,7 @@ export function useUpdateConnection() {
             routeId: string
         },
         callbacks?: {
-            onSuccess?: (updatedConfig: any) => void
+            onSuccess?: (updatedConfig: Record<string, unknown>) => void
         }
     ) => {
         try {
@@ -245,8 +239,8 @@ export function useUpdateConnection() {
                 !!data.pat || (!!data.username && !!data.password)
 
 
-            const routePayload: any = {
-                ...(existingRoute as any).route,
+            const routePayload: Record<string, unknown> = {
+                ...(existingRoute as { route: Record<string, unknown> }).route,
                 name: `[data service] ${data.name}`,
                 url: `${data.url}/api/**`,
             }
@@ -262,15 +256,15 @@ export function useUpdateConnection() {
                         username: data.username,
                         password: data.password,
                     }
-            } else if ((existingRoute as any).route?.auth) {
-                routePayload.auth = (existingRoute as any).route.auth
+            } else if ((existingRoute as { route: Record<string, unknown> }).route?.auth) {
+                routePayload.auth = (existingRoute as { route: Record<string, unknown> }).route.auth
             }
 
-            await engine.mutate(updateRouteMutation, {
-                variables: {
-                    id: data.routeId,
-                    data: routePayload,
-                },
+            await engine.mutate({
+                type: 'update' as const,
+                resource: 'routes',
+                id: data.routeId,
+                data: routePayload,
             })
             const currentConfig = await engine.query(
                 {
@@ -287,18 +281,18 @@ export function useUpdateConnection() {
             )
 
             const updatedConfig = {
-                ...(currentConfig as any).config,
+                ...(currentConfig as { config: Record<string, unknown> }).config,
                 source: {
-                    ...(currentConfig as any).config.source,
+                    ...((currentConfig as { config: Record<string, unknown> }).config.source as Record<string, unknown>),
                     name: data.name,
                 },
             }
 
-            await engine.mutate(updateDataSourceMutation, {
-                variables: {
-                    id: configId,
-                    data: updatedConfig,
-                },
+            await engine.mutate({
+                type: 'update' as const,
+                resource: `dataStore/${DatastoreNamespaces.DATA_SERVICE_CONFIG}`,
+                id: configId,
+                data: updatedConfig,
             })
 
             show({
@@ -325,17 +319,6 @@ export function useUpdateConnection() {
     }
 }
 
-const deleteRouteMutation: any = {
-    type: 'delete' as const,
-    resource: 'routes',
-    id: ({ id }: { id: string }) => id,
-}
-
-const deleteDataSourceMutation: any = {
-    type: 'delete' as const,
-    resource: `dataStore/${DatastoreNamespaces.DATA_SERVICE_CONFIG}`,
-    id: ({ id }: { id: string }) => id,
-}
 
 export function useDeleteDataSource() {
     const refreshList = useRefreshDataSources()
@@ -356,16 +339,16 @@ export function useDeleteDataSource() {
                 )
             }
 
-            await engine.mutate(deleteRouteMutation, {
-                variables: {
-                    id: config.source.routeId,
-                },
+            await engine.mutate({
+                type: 'delete' as const,
+                resource: 'routes',
+                id: config.source.routeId,
             })
 
-            await engine.mutate(deleteDataSourceMutation, {
-                variables: {
-                    id: config.id,
-                },
+            await engine.mutate({
+                type: 'delete' as const,
+                resource: `dataStore/${DatastoreNamespaces.DATA_SERVICE_CONFIG}`,
+                id: config.id,
             })
 
             show({
