@@ -83,7 +83,7 @@ const setupConsumers = async (channel: Channel) => {
                             message,
                             channel,
                         })
-                    } catch (error) {
+                    } catch (_e) {
                         channel.nack(message!, false, true)
                     }
                 })

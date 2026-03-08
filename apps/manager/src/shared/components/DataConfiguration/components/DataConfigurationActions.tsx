@@ -12,10 +12,10 @@ export function DataConfigurationActions() {
         from: '/data-service-configuration/$configId/edit/',
     })
 
-      const {configId} = useParams({
-            from: '/data-service-configuration/_provider/$configId/_provider/edit/_provider/'
-        })
-    
+    const { configId } = useParams({
+        from: '/data-service-configuration/_provider/$configId/_provider/edit/_provider/',
+    })
+
     const { handleSubmit, formState } = useFormContext<DataServiceConfig>()
     const { show } = useAlert(
         ({ message }) => message,

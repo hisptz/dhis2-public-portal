@@ -47,7 +47,9 @@ export default function ErrorPage({
                         border: `1px solid ${colors.grey400}`,
                     }}
                 >
-                    <code style={{ color: colors.red500 }}>{error instanceof Error ? error.stack : String(error)}</code>
+                    <code style={{ color: colors.red500 }}>
+                        {error instanceof Error ? error.stack : String(error)}
+                    </code>
                 </div>
             )}
 

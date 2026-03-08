@@ -19,34 +19,28 @@ import {
     useDataElementConfigs,
     D2Map,
     getIndicatorIdsFromMaps,
-    getDataElementIdsFromMaps
+    getDataElementIdsFromMaps,
 } from '@/shared/components/DataConfiguration/utils'
-
-
 
 const VISUALIZATIONS_QUERY = {
     data: {
         resource: 'visualizations',
         params: {
-            fields:
-                'id,name,type,dataDimensionItems[*]',
+            fields: 'id,name,type,dataDimensionItems[*]',
             paging: false,
         },
     },
 } as const
-
 
 const MAPS_QUERY = {
     data: {
         resource: 'maps',
         params: {
-            fields:
-                'id,name,mapViews[dataDimensionItems[*]]',
+            fields: 'id,name,mapViews[dataDimensionItems[*]]',
             paging: false,
         },
     },
 } as const
-
 
 interface Props {
     nameVisualizations: string
@@ -60,7 +54,6 @@ interface Props {
     helpTextDataElements?: string
 }
 
-
 export function VisualizationDataSelector({
     nameVisualizations,
     nameMaps,
@@ -73,43 +66,43 @@ export function VisualizationDataSelector({
 }: Props) {
     const { control } = useFormContext()
 
-    const {
-        field: vizField,
-        fieldState: visError,
-    } = useController({
+    const { field: vizField, fieldState: visError } = useController({
         name: nameVisualizations,
         control,
     })
 
-    const {
-        field: mapField,
-    } = useController({
+    const { field: mapField } = useController({
         name: nameMaps,
         control,
     })
 
-    const {
-        field: deField,
-        fieldState: deError,
-    } = useController({
+    const { field: deField, fieldState: deError } = useController({
         name: nameDataElements,
         control,
         rules: {
             validate: (value) => {
                 if (!required) return true
-                return value?.length > 0 || i18n.t('At least one data element is required')
+                return (
+                    value?.length > 0 ||
+                    i18n.t('At least one data element is required')
+                )
             },
         },
     })
 
-    const { data: vizData, loading: vizLoading, error: vizErrorQuery } =
-        useDataQuery<{ data: { visualizations: Visualization[] } }>(
-            VISUALIZATIONS_QUERY
-        )
+    const {
+        data: vizData,
+        loading: vizLoading,
+        error: vizErrorQuery,
+    } = useDataQuery<{ data: { visualizations: Visualization[] } }>(
+        VISUALIZATIONS_QUERY
+    )
 
-    const { data: mapData, loading: mapLoading, error: mapErrorQuery } =
-        useDataQuery<{ data: { maps: D2Map[] } }>(MAPS_QUERY)
-
+    const {
+        data: mapData,
+        loading: mapLoading,
+        error: mapErrorQuery,
+    } = useDataQuery<{ data: { maps: D2Map[] } }>(MAPS_QUERY)
 
     const combinedOptions = useMemo(() => {
         const vizOptions =
@@ -127,17 +120,13 @@ export function VisualizationDataSelector({
         return [...vizOptions, ...mapOptions]
     }, [vizData, mapData])
 
-
     const combinedSelected = useMemo(() => {
-        const vizValues =
-            vizField.value?.map((id: string) => `viz:${id}`) ?? []
+        const vizValues = vizField.value?.map((id: string) => `viz:${id}`) ?? []
 
-        const mapValues =
-            mapField.value?.map((id: string) => `map:${id}`) ?? []
+        const mapValues = mapField.value?.map((id: string) => `map:${id}`) ?? []
 
         return [...vizValues, ...mapValues]
     }, [vizField.value, mapField.value])
-
 
     const handleCombinedChange = (selected: string[]) => {
         const vizIds: string[] = []
@@ -157,7 +146,6 @@ export function VisualizationDataSelector({
         deField.onChange([])
     }
 
-
     const selectedViz = useMemo(() => {
         if (!vizData?.data.visualizations) return []
         return vizData.data.visualizations.filter((v) =>
@@ -167,11 +155,8 @@ export function VisualizationDataSelector({
 
     const selectedMaps = useMemo(() => {
         if (!mapData?.data.maps) return []
-        return mapData.data.maps.filter((m) =>
-            mapField.value?.includes(m.id)
-        )
+        return mapData.data.maps.filter((m) => mapField.value?.includes(m.id))
     }, [mapField.value, mapData])
-
 
     const { indicatorIds, baseDataElementIds } = useMemo(() => {
         if (!selectedViz.length && !selectedMaps.length) {
@@ -190,7 +175,11 @@ export function VisualizationDataSelector({
         }
     }, [selectedViz, selectedMaps])
 
-    const { indicators, loading: indicatorsLoading, error: indicatorError } = useIndicatorsConfig(indicatorIds)
+    const {
+        indicators,
+        loading: indicatorsLoading,
+        error: indicatorError,
+    } = useIndicatorsConfig(indicatorIds)
 
     const indicatorSourceIds = useMemo(() => {
         if (isEmpty(indicators)) return []
@@ -203,8 +192,11 @@ export function VisualizationDataSelector({
         [baseDataElementIds, indicatorSourceIds]
     )
 
-    const { dataElements, loading: dataElementsLoading, error: dataElementError } =
-        useDataElementConfigs(allDataElementIds)
+    const {
+        dataElements,
+        loading: dataElementsLoading,
+        error: dataElementError,
+    } = useDataElementConfigs(allDataElementIds)
 
     const deOptions = useMemo(() => {
         return uniqBy(dataElements ?? [], 'id').map((de) => ({
@@ -213,10 +205,8 @@ export function VisualizationDataSelector({
         }))
     }, [dataElements])
 
-
-    const metadataLoading = indicatorsLoading || dataElementsLoading;
-    const metadataError = indicatorError || dataElementError;
-
+    const metadataLoading = indicatorsLoading || dataElementsLoading
+    const metadataError = indicatorError || dataElementError
 
     const sourcesLoading = vizLoading || mapLoading
 
@@ -236,14 +226,13 @@ export function VisualizationDataSelector({
         )
     }
 
-
     if (metadataError) {
-        return (<NoticeBox error title={i18n.t('Metadata loading failed')}>
-            {i18n.t(metadataError.message)}
-        </NoticeBox>
+        return (
+            <NoticeBox error title={i18n.t('Metadata loading failed')}>
+                {i18n.t(metadataError.message)}
+            </NoticeBox>
         )
     }
-
 
     return (
         <>
@@ -259,8 +248,7 @@ export function VisualizationDataSelector({
                     validationText={visError?.error?.message}
                     onChange={({ selected }) => {
                         handleCombinedChange(selected)
-                    }
-                    }
+                    }}
                     filterable
                     placeholder={i18n.t(
                         'Search and select visualizations or maps...'

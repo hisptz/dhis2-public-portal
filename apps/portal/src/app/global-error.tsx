@@ -16,7 +16,6 @@ import {
 } from '@mantine/core'
 import { Notifications } from '@mantine/notifications'
 import { useEffect } from 'react'
-import Link from 'next/link'
 
 export default function GlobalError({
     error,
@@ -63,11 +62,7 @@ export default function GlobalError({
                                     administrator.
                                 </Text>
                                 <Group justify="center">
-                                    <Button
-                                        component={Link}
-                                        href={'/'}
-                                        size="md"
-                                    >
+                                    <Button onClick={() => reset()} size="md">
                                         Refresh
                                     </Button>
                                 </Group>

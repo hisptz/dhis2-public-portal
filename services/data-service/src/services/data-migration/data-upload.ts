@@ -5,9 +5,7 @@ import { existsSync } from 'node:fs'
 import { handleError, QueuedJobError } from '@/utils/error'
 import { DataRun, DataUpload, UploadStrategy } from '@/generated/prisma/client'
 
-export async function dataFromQueue(
-    task: DataUpload & { run: DataRun }
-) {
+export async function dataFromQueue(task: DataUpload & { run: DataRun }) {
     try {
         const fileLocation = task.filename
         if (existsSync(fileLocation)) {
@@ -64,8 +62,8 @@ export async function dataFromFile({
                 false
             )
         }
-        const summary = await uploadDataValues({ payload, filename, strategy });
-        return summary;
+        const summary = await uploadDataValues({ payload, filename, strategy })
+        return summary
     } catch (error) {
         if (error instanceof QueuedJobError) {
             throw error

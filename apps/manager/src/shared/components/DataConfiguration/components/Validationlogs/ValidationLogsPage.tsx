@@ -1,7 +1,15 @@
 import { useState } from 'react'
-import { Button, Card, CircularLoader, NoticeBox, Tab, TabBar, IconArrowLeft16 } from '@dhis2/ui'
+import {
+    Button,
+    Card,
+    CircularLoader,
+    NoticeBox,
+    Tab,
+    TabBar,
+    IconArrowLeft16,
+} from '@dhis2/ui'
 import i18n from '@dhis2/d2-i18n'
-import { useNavigate } from '@tanstack/react-router';
+import { useNavigate } from '@tanstack/react-router'
 import {
     useAnalyticsLastRun,
     useRerunValidation,
@@ -23,9 +31,8 @@ export function ValidationLogsPage({ configId }: ValidationLogsPageProps) {
     const [activeTab, setActiveTab] = useState('logs')
 
     const navigate = useNavigate({
-        from: '/data-service-configuration/$configId/validation-logs'
-    });
-
+        from: '/data-service-configuration/$configId/validation-logs',
+    })
 
     const { show } = useAlert(
         ({ message }) => message,
@@ -50,13 +57,13 @@ export function ValidationLogsPage({ configId }: ValidationLogsPageProps) {
             const params = lastValidationParams
                 ? JSON.parse(lastValidationParams)
                 : {
-                    dataItemsConfigIds: [],
-                    runtimeConfig: {
-                        pageSize: 10,
-                        paginateByData: false,
-                        timeout: 1000 * 60 * 5,
-                    },
-                }
+                      dataItemsConfigIds: [],
+                      runtimeConfig: {
+                          pageSize: 10,
+                          paginateByData: false,
+                          timeout: 1000 * 60 * 5,
+                      },
+                  }
 
             await rerunValidation.mutateAsync(params)
             show({
@@ -80,9 +87,8 @@ export function ValidationLogsPage({ configId }: ValidationLogsPageProps) {
             params: {
                 configId,
             },
-        });
-
-    };
+        })
+    }
 
     const isValidationRunning =
         validationStatus.data?.status === DataServiceRunStatus.RUNNING ||
@@ -117,7 +123,6 @@ export function ValidationLogsPage({ configId }: ValidationLogsPageProps) {
                     secondary
                     onClick={handleGoBack}
                     icon={<IconArrowLeft16 />}
-
                 >
                     {i18n.t('Back')}
                 </Button>

@@ -3,6 +3,7 @@ import { Pagination } from '@hisptz/dhis2-utils'
 import { DatastoreNamespaces } from '@packages/shared/constants'
 import { AppAppearanceConfig, AppMenuConfig } from '@packages/shared/schemas'
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const appConfigKeys = [
     'dashboards',
     'usefulLinks',

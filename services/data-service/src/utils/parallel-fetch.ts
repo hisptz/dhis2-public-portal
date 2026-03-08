@@ -1,8 +1,9 @@
 import logger from '@/logging'
 import * as _ from 'lodash'
+import { AxiosError, AxiosInstance } from 'axios'
 
-async function fetchSingleItem<T = any>(
-    client: any,
+async function fetchSingleItem<T extends Record<string, unknown>>(
+    client: AxiosInstance,
     endpoint: string,
     id: string,
     fields: string
@@ -16,18 +17,20 @@ async function fetchSingleItem<T = any>(
         })
         logger.info(`Successfully fetched ${endpoint} item: ${id}`)
         return response.data
-    } catch (error: any) {
-        logger.error(`Failed to fetch ${endpoint} item ${id}:`, {
-            error: error.message,
-            status: error.response?.status,
-            statusText: error.response?.statusText,
-        })
+    } catch (error) {
+        if (error instanceof AxiosError) {
+            logger.error(`Failed to fetch ${endpoint} item ${id}:`, {
+                error: error.message,
+                status: error.response?.status,
+                statusText: error.response?.statusText,
+            })
+        }
         throw error
     }
 }
 
-export async function fetchItemsInParallel<T = any>(
-    client: any,
+export async function fetchItemsInParallel<T extends Record<string, unknown>>(
+    client: AxiosInstance,
     endpoint: string,
     ids: string[],
     fields: string,
@@ -68,7 +71,7 @@ export async function fetchItemsInParallel<T = any>(
 
         batchResults.forEach((item) => {
             if (item !== null) {
-                results.push(item)
+                results.push(item as T)
             }
         })
 

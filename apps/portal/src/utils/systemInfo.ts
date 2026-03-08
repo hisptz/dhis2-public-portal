@@ -7,7 +7,7 @@ export async function getSystemInfo() {
     try {
         const url = `system/info`
         return dhis2HttpClient.get<D2SystemInfo>(url)
-    } catch (e) {
+    } catch (_e) {
         return undefined
     }
 }

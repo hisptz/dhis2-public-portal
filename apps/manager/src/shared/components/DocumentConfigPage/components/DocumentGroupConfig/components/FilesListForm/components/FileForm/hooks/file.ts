@@ -1,4 +1,9 @@
-import { useAlert, useDataEngine, useDataMutation, useDataQuery } from '@dhis2/app-runtime'
+import {
+    useAlert,
+    useDataEngine,
+    useDataMutation,
+    useDataQuery,
+} from '@dhis2/app-runtime'
 import i18n from '@dhis2/d2-i18n'
 
 const fileUploadMutation = {
@@ -54,7 +59,9 @@ export function useUploadFile() {
         file: File
         label: string
     }): Promise<string | undefined> => {
-        const uploadResponse = (await mutate(data)) as { response?: { fileResource?: { id: string } } }
+        const uploadResponse = (await mutate(data)) as {
+            response?: { fileResource?: { id: string } }
+        }
         const documentPayload = {
             name: data.label,
             external: false,
@@ -137,11 +144,16 @@ export function useDeleteDocument() {
 
     const deleteFile = async (fileId: string) => {
         try {
-            await engine.mutate({ type: 'delete', resource: 'documents', id: fileId })
+            await engine.mutate({
+                type: 'delete',
+                resource: 'documents',
+                id: fileId,
+            })
         } catch (error) {
             show({
                 message: i18n.t('Could not delete file {{ errorMessage }}', {
-                    errorMessage: error instanceof Error ? error.message : String(error),
+                    errorMessage:
+                        error instanceof Error ? error.message : String(error),
                 }),
                 type: { critical: true },
             })
@@ -165,12 +177,22 @@ export function useDeleteDocuments() {
         return await Promise.all(
             fileIds.map(async (fileId) => {
                 try {
-                    await engine.mutate({ type: 'delete', resource: 'documents', id: fileId })
+                    await engine.mutate({
+                        type: 'delete',
+                        resource: 'documents',
+                        id: fileId,
+                    })
                 } catch (error) {
                     show({
-                        message: i18n.t('Could not delete file {{ errorMessage }}', {
-                            errorMessage: error instanceof Error ? error.message : String(error),
-                        }),
+                        message: i18n.t(
+                            'Could not delete file {{ errorMessage }}',
+                            {
+                                errorMessage:
+                                    error instanceof Error
+                                        ? error.message
+                                        : String(error),
+                            }
+                        ),
                         type: { critical: true },
                     })
                     setTimeout(hide, 5000)

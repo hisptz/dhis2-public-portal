@@ -35,8 +35,6 @@ export function useDimensionViewControls({
     tableRef: RefObject<HTMLTableElement | null>
     showFilter?: boolean
 }) {
-    const { type } = config ?? {}
-    //
     const handler = useFullScreenHandle()
     const {
         value: showOrgUnitSelector,
@@ -52,6 +50,8 @@ export function useDimensionViewControls({
     const { value: showTable, toggle: toggleShowTable } = useBoolean(false)
 
     const onDownload = () => {
+        const { type } = config
+        console.log(`Printing ${type} visualization`)
         const label = `${visualizationConfig.name.toLowerCase()}`
         if (
             showTable ||

@@ -101,8 +101,6 @@ const editConnectionFormSchema = z
 
 export type EditConnectionFormValues = z.infer<typeof editConnectionFormSchema>
 
-
-
 export function EditConnectionForm({
     hide,
     onClose,
@@ -164,10 +162,7 @@ export function EditConnectionForm({
             {
                 onSuccess: (updatedConfig) => {
                     const config = updatedConfig as { source: { name: string } }
-                    parentForm.setValue(
-                        'source.name',
-                        config.source.name
-                    )
+                    parentForm.setValue('source.name', config.source.name)
                     form.reset(form.getValues())
 
                     refetch()
@@ -230,9 +225,7 @@ export function EditConnectionForm({
 
                 <ModalActions>
                     <ButtonStrip>
-                        <Button onClick={onClose}>
-                            {i18n.t('Cancel')}
-                        </Button>
+                        <Button onClick={onClose}>{i18n.t('Cancel')}</Button>
 
                         <Button
                             primary
@@ -244,15 +237,13 @@ export function EditConnectionForm({
                                 !form.formState.isDirty ||
                                 form.formState.isSubmitting
                             }
-                            onClick={(_, e) =>
-                                form.handleSubmit(onSubmit)(e)
-                            }
+                            onClick={(_, e) => form.handleSubmit(onSubmit)(e)}
                         >
                             {form.formState.isValidating
                                 ? i18n.t('Validating...')
                                 : form.formState.isSubmitting
-                                    ? i18n.t('Saving...')
-                                    : i18n.t('Save')}
+                                  ? i18n.t('Saving...')
+                                  : i18n.t('Save')}
                         </Button>
                     </ButtonStrip>
                 </ModalActions>

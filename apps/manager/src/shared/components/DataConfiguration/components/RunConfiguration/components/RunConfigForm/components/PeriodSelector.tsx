@@ -18,9 +18,12 @@ import { RunConfigFormValues } from '@packages/shared/schemas'
 
 export function PeriodSelector({ minPeriodType }: { minPeriodType: string }) {
     const [year, setYear] = useState<number>(new Date().getFullYear())
-    const periodType = useWatch<RunConfigFormValues, "runtimeConfig.periodType">({
-        name: "runtimeConfig.periodType",
-    });
+    const periodType = useWatch<
+        RunConfigFormValues,
+        'runtimeConfig.periodType'
+    >({
+        name: 'runtimeConfig.periodType',
+    })
     const periodTypes = useMemo(() => {
         const minimumPeriodType = FixedPeriodType.getFromId(minPeriodType, {})
         return PeriodUtility.fromObject({
@@ -54,13 +57,12 @@ export function PeriodSelector({ minPeriodType }: { minPeriodType: string }) {
 
     const { field: periodTypeField } = useController<
         RunConfigFormValues,
-        "runtimeConfig.periodType"
+        'runtimeConfig.periodType'
     >({
-        name: "runtimeConfig.periodType",
-    });
+        name: 'runtimeConfig.periodType',
+    })
 
-    const { setValue } = useFormContext<RunConfigFormValues>();
-
+    const { setValue } = useFormContext<RunConfigFormValues>()
 
     return (
         <div className="flex flex-col gap-2">
@@ -69,9 +71,9 @@ export function PeriodSelector({ minPeriodType }: { minPeriodType: string }) {
                 selected={periodTypeField.value}
                 label="Period Type"
                 onChange={({ selected }) => {
-                    periodTypeField.onChange(selected);
-                    setValue("runtimeConfig.periods", []);
-                    setValue("dataItemsConfigIds", []);
+                    periodTypeField.onChange(selected)
+                    setValue('runtimeConfig.periods', [])
+                    setValue('dataItemsConfigIds', [])
                 }}
             >
                 {periodTypes.map((periodType) => (
@@ -122,7 +124,7 @@ export function PeriodSelector({ minPeriodType }: { minPeriodType: string }) {
                     selected={year.toString()}
                     label="Year"
                     onChange={({ selected }) => {
-                        field.onChange([]);
+                        field.onChange([])
                         setYear(+selected)
                     }}
                 >

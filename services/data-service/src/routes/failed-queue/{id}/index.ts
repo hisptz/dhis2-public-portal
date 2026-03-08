@@ -1,4 +1,4 @@
-import { NextFunction, Request, Response } from 'express'
+import { Request, Response } from 'express'
 import { Operation } from 'express-openapi'
 import { getChannel } from '@/rabbit/connection'
 import { getQueueNames } from '@/variables/queue-names'
@@ -38,7 +38,7 @@ export const GET: Operation = async (req: Request, res: Response) => {
         ).toString('base64')
 
         let totalFailedMessages = 0
-        let messages: any[] = []
+        let messages: Record<string, unknown>[] = []
         const sourceQueues: Set<string> = new Set()
         const sourceQueueCounts: Map<string, number> = new Map()
 
@@ -157,30 +157,37 @@ export const GET: Operation = async (req: Request, res: Response) => {
                 }
 
                 if (!onlyQueues && messages.length > 0) {
-                    const totalMessages = messages.length
                     messages = messages.slice(offset, offset + limit)
                 }
             }
-        } catch (apiError: any) {
-            console.warn(
-                `RabbitMQ Management API error for config ${configId}:`,
-                apiError.message
-            )
-            const channel = getChannel()
-            if (channel) {
-                try {
-                    const queueInfo = await channel.checkQueue(failedQueueName)
-                    totalFailedMessages = queueInfo.messageCount
-                } catch (queueError) {
-                    console.warn(
-                        `Failed queue does not exist or error checking queue:`,
-                        queueError
-                    )
+        } catch (apiError) {
+            if (apiError instanceof Error) {
+                console.warn(
+                    `RabbitMQ Management API error for config ${configId}:`,
+                    apiError.message
+                )
+                const channel = getChannel()
+                if (channel) {
+                    try {
+                        const queueInfo =
+                            await channel.checkQueue(failedQueueName)
+                        totalFailedMessages = queueInfo.messageCount
+                    } catch (queueError) {
+                        console.warn(
+                            `Failed queue does not exist or error checking queue:`,
+                            queueError
+                        )
+                    }
                 }
+            } else {
+                console.warn(
+                    `RabbitMQ Management API error for config ${configId}:`,
+                    apiError
+                )
             }
         }
 
-        const responseData: any = {
+        const responseData: Record<string, unknown> = {
             configId,
             totalFailedMessages,
             retrievedAt: new Date().toISOString(),
@@ -233,11 +240,7 @@ export const GET: Operation = async (req: Request, res: Response) => {
     }
 }
 
-export const DELETE: Operation = async (
-    req: Request,
-    res: Response,
-    next: NextFunction
-) => {
+export const DELETE: Operation = async (req: Request, res: Response) => {
     try {
         const { id: configId } = req.params
 
@@ -280,7 +283,7 @@ export const DELETE: Operation = async (
             },
             timestamp: new Date().toISOString(),
         })
-    } catch (error) {
+    } catch (_e) {
         res.status(500).json({
             success: false,
             configId: req.params.id,

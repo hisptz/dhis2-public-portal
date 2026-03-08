@@ -1,4 +1,4 @@
-import { NextFunction, Request, Response } from 'express'
+import { Request, Response } from 'express'
 import logger from '@/logging'
 import { Operation } from 'express-openapi'
 import { getQueueNames } from '@/variables/queue-names'
@@ -8,7 +8,9 @@ import axios from 'axios'
 async function consumeFailedMessagesFromRabbitMQ(
     configId: string,
     limit: number = 50
-): Promise<any[]> {
+): Promise<
+    { properties: { headers: { 'x-death': string } }; payload: string }[]
+> {
     const queueNames = getQueueNames(configId)
     const failedQueueName = queueNames.failed
 
@@ -42,14 +44,22 @@ async function consumeFailedMessagesFromRabbitMQ(
         )
 
         return response.data || []
-    } catch (error: any) {
-        logger.error(`Error consuming failed messages:`, error)
-        throw new Error(`Failed to consume messages: ${error.message}`)
+    } catch (error) {
+        if (error instanceof Error) {
+            logger.error(`Error consuming failed messages:`, error)
+            throw new Error(`Failed to consume messages: ${error.message}`)
+        } else {
+            logger.error(`Error consuming failed messages:`, error)
+            throw new Error(`Failed to consume messages: ${error}`)
+        }
     }
 }
 
 async function retryMessage(
-    message: any,
+    message: {
+        properties: { headers: { 'x-death': string } }
+        payload: string
+    },
     configId: string
 ): Promise<{ success: boolean; error?: string }> {
     try {
@@ -88,7 +98,7 @@ async function retryMessage(
 
         logger.info(`Successfully retried message to queue: ${sourceQueue}`)
         return { success: true }
-    } catch (error: any) {
+    } catch (error) {
         logger.error(`Error retrying message:`, error)
 
         // If retry fails, we need to put the message back in the failed queue
@@ -108,14 +118,18 @@ async function retryMessage(
                     `Requeued failed retry message back to failed queue: ${failedQueueName}`
                 )
             }
-        } catch (requeueError: any) {
+        } catch (requeueError) {
             logger.error(
                 `Failed to requeue message to failed queue:`,
                 requeueError
             )
         }
 
-        return { success: false, error: error.message }
+        if (error instanceof Error) {
+            return { success: false, error: error.message }
+        }
+
+        return { success: false, error: String(error) }
     }
 }
 
@@ -147,17 +161,13 @@ async function getQueueDepth(configId: string): Promise<number> {
         )
 
         return response.data.messages || 0
-    } catch (error: any) {
+    } catch (error) {
         logger.error(`Error getting queue depth:`, error)
         return 0
     }
 }
 
-export const GET: Operation = async (
-    req: Request,
-    res: Response,
-    next: NextFunction
-) => {
+export const GET: Operation = async (req: Request, res: Response) => {
     try {
         const { id: configId } = req.params
 
@@ -301,27 +311,24 @@ export const GET: Operation = async (
                 details: retryResults,
             },
         })
-    } catch (error: any) {
+    } catch (error) {
         logger.error(
             `Error in retry endpoint for config ${req.params.id}:`,
             error
         )
-
         res.status(500).json({
             error: 'Retry operation failed',
             message:
-                error.message ||
-                'An unexpected error occurred during retry operation',
+                error instanceof Error
+                    ? error.message ||
+                      'An unexpected error occurred during retry operation'
+                    : 'Unknown error',
             configId: req.params.id,
         })
     }
 }
 
-export const POST: Operation = async (
-    req: Request,
-    res: Response,
-    next: NextFunction
-) => {
+export const POST: Operation = async (req: Request, res: Response) => {
     try {
         const { id: configId } = req.params
 
@@ -329,11 +336,6 @@ export const POST: Operation = async (
             parseInt(req.query.maxRetries as string) ||
             req.body?.maxRetries ||
             10
-        const retryType =
-            (req.query.retryType as string) || req.body?.retryType || 'all'
-        const processType =
-            (req.query.processType as string) || req.body?.processType
-
         if (!configId) {
             return res.status(400).json({
                 error: 'Configuration ID is required',
@@ -401,7 +403,7 @@ export const POST: Operation = async (
                 details: retryResults,
             },
         })
-    } catch (error: any) {
+    } catch (error) {
         logger.error(
             `Error in retry endpoint for config ${req.params.id}:`,
             error
@@ -410,8 +412,10 @@ export const POST: Operation = async (
         res.status(500).json({
             error: 'Retry operation failed',
             message:
-                error.message ||
-                'An unexpected error occurred during retry operation',
+                error instanceof Error
+                    ? error.message ||
+                      'An unexpected error occurred during retry operation'
+                    : 'Unknown error',
             configId: req.params.id,
         })
     }

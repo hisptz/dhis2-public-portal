@@ -32,21 +32,27 @@ export const GET: Operation = async (req: Request, res: Response) => {
                 orderBy: {
                     startedAt: 'desc',
                 },
-            })
-        ]);
-        const runs = [...(metadataRun ? [metadataRun] : []), ...(dataRun ? [dataRun] : [])].sort((a, b) => b.startedAt.getTime() - a.startedAt.getTime());
+            }),
+        ])
+        const runs = [
+            ...(metadataRun ? [metadataRun] : []),
+            ...(dataRun ? [dataRun] : []),
+        ].sort((a, b) => b.startedAt.getTime() - a.startedAt.getTime())
 
         if (runs.length === 0) {
             return res.json({
-                status: "IGNORED",
-            });
+                status: 'IGNORED',
+            })
         }
 
-        const runType = metadataRun?.uid === runs[0].uid ? 'metadata' : 'data';
-        const response = await getRunStatus({ runId: runs[0].uid, runType });
-        res.json(response);
+        const runType = metadataRun?.uid === runs[0].uid ? 'metadata' : 'data'
+        const response = await getRunStatus({ runId: runs[0].uid, runType })
+        res.json(response)
     } catch (error) {
-        logger.error(`Failed to get run status for ${req.params.runType} run ${req.params.runId}:`, error)
+        logger.error(
+            `Failed to get run status for ${req.params.runType} run ${req.params.runId}:`,
+            error
+        )
         res.status(500).json({
             success: false,
             error: error instanceof Error ? error.message : String(error),
@@ -57,6 +63,3 @@ export const GET: Operation = async (req: Request, res: Response) => {
         })
     }
 }
-
-
-

@@ -10,7 +10,9 @@ export function VisualizationError({
     return (
         <div className="h-full w-full flex flex-col gap-2 justify-center items-center">
             <IconError24 />
-            <span>{error instanceof Error ? error.message : String(error)}</span>
+            <span>
+                {error instanceof Error ? error.message : String(error)}
+            </span>
             <Button onClick={resetErrorBoundary} small>
                 {i18n.t('Try again')}
             </Button>

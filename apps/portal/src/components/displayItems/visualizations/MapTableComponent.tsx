@@ -12,7 +12,7 @@ import { useDataQuery } from '@dhis2/app-runtime'
 import { Loader } from '@mantine/core'
 import i18n from '@dhis2/d2-i18n'
 import dynamic from 'next/dynamic'
-import { useMemo } from 'react'
+import { RefObject, useMemo } from 'react'
 import { getOrgUnitSelectionFromIds } from '@packages/shared/visualizations'
 
 const NoSSRDHIS2Table = dynamic(
@@ -24,7 +24,7 @@ const NoSSRDHIS2Table = dynamic(
         ssr: false,
         loading: () => {
             return (
-                <div className="w-full h-full flex items-center justify-center min-h-[400px]">
+                <div className="w-full h-full flex items-center justify-center min-h-100">
                     <Loader size="md" />
                 </div>
             )
@@ -35,7 +35,7 @@ const NoSSRDHIS2Table = dynamic(
 const query = {
     data: {
         resource: 'analytics',
-        params: (variables: Record<string, any>) => {
+        params: (variables: Record<string, string[]>) => {
             const { dx, ou, pe } = variables as {
                 dx: string[]
                 ou: string[]
@@ -62,7 +62,7 @@ export function MapTableComponent({
     fullScreen,
 }: {
     mapConfig: MapConfig
-    setRef: (el: HTMLTableElement | null) => void
+    setRef: RefObject<HTMLTableElement | null>
     orgUnitSelection?: OrgUnitSelection
     fullScreen: boolean
     periodSelection?: {
@@ -137,7 +137,7 @@ export function MapTableComponent({
 
     return (
         <NoSSRDHIS2Table
-            setRef={setRef}
+            setRef={setRef as unknown as (ref: HTMLTableElement) => void}
             tableProps={{
                 scrollHeight: fullScreen ? `calc(100dvh - 96px)` : `600px`,
             }}

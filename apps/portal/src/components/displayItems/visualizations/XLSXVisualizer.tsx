@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { Box, LoadingOverlay, Table, Text } from '@mantine/core'
 import { IconCircleX, IconFileSpreadsheet } from '@tabler/icons-react'
 import * as XLSX from 'xlsx'
@@ -14,7 +14,7 @@ export function XLSXVisualizer({ path }: XLSXVisualizerProps) {
     const [loading, setLoading] = useState(true)
     const [error, setError] = useState<string | null>(null)
 
-    const loadXlsxContent = React.useCallback(async () => {
+    const loadXlsxContent = useCallback(async () => {
         try {
             setLoading(true)
             setError(null)

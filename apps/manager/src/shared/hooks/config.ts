@@ -9,7 +9,7 @@ import { defaultGeneralConfig } from '../constants/defaults/general'
 import { defaultMenuConfig } from '../constants/defaults/menu'
 import { defaultHomeModule } from '../constants/defaults/modules'
 import { useCallback, useState } from 'react'
-import { DateTime } from "luxon";
+import { DateTime } from 'luxon'
 import i18n from '@dhis2/d2-i18n'
 import { defaultAppearanceConfig } from '../constants/defaults/appearance'
 
@@ -31,11 +31,11 @@ export function useCheckConfig() {
 }
 
 export function formatDateTime(value?: string | null) {
-    if (!value) return "-";
-    const dt = DateTime.fromISO(value);
-    if (!dt.isValid) return "-";
-    return `${dt.toLocal().toFormat("dd LLL yyyy, HH:mm")}`;
-};
+    if (!value) return '-'
+    const dt = DateTime.fromISO(value)
+    if (!dt.isValid) return '-'
+    return `${dt.toLocal().toFormat('dd LLL yyyy, HH:mm')}`
+}
 
 function generateCreateConfigMutation({
     namespace,

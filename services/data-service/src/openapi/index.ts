@@ -3,9 +3,8 @@ import dotenv from 'dotenv'
 dotenv.config()
 
 const port = process.env.DATA_SERVICE_PORT || '3000'
-const baseURL = `http://localhost:${port}`
 
-export const apiDoc: any = {
+export const apiDoc = {
     openapi: '3.0.0',
     info: {
         title: 'DHIS2 Data Service API',

@@ -19,10 +19,6 @@ export async function createWorkerPublishChannel(): Promise<amqp.Channel> {
     return workerPublishChannel
 }
 
-export function getWorkerPublishChannel(): amqp.Channel | null {
-    return workerPublishChannel
-}
-
 export async function connectRabbit(delayMs = 10000) {
     const rabbitUri = process.env.RABBITMQ_URI || 'amqp://localhost'
 
@@ -37,12 +33,12 @@ export async function connectRabbit(delayMs = 10000) {
             connectRabbit(delayMs)
         })
 
-        connection.on('error', (err: any) => {
+        connection.on('error', (err) => {
             logger.error('RabbitMQ connection error:', err.message)
         })
 
         return channel
-    } catch (err) {
+    } catch (_err) {
         logger.info(`🔄 Retrying in ${delayMs / 1000} seconds...`)
         await new Promise((res) => setTimeout(res, delayMs))
     }

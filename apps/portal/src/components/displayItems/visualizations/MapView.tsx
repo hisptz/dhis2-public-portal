@@ -69,10 +69,7 @@ export function MapView(props: MapViewProps) {
             const orgUnit = data.orgUnit
             if (orgUnit.level !== undefined && orgUnit.level < 3) {
                 const params = new URLSearchParams(searchParams)
-                params.set(
-                    'ou',
-                    `${orgUnit.id},LEVEL-${orgUnit.level + 1}`
-                )
+                params.set('ou', `${orgUnit.id},LEVEL-${orgUnit.level + 1}`)
                 router.replace(`?${params.toString()}`)
             }
         },

@@ -46,14 +46,14 @@ export function useCreateDataSource(onClose?: () => void) {
                 url: `${data.source.url}/api/**`,
                 auth: data.source.pat
                     ? {
-                        type: 'api-token',
-                        token: data.source.pat,
-                    }
+                          type: 'api-token',
+                          token: data.source.pat,
+                      }
                     : {
-                        type: 'http-basic',
-                        username: data.source.username,
-                        password: data.source.password,
-                    },
+                          type: 'http-basic',
+                          username: data.source.username,
+                          password: data.source.password,
+                      },
             }
 
             const response = (await createRoute({ data: routePayload })) as {
@@ -165,12 +165,18 @@ export function useUpdateDataSource() {
                 }
             )
 
-            type ConfigRecord = { config: Record<string, unknown> & { dataItems?: unknown } }
+            type ConfigRecord = {
+                config: Record<string, unknown> & { dataItems?: unknown }
+            }
             const mergedData = {
                 ...(currentConfig as ConfigRecord).config,
                 ...data,
-                ...(!((data as Record<string, unknown>).dataItems) && (currentConfig as ConfigRecord).config?.dataItems
-                    ? { dataItems: (currentConfig as ConfigRecord).config.dataItems }
+                ...(!(data as Record<string, unknown>).dataItems &&
+                (currentConfig as ConfigRecord).config?.dataItems
+                    ? {
+                          dataItems: (currentConfig as ConfigRecord).config
+                              .dataItems,
+                      }
                     : {}),
             }
             await mutate({ data: mergedData })
@@ -238,7 +244,6 @@ export function useUpdateConnection() {
             const hasCredentials =
                 !!data.pat || (!!data.username && !!data.password)
 
-
             const routePayload: Record<string, unknown> = {
                 ...(existingRoute as { route: Record<string, unknown> }).route,
                 name: `[data service] ${data.name}`,
@@ -248,16 +253,21 @@ export function useUpdateConnection() {
             if (hasCredentials) {
                 routePayload.auth = data.pat
                     ? {
-                        type: 'api-token',
-                        token: data.pat,
-                    }
+                          type: 'api-token',
+                          token: data.pat,
+                      }
                     : {
-                        type: 'http-basic',
-                        username: data.username,
-                        password: data.password,
-                    }
-            } else if ((existingRoute as { route: Record<string, unknown> }).route?.auth) {
-                routePayload.auth = (existingRoute as { route: Record<string, unknown> }).route.auth
+                          type: 'http-basic',
+                          username: data.username,
+                          password: data.password,
+                      }
+            } else if (
+                (existingRoute as { route: Record<string, unknown> }).route
+                    ?.auth
+            ) {
+                routePayload.auth = (
+                    existingRoute as { route: Record<string, unknown> }
+                ).route.auth
             }
 
             await engine.mutate({
@@ -281,9 +291,11 @@ export function useUpdateConnection() {
             )
 
             const updatedConfig = {
-                ...(currentConfig as { config: Record<string, unknown> }).config,
+                ...(currentConfig as { config: Record<string, unknown> })
+                    .config,
                 source: {
-                    ...((currentConfig as { config: Record<string, unknown> }).config.source as Record<string, unknown>),
+                    ...((currentConfig as { config: Record<string, unknown> })
+                        .config.source as Record<string, unknown>),
                     name: data.name,
                 },
             }
@@ -318,7 +330,6 @@ export function useUpdateConnection() {
         updateConnection,
     }
 }
-
 
 export function useDeleteDataSource() {
     const refreshList = useRefreshDataSources()

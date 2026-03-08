@@ -75,7 +75,7 @@ export async function getModuleMetadata({
                     ? `${config.config?.shortDescription}`
                     : undefined,
         }
-    } catch (e) {
+    } catch (_e) {
         return {
             title: 'Public Portal',
             description: 'DHIS2 FlexiPortal',

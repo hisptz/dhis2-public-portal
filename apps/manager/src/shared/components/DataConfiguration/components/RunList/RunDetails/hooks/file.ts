@@ -1,8 +1,8 @@
-import { useWatch } from "react-hook-form"
-import type { DataServiceConfig } from "@packages/shared/schemas"
-import { useAlert, useConfig } from "@dhis2/app-runtime"
-import { useState } from "react"
-import i18n from "@dhis2/d2-i18n";
+import { useWatch } from 'react-hook-form'
+import type { DataServiceConfig } from '@packages/shared/schemas'
+import { useAlert, useConfig } from '@dhis2/app-runtime'
+import { useState } from 'react'
+import i18n from '@dhis2/d2-i18n'
 
 export function useFailedTaskDownload({
     runId,
@@ -11,9 +11,9 @@ export function useFailedTaskDownload({
 }: {
     runId: string
     taskId: string
-    type: "metadata" | "data"
+    type: 'metadata' | 'data'
 }) {
-    const { baseUrl } = useConfig();
+    const { baseUrl } = useConfig()
     const config = useWatch<DataServiceConfig>()
     const [loading, setLoading] = useState(false)
     const { show, hide } = useAlert(
@@ -23,8 +23,8 @@ export function useFailedTaskDownload({
 
     const getErrorMessage = (err: unknown) => {
         if (err instanceof Error) return err.message
-        if (typeof err === "string") return err
-        return i18n.t("Unknown error")
+        if (typeof err === 'string') return err
+        return i18n.t('Unknown error')
     }
 
     const download = async () => {
@@ -37,23 +37,23 @@ export function useFailedTaskDownload({
             const url = `${baseUrl}/api/routes/data-service/run/${config.id}/${type}/${runId}/${taskId}/file`
 
             const res = await fetch(url, {
-                method: "GET",
-                credentials: "include",
+                method: 'GET',
+                credentials: 'include',
             })
 
             if (!res.ok) {
                 throw new Error(`Error: ${res.status} File ${res.statusText}`)
             }
 
-
             const blob = await res.blob()
 
             const objectUrl = URL.createObjectURL(blob)
-            const a = document.createElement("a")
+            const a = document.createElement('a')
             a.href = objectUrl
 
-            const disposition = res.headers.get("Content-Disposition")
-            const filename = disposition?.match(/filename\*=UTF-8''(.+)/)?.[1] ||
+            const disposition = res.headers.get('Content-Disposition')
+            const filename =
+                disposition?.match(/filename\*=UTF-8''(.+)/)?.[1] ||
                 disposition?.match(/filename="?([^"]+)"?/)?.[1] ||
                 `${taskId}.json`
             a.download = filename

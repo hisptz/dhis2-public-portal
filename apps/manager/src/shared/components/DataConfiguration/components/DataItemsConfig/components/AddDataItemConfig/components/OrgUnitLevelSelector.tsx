@@ -1,10 +1,6 @@
 import { useFormContext, useController } from 'react-hook-form'
 import { useDataQuery } from '@dhis2/app-runtime'
-import {
-    NoticeBox,
-    SingleSelectField,
-    SingleSelectOption,
-} from '@dhis2/ui'
+import { NoticeBox, SingleSelectField, SingleSelectOption } from '@dhis2/ui'
 import i18n from '@dhis2/d2-i18n'
 
 const query = {
@@ -42,10 +38,15 @@ export const OrgUnitLevelSelector = ({
         control,
     })
 
-    const { data, loading, error: queryError } = useDataQuery<{ data: { name: string, level: number, id: string }[] }>(query)
+    const {
+        data,
+        loading,
+        error: queryError,
+    } = useDataQuery<{ data: { name: string; level: number; id: string }[] }>(
+        query
+    )
 
     const levels = data?.data ?? []
-
 
     if (loading && !!field.value) {
         return (
@@ -56,12 +57,12 @@ export const OrgUnitLevelSelector = ({
     }
 
     if (queryError) {
-        return (<NoticeBox error title={i18n.t('Failed')}>
-            {i18n.t(queryError.message)}
-        </NoticeBox>
+        return (
+            <NoticeBox error title={i18n.t('Failed')}>
+                {i18n.t(queryError.message)}
+            </NoticeBox>
         )
     }
-
 
     return (
         <SingleSelectField
@@ -71,9 +72,7 @@ export const OrgUnitLevelSelector = ({
             disabled={disabled || loading}
             loading={loading}
             error={!!error}
-            validationText={
-                error?.message
-            }
+            validationText={error?.message}
             selected={
                 field.value !== undefined && field.value !== null
                     ? String(field.value)

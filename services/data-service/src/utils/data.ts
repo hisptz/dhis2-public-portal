@@ -95,13 +95,16 @@ async function expandDataElement(
     timeout?: number
 ): Promise<Expanded[]> {
     if (element.includes('.')) {
-        const [de, coc] = element.split('.')
+        const [, coc] = element.split('.')
         return [{ combo: element, id: coc, name: '' }]
     }
 
     const pipeline = seq(
         // Step 1: get categoryCombo id
-        (deId: string, cb: any) => {
+        (
+            deId: string,
+            cb: (id: null, item?: Record<string, unknown>) => void
+        ) => {
             client
                 .get(`dataElements/${deId}?fields=categoryCombo`, {
                     timeout,
@@ -117,7 +120,10 @@ async function expandDataElement(
         },
 
         // Step 2: get categoryOptionCombos
-        (input: { deId: string; categoryComboId: string }, cb: any) => {
+        (
+            input: { deId: string; categoryComboId: string },
+            cb: (error: null | Error, item?: Record<string, unknown>) => void
+        ) => {
             client
                 .get(
                     `categoryCombos/${input.categoryComboId}?fields=id,categoryOptionCombos`,
@@ -133,8 +139,11 @@ async function expandDataElement(
         },
 
         // Step 3: fetch each categoryOptionCombo details
-        (input: { deId: string; optionCombos: { id: string }[] }, cb: any) => {
-            ; (async () => {
+        (
+            input: { deId: string; optionCombos: { id: string }[] },
+            cb: (error: null | Error, items?: Expanded[]) => void
+        ) => {
+            ;(async () => {
                 try {
                     const results: Expanded[] = []
                     for (const coc of input.optionCombos) {
@@ -150,17 +159,27 @@ async function expandDataElement(
                     }
                     cb(null, results)
                 } catch (err) {
-                    cb(err)
+                    if (err instanceof Error) {
+                        cb(err)
+                    } else {
+                        cb(new Error(err as string))
+                    }
                 }
             })()
         }
     )
 
     return new Promise<Expanded[]>((resolve, reject) => {
-        pipeline(element, (err: any, result: Expanded[]) => {
-            if (err) return reject(err)
-            resolve(result)
-        })
+        pipeline(
+            element,
+            (
+                err: null | Error | Record<string, unknown>,
+                result: Expanded[]
+            ) => {
+                if (err) return reject(err)
+                resolve(result)
+            }
+        )
     })
 }
 
@@ -244,16 +263,11 @@ export async function processDataItems({
     }
 }
 
-
-
-
-
 export async function createMapping({
     dataElements,
 }: {
     dataElements: string[]
 }): Promise<Mapping[]> {
-
     if (!dataElements?.length) {
         return []
     }

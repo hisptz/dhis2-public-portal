@@ -10,8 +10,6 @@ import { useGetDataSource } from '@/shared/components/DataConfiguration/hooks/da
 import { FullLoader } from '@/shared/components/FullLoader'
 import { DataConfigurationActions } from '@/shared/components/DataConfiguration/components/DataConfigurationActions'
 
-
-
 export const Route = createFileRoute(
     '/data-service-configuration/_provider/$configId/_provider/edit/_provider'
 )({
@@ -20,7 +18,7 @@ export const Route = createFileRoute(
 
 function RouteComponent() {
     const { configId } = useParams({
-        from: '/data-service-configuration/_provider/$configId/_provider/edit/_provider/'
+        from: '/data-service-configuration/_provider/$configId/_provider/edit/_provider/',
     })
     const { refetch } = useGetDataSource(configId)
     const form = useForm<DataServiceConfig>({

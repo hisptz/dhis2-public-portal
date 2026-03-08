@@ -8,7 +8,7 @@ export function RHFIDField({
     name,
     dependsOn,
     label,
-    disabled
+    disabled,
 }: {
     name: string
     dependsOn: string

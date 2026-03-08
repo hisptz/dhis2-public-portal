@@ -1,10 +1,10 @@
 'use client'
 
-import { ComponentType, ReactNode } from 'react'
+import { ReactNode } from 'react'
 import dynamic from 'next/dynamic'
 import { FullPageLoader } from '@/components/FullPageLoader'
 
-const NoSsrAppProvider: ComponentType<any> = dynamic(
+const NoSsrAppProvider = dynamic(
     async () => {
         return import('@dhis2/app-runtime').then(({ Provider }) => ({
             default: Provider,
@@ -28,6 +28,13 @@ export function DHIS2AppProvider({
     }
     return (
         <NoSsrAppProvider
+            userInfo={{
+                id: 'portal-user',
+                authorities: [],
+                organisationUnits: [],
+                username: 'portal-user',
+                displayName: 'Portal User',
+            }}
             config={{
                 baseUrl: `${window.location.protocol}//${window.location.host}${contextPath ?? ''}`,
                 apiVersion: '',

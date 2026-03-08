@@ -75,7 +75,9 @@ beforeEach(() => {
     cy.setCookie(name, value, options)
 
     cy.getAllCookies().should((cookies) => {
-        expect(findSessionCookieForBaseUrl(baseUrl, cookies)).to.exist
+        const cookie = findSessionCookieForBaseUrl(baseUrl, cookies)
+        // eslint-disable-next-line @typescript-eslint/no-unused-expressions
+        expect(cookie).to.exist
         expect(localStorage.getItem(LOCAL_STORAGE_KEY)).to.equal(baseUrl)
     })
 })

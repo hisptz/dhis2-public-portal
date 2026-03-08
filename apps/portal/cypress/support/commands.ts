@@ -36,7 +36,7 @@
 //   }
 // }
 
-Cypress.on('uncaught:exception', (err) => {
+Cypress.on('uncaught:exception', () => {
     //Had to ignore this error because of hydration issues as the app is running in development mode
     return false
 })

@@ -18,12 +18,15 @@ import {
 const analyticsQuery = {
     analytics: {
         resource: 'analytics',
-        params: (variables: Record<string, any>) => {
-            const { filters, dimensions, relativePeriodDate } = variables as {
-                filters: Record<string, string[]>
-                dimensions: Record<string, string[]>
-                relativePeriodDate?: string
-            }
+        params: ({
+            filters,
+            dimensions,
+            relativePeriodDate,
+        }: {
+            filters: Record<string, string[]>
+            dimensions: Record<string, string[]>
+            relativePeriodDate?: string
+        }) => {
             return {
                 displayProperty: 'NAME',
                 filter: Object.keys(filters).map(
@@ -51,6 +54,7 @@ export function useAnalytics({
 
     const { refetch, loading, data } = useDataQuery<{
         analytics: AnalyticsData
+        //@ts-expect-error DHIS2 app runtime issues
     }>(analyticsQuery, {
         lazy: true,
     })
@@ -117,18 +121,15 @@ export function useYearOverYearAnalytics({
 
     const { refetch, loading } = useDataQuery<{
         analytics: AnalyticsData
+        //@ts-expect-error DHIS2 app runtime issues
     }>(analyticsQuery, { lazy: true })
 
     //Get the selected relative period
     const selectedRelativePeriods = Object.entries(
         visualizationConfig.relativePeriods || {}
     )
-        .filter(([_, value]) => value === true)
+        .filter(([_, value]) => value)
         .map(([key]) => snakeCase(key).toUpperCase())
-
-    // get the dx and ou
-    const getYearsFromPeriods = (periods: string[]) =>
-        Array.from(new Set(periods.map((pe) => pe.slice(0, 4))))
 
     const selectedYears = selectedPeriods.filter(
         (periodId: string) =>
@@ -153,7 +154,9 @@ export function useYearOverYearAnalytics({
     const dataFilter = (visualizationConfig.filters || []).find(
         (filter: DimensionConfig) => filter.dimension === 'dx'
     )
-    const dx = dataFilter ? dataFilter.items.map((item: { id: string }) => item.id) : []
+    const dx = dataFilter
+        ? dataFilter.items.map((item: { id: string }) => item.id)
+        : []
 
     // Prepare an analytics query per each year to fetch (dynamic)
     useEffect(() => {

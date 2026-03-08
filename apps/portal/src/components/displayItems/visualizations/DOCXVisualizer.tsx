@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { Box, LoadingOverlay, Text } from '@mantine/core'
 import { IconCircleX, IconFileDescription } from '@tabler/icons-react'
 import mammoth from 'mammoth'
@@ -14,7 +14,7 @@ export function DOCXVisualizer({ path }: DOCXVisualizerProps) {
     const [loading, setLoading] = useState(true)
     const [error, setError] = useState<string | null>(null)
 
-    const loadDocxContent = React.useCallback(async () => {
+    const loadDocxContent = useCallback(async () => {
         try {
             setLoading(true)
             setError(null)

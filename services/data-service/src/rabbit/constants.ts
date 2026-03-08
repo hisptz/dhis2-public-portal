@@ -11,13 +11,12 @@ export const REFRESH_EXCHANGE = 'refresh'
 export const PROCESS_NAME = 'Worker'
 
 export enum ProcessName {
-	API = "API Worker",
-    METADATA_DOWNLOAD = "Metadata Download Worker",
-    METADATA_UPLOAD = "Metadata Upload Worker",
-	DATA_UPLOAD = "Data Upload Worker",
-	DATA_DOWNLOAD = "Data Download Worker",
+    API = 'API Worker',
+    METADATA_DOWNLOAD = 'Metadata Download Worker',
+    METADATA_UPLOAD = 'Metadata Upload Worker',
+    DATA_UPLOAD = 'Data Upload Worker',
+    DATA_DOWNLOAD = 'Data Download Worker',
 }
-
 
 export enum Queues {
     METADATA_DOWNLOAD = 'metadata_download',

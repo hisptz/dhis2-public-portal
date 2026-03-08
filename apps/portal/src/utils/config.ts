@@ -12,7 +12,7 @@ export async function getAppConfigWithNamespace<T>({
     try {
         const url = `dataStore/${namespace}/${key}`
         return (await dhis2HttpClient.get(url)) as T | undefined
-    } catch (e) {
+    } catch (_e) {
         return undefined
     }
 }
@@ -31,7 +31,7 @@ export async function getAppConfigsFromNamespace<T>(
             },
         })
         return response?.entries.map(({ value }) => value) ?? []
-    } catch (e) {
+    } catch (_e) {
         return []
     }
 }

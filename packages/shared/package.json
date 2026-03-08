@@ -6,7 +6,9 @@
     "license": "MIT",
     "private": true,
     "scripts": {
-        "check-types": "tsc --noEmit"
+        "check-types": "tsc --noEmit",
+        "lint:check": "eslint .",
+        "format:check": "prettier --check ."
     },
     "exports": {
         "./schemas": "./src/schemas/index.ts",

@@ -16,32 +16,38 @@ export const GET: Operation = async (req: Request, res: Response) => {
             })
         }
 
-        const run = runType == 'metadata' ? await dbClient.metadataRun.findFirst({
-            where: {
-                mainConfigId: configId,
-            },
-            orderBy: {
-                startedAt: 'desc',
-            },
-        }) : await dbClient.dataRun.findFirst({
-            where: {
-                mainConfigId: configId,
-            },
-            orderBy: {
-                startedAt: 'desc',
-            },
-        });
+        const run =
+            runType == 'metadata'
+                ? await dbClient.metadataRun.findFirst({
+                      where: {
+                          mainConfigId: configId,
+                      },
+                      orderBy: {
+                          startedAt: 'desc',
+                      },
+                  })
+                : await dbClient.dataRun.findFirst({
+                      where: {
+                          mainConfigId: configId,
+                      },
+                      orderBy: {
+                          startedAt: 'desc',
+                      },
+                  })
         if (!run) {
             res.status(404).json({
-                status: "failed",
-                message: "Run not found",
-            });
-            return;
+                status: 'failed',
+                message: 'Run not found',
+            })
+            return
         }
-        const response = await getRunStatus({ runId, runType});
-        res.json(response);
+        const response = await getRunStatus({ runId, runType })
+        res.json(response)
     } catch (error) {
-        logger.error(`Failed to get run status for ${req.params.runType} run ${req.params.runId}:`, error)
+        logger.error(
+            `Failed to get run status for ${req.params.runType} run ${req.params.runId}:`,
+            error
+        )
         res.status(500).json({
             success: false,
             error: error instanceof Error ? error.message : String(error),
@@ -55,7 +61,8 @@ export const GET: Operation = async (req: Request, res: Response) => {
 
 GET.apiDoc = {
     summary: 'Get the status of a specific run',
-    description: 'Retrieves the current status of a metadata or data run for a given configuration.',
+    description:
+        'Retrieves the current status of a metadata or data run for a given configuration.',
     tags: ['Data Service Runs'],
     parameters: [
         {
@@ -97,7 +104,8 @@ GET.apiDoc = {
                         properties: {
                             status: {
                                 type: 'string',
-                                description: 'The current status of the run (e.g., RUNNING, SUCCESS, FAILED)',
+                                description:
+                                    'The current status of the run (e.g., RUNNING, SUCCESS, FAILED)',
                             },
                         },
                     },
@@ -153,4 +161,3 @@ GET.apiDoc = {
         },
     },
 }
-

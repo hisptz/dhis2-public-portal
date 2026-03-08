@@ -12,7 +12,9 @@
         "publish:app-hub": "d2-app-scripts publish",
         "test:e2e": "concurrently --kill-others --success first -c blue,green --names app,cypress 'pnpm run dev'  'cypress run'",
         "test:e2e-open": "concurrently -c blue,green --names app,cypress 'pnpm run dev'  'cypress open'",
-        "check-types": "tsc --noEmit"
+        "check-types": "tsc --noEmit",
+        "lint:check": "eslint .",
+        "format:check": "prettier -v --check ."
     },
     "devDependencies": {
         "@dhis2/cli-app-scripts": "^12.8.0-alpha.1",

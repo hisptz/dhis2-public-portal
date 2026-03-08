@@ -27,6 +27,7 @@ import { CustomPeriodModal } from '@/components/displayItems/visualizations/Cust
 
 import { useSearchParams } from 'next/navigation'
 import { useYearOverYearAnalytics } from '@/hooks/charts'
+import { useMemo } from 'react'
 
 export function YearOverYearDataVisComponent({
     visualizationConfig,
@@ -44,7 +45,7 @@ export function YearOverYearDataVisComponent({
     const { orgUnitConfig, periodConfig } = config
     const { chartRef, tableRef } = useVisualizationRefs()
     const searchParams = useSearchParams()
-    const params = React.useMemo(() => new Map(searchParams), [searchParams])
+    const params = useMemo(() => new Map(searchParams), [searchParams])
     const {
         onCloseOrgUnitSelector,
         showPeriodSelector,
@@ -136,7 +137,7 @@ export function YearOverYearDataVisComponent({
         return output
     }
 
-    const combinedAnalytics = React.useMemo(() => {
+    const combinedAnalytics = useMemo(() => {
         if (analytics instanceof Map) {
             return transformToYoYAnalytics(analytics)
         }

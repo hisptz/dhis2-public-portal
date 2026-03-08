@@ -12,7 +12,9 @@ async function bundleApp() {
         console.info('Cleaning up bundle directory')
         await access('./bundle')
         await rm('./bundle', { recursive: true })
-    } catch (e) {}
+    } catch (_e) {
+        console.info('Bundle directory does not exist')
+    }
     console.info('Creating bundle directory')
     await mkdir('./bundle')
     console.info('Packaging app...')

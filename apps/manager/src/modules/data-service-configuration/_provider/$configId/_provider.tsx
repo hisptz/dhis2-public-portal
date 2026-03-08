@@ -29,20 +29,18 @@ function RouteComponent() {
         },
     })
 
-     if (error) {
+    if (error) {
         return (
             <div className="w-full h-full flex justify-center items-center">
                 <IconError24 />
                 <span style={{ color: colors.grey700 }}>{error.message}</span>
             </div>
-        );
+        )
     }
 
     if (form.formState.isLoading) {
         return <FullLoader />
     }
-
-  
 
     return (
         <FormProvider {...form}>
@@ -50,7 +48,6 @@ function RouteComponent() {
                 <div className="flex-1 w-full">
                     <Outlet />
                 </div>
-
             </div>
         </FormProvider>
     )

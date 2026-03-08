@@ -27,7 +27,7 @@ export function TestConnection() {
     const enabled = !!url && (!!pat || (!!username && !!password))
 
     const test = async () => {
-        hide();
+        hide()
         try {
             setTesting(true)
             const response = await testDataSource({
@@ -43,14 +43,14 @@ export function TestConnection() {
                 })
             } else if (response.status === 401) {
                 show({
-                    message: `${i18n.t("Unauthorized - Bad credentials")}`,
+                    message: `${i18n.t('Unauthorized - Bad credentials')}`,
                     type: { critical: true },
-                });
+                })
             } else {
                 show({
-                    message: `${i18n.t("Connection failed")}:${response.statusText}`,
+                    message: `${i18n.t('Connection failed')}:${response.statusText}`,
                     type: { critical: true },
-                });
+                })
             }
         } catch (e) {
             if (e instanceof Error) {

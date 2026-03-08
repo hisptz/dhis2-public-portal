@@ -61,14 +61,13 @@ async function getData({
                 animationDelay: 100,
             }
         })
-    } catch (error) {
+    } catch (_e) {
         return
     }
 }
 
 export async function BannerVisualization({
     config,
-    disableActions = false,
 }: BannerVisualizationProps) {
     const data = await getData({
         config,
@@ -81,7 +80,7 @@ export async function BannerVisualization({
     }
 
     return (
-        <div className="w-full min-h-[200px] p-4 flex flex-col justify-center items-stretch">
+        <div className="w-full min-h-50 p-4 flex flex-col justify-center items-stretch">
             <Banner title={config.label} items={data} />
         </div>
     )

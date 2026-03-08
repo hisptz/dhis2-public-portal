@@ -41,14 +41,16 @@ export const baseDataItemsSourceSchema = z
         dataElements: z
             .array(z.string())
             .min(1, 'At least one data element is required'),
-    }).superRefine((data, context) => {
+    })
+    .superRefine((data, context) => {
         const hasAnyData =
-            !!(data.visualizations?.length > 0) ||
-            !!(data.maps?.length > 0)
+            !!(data.visualizations?.length > 0) || !!(data.maps?.length > 0)
         if (!hasAnyData) {
             context.addIssue({
                 code: 'custom',
-                message: i18n.t('Please select at least one visualization or map'),
+                message: i18n.t(
+                    'Please select at least one visualization or map'
+                ),
                 path: [`visualizations`],
             })
         }
@@ -56,9 +58,7 @@ export const baseDataItemsSourceSchema = z
 
 export const attributeValuesDataItemsSourceSchema =
     baseDataItemsSourceSchema.safeExtend({
-        type: z.literal(
-            DataServiceSupportedDataSourcesType.ATTRIBUTE_VALUES
-        ),
+        type: z.literal(DataServiceSupportedDataSourcesType.ATTRIBUTE_VALUES),
         attributeId: z.string(),
         attributeOptions: z.array(z.string()),
     })
@@ -67,11 +67,10 @@ export type DataServiceAttributeValuesDataItemsSource = z.infer<
     typeof attributeValuesDataItemsSourceSchema
 >
 
-export const dxValuesDataItemsSourceSchema = baseDataItemsSourceSchema.safeExtend({
-    type: z.literal(
-        DataServiceSupportedDataSourcesType.DX_VALUES
-    )
-})
+export const dxValuesDataItemsSourceSchema =
+    baseDataItemsSourceSchema.safeExtend({
+        type: z.literal(DataServiceSupportedDataSourcesType.DX_VALUES),
+    })
 
 export type DataServiceDxValuesDataItemsSource = z.infer<
     typeof dxValuesDataItemsSourceSchema
@@ -83,7 +82,6 @@ export const dataSourceItemsConfigSchema = z.discriminatedUnion(
     { message: i18n.t('This value is required') }
 )
 
-
 export type DataServiceDataSourceItemsConfig = z.infer<
     typeof dataSourceItemsConfigSchema
 >
@@ -92,7 +90,7 @@ export const dataServiceConfigSchema = z.object({
     id: z.string(),
     source: dataSourceSchema,
     itemsConfig: z.array(dataSourceItemsConfigSchema),
-    visualizations: z.array(z.object({ id: z.string() }))
+    visualizations: z.array(z.object({ id: z.string() })),
 })
 
 export type DataServiceConfig = z.infer<typeof dataServiceConfigSchema>

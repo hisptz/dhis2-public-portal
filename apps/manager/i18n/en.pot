@@ -5,8 +5,8 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
-"POT-Creation-Date: 2026-02-12T09:19:02.294Z\n"
-"PO-Revision-Date: 2026-02-12T09:19:02.294Z\n"
+"POT-Creation-Date: 2026-03-07T18:49:26.269Z\n"
+"PO-Revision-Date: 2026-03-07T18:49:26.270Z\n"
 
 msgid "Could not get Appearance configurations"
 msgstr "Could not get Appearance configurations"
@@ -213,15 +213,11 @@ msgstr "Organisation unit level"
 msgid "Organisation unit level at the source to pull data from"
 msgstr "Organisation unit level at the source to pull data from"
 
-msgid "Data items"
-msgstr "Data items"
+msgid "Select visualizations or maps obtained from the metadata migration"
+msgstr "Select visualizations or maps obtained from the metadata migration"
 
-msgid ""
-"Select data items from the pre-mapped items created during metadata "
-"migration"
-msgstr ""
-"Select data items from the pre-mapped items created during metadata "
-"migration"
+msgid "Select data elements from the selected visualizations / maps"
+msgstr "Select data elements from the selected visualizations / maps"
 
 msgid "Source ID"
 msgstr "Source ID"
@@ -271,6 +267,30 @@ msgstr "Select from mapped data items from metadata migration"
 msgid "Search and select data items..."
 msgstr "Search and select data items..."
 
+msgid "Loading sources"
+msgstr "Loading sources"
+
+msgid "Loading organisation unit levels..."
+msgstr "Loading organisation unit levels..."
+
+msgid "Failed"
+msgstr "Failed"
+
+msgid "At least one data element is required"
+msgstr "At least one data element is required"
+
+msgid "Loading saved visualizations and maps..."
+msgstr "Loading saved visualizations and maps..."
+
+msgid "Failed to load data"
+msgstr "Failed to load data"
+
+msgid "Metadata loading failed"
+msgstr "Metadata loading failed"
+
+msgid "Search and select visualizations or maps..."
+msgstr "Search and select visualizations or maps..."
+
 msgid "Period Type"
 msgstr "Period Type"
 
@@ -295,8 +315,8 @@ msgstr "Time taken"
 msgid "Items"
 msgstr "Items"
 
-msgid "Error details"
-msgstr "Error details"
+msgid "Show error details"
+msgstr "Show error details"
 
 msgid "Show {{state}} details"
 msgstr "Show {{state}} details"
@@ -475,9 +495,6 @@ msgstr "Idle"
 msgid "Initialized"
 msgstr "Initialized"
 
-msgid "Failed"
-msgstr "Failed"
-
 msgid "Done"
 msgstr "Done"
 
@@ -490,14 +507,14 @@ msgstr "Errors"
 msgid "Details"
 msgstr "Details"
 
-msgid "Ignored items"
-msgstr "Ignored items"
-
 msgid "Imported items"
 msgstr "Imported items"
 
 msgid "Updated items"
 msgstr "Updated items"
+
+msgid "Ignored items"
+msgstr "Ignored items"
 
 msgid "Deleted items"
 msgstr "Deleted items"
@@ -511,23 +528,35 @@ msgstr "There are no {{type}} with the status {{status}}"
 msgid "There are no {{type}} for this run"
 msgstr "There are no {{type}} for this run"
 
+msgid "An error occurred"
+msgstr "An error occurred"
+
+msgid "HTTP Status"
+msgstr "HTTP Status"
+
+msgid "Message"
+msgstr "Message"
+
 msgid "Upload completed with errors"
 msgstr "Upload completed with errors"
 
 msgid "Error code"
 msgstr "Error code"
 
-msgid "Message"
-msgstr "Message"
-
 msgid "Properties"
 msgstr "Properties"
 
-msgid "An error occurred"
-msgstr "An error occurred"
+msgid "Data import completed with conflicts"
+msgstr "Data import completed with conflicts"
 
-msgid "HTTP Status"
-msgstr "HTTP Status"
+msgid "Property"
+msgstr "Property"
+
+msgid "Value"
+msgstr "Value"
+
+msgid "Object"
+msgstr "Object"
 
 msgid "Error logs"
 msgstr "Error logs"
@@ -553,6 +582,12 @@ msgstr "Run summary "
 msgid "Summaries"
 msgstr "Summaries"
 
+msgid "Unknown error"
+msgstr "Unknown error"
+
+msgid "File downloaded successfully"
+msgstr "File downloaded successfully"
+
 msgid "Run ID"
 msgstr "Run ID"
 
@@ -567,9 +602,6 @@ msgstr "Source type"
 
 msgid "Period(s)"
 msgstr "Period(s)"
-
-msgid "Org Unit Level"
-msgstr "Org Unit Level"
 
 msgid "Configuration(s)"
 msgstr "Configuration(s)"
@@ -613,6 +645,9 @@ msgstr "Testing..."
 msgid "Test connection"
 msgstr "Test connection"
 
+msgid "Total"
+msgstr "Total"
+
 msgid "Imported"
 msgstr "Imported"
 
@@ -624,9 +659,6 @@ msgstr "Ignored"
 
 msgid "Deleted"
 msgstr "Deleted"
-
-msgid "Show error details"
-msgstr "Show error details"
 
 msgid "No value"
 msgstr "No value"
@@ -700,13 +732,6 @@ msgstr "matched"
 msgid "issues"
 msgstr "issues"
 
-msgid ""
-"Configuration saved, but queue creation failed. Queues will be created "
-"automatically when needed."
-msgstr ""
-"Configuration saved, but queue creation failed. Queues will be created "
-"automatically when needed."
-
 msgid "Configuration saved successfully"
 msgstr "Configuration saved successfully"
 
@@ -734,14 +759,17 @@ msgstr "Failed to delete configuration"
 msgid "Add document"
 msgstr "Add document"
 
-msgid "Could not create new library"
-msgstr "Could not create new library"
+msgid "Could not save the document. Please fix the form errors and try again"
+msgstr "Could not save the document. Please fix the form errors and try again"
 
 msgid "File uploaded successfully"
 msgstr "File uploaded successfully"
 
 msgid "Could not save the file!"
 msgstr "Could not save the file!"
+
+msgid "Could not create new library"
+msgstr "Could not create new library"
 
 msgid "Create Item"
 msgstr "Create Item"

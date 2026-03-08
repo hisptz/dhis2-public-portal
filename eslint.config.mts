@@ -50,6 +50,7 @@ export default defineConfig([
         '**/node_modules',
         'd2.config.js',
         '**/.d2',
+        'services/data-service/app',
         'routeTree.gen.ts',
         '**/.docusaurus',
     ]),

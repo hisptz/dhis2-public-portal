@@ -86,7 +86,9 @@ export function SortItemsForm({
             ...item,
             sortOrder: index + 1,
         }))
-        const items = itemsToSubmit.map(({ draggableId: _draggableId, ...rest }) => rest)
+        const items = itemsToSubmit.map(
+            ({ draggableId: _draggableId, ...rest }) => rest
+        )
         for (const item of items) {
             await updateItem(item)
         }

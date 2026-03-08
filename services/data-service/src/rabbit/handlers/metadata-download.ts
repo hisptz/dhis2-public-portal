@@ -37,7 +37,7 @@ export async function metadataDownloadHandler({
         },
         data: {
             status: ProcessStatus.INIT,
-            startedAt: new Date()
+            startedAt: new Date(),
         },
     })
 
@@ -62,7 +62,7 @@ export async function metadataDownloadHandler({
                         status: RunStatus.FAILED,
                         error: error.message,
                         errorObject: error.response?.data,
-                        finishedAt: new Date()
+                        finishedAt: new Date(),
                     },
                 })
                 channel.nack(message, false, false)
@@ -72,7 +72,11 @@ export async function metadataDownloadHandler({
                 where: {
                     uid: metaDownloadTaskUid,
                 },
-                data: { status: RunStatus.FAILED, error: error.message, finishedAt: new Date() },
+                data: {
+                    status: RunStatus.FAILED,
+                    error: error.message,
+                    finishedAt: new Date(),
+                },
             })
             channel.nack(message, false, false)
             logger.error(
@@ -83,7 +87,11 @@ export async function metadataDownloadHandler({
                 where: {
                     uid: metaDownloadTaskUid,
                 },
-                data: { status: RunStatus.FAILED, error: 'Unknown error', finishedAt: new Date() },
+                data: {
+                    status: RunStatus.FAILED,
+                    error: 'Unknown error',
+                    finishedAt: new Date(),
+                },
             })
             channel.nack(message, false, false)
             logger.error(

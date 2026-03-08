@@ -1,6 +1,6 @@
 'use client'
 
-import { SingleValue, SingleValueVisualizer } from '@hisptz/dhis2-analytics'
+import { SingleValue } from '@hisptz/dhis2-analytics'
 import dynamic from 'next/dynamic'
 import { Loader } from '@mantine/core'
 
@@ -18,7 +18,7 @@ const NoSSRSingleValue = dynamic(
         ssr: false,
         loading: () => {
             return (
-                <div className="w-full h-full flex items-center justify-center min-h-[400px]">
+                <div className="w-full h-full flex items-center justify-center min-h-100">
                     <Loader size="md" />
                 </div>
             )

@@ -24,7 +24,7 @@ export async function getAppMetadata(): Promise<Metadata> {
             },
             description: config?.description,
         } as Metadata
-    } catch (e) {
+    } catch (_e) {
         return {
             title: 'Public Portal',
             description: 'DHIS2 FlexiPortal',
@@ -38,7 +38,7 @@ export async function getAppMeta(): Promise<AppMeta | undefined> {
             namespace: DatastoreNamespaces.MAIN_CONFIG,
             key: 'metadata',
         }))!
-    } catch (e) {
+    } catch (_e) {
         return
     }
 }

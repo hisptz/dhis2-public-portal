@@ -1,4 +1,8 @@
-import { createLazyFileRoute, useNavigate, useParams } from '@tanstack/react-router'
+import {
+    createLazyFileRoute,
+    useNavigate,
+    useParams,
+} from '@tanstack/react-router'
 import { SourceConfiguration } from '@/shared/components/DataConfiguration/components/SourceConfiguration'
 import { DataItemsConfig } from '@/shared/components/DataConfiguration/components/DataItemsConfig/DataItemsConfig'
 import { Button, IconArrowLeft24 } from '@dhis2/ui'
@@ -14,8 +18,8 @@ function RouteComponent() {
     const navigate = useNavigate({
         from: '/data-service-configuration/$configId/edit/',
     })
-    const {configId} = useParams({
-        from: '/data-service-configuration/_provider/$configId/_provider/edit/_provider/'
+    const { configId } = useParams({
+        from: '/data-service-configuration/_provider/$configId/_provider/edit/_provider/',
     })
 
     return (
@@ -42,18 +46,3 @@ function RouteComponent() {
         </div>
     )
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

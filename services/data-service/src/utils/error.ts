@@ -14,17 +14,6 @@ export class QueuedJobError extends Error {
     }
 }
 
-type ImportSummary = {
-    response: {
-        importCount: {
-            imported: number
-            ignored: number
-            updated: number
-            deleted: number
-        }
-    }
-}
-
 export function handleError(error: AxiosError | Error) {
     if (error instanceof AxiosError) {
         handleAxiosPostError(error)

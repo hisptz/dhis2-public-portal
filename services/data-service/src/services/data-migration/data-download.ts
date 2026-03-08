@@ -1,4 +1,8 @@
-import { createDownloadClient, createSourceClient, dhis2Client } from '@/clients/dhis2'
+import {
+    createDownloadClient,
+    createSourceClient,
+    dhis2Client,
+} from '@/clients/dhis2'
 import logger from '@/logging'
 import {
     DataServiceAttributeValuesDataItemsSource,
@@ -91,7 +95,13 @@ export async function enqueueDownloadTasks({
 }: DataRun) {
     const mainConfig = await fetchMainConfiguration(mainConfigId)
 
-    const dataItemConfigs = compact(configIds.map((id) => { return mainConfig.itemsConfig.find(({ id: configId }) => configId === id) }))
+    const dataItemConfigs = compact(
+        configIds.map((id) => {
+            return mainConfig.itemsConfig.find(
+                ({ id: configId }) => configId === id
+            )
+        })
+    )
     const sourceClient = createSourceClient(mainConfig.source.routeId)
 
     /**
@@ -175,13 +185,13 @@ async function downloadDataForDxItems({
         const heavyDimension = meta.runtimeConfig.paginateByData
             ? 'dx'
             : Object.keys(dimensions).reduce((acc, value) => {
-                if (
-                    (dimensions[acc]?.length ?? 0) >
-                    (dimensions[value]?.length ?? 0)
-                )
-                    return acc
-                return value
-            }, Object.keys(dimensions)[0])
+                  if (
+                      (dimensions[acc]?.length ?? 0) >
+                      (dimensions[value]?.length ?? 0)
+                  )
+                      return acc
+                  return value
+              }, Object.keys(dimensions)[0])
         const pageSize = meta.runtimeConfig.pageSize ?? 50
 
         if (dimensions[heavyDimension]!.length <= pageSize) {
@@ -259,13 +269,13 @@ async function downloadDataForAttributeItems({
         const heavyDimension = meta.runtimeConfig.paginateByData
             ? 'dx'
             : Object.keys(dimensions).reduce((acc, value) => {
-                if (
-                    (dimensions[acc]?.length ?? 0) >
-                    (dimensions[value]?.length ?? 0)
-                )
-                    return acc
-                return value
-            }, Object.keys(dimensions)[0])
+                  if (
+                      (dimensions[acc]?.length ?? 0) >
+                      (dimensions[value]?.length ?? 0)
+                  )
+                      return acc
+                  return value
+              }, Object.keys(dimensions)[0])
         const pageSize = meta.runtimeConfig.pageSize ?? 50
         const categoryOptions = config.attributeOptions
         const iterations = chunk(dimensions[heavyDimension], pageSize)
@@ -397,20 +407,20 @@ async function processDataDownload({
         const processedData =
             config.type === 'ATTRIBUTE_VALUES'
                 ? await processAttributeComboData({
-                    data,
-                    dataItemsConfig: config,
-                    categoryOptionId: head(
-                        filters![
-                        (
-                            config as DataServiceAttributeValuesDataItemsSource
-                        ).attributeId
-                        ]
-                    ) as string,
-                })
+                      data,
+                      dataItemsConfig: config,
+                      categoryOptionId: head(
+                          filters![
+                              (
+                                  config as DataServiceAttributeValuesDataItemsSource
+                              ).attributeId
+                          ]
+                      ) as string,
+                  })
                 : await processData({
-                    data,
-                    dataItems: config.dataItems,
-                })
+                      data,
+                      dataItems: config.dataItems,
+                  })
 
         logger.info(`${processedData.dataValues.length} data values processed`)
 
@@ -421,7 +431,7 @@ async function processDataDownload({
             })
 
             await updateDownloadStatus(task.uid, {
-                count: processedData.dataValues.length
+                count: processedData.dataValues.length,
             })
 
             const createdUploadTask = await createUploadJob({

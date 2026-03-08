@@ -14,7 +14,7 @@ import {
 import i18n from '@dhis2/d2-i18n'
 import { RHFSingleSelectField, RHFTextInputField } from '@hisptz/dhis2-ui'
 import { startCase } from 'lodash'
-import { FormProvider, useForm,  } from 'react-hook-form'
+import { FormProvider, useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { PeriodTypeCategory, PeriodUtility } from '@hisptz/dhis2-utils'
 import { RHFIDField } from '../../../../../../Fields/IDField'
@@ -56,10 +56,16 @@ export function DataItemConfigForm({
                             name={'type'}
                             options={Object.values(
                                 DataServiceSupportedDataSourcesType
-                            ).filter((item) => item != DataServiceSupportedDataSourcesType.ATTRIBUTE_VALUES).map((item) => ({
-                                label: startCase(item.toLowerCase()),
-                                value: item,
-                            }))}
+                            )
+                                .filter(
+                                    (item) =>
+                                        item !=
+                                        DataServiceSupportedDataSourcesType.ATTRIBUTE_VALUES
+                                )
+                                .map((item) => ({
+                                    label: startCase(item.toLowerCase()),
+                                    value: item,
+                                }))}
                         />
                         <RHFTextInputField
                             required
@@ -103,20 +109,21 @@ export function DataItemConfigForm({
                             helpText={i18n.t(
                                 'Organisation unit level at the source to pull data from'
                             )}
-                         />
+                        />
                         <VisualizationDataSelector
                             nameVisualizations="visualizations"
                             nameDataElements={'dataElements'}
                             labelVisualizations={'Visualizations / Maps'}
                             labelDataElements={'Data elements'}
-                            nameMaps='maps'
+                            nameMaps="maps"
                             required
                             helpTextVisualizations={i18n.t(
                                 'Select visualizations or maps obtained from the metadata migration'
                             )}
                             helpTextDataElements={i18n.t(
                                 'Select data elements from the selected visualizations / maps'
-                            )} />
+                            )}
+                        />
                     </form>
                 </ModalContent>
                 <ModalActions>

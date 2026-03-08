@@ -4,7 +4,13 @@ import { useEffect } from 'react'
 import i18n from '@dhis2/d2-i18n'
 import { AddDataSource } from './AddDataSource'
 import { useRoutes } from '../hooks/useRoutes'
-import { Button, ButtonStrip, IconDelete16, IconView16, Tooltip } from '@dhis2/ui'
+import {
+    Button,
+    ButtonStrip,
+    IconDelete16,
+    IconView16,
+    Tooltip,
+} from '@dhis2/ui'
 import { useNavigate } from '@tanstack/react-router'
 import { useDeleteDataSource } from '../hooks/save'
 import { DataServiceConfig } from '@packages/shared/schemas'
@@ -33,8 +39,8 @@ export function ConfigurationList() {
     const configurations = useDataSources()
     const { routes, refetch: refetchRoutes } = useRoutes()
     const navigate = useNavigate({
-        from: "/data-service-configuration/",
-    });
+        from: '/data-service-configuration/',
+    })
     const { confirm } = useDialog()
     const { deleteConfig } = useDeleteDataSource()
 
@@ -58,7 +64,6 @@ export function ConfigurationList() {
         })
     }
 
-
     useEffect(() => {
         refetchRoutes()
     }, [configurations.length, refetchRoutes])
@@ -73,24 +78,33 @@ export function ConfigurationList() {
             name: configuration.source.name,
             url,
             status: <ConfigStatus configId={configuration.id} />,
-            actions: (<ButtonStrip>
-                <Tooltip content={i18n.t("View runs")}>
-
-                    <Button small secondary onClick={() => {
-                        navigate({
-                            to: "/data-service-configuration/$configId",
-                            params: {
-                                configId: configuration.id,
-                            },
-                        });
-                    }}  icon={<IconView16 />} />
-                </Tooltip>
-                <Tooltip content={i18n.t("Delete configuration")}>
-                    <Button small secondary onClick={() => handleDelete(configuration)} icon={<IconDelete16 color='red' />} />
-
-                </Tooltip>
-
-            </ButtonStrip>),
+            actions: (
+                <ButtonStrip>
+                    <Tooltip content={i18n.t('View runs')}>
+                        <Button
+                            small
+                            secondary
+                            onClick={() => {
+                                navigate({
+                                    to: '/data-service-configuration/$configId',
+                                    params: {
+                                        configId: configuration.id,
+                                    },
+                                })
+                            }}
+                            icon={<IconView16 />}
+                        />
+                    </Tooltip>
+                    <Tooltip content={i18n.t('Delete configuration')}>
+                        <Button
+                            small
+                            secondary
+                            onClick={() => handleDelete(configuration)}
+                            icon={<IconDelete16 color="red" />}
+                        />
+                    </Tooltip>
+                </ButtonStrip>
+            ),
         }
     })
 

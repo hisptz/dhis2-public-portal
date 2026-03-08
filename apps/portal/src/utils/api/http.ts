@@ -208,7 +208,7 @@ export class D2HttpClient {
             let errorDetails
             try {
                 errorDetails = await response.json()
-            } catch (e) {
+            } catch (_e) {
                 errorDetails = response
             }
             throw errorDetails
@@ -279,10 +279,7 @@ export class D2HttpClient {
 
     async postFeedback<T>(
         path: string,
-        meta?: { params?: { [key: string]: string } },
-        p0?: {
-            params: { recipients: string; subject: string; message: string }
-        }
+        meta?: { params?: { [key: string]: string } }
     ) {
         const { params } = meta ?? {}
         const url = new URL(`${path}`, this.baseURL)

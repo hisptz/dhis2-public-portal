@@ -1,7 +1,7 @@
 'use client'
 
 import { ActionIcon, Menu } from '@mantine/core'
-import { Fragment, ReactNode, useId } from 'react'
+import { ReactNode, useId } from 'react'
 import { isEmpty } from 'lodash'
 import { IconDots } from '@tabler/icons-react'
 

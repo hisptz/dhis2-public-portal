@@ -39,7 +39,7 @@ export function DataVisComponent({
     disableActions?: boolean
 }) {
     const { type, orgUnitConfig, periodConfig } = config
-    const { chartRef, tableRef, setSingleValueRef } = useVisualizationRefs()
+    const { chartRef, tableRef } = useVisualizationRefs()
     const {
         onCloseOrgUnitSelector,
         showPeriodSelector,

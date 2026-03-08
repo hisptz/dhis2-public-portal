@@ -39,7 +39,7 @@ export function RunConfigForm({
     hide,
     config,
     onClose,
-    onRunComplete
+    onRunComplete,
 }: {
     config: DataServiceConfig
     hide: boolean
@@ -135,8 +135,8 @@ export function RunConfigForm({
                 )
 
                 // Extract all data elements and org units from selected configs
-                const allDataElements = selectedConfigs.flatMap((configItem) =>
-                    [...configItem.dataElements]
+                const allDataElements = selectedConfigs.flatMap(
+                    (configItem) => [...configItem.dataElements]
                 )
                 const allOrgUnits = selectedConfigs.map(
                     (configItem) => configItem.parentOrgUnitId
@@ -196,7 +196,7 @@ export function RunConfigForm({
                     'Data validation process started successfully. Redirecting to validation logs...'
                 )
             }
-            onRunComplete();
+            onRunComplete()
             show({
                 message: successMessage,
                 type: { success: true },

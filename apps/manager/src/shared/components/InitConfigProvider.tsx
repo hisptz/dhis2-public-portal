@@ -40,7 +40,11 @@ export const InitConfigProvider = ({
     const [mutate, { loading: mutationLoading, error: mutationError }] =
         useDataMutation(getMutation(dataStoreKey))
 
-    const create = async ({ data }: { data: Record<string, unknown> | unknown[] }) => {
+    const create = async ({
+        data,
+    }: {
+        data: Record<string, unknown> | unknown[]
+    }) => {
         return await mutate({
             data,
         })

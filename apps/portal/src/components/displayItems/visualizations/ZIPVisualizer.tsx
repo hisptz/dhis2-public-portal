@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { Box, List, LoadingOverlay, Text } from '@mantine/core'
 import {
     IconCircleX,
@@ -21,7 +21,7 @@ export function ZIPVisualizer({ path }: ZIPVisualizerProps) {
     const [loading, setLoading] = useState(true)
     const [error, setError] = useState<string | null>(null)
 
-    const loadZipContent = React.useCallback(async () => {
+    const loadZipContent = useCallback(async () => {
         try {
             setLoading(true)
             setError(null)

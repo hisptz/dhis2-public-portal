@@ -1,6 +1,6 @@
-import { useDataQuery } from "@dhis2/app-runtime"
-import _, { compact, flattenDeep, isEmpty, uniq } from "lodash"
-import { useEffect } from "react"
+import { useDataQuery } from '@dhis2/app-runtime'
+import _, { compact, flattenDeep, isEmpty, uniq } from 'lodash'
+import { useEffect } from 'react'
 
 export type Visualization = {
     id: string
@@ -17,8 +17,6 @@ export type Visualization = {
     }>
 }
 
-
-
 export type D2Map = {
     id: string
     name: string
@@ -34,8 +32,6 @@ export type D2Map = {
         }>
     }>
 }
-
-
 
 export const testDataSource = async ({
     url,
@@ -59,8 +55,8 @@ export const testDataSource = async ({
 }
 
 type Indicator = {
-    id: string,
-    name: string,
+    id: string
+    name: string
     indicatorType: { id: string }
     numerator: string
     denominator: string
@@ -71,14 +67,11 @@ const INDICATORS_QUERY = {
         resource: 'indicators',
         params: ({ ids }: { ids: string }) => ({
             filter: `id:in:[${ids}]`,
-            fields:
-                'id,name,numerator,denominator,indicatorType[id]',
+            fields: 'id,name,numerator,denominator,indicatorType[id]',
             paging: false,
         }),
     },
 } as const
-
-
 
 export type DataElement = {
     id: string
@@ -88,19 +81,16 @@ export type DataElement = {
     name: string
 }
 
-
 const DATAELEMENTS_QUERY = {
     data: {
         resource: 'dataElements',
         params: ({ ids }: { ids: string }) => ({
             filter: `id:in:[${ids}]`,
-            fields:
-                'id,displayName,code,shortName,name',
+            fields: 'id,displayName,code,shortName,name',
             paging: false,
         }),
     },
 } as const
-
 
 export function getIndicatorIdsFromVisualizations(
     visualizationConfigs: Visualization[]
@@ -115,8 +105,6 @@ export function getIndicatorIdsFromVisualizations(
         )
     )
 }
-
-
 
 export function getDataElementIdsFromVisualizations(
     visualizationConfigs: Visualization[]
@@ -133,24 +121,21 @@ export function getDataElementIdsFromVisualizations(
     )
 }
 
-
-
 export function useDataElementConfigs(items: string[]) {
     const ids = uniq(items).join(',')
 
     const { data, loading, error, refetch } = useDataQuery<{
         data: { dataElements: DataElement[] }
     }>(DATAELEMENTS_QUERY, {
-         variables: { ids },
+        variables: { ids },
         lazy: isEmpty(items),
     })
 
-     useEffect(() => {
+    useEffect(() => {
         if (!isEmpty(ids)) {
             refetch({ ids })
         }
     }, [ids])
-
 
     return {
         dataElements: data?.data?.dataElements ?? [],
@@ -206,7 +191,6 @@ export function getIndicatorsSources({
     }
 }
 
-
 export function getIndicatorSources(indicator: Indicator) {
     const type = indicator.indicatorType.id
     const numeratorDataItems = getDataItemsFromIndicatorExpression(
@@ -245,7 +229,6 @@ export function getIndicatorSources(indicator: Indicator) {
         ...dataItems,
     }
 }
-
 
 export function getDataItemsFromIndicatorExpression(expression: string) {
     /*
@@ -316,7 +299,6 @@ export function getIndicatorIdsFromMaps(maps: D2Map[]) {
     )
 }
 
-
 export function getDataElementIdsFromMaps(mapsConfig: D2Map[]) {
     return _.compact(
         _.flattenDeep(
@@ -331,4 +313,3 @@ export function getDataElementIdsFromMaps(mapsConfig: D2Map[]) {
         )
     )
 }
-

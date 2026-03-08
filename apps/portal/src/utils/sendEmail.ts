@@ -3,7 +3,7 @@
 import { dhis2HttpClient } from '@/utils/api/dhis2'
 import { FeedbackConfig, FeedbackItem } from '@packages/shared/schemas'
 
-interface SendEmailResponse {}
+type SendEmailResponse = object
 
 export async function sendEmail({
     subject,
@@ -21,11 +21,9 @@ export async function sendEmail({
         message,
     }
     try {
-        return await dhis2HttpClient.postFeedback<SendEmailResponse>(
-            url,
-            {},
-            { params: searchParams }
-        )
+        return await dhis2HttpClient.postFeedback<SendEmailResponse>(url, {
+            params: searchParams,
+        })
     } catch (e) {
         console.log(e)
         throw 'Could not send email'

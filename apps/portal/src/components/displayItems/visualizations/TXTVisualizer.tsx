@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { Box, LoadingOverlay, Text } from '@mantine/core'
 import { IconFileText } from '@tabler/icons-react'
 
@@ -13,7 +13,7 @@ export function TXTVisualizer({ path }: TXTVisualizerProps) {
     const [loading, setLoading] = useState(true)
     const [error, setError] = useState<string | null>(null)
 
-    const loadTextContent = React.useCallback(async () => {
+    const loadTextContent = useCallback(async () => {
         try {
             setLoading(true)
             const response = await fetch(path)

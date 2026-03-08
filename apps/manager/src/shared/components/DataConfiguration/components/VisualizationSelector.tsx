@@ -34,7 +34,10 @@ export function VisualizationSelector({
         Array<{ label: string; value: string }>
     >([])
     const { data, loading, refetch } = useDataQuery<{
-        vis: { pager: { page: string; pageCount: string }; visualizations: Array<{ id: string; displayName: string }> }
+        vis: {
+            pager: { page: string; pageCount: string }
+            visualizations: Array<{ id: string; displayName: string }>
+        }
     }>(visualizationQuery, {
         variables: {
             page: 1,
@@ -43,14 +46,13 @@ export function VisualizationSelector({
 
     useEffect(() => {
         if (data) {
-            const newData = data?.vis?.visualizations?.map(
-                (visualization) => {
+            const newData =
+                data?.vis?.visualizations?.map((visualization) => {
                     return {
                         label: visualization.displayName,
                         value: visualization.id,
                     }
-                }
-            ) ?? []
+                }) ?? []
             setOptions((prevState) =>
                 uniqBy([...prevState, ...newData], 'value')
             )
@@ -80,7 +82,11 @@ export function VisualizationSelector({
     const onFilterChange = debounce(async ({ value }) => {
         const { vis: visualizationResponse } = await onFilter(value)
         const visualizations =
-            (visualizationResponse as { visualizations?: Array<{ id: string; displayName: string }> })?.visualizations ?? []
+            (
+                visualizationResponse as {
+                    visualizations?: Array<{ id: string; displayName: string }>
+                }
+            )?.visualizations ?? []
         setOptions(
             uniqBy(
                 [
@@ -101,10 +107,18 @@ export function VisualizationSelector({
                     return uniqBy(
                         [
                             ...(options ?? []),
-                            ...(field.value?.map(({ id, name }: { id: string; name: string }) => ({
-                                label: name,
-                                value: id,
-                            })) ?? []),
+                            ...(field.value?.map(
+                                ({
+                                    id,
+                                    name,
+                                }: {
+                                    id: string
+                                    name: string
+                                }) => ({
+                                    label: name,
+                                    value: id,
+                                })
+                            ) ?? []),
                         ],
                         'value'
                     )

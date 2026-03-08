@@ -13,7 +13,7 @@ export function PageHeader({
     return (
         <div className="flex flex-col">
             <div className="flex items-center justify-between">
-                <div className='flex flex-row justify-start items-center gap-4'>
+                <div className="flex flex-row justify-start items-center gap-4">
                     <h1 className="text-3xl font-bold">{title}</h1>
                     {subTitle}
                 </div>

@@ -21,8 +21,8 @@
         "clean": "find . -name 'node_modules' -type d -prune -exec rm -rf '{}' +",
         "clean:cache": "find . -type d -name '.next' -exec rm -rf {} +",
         "lint": "eslint --fix .",
-        "lint:check": "eslint .",
-        "format:check": "prettier --check .",
+        "lint:check": "turbo run lint:check",
+        "format:check": "turbo run format:check",
         "format": "prettier --write ."
     },
     "devDependencies": {

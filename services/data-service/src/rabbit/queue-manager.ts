@@ -138,7 +138,7 @@ export async function purgeConfigQueues(configId: string) {
     }
 
     const queueNames = getQueueNames(configId)
-    const results: Record<string, any> = {}
+    const results: Record<string, unknown> = {}
 
     logger.info(`Purging all queues for configId: ${configId}`)
 
@@ -191,7 +191,7 @@ export async function deleteConfigQueues(configId: string) {
     }
 
     const queueNames = getQueueNames(configId)
-    const results: Record<string, any> = {}
+    const results: Record<string, unknown> = {}
 
     const queuesToDelete = [
         { key: 'metadataDownload', name: queueNames.metadataDownload },

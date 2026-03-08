@@ -67,7 +67,9 @@ export function AddDocumentForm({
     const onError = (errors: FieldErrors<DocumentItemPayload>) => {
         console.error(errors)
         show({
-            message: i18n.t('Could not save the document. Please fix the form errors and try again'),
+            message: i18n.t(
+                'Could not save the document. Please fix the form errors and try again'
+            ),
             type: { critical: true },
         })
     }

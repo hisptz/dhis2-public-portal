@@ -4,7 +4,7 @@ import { env } from '@/utils/env'
 export function getServerImageUrl(id: string) {
     try {
         return getImageUrl(id, { baseUrl: `${env.CONTEXT_PATH ?? ''}` })
-    } catch (e) {
+    } catch (_e) {
         return undefined
     }
 }

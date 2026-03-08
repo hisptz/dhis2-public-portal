@@ -22,7 +22,9 @@ export function FooterItemConfigInput(props: InputFieldProps) {
 
     const { value: hide, setTrue: onHide, setFalse: onShow } = useBoolean(true)
 
-    const getSanitizedItems = (fields: { id?: string; title?: string; type?: string }[]): FooterItemConfig[] => {
+    const getSanitizedItems = (
+        fields: { id?: string; title?: string; type?: string }[]
+    ): FooterItemConfig[] => {
         return fields as unknown as FooterItemConfig[]
     }
 

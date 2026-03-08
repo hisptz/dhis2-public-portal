@@ -4,15 +4,10 @@ import { SimpleTable, SimpleTableColumn } from '@hisptz/dhis2-ui'
 import i18n from '@dhis2/d2-i18n'
 import { startCase } from 'lodash'
 import { FixedPeriodType } from '@hisptz/dhis2-utils'
-import {
-    ButtonStrip,
-    Divider,
-    Button,
-    IconDelete16,
-} from "@dhis2/ui";
+import { ButtonStrip, Divider, Button, IconDelete16 } from '@dhis2/ui'
 import { AddDataItemConfig } from './AddDataItemConfig/AddDataItemConfig'
 import { EditDataItemConfig } from './AddDataItemConfig/EditDataItemConfig'
-import { DeleteConfirmationAlert } from "../../DeleteConfirmationAlert";
+import { DeleteConfirmationAlert } from '../../DeleteConfirmationAlert'
 import React from 'react'
 
 const columns: SimpleTableColumn[] = [
@@ -44,13 +39,16 @@ export function DataItemsList() {
         keyName: 'fieldId' as unknown as 'id',
     })
 
-    const [deleteStates, setDeleteStates] = React.useState<Record<number, boolean>>({});
+    const [deleteStates, setDeleteStates] = React.useState<
+        Record<number, boolean>
+    >({})
 
     const rows = fields.map((item, index) => {
-
-        const hide = deleteStates[index] ?? true;
-        const onClose = () => setDeleteStates(prev => ({ ...prev, [index]: true }));
-        const onShow = () => setDeleteStates(prev => ({ ...prev, [index]: false }));
+        const hide = deleteStates[index] ?? true
+        const onClose = () =>
+            setDeleteStates((prev) => ({ ...prev, [index]: true }))
+        const onShow = () =>
+            setDeleteStates((prev) => ({ ...prev, [index]: false }))
 
         return {
             ...item,
@@ -70,13 +68,10 @@ export function DataItemsList() {
                             message={i18n.t(
                                 `Are you sure you want to delete ${item.name} config?`
                             )}
-                            onConfirm={() =>
-                                remove(index)
-                            }
+                            onConfirm={() => remove(index)}
                             hide={hide}
                             onClose={onClose}
                         />
-
                     )}
                     <Button
                         small
@@ -86,8 +81,7 @@ export function DataItemsList() {
                 </ButtonStrip>
             ),
         }
-    });
-
+    })
 
     return (
         <div className="flex flex-col gap-2 w-full">

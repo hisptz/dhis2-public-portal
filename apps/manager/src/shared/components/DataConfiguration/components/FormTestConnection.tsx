@@ -38,8 +38,9 @@ export function FormTestConnection({
                 })
             } else {
                 show({
-                    message: `${i18n.t('Connection failed')}: ${error.details?.message || error.message
-                        }`,
+                    message: `${i18n.t('Connection failed')}: ${
+                        error.details?.message || error.message
+                    }`,
                     type: { critical: true },
                 })
             }
@@ -63,7 +64,6 @@ export function FormTestConnection({
     )
 
     return (
-
         <span
             onClick={test}
             className={`
@@ -75,16 +75,16 @@ export function FormTestConnection({
                 cursor-pointer select-none
                 border
                 transition-all duration-200
-                ${busy
-                    ? 'bg-green-50 border-green-700 text-green-700 hover:text-green-700 cursor-wait'
-                    : 'bg-gray-100 border-gray-300 text-gray-700 hover:border-green-700'
+                ${
+                    busy
+                        ? 'bg-green-50 border-green-700 text-green-700 hover:text-green-700 cursor-wait'
+                        : 'bg-gray-100 border-gray-300 text-gray-700 hover:border-green-700'
                 }
                 hover:-translate-y-[1px]
                 hover:text-green-700 text-bold
                 active:scale-100
             `}
         >
-
             {busy ? (
                 <span
                     className="
@@ -96,13 +96,11 @@ export function FormTestConnection({
                         animate-spin
                     "
                 />
-            ) : <></>}
+            ) : (
+                <></>
+            )}
 
             <span className="tracking-wide">{label}</span>
         </span>
-
-
-
-
     )
 }

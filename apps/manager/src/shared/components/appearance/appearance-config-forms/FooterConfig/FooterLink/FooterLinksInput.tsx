@@ -22,7 +22,9 @@ export function FooterLinksInput(props: InputFieldProps) {
 
     const { value: hide, setTrue: onHide, setFalse: onShow } = useBoolean(true)
 
-    const getSanitizedLinks = (fields: { id?: string; name?: string; url?: string }[]): FooterLink[] => {
+    const getSanitizedLinks = (
+        fields: { id?: string; name?: string; url?: string }[]
+    ): FooterLink[] => {
         return fields.map((field) => ({
             name: field.name ?? '',
             url: field.url ?? '',

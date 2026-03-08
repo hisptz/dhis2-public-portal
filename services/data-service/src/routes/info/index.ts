@@ -1,7 +1,7 @@
 import { Operation } from 'express-openapi'
 import { version } from '../../../package.json'
 
-export const GET: Operation = async (req) => {
+export const GET: Operation = async () => {
     return {
         version,
     }

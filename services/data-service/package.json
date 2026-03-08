@@ -17,6 +17,8 @@
         "start:worker": "bun run src/rabbit/worker.ts",
         "dev": "concurrently --names 'worker,api' -c 'blue,green' 'pnpm  run dev:worker' 'pnpm run dev:api'  ",
         "build": "bun run build.ts",
+        "lint:check": "eslint .",
+        "format:check": "prettier --check .",
         "check-types": "tsc --noEmit"
     },
     "dependencies": {
