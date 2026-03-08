@@ -13,7 +13,12 @@ import {
 const analyticsQuery = {
     analytics: {
         resource: 'analytics',
-        params: ({ filters, dimensions, relativePeriodDate }: any) => {
+        params: (variables: Record<string, unknown>) => {
+            const { filters, dimensions, relativePeriodDate } = variables as {
+                filters: Record<string, string[]>
+                dimensions: Record<string, string[]>
+                relativePeriodDate: string
+            }
             return {
                 displayProperty: 'NAME',
                 filter: Object.keys(filters).map(
@@ -116,10 +121,6 @@ export function useYearOverYearAnalytics({
         .filter(([_, value]) => value === true)
         .map(([key]) => snakeCase(key).toUpperCase())
 
-    // get the dx and ou
-    const getYearsFromPeriods = (periods: string[]) =>
-        Array.from(new Set(periods.map((pe) => pe.slice(0, 4))))
-
     const selectedYears = selectedPeriods.filter(
         (periodId: string) =>
             PeriodUtility.getPeriodById(periodId).type.rank === 8 ||
@@ -134,16 +135,16 @@ export function useYearOverYearAnalytics({
     const yearsToFetch = normalizeYears(years)
 
     const orgUnitFilter = (visualizationConfig.filters || []).find(
-        (filter: any) => filter.dimension === 'ou'
+        (filter) => filter.dimension === 'ou'
     )
     const orgUnits = orgUnitFilter
-        ? orgUnitFilter.items.map((item: any) => item.id)
+        ? orgUnitFilter.items.map((item) => item.id)
         : []
 
     const dataFilter = (visualizationConfig.filters || []).find(
-        (filter: any) => filter.dimension === 'dx'
+        (filter) => filter.dimension === 'dx'
     )
-    const dx = dataFilter ? dataFilter.items.map((item: any) => item.id) : []
+    const dx = dataFilter ? dataFilter.items.map((item) => item.id) : []
 
     // Prepare an analytics query per each year to fetch (dynamic)
     useEffect(() => {

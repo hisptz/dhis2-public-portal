@@ -65,7 +65,7 @@ export function TableVisualizer({
                     fixColumnHeaders: true,
                     fixRowHeaders: true,
                     showFilterAsTitle: !isEmpty(visualization.filters),
-                    // @ts-ignore
+                    // @ts-expect-error legend prop not in type definitions but supported at runtime
                     legend: legend,
                 },
                 layout: {

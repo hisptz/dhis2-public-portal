@@ -29,7 +29,7 @@ describe('visualization schema', async () => {
 describe('get layout function', async () => {
     visualizations.forEach((visualization) => {
         it(`Passes the get layout function ${visualization.name}<${visualization.type}>`, () => {
-            // @ts-ignore
+            // @ts-expect-error test data may not satisfy strict type constraints
             const layout = getLayout(visualization)
             Object.values(layout).forEach((value) => {
                 value.forEach((item) => {
@@ -45,7 +45,7 @@ describe('get chart layout function', async () => {
     visualizations.forEach((visualization) => {
         if (visualization.type !== VisualizationChartType.TABLE) {
             it(`Passes the get chart layout function for chart visualization ${visualization.name}<${visualization.type}>`, () => {
-                // @ts-ignore
+                // @ts-expect-error test data may not satisfy strict type constraints
                 const layout = getChartLayout(visualization)
                 Object.values(layout).forEach((value) => {
                     value.forEach((item) => {
@@ -62,11 +62,8 @@ describe('get data items function', async () => {
     visualizations.forEach((visualization) => {
         it(`getDataItems returns at least one data item for visualization ${visualization.name}<${visualization.type}>`, () => {
             try {
-                // @ts-ignore
-                const dataItems = getDataItems(visualization)
-                // expect(dataItems.length).equal(
-                // 	visualization.dataDimensionItems.length,
-                // );
+                // @ts-expect-error test data may not satisfy strict type constraints
+                getDataItems(visualization)
             } catch (e) {
                 console.log(e)
             }
@@ -76,7 +73,7 @@ describe('get data items function', async () => {
 describe('get periods function', async () => {
     visualizations.forEach((visualization) => {
         it(`getPeriod returns a valid period for visualization ${visualization.name}<${visualization.type}>`, () => {
-            // @ts-ignore
+            // @ts-expect-error test data may not satisfy strict type constraints
             const periods = getPeriods(visualization)
             periods.forEach((period) => {
                 expect(() =>
@@ -89,7 +86,7 @@ describe('get periods function', async () => {
 describe('get org units function', async () => {
     visualizations.forEach((visualization) => {
         it(`getOrgUnits returns a valid orgUnits for visualization ${visualization.name}<${visualization.type}>`, () => {
-            // @ts-ignore
+            // @ts-expect-error test data may not satisfy strict type constraints
             const orgUnits = getOrgUnits(visualization)
             orgUnits.forEach((orgUnit) => {
                 expect(orgUnit).toMatch(

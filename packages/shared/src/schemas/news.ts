@@ -1,6 +1,6 @@
 import { z } from 'zod'
 
-const newsSchema = z.object({
+export const newsSchema = z.object({
     summary: z.string(),
     categories: z.array(z.string()).optional(),
     content: z.string(),

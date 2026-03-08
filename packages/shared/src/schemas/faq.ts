@@ -1,6 +1,6 @@
 import { z } from 'zod'
 
-const faqSchema = z.object({
+export const faqSchema = z.object({
     category: z.string(),
     id: z.string(),
     question: z.string(),

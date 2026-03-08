@@ -12,7 +12,7 @@ export enum ThematicMapType {
     BUBBLE = 'bubble',
 }
 
-const mapSchema = z.object({
+export const mapSchema = z.object({
     id: z.string(),
     basemap: z.string().optional(),
     name: z.string(),

@@ -340,7 +340,7 @@ export const visualizationSchema = z.object({
     yearlySeries: z.array(z.string()),
 })
 
-const supportedVisualizations = ['MAP', 'chart', 'table'] as const
+export const supportedVisualizations = ['MAP', 'chart', 'table'] as const
 
 export type SupportedVisualization = (typeof supportedVisualizations)[number]
 

@@ -1,6 +1,6 @@
 import { z } from 'zod'
 
-const welcomeNoteSchema = z.object({
+export const welcomeNoteSchema = z.object({
     author: z.object({
         name: z.string(),
         title: z.string(),
