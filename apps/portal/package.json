@@ -33,7 +33,7 @@
         "@tanstack/react-query": "^5.90.21",
         "canvas": "^3.1.0",
         "chroma-js": "^3.1.2",
-        "cypress": "^14.3.0",
+        "cypress": "^15.11.0",
         "highcharts": "^12.4.0",
         "highcharts-react-official": "^3.2.2",
         "jszip": "^3.10.1",
