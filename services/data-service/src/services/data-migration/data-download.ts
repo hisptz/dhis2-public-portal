@@ -387,7 +387,7 @@ async function processDataDownload({
             timeout: timeout ?? 300000,
         })
 
-        if (isEmpty(data?.dataValues)) {
+        if (!data || isEmpty(data.dataValues)) {
             logger.info(
                 `No data found for ${config.id}: ${JSON.stringify(dimensions.dx?.slice(0, 5) || 'no dx')}`
             )

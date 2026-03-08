@@ -55,7 +55,7 @@ export function getDimensions({
 
         return {
             pe: periods,
-            dx: config.dataItems.map(({ sourceId }) => sourceId),
+            dx: (config.dataItems ?? []).map(({ sourceId }) => sourceId),
             ou: [parentOrgUnit, `LEVEL-${orgUnitLevel}`],
         }
     } catch (e) {
