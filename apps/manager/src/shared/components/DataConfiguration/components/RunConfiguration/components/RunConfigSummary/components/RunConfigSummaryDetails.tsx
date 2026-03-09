@@ -28,7 +28,8 @@ import {
 } from '@/shared/components/DataConfiguration/components/RunConfiguration/components/RunConfigSummary/components/RunConfigSummaryLogs'
 import { TaskDetails } from '@/shared/components/DataConfiguration/components/TaskDetails'
 import { formatDateTime } from '@/shared/hooks/config'
-import { useSearch, useNavigate } from '@tanstack/react-router'
+
+const TAB_KEY = 'run-config-summary-tab'
 
 const downloadColumns: SimpleDataTableColumn[] = [
     {
@@ -147,12 +148,12 @@ export function RunConfigSummaryDetails({
     }
 }) {
     const [statusFilter, setStatusFilter] = useState<RunStatus | null>(null)
-    const search = useSearch({ strict: false })
-    const navigate = useNavigate()
 
-    const [type, setType] = useState<'download' | 'upload'>(
-        (search.type as unknown as 'download' | 'upload') ?? 'download'
-    )
+    const [type, setType] = useState<'download' | 'upload'>(() => {
+        const stored = localStorage.getItem(TAB_KEY)
+        return (stored as 'download' | 'upload') ?? 'download'
+    })
+
     const [selectedDownloads, setSelectedDownloads] = useState<string[]>([])
     const [selectedUploads, setSelectedUploads] = useState<string[]>([])
 
@@ -173,15 +174,15 @@ export function RunConfigSummaryDetails({
                         count:
                             runType === 'metadata'
                                 ? ((summary as MetadataDownloadJob).items
-                                      .length ?? 0)
+                                    .length ?? 0)
                                 : ((summary as DataDownloadJob).count ?? 0),
                         type:
                             runType === 'metadata'
                                 ? capitalize(
-                                      (
-                                          summary as MetadataDownloadJob
-                                      ).type.toString() ?? ''
-                                  )
+                                    (
+                                        summary as MetadataDownloadJob
+                                    ).type.toString() ?? ''
+                                )
                                 : '',
                         startedAt: formatDateTime(summary.startedAt),
                         finishedAt: formatDateTime(summary.finishedAt),
@@ -306,17 +307,7 @@ export function RunConfigSummaryDetails({
                     onChange={({ value }) => {
                         const newType = value as 'download' | 'upload'
                         setType(newType)
-                        ;(
-                            navigate as (opts: {
-                                search: (
-                                    prev: Record<string, unknown>
-                                ) => Record<string, unknown>
-                                replace: boolean
-                            }) => void
-                        )({
-                            search: (prev) => ({ ...prev, type: newType }),
-                            replace: true,
-                        })
+                        localStorage.setItem(TAB_KEY, newType)
                     }}
                     options={[
                         {
@@ -435,15 +426,15 @@ export function RunConfigSummaryDetails({
                     emptyLabel={
                         statusFilter
                             ? i18n.t(
-                                  'There are no {{type}} with the status {{status}}',
-                                  {
-                                      type,
-                                      status: capitalize(statusFilter),
-                                  }
-                              )
+                                'There are no {{type}} with the status {{status}}',
+                                {
+                                    type,
+                                    status: capitalize(statusFilter),
+                                }
+                            )
                             : i18n.t('There are no {{type}} for this run', {
-                                  type,
-                              })
+                                type,
+                            })
                     }
                     pagination={
                         type == 'download'

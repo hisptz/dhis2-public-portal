@@ -6,7 +6,7 @@ const half = cycle / 2
 
 export function StickMan({ status }: { status: RunStatus }) {
     const running = status === 'RUNNING'
-    const hasError = status === 'ERRORED'
+    const hasError = status === 'ERRORED' || status ===  'FAILED'
     const done = status === 'DONE'
 
     const repeat = running

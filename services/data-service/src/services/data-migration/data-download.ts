@@ -11,7 +11,7 @@ import {
     DataServiceRuntimeConfig,
 } from '@packages/shared/schemas'
 import { AxiosInstance } from 'axios'
-import { chunk, compact, head, isEmpty } from 'lodash'
+import { chunk, compact, head, isEmpty, uniqBy } from 'lodash'
 import { pushToQueue } from '@/rabbit/publisher'
 import {
     createMapping,
@@ -134,7 +134,10 @@ export async function enqueueDownloadTasks({
 
             return {
                 ...config,
-                dataItems: expandedDataItems,
+                dataItems: uniqBy(
+                    [...(config.dataItems ?? []), ...expandedDataItems],
+                    "id"
+                )
             }
         })
     )

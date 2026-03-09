@@ -6,7 +6,11 @@ import { useWatch } from 'react-hook-form'
 import { DataServiceConfig } from '@packages/shared/schemas'
 import { StickMan } from './StickMan'
 
-export type RunStatus = 'IGNORED' | 'QUEUED' | 'RUNNING' | 'ERRORED' | 'DONE'
+export type RunStatus = 'IGNORED' | 'QUEUED' | 'RUNNING' | 'ERRORED' | 'DONE' | 'FAILED'
+
+type RunStatusResponse = {
+    status: RunStatus
+}
 
 const query = {
     status: {
@@ -42,7 +46,7 @@ export function RunStatus({
 
     const enabled = Boolean(config?.id && runId)
 
-    const { data, isLoading, error } = useQuery({
+    const { data, isLoading, error } = useQuery<RunStatusResponse>({
         queryKey: [config?.id, 'runs', type, runId, 'status'],
         enabled,
         queryFn: async () => {
@@ -57,7 +61,7 @@ export function RunStatus({
             return data.status as { status: RunStatus }
         },
         refetchInterval: (query) => {
-            const status = query.state.data?.status
+            const status = (query as unknown as RunStatusResponse)?.status
             return status === 'RUNNING' || status === 'QUEUED' || !status
                 ? 1000
                 : false
@@ -82,6 +86,7 @@ export function RunStatus({
                 </Tag>
             )
         case 'ERRORED':
+        case 'FAILED':
             return (
                 <Tag negative>
                     <div style={{ display: 'flex', alignItems: 'center' }}>
@@ -137,7 +142,7 @@ export function ConfigStatus({ configId }: { configId: string }) {
             return data.status as { status: RunStatus }
         },
         refetchInterval: (query) => {
-            const status = query.state.data?.status
+            const status = (query as unknown as RunStatusResponse)?.status
             return status === 'RUNNING' || status === 'QUEUED' || !status
                 ? 1000
                 : false
@@ -162,6 +167,7 @@ export function ConfigStatus({ configId }: { configId: string }) {
                 </Tag>
             )
         case 'ERRORED':
+        case 'FAILED':
             return (
                 <Tag negative>
                     <div style={{ display: 'flex', alignItems: 'center' }}>
