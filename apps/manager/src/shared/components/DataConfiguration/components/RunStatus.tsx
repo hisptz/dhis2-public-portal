@@ -8,10 +8,6 @@ import { StickMan } from './StickMan'
 
 export type RunStatus = 'IGNORED' | 'QUEUED' | 'RUNNING' | 'ERRORED' | 'DONE' | 'FAILED'
 
-type RunStatusResponse = {
-    status: RunStatus
-}
-
 const query = {
     status: {
         resource: 'routes/data-service/run/',
@@ -46,7 +42,7 @@ export function RunStatus({
 
     const enabled = Boolean(config?.id && runId)
 
-    const { data, isLoading, error } = useQuery<RunStatusResponse>({
+    const { data, isLoading, error } = useQuery({
         queryKey: [config?.id, 'runs', type, runId, 'status'],
         enabled,
         queryFn: async () => {
@@ -61,7 +57,7 @@ export function RunStatus({
             return data.status as { status: RunStatus }
         },
         refetchInterval: (query) => {
-            const status = (query as unknown as RunStatusResponse)?.status
+            const status = query.state.data?.status
             return status === 'RUNNING' || status === 'QUEUED' || !status
                 ? 1000
                 : false
@@ -142,7 +138,7 @@ export function ConfigStatus({ configId }: { configId: string }) {
             return data.status as { status: RunStatus }
         },
         refetchInterval: (query) => {
-            const status = (query as unknown as RunStatusResponse)?.status
+            const status = query.state.data?.status
             return status === 'RUNNING' || status === 'QUEUED' || !status
                 ? 1000
                 : false
