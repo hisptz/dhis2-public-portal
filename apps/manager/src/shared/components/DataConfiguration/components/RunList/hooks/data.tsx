@@ -1,7 +1,7 @@
 import { FetchError, useDataEngine } from '@dhis2/app-runtime'
 import { RunStatus } from '@/shared/components/DataConfiguration/components/RunConfiguration/components/RunConfigStatus/RunConfigStatus'
-import { useQueries } from '@tanstack/react-query'
-import { useState } from 'react'
+import { useQuery } from '@tanstack/react-query'
+import { useCallback, useEffect, useState } from 'react'
 import {
     DataErrorObject,
     DataServiceConfig,
@@ -99,24 +99,6 @@ export interface DataRunDetails extends DataRun {
     downloads: Array<DataDownloadJob>
 }
 
-const query = {
-    metadataRuns: {
-        resource: 'routes/data-service/run/',
-        id: ({ id }: { id: string }) => `${id}/metadata`,
-        params: ({ page, pageSize }: { page: number; pageSize: number }) => ({
-            page,
-            pageSize,
-        }),
-    },
-    dataRuns: {
-        resource: 'routes/data-service/run/',
-        id: ({ id }: { id: string }) => `${id}/data`,
-        params: ({ page, pageSize }: { page: number; pageSize: number }) => ({
-            page,
-            pageSize,
-        }),
-    },
-}
 
 type RunTypeMap = {
     metadata: MetadataRun
@@ -133,67 +115,93 @@ interface QueryResponse<T extends Run = Run> {
     items: T[]
 }
 
-export function useConfigurationRuns() {
+const query = {
+    runs: {
+        resource: "routes/data-service/run/",
+        id: ({ id, type }: { id: string; type: RunType }) =>
+            `${id}/${type}`,
+        params: ({ page, pageSize }: { page: number; pageSize: number }) => ({
+            page,
+            pageSize,
+        }),
+    },
+}
+
+
+
+type RunType = "metadata" | "data"
+
+export function useConfigurationRuns<T extends RunType>(type: T) {
     const config = useWatch<DataServiceConfig>()
     const engine = useDataEngine()
 
-    const [page, setPage] = useState(1)
-    const [pageSize, setPageSize] = useState(10)
-
     const enabled = Boolean(config?.id)
 
-    const fetchRuns = async <T extends keyof RunTypeMap>(
-        type: T
-    ): Promise<QueryResponse<RunTypeMap[T]>> => {
-        return engine
-            .query(query, {
+    const [paginationState, setPaginationState] = useState<
+        Record<RunType, { page: number; pageSize: number }>
+    >({
+        metadata: { page: 1, pageSize: 10 },
+        data: { page: 1, pageSize: 10 },
+    })
+
+    useEffect(() => {
+        setPaginationState((prev) => {
+            if (prev[type].page === 1) return prev
+
+            return {
+                ...prev,
+                [type]: {
+                    ...prev[type],
+                    page: 1,
+                },
+            }
+        })
+    }, [type])
+
+    const page = paginationState[type].page
+    const pageSize = paginationState[type].pageSize
+
+    const queryResult = useQuery({
+        queryKey: [config?.id, type, page, pageSize],
+        enabled,
+        queryFn: async (): Promise<QueryResponse<RunTypeMap[T]>> => {
+            const res = await engine.query(query, {
                 variables: {
                     id: config.id,
+                    type,
                     page,
                     pageSize,
                 },
             })
-            .then((res) =>
-                type === 'metadata'
-                    ? (res.metadataRuns as QueryResponse<RunTypeMap[T]>)
-                    : (res.dataRuns as QueryResponse<RunTypeMap[T]>)
-            )
-    }
 
-    const results = useQueries({
-        queries: [
-            {
-                queryKey: [config.id, 'metadataRuns', page, pageSize],
-                queryFn: () => fetchRuns('metadata'),
-                enabled,
-            },
-            {
-                queryKey: [config.id, 'dataRuns', page, pageSize],
-                queryFn: () => fetchRuns('data'),
-                enabled,
-            },
-        ],
+            return res.runs as QueryResponse<RunTypeMap[T]>
+        },
     })
 
-    const [metadataQuery, dataQuery] = results
-
-    const loading = results.some((q) => q.isLoading)
-    const fetching = results.some((q) => q.isFetching)
-    const error = (results.find((q) => q.error)?.error as FetchError) ?? null
-
-    const pager = metadataQuery.data?.pager ?? dataQuery.data?.pager
+    const pager = queryResult.data?.pager
 
     const onPageChange = (page: number) => {
-        setPage(page)
+        setPaginationState((prev) => ({
+            ...prev,
+            [type]: {
+                ...prev[type],
+                page,
+            },
+        }))
     }
 
-    const onPageSizeChange = (pageSize: number) => {
-        setPageSize(pageSize)
-        setPage(1)
+    const onPageSizeChange = (size: number) => {
+        setPaginationState((prev) => ({
+            ...prev,
+            [type]: {
+                page: 1,
+                pageSize: size,
+            },
+        }))
     }
 
     const pagination = {
-        page: pager?.page ?? 1,
+        page: pager?.page ?? page,
         pageSize: pager?.pageSize ?? pageSize,
         total: pager?.total ?? 0,
         pageCount: pager?.pageCount ?? 1,
@@ -201,16 +209,28 @@ export function useConfigurationRuns() {
         onPageSizeChange,
     }
 
+    const refetch = useCallback(() => {
+        setPaginationState((prev) => {
+            if (prev[type].page === 1) {
+                queryResult.refetch()
+                return prev
+            }
+            return {
+                ...prev,
+                [type]: {
+                    ...prev[type],
+                    page: 1,
+                },
+            }
+        })
+    }, [type, queryResult])
+
     return {
-        metadataRuns: metadataQuery.data?.items ?? [],
-        dataRuns: dataQuery.data?.items ?? [],
-        loading,
-        fetching,
-        error,
+        runs: queryResult.data?.items ?? [],
+        loading: queryResult.isLoading,
+        fetching: queryResult.isFetching,
+        error: queryResult.error as FetchError | null,
         pagination,
-        refetch: () => {
-            metadataQuery.refetch()
-            dataQuery.refetch()
-        },
+        refetch,
     }
 }

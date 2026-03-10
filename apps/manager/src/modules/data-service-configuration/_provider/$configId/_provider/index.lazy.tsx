@@ -4,6 +4,7 @@ import {
     ButtonStrip,
     IconArrowLeft24,
     IconSettings24,
+    SegmentedControl,
     Tooltip,
 } from '@dhis2/ui'
 import i18n from '@dhis2/d2-i18n'
@@ -14,6 +15,7 @@ import { DataServiceConfig } from '@packages/shared/schemas'
 import { useWatch } from 'react-hook-form'
 import { RunList } from '@/shared/components/DataConfiguration/components/RunList/RunList'
 import { useConfigurationRuns } from '@/shared/components/DataConfiguration/components/RunList/hooks/data'
+import { useState } from 'react'
 
 export const Route = createLazyFileRoute(
     '/data-service-configuration/_provider/$configId/_provider/'
@@ -28,16 +30,16 @@ function RouteComponent() {
 
     const config = useWatch<DataServiceConfig>()
     const source = config?.source
+    const [activeTab, setActiveTab] = useState<'metadata' | 'data'>('metadata')
 
     const {
         loading,
-        dataRuns,
-        metadataRuns,
+        runs,
         fetching,
         pagination,
         error,
         refetch,
-    } = useConfigurationRuns()
+    } = useConfigurationRuns(activeTab);
 
     return (
         <div className="h-full w-full flex flex-col gap-4 ">
@@ -97,15 +99,32 @@ function RouteComponent() {
                             />
                         }
                     />
-                    <RunList
-                        loading={loading}
-                        dataRuns={dataRuns}
-                        metadataRuns={metadataRuns}
-                        fetching={fetching}
-                        pagination={pagination}
-                        error={error}
-                        refetch={refetch}
-                    />
+                    <>
+                        <div className="flex flex-row justify-start items-center">
+                            <SegmentedControl
+                                selected={activeTab}
+                                onChange={({ value }) =>
+                                    setActiveTab(value as 'metadata' | 'data')
+                                }
+                                options={[
+                                    {
+                                        label: i18n.t('Metadata Runs'),
+                                        value: 'metadata',
+                                    },
+                                    { label: i18n.t('Data Runs'), value: 'data' },
+                                ]}
+                            />
+                        </div>
+                        <RunList
+                            loading={loading}
+                            runs={runs}
+                            activeTab={activeTab}
+                            fetching={fetching}
+                            pagination={pagination}
+                            error={error}
+                            refetch={refetch}
+                        />
+                    </>
                 </>
             )}
         </div>

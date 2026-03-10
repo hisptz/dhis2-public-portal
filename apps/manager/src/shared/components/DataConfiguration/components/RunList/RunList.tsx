@@ -93,15 +93,15 @@ const dataColumns = [
 
 export function RunList({
     loading,
-    dataRuns,
-    metadataRuns,
+    runs,
     fetching,
+    activeTab,
     pagination,
     error,
 }: {
     loading: boolean
-    dataRuns: DataRun[]
-    metadataRuns: MetadataRun[]
+    runs: (MetadataRun | DataRun)[]
+    activeTab: 'metadata' | 'data'
     fetching: boolean
     pagination: {
         page: number
@@ -111,11 +111,11 @@ export function RunList({
         onPageChange: (page: number) => void
         onPageSizeChange: (pageSize: number) => void
     }
-    error: FetchError
+    error: FetchError | null
     refetch: () => void
 }) {
     const config = useWatch<DataServiceConfig>()
-    const [activeTab, setActiveTab] = useState<'metadata' | 'data'>('metadata')
+  
 
     const transformRun = (
         run: MetadataRun | DataRun,
@@ -139,11 +139,11 @@ export function RunList({
         sourceType:
             'sourceType' in run
                 ? capitalize(
-                      (run as MetadataRun).sourceType
-                          .toString()
-                          .split('_')
-                          .join(' ')
-                  )
+                    (run as MetadataRun).sourceType
+                        .toString()
+                        .split('_')
+                        .join(' ')
+                )
                 : '',
         visualizations: (run as MetadataRun).visualizations?.length ?? 0,
         maps: (run as MetadataRun).maps?.length ?? 0,
@@ -163,13 +163,13 @@ export function RunList({
     const rows = useMemo(() => {
         if (activeTab === 'metadata') {
             return (
-                metadataRuns?.map((run) =>
+                (runs as MetadataRun[])?.map((run) =>
                     transformRun(run, run.mainConfigId)
                 ) ?? []
             )
         } else {
             return (
-                dataRuns?.map((run) => {
+                (runs as DataRun[])?.map((run) => {
                     const configurations = run.configIds.map(
                         (configId: string) => {
                             const conf = config?.itemsConfig?.find(
@@ -182,7 +182,7 @@ export function RunList({
                 }) ?? []
             )
         }
-    }, [dataRuns, metadataRuns, config, activeTab])
+    }, [runs, config, activeTab])
 
     const columns = useMemo(() => {
         switch (activeTab) {
@@ -211,23 +211,6 @@ export function RunList({
     }
 
     return (
-        <>
-            <div className="flex flex-row justify-start items-center">
-                <SegmentedControl
-                    selected={activeTab}
-                    onChange={({ value }) =>
-                        setActiveTab(value as 'metadata' | 'data')
-                    }
-                    options={[
-                        {
-                            label: i18n.t('Metadata Runs'),
-                            value: 'metadata',
-                        },
-                        { label: i18n.t('Data Runs'), value: 'data' },
-                    ]}
-                />
-            </div>
-
             <SimpleDataTable
                 pagination={pagination}
                 emptyLabel={i18n.t(
@@ -237,6 +220,5 @@ export function RunList({
                 rows={rows}
                 columns={columns}
             />
-        </>
     )
 }
