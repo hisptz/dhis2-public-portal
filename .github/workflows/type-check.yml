@@ -38,6 +38,9 @@ jobs:
 
             - name: Install dependencies
               run: pnpm install --frozen-lockfile
+            
+            - name: Generate Prisma types
+              run: pnpm dlx prisma@7 generate
 
             - name: Type Check
               run: pnpm check-types
