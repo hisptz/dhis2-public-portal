@@ -6,7 +6,13 @@ import { useWatch } from 'react-hook-form'
 import { DataServiceConfig } from '@packages/shared/schemas'
 import { StickMan } from './StickMan'
 
-export type RunStatus = 'IGNORED' | 'QUEUED' | 'RUNNING' | 'ERRORED' | 'DONE' | 'FAILED'
+export type RunStatus =
+    | 'IGNORED'
+    | 'QUEUED'
+    | 'RUNNING'
+    | 'ERRORED'
+    | 'DONE'
+    | 'FAILED'
 
 const query = {
     status: {

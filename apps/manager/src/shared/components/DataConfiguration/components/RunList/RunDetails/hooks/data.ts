@@ -41,7 +41,7 @@ const query = {
 }
 
 type RunDetailsMap = Run & {
-    status: { status: string}
+    status: { status: string }
     uploads: MetadataUploadJob[]
     downloads: MetadataDownloadJob[]
     uploadsPager: {
@@ -109,7 +109,12 @@ export function useRunDetails<T extends 'metadata' | 'data'>({
         refetchInterval: (query) => {
             const status = query.state.data?.status.status
             if (!status) return false
-            if (status === 'DONE' || status === 'FAILED' || status === 'ERRORED') return false
+            if (
+                status === 'DONE' ||
+                status === 'FAILED' ||
+                status === 'ERRORED'
+            )
+                return false
             return 1000
         },
     })

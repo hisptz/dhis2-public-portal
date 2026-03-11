@@ -32,14 +32,8 @@ function RouteComponent() {
     const source = config?.source
     const [activeTab, setActiveTab] = useState<'metadata' | 'data'>('metadata')
 
-    const {
-        loading,
-        runs,
-        fetching,
-        pagination,
-        error,
-        refetch,
-    } = useConfigurationRuns(activeTab);
+    const { loading, runs, fetching, pagination, error, refetch } =
+        useConfigurationRuns(activeTab)
 
     return (
         <div className="h-full w-full flex flex-col gap-4 ">
@@ -111,7 +105,10 @@ function RouteComponent() {
                                         label: i18n.t('Metadata Runs'),
                                         value: 'metadata',
                                     },
-                                    { label: i18n.t('Data Runs'), value: 'data' },
+                                    {
+                                        label: i18n.t('Data Runs'),
+                                        value: 'data',
+                                    },
                                 ]}
                             />
                         </div>

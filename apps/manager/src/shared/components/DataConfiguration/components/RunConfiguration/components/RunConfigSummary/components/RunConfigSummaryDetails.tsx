@@ -174,15 +174,15 @@ export function RunConfigSummaryDetails({
                         count:
                             runType === 'metadata'
                                 ? ((summary as MetadataDownloadJob).items
-                                    .length ?? 0)
+                                      .length ?? 0)
                                 : ((summary as DataDownloadJob).count ?? 0),
                         type:
                             runType === 'metadata'
                                 ? capitalize(
-                                    (
-                                        summary as MetadataDownloadJob
-                                    ).type.toString() ?? ''
-                                )
+                                      (
+                                          summary as MetadataDownloadJob
+                                      ).type.toString() ?? ''
+                                  )
                                 : '',
                         startedAt: formatDateTime(summary.startedAt),
                         finishedAt: formatDateTime(summary.finishedAt),
@@ -426,15 +426,15 @@ export function RunConfigSummaryDetails({
                     emptyLabel={
                         statusFilter
                             ? i18n.t(
-                                'There are no {{type}} with the status {{status}}',
-                                {
-                                    type,
-                                    status: capitalize(statusFilter),
-                                }
-                            )
+                                  'There are no {{type}} with the status {{status}}',
+                                  {
+                                      type,
+                                      status: capitalize(statusFilter),
+                                  }
+                              )
                             : i18n.t('There are no {{type}} for this run', {
-                                type,
-                            })
+                                  type,
+                              })
                     }
                     pagination={
                         type == 'download'

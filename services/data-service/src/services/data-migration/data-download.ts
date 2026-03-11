@@ -136,8 +136,8 @@ export async function enqueueDownloadTasks({
                 ...config,
                 dataItems: uniqBy(
                     [...(config.dataItems ?? []), ...expandedDataItems],
-                    "id"
-                )
+                    'id'
+                ),
             }
         })
     )

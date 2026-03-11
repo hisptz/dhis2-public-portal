@@ -2,11 +2,7 @@ import {
     DataRun,
     MetadataRun,
 } from '@/shared/components/DataConfiguration/components/RunList/hooks/data'
-import {
-    CircularLoader,
-    colors,
-    IconError24,
-} from '@dhis2/ui'
+import { CircularLoader, colors, IconError24 } from '@dhis2/ui'
 import { SimpleDataTable } from '@hisptz/dhis2-ui'
 import i18n from '@dhis2/d2-i18n'
 import { PeriodUtility } from '@hisptz/dhis2-utils'
@@ -114,7 +110,6 @@ export function RunList({
     refetch: () => void
 }) {
     const config = useWatch<DataServiceConfig>()
-  
 
     const transformRun = (
         run: MetadataRun | DataRun,
@@ -138,11 +133,11 @@ export function RunList({
         sourceType:
             'sourceType' in run
                 ? capitalize(
-                    (run as MetadataRun).sourceType
-                        .toString()
-                        .split('_')
-                        .join(' ')
-                )
+                      (run as MetadataRun).sourceType
+                          .toString()
+                          .split('_')
+                          .join(' ')
+                  )
                 : '',
         visualizations: (run as MetadataRun).visualizations?.length ?? 0,
         maps: (run as MetadataRun).maps?.length ?? 0,
@@ -210,14 +205,14 @@ export function RunList({
     }
 
     return (
-            <SimpleDataTable
-                pagination={pagination}
-                emptyLabel={i18n.t(
-                    `There are no ${activeTab === 'metadata' ? 'metadata' : 'data'} runs for this configuration`
-                )}
-                loading={fetching}
-                rows={rows}
-                columns={columns}
-            />
+        <SimpleDataTable
+            pagination={pagination}
+            emptyLabel={i18n.t(
+                `There are no ${activeTab === 'metadata' ? 'metadata' : 'data'} runs for this configuration`
+            )}
+            loading={fetching}
+            rows={rows}
+            columns={columns}
+        />
     )
 }

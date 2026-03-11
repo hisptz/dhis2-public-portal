@@ -99,7 +99,6 @@ export interface DataRunDetails extends DataRun {
     downloads: Array<DataDownloadJob>
 }
 
-
 type RunTypeMap = {
     metadata: MetadataRun
     data: DataRun
@@ -117,9 +116,8 @@ interface QueryResponse<T extends Run = Run> {
 
 const query = {
     runs: {
-        resource: "routes/data-service/run/",
-        id: ({ id, type }: { id: string; type: RunType }) =>
-            `${id}/${type}`,
+        resource: 'routes/data-service/run/',
+        id: ({ id, type }: { id: string; type: RunType }) => `${id}/${type}`,
         params: ({ page, pageSize }: { page: number; pageSize: number }) => ({
             page,
             pageSize,
@@ -127,9 +125,7 @@ const query = {
     },
 }
 
-
-
-type RunType = "metadata" | "data"
+type RunType = 'metadata' | 'data'
 
 export function useConfigurationRuns<T extends RunType>(type: T) {
     const config = useWatch<DataServiceConfig>()
