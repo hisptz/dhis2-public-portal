@@ -1,5 +1,5 @@
-import i18n from '@/locales'
 import { CheckboxField } from '@dhis2/ui'
+import i18n from '@dhis2/d2-i18n'
 import { useState } from 'react'
 import { useFormContext, useWatch } from 'react-hook-form'
 import { ManualDataItemMappingField } from './ManualDataItemMappingField'
