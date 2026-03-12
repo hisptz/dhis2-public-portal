@@ -81,6 +81,12 @@ export type DataElement = {
     name: string
 }
 
+export type CategoryOptionCombo = {
+    id: string
+    displayName: string
+    name: string
+}
+
 const DATAELEMENTS_QUERY = {
     data: {
         resource: 'dataElements',
@@ -88,6 +94,18 @@ const DATAELEMENTS_QUERY = {
             filter: `id:in:[${ids}]`,
             fields: 'id,displayName,code,shortName,name',
             paging: false,
+        }),
+    },
+} as const
+
+
+const CATEGORY_OPTION_COMBO_QUERY = {
+    data: {
+        resource: "categoryOptionCombos",
+        params: ({ ids }: { ids: string }) => ({
+            fields: "id,displayName",
+            paging: false,
+            filter: `id:in:[${ids}]`,
         }),
     },
 } as const
@@ -139,6 +157,110 @@ export function useDataElementConfigs(items: string[]) {
 
     return {
         dataElements: data?.data?.dataElements ?? [],
+        loading,
+        error,
+    }
+}
+
+export function useSourceDataElementConfigs(
+    sourceInstanceId: string | undefined,
+    items: string[]
+) {
+    const ids = uniq(items).join(',')
+
+    const { data, loading, error, refetch } = useDataQuery<{
+         data: { dataElements: DataElement[] }
+    }>(
+        {
+            data: {
+                resource: 'routes',
+                id: ({ sourceInstanceId }: { sourceInstanceId: string }) =>
+                    `${sourceInstanceId}/run/dataElements`,
+                params: ({ ids }: { ids: string }) => ({
+                    fields: 'id,displayName,code,shortName,name',
+                    filter: `id:in:[${ids}]`,
+                    paging: false,
+                }),
+            },
+        },
+        {
+            variables: { ids, sourceInstanceId },
+            lazy: isEmpty(items) || !sourceInstanceId,
+        }
+    )
+
+    useEffect(() => {
+        if (!isEmpty(ids) && sourceInstanceId) {
+            refetch({ ids, sourceInstanceId })
+        }
+    }, [ids, sourceInstanceId])
+
+    return {
+        dataElements: data?.data?.dataElements ?? [],
+        loading,
+        error,
+    }
+}
+
+
+export function useCategoryOptionComboConfigs(items: string[]) {
+    const ids = uniq(items).join(',')
+
+    const { data, loading, error, refetch } = useDataQuery<{
+        data: { categoryOptionCombos: CategoryOptionCombo[] }
+    }>(CATEGORY_OPTION_COMBO_QUERY, {
+        variables: { ids },
+        lazy: isEmpty(items),
+    })
+
+    useEffect(() => {
+        if (!isEmpty(ids)) {
+            refetch({ ids })
+        }
+    }, [ids])
+
+    return {
+        categoryOptionCombos: data?.data?.categoryOptionCombos ?? [],
+        loading,
+        error,
+    }
+}
+
+export function useSourceCategoryOptionComboConfigs(
+    sourceInstanceId: string | undefined,
+    items: string[]
+) {
+    const ids = uniq(items).join(',')
+
+    const { data, loading, error, refetch } = useDataQuery<{
+        data: { categoryOptionCombos: CategoryOptionCombo[] }
+    }>(
+        {
+            data: {
+                resource: 'routes',
+                id: ({ sourceInstanceId }: { sourceInstanceId: string }) =>
+                    `${sourceInstanceId}/run/categoryOptionCombos`,
+                params: ({ ids }: { ids: string }) => ({
+                    fields: 'id,displayName',
+                    filter: `id:in:[${ids}]`,
+                    paging: false,
+                }),
+            },
+        },
+        {
+            variables: { ids, sourceInstanceId },
+            lazy: isEmpty(items) || !sourceInstanceId,
+        }
+    )
+
+    useEffect(() => {
+        if (!isEmpty(ids) && sourceInstanceId) {
+            refetch({ ids, sourceInstanceId })
+        }
+    }, [ids, sourceInstanceId])
+
+    return {
+        categoryOptionCombos: data?.data?.categoryOptionCombos ?? [],
         loading,
         error,
     }

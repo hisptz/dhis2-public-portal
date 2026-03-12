@@ -21,15 +21,18 @@ import { RHFIDField } from '../../../../../../Fields/IDField'
 import { RHFOrgUnitField } from '../../../../../../Fields/RHFOrgUnitField'
 import { VisualizationDataSelector } from './VisualizationDataSelector'
 import { OrgUnitLevelSelector } from './OrgUnitLevelSelector'
+import { ManualDataItemMappingToggle } from './ManualDataItemMappingToggle'
 
 export function DataItemConfigForm({
     data,
     onClose,
+    routeId,
     onSubmit,
     hide,
 }: {
     onClose: () => void
     hide: boolean
+    routeId: string | undefined
     onSubmit: (data: DataServiceDataSourceItemsConfig) => void
     data?: DataServiceDataSourceItemsConfig
 }) {
@@ -46,7 +49,7 @@ export function DataItemConfigForm({
 
     return (
         <FormProvider {...form}>
-            <Modal position="middle" onClose={onClose} hide={hide}>
+            <Modal position="middle" large onClose={onClose} hide={hide}>
                 <ModalTitle>{`${action} ${i18n.t('data item configuration')}`}</ModalTitle>
                 <ModalContent>
                     <form className="flex flex-col gap-2">
@@ -124,6 +127,7 @@ export function DataItemConfigForm({
                                 'Select data elements from the selected visualizations / maps'
                             )}
                         />
+                        <ManualDataItemMappingToggle routeId={routeId} />
                     </form>
                 </ModalContent>
                 <ModalActions>

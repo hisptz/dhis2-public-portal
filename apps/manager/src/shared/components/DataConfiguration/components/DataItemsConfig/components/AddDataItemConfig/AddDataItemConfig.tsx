@@ -7,8 +7,10 @@ import { DataItemConfigForm } from './components/DataItemConfigForm'
 
 export function AddDataItemConfig({
     onAdd,
+    routeId
 }: {
     onAdd: (data: DataServiceDataSourceItemsConfig) => void
+    routeId: string | undefined
 }) {
     const { value: hide, setTrue: onClose, setFalse: onShow } = useBoolean(true)
     return (
@@ -16,6 +18,7 @@ export function AddDataItemConfig({
             {!hide && (
                 <DataItemConfigForm
                     hide={hide}
+                    routeId={routeId}
                     onClose={onClose}
                     onSubmit={onAdd}
                 />

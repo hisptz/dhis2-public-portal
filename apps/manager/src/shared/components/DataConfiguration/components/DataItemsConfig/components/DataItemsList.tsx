@@ -1,4 +1,4 @@
-import { useFieldArray } from 'react-hook-form'
+import { useFieldArray, useWatch } from 'react-hook-form'
 import { DataServiceConfig } from '@packages/shared/schemas'
 import { SimpleTable, SimpleTableColumn } from '@hisptz/dhis2-ui'
 import i18n from '@dhis2/d2-i18n'
@@ -43,6 +43,9 @@ export function DataItemsList() {
         Record<number, boolean>
     >({})
 
+    const config = useWatch<DataServiceConfig>()
+    const routeId = config?.source?.routeId
+
     const rows = fields.map((item, index) => {
         const hide = deleteStates[index] ?? true
         const onClose = () =>
@@ -59,6 +62,7 @@ export function DataItemsList() {
                 <ButtonStrip>
                     <EditDataItemConfig
                         config={item}
+                        routeId={routeId}
                         onUpdate={(data) => update(index, data)}
                     />
 
@@ -86,7 +90,7 @@ export function DataItemsList() {
     return (
         <div className="flex flex-col gap-2 w-full">
             <ButtonStrip end>
-                <AddDataItemConfig onAdd={append} />
+                <AddDataItemConfig routeId={routeId} onAdd={append} />
             </ButtonStrip>
             <Divider />
             <SimpleTable

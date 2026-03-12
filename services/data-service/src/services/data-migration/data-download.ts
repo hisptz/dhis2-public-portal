@@ -11,7 +11,7 @@ import {
     DataServiceRuntimeConfig,
 } from '@packages/shared/schemas'
 import { AxiosInstance } from 'axios'
-import { chunk, compact, head, isEmpty, uniqBy } from 'lodash'
+import { chunk, compact, head, isEmpty } from 'lodash'
 import { pushToQueue } from '@/rabbit/publisher'
 import {
     createMapping,
@@ -118,12 +118,21 @@ export async function enqueueDownloadTasks({
                 dataElements: config?.dataElements ?? [],
             })
 
+            const sanitizedMapping = Array.from(
+                new Map(
+                    [...(config.dataItems ?? []), ...mapping].map((m) => [
+                        `${m.sourceId}:${m.id}`,
+                        m,
+                    ])
+                ).values()
+            )
+
             logger.info(
                 `Processing and disaggregating data elements for ${config.name}`
             )
 
             const expandedDataItems = await processDataItems({
-                mappings: mapping,
+                mappings: sanitizedMapping,
                 destinationClient: dhis2Client,
                 sourceClient,
             })
@@ -134,10 +143,7 @@ export async function enqueueDownloadTasks({
 
             return {
                 ...config,
-                dataItems: uniqBy(
-                    [...(config.dataItems ?? []), ...expandedDataItems],
-                    'id'
-                ),
+                dataItems: expandedDataItems,
             }
         })
     )
@@ -188,13 +194,13 @@ async function downloadDataForDxItems({
         const heavyDimension = meta.runtimeConfig.paginateByData
             ? 'dx'
             : Object.keys(dimensions).reduce((acc, value) => {
-                  if (
-                      (dimensions[acc]?.length ?? 0) >
-                      (dimensions[value]?.length ?? 0)
-                  )
-                      return acc
-                  return value
-              }, Object.keys(dimensions)[0])
+                if (
+                    (dimensions[acc]?.length ?? 0) >
+                    (dimensions[value]?.length ?? 0)
+                )
+                    return acc
+                return value
+            }, Object.keys(dimensions)[0])
         const pageSize = meta.runtimeConfig.pageSize ?? 50
 
         if (dimensions[heavyDimension]!.length <= pageSize) {
@@ -272,13 +278,13 @@ async function downloadDataForAttributeItems({
         const heavyDimension = meta.runtimeConfig.paginateByData
             ? 'dx'
             : Object.keys(dimensions).reduce((acc, value) => {
-                  if (
-                      (dimensions[acc]?.length ?? 0) >
-                      (dimensions[value]?.length ?? 0)
-                  )
-                      return acc
-                  return value
-              }, Object.keys(dimensions)[0])
+                if (
+                    (dimensions[acc]?.length ?? 0) >
+                    (dimensions[value]?.length ?? 0)
+                )
+                    return acc
+                return value
+            }, Object.keys(dimensions)[0])
         const pageSize = meta.runtimeConfig.pageSize ?? 50
         const categoryOptions = config.attributeOptions
         const iterations = chunk(dimensions[heavyDimension], pageSize)
@@ -410,20 +416,20 @@ async function processDataDownload({
         const processedData =
             config.type === 'ATTRIBUTE_VALUES'
                 ? await processAttributeComboData({
-                      data,
-                      dataItemsConfig: config,
-                      categoryOptionId: head(
-                          filters![
-                              (
-                                  config as DataServiceAttributeValuesDataItemsSource
-                              ).attributeId
-                          ]
-                      ) as string,
-                  })
+                    data,
+                    dataItemsConfig: config,
+                    categoryOptionId: head(
+                        filters![
+                        (
+                            config as DataServiceAttributeValuesDataItemsSource
+                        ).attributeId
+                        ]
+                    ) as string,
+                })
                 : await processData({
-                      data,
-                      dataItems: config.dataItems,
-                  })
+                    data,
+                    dataItems: config.dataItems,
+                })
 
         logger.info(`${processedData.dataValues.length} data values processed`)
 
