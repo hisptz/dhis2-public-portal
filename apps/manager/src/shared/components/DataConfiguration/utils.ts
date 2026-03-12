@@ -98,12 +98,11 @@ const DATAELEMENTS_QUERY = {
     },
 } as const
 
-
 const CATEGORY_OPTION_COMBO_QUERY = {
     data: {
-        resource: "categoryOptionCombos",
+        resource: 'categoryOptionCombos',
         params: ({ ids }: { ids: string }) => ({
-            fields: "id,displayName",
+            fields: 'id,displayName',
             paging: false,
             filter: `id:in:[${ids}]`,
         }),
@@ -169,7 +168,7 @@ export function useSourceDataElementConfigs(
     const ids = uniq(items).join(',')
 
     const { data, loading, error, refetch } = useDataQuery<{
-         data: { dataElements: DataElement[] }
+        data: { dataElements: DataElement[] }
     }>(
         {
             data: {
@@ -201,7 +200,6 @@ export function useSourceDataElementConfigs(
         error,
     }
 }
-
 
 export function useCategoryOptionComboConfigs(items: string[]) {
     const ids = uniq(items).join(',')

@@ -1,19 +1,15 @@
-import i18n from "@/locales"
-import { CheckboxField } from "@dhis2/ui"
-import { useState } from "react"
-import { useFormContext, useWatch } from "react-hook-form"
-import { ManualDataItemMappingField } from "./ManualDataItemMappingField"
+import i18n from '@/locales'
+import { CheckboxField } from '@dhis2/ui'
+import { useState } from 'react'
+import { useFormContext, useWatch } from 'react-hook-form'
+import { ManualDataItemMappingField } from './ManualDataItemMappingField'
 
-export function ManualDataItemMappingToggle({
-    routeId,
-}: {
-    routeId?: string
-}) {
+export function ManualDataItemMappingToggle({ routeId }: { routeId?: string }) {
     const { control, setValue } = useFormContext()
 
     const dataItems = useWatch({
         control,
-        name: "dataItems",
+        name: 'dataItems',
     })
 
     const [enabled, setEnabled] = useState<boolean>(
@@ -24,7 +20,7 @@ export function ManualDataItemMappingToggle({
         setEnabled(checked)
 
         if (!checked) {
-            setValue("dataItems", [])
+            setValue('dataItems', [])
         }
     }
 
@@ -32,7 +28,7 @@ export function ManualDataItemMappingToggle({
         <>
             <CheckboxField
                 checked={enabled}
-                label={i18n.t("Data items")}
+                label={i18n.t('Data items')}
                 onChange={({ checked }) => handleToggle(checked)}
             />
 
@@ -40,9 +36,9 @@ export function ManualDataItemMappingToggle({
                 <ManualDataItemMappingField
                     routeId={routeId}
                     name="dataItems"
-                     helpText={i18n.t(
-                    "Optionally define explicit mappings between source and destination data items"
-                )}
+                    helpText={i18n.t(
+                        'Optionally define explicit mappings between source and destination data items'
+                    )}
                 />
             )}
         </>

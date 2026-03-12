@@ -1,10 +1,15 @@
-import { useCategoryOptionComboConfigs, useDataElementConfigs, useSourceCategoryOptionComboConfigs, useSourceDataElementConfigs } from "@/shared/components/DataConfiguration/utils"
-import { Field, InputField, Button, Chip } from "@dhis2/ui"
-import { uniq } from "lodash"
-import { useCallback, useMemo, useState } from "react"
+import {
+    useCategoryOptionComboConfigs,
+    useDataElementConfigs,
+    useSourceCategoryOptionComboConfigs,
+    useSourceDataElementConfigs,
+} from '@/shared/components/DataConfiguration/utils'
+import { Field, InputField, Button, Chip } from '@dhis2/ui'
+import { uniq } from 'lodash'
+import { useCallback, useMemo, useState } from 'react'
 import i18n from '@dhis2/d2-i18n'
-import { useFormContext, useController } from "react-hook-form"
-import { DataItemMapping } from "@packages/shared/schemas"
+import { useFormContext, useController } from 'react-hook-form'
+import { DataItemMapping } from '@packages/shared/schemas'
 
 export function ManualDataItemMappingField({
     name,
@@ -24,55 +29,52 @@ export function ManualDataItemMappingField({
 
     const mappings: DataItemMapping[] = field.value ?? []
 
-    const [sourceId, setSourceId] = useState("")
-    const [destId, setDestId] = useState("")
-    const [sourceIdError, setSourceIdError] = useState("")
-    const [destIdError, setDestIdError] = useState("")
+    const [sourceId, setSourceId] = useState('')
+    const [destId, setDestId] = useState('')
+    const [sourceIdError, setSourceIdError] = useState('')
+    const [destIdError, setDestIdError] = useState('')
 
     const addMapping = () => {
         const src = sourceId.trim()
         const dst = destId.trim()
 
-        setSourceIdError("")
-        setDestIdError("")
+        setSourceIdError('')
+        setDestIdError('')
 
         if (!src && !dst) {
-            setSourceIdError("Source id is required")
-            setDestIdError("Destination id is required")
+            setSourceIdError('Source id is required')
+            setDestIdError('Destination id is required')
             return
         }
 
         if (!src) {
-            setSourceIdError("Source id is required")
+            setSourceIdError('Source id is required')
             return
         }
 
         if (!dst) {
-            setDestIdError("Destination id is required")
+            setDestIdError('Destination id is required')
             return
         }
 
-        const exists = mappings.some(
-            (m) => m.sourceId === src && m.id === dst
-        )
+        const exists = mappings.some((m) => m.sourceId === src && m.id === dst)
 
         if (exists) {
-            setSourceIdError("Mapping already exists")
-            setDestIdError("Mapping already exists")
+            setSourceIdError('Mapping already exists')
+            setDestIdError('Mapping already exists')
             return
         }
 
         field.onChange([...mappings, { sourceId: src, id: dst }])
 
-        setSourceId("")
-        setDestId("")
+        setSourceId('')
+        setDestId('')
     }
 
     const removeMapping = (mapping: DataItemMapping) => {
         field.onChange(
             mappings.filter(
-                (m) =>
-                    !(m.sourceId === mapping.sourceId && m.id === mapping.id)
+                (m) => !(m.sourceId === mapping.sourceId && m.id === mapping.id)
             )
         )
     }
@@ -89,7 +91,7 @@ export function ManualDataItemMappingField({
         const destComboIds: string[] = []
 
         const parse = (value: string) => {
-            const [de, combo] = value.split(".")
+            const [de, combo] = value.split('.')
             return { de, combo }
         }
 
@@ -153,8 +155,7 @@ export function ManualDataItemMappingField({
     )
 
     const destDataElementMap = useMemo(
-        () =>
-            Object.fromEntries((dataElements ?? []).map((d) => [d.id, d])),
+        () => Object.fromEntries((dataElements ?? []).map((d) => [d.id, d])),
         [dataElements]
     )
 
@@ -168,7 +169,7 @@ export function ManualDataItemMappingField({
 
     const resolveSourceLabel = useCallback(
         (itemId: string) => {
-            const [deId, comboId] = itemId.split(".")
+            const [deId, comboId] = itemId.split('.')
 
             const de = sourceDataElementMap[deId]
             const combo = sourceComboMap[comboId]
@@ -183,7 +184,7 @@ export function ManualDataItemMappingField({
 
     const resolveDestLabel = useCallback(
         (itemId: string) => {
-            const [deId, comboId] = itemId.split(".")
+            const [deId, comboId] = itemId.split('.')
 
             const de = destDataElementMap[deId]
             const combo = destComboMap[comboId]
@@ -208,10 +209,7 @@ export function ManualDataItemMappingField({
         destDataElementsError ||
         destCombosError
 
-    const addDisabled =
-        metadataLoading ||
-        !sourceId.trim() ||
-        !destId.trim()
+    const addDisabled = metadataLoading || !sourceId.trim() || !destId.trim()
 
     return (
         <Field
@@ -223,10 +221,10 @@ export function ManualDataItemMappingField({
         >
             <div
                 style={{
-                    display: "grid",
-                    gridTemplateColumns: "1fr 1fr auto",
+                    display: 'grid',
+                    gridTemplateColumns: '1fr 1fr auto',
                     gap: 8,
-                    alignItems: "end",
+                    alignItems: 'end',
                     marginBottom: 4,
                 }}
             >
@@ -237,7 +235,7 @@ export function ManualDataItemMappingField({
                     validationText={sourceIdError}
                     placeholder="Source Id"
                     onChange={({ value }) => {
-                        setSourceIdError("")
+                        setSourceIdError('')
                         setSourceId(value as string)
                     }}
                 />
@@ -249,7 +247,7 @@ export function ManualDataItemMappingField({
                     validationText={destIdError}
                     placeholder="Destination Id"
                     onChange={({ value }) => {
-                        setDestIdError("")
+                        setDestIdError('')
                         setDestId(value as string)
                     }}
                 />
@@ -261,46 +259,40 @@ export function ManualDataItemMappingField({
                         disabled={addDisabled}
                         loading={metadataLoading}
                     >
-                        {metadataLoading
-                            ? i18n.t("Loading")
-                            : i18n.t("Add")}
+                        {metadataLoading ? i18n.t('Loading') : i18n.t('Add')}
                     </Button>
                 </div>
             </div>
 
-
             {mappings.length > 0 && (
                 <>
-                    <span style={{ fontSize: 12, color: "#6e7a8a" }}>
-                        {mappings.length} {i18n.t("mappings")}
+                    <span style={{ fontSize: 12, color: '#6e7a8a' }}>
+                        {mappings.length} {i18n.t('mappings')}
                     </span>
                     <div
                         style={{
                             maxHeight: 200,
-                            overflowY: "auto",
-                            display: "flex",
-                            flexWrap: "wrap",
+                            overflowY: 'auto',
+                            display: 'flex',
+                            flexWrap: 'wrap',
                             padding: 6,
-                            border: "1px solid #d5dde5",
+                            border: '1px solid #d5dde5',
                             borderRadius: 4,
-                            background: "#fff",
+                            background: '#fff',
                         }}
                     >
                         {mappings.map((m) => (
                             <Chip
                                 dense
-                                
                                 key={`${m.sourceId}-${m.id}`}
                                 onRemove={() => removeMapping(m)}
                             >
-                                {resolveSourceLabel(m.sourceId)} :{" "}
+                                {resolveSourceLabel(m.sourceId)} :{' '}
                                 {resolveDestLabel(m.id)}
                             </Chip>
                         ))}
                     </div>
-
                 </>
-
             )}
         </Field>
     )

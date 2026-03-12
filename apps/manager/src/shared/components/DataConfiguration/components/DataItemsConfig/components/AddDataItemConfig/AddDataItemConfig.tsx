@@ -7,7 +7,7 @@ import { DataItemConfigForm } from './components/DataItemConfigForm'
 
 export function AddDataItemConfig({
     onAdd,
-    routeId
+    routeId,
 }: {
     onAdd: (data: DataServiceDataSourceItemsConfig) => void
     routeId: string | undefined

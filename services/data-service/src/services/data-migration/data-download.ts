@@ -194,13 +194,13 @@ async function downloadDataForDxItems({
         const heavyDimension = meta.runtimeConfig.paginateByData
             ? 'dx'
             : Object.keys(dimensions).reduce((acc, value) => {
-                if (
-                    (dimensions[acc]?.length ?? 0) >
-                    (dimensions[value]?.length ?? 0)
-                )
-                    return acc
-                return value
-            }, Object.keys(dimensions)[0])
+                  if (
+                      (dimensions[acc]?.length ?? 0) >
+                      (dimensions[value]?.length ?? 0)
+                  )
+                      return acc
+                  return value
+              }, Object.keys(dimensions)[0])
         const pageSize = meta.runtimeConfig.pageSize ?? 50
 
         if (dimensions[heavyDimension]!.length <= pageSize) {
@@ -278,13 +278,13 @@ async function downloadDataForAttributeItems({
         const heavyDimension = meta.runtimeConfig.paginateByData
             ? 'dx'
             : Object.keys(dimensions).reduce((acc, value) => {
-                if (
-                    (dimensions[acc]?.length ?? 0) >
-                    (dimensions[value]?.length ?? 0)
-                )
-                    return acc
-                return value
-            }, Object.keys(dimensions)[0])
+                  if (
+                      (dimensions[acc]?.length ?? 0) >
+                      (dimensions[value]?.length ?? 0)
+                  )
+                      return acc
+                  return value
+              }, Object.keys(dimensions)[0])
         const pageSize = meta.runtimeConfig.pageSize ?? 50
         const categoryOptions = config.attributeOptions
         const iterations = chunk(dimensions[heavyDimension], pageSize)
@@ -416,20 +416,20 @@ async function processDataDownload({
         const processedData =
             config.type === 'ATTRIBUTE_VALUES'
                 ? await processAttributeComboData({
-                    data,
-                    dataItemsConfig: config,
-                    categoryOptionId: head(
-                        filters![
-                        (
-                            config as DataServiceAttributeValuesDataItemsSource
-                        ).attributeId
-                        ]
-                    ) as string,
-                })
+                      data,
+                      dataItemsConfig: config,
+                      categoryOptionId: head(
+                          filters![
+                              (
+                                  config as DataServiceAttributeValuesDataItemsSource
+                              ).attributeId
+                          ]
+                      ) as string,
+                  })
                 : await processData({
-                    data,
-                    dataItems: config.dataItems,
-                })
+                      data,
+                      dataItems: config.dataItems,
+                  })
 
         logger.info(`${processedData.dataValues.length} data values processed`)
 

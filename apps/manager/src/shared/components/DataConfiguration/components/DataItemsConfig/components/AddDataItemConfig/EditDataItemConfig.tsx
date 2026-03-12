@@ -7,7 +7,7 @@ import { DataItemConfigForm } from './components/DataItemConfigForm'
 export function EditDataItemConfig({
     onUpdate,
     config,
-    routeId
+    routeId,
 }: {
     onUpdate: (data: DataServiceDataSourceItemsConfig) => void
     config: DataServiceDataSourceItemsConfig
