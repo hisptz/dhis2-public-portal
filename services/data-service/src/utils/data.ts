@@ -248,7 +248,7 @@ export async function processDataItems({
         if (e instanceof AxiosError) {
             console.error(`Axios Error fetching data: ${e.message}`)
             console.error(
-                `Axios Status code: ${e.response?.status} - ${e.response?.statusText}`
+                `Axios Status code: ${e.response?.status} - ${e.response?.data?.message ?? e.response?.statusText}`
             )
             throw e
         } else {

@@ -34,18 +34,28 @@ export function ManualDataItemMappingField({
     const [sourceIdError, setSourceIdError] = useState('')
     const [destIdError, setDestIdError] = useState('')
 
+    const parseDataItemId = (value: string) => {
+        const trimmed = value.trim()
+
+        if (!trimmed.includes('.')) {
+            return null
+        }
+
+        const [dataElementId, comboId] = trimmed.split('.')
+
+        if (!dataElementId || !comboId) {
+            return null
+        }
+
+        return { dataElementId, comboId }
+    }
+
     const addMapping = () => {
         const src = sourceId.trim()
         const dst = destId.trim()
 
         setSourceIdError('')
         setDestIdError('')
-
-        if (!src && !dst) {
-            setSourceIdError('Source id is required')
-            setDestIdError('Destination id is required')
-            return
-        }
 
         if (!src) {
             setSourceIdError('Source id is required')
@@ -54,6 +64,33 @@ export function ManualDataItemMappingField({
 
         if (!dst) {
             setDestIdError('Destination id is required')
+            return
+        }
+
+        const parsedSrc = parseDataItemId(src)
+        const parsedDst = parseDataItemId(dst)
+
+        if (!parsedSrc && !parsedDst) {
+            setSourceIdError(
+                'Invalid format. Expected: DataElement.CategoryOptionCombo'
+            )
+            setDestIdError(
+                'Invalid format. Expected: DataElement.CategoryOptionCombo'
+            )
+            return
+        }
+
+        if (!parsedSrc) {
+            setSourceIdError(
+                'Invalid format. Expected: DataElement.CategoryOptionCombo'
+            )
+            return
+        }
+
+        if (!parsedDst) {
+            setDestIdError(
+                'Invalid format. Expected: DataElement.CategoryOptionCombo'
+            )
             return
         }
 

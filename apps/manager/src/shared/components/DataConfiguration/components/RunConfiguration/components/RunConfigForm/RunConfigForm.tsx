@@ -136,7 +136,12 @@ export function RunConfigForm({
 
                 // Extract all data elements and org units from selected configs
                 const allDataElements = selectedConfigs.flatMap(
-                    (configItem) => [...configItem.dataElements]
+                    (configItem) => [
+                        ...configItem.dataElements,
+                        ...(configItem.dataItems?.map(
+                            (dataItem) => dataItem.id
+                        ) ?? []),
+                    ]
                 )
                 const allOrgUnits = selectedConfigs.map(
                     (configItem) => configItem.parentOrgUnitId
@@ -153,7 +158,9 @@ export function RunConfigForm({
                         name: item.name,
                         type: item.type,
                         periodTypeId: item.periodTypeId,
-                        dataItemsCount: item.dataElements.length,
+                        dataItemsCount:
+                            item.dataElements.length +
+                            (item.dataItems?.length ?? 0),
                         parentOrgUnitId: item.parentOrgUnitId,
                         orgUnitLevel: item.orgUnitLevel,
                     })),
