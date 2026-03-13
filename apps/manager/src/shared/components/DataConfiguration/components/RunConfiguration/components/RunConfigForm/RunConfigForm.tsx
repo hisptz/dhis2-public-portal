@@ -329,10 +329,11 @@ export function RunConfigForm({
                                                     label: i18n.t('Maps'),
                                                     value: 'maps',
                                                 },
-                                                {
-                                                    label: i18n.t('Dashboards'),
-                                                    value: 'dashboards',
-                                                },
+                                                // Currently not supported
+                                                // {
+                                                //     label: i18n.t('Dashboards'),
+                                                //     value: 'dashboards',
+                                                // },
                                             ]}
                                         />
 
