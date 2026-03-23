@@ -5,6 +5,24 @@ export default defineConfig({
     e2e: {
         setupNodeEvents(on, config) {
             chromeAllowXSiteCookies(on, config)
+            const configProcessScopedVariables = {}
+            on('task', {
+                set: (keySet: Record<string, unknown>) => {
+                    Object.entries(keySet).forEach(([key, value]) => {
+                        configProcessScopedVariables[key] = value
+                    })
+                    return null
+                },
+                get: (keys: string[]) => {
+                    const variablesToReturn = {}
+                    keys.forEach((key: string) => {
+                        variablesToReturn[key] =
+                            configProcessScopedVariables[key]
+                    })
+                    return variablesToReturn
+                },
+            })
+            return config
         },
         baseUrl: 'http://localhost:3001',
         specPattern: 'cypress/integration/**/*.cy.ts',
