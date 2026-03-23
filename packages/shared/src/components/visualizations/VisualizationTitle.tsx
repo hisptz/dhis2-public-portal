@@ -1,5 +1,3 @@
-import React from "react";
-
 export function VisualizationTitle({ title }: { title: string }) {
-	return <span className="font-bold flex-1">{title}</span>;
+    return <span className="font-bold flex-1">{title}</span>
 }

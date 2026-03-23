@@ -1,293 +1,452 @@
 import {
+    D2Map,
+    DataElement,
     getDataElementConfigs,
     getDataElementIdsFromMaps,
     getDataElementIdsFromVisualizations,
-    getIndicatorConfigs,
+    getDataSetsFromMaps,
+    getDataSetsFromVisualizations,
     getIndicatorIdsFromMaps,
     getIndicatorIdsFromVisualizations,
-    getMaps,
     getMapsConfig,
-    getModuleConfigs,
+    getProgramAttributesFromMaps,
+    getProgramAttributesFromVisualizations,
+    getProgramDataElementFromMaps,
+    getProgramDataElementFromVisualizations,
+    getProgramIndicatorsFromMaps,
+    getProgramIndicatorsFromVisualizations,
     getVisualizationConfigs,
-    getVisualizations,
-} from "../../utils/visualizations";
-import { compact, uniq, uniqBy } from "lodash";
+    sanitizeMapsWithDatasetReferences,
+    sanitizeVisualizationsWithDatasetReferences,
+    Visualization,
+} from '@/utils/visualizations'
+import { compact, isEmpty, uniq, uniqBy } from 'lodash'
 import {
-    getCategoryCombosFromDataElements,
+    getCategories,
+    getIndicatorsConfig,
     getIndicatorsSources,
-    getLegendSets,
-} from "../../utils/indicators";
-import logger from "@/logging";
-import { getDefaultCategoryValues, getDestinationDefaultCategoryValues } from "../../utils/default-categories";
-import { pushToQueue } from "../../rabbit/publisher";
-import { exportConfiguration } from "./utils/configuration-export";
-import { getMetadataFromDashboards } from "../../utils/dashboard";
-import { DatastoreNamespaces } from "@packages/shared/constants";
-import { dhis2Client } from "@/clients/dhis2";
+    getIndicatorTypes,
+    sanitizeIndicatorsWithDatasetReferences,
+} from '@/utils/indicators'
+import logger from '@/logging'
 import {
-    DataItemMapping
-} from "../../utils/data-item-mapping";
+    getDefaultCategoryValues,
+    getDestinationDefaultCategoryValues,
+} from '@/utils/default-categories'
+import { DataItemMapping } from '@/utils/data-item-mapping'
+import {
+    MetadataDownload,
+    MetadataDownloadType,
+    MetadataRun,
+    ProcessStatus,
+} from '@/generated/prisma/client'
+import { createSourceClient } from '@/clients/dhis2'
+import { AxiosInstance } from 'axios'
+import {
+    generateDataElementsForProgramItems,
+    getProgramAttributesConfig,
+    getProgramDataElementsConfig,
+    getProgramIndicatorsConfig,
+} from '@/utils/program-metadata'
+import {
+    generateDataElementsForDatasetItems,
+    getDatasetsConfig,
+} from '@/utils/dataset-metadata'
+import { saveMetadataFile } from '@/services/metadata-migration/utils/file'
+import { dbClient } from '@/clients/prisma'
+import { pushToQueue } from '@/rabbit/publisher'
+import { Queues } from '@/rabbit/constants'
+import { logWorker } from '@/rabbit/utils'
 
 export interface ProcessedMetadata {
-    legendSets: any;
-    visualizations: {
-        maps: any[];
-        visualizations: any[];
-    };
-    dataItems: {
-        indicators: any[];
-        dataElements: any[];
-    };
-    indicatorTypes: {
-        indicatorTypes: any[];
-    };
-    categories: {
-        categories: any[];
-        categoryCombos: any[];
-        categoryOptions: any[];
-        categoryOptionCombos: any[];
-    };
-    mappings?: {
-        dataItems: DataItemMapping[];
-    };
-    programIndicatorIds?: string[];
-}
-
-export interface MetadataDownloadOptions {
-    configId: string;
-    metadataSource?: 'source' | 'flexiportal-config';
-    selectedVisualizations?: Array<{ id: string; name: string }>;
-    selectedMaps?: Array<{ id: string; name: string }>;
-    selectedDashboards?: Array<{ id: string; name: string }>;
-    totalItems?: number;
-}
-
-export async function downloadAndQueueMetadata(options: MetadataDownloadOptions): Promise<void> {
-    try {
-        const { configId, metadataSource } = options;
-        logger.info(`Starting metadata download and queue process for config: ${configId}`);
-        const metadata = await downloadMetadata(options);
- 
-        await pushToQueue(configId, 'metadataUpload', {
-            metadata,
-            configId,
-            downloadedAt: new Date().toISOString()
-        });
-
-        if (metadataSource === 'flexiportal-config') {
-            const configuration = await exportConfiguration(configId);
-
-            await pushToQueue(configId, 'metadataUpload', {
-                type: 'configuration',
-                configuration,
-                timestamp: new Date().toISOString()
-            });
-        }
-        logger.info(`Metadata successfully downloaded and queued for upload (config: ${configId})`);
-    } catch (error) {
-        logger.error(`Error during download and queue process for config ${options.configId}:`, error);
-        throw error;
+    metadata: {
+        legendSets: Array<LegendSet>
+        visualizations: Array<Visualization>
+        maps: Array<D2Map>
+        indicators: Array<{
+            id: string
+        }>
+        dataElements: Array<{
+            id: string
+        }>
+        indicatorTypes: Array<{
+            id: string
+        }>
+        categories: Array<{
+            id: string
+        }>
+        categoryCombos: Array<{
+            id: string
+        }>
+        categoryOptions: Array<{
+            id: string
+        }>
+        categoryOptionCombos: Array<{
+            id: string
+        }>
     }
+    mapping: Array<DataItemMapping>
 }
 
+type LegendSet = {
+    id: string
+    name: string
+    legends: Array<{
+        id: string
+        name: string
+        color: string
+    }>
+}
 
+export async function downloadAndQueueMetadata({
+    task,
+}: {
+    task: MetadataDownload & { run: MetadataRun }
+}): Promise<void> {
+    const metadata = await downloadMetadata(task)
+    if (!metadata) {
+        await dbClient.metadataDownload.update({
+            where: { uid: task.uid },
+            data: {
+                status: ProcessStatus.FAILED,
+                error: 'Unsupported metadata download',
+                finishedAt: new Date(),
+            },
+        })
+        return
+    }
+    const filename = await saveMetadataFile({
+        data: metadata,
+    })
+    const createdUploadTask = await dbClient.metadataUpload.create({
+        data: {
+            filename,
+            downloadId: task.id,
+            runId: task.run.id,
+        },
+    })
+    pushToQueue({
+        queue: Queues.METADATA_UPLOAD,
+        reference: createdUploadTask.uid,
+    })
+    await dbClient.metadataDownload.update({
+        where: { uid: task.uid },
+        data: {
+            status: ProcessStatus.DONE,
+            finishedAt: new Date(),
+        },
+    })
+}
 
+function extractLegendSets(
+    items: Array<{
+        legendSets: Array<{
+            id: string
+        }>
+    }>
+) {
+    const legendSets = compact(items.flatMap((item) => item.legendSets))
+    return uniq(legendSets.map((legendSet) => legendSet.id))
+}
 
-export async function downloadMetadata(options: MetadataDownloadOptions): Promise<ProcessedMetadata> {
-    try {
-        const { configId, metadataSource = 'flexiportal-config' } = options;
-        const configUrl = `dataStore/${DatastoreNamespaces.DATA_SERVICE_CONFIG}/${configId}`;
-        const { data: config } = await dhis2Client.get(configUrl);
-        const routeId = config.source.routeId;
+async function getLegendSets({
+    items,
+    client,
+}: {
+    items: string[]
+    client: AxiosInstance
+}) {
+    if (isEmpty(items)) {
+        return []
+    }
+    logWorker(
+        'info',
+        `Fetching configurations for ${items.length} legend sets...`
+    )
+    const response = await client.get<{
+        legendSets: Array<LegendSet>
+    }>(`legendSets`, {
+        params: {
+            fields: ':owner,legends[:owner,!sharing,!users,!userGroups],!users,!userGroups,!sharing',
+            filter: `id:in:[${items.join(',')}]`,
+            paging: false,
+        },
+    })
+    logWorker('info', `Fetched configurations for ${items.length} legend sets`)
+    return response.data.legendSets
+}
 
-        if (!config?.source?.routeId) {
-            throw new Error(`No routeId found in config ${configId}`);
-        }
-        logger.info("Fetching default category system values...");
-        const sourceDefaults = await getDefaultCategoryValues(routeId);
-        const destinationDefaults = await getDestinationDefaultCategoryValues();
+// function generateDataItemsMapping({
+//     dataElements,
+//     datasetDataElements,
+//     defaultCategoryComboId,
+//     categoryCombos,
+// }: {
+//     dataElements: Array<DataElement>
+//     datasetDataElements: Array<DataElement>
+//     categoryCombos: Array<{
+//         id: string
+//         categoryOptionCombos: Array<{ id: string }>
+//     }>
+//     defaultCategoryComboId?: string
+// }): Array<DataItemMapping> {
+//     const dataElementDataItems = flattenDeep(
+//         dataElements.map((dataElement) => {
+//             if (dataElement.categoryCombo.id === defaultCategoryComboId) {
+//                 return {
+//                     id: dataElement.id,
+//                     sourceId: dataElement.id,
+//                 }
+//             } else {
+//                 const categoryCombo = categoryCombos.find(
+//                     ({ id }) => id === dataElement.categoryCombo.id
+//                 )
+//
+//                 return (
+//                     categoryCombo?.categoryOptionCombos.map(
+//                         (categoryOptionCombo) => ({
+//                             id: `${dataElement.id}.${categoryOptionCombo.id}`,
+//                             sourceId: `${dataElement.id}.${categoryOptionCombo.id}`,
+//                         })
+//                     ) ?? []
+//                 )
+//             }
+//         })
+//     )
+//     const datasetDataItems = datasetDataElements.map((dataElement) => ({
+//         id: dataElement.id,
+//         sourceId: dataElement.code,
+//     }))
+//
+//     return uniqBy([...dataElementDataItems, ...datasetDataItems], 'id')
+// }
 
-        let visualizations: any[] = [];
-        let maps: any[] = [];
+function extractCategoryCombos(
+    items: Array<DataElement>,
+    sourceDefaultCategoryComboId: string
+) {
+    logWorker(
+        'info',
+        `Extracting category combos for ${items.length} data elements`
+    )
+    return uniq(
+        compact(
+            items
+                .flatMap((item) => item.categoryCombo.id)
+                .filter((comboId) => comboId !== sourceDefaultCategoryComboId)
+        )
+    )
+}
 
-        if (metadataSource === 'flexiportal-config') {
-            logger.info("Loading Module Configs...");
-            const moduleConfigs = await getModuleConfigs(routeId);
-
-            logger.info("Extracting Visualizations from modules...");
-            visualizations = [...getVisualizations(moduleConfigs ?? [])];
-
-            logger.info("Extracting Maps from modules...");
-            maps = [...getMaps(moduleConfigs ?? [])];
-
-        } else if (metadataSource === 'source') {
-            logger.info("Processing selected metadata items...");
-            const selectedVisualizationIds = options.selectedVisualizations?.map(v => v.id) || [];
-            const selectedMapIds = options.selectedMaps?.map(m => m.id) || [];
-
-            let dashboardExtractedIds: { visualizationIds: string[]; mapIds: string[] } = { visualizationIds: [], mapIds: [] };
-            if (options.selectedDashboards && options.selectedDashboards.length > 0) {
-                const dashboardIds = options.selectedDashboards.map(d => d.id);
-                dashboardExtractedIds = await getMetadataFromDashboards(dashboardIds, routeId);
+function replaceDefaultCategoryCombo({
+    dataElements,
+    defaultDestinationCategoryCombo,
+    defaultSourceCategoryCombo,
+}: {
+    dataElements: Array<DataElement>
+    defaultSourceCategoryCombo: string
+    defaultDestinationCategoryCombo: string
+}) {
+    logWorker(
+        'info',
+        `Replacing default category combo for ${dataElements.length} data elements`
+    )
+    return dataElements.map((dataElement) => {
+        if (dataElement.categoryCombo.id === defaultSourceCategoryCombo) {
+            return {
+                ...dataElement,
+                categoryCombo: {
+                    id: defaultDestinationCategoryCombo,
+                },
             }
+        }
+        return dataElement
+    })
+}
 
-            const allVisualizationIds = [...new Set([
-                ...selectedVisualizationIds,
-                ...dashboardExtractedIds.visualizationIds
-            ])];
+export async function downloadMetadata(
+    task: MetadataDownload & { run: MetadataRun }
+): Promise<ProcessedMetadata | null> {
+    try {
+        logger.info('Fetching default category system values...')
+        const client = createSourceClient(task.run.mainConfigId)
+        const sourceDefaults = await getDefaultCategoryValues(client)
+        const destinationDefaults = await getDestinationDefaultCategoryValues()
 
-            const allMapIds = [...new Set([
-                ...selectedMapIds,
-                ...dashboardExtractedIds.mapIds
-            ])];
-
-            logger.info(`Total visualizations to process: ${allVisualizationIds.length}`);
-            logger.info(`Total maps to process: ${allMapIds.length}`);
-
-            visualizations = allVisualizationIds.map(id => ({ id }));
-            maps = allMapIds.map(id => ({ id }));
+        if (task.type === MetadataDownloadType.DASHBOARD) {
+            //Will be worked on soon
+            return null
         }
 
-        logger.info("Fetching Map Configs...");
-        const mapsConfig = maps.length > 0 ? (await getMapsConfig(maps, routeId)) ?? [] : [];
+        const indicatorIds = []
+        const dataElementIds = []
+        const programIndicatorIds = []
+        const programAttributeIds = []
+        const programDataElementsIds = []
+        const dataSetIds = []
+        const visualizations = await getVisualizationConfigs({
+            items: task.items,
+            client,
+        })
+        const maps = await getMapsConfig({
+            items: task.items,
+            client,
+        })
 
-        logger.info("Fetching Visualization Configs...");
-        const visualizationConfig = visualizations.length > 0 ? await getVisualizationConfigs(visualizations, routeId) : [];
+        if (!isEmpty(visualizations)) {
+            indicatorIds.push(
+                ...getIndicatorIdsFromVisualizations(visualizations)
+            )
+            dataElementIds.push(
+                ...getDataElementIdsFromVisualizations(visualizations)
+            )
+            programAttributeIds.push(
+                ...getProgramAttributesFromVisualizations(visualizations)
+            )
+            programIndicatorIds.push(
+                ...getProgramIndicatorsFromVisualizations(visualizations)
+            )
+            programDataElementsIds.push(
+                ...getProgramDataElementFromVisualizations(visualizations)
+            )
+            dataSetIds.push(...getDataSetsFromVisualizations(visualizations))
+        }
 
-        logger.info("Collecting Indicator IDs...");
-        const indicatorIds = [
-            ...(getIndicatorIdsFromMaps(mapsConfig ?? []) ?? []),
-            ...getIndicatorIdsFromVisualizations(visualizationConfig ?? []),
-        ];
-        logger.info(`Collected ${indicatorIds.length} unique indicator IDs`);
+        if (!isEmpty(maps)) {
+            indicatorIds.push(...getIndicatorIdsFromMaps(maps))
+            dataElementIds.push(...getDataElementIdsFromMaps(maps))
+            programAttributeIds.push(...getProgramAttributesFromMaps(maps))
+            programIndicatorIds.push(...getProgramIndicatorsFromMaps(maps))
+            dataSetIds.push(...getDataSetsFromMaps(maps))
+            programDataElementsIds.push(...getProgramDataElementFromMaps(maps))
+        }
 
-        logger.info("Collecting Data Element IDs...");
-        const dataElementIds = [
-            ...(getDataElementIdsFromMaps(mapsConfig ?? []) ?? []),
-            ...getDataElementIdsFromVisualizations(visualizationConfig ?? []),
-        ];
-        logger.info(`Collected ${dataElementIds.length} unique data element IDs`);
-
-        logger.info("Fetching Indicators...");
-        const indicators = await getIndicatorConfigs(indicatorIds, configId);
-        logger.info(`Successfully fetched ${indicators.length} indicators`);
-
-        logger.info("Fetching Data Elements...");
-        const dataElements = await getDataElementConfigs(dataElementIds, configId);
-        logger.info(`Successfully fetched ${dataElements.length} data elements`);
-
-        logger.info("Getting Indicator Sources...");
-        const indicatorMeta = await getIndicatorsSources(indicators, configId);
-        dataElements.push(...indicatorMeta.dataElements);
-
-        const programIndicatorIds = indicatorMeta.programIndicatorIds || [];
-        logger.info(`Found ${programIndicatorIds.length} program indicators from indicator sources`);
-
-        logger.info("Getting Category Combos...");
-        const dataElementMeta = await getCategoryCombosFromDataElements(
-            uniqBy(dataElements, "id"),
-            configId
-        );
-
-        logger.info("Collecting categories...");
-        const categories = [...indicatorMeta.categories, ...dataElementMeta.categories];
-
-        logger.info("Collecting category options...");
-        const categoryOptions = [
-            ...indicatorMeta.categoryOptions,
-            ...dataElementMeta.categoryOptions,
-        ];
-
-        logger.info("Collecting category combos...");
-        const categoryCombos = [
-            ...indicatorMeta.categoryCombos,
-            ...dataElementMeta.categoryCombos,
-        ];
-
-        logger.info("Collecting category option combos...");
-        const categoryOptionCombos = [
-            ...indicatorMeta.categoryOptionCombos,
-            ...dataElementMeta.categoryOptionCombos,
-        ];
-
-        logger.info("Collecting legend sets IDs...");
-        const legendSetIds: string[] = [
-            ...dataElements
-                .map(({ legendSets }) => legendSets?.map(({ id }: { id: string }) => id) || [])
-                .flat(),
-            ...indicators
-                .map(({ legendSets }) => legendSets?.map(({ id }: { id: string }) => id) || [])
-                .flat(),
-            ...compact(visualizationConfig?.map(({ legend }) => legend?.set?.id)),
-            ...compact(
-                mapsConfig
-                    .map(({ mapViews }) =>
-                        mapViews?.map(
-                            ({ legendSet }: { legendSet: { id: string } }) => legendSet?.id
-                        ) || []
-                    )
-                    .flat()
+        const indicators = await getIndicatorsConfig({
+            items: uniq(indicatorIds),
+            client,
+        })
+        if (!isEmpty(indicatorIds)) {
+            //We need to get all other meta used in the indicators expressions
+            const indicatorSources = await getIndicatorsSources({
+                indicators,
+            })
+            dataElementIds.push(...indicatorSources.dataElementIds)
+            programIndicatorIds.push(...indicatorSources.programIndicatorIds)
+            dataSetIds.push(...indicatorSources.dataSetIds)
+        }
+        const dataElements = await getDataElementConfigs({
+            items: uniq(dataElementIds),
+            client,
+        })
+        const programIndicators = await getProgramIndicatorsConfig({
+            items: uniq(programIndicatorIds),
+            client,
+        })
+        const programAttributes = await getProgramAttributesConfig({
+            items: uniq(programAttributeIds),
+            client,
+        })
+        const programDataElements = await getProgramDataElementsConfig({
+            items: uniq(programDataElementsIds),
+            client,
+        })
+        const dataSets = await getDatasetsConfig({
+            client,
+            items: uniq(dataSetIds),
+        })
+        const createdProgramDataElements = generateDataElementsForProgramItems(
+            [
+                ...programDataElements,
+                ...programAttributes,
+                ...programIndicators,
+            ],
+            destinationDefaults.defaultCategoryComboId
+        )
+        const createdDataSetDataElements = generateDataElementsForDatasetItems(
+            dataSets,
+            destinationDefaults.defaultCategoryComboId
+        )
+        const legendSetIds = extractLegendSets([
+            ...indicators,
+            ...dataElements,
+            ...uniqBy(
+                [...createdProgramDataElements, ...createdDataSetDataElements],
+                'code'
             ),
-        ];
+        ])
+        const legendSets = await getLegendSets({
+            client,
+            items: legendSetIds,
+        })
+        const categoryIds = extractCategoryCombos(
+            dataElements,
+            sourceDefaults.defaultCategoryComboId
+        )
+        const {
+            categories,
+            categoryOptions,
+            categoryCombos,
+            categoryOptionCombos,
+        } = await getCategories({
+            items: uniq(categoryIds),
+            client,
+        })
+        const indicatorTypeIds = uniq(
+            indicators.map((indicator) => indicator.indicatorType.id)
+        )
+        const indicatorTypes = await getIndicatorTypes({
+            items: indicatorTypeIds,
+            client,
+        })
+        const sanitizedIndicators = sanitizeIndicatorsWithDatasetReferences({
+            indicators,
+            datasetDataElements: createdDataSetDataElements,
+        })
 
-        logger.info("Fetching LegendSets...");
-        const legendSets = legendSetIds.length > 0 ? await getLegendSets(uniq(legendSetIds), routeId) : [];
-        logger.info(`Total LegendSets fetched: ${legendSets}`);
-        const processedMetadata: ProcessedMetadata = {
-            legendSets,
-            visualizations: {
-                maps: uniqBy(mapsConfig, "id"),
-                visualizations: uniqBy(visualizationConfig, "id"),
-            },
-            dataItems: {
-                indicators: uniqBy(indicators, "id").map((entity) => ({
-                    ...entity,
-                    translations: [],
-                    attributeValues: [],
-                })),
-                dataElements: uniqBy(dataElements, "id")
-                    .map((entity) => ({
-                        ...entity,
-                        translations: [],
-                        attributeValues: [],
-                    }))
-                    .map((dataElement) => {
-                        if (
-                            dataElement.categoryCombo?.id === sourceDefaults.defaultCategoryComboId
-                        ) {
-                            return {
-                                ...dataElement,
-                                categoryCombo: { id: destinationDefaults.defaultCategoryComboId },
-                            };
-                        }
-                        return dataElement;
-                    }),
-            },
-            indicatorTypes: {
-                indicatorTypes: indicatorMeta.indicatorTypes,
-            },
-            categories: {
-                categories: uniqBy(categories, "id").filter(
-                    (category) => category.id != sourceDefaults.defaultCategoryId
-                ),
-                categoryCombos: uniqBy(categoryCombos, "id").filter(
-                    (combo) => combo.id != sourceDefaults.defaultCategoryComboId
-                ),
-                categoryOptions: uniqBy(categoryOptions, "id").filter(
-                    (option) => option.id != sourceDefaults.defaultCategoryOptionId
-                ),
-                categoryOptionCombos: uniqBy(categoryOptionCombos, "id").filter(
-                    (optionCombo: any) => optionCombo && optionCombo.name && !(optionCombo.name as string).includes("default")
-                ),
-            },
-            programIndicatorIds,
-        };
+        const sanitizedVisualizations =
+            sanitizeVisualizationsWithDatasetReferences({
+                visualizations,
+                datasetDataElements: createdDataSetDataElements,
+            })
 
-        logger.info(`Metadata download completed successfully. Source: ${metadataSource}`);
-        return processedMetadata;
+        const sanitizedMaps = sanitizeMapsWithDatasetReferences({
+            maps,
+            datasetDataElements: createdDataSetDataElements,
+        })
+        const dataElementsWithReplacedCategoryCombo =
+            replaceDefaultCategoryCombo({
+                dataElements,
+                defaultSourceCategoryCombo:
+                    sourceDefaults.defaultCategoryComboId,
+                defaultDestinationCategoryCombo:
+                    destinationDefaults.defaultCategoryComboId,
+            })
+        const sanitizedDataElements = uniqBy(
+            [
+                ...dataElementsWithReplacedCategoryCombo,
+                ...createdProgramDataElements,
+                ...createdDataSetDataElements,
+            ],
+            'id'
+        )
 
+        return {
+            metadata: {
+                maps: sanitizedMaps,
+                visualizations: sanitizedVisualizations,
+                indicators: sanitizedIndicators,
+                indicatorTypes,
+                dataElements: sanitizedDataElements,
+                categories,
+                categoryOptions,
+                categoryCombos,
+                categoryOptionCombos,
+                legendSets,
+            },
+            mapping: [],
+        }
     } catch (error) {
-        logger.error("Error during metadata download:", error);
-        throw error;
+        logger.error('Error during metadata download:', error)
+        throw error
     }
 }

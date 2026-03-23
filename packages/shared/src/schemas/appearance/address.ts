@@ -1,7 +1,7 @@
-import { z } from "zod";
+import { z } from 'zod'
 
 export const addressSchema = z.object({
-	content: z.string(),
-});
+    content: z.string(),
+})
 
-export type AddressConfig = z.infer<typeof addressSchema>;
+export type AddressConfig = z.infer<typeof addressSchema>

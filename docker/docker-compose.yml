@@ -1,7 +1,7 @@
 services:
-  portal:
-    image: hisptanzania/dhis2-public-portal:latest
-    ports:
-      - "3000:3000"
-    env_file:
-      - .env
+    portal:
+        image: hisptanzania/dhis2-public-portal:${TAG:-latest}
+        ports:
+            - '3000:3000'
+        env_file:
+            - .env

@@ -37,11 +37,13 @@ Create the `.env` file in the `apps/portal/` folder. The file should have the fo
 This tells the Next.js application to use `/portal` as the base path for all assets and navigation.
 
 ### 3. Building a custom docker image
+
 You can then build your custom docker image by running:
 
 ```bash
-docker build -t portal:latest . 
+docker build -t portal:latest .
 ```
+
 And then run the created docker image
 
 ```bash
@@ -51,7 +53,7 @@ docker run -p 3000:3000 -e DHIS2_BASE_URL=https://your-dhis2-instance.org portal
 You can also use the `docker-comopse-build.yml` file provided to build and run the application using docker compose:
 
 ```bash
- docker compose -f docker-compose-build.yml up -d --build 
+ docker compose -f docker-compose-build.yml up -d --build
 ```
 
 ### 4. Reverse Proxy Configuration

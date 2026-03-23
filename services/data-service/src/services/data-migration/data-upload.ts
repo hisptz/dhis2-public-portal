@@ -1,315 +1,134 @@
-import logger from "@/logging";
-import { dhis2Client } from "@/clients/dhis2";
-import { AxiosError } from "axios";
-import * as fs from "node:fs";
-import { existsSync } from "node:fs";
+import logger from '@/logging'
+import { dhis2Client } from '@/clients/dhis2'
+import * as fs from 'node:fs'
+import { existsSync } from 'node:fs'
+import { handleError, QueuedJobError } from '@/utils/error'
+import { DataRun, DataUpload, UploadStrategy } from '@/generated/prisma/client'
 
-export interface DataUploadJob {
-    mainConfigId: string;
-    filename?: string;
-    payload?: any;
-    queuedAt?: string;
-    downloadedFrom?: string;
-}
-
-export async function dataFromQueue(jobData: any): Promise<void> {
+export async function dataFromQueue(task: DataUpload & { run: DataRun }) {
     try {
-        const { mainConfigId, filename, payload, isDelete } = jobData;
-
-        if (!validateUploadJobData(jobData)) {
-            throw new Error(`Invalid job data for config: ${mainConfigId}`);
-        }
-
-        const fileLocation = `outputs/${mainConfigId}/${filename}.json`;
-
+        const fileLocation = task.filename
         if (existsSync(fileLocation)) {
-            await dataFromFile({ filename, configId: mainConfigId, isDelete })
-        } else if (payload) {
-            await dataFromPayload({ payload, configId: mainConfigId, filename, isDelete });
+            const summary = await dataFromFile({
+                filename: task.filename,
+                strategy: task.strategy,
+            })
+            return summary
         } else {
-            throw new Error(`No payload and file does not exist for data upload job: ${mainConfigId}`);
+            throw new QueuedJobError(
+                `No payload and file does not exist for data upload job: ${task.uid}`,
+                false
+            )
         }
-    } catch (error: any) {
-        logger.error(`Error processing data job:`, {
-            error: {
-                message: error.message,
-                stack: error.stack,
-                name: error.name,
-            },
-        });
-        throw error;
+    } catch (error) {
+        if (error instanceof QueuedJobError) {
+            throw error
+        } else {
+            if (error instanceof Error) {
+                throw new QueuedJobError(error.message, false)
+            } else {
+                throw new QueuedJobError('Unknown error', false)
+            }
+        }
     }
 }
-
-function validateUploadJobData(jobData: any): boolean {
-    const { mainConfigId, filename, payload } = jobData;
-
-    if (!mainConfigId) {
-        logger.error("Missing required mainConfigId in upload job data");
-        return false;
-    }
-
-    if (!filename && !payload) {
-        logger.error("Missing both filename and payload in upload job data", {
-            hasMainConfigId: !!mainConfigId,
-            hasFilename: !!filename,
-            hasPayload: !!payload,
-        });
-        return false;
-    }
-
-    return true;
-}
-
 
 export async function dataFromFile({
     filename,
-    configId,
-    isDelete,
+    strategy,
 }: {
-    filename: string;
-    configId: string;
-    isDelete?: boolean;
-}): Promise<void> {
+    filename: string
+    strategy: UploadStrategy
+}) {
     try {
-
-        if (!await fs.promises.access(filename).then(() => true).catch(() => false)) {
-            throw new Error(`Data file does not exist: ${filename}`);
+        if (
+            !(await fs.promises
+                .access(filename)
+                .then(() => true)
+                .catch(() => false))
+        ) {
+            throw new QueuedJobError(
+                `Data file does not exist: ${filename}`,
+                false
+            )
         }
 
-        const fileContent = await fs.promises.readFile(filename, 'utf8');
-        const payload = JSON.parse(fileContent);
+        const fileContent = await fs.promises.readFile(filename, 'utf8')
+        const payload = JSON.parse(fileContent)
 
         if (!payload.dataValues || !Array.isArray(payload.dataValues)) {
-            throw new Error(`Invalid data file format: missing or invalid dataValues array in ${filename}`);
+            throw new QueuedJobError(
+                `Invalid data file format: missing or invalid dataValues array in ${filename}`,
+                false
+            )
         }
-        if (isDelete) {
-            logger.info(`Starting data deletion from file: ${filename} for config: ${configId}`);
-            await deleteDataValues(payload, filename);
+        const summary = await uploadDataValues({ payload, filename, strategy })
+        return summary
+    } catch (error) {
+        if (error instanceof QueuedJobError) {
+            throw error
         } else {
-            logger.info(`Starting data upload from file: ${filename} for config: ${configId}`);
-            await uploadDataValues(payload, filename);
+            if (error instanceof Error) {
+                throw new QueuedJobError(error.message, false)
+            } else {
+                throw new QueuedJobError('Unknown error', false)
+            }
         }
-
-
-    } catch (error: any) {
-        logger.error(`Error uploading data from file ${filename}:`, {
-            error: {
-                message: error.message,
-                stack: error.stack,
-                name: error.name,
-            },
-            configId,
-        });
-
-        throw error;
     }
 }
 
-export async function dataFromPayload({
+async function uploadDataValues({
     payload,
-    configId,
     filename,
-    isDelete
+    strategy,
 }: {
-    payload: any;
-    configId: string;
-    filename: string;
-    isDelete?: boolean;
-}): Promise<void> {
+    payload: { dataValues: Array<Record<string, unknown>> }
+    filename: string
+    strategy: UploadStrategy
+}) {
     try {
-
-        if (!payload || !payload.dataValues || !Array.isArray(payload.dataValues)) {
-            throw new Error(`Invalid payload format: missing or invalid dataValues array`);
-        }
-        if (isDelete) {
-            logger.info(`Starting data deletion from payload for config: ${configId}`);
-            await deleteDataValues(payload, filename);
-        } else {
-            logger.info(`Starting data upload from payload for config: ${configId}`);
-            await uploadDataValues(payload, filename);
-        }
-
-
-    } catch (error: any) {
-        logger.error(`Error from payload:`, {
-            error: {
-                message: error.message,
-                stack: error.stack,
-                name: error.name,
-            },
-            configId
-        });
-
-        throw error;
-    }
-}
-
-async function uploadDataValues(payload: any, filename: string) {
-    try {
-        const client = dhis2Client;
-        const url = `dataValueSets`;
+        const client = dhis2Client
+        const url = `dataValueSets`
         const params = {
-            importStrategy: "CREATE_AND_UPDATE",
+            importStrategy: strategy,
             async: false,
-        };
-        logger.info(`Uploading ${payload.dataValues.length} data values`);
+        }
+        logger.info(`Uploading ${payload.dataValues.length} data values`)
         const response = await client.post(url, payload, {
             params,
-        });
-        const importSummary = response.data?.response;
-        const importCount = importSummary.importCount.imported;
-        const ignoredCount = importSummary.importCount.ignored;
-        logger.info(`${importCount} data values imported successfully`);
+        })
+        const importSummary = response.data?.response
+        const importCount = importSummary.importCount.imported
+        const ignoredCount = importSummary.importCount.ignored
+        logger.info(`${importCount} data values imported successfully`)
         if (ignoredCount > 0) {
-            logger.warn(`${ignoredCount} data values ignored`);
+            logger.warn(`${ignoredCount} data values ignored`)
         }
-        logger.info(`Deleting ${filename} file`);
-        await cleanupDataFile(filename);
-
-        return;
-    } catch (e: any) {
-        if (e instanceof AxiosError) {
-            if (e.response?.status === 409) {
-                const response = e.response!;
-                logger.warn(`Conflicts detected. These will be ignored`);
-                logger.warn(
-                    `While uploading the file some values were ignored. This normally means values already exist in DHIS2.`,
-                );
-                logger.warn(
-                    `Status code: ${response.status} - ${response.statusText}`,
-                );
-                const importSummary = response.data?.response;
-                logger.error(importSummary);
-                const importCount = importSummary.importCount.imported;
-                const ignoredCount = importSummary.importCount.ignored;
-                logger.info(`${importCount} data values imported successfully`);
-                if (ignoredCount > 0) {
-                    logger.warn(`${importCount} data values ignored`);
-                }
-                await cleanupDataFile(filename);
-
-                throw e;
-            } else {
-                const response = e.response;
-                logger.error(
-                    `Status code: ${response?.status} - ${response?.statusText}`,
-                );
-
-            }
-            throw e;
+        logger.info(`Deleting ${filename} file`)
+        await cleanupDataFile(filename)
+        return importSummary
+    } catch (e) {
+        if (e instanceof Error) {
+            handleError(e)
         }
-        logger.error(
-            `Error uploading file: ${e.message ?? JSON.stringify(e)}`,
-        );
-
-        throw e;
     }
 }
-
-
-async function deleteDataValues(payload: any, filename: string) {
-    try {
-        const client = dhis2Client;
-        const url = `dataValueSets`;
-        const params = {
-            importStrategy: "DELETE",
-            async: false,
-        };
-        logger.info(`Uploading ${payload.dataValues.length} data values`);
-        const response = await client.post(url, payload, {
-            params,
-        });
-        const importSummary = response.data?.response;
-        const importCount = importSummary.importCount.imported;
-        const ignoredCount = importSummary.importCount.ignored;
-        logger.info(`${importCount} data values imported successfully`);
-        if (ignoredCount > 0) {
-            logger.warn(`${ignoredCount} data values ignored`);
-        }
-        logger.info(`Deleting ${filename} file`);
-        await cleanupDataFile(filename);
-
-        return;
-    } catch (e: any) {
-        if (e instanceof AxiosError) {
-            if (e.response?.status === 409) {
-                const response = e.response!;
-                logger.warn(`Conflicts detected. These will be ignored`);
-                logger.warn(
-                    `While uploading the file some values were ignored. This normally means values already exist in DHIS2.`,
-                );
-                logger.warn(
-                    `Status code: ${response.status} - ${response.statusText}`,
-                );
-                const importSummary = response.data?.response;
-                logger.error(importSummary);
-                const importCount = importSummary.importCount.imported;
-                const ignoredCount = importSummary.importCount.ignored;
-                logger.info(`${importCount} data values imported successfully`);
-                if (ignoredCount > 0) {
-                    logger.warn(`${importCount} data values ignored`);
-                }
-                await cleanupDataFile(filename);
-                throw e;
-            } else {
-                const response = e.response;
-                logger.error(
-                    `Status code: ${response?.status} - ${response?.statusText}`,
-                );
-
-            }
-            throw e;
-        }
-        logger.error(
-            `Error uploading file: ${e.message ?? JSON.stringify(e)}`,
-        );
-
-        throw e;
-    }
-}
-
-
-
 
 async function cleanupDataFile(filename: string): Promise<void> {
     try {
-        if (await fs.promises.access(filename).then(() => true).catch(() => false)) {
-            await fs.promises.unlink(filename);
-            logger.info(`Successfully deleted temporary file: ${filename}`);
+        if (
+            await fs.promises
+                .access(filename)
+                .then(() => true)
+                .catch(() => false)
+        ) {
+            await fs.promises.unlink(filename)
+            logger.info(`Successfully deleted temporary file: ${filename}`)
         }
     } catch (cleanupError) {
-        logger.warn(`Failed to delete temporary file: ${filename}`, cleanupError);
+        logger.warn(
+            `Failed to delete temporary file: ${filename}`,
+            cleanupError
+        )
     }
-}
-
-async function handleUploadAxiosError(error: AxiosError, filename: string): Promise<void> {
-    const response = error.response;
-
-    if (response?.status === 409) {
-        logger.warn(`Conflicts detected of ${filename}`, {
-            status: response.status,
-            statusText: response.statusText
-        });
-
-        const responseData = response.data as any;
-        const importSummary = responseData?.response;
-        if (importSummary) {
-            const imported = importSummary.importCount?.imported || 0;
-            const ignored = importSummary.importCount?.ignored || 0;
-
-            logger.info(`Conflict summary: ${imported} imported, ${ignored} ignored`);
-        }
-
-        // Clean up file even on conflicts
-        await cleanupDataFile(filename);
-
-        return;
-    }
-
-    logger.error(`HTTP error of ${filename}`, {
-        status: response?.status,
-        statusText: response?.statusText,
-        data: response?.data,
-    });
 }

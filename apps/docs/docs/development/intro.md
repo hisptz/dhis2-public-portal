@@ -1,8 +1,3 @@
-
-
-
-
-
 # Development Guide
 
 This section provides guidance for developers who want to contribute to or modify the DHIS2 FlexiPortal.
@@ -29,26 +24,28 @@ The project is organized as a monorepo using Yarn workspaces and Turborepo, with
 ## Setup Instructions
 
 1. Clone the repository:
-   ```bash
-   git clone https://github.com/hisptz/dhis2-public-portal.git
-   cd dhis2-public-portal
-   ```
+
+    ```bash
+    git clone https://github.com/hisptz/dhis2-public-portal.git
+    cd dhis2-public-portal
+    ```
 
 2. Install dependencies:
-   ```bash
-   yarn install
-   ```
+
+    ```bash
+    yarn install
+    ```
 
 3. Set up environment variables:
     - For the portal app, create a `.env` file in `apps/portal/` with:
-      ```
-      DHIS2_BASE_URL=https://your-dhis2-instance.org
-      DHIS2_BASE_PAT_TOKEN=your-personal-access-token
-      ```
+        ```
+        DHIS2_BASE_URL=https://your-dhis2-instance.org
+        DHIS2_BASE_PAT_TOKEN=your-personal-access-token
+        ```
     - For the manager app, create a `.env` file in `apps/manager/` with:
-      ```
-      DHIS2_PROXY_URL=https://your-dhis2-instance.org
-      ```
+        ```
+        DHIS2_PROXY_URL=https://your-dhis2-instance.org
+        ```
 
 ## Development Workflow
 

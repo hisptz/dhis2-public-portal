@@ -12,12 +12,12 @@ import logger from '@/logging'
 
 interface HttpError extends Error {
     status?: number
-    [key: string]: any
+    [key: string]: unknown
 }
 interface ErrorResponse {
     success: boolean
     error: string
-    details?: any
+    details?: unknown
 }
 
 const __filename = fileURLToPath(import.meta.url)
@@ -56,23 +56,16 @@ app.use(
     )
 )
 
-app.use(
-    (
-        err: HttpError,
-        req: express.Request,
-        res: express.Response,
-        next: express.NextFunction
-    ): void => {
-        console.error('Error:', err)
-        const payload: ErrorResponse = {
-            success: false,
-            error: err.message || 'Unknown server error',
-            details: err,
-        }
-
-        res.status(err.status || 500).json(payload)
+app.use((err: HttpError, req: express.Request, res: express.Response): void => {
+    console.error('Error:', err)
+    const payload: ErrorResponse = {
+        success: false,
+        error: err.message || 'Unknown server error',
+        details: err,
     }
-)
+
+    res.status(err.status || 500).json(payload)
+})
 app.listen(env.DATA_SERVICE_PORT, async () => {
     await connectRabbit()
     console.log(

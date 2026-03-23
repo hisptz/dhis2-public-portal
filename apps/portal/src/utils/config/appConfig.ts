@@ -1,76 +1,77 @@
-import { dhis2HttpClient } from "@/utils/api/dhis2";
-import { Pagination } from "@hisptz/dhis2-utils";
-import { DatastoreNamespaces } from "@packages/shared/constants";
-import { AppAppearanceConfig, AppMenuConfig } from "@packages/shared/schemas";
+import { dhis2HttpClient } from '@/utils/api/dhis2'
+import { Pagination } from '@hisptz/dhis2-utils'
+import { DatastoreNamespaces } from '@packages/shared/constants'
+import { AppAppearanceConfig, AppMenuConfig } from '@packages/shared/schemas'
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const appConfigKeys = [
-	"dashboards",
-	"usefulLinks",
-	"faq",
-	"favorites",
-	"news",
-	"themes",
-	"welcomeNote",
-	"library",
-	"surveyData",
-	"feedback-emails",
-] as const;
+    'dashboards',
+    'usefulLinks',
+    'faq',
+    'favorites',
+    'news',
+    'themes',
+    'welcomeNote',
+    'library',
+    'surveyData',
+    'feedback-emails',
+] as const
 
-export type AppConfigKey = (typeof appConfigKeys)[number];
+export type AppConfigKey = (typeof appConfigKeys)[number]
 
 export async function getAppConfig<T>(key: AppConfigKey): Promise<T> {
-	const url = `dataStore/${DatastoreNamespaces.MAIN_CONFIG}/${key}`;
-	return (await dhis2HttpClient.get(url)) as T;
+    const url = `dataStore/${DatastoreNamespaces.MAIN_CONFIG}/${key}`
+    return (await dhis2HttpClient.get(url)) as T
 }
 
 export async function getAppConfigWithNamespace<T>({
-	namespace,
-	key,
+    namespace,
+    key,
 }: {
-	namespace: string;
-	key: string;
+    namespace: string
+    key: string
 }) {
-	const url = `dataStore/${namespace}/${key}`;
-	return (await dhis2HttpClient.get(url)) as T | undefined;
+    const url = `dataStore/${namespace}/${key}`
+    return (await dhis2HttpClient.get(url)) as T | undefined
 }
 
 export async function getAppConfigsFromNamespace<T>(
-	namespace: string,
+    namespace: string
 ): Promise<T[]> {
-	const url = `dataStore/${namespace}`;
-	const response = await dhis2HttpClient.get<{
-		entries: { key: string; value: T }[];
-		pager: Pagination;
-	}>(url, {
-		params: {
-			fields: ".",
-		},
-	});
-	return response?.entries.map(({ value }) => value) ?? [];
+    const url = `dataStore/${namespace}`
+    const response = await dhis2HttpClient.get<{
+        entries: { key: string; value: T }[]
+        pager: Pagination
+    }>(url, {
+        params: {
+            fields: '.',
+        },
+    })
+    return response?.entries.map(({ value }) => value) ?? []
 }
 
 export async function getAppearanceConfig() {
-	try {
-		const appearanceConfig =
-			await getAppConfigWithNamespace<AppAppearanceConfig>({
-				namespace: DatastoreNamespaces.MAIN_CONFIG,
-				key: "appearance",
-			});
+    try {
+        const appearanceConfig =
+            await getAppConfigWithNamespace<AppAppearanceConfig>({
+                namespace: DatastoreNamespaces.MAIN_CONFIG,
+                key: 'appearance',
+            })
 
-		const menuConfig = await getAppConfigWithNamespace<AppMenuConfig>({
-			namespace: DatastoreNamespaces.MAIN_CONFIG,
-			key: "menu",
-		});
+        const menuConfig = await getAppConfigWithNamespace<AppMenuConfig>({
+            namespace: DatastoreNamespaces.MAIN_CONFIG,
+            key: 'menu',
+        })
 
-		if (!appearanceConfig || !menuConfig) {
-			return;
-		}
-		return {
-			appearanceConfig,
-			menuConfig,
-		};
-	} catch (error) {
-		console.error("Error fetching appearance config:", error);
-		return;
-	}
+        if (!appearanceConfig || !menuConfig) {
+            return
+        }
+        return {
+            appearanceConfig,
+            menuConfig,
+        }
+    } catch (error) {
+        console.error('Error fetching appearance config:', error)
+        return
+    }
 }

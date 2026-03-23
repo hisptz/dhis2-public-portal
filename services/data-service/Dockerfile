@@ -28,9 +28,10 @@ RUN corepack enable
 RUN pnpm install --frozen-lockfile
 COPY --from=prepare /app/out/full/ .
 
+RUN pnpm dlx prisma@7 generate --schema services/data-service/prisma/schema.prisma
 RUN pnpm --filter data-service build
 
-FROM oven/bun:alpine
+FROM oven/bun:alpine AS runner
 WORKDIR /app
 
 ENV NODE_ENV=production

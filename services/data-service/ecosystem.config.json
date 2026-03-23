@@ -1,8 +1,8 @@
 {
-  "apps": [
-    {
-      "name": "hisptz-flexiportal-data-service",
-      "script": "bun run app.mjs"
-    }
-  ]
+    "apps": [
+        {
+            "name": "hisptz-flexiportal-data-service",
+            "script": "bun run app.mjs"
+        }
+    ]
 }

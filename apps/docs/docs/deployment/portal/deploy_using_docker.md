@@ -32,17 +32,17 @@ Create a `docker-compose.yml` file with the following content:
 
 ```yaml
 services:
-  portal:
-    image: hisptanzania/dhis2-public-portal:latest
-    user: "1001:1001"
-    ports:
-      - "3000:3000"
-    env_file:
-      - .env
-    volumes:
-      - public:/app/apps/portal/public
+    portal:
+        image: hisptanzania/dhis2-public-portal:latest
+        user: '1001:1001'
+        ports:
+            - '3000:3000'
+        env_file:
+            - .env
+        volumes:
+            - public:/app/apps/portal/public
 volumes:
-  public:
+    public:
 ```
 
 Create a `.env` file in the same directory with your configuration:
@@ -63,27 +63,29 @@ docker-compose up -d
 If you need to customize the Portal, you can build your own Docker image.
 
 1. Clone the repository:
-   ```bash
-   git clone https://github.com/hisptz/dhis2-public-portal.git
-   cd dhis2-public-portal
-   ```
+
+    ```bash
+    git clone https://github.com/hisptz/dhis2-public-portal.git
+    cd dhis2-public-portal
+    ```
 
 2. Build the Docker image:
-   ```bash
-   docker build -t my-portal:latest .
-   ```
+
+    ```bash
+    docker build -t my-portal:latest .
+    ```
 
 3. Run the container:
-   ```bash
-   docker run -p 3000:3000 -e DHIS2_BASE_URL=https://your-dhis2-instance.org my-portal:latest
-   ```
+    ```bash
+    docker run -p 3000:3000 -e DHIS2_BASE_URL=https://your-dhis2-instance.org my-portal:latest
+    ```
 
 ## Environment Variables
 
 The Portal Docker container can be configured using the following environment variables:
 
 | Variable             | Description                                              | Default | Required |
-|----------------------|----------------------------------------------------------|---------|----------|
+| -------------------- | -------------------------------------------------------- | ------- | -------- |
 | DHIS2_BASE_URL       | URL of your DHIS2 instance                               | -       | Yes      |
 | DHIS2_BASE_PAT_TOKEN | DHIS2 PAT for authenticating your DHIS2 instance         | -       | Yes      |
 | CONTEXT_PATH         | Base path for the application (for non-root deployments) | /       | No       |
@@ -119,24 +121,26 @@ server {
 To update the Portal to a newer version:
 
 1. Pull the latest image:
-   ```bash
-   docker pull hisptanzania/dhis2-public-portal:latest
-   ```
+
+    ```bash
+    docker pull hisptanzania/dhis2-public-portal:latest
+    ```
 
 2. Restart your container:
-   ```bash
-   docker-compose down
-   docker-compose up -d
-   ```
+    ```bash
+    docker-compose down
+    docker-compose up -d
+    ```
 
 ## Troubleshooting
 
 If you encounter issues with your Docker deployment:
 
 1. Check the container logs:
-   ```bash
-   docker logs <container_id>
-   ```
+
+    ```bash
+    docker logs <container_id>
+    ```
 
 2. Verify your environment variables are correctly set
 3. Ensure your DHIS2 instance is accessible from the Docker container

@@ -34,23 +34,24 @@ The Portal Manager can be deployed in two main ways:
 
 1. **Download the App**
 
-   Download the latest version of the Portal Manager app from the [releases page](https://github.com/hisptz/dhis2-public-portal/releases) or build it yourself.
+    Download the latest version of the Portal Manager app from
+    the [releases page](https://github.com/hisptz/dhis2-public-portal/releases) or build it yourself.
 
 2. **Upload to DHIS2**
 
-   a. Log in to your DHIS2 instance as an administrator
+    a. Log in to your DHIS2 instance as an administrator
 
-   b. Navigate to App Management (Apps > App Management)
+    b. Navigate to App Management (Apps > App Management)
 
-   c. Click on "Upload App"
+    c. Click on "Upload App"
 
-   d. Select the downloaded .zip file
+    d. Select the downloaded .zip file
 
-   e. Click "Upload"
+    e. Click "Upload"
 
 3. **Verify Installation**
 
-   After installation, the Portal Manager should appear in your DHIS2 app menu. Click on it to launch the application.
+    After installation, the Portal Manager should appear in your DHIS2 app menu. Click on it to launch the application.
 
 ## Deploying to Development DHIS2 Instance
 
@@ -58,20 +59,20 @@ For development purposes, you can deploy directly to a DHIS2 instance:
 
 1. **Configure Environment Variables**
 
-   Create a `.env` file in the `apps/manager` directory with:
+    Create a `.env` file in the `apps/manager` directory with:
 
-   ```
-   DHIS2_BASE_URL=https://your-dhis2-instance.org
-   ```
+    ```
+    DHIS2_BASE_URL=https://your-dhis2-instance.org
+    ```
 
 2. **Deploy**
 
-   ```bash
-   cd apps/manager
-   yarn deploy --username YOUR_USERNAME https://your-dhis2-instance.org
-   ```
+    ```bash
+    cd apps/manager
+    yarn deploy --username YOUR_USERNAME https://your-dhis2-instance.org
+    ```
 
-   You will be prompted for your password.
+    You will be prompted for your password.
 
 ## Troubleshooting
 
@@ -79,12 +80,12 @@ If you encounter issues with the Portal Manager deployment:
 
 1. **Check DHIS2 Version Compatibility**
 
-   Ensure your DHIS2 instance is version 2.40 or later.
+    Ensure your DHIS2 instance is version 2.40 or later.
 
 2. **Verify Permissions**
 
-   Make sure your DHIS2 user has the necessary permissions to install apps and access the required API endpoints.
+    Make sure your DHIS2 user has the necessary permissions to install apps and access the required API endpoints.
 
 3. **Check Browser Console**
 
-   If the app loads but doesn't function correctly, check your browser's developer console for errors.
+    If the app loads but doesn't function correctly, check your browser's developer console for errors.

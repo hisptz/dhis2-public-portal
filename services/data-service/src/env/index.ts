@@ -1,8 +1,8 @@
-import { config } from "dotenv";
-import { envSchema } from "./schema";
+import { config } from 'dotenv'
+import { envSchema } from './schema'
 
-export * from "./schema";
+export * from './schema'
 
-config();
+config()
 
-export const env = envSchema.parse(process.env);
+export const env = envSchema.parse(process.env)

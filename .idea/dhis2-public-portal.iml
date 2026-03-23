@@ -15,6 +15,13 @@
       <excludeFolder url="file://$MODULE_DIR$/apps/docs/.docusaurus" />
       <excludeFolder url="file://$MODULE_DIR$/services/data-service/app" />
       <excludeFolder url="file://$MODULE_DIR$/services/data-service/bundle" />
+      <excludeFolder url="file://$MODULE_DIR$/apps/docs/.turbo" />
+      <excludeFolder url="file://$MODULE_DIR$/apps/portal/coverage" />
+      <excludeFolder url="file://$MODULE_DIR$/packages/shared/.turbo" />
+      <excludeFolder url="file://$MODULE_DIR$/services/data-service/.turbo" />
+      <excludeFolder url="file://$MODULE_DIR$/services/data-service/logs" />
+      <excludeFolder url="file://$MODULE_DIR$/services/data-service/outputs" />
+      <excludeFolder url="file://$MODULE_DIR$/services/data-service/.turbo" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

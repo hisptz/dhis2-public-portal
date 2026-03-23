@@ -1,30 +1,30 @@
-"use client";
+'use client'
 
-import { Box, Title } from "@mantine/core";
-import JsxParser from "react-jsx-parser";
+import { Box, Title } from '@mantine/core'
+import JsxParser from 'react-jsx-parser'
 
 export function FooterStaticContent({
-	config,
+    config,
 }: {
-	config: {
-		title: string;
-		staticContent: string;
-	};
+    config: {
+        title: string
+        staticContent: string
+    }
 }) {
-	const { staticContent: content, title } = config;
+    const { staticContent: content, title } = config
 
-	return (
-		<Box
-			style={{
-				width: "100%",
-			}}
-		>
-			<Title order={5}>{title}</Title>
-			<JsxParser
-				onError={console.error}
-				autoCloseVoidElements
-				jsx={content}
-			/>
-		</Box>
-	);
+    return (
+        <Box
+            style={{
+                width: '100%',
+            }}
+        >
+            <Title order={5}>{title}</Title>
+            <JsxParser
+                onError={console.error}
+                autoCloseVoidElements
+                jsx={content}
+            />
+        </Box>
+    )
 }

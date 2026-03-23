@@ -1,280 +1,420 @@
-import { dhis2Client, createSourceClient } from "@/clients/dhis2";
-import logger from "@/logging";
-import * as _ from "lodash";
-import { fetchItemsInParallel } from "./parallel-fetch";
-export { fetchItemsInParallel };
+import logger from '@/logging'
+import * as _ from 'lodash'
+import { compact, flattenDeep, isEmpty } from 'lodash'
+import { AxiosInstance } from 'axios'
+import { logWorker } from '@/rabbit/utils'
 
-enum DisplayItemType {
-  RICH_TEXT = "RICH_TEXT",
-  VISUALIZATION = "VISUALIZATION",
-  HIGHLIGHTED_SINGLE_VALUE = "HIGHLIGHTED_SINGLE_VALUE",
-  FEEDBACK = "FEEDBACK",
-  SECTION = "SECTION",
+export type Visualization = {
+    id: string
+    type: string
+    dataDimensionItems: Array<{
+        dataDimensionItemType: string
+        reportingRate?: { id: string; dimensionItem: string }
+        indicator?: { id: string }
+        dataElement?: { id: string }
+        programIndicator?: { id: string }
+        programDataElement?: { id: string }
+        programAttribute?: { id: string }
+    }>
 }
 
-export enum VisualizationDisplayItemType {
-  CHART = "CHART",
-  MAP = "MAP",
-  BANNER = "BANNER",
+export type D2Map = {
+    id: string
+    mapViews: Array<{
+        dataDimensionItems: Array<{
+            dataDimensionItemType: string
+            reportingRate?: { id: string; dimensionItem: string }
+            indicator?: { id: string }
+            dataElement?: { id: string }
+            programIndicator?: { id: string }
+            programDataElement?: { id: string }
+            programAttribute?: { id: string }
+        }>
+    }>
 }
 
-type Visualization = {
-  id: string;
-  type: string;
-};
-type Dashboard = {
-  visualizations: Visualization[];
-  groups: {
-    visualizations: Visualization[];
-    subGroups: {
-      visualizations: Visualization[];
-    }[];
-  }[];
-};
-
-type ModuleConfig = any;
-
-export async function getModuleConfigs(routeId?: string) {
-  try {
-    const client = routeId ? await createSourceClient(routeId) : dhis2Client;
-    const url = `dataStore/hisptz-public-portal-modules`;
-    const response = await client.get<Array<String>>(url);
-    const moduleIds = response.data ?? [];
-    const moduleConfigs = [];
-    for (const moduleId of moduleIds) {
-      const moduleUrl = `dataStore/hisptz-public-portal-modules/${moduleId}`;
-      const moduleResponse = await client.get<{
-        config: ModuleConfig;
-        type: DisplayItemType;
-      }>(moduleUrl);
-
-      if (!moduleResponse.data || !moduleResponse.data.config) {
-        console.warn(`Module config for ${moduleId} is empty or undefined`);
-        continue;
-      }
-      if (moduleResponse.data.type == DisplayItemType.VISUALIZATION) {
-        if (moduleResponse.data.config.grouped) {
-          for (const group of moduleResponse.data.config.groups || []) {
-            if (group.items && Array.isArray(group.items)) {
-              moduleConfigs.push(...group.items.map((item: any) => item.item));
-            }
-          }
-        } else {
-          if (moduleResponse.data.config.items && Array.isArray(moduleResponse.data.config.items)) {
-            moduleConfigs.push(
-              ...moduleResponse.data.config.items.map((item: any) => item.item)
-            );
-          }
-        }
-      }
-      if (moduleResponse.data.type == DisplayItemType.SECTION) {
-        for (const section of moduleResponse.data.config.sections || []) {
-          if (
-            section.type == "SINGLE_ITEM" &&
-            section.item &&
-            (section.item.type == DisplayItemType.VISUALIZATION ||
-              section.item.type == DisplayItemType.HIGHLIGHTED_SINGLE_VALUE)
-          ) {
-            moduleConfigs.push(section.item.item);
-          } else {
-            if (section.type != "SINGLE_ITEM" && section.items && Array.isArray(section.items)) {
-              moduleConfigs.push(
-                ...section.items.map((item: any) => item.item)
-              );
-            }
-          }
-        }
-      }
+export type DataElement = {
+    id: string
+    code: string
+    shortName: string
+    name: string
+    valueType: string
+    categoryCombo: {
+        id: string
+        categories?: Array<{ id: string; name: string }>
     }
-    return moduleConfigs.flat().filter((config) => config != undefined) ?? [];
-  } catch (e) {
-    console.error(e);
-  }
+    domainType: 'AGGREGATE' | 'TRACKER'
+    aggregationType: string
+    legendSets: Array<{ id: string }>
 }
 
-export function getVisualizations(
-  moduleConfigs: { id: string; type: VisualizationDisplayItemType }[]
-) {
-  const visualizations = [];
-  visualizations.push(
-    ...(moduleConfigs?.filter(
-      (module) => module.type != VisualizationDisplayItemType.MAP
-    ) ?? [])
-  );
-  return visualizations;
-}
-
-export function getMaps(
-  moduleConfigs: { id: string; type: VisualizationDisplayItemType }[]
-) {
-  const maps = [];
-  maps.push(
-    ...(moduleConfigs?.filter(
-      (module) => module.type == VisualizationDisplayItemType.MAP
-    ) ?? [])
-  );
-  return maps;
-}
-
-export async function getVisualizationConfigs(
-  visualizations: { id: string }[],
-  routeId?: string
-) {
-  const client = routeId
-    ? await createSourceClient(routeId)
-    : dhis2Client;
-
-  if (!visualizations || visualizations.length === 0) {
-    logger.warn("No visualizations provided — skipping fetch");
-    return [];
-  }
-
-  logger.info(`Fetching configurations for ${visualizations.length} visualizations`);
-
-  const visualizationIds = visualizations.map(vis => vis.id);
-
-  const allVisualizations = await fetchItemsInParallel(
+export async function getVisualizationConfigs({
+    items,
     client,
-    'visualizations',
-    visualizationIds,
-    ':owner,!sharing,!createdBy,!lastUpdatedBy,!created,!lastUpdated',
-    5
-  );
-
-  logger.info(`getVisualizationConfigs completed: ${allVisualizations.length} total visualizations fetched`);
-  return allVisualizations;
+}: {
+    items: string[]
+    client: AxiosInstance
+}) {
+    if (isEmpty(items)) {
+        logger.warn('No visualizations provided — skipping fetch')
+        return []
+    }
+    logWorker(
+        'info',
+        `Fetching configurations for ${items.length} visualizations...`
+    )
+    const response = await client.get<{
+        visualizations: Visualization[]
+    }>(`visualizations`, {
+        params: {
+            filter: `id:in:[${items.join(',')}]`,
+            fields: ':owner,!sharing,!createdBy,!lastUpdatedBy,!created,!lastUpdated',
+        },
+    })
+    logWorker(
+        'info',
+        `Fetched configurations for ${items.length} visualizations`
+    )
+    return response.data.visualizations
 }
 
-export async function getMapsConfig(maps: Visualization[], routeId?: string) {
-  const client = routeId ? await createSourceClient(routeId) : dhis2Client;
-
-  if (!maps || maps.length === 0) {
-    logger.warn("No maps provided — skipping fetch");
-    return [];
-  }
-
-  logger.info(`Fetching configurations for ${maps.length} maps`);
-
-  const mapIds = maps.map(map => map.id);
-
-  const allMaps = await fetchItemsInParallel(
+export async function getMapsConfig({
+    items,
     client,
-    'maps',
-    mapIds,
-    ':owner,!sharing,!createdBy,!lastUpdatedBy,!created,!lastUpdated',
-    5
-  );
-
-  logger.info(`getMapsConfig completed: ${allMaps.length} total maps fetched`);
-  return allMaps;
+}: {
+    items: string[]
+    client: AxiosInstance
+}) {
+    if (isEmpty(items)) {
+        logger.warn('No maps provided — skipping fetch')
+        return []
+    }
+    logWorker('info', `Fetching configurations for ${items.length} maps`)
+    const response = await client.get<{
+        maps: Array<D2Map>
+    }>(`maps`, {
+        params: {
+            filter: `id:in:[${items.join(',')}]`,
+            fields: ':owner,!sharing,!createdBy,!lastUpdatedBy,!created,!lastUpdated',
+        },
+    })
+    logWorker('info', `Fetched configurations for ${items.length} maps`)
+    return response.data.maps
 }
 
-export function getIndicatorIdsFromVisualizations(visualizationConfigs: any[]) {
-  return _.compact(
-    _.flattenDeep(
-      visualizationConfigs.map((config) =>
-        config.dataDimensionItems.map(
-          (item: { indicator?: { id: string } }) => item.indicator?.id
+export function getIndicatorIdsFromVisualizations(
+    visualizationConfigs: Visualization[]
+) {
+    return compact(
+        flattenDeep(
+            visualizationConfigs.map((config) =>
+                config.dataDimensionItems.map(
+                    (item: { indicator?: { id: string } }) => item.indicator?.id
+                )
+            )
         )
-      )
     )
-  );
 }
 
-export function getIndicatorIdsFromMaps(mapsConfig: any[]) {
-  return _.compact(
-    _.flattenDeep(
-      mapsConfig.map((config) =>
-        config.mapViews.map((view: any) =>
-          view.dataDimensionItems.map(
-            (item: { indicator?: { id: string } }) => item.indicator?.id
-          )
+export function getDataElementIdsFromMaps(mapsConfig: D2Map[]) {
+    return _.compact(
+        _.flattenDeep(
+            mapsConfig.map((config) =>
+                config.mapViews.map((view) =>
+                    view.dataDimensionItems.map(
+                        (item: { dataElement?: { id: string } }) =>
+                            item.dataElement?.id
+                    )
+                )
+            )
         )
-      )
     )
-  );
-}
-
-export async function getIndicatorConfigs(indicatorIds: string[], routeId: string) {
-  const client = await createSourceClient(routeId);
-  if (!indicatorIds || indicatorIds.length === 0) {
-    logger.warn("No indicator IDs provided — skipping fetch");
-    return [];
-  }
-
-  logger.info(`Fetching configurations for ${indicatorIds.length} indicators`);
-
-  const indicators = await fetchItemsInParallel(
-    client,
-    'indicators',
-    indicatorIds,
-    ':owner,!sharing,!createdBy,!lastUpdatedBy,!created,!lastUpdated',
-    5
-  );
-
-  const processedIndicators = indicators.map((indicator: any) => ({
-    ...indicator,
-    translations: [],
-  }));
-
-  logger.info(`getIndicatorConfigs completed: ${processedIndicators.length} total indicators fetched`);
-  return processedIndicators;
-}
-
-export function getDataElementIdsFromMaps(mapsConfig: any[]) {
-  return _.compact(
-    _.flattenDeep(
-      mapsConfig.map((config) =>
-        config.mapViews.map((view: any) =>
-          view.dataDimensionItems.map(
-            (item: { dataElement?: { id: string } }) => item.dataElement?.id
-          )
-        )
-      )
-    )
-  );
 }
 
 export function getDataElementIdsFromVisualizations(
-  visualizationConfigs: any[]
+    visualizationConfigs: Visualization[]
 ) {
-  return _.compact(
-    _.flattenDeep(
-      visualizationConfigs.map((config) =>
-        config.dataDimensionItems.map(
-          (item: { dataElement?: { id: string } }) => item.dataElement?.id
+    return _.compact(
+        _.flattenDeep(
+            visualizationConfigs.map((config) =>
+                config.dataDimensionItems.map(
+                    (item: { dataElement?: { id: string } }) =>
+                        item.dataElement?.id
+                )
+            )
         )
-      )
     )
-  );
 }
 
-export async function getDataElementConfigs(dataElementIds: string[], routeId?: string) {
-  const client = routeId ? await createSourceClient(routeId) : dhis2Client;
-  logger.info(`getDataElementConfigs called with ${dataElementIds.length} data element IDs`, {
-    dataElementIds: dataElementIds.slice(0, 10),
-    totalCount: dataElementIds.length,
-    routeId
-  });
+export function getProgramIndicatorsFromVisualizations(
+    visualizationConfigs: Visualization[]
+) {
+    return _.compact(
+        _.flattenDeep(
+            visualizationConfigs.map((config) =>
+                config.dataDimensionItems.map(
+                    (item: { programIndicator?: { id: string } }) =>
+                        item.programIndicator?.id
+                )
+            )
+        )
+    )
+}
 
-  if (!dataElementIds || dataElementIds.length === 0) {
-    logger.warn("No data element IDs provided — skipping fetch");
-    return [];
-  }
+/*
+ * We get the data set ids as we are going to pull all reporting rates regardless of what reporting rate is actually used in the visualization
+ * */
+export function getDataSetsFromVisualizations(
+    visualizationConfigs: Visualization[]
+) {
+    return _.compact(
+        _.flattenDeep(
+            visualizationConfigs.map((config) =>
+                config.dataDimensionItems.map(
+                    (item: { reportingRate?: { id: string } }) =>
+                        item.reportingRate?.id.split('.')[0]
+                )
+            )
+        )
+    )
+}
 
-  const dataElements = await fetchItemsInParallel(
+export function getProgramAttributesFromVisualizations(
+    visualizationConfigs: Visualization[]
+) {
+    return _.compact(
+        _.flattenDeep(
+            visualizationConfigs.map((config) =>
+                config.dataDimensionItems.map(
+                    (item: { programAttribute?: { id: string } }) =>
+                        item.programAttribute?.id
+                )
+            )
+        )
+    )
+}
+
+export function getProgramDataElementFromVisualizations(
+    visualizationConfigs: Visualization[]
+) {
+    return _.compact(
+        _.flattenDeep(
+            visualizationConfigs.map((config) =>
+                config.dataDimensionItems.map(
+                    (item: { programDataElement?: { id: string } }) =>
+                        item.programDataElement?.id
+                )
+            )
+        )
+    )
+}
+
+export function getProgramIndicatorsFromMaps(maps: D2Map[]) {
+    return compact(
+        flattenDeep(
+            maps.map((map) =>
+                map.mapViews.map((view) =>
+                    view.dataDimensionItems.map(
+                        (item) => item.programIndicator?.id
+                    )
+                )
+            )
+        )
+    )
+}
+
+export function getDataSetsFromMaps(maps: D2Map[]) {
+    return compact(
+        flattenDeep(
+            maps.map((map) =>
+                map.mapViews.map((view) =>
+                    view.dataDimensionItems.map(
+                        (item) => item.reportingRate?.id.split('.')[0]
+                    )
+                )
+            )
+        )
+    )
+}
+
+export function getProgramAttributesFromMaps(maps: D2Map[]) {
+    return compact(
+        flattenDeep(
+            maps.map((map) =>
+                map.mapViews.map((view) =>
+                    view.dataDimensionItems.map(
+                        (item) => item.programAttribute?.id
+                    )
+                )
+            )
+        )
+    )
+}
+
+export function getProgramDataElementFromMaps(maps: D2Map[]) {
+    return compact(
+        flattenDeep(
+            maps.map((map) =>
+                map.mapViews.map((view) =>
+                    view.dataDimensionItems.map(
+                        (item) => item.programDataElement?.id
+                    )
+                )
+            )
+        )
+    )
+}
+
+export function getIndicatorIdsFromMaps(maps: D2Map[]) {
+    return compact(
+        flattenDeep(
+            maps.map((map) =>
+                map.mapViews.map((view) =>
+                    view.dataDimensionItems.map((item) => item.indicator?.id)
+                )
+            )
+        )
+    )
+}
+
+export async function getDataElementConfigs({
+    items,
     client,
-    'dataElements',
-    dataElementIds,
-    ':owner,!sharing,!createdBy,!lastUpdatedBy,!created,!lastUpdated',
-    5
-  );
+}: {
+    client: AxiosInstance
+    items: string[]
+}) {
+    logger.info(`Getting ${items.length} data elements...`)
 
-  const processedDataElements = dataElements.map((dataElement: any) => ({
-    ...dataElement,
-    translations: [],
-  }));
+    if (isEmpty(items)) {
+        logger.warn('No data element IDs provided — skipping fetch')
+        return []
+    }
 
-  logger.info(`getDataElementConfigs completed: ${processedDataElements.length} total data elements fetched`);
-  return processedDataElements;
+    const response = await client.get<{
+        dataElements: Array<DataElement>
+    }>(`dataElements`, {
+        params: {
+            filter: `id:in:[${items.join(',')}]`,
+            fields: ':owner,!sharing,!createdBy,!code,!lastUpdatedBy,!created,!lastUpdated,categoryCombo[id,categories[id,name]]',
+            paging: false,
+        },
+    })
+
+    logger.info(`Fetched ${response.data.dataElements.length} data elements`)
+
+    return response.data.dataElements
+}
+
+export function sanitizeVisualizationsWithDatasetReferences({
+    visualizations,
+    datasetDataElements,
+}: {
+    visualizations: Array<Visualization>
+    datasetDataElements: Array<DataElement>
+}): Array<Visualization> {
+    if (isEmpty(visualizations)) {
+        return []
+    }
+    logWorker(
+        'info',
+        `Sanitizing ${visualizations.length} visualizations with dataset references`
+    )
+    return visualizations.map((visualization) => {
+        const hasDatasetReference = visualization.dataDimensionItems.some(
+            (item) => {
+                return !!item.reportingRate?.id
+            }
+        )
+        if (hasDatasetReference) {
+            const updatedDataDimensionItems =
+                visualization.dataDimensionItems.map((item) => {
+                    if (item.reportingRate?.id) {
+                        const datasetDataElement = datasetDataElements.find(
+                            (dataElement) =>
+                                dataElement.code ===
+                                item.reportingRate?.dimensionItem
+                        )
+
+                        return {
+                            ...item,
+                            reportingRate: undefined,
+                            dataDimensionItemType: 'DATA_ELEMENT',
+                            dataElement: {
+                                id: datasetDataElement!.id,
+                            },
+                        }
+                    }
+                    return item
+                })
+            return {
+                ...visualization,
+                dataDimensionItems: updatedDataDimensionItems,
+            }
+        } else {
+            return visualization
+        }
+    })
+}
+export function sanitizeMapsWithDatasetReferences({
+    maps,
+    datasetDataElements,
+}: {
+    maps: Array<D2Map>
+    datasetDataElements: Array<DataElement>
+}): Array<D2Map> {
+    if (isEmpty(maps)) {
+        return []
+    }
+    logWorker('info', `Sanitizing ${maps.length} maps with dataset references`)
+    return maps.map((map) => {
+        const hasDatasetReference = map.mapViews.map((view) =>
+            view.dataDimensionItems.some((item) => {
+                return !!item.reportingRate?.id
+            })
+        )
+        if (hasDatasetReference) {
+            const updatedMapViews = map.mapViews.map((view) => {
+                const hasDatasetReference = view.dataDimensionItems.some(
+                    (item) => !!item.reportingRate
+                )
+                if (hasDatasetReference) {
+                    const updatedDataDimensionItems =
+                        view.dataDimensionItems.map((item) => {
+                            if (item.reportingRate?.id) {
+                                const datasetDataElement =
+                                    datasetDataElements.find(
+                                        (dataElement) =>
+                                            dataElement.code ===
+                                            item.reportingRate?.dimensionItem
+                                    )
+                                return {
+                                    ...item,
+                                    reportingRate: undefined,
+                                    dataDimensionItemType: 'DATA_ELEMENT',
+                                    dataElement: {
+                                        id:
+                                            datasetDataElement?.id ??
+                                            item.reportingRate.id,
+                                    },
+                                }
+                            }
+                            return item
+                        })
+
+                    return {
+                        ...view,
+                        dataDimensionItems: updatedDataDimensionItems,
+                    }
+                }
+                return view
+            })
+            return {
+                ...map,
+                mapViews: updatedMapViews,
+            }
+        } else {
+            return map
+        }
+    })
 }

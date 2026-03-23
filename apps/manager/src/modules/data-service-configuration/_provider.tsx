@@ -1,18 +1,17 @@
-import { createFileRoute, Outlet } from "@tanstack/react-router";
-import { DataSourcesProvider } from "../../shared/components/DataConfiguration/providers/DataSourcesProvider";
-import { PollingProvider } from "../../shared/components/DataConfiguration/providers/PollingProvider";
-import React from "react";
+import { createFileRoute, Outlet } from '@tanstack/react-router'
+import { DataSourcesProvider } from '@/shared/components/DataConfiguration/providers/DataSourcesProvider'
+import { PollingProvider } from '@/shared/components/DataConfiguration/providers/PollingProvider'
 
-export const Route = createFileRoute("/data-service-configuration/_provider")({
-	component: RouteComponent,
-});
+export const Route = createFileRoute('/data-service-configuration/_provider')({
+    component: RouteComponent,
+})
 
 function RouteComponent() {
-	return (
-		<DataSourcesProvider>
-			<PollingProvider>
-				<Outlet />
-			</PollingProvider>
-		</DataSourcesProvider>
-	);
+    return (
+        <DataSourcesProvider>
+            <PollingProvider>
+                <Outlet />
+            </PollingProvider>
+        </DataSourcesProvider>
+    )
 }

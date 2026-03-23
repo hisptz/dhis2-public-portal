@@ -1,3 +1,3 @@
-export * from "./datastore";
-export * from "./colors";
-export * from "./screen";
+export * from './datastore'
+export * from './colors'
+export * from './screen'

@@ -1,26 +1,35 @@
 services:
-  rabbitmq:
-    image: rabbitmq:4-management
-    env_file:
-      - .env
-  data-service-api:
-    image: hisptanzania/dhis2-public-portal-data-service:latest
-    depends_on:
-      - rabbitmq
-    ports:
-      - "3002:3000"
-    volumes:
-      - ./log:/app/log
-      - ./outputs:/app/outputs
-    env_file:
-      - .env.data-service
-  data-service-worker:
-    image: hisptanzania/dhis2-public-portal-data-service:latest
-    depends_on:
-      - rabbitmq
-    volumes:
-      - ./log:/app/log
-      - ./outputs:/app/outputs
-    env_file:
-      - .env.data-service
-    command: [ "bun", "run", "rabbit/worker.mjs" ]
+    rabbitmq:
+        image: rabbitmq:4-management
+        env_file:
+            - .env
+        healthcheck:
+            test: ['CMD', 'rabbitmq-diagnostics', '-q', 'ping']
+            interval: 30s
+            timeout: 10s
+            retries: 5
+            start_period: 10s
+        restart: unless-stopped
+    data-service-api:
+        image: hisptanzania/dhis2-public-portal-data-service:${TAG:-latest}
+        depends_on:
+            rabbitmq:
+                condition: service_healthy
+        ports:
+            - '3002:3000'
+        volumes:
+            - ./log:/app/log
+            - ./outputs:/app/outputs
+        env_file:
+            - .env.data-service
+    data-service-worker:
+        image: hisptanzania/dhis2-public-portal-data-service:${TAG:-latest}
+        depends_on:
+            rabbitmq:
+                condition: service_healthy
+        volumes:
+            - ./log:/app/log
+            - ./outputs:/app/outputs
+        env_file:
+            - .env.data-service
+        command: ['bun', 'run', 'rabbit/worker.mjs']
