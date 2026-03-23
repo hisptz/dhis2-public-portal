@@ -15,7 +15,7 @@
         "format:check": "prettier --check ."
     },
     "dependencies": {
-        "@dhis2/app-runtime": "^3.14.5",
+        "@dhis2/app-runtime": "^3.16.0",
         "@dhis2/multi-calendar-dates": "^2.1.0",
         "@dhis2/ui": "^10.5.1",
         "@hisptz/dhis2-analytics": "^2.1.34",
@@ -32,7 +32,6 @@
         "@next/env": "16.2.1",
         "@packages/shared": "workspace:*",
         "@tabler/icons-react": "^3.31.0",
-        "@tanstack/react-query": "^5.90.21",
         "canvas": "^3.1.0",
         "chroma-js": "^3.1.2",
         "cypress": "^15.11.0",

@@ -5,8 +5,8 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
-"POT-Creation-Date: 2026-03-07T18:49:26.269Z\n"
-"PO-Revision-Date: 2026-03-07T18:49:26.270Z\n"
+"POT-Creation-Date: 2026-03-23T12:24:18.327Z\n"
+"PO-Revision-Date: 2026-03-23T12:24:18.327Z\n"
 
 msgid "Could not get Appearance configurations"
 msgstr "Could not get Appearance configurations"
@@ -28,6 +28,12 @@ msgstr "Configure"
 
 msgid "Run"
 msgstr "Run"
+
+msgid "Metadata Runs"
+msgstr "Metadata Runs"
+
+msgid "Data Runs"
+msgstr "Data Runs"
 
 msgid "Data service configuration"
 msgstr "Data service configuration"
@@ -238,6 +244,37 @@ msgstr ""
 
 msgid "Add data item"
 msgstr "Add data item"
+
+msgid "ID does not exist in source instance"
+msgstr "ID does not exist in source instance"
+
+msgid "ID does not exist in destination instance"
+msgstr "ID does not exist in destination instance"
+
+msgid "Source id is required"
+msgstr "Source id is required"
+
+msgid "Destination id is required"
+msgstr "Destination id is required"
+
+msgid "Mapping already exists"
+msgstr "Mapping already exists"
+
+msgid "Add"
+msgstr "Add"
+
+msgid "mappings"
+msgstr "mappings"
+
+msgid "Data items"
+msgstr "Data items"
+
+msgid ""
+"Optionally define explicit mappings between source and destination data "
+"items"
+msgstr ""
+"Optionally define explicit mappings between source and destination data "
+"items"
 
 msgid "At least one data item is required"
 msgstr "At least one data item is required"
@@ -608,12 +645,6 @@ msgstr "Configuration(s)"
 
 msgid "Unknown"
 msgstr "Unknown"
-
-msgid "Metadata Runs"
-msgstr "Metadata Runs"
-
-msgid "Data Runs"
-msgstr "Data Runs"
 
 msgid "Has errors"
 msgstr "Has errors"
@@ -1491,9 +1522,6 @@ msgstr "Links"
 
 msgid "Static Content"
 msgstr "Static Content"
-
-msgid "Add"
-msgstr "Add"
 
 msgid "S/N"
 msgstr "S/N"
