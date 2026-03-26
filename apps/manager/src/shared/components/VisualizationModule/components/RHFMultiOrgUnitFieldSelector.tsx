@@ -1,4 +1,4 @@
-import i18n from '@/locales'
+import i18n from '@dhis2/d2-i18n'
 import { useDataQuery } from '@dhis2/app-runtime'
 import { Field, Button } from '@dhis2/ui'
 import { OrgUnitSelectorModal } from '@hisptz/dhis2-ui'
