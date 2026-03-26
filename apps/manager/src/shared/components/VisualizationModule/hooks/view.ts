@@ -119,10 +119,6 @@ export function useManageVisualizations({
 }: {
     prefix?: `config.groups.${number}`
 }) {
-    const { show } = useAlert(
-        ({ message }) => message,
-        ({ type }) => ({ ...type, duration: 3000 })
-    )
     const { getValues, setValue } = useFormContext<
         VisualizationModule,
         'config.layouts' | `config.groups.${number}.layouts`
@@ -137,7 +133,7 @@ export function useManageVisualizations({
         return `config` as const
     }, [prefix])
 
-    const { append, remove, fields } = useFieldArray<
+    const { append, remove, update, fields } = useFieldArray<
         VisualizationModule,
         'config.items' | `config.groups.${number}.items`,
         'fieldId'
@@ -182,21 +178,24 @@ export function useManageVisualizations({
 
     const onAddVisualization = useCallback(
         (visualization: VisualizationItem) => {
-            if (fields.some((field) => field.item.id === visualization.id)) {
-                show({
-                    message: i18n.t('This visualization is already added'),
-                    type: { critical: true },
-                })
-                return
-            }
             const displayItem: DisplayItem = {
                 type: DisplayItemType.VISUALIZATION,
                 item: visualization,
             }
+
+            const existingIndex = fields.findIndex(
+                (field) => field.item.id === visualization.id
+            )
+
+            if (existingIndex !== -1) {
+                update(existingIndex, displayItem)
+                return
+            }
+
             append(displayItem)
             addVisualizationToLayout(displayItem)
         },
-        [append]
+        [append, update]
     )
 
     const onRemoveVisualization = useCallback(

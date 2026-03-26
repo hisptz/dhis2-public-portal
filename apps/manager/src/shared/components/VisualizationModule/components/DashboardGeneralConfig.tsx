@@ -3,10 +3,15 @@ import { RHFCheckboxField, RHFTextInputField } from '@hisptz/dhis2-ui'
 import i18n from '@dhis2/d2-i18n'
 import { RHFRichTextAreaField } from '../../Fields/RHFRichTextAreaField'
 import { useController, useFormContext, useWatch } from 'react-hook-form'
-import { Field, Radio } from '@dhis2/ui'
+import { Divider, Field, Radio } from '@dhis2/ui'
 import { ItemsDisplay, VisualizationModule } from '@packages/shared/schemas'
 import { startCase } from 'lodash'
 import { RHFTextAreaField } from '../../Fields/RHFTextAreaField'
+import { DimensionPeriodSelector } from './DimensionPeriodSelector'
+import { DimensionPeriodTypeSelector } from './DimensionPeriodTypeSelector'
+import { RHFMultiOrgUnitFieldSelector } from './RHFMultiOrgUnitFieldSelector'
+import { MultiOrgUnitLevelSelector } from '../../DataConfiguration/components/DataItemsConfig/components/AddDataItemConfig/components/MultiOrgUnitLevelSelector'
+import { DimensionPeriodCategorySelector } from './DimensionPeriodCategorySelector'
 
 export function DashboardGeneralConfig() {
     const { field, fieldState } = useController<
@@ -68,6 +73,58 @@ export function DashboardGeneralConfig() {
                 )}
                 label={i18n.t('Categorize visualizations into groups')}
             />
+
+            <Divider />
+            <h3 className="text-2xl">{i18n.t('Dimensions')}</h3>
+
+            <DimensionPeriodCategorySelector
+                categoriesField="config.periodConfig.categories"
+                periodTypesField="config.periodConfig.periodTypes"
+                periodsField="config.periodConfig.periods"
+                helpText={i18n.t(
+                    'Choose whether to include relative periods, fixed periods, or both.'
+                )}
+            />
+
+            <DimensionPeriodTypeSelector
+                categoriesField="config.periodConfig.categories"
+                periodTypesField="config.periodConfig.periodTypes"
+                periodsField="config.periodConfig.periods"
+                helpText={i18n.t(
+                    'Select the period types users can choose from, e.g. Monthly, Quarterly, Yearly.'
+                )}
+            />
+
+            <DimensionPeriodSelector
+                periodTypesField="config.periodConfig.periodTypes"
+                periodsField="config.periodConfig.periods"
+                helpText={i18n.t(
+                    'Pin specific periods to restrict what users can select.'
+                )}
+            />
+            <RHFCheckboxField
+                name="config.periodConfig.singleSelection"
+                label={i18n.t('Single period selection')}
+                helpText={i18n.t(
+                    'When enabled, users can only select one period at a time.'
+                )}
+            />
+            <MultiOrgUnitLevelSelector
+                name="config.orgUnitConfig.orgUnitLevels"
+                label={i18n.t('Organisation unit levels')}
+                helpText={i18n.t(
+                    'Restrict data to specific levels in the organisation unit hierarchy.'
+                )}
+            />
+            <RHFMultiOrgUnitFieldSelector
+                name="config.orgUnitConfig.orgUnits"
+                label={i18n.t('Organisation units')}
+                helpText={i18n.t(
+                    'Limit access to specific organisation units. Leave empty to allow all units.'
+                )}
+                searchable
+            />
+
             {isGrouped && (
                 <div className="my-2">
                     <Field
