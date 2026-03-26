@@ -1,11 +1,11 @@
 import { z } from 'zod'
 
-const stripEmptyArrays = <T extends Record<string, unknown>>(obj: T) =>
+const stripEmptyArrays = <T extends Record<string, unknown>>(obj: T): Partial<T> =>
     Object.fromEntries(
         Object.entries(obj).filter(
             ([, v]) => !(Array.isArray(v) && v.length === 0)
         )
-    )
+    ) as Partial<T>
 
 export const periodConfigSchema = z
     .object({
