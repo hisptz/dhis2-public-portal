@@ -1,9 +1,9 @@
-import MainLoadingScreen from "@/components/MainLoadingScreen";
+import MainLoadingScreen from '@/components/MainLoadingScreen'
 
 export default async function Loading() {
-	return (
-		<>
-			<MainLoadingScreen />
-		</>
-	);
+    return (
+        <>
+            <MainLoadingScreen />
+        </>
+    )
 }

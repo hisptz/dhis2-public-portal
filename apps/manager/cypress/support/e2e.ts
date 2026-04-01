@@ -1,84 +1,101 @@
-import "./commands";
-import "cypress-real-events/support";
+import './commands'
+import 'cypress-real-events/support'
 
-Cypress.on("uncaught:exception", (err) => {
-	// This prevents a benign error:
-	//   This error means that ResizeObserver was not able to deliver all
-	//   observations within a single animation frame. It is benign (your site
-	//   will not break).
-	//
-	// Source: https://stackoverflow.com/a/50387233/1319140
-	const errMsg = err.toString();
+Cypress.on('uncaught:exception', (err) => {
+    // This prevents a benign error:
+    //   This error means that ResizeObserver was not able to deliver all
+    //   observations within a single animation frame. It is benign (your site
+    //   will not break).
+    //
+    // Source: https://stackoverflow.com/a/50387233/1319140
+    const errMsg = err.toString()
 
-	if (
-		errMsg.match(/ResizeObserver loop limit exceeded/) ||
-		errMsg.match(
-			/ResizeObserver loop completed with undelivered notifications/,
-		)
-	) {
-		return false;
-	}
-});
-const SESSION_COOKIE_NAME = "JSESSIONID";
-const LOCAL_STORAGE_KEY = "DHIS2_BASE_URL";
+    if (
+        errMsg.match(/ResizeObserver loop limit exceeded/) ||
+        errMsg.match(
+            /ResizeObserver loop completed with undelivered notifications/
+        )
+    ) {
+        return false
+    }
+})
+const SESSION_COOKIE_NAME = 'JSESSIONID'
+const LOCAL_STORAGE_KEY = 'DHIS2_BASE_URL'
 
 // '2.39' or 39?
 const computeEnvVariableName = (instanceVersion) =>
-	typeof instanceVersion === "number"
-		? `${SESSION_COOKIE_NAME}_${instanceVersion}`
-		: `${SESSION_COOKIE_NAME}_${instanceVersion.split(".").pop()}`;
+    typeof instanceVersion === 'number'
+        ? `${SESSION_COOKIE_NAME}_${instanceVersion}`
+        : `${SESSION_COOKIE_NAME}_${instanceVersion.split('.').pop()}`
 
 const findSessionCookieForBaseUrl = (baseUrl, cookies) =>
-	cookies.find(
-		(cookie) =>
-			cookie.name === SESSION_COOKIE_NAME &&
-			baseUrl.includes(cookie.path),
-	);
+    cookies.find(
+        (cookie) =>
+            cookie.name === SESSION_COOKIE_NAME && baseUrl.includes(cookie.path)
+    )
 
 before(() => {
-	const username = Cypress.env("dhis2Username");
-	const password = Cypress.env("dhis2Password");
-	const baseUrl = Cypress.env("dhis2BaseUrl");
-	const instanceVersion = Cypress.env("dhis2InstanceVersion");
+    cy.env([
+        'dhis2Username',
+        'dhis2Password',
+        'dhis2BaseUrl',
+        'dhis2InstanceVersion',
+    ]).then((env) => {
+        const {
+            dhis2Username: username,
+            dhis2Password: password,
+            dhis2BaseUrl: baseUrl,
+            dhis2InstanceVersion: instanceVersion,
+        } = env
+        console.info({
+            baseUrl,
+            username,
+            dhis2Version: instanceVersion,
+        })
+        // @ts-expect-error Injected by DHIS2 commands
+        cy.loginByApi({ username, password, baseUrl })
 
-	console.info({
-		baseUrl,
-		username,
-		dhis2Version: instanceVersion,
-	});
-
-	// @ts-expect-error Injected by DHIS2 commands
-	cy.loginByApi({ username, password, baseUrl });
-
-	cy.getAllCookies()
-		.should((cookies) => {
-			expect(cookies.length).to.be.at.least(1);
-		})
-		.then((cookies) => {
-			const sessionCookieForBaseUrl = findSessionCookieForBaseUrl(
-				baseUrl,
-				cookies,
-			);
-			Cypress.env(
-				computeEnvVariableName(instanceVersion),
-				JSON.stringify(sessionCookieForBaseUrl),
-			);
-		});
-});
+        cy.getAllCookies()
+            .should((cookies) => {
+                expect(cookies.length).to.be.at.least(1)
+            })
+            .then((cookies) => {
+                const sessionCookieForBaseUrl = findSessionCookieForBaseUrl(
+                    baseUrl,
+                    cookies
+                )
+                cy.task('set', {
+                    [computeEnvVariableName(instanceVersion)]: JSON.stringify(
+                        sessionCookieForBaseUrl
+                    ),
+                })
+            })
+    })
+})
 
 beforeEach(() => {
-	const baseUrl = Cypress.env("dhis2BaseUrl");
-	const instanceVersion = Cypress.env("dhis2InstanceVersion");
-	const envVariableName = computeEnvVariableName(instanceVersion);
-	const { name, value, ...options } = JSON.parse(
-		Cypress.env(envVariableName),
-	);
+    cy.env(['dhis2InstanceVersion', 'dhis2BaseUrl']).then((env) => {
+        const { dhis2BaseUrl: baseUrl, dhis2InstanceVersion: instanceVersion } =
+            env
+        const envVariableName = computeEnvVariableName(instanceVersion)
+        cy.task('get', [envVariableName]).then(
+            (result: Record<string, unknown>) => {
+                const sessionString = result[envVariableName]
+                const { name, value, ...options } = JSON.parse(
+                    sessionString as string
+                )
+                localStorage.setItem(LOCAL_STORAGE_KEY, baseUrl)
+                cy.setCookie(name, value, options)
 
-	localStorage.setItem(LOCAL_STORAGE_KEY, baseUrl);
-	cy.setCookie(name, value, options);
-
-	cy.getAllCookies().should((cookies) => {
-		expect(findSessionCookieForBaseUrl(baseUrl, cookies)).to.exist;
-		expect(localStorage.getItem(LOCAL_STORAGE_KEY)).to.equal(baseUrl);
-	});
-});
+                cy.getAllCookies().should((cookies) => {
+                    const cookie = findSessionCookieForBaseUrl(baseUrl, cookies)
+                    // eslint-disable-next-line @typescript-eslint/no-unused-expressions
+                    expect(cookie).to.exist
+                    expect(localStorage.getItem(LOCAL_STORAGE_KEY)).to.equal(
+                        baseUrl
+                    )
+                })
+            }
+        )
+    })
+})

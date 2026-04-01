@@ -1,47 +1,47 @@
 name: App Hub Publish
 
 env:
-  D2_APP_HUB_API_KEY: ${{secrets.D2_APP_HUB_API_KEY}}
+    D2_APP_HUB_API_KEY: ${{secrets.D2_APP_HUB_API_KEY}}
 
 # Controls when the action will run.
 on:
-  # Triggers the workflow when a new release is created
-  release:
-    types: [ released ]
-  # Allows you to run this workflow manually from the Actions tab
-  workflow_dispatch:
+    # Triggers the workflow when a new release is created
+    release:
+        types: [released]
+    # Allows you to run this workflow manually from the Actions tab
+    workflow_dispatch:
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  publish:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - uses: pnpm/action-setup@v4
-        name: Install pnpm
-        with:
-          run_install: false
+    publish:
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v2
+            - uses: pnpm/action-setup@v4
+              name: Install pnpm
+              with:
+                  run_install: false
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: '22'
-          cache: 'pnpm'
+            - name: Setup Node.js
+              uses: actions/setup-node@v4
+              with:
+                  node-version: '22'
+                  cache: 'pnpm'
 
-      - name: Install JS dependencies
-        run: pnpm install --frozen-lockfile
-      # Publish to the App Hub
-      - name: Set channel
-        id: set_channel
-        run: |
-          release_name="${{ github.event.release.name }}"
-          channel="stable"
-          if [[ "$release_name" == *"alpha"* ]]; then
-            channel="alpha"
-          elif [[ "$release_name" == *"beta"* ]]; then
-            channel="beta"
-          fi
-          echo "channel=$channel" >> $GITHUB_OUTPUT
-      # Publish to the App Hub
-      - name: Release to DHIS2 App Hub
-        run: pnpm run  publish:app-hub --filter manager -- -k ${{secrets.D2_APP_HUB_API_KEY}} --channel ${{ steps.set_channel.outputs.channel }}
+            - name: Install JS dependencies
+              run: pnpm install --frozen-lockfile
+            # Publish to the App Hub
+            - name: Set channel
+              id: set_channel
+              run: |
+                  release_name="${{ github.event.release.name }}"
+                  channel="stable"
+                  if [[ "$release_name" == *"alpha"* ]]; then
+                    channel="alpha"
+                  elif [[ "$release_name" == *"beta"* ]]; then
+                    channel="beta"
+                  fi
+                  echo "channel=$channel" >> $GITHUB_OUTPUT
+            # Publish to the App Hub
+            - name: Release to DHIS2 App Hub
+              run: pnpm run  publish:app-hub --filter manager -- -k ${{secrets.D2_APP_HUB_API_KEY}} --channel ${{ steps.set_channel.outputs.channel }}

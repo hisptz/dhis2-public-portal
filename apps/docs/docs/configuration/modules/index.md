@@ -90,12 +90,11 @@ Supports three types of sections:
 #### b. Visualization Section
 
 - Categorized collections of visualizations.
- 
- 
+
 #### c. Feedback Section
 
 - Allows capturing or displaying user feedback.
- 
+
 > Example Use Cases:
 >
 > - "About this section" with rich text
@@ -140,7 +139,7 @@ The form will adapt based on the selected type to provide appropriate configurat
 
 ### Viewing Existing Modules
 
-Below the filter  is a list of all configured modules (based on the current filter). Each list item shows:
+Below the filter is a list of all configured modules (based on the current filter). Each list item shows:
 
 - Module Label
 - Type
@@ -150,7 +149,7 @@ Below the filter  is a list of all configured modules (based on the current filt
 
 ## Best Practices
 
-- Use descriptive **labels**  for clarity.
+- Use descriptive **labels** for clarity.
 - When using IDs, avoid spaces or special characters.
 - Use the filter feature to quickly find specific modules when the list grows large.
 - Regularly update static and document modules to reflect the latest information.

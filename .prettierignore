@@ -14,8 +14,15 @@ thumb
 sketch
 
 # DHIS2_INSTANCE Platform
-.d2
+apps/manager/.d2
+services/data-service/app
+services/data-service/bundle
+services/data-service/outputs
+
+
 src/locales
 build
 *.env
 cypress.env.json
+
+pnpm-lock.yaml

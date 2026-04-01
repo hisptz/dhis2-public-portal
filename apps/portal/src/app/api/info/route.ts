@@ -1,6 +1,6 @@
-import { version } from "../../../../package.json";
-import { NextResponse } from "next/server";
+import { version } from '../../../../package.json'
+import { NextResponse } from 'next/server'
 
 export function GET() {
-	return NextResponse.json({ version });
+    return NextResponse.json({ version })
 }

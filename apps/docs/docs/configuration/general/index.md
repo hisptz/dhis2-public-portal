@@ -1,6 +1,7 @@
 ---
 sidebar_position: 2
 ---
+
 # General Settings
 
 The General Settings section allows you to configure basic information about your DHIS2 Public Portal. These settings define how your portal is identified and accessed.

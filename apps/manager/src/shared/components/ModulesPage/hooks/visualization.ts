@@ -1,41 +1,41 @@
-import { useDataQuery } from "@dhis2/app-runtime";
+import { useDataQuery } from '@dhis2/app-runtime'
 import {
-	VisualizationConfig,
-	visualizationFields,
-} from "@packages/shared/schemas";
+    VisualizationConfig,
+    visualizationFields,
+} from '@packages/shared/schemas'
 
 type VisualizationConfigQueryResponse = {
-	visualization: VisualizationConfig;
-};
+    visualization: VisualizationConfig
+}
 
 const visualizationQuery = {
-	visualization: {
-		resource: "visualizations",
-		id: ({ id }: { id: string }) => id,
-		params: () => ({
-			fields: visualizationFields,
-		}),
-	},
-};
+    visualization: {
+        resource: 'visualizations',
+        id: ({ id }: { id: string }) => id,
+        params: () => ({
+            fields: visualizationFields,
+        }),
+    },
+}
 
 export function useVisualizationConfig(visualizationId: string) {
-	const { data, loading, error, refetch } =
-		useDataQuery<VisualizationConfigQueryResponse>(visualizationQuery, {
-			variables: { id: visualizationId },
-		});
+    const { data, loading, error, refetch } =
+        useDataQuery<VisualizationConfigQueryResponse>(visualizationQuery, {
+            variables: { id: visualizationId },
+        })
 
-	const visualizationConfig = data?.visualization;
+    const visualizationConfig = data?.visualization
 
-	if (error) {
-		console.error(
-			`Could not get visualization details for visualization ${visualizationId}`,
-		);
-	}
+    if (error) {
+        console.error(
+            `Could not get visualization details for visualization ${visualizationId}`
+        )
+    }
 
-	return {
-		visualizationConfig,
-		loading,
-		error: error ? "Could not get visualization details" : undefined,
-		refetch,
-	};
+    return {
+        visualizationConfig,
+        loading,
+        error: error ? 'Could not get visualization details' : undefined,
+        refetch,
+    }
 }

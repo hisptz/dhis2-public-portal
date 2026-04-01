@@ -1,0 +1,31 @@
+import { Button, IconAdd24 } from '@dhis2/ui'
+import i18n from '@dhis2/d2-i18n'
+
+import { DataServiceDataSourceItemsConfig } from '@packages/shared/schemas'
+import { useBoolean } from 'usehooks-ts'
+import { DataItemConfigForm } from './components/DataItemConfigForm'
+
+export function AddDataItemConfig({
+    onAdd,
+    routeId,
+}: {
+    onAdd: (data: DataServiceDataSourceItemsConfig) => void
+    routeId: string | undefined
+}) {
+    const { value: hide, setTrue: onClose, setFalse: onShow } = useBoolean(true)
+    return (
+        <>
+            {!hide && (
+                <DataItemConfigForm
+                    hide={hide}
+                    routeId={routeId}
+                    onClose={onClose}
+                    onSubmit={onAdd}
+                />
+            )}
+            <Button onClick={onShow} icon={<IconAdd24 />}>
+                {i18n.t('Add config')}
+            </Button>
+        </>
+    )
+}

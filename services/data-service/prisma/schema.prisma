@@ -1,0 +1,147 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum RunStatus {
+  QUEUED
+  PROCESSING
+  FAILED
+  PROCESSED
+}
+
+enum ProcessStatus {
+  QUEUED
+  INIT
+  FAILED
+  DONE
+}
+
+enum UploadStrategy {
+  CREATE_AND_UPDATE
+  DELETE
+}
+
+enum MetadataDownloadType {
+  VISUALIZATION
+  MAP
+  DASHBOARD
+}
+
+enum MetadataSourceType {
+  SOURCE_INSTANCE
+  FLEXIPORTAL_CONFIG
+}
+
+model DataRun {
+  id            Int       @id @default(autoincrement())
+  uid           String    @unique @default(cuid())
+  startedAt     DateTime  @default(now())
+  status        RunStatus @default(QUEUED)
+  periods       String[]
+  timeout       Int?
+  parentOrgUnit String?
+  orgUnitLevel  Int?
+  configIds     String[]
+  mainConfigId  String
+  isDelete      Boolean   @default(false)
+  error         String?
+
+  downloads DataDownload[]
+  uploads   DataUpload[]
+}
+
+model DataDownload {
+  id          Int           @id @default(autoincrement())
+  uid         String        @unique @default(cuid())
+  runId       Int
+  run         DataRun       @relation(fields: [runId], references: [id])
+  dimensions  Json
+  filters     Json?
+  configId    String
+  status      ProcessStatus @default(QUEUED)
+  startedAt   DateTime?
+  finishedAt  DateTime?
+  count       Int?
+  uploads     DataUpload[]
+  error       String?
+  errorObject Json?
+}
+
+model DataUpload {
+  id             Int            @id @default(autoincrement())
+  uid            String         @unique @default(cuid())
+  filename       String
+  runId          Int
+  run            DataRun        @relation(fields: [runId], references: [id])
+  strategy       UploadStrategy @default(CREATE_AND_UPDATE)
+  dataDownloadId Int
+  download       DataDownload   @relation(fields: [dataDownloadId], references: [id])
+  status         ProcessStatus  @default(QUEUED)
+  startedAt      DateTime?
+  finishedAt     DateTime?
+  count          Int?
+  imported       Int?
+  ignored        Int?
+  deleted        Int?
+  updated        Int?
+  error          String?
+  errorObject    Json?
+}
+
+model MetadataRun {
+  id             Int                @id @default(autoincrement())
+  uid            String             @unique @default(cuid())
+  status         RunStatus          @default(QUEUED)
+  mainConfigId   String
+  startedAt      DateTime           @default(now())
+  sourceType     MetadataSourceType
+  visualizations String[]           @default([])
+  dashboards     String[]           @default([])
+  maps           String[]           @default([])
+  error          String?
+
+  uploads   MetadataUpload[]
+  downloads MetadataDownload[]
+}
+
+model MetadataDownload {
+  id          Int                  @id @default(autoincrement())
+  uid         String               @unique @default(cuid())
+  type        MetadataDownloadType
+  items       String[]
+  runId       Int
+  run         MetadataRun          @relation(fields: [runId], references: [id])
+  status      ProcessStatus        @default(QUEUED)
+  error       String?
+  errorObject Json?
+  uploads     MetadataUpload[]
+  startedAt   DateTime?
+  finishedAt  DateTime?
+}
+
+model MetadataUpload {
+  id          Int              @id @default(autoincrement())
+  uid         String           @unique @default(cuid())
+  filename    String
+  runId       Int
+  run         MetadataRun      @relation(fields: [runId], references: [id])
+  downloadId  Int
+  summary     Json?
+  download    MetadataDownload @relation(fields: [downloadId], references: [id])
+  status      ProcessStatus    @default(QUEUED)
+  error       String?
+  errorObject Json?
+  startedAt   DateTime?
+  finishedAt  DateTime?
+}

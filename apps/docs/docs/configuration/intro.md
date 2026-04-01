@@ -12,6 +12,7 @@ The DHIS2 Public Portal can be configured through the Manager App. This section 
 - **Modules**: Configure the different modules available in the portal, such as visualizations, documents, and more.
 
 The following sections provide detailed instructions on how to configure each aspect of the portal app.
+
 ## Initial Configuration Setup
 
 After installing and launching the application, FlexiPortal provides two options for setting up your configuration:
@@ -34,7 +35,6 @@ Key default sections include:
 
 These settings offer a solid foundation that can be customized later to suit your specific requirements.
 
-
 ### Import Configuration
 
 Use this option if you already have a configuration `.zip` file to apply.
@@ -43,15 +43,16 @@ Use this option if you already have a configuration `.zip` file to apply.
 
 1. Click the **“Import Configuration”** button.
 
-   ![Import Option](../../../docs/static/img/configuration-management/initialSetupsCroped.png)
+    ![Import Option](../../../docs/static/img/configuration-management/initialSetupsCroped.png)
 
 2. Select your `.zip` configuration file.
 
-   ![Import Dialog](../../../docs/static/img/configuration-management/initialImportDialog.png)
+    ![Import Dialog](../../../docs/static/img/configuration-management/initialImportDialog.png)
 
-3. The configuration  will be applied to your instance.
+3. The configuration will be applied to your instance.
 
 ---
+
 :::warning
 
 When importing a configuration into a new instance, ensure that all referenced metadata required by the configuration is already present in the target instance.

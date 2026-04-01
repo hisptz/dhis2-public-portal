@@ -1,43 +1,49 @@
 name: TypeScript Type Check
 
 on:
-  pull_request:
-    branches:
-      - develop
-    paths:
-      - '.github/workflows/type-check.yml'
-      - '**/*.ts'
-      - '**/*.tsx'
-      - 'package.json'
-      - 'pnpm-lock.yaml'
-      - 'tsconfig.json'
-      - '**/tsconfig.json'
+    pull_request:
+        branches:
+            - develop
+        paths:
+            - '.github/workflows/type-check.yml'
+            - '**/*.ts'
+            - '**/*.tsx'
+            - 'package.json'
+            - 'pnpm-lock.yaml'
+            - 'tsconfig.json'
+            - '**/tsconfig.json'
 env:
-  DHIS2_BASE_URL: ${{vars.DHIS2_BASE_URL}}
-  DHIS2_BASE_PAT_TOKEN: ${{secrets.DHIS2_BASE_PAT_TOKEN}}
+    DHIS2_BASE_URL: ${{vars.DHIS2_BASE_URL}}
+    DHIS2_BASE_PAT_TOKEN: ${{secrets.DHIS2_BASE_PAT_TOKEN}}
 
 jobs:
-  type-check:
-    name: Run TypeScript Type Check
-    runs-on: ubuntu-latest
+    type-check:
+        name: Run TypeScript Type Check
+        runs-on: ubuntu-latest
 
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v4
 
-      - uses: pnpm/action-setup@v4
-        name: Install pnpm
-        with:
-          run_install: false
+            - uses: pnpm/action-setup@v4
+              name: Install pnpm
+              with:
+                  run_install: false
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: '22'
-          cache: 'pnpm'
+            - name: Setup Node.js
+              uses: actions/setup-node@v4
+              with:
+                  node-version: '22'
+                  cache: 'pnpm'
 
-      - name: Install dependencies
-        run: pnpm install --frozen-lockfile
+            - name: Install dependencies
+              run: pnpm install --frozen-lockfile
 
-      - name: Type Check
-        run: pnpm check-types
+            - name: Generate Prisma types
+              run: pnpm dlx prisma@7 generate
+              working-directory: services/data-service
+              env:
+                  DATABASE_URL: ${{secrets.DATABASE_URL}}
+
+            - name: Type Check
+              run: pnpm check-types

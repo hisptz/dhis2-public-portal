@@ -1,7 +1,7 @@
 ---
 name: Project Activity
 about: Template for tracking project activities and features
-title: "[ACTIVITY] "
+title: '[ACTIVITY] '
 labels: enhancement
 assignees: ''
 ---

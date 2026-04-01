@@ -1,39 +1,39 @@
-import { useBoolean } from "usehooks-ts";
-import { Button } from "@dhis2/ui"; 
-import i18n from "@dhis2/d2-i18n";
-import React from "react";
-import { DocumentItem } from "@packages/shared/schemas";
-import { SortDocumentForm } from "./components/SortDocumentForm";
+import { useBoolean } from 'usehooks-ts'
+import { Button } from '@dhis2/ui'
+import i18n from '@dhis2/d2-i18n'
+
+import { DocumentItem } from '@packages/shared/schemas'
+import { SortDocumentForm } from './components/SortDocumentForm'
 
 export function SortDocument({
     items,
-    onSortSubmit, 
+    onSortSubmit,
 }: {
-    items: DocumentItem[];
-    onSortSubmit: (updatedItems: DocumentItem[]) => void; 
+    items: DocumentItem[]
+    onSortSubmit: (updatedItems: DocumentItem[]) => void
 }) {
     const {
-        value: hideModal, 
+        value: hideModal,
         setTrue: closeModal,
         setFalse: openModal,
-    } = useBoolean(true);
+    } = useBoolean(true)
 
     return (
         <>
-            {!hideModal && (  
+            {!hideModal && (
                 <SortDocumentForm
-                    hide={hideModal}  
+                    hide={hideModal}
                     items={items}
-                    onClose={closeModal} 
+                    onClose={closeModal}
                     onSubmit={(updatedItems) => {
-                        onSortSubmit(updatedItems);
-                        closeModal();  
+                        onSortSubmit(updatedItems)
+                        closeModal()
                     }}
                 />
             )}
-            <Button onClick={openModal} disabled={items.length === 0}> 
-                {i18n.t("Sort document items")}
+            <Button onClick={openModal} disabled={items.length === 0}>
+                {i18n.t('Sort document items')}
             </Button>
         </>
-    );
+    )
 }

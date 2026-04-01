@@ -1,8 +1,8 @@
 module.exports = {
-	apps: [
-		{
-			name: "FlexiPortal",
-			script: "apps/portal/server.js",
-		},
-	],
-};
+    apps: [
+        {
+            name: 'FlexiPortal',
+            script: 'apps/portal/server.js',
+        },
+    ],
+}

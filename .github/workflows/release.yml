@@ -1,39 +1,39 @@
 name: Release
 on:
-  push:
-    branches:
-      - main # or main
+    push:
+        branches:
+            - main # or main
 
 permissions:
-  contents: read # for checkout
+    contents: read # for checkout
 
 jobs:
-  release:
-    name: Release
-    runs-on: ubuntu-latest
-    permissions:
-      contents: write # to be able to publish a GitHub release
-      issues: write # to be able to comment on released issues
-      pull-requests: write # to be able to comment on released pull requests
-      id-token: write # to enable use of OIDC for npm provenance
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-      - uses: pnpm/action-setup@v4
-        name: Install pnpm
-        with:
-          run_install: false
+    release:
+        name: Release
+        runs-on: ubuntu-latest
+        permissions:
+            contents: write # to be able to publish a GitHub release
+            issues: write # to be able to comment on released issues
+            pull-requests: write # to be able to comment on released pull requests
+            id-token: write # to enable use of OIDC for npm provenance
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v4
+              with:
+                  fetch-depth: 0
+            - uses: pnpm/action-setup@v4
+              name: Install pnpm
+              with:
+                  run_install: false
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: '22'
-          cache: 'pnpm'
-      - name: Install dependencies
-        run: pnpm install --frozen-lockfile
-      - name: Release
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: pnpm run release
+            - name: Setup Node.js
+              uses: actions/setup-node@v4
+              with:
+                  node-version: '22'
+                  cache: 'pnpm'
+            - name: Install dependencies
+              run: pnpm install --frozen-lockfile
+            - name: Release
+              env:
+                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+              run: pnpm run release

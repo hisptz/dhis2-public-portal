@@ -67,7 +67,7 @@ FlexiPortal to fetch DHIS2 visualizations.
 #### Steps
 
 1. Go to:  
-   **Apps ->  Users -> User**
+   **Apps -> Users -> User**
 2. Click **"New"**.
 
 ![Visualization Display Example](../../../static/img/dhis2-access-settings/user_management_page.png)
@@ -121,4 +121,4 @@ You need to generate a **GET-only Personal Access Token (PAT)** for the user `pu
 > Make sure to copy your personal access token at this time. You won't be able to see it again. Store this token
 > securely (in environment variables) — it's your key to public access.
 
-You can then use your `PAT` to set up your FlexiPortal 
+You can then use your `PAT` to set up your FlexiPortal

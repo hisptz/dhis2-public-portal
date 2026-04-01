@@ -24,10 +24,10 @@ Instead of using the standard Cypress `cy.intercept()` command, use the `cy.mock
 
 ```typescript
 // Mock a server-side API request
-cy.mockNextApi("**/dataStore/**/menu", {
-  statusCode: 200,
-  body: menuConfig,
-});
+cy.mockNextApi('**/dataStore/**/menu', {
+    statusCode: 200,
+    body: menuConfig,
+})
 ```
 
 ### Example Test
@@ -35,27 +35,27 @@ cy.mockNextApi("**/dataStore/**/menu", {
 Here's an example of a test that mocks a server-side API request:
 
 ```typescript
-describe("Menu Tests", () => {
-  context("Header Menu", () => {
-    beforeEach(() => {
-      // Load the header menu fixture
-      cy.fixture("menu-header.json").then((menuConfig: AppMenuConfig) => {
-        // Mock the server-side API request and return our fixture
-        cy.mockNextApi("**/dataStore/**/menu", {
-          statusCode: 200,
-          body: menuConfig,
-        });
+describe('Menu Tests', () => {
+    context('Header Menu', () => {
+        beforeEach(() => {
+            // Load the header menu fixture
+            cy.fixture('menu-header.json').then((menuConfig: AppMenuConfig) => {
+                // Mock the server-side API request and return our fixture
+                cy.mockNextApi('**/dataStore/**/menu', {
+                    statusCode: 200,
+                    body: menuConfig,
+                })
 
-        // Visit the application
-        cy.visit("/");
-      });
-    });
+                // Visit the application
+                cy.visit('/')
+            })
+        })
 
-    it("should render the menu in the header", () => {
-      // Test assertions here
-    });
-  });
-});
+        it('should render the menu in the header', () => {
+            // Test assertions here
+        })
+    })
+})
 ```
 
 ## Running Tests
