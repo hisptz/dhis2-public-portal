@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { FormProvider, useForm } from 'react-hook-form'
 
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -5,6 +6,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import {
     Button,
     ButtonStrip,
+    CheckboxField,
     Modal,
     ModalActions,
     ModalContent,
@@ -41,6 +43,30 @@ export function AddVisualizationForm({
         defaultValues: visualization,
     })
 
+    const [limitPeriods, setLimitPeriods] = useState(() => {
+        const categories = visualization?.periodConfig?.categories
+        const periodTypes = visualization?.periodConfig?.periodTypes
+        const periods = visualization?.periodConfig?.periods
+        const singleSelection = visualization?.periodConfig?.singleSelection
+        return !!(
+            (categories && categories.length > 0) ||
+            (periodTypes && periodTypes.length > 0) ||
+            (periods && periods.length > 0) ||
+            singleSelection
+        )
+    })
+
+    const [limitOrgUnits, setLimitOrgUnits] = useState(() => {
+        const orgUnitLevels = visualization?.orgUnitConfig?.orgUnitLevels
+        const orgUnits = visualization?.orgUnitConfig?.orgUnits
+        const singleSelection = visualization?.orgUnitConfig?.singleSelection
+        return !!(
+            (orgUnitLevels && orgUnitLevels.length > 0) ||
+            (orgUnits && orgUnits.length > 0) ||
+            singleSelection
+        )
+    })
+
     const onAdd = (visualization: VisualizationItem) => {
         onSubmit(visualization)
         onClose()
@@ -73,57 +99,135 @@ export function AddVisualizationForm({
                             name="type"
                         />
                         <VisualizationSelector />
-                        <DimensionPeriodCategorySelector
-                            categoriesField="periodConfig.categories"
-                            periodTypesField="periodConfig.periodTypes"
-                            periodsField="periodConfig.periods"
-                            helpText={i18n.t(
-                                'Choose whether to include relative periods, fixed periods, or both.'
-                            )}
-                        />
-
-                        <DimensionPeriodTypeSelector
-                            categoriesField="periodConfig.categories"
-                            periodTypesField="periodConfig.periodTypes"
-                            periodsField="periodConfig.periods"
-                            helpText={i18n.t(
-                                'Select the period types users can choose from, e.g. Monthly, Quarterly, Yearly.'
-                            )}
-                        />
-
-                        <DimensionPeriodSelector
-                            periodTypesField="periodConfig.periodTypes"
-                            periodsField="periodConfig.periods"
-                            helpText={i18n.t(
-                                'Pin specific periods to restrict what users can select.'
-                            )}
-                        />
-                        <RHFCheckboxField
-                            name="periodConfig.singleSelection"
-                            label={i18n.t('Single period selection')}
-                            helpText={i18n.t(
-                                'When enabled, users can only select one period at a time.'
-                            )}
-                        />
-                        <MultiOrgUnitLevelSelector
-                            name="orgUnitConfig.orgUnitLevels"
-                            label={i18n.t('Organisation unit levels')}
-                            helpText={i18n.t(
-                                'Restrict data to specific levels in the organisation unit hierarchy.'
-                            )}
-                        />
-                        <RHFMultiOrgUnitFieldSelector
-                            name="orgUnitConfig.orgUnits"
-                            label={i18n.t('Organisation units')}
-                            helpText={i18n.t(
-                                'Limit access to specific organisation units. Leave empty to allow all units.'
-                            )}
-                            searchable
-                        />
                         <RHFTextAreaField
                             name="caption"
                             label={i18n.t('Caption')}
                         />
+
+                        <CheckboxField
+                            checked={limitPeriods}
+                            helpText={i18n.t(
+                                'Enable to restrict which periods users can select.'
+                            )}
+                            onChange={({ checked }: { checked: boolean }) => {
+                                setLimitPeriods(checked)
+                                if (!checked) {
+                                    form.setValue(
+                                        'periodConfig.categories',
+                                        [],
+                                        { shouldDirty: true }
+                                    )
+                                    form.setValue(
+                                        'periodConfig.periodTypes',
+                                        [],
+                                        { shouldDirty: true }
+                                    )
+                                    form.setValue('periodConfig.periods', [], {
+                                        shouldDirty: true,
+                                    })
+                                    form.setValue(
+                                        'periodConfig.singleSelection',
+                                        false,
+                                        { shouldDirty: true }
+                                    )
+                                }
+                            }}
+                            label={i18n.t('Limit period selections')}
+                        />
+
+                        {limitPeriods && (
+                            <div className="flex flex-col gap-2 pl-4 border-l-2 border-gray-200">
+                                <DimensionPeriodCategorySelector
+                                    categoriesField="periodConfig.categories"
+                                    periodTypesField="periodConfig.periodTypes"
+                                    periodsField="periodConfig.periods"
+                                    helpText={i18n.t(
+                                        'Choose whether to include relative periods, fixed periods, or both.'
+                                    )}
+                                />
+
+                                <DimensionPeriodTypeSelector
+                                    categoriesField="periodConfig.categories"
+                                    periodTypesField="periodConfig.periodTypes"
+                                    periodsField="periodConfig.periods"
+                                    helpText={i18n.t(
+                                        'Select the period types users can choose from, e.g. Monthly, Quarterly, Yearly.'
+                                    )}
+                                />
+                                <RHFCheckboxField
+                                    name="periodConfig.singleSelection"
+                                    label={i18n.t('Single period selection')}
+                                    helpText={i18n.t(
+                                        'When enabled, users can only select one period at a time.'
+                                    )}
+                                />
+                                <DimensionPeriodSelector
+                                    categoriesField="periodConfig.categories"
+                                    periodTypesField="periodConfig.periodTypes"
+                                    periodsField="periodConfig.periods"
+                                    helpText={i18n.t(
+                                        'Pin specific periods to restrict what users can select.'
+                                    )}
+                                />
+                            </div>
+                        )}
+
+                        <CheckboxField
+                            checked={limitOrgUnits}
+                            helpText={i18n.t(
+                                'Enable to restrict which organisation units users can select.'
+                            )}
+                            onChange={({ checked }: { checked: boolean }) => {
+                                setLimitOrgUnits(checked)
+                                if (!checked) {
+                                    form.setValue(
+                                        'orgUnitConfig.orgUnitLevels',
+                                        [],
+                                        { shouldDirty: true }
+                                    )
+                                    form.setValue(
+                                        'orgUnitConfig.orgUnits',
+                                        [],
+                                        { shouldDirty: true }
+                                    )
+                                    form.setValue(
+                                        'orgUnitConfig.singleSelection',
+                                        false,
+                                        { shouldDirty: true }
+                                    )
+                                }
+                            }}
+                            label={i18n.t('Limit organisation unit selections')}
+                        />
+
+                        {limitOrgUnits && (
+                            <div className="flex flex-col gap-2 pl-4 border-l-2 border-gray-200">
+                                <MultiOrgUnitLevelSelector
+                                    name="orgUnitConfig.orgUnitLevels"
+                                    label={i18n.t('Organisation unit levels')}
+                                    helpText={i18n.t(
+                                        'Restrict data to specific levels in the organisation unit hierarchy.'
+                                    )}
+                                />
+                                <RHFCheckboxField
+                                    name="orgUnitConfig.singleSelection"
+                                    label={i18n.t(
+                                        'Single organisation unit selection'
+                                    )}
+                                    helpText={i18n.t(
+                                        'When enabled, users can only select one organisation unit at a time.'
+                                    )}
+                                />
+                                <RHFMultiOrgUnitFieldSelector
+                                    name="orgUnitConfig.orgUnits"
+                                    label={i18n.t('Organisation units')}
+                                    helpText={i18n.t(
+                                        'Limit access to specific organisation units. Leave empty to allow all units.'
+                                    )}
+                                    searchable
+                                />
+                            </div>
+                        )}
                     </form>
                 </ModalContent>
                 <ModalActions>

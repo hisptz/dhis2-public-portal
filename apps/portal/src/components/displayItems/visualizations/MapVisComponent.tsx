@@ -325,6 +325,7 @@ export function MapVisComponent({
                     handleClose={hideOrgUnits}
                     limitSelectionToLevels={orgUnitConfig?.orgUnitLevels}
                     orgUnitsId={orgUnitConfig?.orgUnits}
+                    singleSelection={orgUnitConfig?.singleSelection}
                 />
             )}
 
@@ -343,6 +344,7 @@ export function MapVisComponent({
                     categories={periodConfig?.categories}
                     periodTypes={periodConfig?.periodTypes}
                     periods={periodConfig?.periods}
+                    singleSelection={periodConfig?.singleSelection}
                 />
             )}
         </>

@@ -14,6 +14,7 @@ export function CustomOrgUnitModal({
     title,
     orgUnitsId,
     limitSelectionToLevels,
+    singleSelection,
     onUpdate,
 }: {
     orgUnitState?: string[]
@@ -23,11 +24,14 @@ export function CustomOrgUnitModal({
     title: string
     orgUnitsId?: string[]
     limitSelectionToLevels?: number[]
+    singleSelection?: boolean
     onUpdate: (val: string[] | undefined) => void
 }) {
-    const { orgUnit: defaultOrgUnits, loading: orgUnitLoading } = useOrgUnit(
-        orgUnitState ?? orgUnitsId
-    )
+    const { orgUnit: defaultOrgUnits, loading: orgUnitLoading } =
+        useOrgUnit(orgUnitState)
+
+    const { orgUnit: limitedOrgUnits, loading: limitedorgUnitLoading } =
+        useOrgUnit(orgUnitsId)
 
     const [selectedOrgUnits, setOrgUnits] = useState<
         OrganisationUnit[] | undefined
@@ -69,7 +73,7 @@ export function CustomOrgUnitModal({
                     </Button>
                 </div>
 
-                {orgUnitLoading ? (
+                {orgUnitLoading || limitedorgUnitLoading ? (
                     <div className="flex justify-center items-center h-full">
                         <Loader size="md" />
                     </div>
@@ -78,13 +82,21 @@ export function CustomOrgUnitModal({
                         <OrgUnitSelector
                             limitSelectionToLevels={limitSelectionToLevels}
                             searchable
+                            roots={
+                                isEmpty(orgUnitsId)
+                                    ? undefined
+                                    : limitedOrgUnits
+                            }
+                            singleSelection={singleSelection}
                             value={{
                                 orgUnits: selectedOrgUnits ?? [],
                             }}
                             onUpdate={(val: OrgUnitSelection) => {
                                 setOrgUnits(
-                                    !isEmpty(val.orgUnits)
-                                        ? val.orgUnits
+                                    !isEmpty(val.orgUnits) && val.orgUnits
+                                        ? singleSelection
+                                            ? [[...val.orgUnits].reverse()[0]]
+                                            : val.orgUnits
                                         : defaultOrgUnits
                                 )
                             }}

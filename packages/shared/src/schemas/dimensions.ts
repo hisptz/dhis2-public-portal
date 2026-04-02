@@ -24,6 +24,7 @@ export const orgUnitConfigSchema = z
     .object({
         orgUnitLevels: z.array(z.number()).optional(),
         orgUnits: z.array(z.string()).optional(),
+        singleSelection: z.boolean().optional(),
     })
     .transform(stripEmptyArrays)
 

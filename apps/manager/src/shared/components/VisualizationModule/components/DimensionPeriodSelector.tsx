@@ -11,12 +11,14 @@ import { useState, useMemo, useRef } from 'react'
 import { useWatch, useController } from 'react-hook-form'
 
 type Props = {
+    categoriesField: string
     periodTypesField: string
     periodsField: string
     helpText?: string
 }
 
 export const DimensionPeriodSelector = ({
+    categoriesField,
     periodTypesField,
     periodsField,
     helpText,
@@ -24,6 +26,9 @@ export const DimensionPeriodSelector = ({
     const [year, setYear] = useState<number>(new Date().getFullYear())
 
     const selectedPeriodTypes = useWatch({ name: periodTypesField })
+    const selectedCategories: ('RELATIVE' | 'FIXED')[] | undefined = useWatch({
+        name: categoriesField,
+    })
 
     const { field: periodsFieldController } = useController({
         name: periodsField,
@@ -34,20 +39,58 @@ export const DimensionPeriodSelector = ({
     const allPeriods = useMemo(() => {
         if (!selectedPeriodTypes?.length) return []
 
-        const utility = PeriodUtility.fromObject({
-            year,
-            category: PeriodTypeCategory.FIXED,
-            preference: { allowFuturePeriods: false },
-        })
+        const includeFixed =
+            !selectedCategories?.length || selectedCategories.includes('FIXED')
+        const includeRelative =
+            !selectedCategories?.length ||
+            selectedCategories.includes('RELATIVE')
+
+        const fixedUtility = includeFixed
+            ? PeriodUtility.fromObject({
+                  year,
+                  category: PeriodTypeCategory.FIXED,
+                  preference: { allowFuturePeriods: false },
+              })
+            : null
+
+        const relativeUtility = includeRelative
+            ? PeriodUtility.fromObject({
+                  year,
+                  category: PeriodTypeCategory.RELATIVE,
+                  preference: { allowFuturePeriods: false },
+              })
+            : null
 
         return selectedPeriodTypes.flatMap((periodTypeId: string) => {
-            try {
-                return utility.getPeriodType(periodTypeId)?.periods ?? []
-            } catch {
-                return []
-            }
+            const fixedPeriods = fixedUtility
+                ? (() => {
+                      try {
+                          return (
+                              fixedUtility.getPeriodType(periodTypeId)
+                                  ?.periods ?? []
+                          )
+                      } catch {
+                          return []
+                      }
+                  })()
+                : []
+
+            const relativePeriods = relativeUtility
+                ? (() => {
+                      try {
+                          return (
+                              relativeUtility.getPeriodType(periodTypeId)
+                                  ?.periods ?? []
+                          )
+                      } catch {
+                          return []
+                      }
+                  })()
+                : []
+
+            return [...fixedPeriods, ...relativePeriods]
         })
-    }, [selectedPeriodTypes, year])
+    }, [selectedPeriodTypes, selectedCategories, year])
 
     const periodOptions = useMemo(() => {
         const currentOptions = allPeriods.map((period) => ({

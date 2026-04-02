@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useCallback, useState } from 'react'
 import { Box, Button, Group, Modal, Text, Title } from '@mantine/core'
 import { PeriodTypeCategory, PeriodUtility } from '@hisptz/dhis2-utils'
 import {
@@ -19,6 +19,7 @@ export function CustomPeriodModal({
     title,
     categories,
     periodTypes,
+    singleSelection,
     periods,
 }: {
     open: boolean
@@ -29,6 +30,7 @@ export function CustomPeriodModal({
     title: string
     categories?: ('RELATIVE' | 'FIXED')[]
     periodTypes?: string[]
+    singleSelection?: boolean
     periods?: string[]
 }) {
     const defaultCategoryOptions = [
@@ -124,6 +126,12 @@ export function CustomPeriodModal({
         ? defaultPeriods
         : intersectionBy(defaultPeriods, periodsFromConfig!, 'value')
 
+    const handlePeriodsChange = useCallback(
+        (val: string | string[]) =>
+            setPeriods(Array.isArray(val) ? val : [val]),
+        []
+    )
+
     const sanitizedPeriodState = periodState?.map((id: string) => {
         const label =
             /^\d{4}$/.test(id) && parseInt(id) < 1009
@@ -205,12 +213,14 @@ export function CustomPeriodModal({
                     <SelectInputField
                         key={`${title}-periods`}
                         label={i18n.t('Periods')}
-                        value={sanitizedPeriodState}
-                        onChange={(val) =>
-                            setPeriods(Array.isArray(val) ? val : [val])
+                        value={
+                            singleSelection
+                                ? sanitizedPeriodState?.[0]
+                                : sanitizedPeriodState
                         }
+                        onChange={handlePeriodsChange}
                         options={periodOptions}
-                        multiple
+                        multiple={!singleSelection}
                     />
                 </div>
                 <div className="flex flex-row justify-end gap-2">
