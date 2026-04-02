@@ -35,9 +35,9 @@ export function ConfigSelector({ config }: { config: DataServiceConfig }) {
                     isPeriodTypeLower(periodTypeId, periodType)
                 )
             })
-            .map(({ id, name, dataElements, periodTypeId }) => {
+            .map(({ id, name, dataElements, dataItems, periodTypeId }) => {
                 return {
-                    label: `${name} (items: ${dataElements.length} period type: ${periodTypeId})`,
+                    label: `${name} (items: ${dataElements.length + (dataItems?.length ?? 0)} period type: ${periodTypeId})`,
                     value: id,
                 }
             })
