@@ -222,7 +222,6 @@ export function YearOverYearDataVisComponent({
                     handleClose={onCloseOrgUnitSelector}
                     limitSelectionToLevels={orgUnitConfig?.orgUnitLevels}
                     orgUnitsId={orgUnitConfig?.orgUnits}
-                    singleSelection={orgUnitConfig?.singleSelection}
                 />
             )}
 
@@ -243,7 +242,6 @@ export function YearOverYearDataVisComponent({
                     categories={periodConfig?.categories}
                     periodTypes={periodConfig?.periodTypes}
                     periods={periodConfig?.periods}
-                    singleSelection={periodConfig?.singleSelection}
                 />
             )}
         </>

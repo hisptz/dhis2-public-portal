@@ -90,7 +90,6 @@ export function GlobalOrgUnitFilter({
                     handleClose={onClose}
                     limitSelectionToLevels={orgUnitConfig?.orgUnitLevels}
                     orgUnitsId={orgUnitConfig?.orgUnits}
-                    singleSelection={orgUnitConfig?.singleSelection}
                 />
             )}
         </>
