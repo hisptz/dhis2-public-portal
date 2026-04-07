@@ -5,8 +5,8 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
-"POT-Creation-Date: 2026-03-23T13:16:57.933Z\n"
-"PO-Revision-Date: 2026-03-23T13:16:57.934Z\n"
+"POT-Creation-Date: 2026-04-01T08:29:25.470Z\n"
+"PO-Revision-Date: 2026-04-01T08:29:25.470Z\n"
 
 msgid "Could not get Appearance configurations"
 msgstr "Could not get Appearance configurations"
@@ -94,6 +94,9 @@ msgstr "No logs yet. Perform an action to see logs here."
 
 msgid "Detail"
 msgstr "Detail"
+
+msgid "Edit visualization"
+msgstr "Edit visualization"
 
 msgid "Remove visualization"
 msgstr "Remove visualization"
@@ -1397,8 +1400,36 @@ msgstr "Add a new visualization"
 msgid "{{action}} visualization"
 msgstr "{{action}} visualization"
 
-msgid "Edit visualization"
-msgstr "Edit visualization"
+msgid "Choose whether to include relative periods, fixed periods, or both."
+msgstr "Choose whether to include relative periods, fixed periods, or both."
+
+msgid ""
+"Select the period types users can choose from, e.g. Monthly, Quarterly, "
+"Yearly."
+msgstr ""
+"Select the period types users can choose from, e.g. Monthly, Quarterly, "
+"Yearly."
+
+msgid "Pin specific periods to restrict what users can select."
+msgstr "Pin specific periods to restrict what users can select."
+
+msgid "Single period selection"
+msgstr "Single period selection"
+
+msgid "When enabled, users can only select one period at a time."
+msgstr "When enabled, users can only select one period at a time."
+
+msgid "Organisation unit levels"
+msgstr "Organisation unit levels"
+
+msgid "Restrict data to specific levels in the organisation unit hierarchy."
+msgstr "Restrict data to specific levels in the organisation unit hierarchy."
+
+msgid "Organisation units"
+msgstr "Organisation units"
+
+msgid "Limit access to specific organisation units. Leave empty to allow all units."
+msgstr "Limit access to specific organisation units. Leave empty to allow all units."
 
 msgid ""
 "Enable to show filters(i.e period selector & location selector) for "
@@ -1425,6 +1456,21 @@ msgstr "Group selector"
 
 msgid "Save group changes"
 msgstr "Save group changes"
+
+msgid "Relative"
+msgstr "Relative"
+
+msgid "Fixed"
+msgstr "Fixed"
+
+msgid "Period categories"
+msgstr "Period categories"
+
+msgid "Period types"
+msgstr "Period types"
+
+msgid "Clear"
+msgstr "Clear"
 
 msgid "Failed to save visualization"
 msgstr "Failed to save visualization"
@@ -1676,16 +1722,6 @@ msgstr ""
 msgid "Import or export configuration"
 msgstr "Import or export configuration"
 
-msgid ""
-"Configure the data service for the web portal application, including data "
-"sources and synchronization settings"
-msgstr ""
-"Configure the data service for the web portal application, including data "
-"sources and synchronization settings"
-
-msgid "Configure data service"
-msgstr "Configure data service"
-
 msgid "Menu"
 msgstr "Menu"
 
@@ -1701,11 +1737,3 @@ msgstr "Error deleting file"
 msgctxt "Follows either create or update"
 msgid " menu item"
 msgstr " menu item"
-
-msgctxt "Application title"
-msgid "__MANIFEST_APP_TITLE"
-msgstr "FlexiPortal Manager"
-
-msgctxt "Application description"
-msgid "__MANIFEST_APP_DESCRIPTION"
-msgstr ""
