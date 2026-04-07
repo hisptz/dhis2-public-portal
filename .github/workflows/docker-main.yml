@@ -81,6 +81,6 @@ jobs:
                       hisptanzania/dhis2-public-portal:latest-with-context-path
                       hisptanzania/dhis2-public-portal:${{ steps.package-version.outputs.VERSION }}-with-context-path
                   build-args: |
-                      CONTEXT_PATH="/portal"
+                      CONTEXT_PATH=/portal
                   cache-from: type=gha
                   cache-to: type=gha,mode=max
