@@ -40,3 +40,14 @@ jobs:
                   tags: hisptanzania/dhis2-public-portal:develop
                   cache-from: type=gha
                   cache-to: type=gha,mode=max
+            - name: Build and push(with context path)
+              uses: docker/build-push-action@v5
+              with:
+                  context: .
+                  file: ./Dockerfile
+                  push: true
+                  build-args: |
+                      CONTEXT_PATH: /portal
+                  tags: hisptanzania/dhis2-public-portal:develop-with-context-path
+                  cache-from: type=gha
+                  cache-to: type=gha,mode=max
