@@ -1,9 +1,8 @@
 ## [1.5.4](https://github.com/hisptz/dhis2-public-portal/compare/v1.5.3...v1.5.4) (2026-04-01)
 
-
 ### Bug Fixes
 
-* fixes and improvements on the manager app ([b613851](https://github.com/hisptz/dhis2-public-portal/commit/b613851fee10981c5c8d0c0215656676c77b6b3e))
+- fixes and improvements on the manager app ([b613851](https://github.com/hisptz/dhis2-public-portal/commit/b613851fee10981c5c8d0c0215656676c77b6b3e))
 
 ## [1.5.3](https://github.com/hisptz/dhis2-public-portal/compare/v1.5.2...v1.5.3) (2026-01-14)
 
