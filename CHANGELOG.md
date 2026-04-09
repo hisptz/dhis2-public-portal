@@ -1,11 +1,10 @@
 ## [1.5.5](https://github.com/hisptz/dhis2-public-portal/compare/v1.5.4...v1.5.5) (2026-04-09)
 
-
 ### Bug Fixes
 
-* correct build-args formatting in Docker workflow ([173dca3](https://github.com/hisptz/dhis2-public-portal/commit/173dca3ec59a346f8ccde98539501b5903d9d65f))
-* react duplication issue causing react-query client error ([c0ad6af](https://github.com/hisptz/dhis2-public-portal/commit/c0ad6afa6adedbf072931add37896493f6d6bcc8))
-* remove quotes from CONTEXT_PATH in Docker workflow ([cc58ec4](https://github.com/hisptz/dhis2-public-portal/commit/cc58ec4296ba212a67c2e20d67e4c85811ae0c1f))
+- correct build-args formatting in Docker workflow ([173dca3](https://github.com/hisptz/dhis2-public-portal/commit/173dca3ec59a346f8ccde98539501b5903d9d65f))
+- react duplication issue causing react-query client error ([c0ad6af](https://github.com/hisptz/dhis2-public-portal/commit/c0ad6afa6adedbf072931add37896493f6d6bcc8))
+- remove quotes from CONTEXT_PATH in Docker workflow ([cc58ec4](https://github.com/hisptz/dhis2-public-portal/commit/cc58ec4296ba212a67c2e20d67e4c85811ae0c1f))
 
 ## [1.5.4](https://github.com/hisptz/dhis2-public-portal/compare/v1.5.3...v1.5.4) (2026-04-01)
 
