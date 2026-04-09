@@ -15,13 +15,10 @@ import { Route as ConfigurationIndexRouteImport } from './modules/configuration/
 import { Route as ModulesProviderRouteImport } from './modules/modules/_provider'
 import { Route as MenuProviderRouteImport } from './modules/menu/_provider'
 import { Route as GeneralProviderRouteImport } from './modules/general/_provider'
-import { Route as DataServiceConfigurationProviderRouteImport } from './modules/data-service-configuration/_provider'
 import { Route as AppearanceProviderRouteImport } from './modules/appearance/_provider'
 import { Route as ModulesProviderIndexRouteImport } from './modules/modules/_provider/index'
 import { Route as ModulesProviderModuleIdFormProviderRouteImport } from './modules/modules/_provider/$moduleId/_formProvider'
-import { Route as DataServiceConfigurationProviderConfigIdProviderRouteImport } from './modules/data-service-configuration/_provider/$configId/_provider'
 import { Route as ModulesProviderModuleIdFormProviderEditLayoutRouteImport } from './modules/modules/_provider/$moduleId/_formProvider/edit/layout'
-import { Route as DataServiceConfigurationProviderConfigIdProviderEditProviderRouteImport } from './modules/data-service-configuration/_provider/$configId/_provider/edit/_provider'
 import { Route as ModulesProviderModuleIdFormProviderEditGroupIndexIndexRouteImport } from './modules/modules/_provider/$moduleId/_formProvider/edit/$groupIndex/index'
 import { Route as ModulesProviderModuleIdFormProviderEditGroupIndexLayoutRouteImport } from './modules/modules/_provider/$moduleId/_formProvider/edit/$groupIndex/layout'
 import { Route as ModulesProviderModuleIdFormProviderEditStaticItemIdIndexRouteImport } from './modules/modules/_provider/$moduleId/_formProvider/edit/static/$itemId/index'
@@ -33,26 +30,11 @@ const MenuProviderIndexLazyRouteImport = createFileRoute('/menu/_provider/')()
 const GeneralProviderIndexLazyRouteImport = createFileRoute(
     '/general/_provider/'
 )()
-const DataServiceConfigurationProviderIndexLazyRouteImport = createFileRoute(
-    '/data-service-configuration/_provider/'
-)()
 const AppearanceProviderIndexLazyRouteImport = createFileRoute(
     '/appearance/_provider/'
 )()
-const DataServiceConfigurationProviderConfigIdValidationLogsIndexLazyRouteImport =
-    createFileRoute(
-        '/data-service-configuration/_provider/$configId/validation-logs/'
-    )()
-const DataServiceConfigurationProviderConfigIdProviderIndexLazyRouteImport =
-    createFileRoute(
-        '/data-service-configuration/_provider/$configId/_provider/'
-    )()
 const ModulesProviderModuleIdFormProviderEditIndexLazyRouteImport =
     createFileRoute('/modules/_provider/$moduleId/_formProvider/edit/')()
-const DataServiceConfigurationProviderConfigIdProviderEditProviderIndexLazyRouteImport =
-    createFileRoute(
-        '/data-service-configuration/_provider/$configId/_provider/edit/_provider/'
-    )()
 
 const IndexLazyRoute = IndexLazyRouteImport.update({
     id: '/',
@@ -79,12 +61,6 @@ const GeneralProviderRoute = GeneralProviderRouteImport.update({
     path: '/general',
     getParentRoute: () => rootRouteImport,
 } as any)
-const DataServiceConfigurationProviderRoute =
-    DataServiceConfigurationProviderRouteImport.update({
-        id: '/data-service-configuration/_provider',
-        path: '/data-service-configuration',
-        getParentRoute: () => rootRouteImport,
-    } as any)
 const AppearanceProviderRoute = AppearanceProviderRouteImport.update({
     id: '/appearance/_provider',
     path: '/appearance',
@@ -105,16 +81,6 @@ const GeneralProviderIndexLazyRoute =
     } as any).lazy(() =>
         import('./modules/general/_provider/index.lazy').then((d) => d.Route)
     )
-const DataServiceConfigurationProviderIndexLazyRoute =
-    DataServiceConfigurationProviderIndexLazyRouteImport.update({
-        id: '/',
-        path: '/',
-        getParentRoute: () => DataServiceConfigurationProviderRoute,
-    } as any).lazy(() =>
-        import('./modules/data-service-configuration/_provider/index.lazy').then(
-            (d) => d.Route
-        )
-    )
 const AppearanceProviderIndexLazyRoute =
     AppearanceProviderIndexLazyRouteImport.update({
         id: '/',
@@ -134,37 +100,6 @@ const ModulesProviderModuleIdFormProviderRoute =
         path: '/$moduleId',
         getParentRoute: () => ModulesProviderRoute,
     } as any)
-const DataServiceConfigurationProviderConfigIdProviderRoute =
-    DataServiceConfigurationProviderConfigIdProviderRouteImport.update({
-        id: '/$configId/_provider',
-        path: '/$configId',
-        getParentRoute: () => DataServiceConfigurationProviderRoute,
-    } as any)
-const DataServiceConfigurationProviderConfigIdValidationLogsIndexLazyRoute =
-    DataServiceConfigurationProviderConfigIdValidationLogsIndexLazyRouteImport.update(
-        {
-            id: '/$configId/validation-logs/',
-            path: '/$configId/validation-logs/',
-            getParentRoute: () => DataServiceConfigurationProviderRoute,
-        } as any
-    ).lazy(() =>
-        import('./modules/data-service-configuration/_provider/$configId/validation-logs/index.lazy').then(
-            (d) => d.Route
-        )
-    )
-const DataServiceConfigurationProviderConfigIdProviderIndexLazyRoute =
-    DataServiceConfigurationProviderConfigIdProviderIndexLazyRouteImport.update(
-        {
-            id: '/',
-            path: '/',
-            getParentRoute: () =>
-                DataServiceConfigurationProviderConfigIdProviderRoute,
-        } as any
-    ).lazy(() =>
-        import('./modules/data-service-configuration/_provider/$configId/_provider/index.lazy').then(
-            (d) => d.Route
-        )
-    )
 const ModulesProviderModuleIdFormProviderEditIndexLazyRoute =
     ModulesProviderModuleIdFormProviderEditIndexLazyRouteImport.update({
         id: '/edit/',
@@ -181,28 +116,6 @@ const ModulesProviderModuleIdFormProviderEditLayoutRoute =
         path: '/edit/layout',
         getParentRoute: () => ModulesProviderModuleIdFormProviderRoute,
     } as any)
-const DataServiceConfigurationProviderConfigIdProviderEditProviderRoute =
-    DataServiceConfigurationProviderConfigIdProviderEditProviderRouteImport.update(
-        {
-            id: '/edit/_provider',
-            path: '/edit',
-            getParentRoute: () =>
-                DataServiceConfigurationProviderConfigIdProviderRoute,
-        } as any
-    )
-const DataServiceConfigurationProviderConfigIdProviderEditProviderIndexLazyRoute =
-    DataServiceConfigurationProviderConfigIdProviderEditProviderIndexLazyRouteImport.update(
-        {
-            id: '/',
-            path: '/',
-            getParentRoute: () =>
-                DataServiceConfigurationProviderConfigIdProviderEditProviderRoute,
-        } as any
-    ).lazy(() =>
-        import('./modules/data-service-configuration/_provider/$configId/_provider/edit/_provider/index.lazy').then(
-            (d) => d.Route
-        )
-    )
 const ModulesProviderModuleIdFormProviderEditGroupIndexIndexRoute =
     ModulesProviderModuleIdFormProviderEditGroupIndexIndexRouteImport.update({
         id: '/edit/$groupIndex/',
@@ -241,26 +154,19 @@ const ModulesProviderModuleIdFormProviderEditSectionSectionIndexLayoutRoute =
 export interface FileRoutesByFullPath {
     '/': typeof IndexLazyRoute
     '/appearance': typeof AppearanceProviderRouteWithChildren
-    '/data-service-configuration': typeof DataServiceConfigurationProviderRouteWithChildren
     '/general': typeof GeneralProviderRouteWithChildren
     '/menu': typeof MenuProviderRouteWithChildren
     '/modules': typeof ModulesProviderRouteWithChildren
     '/configuration': typeof ConfigurationIndexRoute
     '/modules/': typeof ModulesProviderIndexRoute
     '/appearance/': typeof AppearanceProviderIndexLazyRoute
-    '/data-service-configuration/': typeof DataServiceConfigurationProviderIndexLazyRoute
     '/general/': typeof GeneralProviderIndexLazyRoute
     '/menu/': typeof MenuProviderIndexLazyRoute
-    '/data-service-configuration/$configId': typeof DataServiceConfigurationProviderConfigIdProviderRouteWithChildren
     '/modules/$moduleId': typeof ModulesProviderModuleIdFormProviderRouteWithChildren
-    '/data-service-configuration/$configId/': typeof DataServiceConfigurationProviderConfigIdProviderIndexLazyRoute
-    '/data-service-configuration/$configId/validation-logs': typeof DataServiceConfigurationProviderConfigIdValidationLogsIndexLazyRoute
-    '/data-service-configuration/$configId/edit': typeof DataServiceConfigurationProviderConfigIdProviderEditProviderRouteWithChildren
     '/modules/$moduleId/edit/layout': typeof ModulesProviderModuleIdFormProviderEditLayoutRoute
     '/modules/$moduleId/edit': typeof ModulesProviderModuleIdFormProviderEditIndexLazyRoute
     '/modules/$moduleId/edit/$groupIndex/layout': typeof ModulesProviderModuleIdFormProviderEditGroupIndexLayoutRoute
     '/modules/$moduleId/edit/$groupIndex': typeof ModulesProviderModuleIdFormProviderEditGroupIndexIndexRoute
-    '/data-service-configuration/$configId/edit/': typeof DataServiceConfigurationProviderConfigIdProviderEditProviderIndexLazyRoute
     '/modules/$moduleId/edit/section/$sectionIndex/layout': typeof ModulesProviderModuleIdFormProviderEditSectionSectionIndexLayoutRoute
     '/modules/$moduleId/edit/section/$sectionIndex': typeof ModulesProviderModuleIdFormProviderEditSectionSectionIndexIndexRoute
     '/modules/$moduleId/edit/static/$itemId': typeof ModulesProviderModuleIdFormProviderEditStaticItemIdIndexRoute
@@ -270,17 +176,13 @@ export interface FileRoutesByTo {
     '/configuration': typeof ConfigurationIndexRoute
     '/modules': typeof ModulesProviderIndexRoute
     '/appearance': typeof AppearanceProviderIndexLazyRoute
-    '/data-service-configuration': typeof DataServiceConfigurationProviderIndexLazyRoute
     '/general': typeof GeneralProviderIndexLazyRoute
     '/menu': typeof MenuProviderIndexLazyRoute
     '/modules/$moduleId': typeof ModulesProviderModuleIdFormProviderRouteWithChildren
-    '/data-service-configuration/$configId': typeof DataServiceConfigurationProviderConfigIdProviderIndexLazyRoute
-    '/data-service-configuration/$configId/validation-logs': typeof DataServiceConfigurationProviderConfigIdValidationLogsIndexLazyRoute
     '/modules/$moduleId/edit/layout': typeof ModulesProviderModuleIdFormProviderEditLayoutRoute
     '/modules/$moduleId/edit': typeof ModulesProviderModuleIdFormProviderEditIndexLazyRoute
     '/modules/$moduleId/edit/$groupIndex/layout': typeof ModulesProviderModuleIdFormProviderEditGroupIndexLayoutRoute
     '/modules/$moduleId/edit/$groupIndex': typeof ModulesProviderModuleIdFormProviderEditGroupIndexIndexRoute
-    '/data-service-configuration/$configId/edit': typeof DataServiceConfigurationProviderConfigIdProviderEditProviderIndexLazyRoute
     '/modules/$moduleId/edit/section/$sectionIndex/layout': typeof ModulesProviderModuleIdFormProviderEditSectionSectionIndexLayoutRoute
     '/modules/$moduleId/edit/section/$sectionIndex': typeof ModulesProviderModuleIdFormProviderEditSectionSectionIndexIndexRoute
     '/modules/$moduleId/edit/static/$itemId': typeof ModulesProviderModuleIdFormProviderEditStaticItemIdIndexRoute
@@ -289,26 +191,19 @@ export interface FileRoutesById {
     __root__: typeof rootRouteImport
     '/': typeof IndexLazyRoute
     '/appearance/_provider': typeof AppearanceProviderRouteWithChildren
-    '/data-service-configuration/_provider': typeof DataServiceConfigurationProviderRouteWithChildren
     '/general/_provider': typeof GeneralProviderRouteWithChildren
     '/menu/_provider': typeof MenuProviderRouteWithChildren
     '/modules/_provider': typeof ModulesProviderRouteWithChildren
     '/configuration/': typeof ConfigurationIndexRoute
     '/modules/_provider/': typeof ModulesProviderIndexRoute
     '/appearance/_provider/': typeof AppearanceProviderIndexLazyRoute
-    '/data-service-configuration/_provider/': typeof DataServiceConfigurationProviderIndexLazyRoute
     '/general/_provider/': typeof GeneralProviderIndexLazyRoute
     '/menu/_provider/': typeof MenuProviderIndexLazyRoute
-    '/data-service-configuration/_provider/$configId/_provider': typeof DataServiceConfigurationProviderConfigIdProviderRouteWithChildren
     '/modules/_provider/$moduleId/_formProvider': typeof ModulesProviderModuleIdFormProviderRouteWithChildren
-    '/data-service-configuration/_provider/$configId/_provider/': typeof DataServiceConfigurationProviderConfigIdProviderIndexLazyRoute
-    '/data-service-configuration/_provider/$configId/validation-logs/': typeof DataServiceConfigurationProviderConfigIdValidationLogsIndexLazyRoute
-    '/data-service-configuration/_provider/$configId/_provider/edit/_provider': typeof DataServiceConfigurationProviderConfigIdProviderEditProviderRouteWithChildren
     '/modules/_provider/$moduleId/_formProvider/edit/layout': typeof ModulesProviderModuleIdFormProviderEditLayoutRoute
     '/modules/_provider/$moduleId/_formProvider/edit/': typeof ModulesProviderModuleIdFormProviderEditIndexLazyRoute
     '/modules/_provider/$moduleId/_formProvider/edit/$groupIndex/layout': typeof ModulesProviderModuleIdFormProviderEditGroupIndexLayoutRoute
     '/modules/_provider/$moduleId/_formProvider/edit/$groupIndex/': typeof ModulesProviderModuleIdFormProviderEditGroupIndexIndexRoute
-    '/data-service-configuration/_provider/$configId/_provider/edit/_provider/': typeof DataServiceConfigurationProviderConfigIdProviderEditProviderIndexLazyRoute
     '/modules/_provider/$moduleId/_formProvider/edit/section/$sectionIndex/layout': typeof ModulesProviderModuleIdFormProviderEditSectionSectionIndexLayoutRoute
     '/modules/_provider/$moduleId/_formProvider/edit/section/$sectionIndex/': typeof ModulesProviderModuleIdFormProviderEditSectionSectionIndexIndexRoute
     '/modules/_provider/$moduleId/_formProvider/edit/static/$itemId/': typeof ModulesProviderModuleIdFormProviderEditStaticItemIdIndexRoute
@@ -318,26 +213,19 @@ export interface FileRouteTypes {
     fullPaths:
         | '/'
         | '/appearance'
-        | '/data-service-configuration'
         | '/general'
         | '/menu'
         | '/modules'
         | '/configuration'
         | '/modules/'
         | '/appearance/'
-        | '/data-service-configuration/'
         | '/general/'
         | '/menu/'
-        | '/data-service-configuration/$configId'
         | '/modules/$moduleId'
-        | '/data-service-configuration/$configId/'
-        | '/data-service-configuration/$configId/validation-logs'
-        | '/data-service-configuration/$configId/edit'
         | '/modules/$moduleId/edit/layout'
         | '/modules/$moduleId/edit'
         | '/modules/$moduleId/edit/$groupIndex/layout'
         | '/modules/$moduleId/edit/$groupIndex'
-        | '/data-service-configuration/$configId/edit/'
         | '/modules/$moduleId/edit/section/$sectionIndex/layout'
         | '/modules/$moduleId/edit/section/$sectionIndex'
         | '/modules/$moduleId/edit/static/$itemId'
@@ -347,17 +235,13 @@ export interface FileRouteTypes {
         | '/configuration'
         | '/modules'
         | '/appearance'
-        | '/data-service-configuration'
         | '/general'
         | '/menu'
         | '/modules/$moduleId'
-        | '/data-service-configuration/$configId'
-        | '/data-service-configuration/$configId/validation-logs'
         | '/modules/$moduleId/edit/layout'
         | '/modules/$moduleId/edit'
         | '/modules/$moduleId/edit/$groupIndex/layout'
         | '/modules/$moduleId/edit/$groupIndex'
-        | '/data-service-configuration/$configId/edit'
         | '/modules/$moduleId/edit/section/$sectionIndex/layout'
         | '/modules/$moduleId/edit/section/$sectionIndex'
         | '/modules/$moduleId/edit/static/$itemId'
@@ -365,26 +249,19 @@ export interface FileRouteTypes {
         | '__root__'
         | '/'
         | '/appearance/_provider'
-        | '/data-service-configuration/_provider'
         | '/general/_provider'
         | '/menu/_provider'
         | '/modules/_provider'
         | '/configuration/'
         | '/modules/_provider/'
         | '/appearance/_provider/'
-        | '/data-service-configuration/_provider/'
         | '/general/_provider/'
         | '/menu/_provider/'
-        | '/data-service-configuration/_provider/$configId/_provider'
         | '/modules/_provider/$moduleId/_formProvider'
-        | '/data-service-configuration/_provider/$configId/_provider/'
-        | '/data-service-configuration/_provider/$configId/validation-logs/'
-        | '/data-service-configuration/_provider/$configId/_provider/edit/_provider'
         | '/modules/_provider/$moduleId/_formProvider/edit/layout'
         | '/modules/_provider/$moduleId/_formProvider/edit/'
         | '/modules/_provider/$moduleId/_formProvider/edit/$groupIndex/layout'
         | '/modules/_provider/$moduleId/_formProvider/edit/$groupIndex/'
-        | '/data-service-configuration/_provider/$configId/_provider/edit/_provider/'
         | '/modules/_provider/$moduleId/_formProvider/edit/section/$sectionIndex/layout'
         | '/modules/_provider/$moduleId/_formProvider/edit/section/$sectionIndex/'
         | '/modules/_provider/$moduleId/_formProvider/edit/static/$itemId/'
@@ -393,7 +270,6 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
     IndexLazyRoute: typeof IndexLazyRoute
     AppearanceProviderRoute: typeof AppearanceProviderRouteWithChildren
-    DataServiceConfigurationProviderRoute: typeof DataServiceConfigurationProviderRouteWithChildren
     GeneralProviderRoute: typeof GeneralProviderRouteWithChildren
     MenuProviderRoute: typeof MenuProviderRouteWithChildren
     ModulesProviderRoute: typeof ModulesProviderRouteWithChildren
@@ -437,13 +313,6 @@ declare module '@tanstack/react-router' {
             preLoaderRoute: typeof GeneralProviderRouteImport
             parentRoute: typeof rootRouteImport
         }
-        '/data-service-configuration/_provider': {
-            id: '/data-service-configuration/_provider'
-            path: '/data-service-configuration'
-            fullPath: '/data-service-configuration'
-            preLoaderRoute: typeof DataServiceConfigurationProviderRouteImport
-            parentRoute: typeof rootRouteImport
-        }
         '/appearance/_provider': {
             id: '/appearance/_provider'
             path: '/appearance'
@@ -464,13 +333,6 @@ declare module '@tanstack/react-router' {
             fullPath: '/general/'
             preLoaderRoute: typeof GeneralProviderIndexLazyRouteImport
             parentRoute: typeof GeneralProviderRoute
-        }
-        '/data-service-configuration/_provider/': {
-            id: '/data-service-configuration/_provider/'
-            path: '/'
-            fullPath: '/data-service-configuration/'
-            preLoaderRoute: typeof DataServiceConfigurationProviderIndexLazyRouteImport
-            parentRoute: typeof DataServiceConfigurationProviderRoute
         }
         '/appearance/_provider/': {
             id: '/appearance/_provider/'
@@ -493,27 +355,6 @@ declare module '@tanstack/react-router' {
             preLoaderRoute: typeof ModulesProviderModuleIdFormProviderRouteImport
             parentRoute: typeof ModulesProviderRoute
         }
-        '/data-service-configuration/_provider/$configId/_provider': {
-            id: '/data-service-configuration/_provider/$configId/_provider'
-            path: '/$configId'
-            fullPath: '/data-service-configuration/$configId'
-            preLoaderRoute: typeof DataServiceConfigurationProviderConfigIdProviderRouteImport
-            parentRoute: typeof DataServiceConfigurationProviderRoute
-        }
-        '/data-service-configuration/_provider/$configId/validation-logs/': {
-            id: '/data-service-configuration/_provider/$configId/validation-logs/'
-            path: '/$configId/validation-logs'
-            fullPath: '/data-service-configuration/$configId/validation-logs'
-            preLoaderRoute: typeof DataServiceConfigurationProviderConfigIdValidationLogsIndexLazyRouteImport
-            parentRoute: typeof DataServiceConfigurationProviderRoute
-        }
-        '/data-service-configuration/_provider/$configId/_provider/': {
-            id: '/data-service-configuration/_provider/$configId/_provider/'
-            path: '/'
-            fullPath: '/data-service-configuration/$configId/'
-            preLoaderRoute: typeof DataServiceConfigurationProviderConfigIdProviderIndexLazyRouteImport
-            parentRoute: typeof DataServiceConfigurationProviderConfigIdProviderRoute
-        }
         '/modules/_provider/$moduleId/_formProvider/edit/': {
             id: '/modules/_provider/$moduleId/_formProvider/edit/'
             path: '/edit'
@@ -527,20 +368,6 @@ declare module '@tanstack/react-router' {
             fullPath: '/modules/$moduleId/edit/layout'
             preLoaderRoute: typeof ModulesProviderModuleIdFormProviderEditLayoutRouteImport
             parentRoute: typeof ModulesProviderModuleIdFormProviderRoute
-        }
-        '/data-service-configuration/_provider/$configId/_provider/edit/_provider': {
-            id: '/data-service-configuration/_provider/$configId/_provider/edit/_provider'
-            path: '/edit'
-            fullPath: '/data-service-configuration/$configId/edit'
-            preLoaderRoute: typeof DataServiceConfigurationProviderConfigIdProviderEditProviderRouteImport
-            parentRoute: typeof DataServiceConfigurationProviderConfigIdProviderRoute
-        }
-        '/data-service-configuration/_provider/$configId/_provider/edit/_provider/': {
-            id: '/data-service-configuration/_provider/$configId/_provider/edit/_provider/'
-            path: '/'
-            fullPath: '/data-service-configuration/$configId/edit/'
-            preLoaderRoute: typeof DataServiceConfigurationProviderConfigIdProviderEditProviderIndexLazyRouteImport
-            parentRoute: typeof DataServiceConfigurationProviderConfigIdProviderEditProviderRoute
         }
         '/modules/_provider/$moduleId/_formProvider/edit/$groupIndex/': {
             id: '/modules/_provider/$moduleId/_formProvider/edit/$groupIndex/'
@@ -590,60 +417,6 @@ const AppearanceProviderRouteChildren: AppearanceProviderRouteChildren = {
 
 const AppearanceProviderRouteWithChildren =
     AppearanceProviderRoute._addFileChildren(AppearanceProviderRouteChildren)
-
-interface DataServiceConfigurationProviderConfigIdProviderEditProviderRouteChildren {
-    DataServiceConfigurationProviderConfigIdProviderEditProviderIndexLazyRoute: typeof DataServiceConfigurationProviderConfigIdProviderEditProviderIndexLazyRoute
-}
-
-const DataServiceConfigurationProviderConfigIdProviderEditProviderRouteChildren: DataServiceConfigurationProviderConfigIdProviderEditProviderRouteChildren =
-    {
-        DataServiceConfigurationProviderConfigIdProviderEditProviderIndexLazyRoute:
-            DataServiceConfigurationProviderConfigIdProviderEditProviderIndexLazyRoute,
-    }
-
-const DataServiceConfigurationProviderConfigIdProviderEditProviderRouteWithChildren =
-    DataServiceConfigurationProviderConfigIdProviderEditProviderRoute._addFileChildren(
-        DataServiceConfigurationProviderConfigIdProviderEditProviderRouteChildren
-    )
-
-interface DataServiceConfigurationProviderConfigIdProviderRouteChildren {
-    DataServiceConfigurationProviderConfigIdProviderIndexLazyRoute: typeof DataServiceConfigurationProviderConfigIdProviderIndexLazyRoute
-    DataServiceConfigurationProviderConfigIdProviderEditProviderRoute: typeof DataServiceConfigurationProviderConfigIdProviderEditProviderRouteWithChildren
-}
-
-const DataServiceConfigurationProviderConfigIdProviderRouteChildren: DataServiceConfigurationProviderConfigIdProviderRouteChildren =
-    {
-        DataServiceConfigurationProviderConfigIdProviderIndexLazyRoute:
-            DataServiceConfigurationProviderConfigIdProviderIndexLazyRoute,
-        DataServiceConfigurationProviderConfigIdProviderEditProviderRoute:
-            DataServiceConfigurationProviderConfigIdProviderEditProviderRouteWithChildren,
-    }
-
-const DataServiceConfigurationProviderConfigIdProviderRouteWithChildren =
-    DataServiceConfigurationProviderConfigIdProviderRoute._addFileChildren(
-        DataServiceConfigurationProviderConfigIdProviderRouteChildren
-    )
-
-interface DataServiceConfigurationProviderRouteChildren {
-    DataServiceConfigurationProviderIndexLazyRoute: typeof DataServiceConfigurationProviderIndexLazyRoute
-    DataServiceConfigurationProviderConfigIdProviderRoute: typeof DataServiceConfigurationProviderConfigIdProviderRouteWithChildren
-    DataServiceConfigurationProviderConfigIdValidationLogsIndexLazyRoute: typeof DataServiceConfigurationProviderConfigIdValidationLogsIndexLazyRoute
-}
-
-const DataServiceConfigurationProviderRouteChildren: DataServiceConfigurationProviderRouteChildren =
-    {
-        DataServiceConfigurationProviderIndexLazyRoute:
-            DataServiceConfigurationProviderIndexLazyRoute,
-        DataServiceConfigurationProviderConfigIdProviderRoute:
-            DataServiceConfigurationProviderConfigIdProviderRouteWithChildren,
-        DataServiceConfigurationProviderConfigIdValidationLogsIndexLazyRoute:
-            DataServiceConfigurationProviderConfigIdValidationLogsIndexLazyRoute,
-    }
-
-const DataServiceConfigurationProviderRouteWithChildren =
-    DataServiceConfigurationProviderRoute._addFileChildren(
-        DataServiceConfigurationProviderRouteChildren
-    )
 
 interface GeneralProviderRouteChildren {
     GeneralProviderIndexLazyRoute: typeof GeneralProviderIndexLazyRoute
@@ -720,8 +493,6 @@ const ModulesProviderRouteWithChildren = ModulesProviderRoute._addFileChildren(
 const rootRouteChildren: RootRouteChildren = {
     IndexLazyRoute: IndexLazyRoute,
     AppearanceProviderRoute: AppearanceProviderRouteWithChildren,
-    DataServiceConfigurationProviderRoute:
-        DataServiceConfigurationProviderRouteWithChildren,
     GeneralProviderRoute: GeneralProviderRouteWithChildren,
     MenuProviderRoute: MenuProviderRouteWithChildren,
     ModulesProviderRoute: ModulesProviderRouteWithChildren,
