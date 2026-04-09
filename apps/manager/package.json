@@ -38,7 +38,7 @@
         "tailwind": "4",
         "tailwindcss": "4",
         "typescript": "5.6.3",
-        "vite": "~7.2.1"
+        "vite": "^8.0.8"
     },
     "dependencies": {
         "@dhis2/app-runtime": "^3.16.0",
@@ -69,9 +69,9 @@
         "leaflet": "^1.9.4",
         "lodash": "^4.17.23",
         "luxon": "^3.7.2",
-        "react": "19.2.4",
+        "react": "19.2.5",
         "react-countup": "^6.5.3",
-        "react-dom": "19.2.4",
+        "react-dom": "19.2.5",
         "react-error-boundary": "^6.0.0",
         "react-full-screen": "^1.1.1",
         "react-grid-layout": "^2.2.2",
