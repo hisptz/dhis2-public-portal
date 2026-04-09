@@ -68,7 +68,7 @@
     "repository": {
         "url": "git@github.com:hisptz/dhis2-public-portal.git"
     },
-    "version": "1.5.4",
+    "version": "1.5.5",
     "lint-staged": {
         "**/*.{js,jsx,ts,tsx,json,css,md,yml,mjs,mts}": [
             "eslint --fix",
