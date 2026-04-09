@@ -5,17 +5,7 @@ import tailwindcss from '@tailwindcss/vite'
 const viteConfig = defineConfig(async (configEnv) => {
     const { mode } = configEnv
     return {
-        plugins: [
-            // tanstackRouter({
-            //     target: 'react',
-            //     autoCodeSplitting: true,
-            //     routesDirectory: '../../src/modules',
-            //     generatedRouteTree: '../../src/routeTree.gen.ts',
-            //     verboseFileRoutes: true,
-            //     enableRouteGeneration: true,
-            // }),
-            tailwindcss(),
-        ],
+        plugins: [tailwindcss()],
         // In dev environments, don't clear the terminal after files update
         clearScreen: mode !== 'development',
         // Use an import alias: import from '@/' anywhere instead of 'src/'

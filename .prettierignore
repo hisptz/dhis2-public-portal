@@ -15,9 +15,7 @@ sketch
 
 # DHIS2_INSTANCE Platform
 apps/manager/.d2
-services/data-service/app
-services/data-service/bundle
-services/data-service/outputs
+apps/manager/src/routeTree.gen.ts
 
 
 src/locales
