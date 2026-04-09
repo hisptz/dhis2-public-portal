@@ -2,7 +2,7 @@ import i18n from '@dhis2/d2-i18n'
 import { RHFSingleSelectField } from '@hisptz/dhis2-ui'
 
 import { SectionDisplay, SectionType } from '@packages/shared/schemas'
-import { startCase } from 'lodash'
+import { startCase } from 'lodash-es'
 
 export function SectionTypeSelector({
     displayType,

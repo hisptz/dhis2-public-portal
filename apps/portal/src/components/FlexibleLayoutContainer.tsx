@@ -6,7 +6,7 @@ import {
 import { FlexibleLayoutConfig } from '@packages/shared/schemas'
 import { Container } from '@mantine/core'
 
-import { fromPairs } from 'lodash'
+import { fromPairs } from 'lodash-es'
 import {
     ScreenSizeId,
     SUPPORTED_SCREEN_SIZES,

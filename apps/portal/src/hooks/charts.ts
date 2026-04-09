@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { useDataQuery } from '@dhis2/app-runtime'
 import { PeriodTypeCategory, PeriodUtility } from '@hisptz/dhis2-utils'
-import { snakeCase } from 'lodash'
+import { snakeCase } from 'lodash-es'
 import { DateTime, Interval } from 'luxon'
 
 import {

@@ -1,5 +1,5 @@
 import i18n from '@dhis2/d2-i18n'
-import { fromPairs } from 'lodash'
+import { fromPairs } from 'lodash-es'
 
 export type ScreenSizeId = 'sm' | 'md' | 'lg'
 

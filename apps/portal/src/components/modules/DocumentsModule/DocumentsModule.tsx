@@ -2,7 +2,7 @@ import { Stack, Title } from '@mantine/core'
 import { DocumentsItemsContainer } from '@/components/modules/DocumentsModule/components/DocumentsItemsContainer'
 import { DocumentsModuleConfig } from '@packages/shared/schemas'
 import { DocumentsGroupControl } from '@/components/modules/DocumentsModule/components/DocumentsGroupControl'
-import { isEmpty } from 'lodash'
+import { isEmpty } from 'lodash-es'
 
 export function DocumentsModule({
     config,

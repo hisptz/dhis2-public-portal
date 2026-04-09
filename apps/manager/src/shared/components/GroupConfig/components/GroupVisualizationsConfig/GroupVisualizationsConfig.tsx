@@ -11,7 +11,7 @@ import {
     VisualizationModule,
 } from '@packages/shared/schemas'
 import { VisualizationNameResolver } from '@/shared/components/VisualizationNameResolver'
-import { capitalize } from 'lodash'
+import { capitalize } from 'lodash-es'
 
 export function GroupVisualizationsConfig() {
     const { moduleId, groupIndex } = useParams({

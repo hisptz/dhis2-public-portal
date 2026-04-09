@@ -2,7 +2,7 @@ import { RHFSingleSelectField, RHFTextInputField } from '@hisptz/dhis2-ui'
 import i18n from '@dhis2/d2-i18n'
 import { useSectionNamePrefix } from '../hooks/route'
 import { SectionType } from '@packages/shared/schemas'
-import { startCase } from 'lodash'
+import { startCase } from 'lodash-es'
 
 export function SectionGeneralConfig() {
     const namePrefix = useSectionNamePrefix()

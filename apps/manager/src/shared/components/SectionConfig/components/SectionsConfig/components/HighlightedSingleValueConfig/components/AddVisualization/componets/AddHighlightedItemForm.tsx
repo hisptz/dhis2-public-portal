@@ -20,7 +20,7 @@ import {
 } from '@packages/shared/schemas'
 import { z } from 'zod'
 import { RHFIconInput } from '../../../../../../../../Fields/RHFIconInput'
-import { set } from 'lodash'
+import { set } from 'lodash-es'
 import { useDataEngine } from '@dhis2/app-runtime'
 import { useManageDocument } from '../../../../../../../../../hooks/document'
 

@@ -21,7 +21,7 @@ import { SectionIDField } from './SectionIDField'
 import { FetchError, useAlert } from '@dhis2/app-runtime'
 import { SectionTypeSelector } from './SectionTypeSelector'
 import { getDefaultLayoutConfig } from '@packages/shared/constants'
-import { set } from 'lodash'
+import { set } from 'lodash-es'
 
 export function AddSectionForm({
     sortOrder,

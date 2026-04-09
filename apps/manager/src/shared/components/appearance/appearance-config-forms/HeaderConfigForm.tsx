@@ -39,7 +39,7 @@ import { TitleConfig } from './components/AdvancedHeaderConfig/components/TitleC
 import { zodResolver } from '@hookform/resolvers/zod'
 import { HeaderStyleConfig } from './components/AdvancedHeaderConfig/components/HeaderStyleConfig'
 import { useManageDocument } from '../../../hooks/document'
-import { isEmpty, set } from 'lodash'
+import { isEmpty, set } from 'lodash-es'
 
 type props = {
     configurations: AppAppearanceConfig

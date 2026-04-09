@@ -4,7 +4,7 @@ import { Divider } from '@dhis2/ui'
 import { DisplayItemType } from '@packages/shared/schemas'
 
 import { RHFSingleSelectField } from '@hisptz/dhis2-ui'
-import { startCase } from 'lodash'
+import { startCase } from 'lodash-es'
 import { useSectionNamePrefix } from '../../../hooks/route'
 import { SingleItemDisplayItemSelector } from '../../../../SectionModule/components/SingleItemDisplayItemSelector'
 

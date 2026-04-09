@@ -1,4 +1,4 @@
-import { last } from 'lodash'
+import { last } from 'lodash-es'
 import { getAppModule } from '@/utils/module'
 import { SectionModule } from '@/components/modules/SectionModule/SectionModule'
 import { ModuleType } from '@packages/shared/schemas'

@@ -8,7 +8,7 @@ import {
     VisualizationItem,
     VisualizationModule,
 } from '@packages/shared/schemas'
-import { isEmpty, last, mapValues } from 'lodash'
+import { isEmpty, last, mapValues } from 'lodash-es'
 import { useAlert } from '@dhis2/app-runtime'
 import {
     getDefaultLayoutConfig,

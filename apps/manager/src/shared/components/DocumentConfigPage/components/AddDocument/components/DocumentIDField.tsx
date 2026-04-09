@@ -3,7 +3,7 @@ import { DocumentsModule } from '@packages/shared/schemas'
 import i18n from '@dhis2/d2-i18n'
 import { RHFTextInputField } from '@hisptz/dhis2-ui'
 import { useEffect } from 'react'
-import { kebabCase } from 'lodash'
+import { kebabCase } from 'lodash-es'
 
 export function DocumentIDField() {
     const { setValue } = useFormContext<DocumentsModule>()

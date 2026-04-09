@@ -4,7 +4,7 @@ import {
     SectionType,
 } from '@packages/shared/schemas'
 import { appMenus } from '../../src/shared/constants/menu'
-import { capitalize, startCase } from 'lodash'
+import { capitalize, startCase } from 'lodash-es'
 import 'cypress-file-upload'
 
 describe('Modules Page', () => {

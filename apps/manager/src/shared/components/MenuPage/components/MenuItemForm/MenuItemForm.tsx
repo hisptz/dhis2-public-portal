@@ -24,7 +24,7 @@ import { z } from 'zod'
 import { useDataEngine } from '@dhis2/app-runtime'
 import { RHFIconInput } from '../../../Fields/RHFIconInput'
 import { useManageDocument } from '../../../../hooks/document'
-import { set } from 'lodash'
+import { set } from 'lodash-es'
 import { useMenuConfig } from '../../providers/MenuProvider'
 
 export interface MenuItemFormProps {

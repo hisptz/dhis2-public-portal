@@ -2,7 +2,7 @@ import {
     AnalyticsData,
     bannerVisualizationItem as BannerVisualizationType,
 } from '@packages/shared/schemas'
-import { find, findIndex } from 'lodash'
+import { find, findIndex } from 'lodash-es'
 import { SingleValue } from '@hisptz/dhis2-analytics'
 import { mainColors } from '@packages/shared/constants'
 import { useMemo } from 'react'

@@ -5,7 +5,7 @@ import { ButtonStrip, Field } from '@dhis2/ui'
 import i18n from '@dhis2/d2-i18n'
 import { SubMenuItem } from './SubMenuItem'
 import { AddSubMenuItem } from './AddSubMenuItem'
-import { isEmpty } from 'lodash'
+import { isEmpty } from 'lodash-es'
 import { RHFTextInputField } from '@hisptz/dhis2-ui'
 import { MenuPathInput } from './MenuPathInput'
 

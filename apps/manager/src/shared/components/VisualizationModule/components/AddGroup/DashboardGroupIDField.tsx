@@ -2,7 +2,7 @@ import { useFormContext, useWatch } from 'react-hook-form'
 import i18n from '@dhis2/d2-i18n'
 import { RHFTextInputField } from '@hisptz/dhis2-ui'
 import { useEffect } from 'react'
-import { kebabCase } from 'lodash'
+import { kebabCase } from 'lodash-es'
 import { VisualizationGroup } from '@packages/shared/schemas'
 
 export function DashboardGroupIDField() {

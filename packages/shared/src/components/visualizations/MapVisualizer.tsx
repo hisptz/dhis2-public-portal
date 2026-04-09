@@ -8,7 +8,7 @@ import {
 import { Map as LeafletMap } from 'leaflet'
 import { MapConfig, MapLayerType } from '../../schemas'
 import { memo, useMemo } from 'react'
-import { forEach, head, isEmpty, set } from 'lodash'
+import { forEach, head, isEmpty, set } from 'lodash-es'
 import { OrgUnitSelection } from '@hisptz/dhis2-utils'
 
 export interface MapViewProps {

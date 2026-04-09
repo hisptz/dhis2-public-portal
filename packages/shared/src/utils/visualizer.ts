@@ -12,7 +12,7 @@ import {
     fromPairs,
     get,
     isEmpty,
-} from 'lodash'
+} from 'lodash-es'
 import { ChartType } from '@hisptz/dhis2-analytics'
 import { LegendSet } from '@hisptz/dhis2-utils'
 

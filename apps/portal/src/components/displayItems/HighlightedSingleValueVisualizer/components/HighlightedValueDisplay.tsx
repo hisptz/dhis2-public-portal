@@ -1,6 +1,6 @@
 import { VisualizationConfig } from '@packages/shared/schemas'
 import { dhis2HttpClient } from '@/utils/api/dhis2'
-import { findIndex, head } from 'lodash'
+import { findIndex, head } from 'lodash-es'
 import { getPeriods } from '@packages/shared/utils'
 import { NumberFormatter, Title } from '@mantine/core'
 import { getAppearanceConfig } from '@/utils/config/appConfig'

@@ -15,7 +15,7 @@ import {
     useContainerWidth,
     verticalCompactor,
 } from 'react-grid-layout'
-import { debounce, fromPairs } from 'lodash'
+import { debounce, fromPairs } from 'lodash-es'
 import {
     VisualizationItem,
     VisualizationModule,

@@ -7,7 +7,7 @@ import {
 } from '@dhis2/multi-calendar-dates'
 import i18n from '@dhis2/d2-i18n'
 import { SelectInputField } from './SelectInputField'
-import { first, intersectionBy, isEmpty } from 'lodash'
+import { first, intersectionBy, isEmpty } from 'lodash-es'
 import { YearInputField } from './YearInputField'
 
 export function CustomPeriodModal({

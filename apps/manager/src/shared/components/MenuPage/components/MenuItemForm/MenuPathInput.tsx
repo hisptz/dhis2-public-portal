@@ -1,7 +1,7 @@
 import { useFormContext, useWatch } from 'react-hook-form'
 import { MenuItem } from '@packages/shared/schemas'
 import { useEffect } from 'react'
-import { kebabCase } from 'lodash'
+import { kebabCase } from 'lodash-es'
 import { RHFTextInputField } from '@hisptz/dhis2-ui'
 import i18n from '@dhis2/d2-i18n'
 

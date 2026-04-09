@@ -5,7 +5,7 @@ import {
 } from '@dhis2/ui'
 
 import { RegisterOptions, useController } from 'react-hook-form'
-import { isEmpty } from 'lodash'
+import { isEmpty } from 'lodash-es'
 
 export type RHFMultiSelectFieldProps = MultiSelectFieldProps & {
     name: string

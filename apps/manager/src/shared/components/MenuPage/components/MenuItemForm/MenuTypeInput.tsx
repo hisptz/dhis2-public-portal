@@ -1,7 +1,7 @@
 import { Field, Radio } from '@dhis2/ui'
 
 import { MenuItem, MenuItemType } from '@packages/shared/schemas'
-import { capitalize, snakeCase } from 'lodash'
+import { capitalize, snakeCase } from 'lodash-es'
 import { useController } from 'react-hook-form'
 import i18n from '@dhis2/d2-i18n'
 

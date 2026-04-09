@@ -10,7 +10,7 @@ import { HighlightedValueDisplay } from '@/components/displayItems/HighlightedSi
 import NextImage from 'next/image'
 import { getServerImageUrl } from '@/utils/server/images'
 import { getDataVisualization } from '@/components/displayItems/visualizations/DataVisualization'
-import { find } from 'lodash'
+import { find } from 'lodash-es'
 import { PeriodUtility } from '@hisptz/dhis2-utils'
 
 export async function HighlightedSingleValueContainer({

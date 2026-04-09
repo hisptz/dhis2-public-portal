@@ -2,7 +2,7 @@ import { SectionDisplay, SectionModuleConfig } from '@packages/shared/schemas'
 import { Box, SimpleGrid, Stack, Text } from '@mantine/core'
 import { SectionTitle } from '@/components/modules/SectionModule/components/SectionTitle'
 import { SectionDisplaySelector } from '@/components/modules/SectionModule/components/SectionDisplaySelector'
-import { isEmpty } from 'lodash'
+import { isEmpty } from 'lodash-es'
 
 export function SectionModule({ config }: { config: SectionModuleConfig }) {
     const isHorizontal = config.sectionDisplay === SectionDisplay.HORIZONTAL

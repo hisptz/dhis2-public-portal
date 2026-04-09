@@ -1,7 +1,7 @@
 import { RHFSingleSelectField } from '@hisptz/dhis2-ui'
 import i18n from '@dhis2/d2-i18n'
 import { ModuleType } from '@packages/shared/schemas'
-import { startCase } from 'lodash'
+import { startCase } from 'lodash-es'
 
 export function ModuleTypeSelector() {
     return (
