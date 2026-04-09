@@ -5,8 +5,8 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
-"POT-Creation-Date: 2026-04-09T04:53:16.230Z\n"
-"PO-Revision-Date: 2026-04-09T04:53:16.231Z\n"
+"POT-Creation-Date: 2026-04-09T16:42:05.475Z\n"
+"PO-Revision-Date: 2026-04-09T16:42:05.476Z\n"
 
 msgid "Could not get Appearance configurations"
 msgstr "Could not get Appearance configurations"
@@ -82,24 +82,6 @@ msgstr "Edit visualization"
 
 msgid "Remove visualization"
 msgstr "Remove visualization"
-
-msgid "Loading sources"
-msgstr "Loading sources"
-
-msgid "Loading organisation unit levels..."
-msgstr "Loading organisation unit levels..."
-
-msgid "Failed"
-msgstr "Failed"
-
-msgid "Configuration items"
-msgstr "Configuration items"
-
-msgid "Select all"
-msgstr "Select all"
-
-msgid "Clear selection"
-msgstr "Clear selection"
 
 msgid "Add document"
 msgstr "Add document"
@@ -587,6 +569,15 @@ msgstr "Preview module"
 
 msgid "Could not save changes"
 msgstr "Could not save changes"
+
+msgid "Loading sources"
+msgstr "Loading sources"
+
+msgid "Loading organisation unit levels..."
+msgstr "Loading organisation unit levels..."
+
+msgid "Failed"
+msgstr "Failed"
 
 msgid "Section"
 msgstr "Section"

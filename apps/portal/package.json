@@ -15,11 +15,11 @@
         "format:check": "prettier --check ."
     },
     "dependencies": {
-        "@dhis2/app-runtime": "^3.16.0",
+        "@dhis2/app-runtime": "3.16.0",
         "@dhis2/multi-calendar-dates": "^2.1.0",
         "@dhis2/ui": "^10.5.1",
-        "@hisptz/dhis2-analytics": "^2.1.34",
-        "@hisptz/dhis2-ui": "^2.0.51",
+        "@hisptz/dhis2-analytics": "^2.1.35",
+        "@hisptz/dhis2-ui": "^2.0.52",
         "@hisptz/dhis2-utils": "^2.0.19",
         "@hookform/resolvers": "5.1.0",
         "@mantine/colors-generator": "^7.17.5",
@@ -40,7 +40,7 @@
         "jszip": "^3.10.1",
         "leaflet": "^1.9.4",
         "leaflet-easyprint": "^2.1.9",
-        "lodash": "^4.17.23",
+        "lodash": "^4.18.1",
         "luxon": "^3.7.2",
         "mammoth": "^1.11.0",
         "manager": "^1.0.9",
