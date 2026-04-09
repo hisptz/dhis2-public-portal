@@ -27,6 +27,7 @@
         "xlsx": ">=0.18.5",
         "react-jsx-parser": ">=2",
         "lodash-es": ">=4.18.1",
+        "luxon": ">=3",
         "usehooks-ts": ">=3",
         "zod": ">=3"
     },
