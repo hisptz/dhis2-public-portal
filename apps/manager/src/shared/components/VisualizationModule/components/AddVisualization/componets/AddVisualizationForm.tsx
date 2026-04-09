@@ -21,11 +21,11 @@ import {
     visualizationItemSchema,
 } from '@packages/shared/schemas'
 import { RHFTextAreaField } from '../../../../Fields/RHFTextAreaField'
-import { MultiOrgUnitLevelSelector } from '@/shared/components/DataConfiguration/components/DataItemsConfig/components/AddDataItemConfig/components/MultiOrgUnitLevelSelector'
 import { DimensionPeriodCategorySelector } from '../../DimensionPeriodCategorySelector'
 import { DimensionPeriodSelector } from '../../DimensionPeriodSelector'
 import { DimensionPeriodTypeSelector } from '../../DimensionPeriodTypeSelector'
 import { RHFMultiOrgUnitFieldSelector } from '../../RHFMultiOrgUnitFieldSelector'
+import { MultiOrgUnitLevelSelector } from '@/shared/components/MultiOrgUnitLevelSelector'
 
 export function AddVisualizationForm({
     visualization,

@@ -10,8 +10,8 @@ import { RHFTextAreaField } from '../../Fields/RHFTextAreaField'
 import { DimensionPeriodSelector } from './DimensionPeriodSelector'
 import { DimensionPeriodTypeSelector } from './DimensionPeriodTypeSelector'
 import { RHFMultiOrgUnitFieldSelector } from './RHFMultiOrgUnitFieldSelector'
-import { MultiOrgUnitLevelSelector } from '../../DataConfiguration/components/DataItemsConfig/components/AddDataItemConfig/components/MultiOrgUnitLevelSelector'
 import { DimensionPeriodCategorySelector } from './DimensionPeriodCategorySelector'
+import { MultiOrgUnitLevelSelector } from '@/shared/components/MultiOrgUnitLevelSelector'
 
 export function DashboardGeneralConfig() {
     const { field, fieldState } = useController<

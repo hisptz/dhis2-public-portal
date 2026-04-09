@@ -5,8 +5,8 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
-"POT-Creation-Date: 2026-04-09T04:42:13.152Z\n"
-"PO-Revision-Date: 2026-04-09T04:42:13.152Z\n"
+"POT-Creation-Date: 2026-04-09T04:53:16.230Z\n"
+"PO-Revision-Date: 2026-04-09T04:53:16.231Z\n"
 
 msgid "Could not get Appearance configurations"
 msgstr "Could not get Appearance configurations"
@@ -77,8 +77,29 @@ msgstr "No logs yet. Perform an action to see logs here."
 msgid "Detail"
 msgstr "Detail"
 
+msgid "Edit visualization"
+msgstr "Edit visualization"
+
 msgid "Remove visualization"
 msgstr "Remove visualization"
+
+msgid "Loading sources"
+msgstr "Loading sources"
+
+msgid "Loading organisation unit levels..."
+msgstr "Loading organisation unit levels..."
+
+msgid "Failed"
+msgstr "Failed"
+
+msgid "Configuration items"
+msgstr "Configuration items"
+
+msgid "Select all"
+msgstr "Select all"
+
+msgid "Clear selection"
+msgstr "Clear selection"
 
 msgid "Add document"
 msgstr "Add document"
@@ -732,8 +753,54 @@ msgstr "Add a new visualization"
 msgid "{{action}} visualization"
 msgstr "{{action}} visualization"
 
-msgid "Edit visualization"
-msgstr "Edit visualization"
+msgid "Enable to restrict which periods users can select."
+msgstr "Enable to restrict which periods users can select."
+
+msgid "Limit period selections"
+msgstr "Limit period selections"
+
+msgid "Choose whether to include relative periods, fixed periods, or both."
+msgstr "Choose whether to include relative periods, fixed periods, or both."
+
+msgid ""
+"Select the period types users can choose from, e.g. Monthly, Quarterly, "
+"Yearly."
+msgstr ""
+"Select the period types users can choose from, e.g. Monthly, Quarterly, "
+"Yearly."
+
+msgid "Single period selection"
+msgstr "Single period selection"
+
+msgid "When enabled, users can only select one period at a time."
+msgstr "When enabled, users can only select one period at a time."
+
+msgid "Pin specific periods to restrict what users can select."
+msgstr "Pin specific periods to restrict what users can select."
+
+msgid "Enable to restrict which organisation units users can select."
+msgstr "Enable to restrict which organisation units users can select."
+
+msgid "Limit organisation unit selections"
+msgstr "Limit organisation unit selections"
+
+msgid "Organisation unit levels"
+msgstr "Organisation unit levels"
+
+msgid "Restrict data to specific levels in the organisation unit hierarchy."
+msgstr "Restrict data to specific levels in the organisation unit hierarchy."
+
+msgid "Single organisation unit selection"
+msgstr "Single organisation unit selection"
+
+msgid "When enabled, users can only select one organisation unit at a time."
+msgstr "When enabled, users can only select one organisation unit at a time."
+
+msgid "Organisation units"
+msgstr "Organisation units"
+
+msgid "Limit access to specific organisation units. Leave empty to allow all units."
+msgstr "Limit access to specific organisation units. Leave empty to allow all units."
 
 msgid ""
 "Enable to show filters(i.e period selector & location selector) for "
@@ -755,6 +822,9 @@ msgstr ""
 msgid "Categorize visualizations into groups"
 msgstr "Categorize visualizations into groups"
 
+msgid "Periods"
+msgstr "Periods"
+
 msgid "Group selector"
 msgstr "Group selector"
 
@@ -769,9 +839,6 @@ msgstr "Fixed"
 
 msgid "Period categories"
 msgstr "Period categories"
-
-msgid "Periods"
-msgstr "Periods"
 
 msgid "Period types"
 msgstr "Period types"
