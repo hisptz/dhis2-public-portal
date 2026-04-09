@@ -5,7 +5,7 @@ import {
     MapConfig,
     MapLayerType,
 } from '@packages/shared/schemas'
-import { flattenDeep, head } from 'lodash'
+import { flattenDeep, head } from 'lodash-es'
 import { OrgUnitSelection } from '@hisptz/dhis2-utils'
 import { getOrgUnitsSelection } from '@/utils/orgUnits'
 import { useDataQuery } from '@dhis2/app-runtime'

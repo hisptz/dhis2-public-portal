@@ -2,7 +2,7 @@ import { SimpleTable, SimpleTableColumn } from '@hisptz/dhis2-ui'
 import i18n from '@dhis2/d2-i18n'
 import { FooterItemConfig } from '@packages/shared/schemas'
 import { Button, ButtonStrip, IconDelete16, IconEdit16 } from '@dhis2/ui'
-import { capitalize } from 'lodash'
+import { capitalize } from 'lodash-es'
 
 type Props = {
     fields: FooterItemConfig[]

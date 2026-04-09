@@ -12,7 +12,7 @@ import {
     getVisualizationLegendSet,
 } from '../../utils'
 import { useResizeObserver } from 'usehooks-ts'
-import { isEmpty } from 'lodash'
+import { isEmpty } from 'lodash-es'
 
 export interface ChartVisualizerProps {
     analytics: AnalyticsData

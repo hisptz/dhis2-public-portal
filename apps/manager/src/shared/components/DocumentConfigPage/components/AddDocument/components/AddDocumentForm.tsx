@@ -18,7 +18,7 @@ import { RHFIDField } from '../../../../Fields/IDField'
 import { useManageDocument } from '../../../../../hooks/document'
 import { CustomFile } from '../../DocumentGroupConfig/components/FilesListForm/components/FileForm/hooks/file'
 import { z } from 'zod'
-import { omit } from 'lodash'
+import { omit } from 'lodash-es'
 
 type Props = {
     hide: boolean

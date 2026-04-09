@@ -21,7 +21,7 @@ import { DashboardIDField } from './DashboardIDField'
 import { useCreateModule } from '../hooks/create'
 import { ModuleTypeSelector } from '../../ModuleTypeSelector'
 import { useValidateModuleId } from '../hooks/moduleID'
-import { set } from 'lodash'
+import { set } from 'lodash-es'
 
 export function AddModuleForm({
     hide,

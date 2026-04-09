@@ -4,7 +4,7 @@ import { OrgUnitSelector } from '@hisptz/dhis2-ui'
 import { OrganisationUnit, OrgUnitSelection } from '@hisptz/dhis2-utils'
 import i18n from '@dhis2/d2-i18n'
 import { useOrgUnit } from '@/utils/orgUnits'
-import { isEmpty } from 'lodash'
+import { isEmpty } from 'lodash-es'
 
 export function CustomOrgUnitModal({
     orgUnitState,

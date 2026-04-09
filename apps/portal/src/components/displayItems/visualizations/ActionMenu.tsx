@@ -2,7 +2,7 @@
 
 import { ActionIcon, Menu } from '@mantine/core'
 import { ReactNode, useId } from 'react'
-import { isEmpty } from 'lodash'
+import { isEmpty } from 'lodash-es'
 import { IconDots } from '@tabler/icons-react'
 
 export interface ActionMenu {

@@ -33,7 +33,7 @@ import {
     MapVisualizer,
 } from '@packages/shared/visualizations'
 import { useSearchParams } from 'next/navigation'
-import { defaultTo, isEmpty } from 'lodash'
+import { defaultTo, isEmpty } from 'lodash-es'
 
 export function MapVisComponent({
     mapConfig,

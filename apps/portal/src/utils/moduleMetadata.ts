@@ -3,7 +3,7 @@ import { DatastoreNamespaces } from '@packages/shared/constants'
 import { StaticItemConfig, StaticModule } from '@packages/shared/schemas'
 import { Metadata } from 'next'
 import { ModuleMetaProps } from '@/types/appMetadata'
-import { last } from 'lodash'
+import { last } from 'lodash-es'
 import { getAppModule } from '@/utils/module'
 
 export async function getModuleMetadata({

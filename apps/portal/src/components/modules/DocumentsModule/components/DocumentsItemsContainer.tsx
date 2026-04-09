@@ -1,6 +1,6 @@
 import { DocumentsModuleConfig } from '@packages/shared/schemas'
 import { Box, Group, Text } from '@mantine/core'
-import { isEmpty } from 'lodash'
+import { isEmpty } from 'lodash-es'
 import { DocumentItemCard } from '@/components/modules/DocumentsModule/components/DocumentItemCard'
 
 export function DocumentsItemsContainer({

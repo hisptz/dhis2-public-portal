@@ -10,7 +10,7 @@ import {
 } from '@packages/shared/schemas'
 import { FullScreen } from 'react-full-screen'
 
-import { isEmpty } from 'lodash'
+import { isEmpty } from 'lodash-es'
 import { CaptionPopover } from '@/components/CaptionPopover'
 import {
     useContainerSize,

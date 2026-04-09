@@ -6,7 +6,7 @@ import { Loader } from '@mantine/core'
 import { MapProps } from '@hisptz/dhis2-analytics'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { memo, useCallback, useMemo } from 'react'
-import { isEmpty } from 'lodash'
+import { isEmpty } from 'lodash-es'
 import { OrgUnitSelection } from '@hisptz/dhis2-utils'
 import { Map as LeafletMap } from 'leaflet'
 

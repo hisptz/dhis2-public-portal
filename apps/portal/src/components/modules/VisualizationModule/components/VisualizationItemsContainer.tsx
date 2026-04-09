@@ -2,7 +2,7 @@ import { VisualizationModuleConfig } from '@packages/shared/schemas'
 import { FlexibleLayoutContainer } from '@/components/FlexibleLayoutContainer'
 import { FlexibleLayoutItem } from '@/components/FlexibleLayoutItem'
 import { Box, Text } from '@mantine/core'
-import { isEmpty } from 'lodash'
+import { isEmpty } from 'lodash-es'
 import { DisplayItemContainer } from '@/components/displayItems/DisplayItemContainer'
 import { DisplayItemSelector } from '@/components/displayItems/DisplayItemSelector'
 
