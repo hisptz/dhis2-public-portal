@@ -1,7 +1,7 @@
 import { SimpleTable } from '@hisptz/dhis2-ui'
 import i18n from '@dhis2/d2-i18n'
 import { DisplayItem, DisplayItemType } from '@packages/shared/schemas'
-import { capitalize, first } from 'lodash'
+import { capitalize, first } from 'lodash-es'
 import { VisualizationNameResolver } from '../../../../VisualizationNameResolver'
 
 export function SectionVisualizations({

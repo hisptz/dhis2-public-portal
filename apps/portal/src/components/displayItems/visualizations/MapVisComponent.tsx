@@ -33,7 +33,7 @@ import {
     MapVisualizer,
 } from '@packages/shared/visualizations'
 import { useSearchParams } from 'next/navigation'
-import { defaultTo, isEmpty } from 'lodash'
+import { defaultTo, isEmpty } from 'lodash-es'
 
 export function MapVisComponent({
     mapConfig,
@@ -325,6 +325,7 @@ export function MapVisComponent({
                     handleClose={hideOrgUnits}
                     limitSelectionToLevels={orgUnitConfig?.orgUnitLevels}
                     orgUnitsId={orgUnitConfig?.orgUnits}
+                    singleSelection={orgUnitConfig?.singleSelection}
                 />
             )}
 
@@ -343,6 +344,7 @@ export function MapVisComponent({
                     categories={periodConfig?.categories}
                     periodTypes={periodConfig?.periodTypes}
                     periods={periodConfig?.periods}
+                    singleSelection={periodConfig?.singleSelection}
                 />
             )}
         </>

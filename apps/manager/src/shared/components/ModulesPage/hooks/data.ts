@@ -1,6 +1,6 @@
 import { useDataQuery } from '@dhis2/app-runtime'
 import { Pagination } from '@hisptz/dhis2-utils'
-import { sortBy } from 'lodash'
+import { sortBy } from 'lodash-es'
 import { DatastoreNamespaces } from '@packages/shared/constants'
 import { AppModule } from '@packages/shared/schemas'
 

@@ -12,7 +12,7 @@ import { FullScreen } from 'react-full-screen'
 import { CustomOrgUnitModal } from './CustomOrgUnitModal'
 import { CustomPeriodModal } from './CustomPeriodModal'
 import { useSearchParams } from 'next/navigation'
-import { isEmpty } from 'lodash'
+import { isEmpty } from 'lodash-es'
 import { ActionMenu } from '@/components/displayItems/visualizations/ActionMenu'
 import { CaptionPopover } from '@/components/CaptionPopover'
 import { VisualizationTitle } from '@/components/displayItems/visualizations/VisualizationTitle'
@@ -167,6 +167,7 @@ export function DataVisComponent({
                     handleClose={onCloseOrgUnitSelector}
                     limitSelectionToLevels={orgUnitConfig?.orgUnitLevels}
                     orgUnitsId={orgUnitConfig?.orgUnits}
+                    singleSelection={orgUnitConfig?.singleSelection}
                 />
             )}
 
@@ -189,6 +190,7 @@ export function DataVisComponent({
                     categories={periodConfig?.categories}
                     periodTypes={periodConfig?.periodTypes}
                     periods={periodConfig?.periods}
+                    singleSelection={periodConfig?.singleSelection}
                 />
             )}
         </>

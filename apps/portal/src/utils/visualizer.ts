@@ -1,4 +1,4 @@
-import { snakeCase } from 'lodash'
+import { snakeCase } from 'lodash-es'
 import { MapConfig } from '@packages/shared/schemas'
 
 export function getMapPeriods(mapConfig: MapConfig['mapViews'][number]) {

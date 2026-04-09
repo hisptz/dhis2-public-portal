@@ -5,16 +5,17 @@ import React, {
     memo,
     useCallback,
     useMemo,
+    useState,
 } from 'react'
 import i18n from '@dhis2/d2-i18n'
 import { useController, useWatch } from 'react-hook-form'
-import { IconCross24 } from '@dhis2/ui'
+import { IconCross24, IconEdit24 } from '@dhis2/ui'
 import {
     Responsive as ResponsiveGridLayout,
     useContainerWidth,
     verticalCompactor,
 } from 'react-grid-layout'
-import { debounce, fromPairs } from 'lodash'
+import { debounce, fromPairs } from 'lodash-es'
 import {
     VisualizationItem,
     VisualizationModule,
@@ -29,6 +30,8 @@ import {
     ScreenSizeId,
     SUPPORTED_SCREEN_SIZES,
 } from '@packages/shared/constants'
+import { useBoolean } from 'usehooks-ts'
+import { AddVisualizationForm } from './VisualizationModule/components/AddVisualization/componets/AddVisualizationForm'
 
 function DashboardItemComponent({ item }: { item: VisualizationItem }) {
     return (
@@ -47,11 +50,13 @@ const GridItem = forwardRef<
     {
         item: VisualizationItem
         onDelete: (id: string) => void
+        onEdit: (id: string) => void
     } & DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement>
 >(function GridItem(
     {
         item,
         onDelete,
+        onEdit,
         style,
         className,
         children,
@@ -59,11 +64,16 @@ const GridItem = forwardRef<
     }: {
         item: VisualizationItem
         onDelete: (id: string) => void
+        onEdit: (id: string) => void
     } & DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement>,
     ref
 ) {
     const handleDeleteClick = () => {
         onDelete(item.id)
+    }
+
+    const handleEditClick = () => {
+        onEdit(item.id)
     }
 
     const stopPropagation = (event: React.MouseEvent) => {
@@ -83,6 +93,20 @@ const GridItem = forwardRef<
             className={`border-2 border-gray-400 rounded-md p-2 flex flex-col relative cursor-all-scroll ${className}`}
             {...rest}
         >
+            <button
+                onMouseDown={stopPropagation}
+                onTouchStart={stopPropagationTouch}
+                onClick={handleEditClick}
+                className="absolute top-1 right-10 cursor-pointer"
+                style={{
+                    background: 'transparent',
+                    border: 'none',
+                    padding: 0,
+                }}
+                title={i18n.t('Edit visualization')}
+            >
+                <IconEdit24 />
+            </button>
             <button
                 onMouseDown={stopPropagation}
                 onTouchStart={stopPropagationTouch}
@@ -110,11 +134,16 @@ export function DashboardLayoutEditor({
     prefix?: `config.groups.${number}`
     size: ScreenSizeId
 }) {
+    const { value: hide, setTrue: onHide, setFalse: onShow } = useBoolean(true)
     const { width, containerRef, mounted } = useContainerWidth()
+    const [selectedVis, setSelectedVis] = useState<
+        VisualizationItem | undefined
+    >()
 
-    const { onRemoveVisualization } = useManageVisualizations({
-        prefix,
-    })
+    const { onRemoveVisualization, onAddVisualization } =
+        useManageVisualizations({
+            prefix,
+        })
 
     const { field } = useController<
         VisualizationModule,
@@ -146,50 +175,71 @@ export function DashboardLayoutEditor({
     )
 
     return (
-        <div className="flex flex-col gap-2 w-full">
-            <div className="flex-1 flex justify-center w-full">
-                <div ref={containerRef} className="bg-white w-full">
-                    {mounted && (
-                        <ResponsiveGridLayout
-                            breakpoint={size}
-                            compactor={verticalCompactor}
-                            key={
-                                visualizations
-                                    ?.map((v) => v.item.id)
-                                    .join(',') || 'empty'
-                            }
-                            breakpoints={
-                                fromPairs(
-                                    SUPPORTED_SCREEN_SIZES.map((value) => {
-                                        return [value.id, value.value]
-                                    })
-                                ) as { [key in ScreenSizeId]: number }
-                            }
-                            cols={
-                                fromPairs(
-                                    SUPPORTED_SCREEN_SIZES.map((value) => {
-                                        return [value.id, value.cols]
-                                    })
-                                ) as { [key in ScreenSizeId]: number }
-                            }
-                            layouts={field.value}
-                            margin={[8, 8]}
-                            className="layout"
-                            rowHeight={80}
-                            width={width}
-                            onLayoutChange={handleLayoutChange}
-                        >
-                            {visualizations?.map((item) => (
-                                <GridItem
-                                    key={item.item.id}
-                                    item={item.item as VisualizationItem}
-                                    onDelete={onRemoveVisualization}
-                                />
-                            ))}
-                        </ResponsiveGridLayout>
-                    )}
+        <>
+            {!hide && (
+                <AddVisualizationForm
+                    hide={hide}
+                    onClose={onHide}
+                    visualization={selectedVis}
+                    onSubmit={onAddVisualization}
+                />
+            )}
+            <div className="flex flex-col gap-2 w-full">
+                <div className="flex-1 flex justify-center w-full">
+                    <div ref={containerRef} className="bg-white w-full">
+                        {mounted && (
+                            <ResponsiveGridLayout
+                                breakpoint={size}
+                                compactor={verticalCompactor}
+                                key={
+                                    visualizations
+                                        ?.map((v) => v.item.id)
+                                        .join(',') || 'empty'
+                                }
+                                breakpoints={
+                                    fromPairs(
+                                        SUPPORTED_SCREEN_SIZES.map((value) => {
+                                            return [value.id, value.value]
+                                        })
+                                    ) as { [key in ScreenSizeId]: number }
+                                }
+                                cols={
+                                    fromPairs(
+                                        SUPPORTED_SCREEN_SIZES.map((value) => {
+                                            return [value.id, value.cols]
+                                        })
+                                    ) as { [key in ScreenSizeId]: number }
+                                }
+                                layouts={field.value}
+                                margin={[8, 8]}
+                                className="layout"
+                                rowHeight={80}
+                                width={width}
+                                onLayoutChange={handleLayoutChange}
+                            >
+                                {visualizations?.map((item) => (
+                                    <GridItem
+                                        key={item.item.id}
+                                        item={item.item as VisualizationItem}
+                                        onDelete={onRemoveVisualization}
+                                        onEdit={(id) => {
+                                            const visualization =
+                                                visualizations.find(
+                                                    (item) =>
+                                                        item.item.id === id
+                                                )
+                                            setSelectedVis(
+                                                visualization?.item as VisualizationItem
+                                            )
+                                            onShow()
+                                        }}
+                                    />
+                                ))}
+                            </ResponsiveGridLayout>
+                        )}
+                    </div>
                 </div>
             </div>
-        </div>
+        </>
     )
 }

@@ -10,7 +10,7 @@ import {
 } from '@packages/shared/schemas'
 import { FullScreen } from 'react-full-screen'
 
-import { isEmpty } from 'lodash'
+import { isEmpty } from 'lodash-es'
 import { CaptionPopover } from '@/components/CaptionPopover'
 import {
     useContainerSize,
@@ -222,6 +222,7 @@ export function YearOverYearDataVisComponent({
                     handleClose={onCloseOrgUnitSelector}
                     limitSelectionToLevels={orgUnitConfig?.orgUnitLevels}
                     orgUnitsId={orgUnitConfig?.orgUnits}
+                    singleSelection={orgUnitConfig?.singleSelection}
                 />
             )}
 
@@ -242,6 +243,7 @@ export function YearOverYearDataVisComponent({
                     categories={periodConfig?.categories}
                     periodTypes={periodConfig?.periodTypes}
                     periods={periodConfig?.periods}
+                    singleSelection={periodConfig?.singleSelection}
                 />
             )}
         </>

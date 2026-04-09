@@ -1,7 +1,7 @@
 import { RefObject, useMemo } from 'react'
 
 import { AnalyticsData, VisualizationConfig } from '../../schemas'
-import { isArray, isEmpty } from 'lodash'
+import { isArray, isEmpty } from 'lodash-es'
 import { DHIS2PivotTable } from '@hisptz/dhis2-analytics'
 import { getVisualizationLegendSet } from '../../utils'
 import { LegendSet } from '@hisptz/dhis2-utils'

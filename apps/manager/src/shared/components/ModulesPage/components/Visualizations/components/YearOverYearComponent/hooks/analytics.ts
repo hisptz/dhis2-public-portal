@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react'
 import { useDataQuery } from '@dhis2/app-runtime'
 import { getVisualizationFilters } from '@packages/shared/utils'
 import { PeriodUtility } from '@hisptz/dhis2-utils'
-import { head } from 'lodash'
+import { head } from 'lodash-es'
 
 type Dimension = 'ou' | 'pe' | 'dx' | string
 

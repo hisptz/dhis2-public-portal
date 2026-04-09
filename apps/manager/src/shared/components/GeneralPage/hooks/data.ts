@@ -14,7 +14,7 @@ import {
 import { useForm, useFormContext } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import i18n from '@dhis2/d2-i18n'
-import { set } from 'lodash'
+import { set } from 'lodash-es'
 import { useManageDocument } from '../../../hooks/document'
 
 const query = {

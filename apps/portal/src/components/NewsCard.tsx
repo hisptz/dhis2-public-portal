@@ -1,7 +1,7 @@
 import { Card, NavLink, Title } from '@mantine/core'
 import { NewsData } from '@packages/shared/schemas'
 import Image from 'next/image'
-import { snakeCase } from 'lodash'
+import { snakeCase } from 'lodash-es'
 import Link from 'next/link'
 import i18n from '@dhis2/d2-i18n'
 

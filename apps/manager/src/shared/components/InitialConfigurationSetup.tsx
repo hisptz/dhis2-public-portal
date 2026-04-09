@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import i18n from '@dhis2/d2-i18n'
 import { CreateStatus, useInitialSetup } from '../hooks/config'
-import { some } from 'lodash'
+import { some } from 'lodash-es'
 import {
     Button,
     ButtonStrip,

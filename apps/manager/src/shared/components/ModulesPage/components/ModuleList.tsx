@@ -5,7 +5,7 @@ import { Button, ButtonStrip, IconView16 } from '@dhis2/ui'
 import { useNavigate } from '@tanstack/react-router'
 import { useModules } from '../providers/ModulesProvider'
 import { ModuleType } from '@packages/shared/schemas'
-import { startCase } from 'lodash'
+import { startCase } from 'lodash-es'
 import { Links } from '../../../constants/links'
 
 const columns: SimpleTableColumn[] = [

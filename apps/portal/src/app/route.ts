@@ -1,7 +1,7 @@
 import { getAppConfigWithNamespace } from '@/utils/config'
 import { AppMenuConfig } from '@packages/shared/schemas'
 import { DatastoreNamespaces } from '@packages/shared/constants'
-import { sortBy } from 'lodash'
+import { sortBy } from 'lodash-es'
 import { redirect } from 'next/navigation'
 import { env } from '@/utils/env'
 import { dhis2HttpClient } from '@/utils/api/dhis2'

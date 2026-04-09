@@ -10,7 +10,7 @@ import {
 } from '@packages/shared/schemas'
 import { useNavigate, useParams } from '@tanstack/react-router'
 import { VisualizationNameResolver } from '../../../VisualizationNameResolver'
-import { capitalize } from 'lodash'
+import { capitalize } from 'lodash-es'
 
 export function ModuleVisualizationsConfig() {
     const { moduleId } = useParams({

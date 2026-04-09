@@ -14,7 +14,7 @@ import {
 import 'react-grid-layout/css/styles.css'
 import 'react-resizable/css/styles.css'
 import { MainVisualization } from './ModulesPage/components/Visualizations/MainVisualization'
-import { fromPairs } from 'lodash'
+import { fromPairs } from 'lodash-es'
 import {
     ScreenSizeId,
     SUPPORTED_SCREEN_SIZES,

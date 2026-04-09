@@ -2,7 +2,7 @@ import { Divider, SingleSelectField, SingleSelectOption } from '@dhis2/ui'
 import { ReactNode } from 'react'
 import i18n from '@dhis2/d2-i18n'
 import { ModuleType } from '@packages/shared/schemas'
-import { isEmpty, startCase } from 'lodash'
+import { isEmpty, startCase } from 'lodash-es'
 
 type HeaderProps = {
     actions?: ReactNode

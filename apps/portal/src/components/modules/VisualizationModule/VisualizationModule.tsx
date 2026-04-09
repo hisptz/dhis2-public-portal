@@ -4,7 +4,7 @@ import { GroupControl } from '@/components/modules/VisualizationModule/component
 import { Selectors } from '@/components/modules/VisualizationModule/components/Selectors/Selectors'
 import { VisualizationItemsContainer } from '@/components/modules/VisualizationModule/components/VisualizationItemsContainer'
 import { DescriptionArea } from '@/components/modules/VisualizationModule/components/DescriptionArea'
-import { isEmpty } from 'lodash'
+import { isEmpty } from 'lodash-es'
 
 export function VisualizationModule({
     config,

@@ -3,7 +3,7 @@ import {
     bannerVisualizationItem as BannerVisualizationType,
 } from '@packages/shared/schemas'
 import { dhis2HttpClient } from '@/utils/api/dhis2'
-import { find, findIndex } from 'lodash'
+import { find, findIndex } from 'lodash-es'
 import { SingleValue } from '@hisptz/dhis2-analytics'
 import { mainColors } from '@packages/shared/constants'
 import { Banner } from '@/components/displayItems/visualizations/Banner'

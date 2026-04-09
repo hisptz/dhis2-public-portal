@@ -18,7 +18,7 @@ import {
     VisualizationItem,
 } from '@packages/shared/schemas'
 import Highcharts from 'highcharts'
-import { isEmpty } from 'lodash'
+import { isEmpty } from 'lodash-es'
 import { useFullScreenHandle } from 'react-full-screen'
 import { ActionMenuGroup } from '@/components/displayItems/visualizations/ActionMenu'
 
