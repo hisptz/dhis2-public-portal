@@ -326,6 +326,9 @@ importers:
       '@dhis2/app-runtime':
         specifier: 3.16.0
         version: 3.16.0(react-dom@19.2.5(react@19.2.5))(react-native@0.85.0(@babel/core@7.29.0)(@types/react@19.2.14)(react@19.2.5))(react@19.2.5)
+      '@dhis2/data-engine':
+        specifier: 3.17.0-beta.2
+        version: 3.17.0-beta.2
       '@dhis2/multi-calendar-dates':
         specifier: ^2.1.0
         version: 2.1.2(react-dom@19.2.5(react@19.2.5))(react@19.2.5)
@@ -2138,6 +2141,9 @@ packages:
 
   '@dhis2/d2-i18n@1.2.0':
     resolution: {integrity: sha512-bpJggHy5dyuS9DHCQuLbStccsHIRGj4WjZh10wk7jmctOpzKHBTsm5ZgKYYLTN2JjtiCPqPFYIxKeVQEZWOhkA==}
+
+  '@dhis2/data-engine@3.17.0-beta.2':
+    resolution: {integrity: sha512-1Cp3KN5WYBHifQQEIZFjdfRJJgb8DGMz6FBWU8DrbDW7O3flRTmU+0dqIBoQLu2BVRTqoDRx78CRoagvUdschA==}
 
   '@dhis2/multi-calendar-dates@2.1.2':
     resolution: {integrity: sha512-7/EuYZFi266QwyRpK+s79iEiwdOUVBwM+QjKwNUHN3zdYMDmQcWLTo5TujJFg1XnnQ8UhdiRqESq5rgoJkM2fQ==}
@@ -17331,6 +17337,8 @@ snapshots:
       '@types/i18next': 11.9.3
       i18next: 10.6.0
       moment: 2.30.1
+
+  '@dhis2/data-engine@3.17.0-beta.2': {}
 
   '@dhis2/multi-calendar-dates@2.1.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
     dependencies:
