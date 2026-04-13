@@ -9,24 +9,34 @@ import {
 export class D2HttpClient {
     baseURL: URL
     pat: string
-    private engineReady: Promise<DataEngine>
+    private engineReady: DataEngine | null
+    private _initPromise: Promise<void> | null
 
     constructor(baseURL: string, pat: string) {
         this.baseURL = D2HttpClient.sanitizeURL(baseURL)
         this.pat = pat
-        this.engineReady = this.initEngine(baseURL, pat)
+        this.engineReady = null
+        this._initPromise = null
     }
 
-    private async initEngine(
-        baseURL: string,
-        pat: string
-    ): Promise<DataEngine> {
-        let apiVersion = 42
+    async init(): Promise<void> {
+        if (this.engineReady) return
+        if (!this._initPromise) {
+            this._initPromise = this._initialize().catch((err) => {
+                this._initPromise = null // allow retry on next call
+                throw err
+            })
+        }
+        return this._initPromise
+    }
+
+    private async _initialize(): Promise<void> {
+        let apiVersion = 40 // default to 2.40 for older DHIS2 instances
         try {
             const url = new URL('system/info', this.baseURL)
             const response = await fetch(url, {
                 cache: 'no-store',
-                headers: { Authorization: `ApiToken ${pat}` },
+                headers: { Authorization: `ApiToken ${this.pat}` },
             })
             if (response.ok) {
                 const info = (await response.json()) as { version?: string }
@@ -40,11 +50,14 @@ export class D2HttpClient {
         }
 
         const config: DataEngineConfig = {
-            baseUrl: baseURL.replace(/\/api\/?$/, '').replace(/\/$/, ''),
+            baseUrl: this.baseURL
+                .toString()
+                .replace(/\/api\/?$/, '')
+                .replace(/\/$/, ''),
             apiVersion,
-            apiToken: pat,
+            apiToken: this.pat,
         }
-        return new DataEngine(new RestAPILink(config))
+        this.engineReady = new DataEngine(new RestAPILink(config))
     }
 
     private static parseApiVersion(version?: string): number | null {
@@ -70,14 +83,15 @@ export class D2HttpClient {
     }
 
     async getIcon(path: string) {
-        const url = new URL(`${path}`, this.baseURL)
-        const response = await fetch(url, {
+        await this.init()
+        const url = path
+        const response: Response = (await this.engineReady!.fetch(url, {
             cache: 'force-cache',
             headers: {
                 Authorization: `ApiToken ${this.pat}`,
                 Accept: 'application/octet-stream;charset=utf-8',
             },
-        })
+        })) as Response
 
         const status = response.status
         if (status >= 400) {
@@ -85,6 +99,7 @@ export class D2HttpClient {
         }
 
         const blob = await response.blob()
+
         return new Response(blob, {
             headers: {
                 ...response.headers,
@@ -93,13 +108,21 @@ export class D2HttpClient {
     }
 
     async getRaw(path: string) {
-        const url = new URL(`${path}`, this.baseURL)
-        const response = await fetch(url, {
+        await this.init()
+
+        const result = await this.engineReady!.fetch(path, {
             cache: 'default',
             headers: {
                 Authorization: `ApiToken ${this.pat}`,
             },
         })
+
+        // The data engine returns a Blob directly for binary content types
+        if (result instanceof Blob) {
+            return new Response(result, { status: 200 })
+        }
+
+        const response = result as Response
         const status = response.status
         if (status >= 400) {
             console.error(await response.json())
@@ -173,13 +196,12 @@ export class D2HttpClient {
             params?: { [key: string]: string }
         }
     ) {
+        await this.init()
         const { params } = meta ?? {}
-        const url = new URL(`${path}`, this.baseURL)
-
+        let url = path
         if (params) {
-            Object.entries(params).forEach(([key, value]) => {
-                url.searchParams.append(key, value)
-            })
+            const qs = new URLSearchParams(params).toString()
+            url = `${path}?${qs}`
         }
 
         const detailsUrl = path.replace('/data', '')
@@ -194,7 +216,7 @@ export class D2HttpClient {
             `fileResources/${details.url}`
         )
 
-        const response = await fetch(url, {
+        const result = await this.engineReady!.fetch(url, {
             cache: 'force-cache',
             headers: {
                 Authorization: `ApiToken ${this.pat}`,
@@ -202,6 +224,16 @@ export class D2HttpClient {
             },
         })
 
+        // The data engine returns a Blob directly for binary content types
+        if (result instanceof Blob) {
+            return new Response(result, {
+                headers: {
+                    'content-disposition': `attachment; filename="${fileDetails?.name}"`,
+                },
+            })
+        }
+
+        const response = result as Response
         const status = response.status
 
         if (status >= 400) {
@@ -224,18 +256,17 @@ export class D2HttpClient {
             params?: { [key: string]: string }
         }
     ) {
+        await this.init()
         const { params } = meta ?? {}
         let url = path
         if (params) {
             const qs = new URLSearchParams(params).toString()
             url = `${path}?${qs}`
         }
-        const engine = await this.engineReady
-        return engine
-            .get(url)
-            .catch((e) =>
-                D2HttpClient.handleFetchError(e, `GET ${path}`)
-            ) as Promise<T>
+
+        return this.engineReady!.get(url).catch((e) =>
+            D2HttpClient.handleFetchError(e, `GET ${path}`)
+        ) as Promise<T>
     }
 
     async post<T, R>(
@@ -245,18 +276,17 @@ export class D2HttpClient {
             params?: { [key: string]: string }
         }
     ) {
+        await this.init()
         const { params } = meta ?? {}
         let url = path
         if (params) {
             const qs = new URLSearchParams(params).toString()
             url = `${path}?${qs}`
         }
-        const engine = await this.engineReady
-        return engine
-            .post(url, body)
-            .catch((e) =>
-                D2HttpClient.handleFetchError(e, `POST ${path}`)
-            ) as Promise<R>
+
+        return this.engineReady!.post(url, body).catch((e) =>
+            D2HttpClient.handleFetchError(e, `POST ${path}`)
+        ) as Promise<R>
     }
 
     async put<T, R>(
@@ -266,36 +296,34 @@ export class D2HttpClient {
             params?: { [key: string]: string }
         }
     ) {
+        await this.init()
         const { params } = meta ?? {}
         let url = path
         if (params) {
             const qs = new URLSearchParams(params).toString()
             url = `${path}?${qs}`
         }
-        const engine = await this.engineReady
-        return engine
-            .put(url, body)
-            .catch((e) =>
-                D2HttpClient.handleFetchError(e, `PUT ${path}`)
-            ) as Promise<R>
+
+        return this.engineReady!.put(url, body).catch((e) =>
+            D2HttpClient.handleFetchError(e, `PUT ${path}`)
+        ) as Promise<R>
     }
 
     async postFeedback<T>(
         path: string,
         meta?: { params?: { [key: string]: string } }
     ) {
+        await this.init()
         const { params } = meta ?? {}
         let url = path
         if (params) {
             const qs = new URLSearchParams(params).toString()
             url = `${path}?${qs}`
         }
-        const engine = await this.engineReady
-        return engine
-            .post(url, '')
-            .catch((e) =>
-                D2HttpClient.handleFetchError(e, `POST ${path}`)
-            ) as Promise<T>
+
+        return this.engineReady!.post(url, '').catch((e) =>
+            D2HttpClient.handleFetchError(e, `POST ${path}`)
+        ) as Promise<T>
     }
 
     static handleFetchError(e: unknown, context?: string): never {
