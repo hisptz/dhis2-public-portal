@@ -1,6 +1,6 @@
 'use client'
 
-import { ReactNode } from 'react'
+import { ReactNode, useEffect, useState } from 'react'
 import dynamic from 'next/dynamic'
 import { FullPageLoader } from '@/components/FullPageLoader'
 
@@ -23,9 +23,16 @@ export function DHIS2AppProvider({
     children: ReactNode
     contextPath: string
 }) {
-    if (typeof window === 'undefined') {
-        return children
+    const [mounted, setMounted] = useState(false)
+
+    useEffect(() => {
+        setMounted(true)
+    }, [])
+
+    if (!mounted) {
+        return <>{children}</>
     }
+
     return (
         <NoSsrAppProvider
             userInfo={{

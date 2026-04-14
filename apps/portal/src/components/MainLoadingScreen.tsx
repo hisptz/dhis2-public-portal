@@ -28,6 +28,7 @@ export default async function MainLoadingScreen() {
                                     <Image
                                         width={80}
                                         height={80}
+                                        style={{ width: 80, height: 80 }}
                                         component={NextImage}
                                         src={logo}
                                         alt="logo"

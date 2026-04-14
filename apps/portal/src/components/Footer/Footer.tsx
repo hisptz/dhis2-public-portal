@@ -63,6 +63,10 @@ export function Footer({
                                                 component={NextImage}
                                                 width={60}
                                                 height={60}
+                                                style={{
+                                                    width: 60,
+                                                    height: 60,
+                                                }}
                                                 alt="logo"
                                                 src={logo}
                                             />

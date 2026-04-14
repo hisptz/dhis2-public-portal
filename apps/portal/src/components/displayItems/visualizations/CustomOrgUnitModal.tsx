@@ -1,3 +1,5 @@
+'use client'
+
 import { useEffect, useState } from 'react'
 import { Box, Button, Loader, Modal, Text, Title } from '@mantine/core'
 import { OrgUnitSelector } from '@hisptz/dhis2-ui'
