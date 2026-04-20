@@ -14,8 +14,8 @@ import { notifications } from '@mantine/notifications'
 import { useCallback, useRef } from 'react'
 import { FormProvider, useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
-
-import { FeedbackItem, feedbackSchema } from '@packages/shared/schemas'
+import { FeedbackConfig, FeedbackItem, feedbackSchema } from '@packages/shared/schemas'
+import { sendFeedbackEmail } from '@/utils/sendEmail'
 
 export default function FeedbackVisualizer({ item }: { item: FeedbackItem }) {
     const theme = useMantineTheme()
@@ -27,9 +27,9 @@ export default function FeedbackVisualizer({ item }: { item: FeedbackItem }) {
     })
     const formRef = useRef<HTMLFormElement>(null)
 
-    const onFormSubmit = useCallback(async () => {
+    const onFormSubmit = useCallback(async (data: FeedbackConfig) => {
         try {
-            //   await sendFeedbackEmail({ data, item });
+            await sendFeedbackEmail({ data, item });
             form.reset()
             notifications.show({
                 title: i18n.t('Success'),

@@ -315,15 +315,11 @@ export class D2HttpClient {
     ) {
         await this.init()
         const { params } = meta ?? {}
-        let url = path
-        if (params) {
-            const qs = new URLSearchParams(params).toString()
-            url = `${path}?${qs}`
-        }
 
-        return this.engineReady!.post(url, '').catch((e) =>
-            D2HttpClient.handleFetchError(e, `POST ${path}`)
-        ) as Promise<T>
+        const mutation = { resource: path, type: 'create' as const, params }
+        return this.engineReady!.mutate(
+            mutation as Parameters<NonNullable<typeof this.engineReady>['mutate']>[0]
+        ).catch((e) => D2HttpClient.handleFetchError(e, `POST ${path}`)) as Promise<T>
     }
 
     static handleFetchError(e: unknown, context?: string): never {
