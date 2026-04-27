@@ -35,7 +35,7 @@
         "@tabler/icons-react": "^3.31.0",
         "canvas": "^3.1.0",
         "chroma-js": "^3.1.2",
-        "cypress": "^15.11.0",
+        "cypress": "^15.14.1",
         "highcharts": "^12.4.0",
         "highcharts-react-official": "^3.2.2",
         "jszip": "^3.10.1",
