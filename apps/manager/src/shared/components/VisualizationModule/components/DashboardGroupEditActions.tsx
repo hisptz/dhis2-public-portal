@@ -33,6 +33,9 @@ export function DashboardGroupEditActions() {
     const onSubmit = async (data: AppModule) => {
         try {
             await save(data)
+            navigate({
+                to: '/modules/$moduleId/edit',
+            })
         } catch (error) {
             show({
                 message: i18n.t('Failed to save section', error),
@@ -58,9 +61,6 @@ export function DashboardGroupEditActions() {
                 disabled={!formState.isDirty || formState.isSubmitting}
                 onClick={() => {
                     handleSubmit(onSubmit, onError)()
-                    navigate({
-                        to: '/modules/$moduleId/edit',
-                    })
                 }}
             >
                 {i18n.t('Save group changes')}

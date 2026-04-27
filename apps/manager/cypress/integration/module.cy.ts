@@ -168,7 +168,7 @@ describe('Modules Page', () => {
         cy.get('.react-grid-layout').within(() => {
             cy.get(`[data-prefix="${visualizations[0]}"]`).should('exist')
         })
-        cy.contains('button', 'Save changes').should('not.be.disabled').click()
+        cy.contains('button', 'Save changes').click()
 
         cy.get('input[name="config.grouped"]').click()
         cy.get('input[value="segmented"]').click()
@@ -182,7 +182,7 @@ describe('Modules Page', () => {
         )
         cy.get('.jodit-wysiwyg').type('Full description')
 
-        cy.contains('button', 'Save group changes').should('not.be.disabled').click()
+        cy.contains('button', 'Save group changes').click()
 
         cy.get('table tbody tr')
             .contains('td', 'Test Group')
@@ -193,7 +193,7 @@ describe('Modules Page', () => {
         cy.get('input[name="config.groups.0.title"]')
             .clear()
             .type('Updated Test Group')
-        cy.contains('button', 'Save group changes').should('not.be.disabled').click()
+        cy.contains('button', 'Save group changes').click()
         cy.get('table tbody tr')
             .contains('td', 'Updated Test Group')
             .parent('tr')
@@ -248,7 +248,7 @@ describe('Modules Page', () => {
         cy.get('.react-grid-layout').within(() => {
             cy.get(`[data-prefix="${visualizations[0]}"]`).should('exist')
         })
-        cy.contains('button', 'Save changes').should('not.be.disabled').click()
+        cy.contains('button', 'Save changes').click()
 
         cy.contains('button', 'Back to dashboard').click()
     })
