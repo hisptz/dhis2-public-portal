@@ -29,6 +29,11 @@ RUN npm -g install corepack@latest
 RUN corepack enable
 RUN pnpm install --no-frozen-lockfile
 
+# Install bun for building with the bun adapter
+RUN apk add --no-cache curl bash && \
+    curl -fsSL https://bun.sh/install | bash
+ENV PATH="/root/.bun/bin:${PATH}"
+
 # Build the project
 COPY --from=builder /app/out/full/ .
 
@@ -49,10 +54,10 @@ RUN npm -g install corepack@latest
 RUN corepack enable
 RUN pnpm run build --filter portal
 
-FROM base AS runner
+FROM --platform=linux/amd64 oven/bun:1-alpine AS runner
 WORKDIR /app
 
-ENV NODE_ENV production
+ENV NODE_ENV=production
 
 # Don't run production as root
 RUN addgroup --system --gid 1001 nodejs
@@ -67,4 +72,7 @@ COPY --from=installer /app/apps/portal/package.json .
 COPY --from=installer --chown=nextjs:nodejs /app/apps/portal/.next/standalone ./
 COPY --from=installer --chown=nextjs:nodejs /app/apps/portal/.next/static ./apps/portal/.next/static
 
-CMD node apps/portal/server.js
+# Bun adapter server entry and runtime modules
+COPY --from=installer --chown=nextjs:nodejs /app/apps/portal/bun-dist ./apps/portal/bun-dist
+
+CMD ["bun", "apps/portal/bun-dist/server.js"]

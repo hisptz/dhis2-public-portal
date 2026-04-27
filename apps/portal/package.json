@@ -6,7 +6,7 @@
         "dev": "next dev",
         "build": "next build",
         "build:standalone": "./build.sh",
-        "start": "next start",
+        "start": "bun bun-dist/server.js",
         "lint": "next lint",
         "check-types": "next typegen &&  tsc --noEmit",
         "test:e2e": "dotenv -- cross-var concurrently --kill-others --success first -c blue,green --names app,cypress 'yarn dev' 'cypress run'",
@@ -62,6 +62,7 @@
         "zod": "^4.3.6"
     },
     "devDependencies": {
+        "@packages/adapter-bun": "workspace:*",
         "@cypress/code-coverage": "^3.14.0",
         "@svgr/webpack": "^8.1.0",
         "@tailwindcss/postcss": "^4",
@@ -83,11 +84,5 @@
         "postcss-simple-vars": "^7.0.1",
         "tailwindcss": "^4",
         "typescript": "5.6.3"
-    },
-    "pnpm": {
-        "overrides": {
-            "@types/react": "19.2.14",
-            "@types/react-dom": "19.2.3"
-        }
     }
 }

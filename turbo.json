@@ -9,6 +9,7 @@
             "outputs": [
                 ".next/**",
                 "!.next/cache/**",
+                "bun-dist/**",
                 "build/**",
                 "app/**",
                 "bundle/**"
