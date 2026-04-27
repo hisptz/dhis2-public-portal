@@ -47,11 +47,6 @@ before(() => {
             dhis2BaseUrl: baseUrl,
             dhis2InstanceVersion: instanceVersion,
         } = env
-        console.info({
-            baseUrl,
-            username,
-            dhis2Version: instanceVersion,
-        })
         // @ts-expect-error Injected by DHIS2 commands
         cy.loginByApi({ username, password, baseUrl })
 

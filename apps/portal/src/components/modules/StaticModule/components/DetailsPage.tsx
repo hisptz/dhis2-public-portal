@@ -6,7 +6,6 @@ import { DatastoreNamespaces } from '@packages/shared/constants'
 import { BaseCardError } from '@/components/CardError'
 import { RichContent } from '@/components/RichContent'
 import { IconArrowLeft } from '@tabler/icons-react'
-import Link from 'next/link'
 
 export async function DetailsPage({
     id,
@@ -42,7 +41,7 @@ export async function DetailsPage({
                 <Button
                     variant="subtle"
                     href={'../'}
-                    component={Link}
+                    component="a"
                     leftSection={<IconArrowLeft size={14} />}
                 >
                     Back

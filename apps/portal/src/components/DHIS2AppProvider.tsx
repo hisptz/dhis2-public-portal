@@ -1,6 +1,6 @@
 'use client'
 
-import { ReactNode } from 'react'
+import { ReactNode, useEffect, useState } from 'react'
 import dynamic from 'next/dynamic'
 import { FullPageLoader } from '@/components/FullPageLoader'
 
@@ -23,9 +23,16 @@ export function DHIS2AppProvider({
     children: ReactNode
     contextPath: string
 }) {
-    if (typeof window === 'undefined') {
-        return children
+    const [mounted, setMounted] = useState(false)
+
+    useEffect(() => {
+        setMounted(true)
+    }, [])
+
+    if (!mounted) {
+        return <>{children}</>
     }
+
     return (
         <NoSsrAppProvider
             userInfo={{
@@ -37,6 +44,7 @@ export function DHIS2AppProvider({
             }}
             config={{
                 baseUrl: `${window.location.protocol}//${window.location.host}${contextPath ?? ''}`,
+                // @ts-expect-error not required in this instance
                 apiVersion: '',
             }}
             plugin={false}

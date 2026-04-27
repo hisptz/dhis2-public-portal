@@ -33,7 +33,7 @@ export function SectionConfigPage() {
     })
 
     const navigate = useNavigate({
-        from: '/modules/$moduleId/edit/section/$sectionIndex',
+        from: '/modules/$moduleId/edit/section/$sectionIndex/',
     })
 
     return (
