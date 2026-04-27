@@ -131,23 +131,23 @@ importers:
   apps/manager:
     dependencies:
       '@dhis2/app-runtime':
-        specifier: 3.16.0
-        version: 3.16.0(react-dom@18.3.1(react@18.3.1))(react-native@0.85.0(@babel/core@7.29.0)(@types/react@19.2.14)(react@18.3.1))(react@18.3.1)
+        specifier: 3.17.0
+        version: 3.17.0(@dhis2/data-engine@3.17.0)(react-dom@18.3.1(react@18.3.1))(react-native@0.85.0(@babel/core@7.29.0)(@types/react@19.2.14)(react@18.3.1))(react@18.3.1)
       '@dhis2/d2-i18n':
         specifier: ^1.1.3
         version: 1.2.0
       '@dhis2/ui':
         specifier: ^10.9.0
-        version: 10.12.13(@dhis2/app-runtime@3.16.0(react-dom@18.3.1(react@18.3.1))(react-native@0.85.0(@babel/core@7.29.0)(@types/react@19.2.14)(react@18.3.1))(react@18.3.1))(@dhis2/d2-i18n@1.2.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(styled-jsx@4.0.1(@babel/core@7.29.0)(react@18.3.1))
+        version: 10.12.13(@dhis2/app-runtime@3.17.0(@dhis2/data-engine@3.17.0)(react-dom@18.3.1(react@18.3.1))(react-native@0.85.0(@babel/core@7.29.0)(@types/react@19.2.14)(react@18.3.1))(react@18.3.1))(@dhis2/d2-i18n@1.2.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(styled-jsx@4.0.1(@babel/core@7.29.0)(react@18.3.1))
       '@hello-pangea/dnd':
         specifier: ^18.0.1
         version: 18.0.1(@types/react@19.2.14)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@hisptz/dhis2-analytics':
         specifier: ^2.1.35
-        version: 2.1.36(c71f6b65fbbe0dcef48b474778185bff)
+        version: 2.1.36(19970fdc033939d307827961afeb45a0)
       '@hisptz/dhis2-ui':
         specifier: ^2.0.52
-        version: 2.0.52(@dhis2/app-runtime@3.16.0(react-dom@18.3.1(react@18.3.1))(react-native@0.85.0(@babel/core@7.29.0)(@types/react@19.2.14)(react@18.3.1))(react@18.3.1))(@dhis2/d2-i18n@1.2.0)(classnames@2.5.1)(prop-types@15.8.1)(react-dom@18.3.1(react@18.3.1))(react-native@0.85.0(@babel/core@7.29.0)(@types/react@19.2.14)(react@18.3.1))(react@18.3.1)(usehooks-ts@3.1.1(react@18.3.1))
+        version: 2.0.52(@dhis2/app-runtime@3.17.0(@dhis2/data-engine@3.17.0)(react-dom@18.3.1(react@18.3.1))(react-native@0.85.0(@babel/core@7.29.0)(@types/react@19.2.14)(react@18.3.1))(react@18.3.1))(@dhis2/d2-i18n@1.2.0)(classnames@2.5.1)(prop-types@15.8.1)(react-dom@18.3.1(react@18.3.1))(react-native@0.85.0(@babel/core@7.29.0)(@types/react@19.2.14)(react@18.3.1))(react@18.3.1)(usehooks-ts@3.1.1(react@18.3.1))
       '@hisptz/dhis2-utils':
         specifier: ^2.0.19
         version: 2.0.19(@dhis2/d2-i18n@1.2.0)(lodash@4.18.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(usehooks-ts@3.1.1(react@18.3.1))
@@ -259,7 +259,7 @@ importers:
     devDependencies:
       '@dhis2/cli-app-scripts':
         specifier: ^12.11.0
-        version: 12.11.0(@types/babel__core@7.20.5)(@types/node@24.12.2)(esbuild@0.27.7)(lightningcss@1.32.0)(react-native@0.85.0(@babel/core@7.29.0)(@types/react@19.2.14)(react@18.3.1))(react@18.3.1)(sugarss@5.0.1(postcss@8.5.9))(terser@5.46.1)(type-fest@4.41.0)(typescript@5.6.3)(webpack-dev-server@5.2.3(webpack@5.106.0(esbuild@0.27.7)))
+        version: 12.11.0(@dhis2/data-engine@3.17.0)(@types/babel__core@7.20.5)(@types/node@24.12.2)(esbuild@0.27.7)(lightningcss@1.32.0)(react-native@0.85.0(@babel/core@7.29.0)(@types/react@19.2.14)(react@18.3.1))(react@18.3.1)(sugarss@5.0.1(postcss@8.5.9))(terser@5.46.1)(type-fest@4.41.0)(typescript@5.6.3)(webpack-dev-server@5.2.3(webpack@5.106.0(esbuild@0.27.7)))
       '@dhis2/cypress-commands':
         specifier: ^10.0.6
         version: 10.1.2(@babel/preset-env@7.29.2(@babel/core@7.29.0))(cypress@15.13.1)
@@ -324,23 +324,23 @@ importers:
   apps/portal:
     dependencies:
       '@dhis2/app-runtime':
-        specifier: 3.16.0
-        version: 3.16.0(react-dom@19.2.5(react@19.2.5))(react-native@0.85.0(@babel/core@7.29.0)(@types/react@19.2.14)(react@19.2.5))(react@19.2.5)
+        specifier: ^3.17.0
+        version: 3.17.0(@dhis2/data-engine@3.17.0)(react-dom@19.2.5(react@19.2.5))(react-native@0.85.0(@babel/core@7.29.0)(@types/react@19.2.14)(react@19.2.5))(react@19.2.5)
       '@dhis2/data-engine':
-        specifier: 3.17.0-beta.2
-        version: 3.17.0-beta.2
+        specifier: 3.17.0
+        version: 3.17.0
       '@dhis2/multi-calendar-dates':
         specifier: ^2.1.0
         version: 2.1.2(react-dom@19.2.5(react@19.2.5))(react@19.2.5)
       '@dhis2/ui':
         specifier: ^10.5.1
-        version: 10.12.13(@dhis2/app-runtime@3.16.0(react-dom@19.2.5(react@19.2.5))(react-native@0.85.0(@babel/core@7.29.0)(@types/react@19.2.14)(react@19.2.5))(react@19.2.5))(@dhis2/d2-i18n@1.2.0)(react-dom@19.2.5(react@19.2.5))(react@19.2.5)(styled-jsx@4.0.1(@babel/core@7.29.0)(react@19.2.5))
+        version: 10.12.13(@dhis2/app-runtime@3.17.0(@dhis2/data-engine@3.17.0)(react-dom@19.2.5(react@19.2.5))(react-native@0.85.0(@babel/core@7.29.0)(@types/react@19.2.14)(react@19.2.5))(react@19.2.5))(@dhis2/d2-i18n@1.2.0)(react-dom@19.2.5(react@19.2.5))(react@19.2.5)(styled-jsx@4.0.1(@babel/core@7.29.0)(react@19.2.5))
       '@hisptz/dhis2-analytics':
         specifier: ^2.1.35
-        version: 2.1.36(@dhis2/app-runtime@3.16.0(react-dom@19.2.5(react@19.2.5))(react-native@0.85.0(@babel/core@7.29.0)(@types/react@19.2.14)(react@19.2.5))(react@19.2.5))(@dhis2/d2-i18n@1.2.0)(@react-three/fiber@9.5.0(@types/react@19.2.14)(react-dom@19.2.5(react@19.2.5))(react-native@0.85.0(@babel/core@7.29.0)(@types/react@19.2.14)(react@19.2.5))(react@19.2.5)(three@0.183.2))(@tanstack/react-query@4.44.0(react-dom@19.2.5(react@19.2.5))(react-native@0.85.0(@babel/core@7.29.0)(@types/react@19.2.14)(react@19.2.5))(react@19.2.5))(@types/node@20.19.39)(@types/react@19.2.14)(classnames@2.5.1)(highcharts-react-official@3.2.3(highcharts@12.5.0)(react@19.2.5))(highcharts@12.5.0)(konva@10.2.3)(lodash@4.18.1)(prop-types@15.8.1)(react-dom@19.2.5(react@19.2.5))(react-native@0.85.0(@babel/core@7.29.0)(@types/react@19.2.14)(react@19.2.5))(react-zdog@1.2.2)(react@19.2.5)(redux@5.0.1)(three@0.183.2)(usehooks-ts@3.1.1(react@19.2.5))(zdog@1.1.3)(zod@4.3.6)
+        version: 2.1.36(@dhis2/app-runtime@3.17.0(@dhis2/data-engine@3.17.0)(react-dom@19.2.5(react@19.2.5))(react-native@0.85.0(@babel/core@7.29.0)(@types/react@19.2.14)(react@19.2.5))(react@19.2.5))(@dhis2/d2-i18n@1.2.0)(@react-three/fiber@9.5.0(@types/react@19.2.14)(react-dom@19.2.5(react@19.2.5))(react-native@0.85.0(@babel/core@7.29.0)(@types/react@19.2.14)(react@19.2.5))(react@19.2.5)(three@0.183.2))(@tanstack/react-query@4.44.0(react-dom@19.2.5(react@19.2.5))(react-native@0.85.0(@babel/core@7.29.0)(@types/react@19.2.14)(react@19.2.5))(react@19.2.5))(@types/node@20.19.39)(@types/react@19.2.14)(classnames@2.5.1)(highcharts-react-official@3.2.3(highcharts@12.5.0)(react@19.2.5))(highcharts@12.5.0)(konva@10.2.3)(lodash@4.18.1)(prop-types@15.8.1)(react-dom@19.2.5(react@19.2.5))(react-native@0.85.0(@babel/core@7.29.0)(@types/react@19.2.14)(react@19.2.5))(react-zdog@1.2.2)(react@19.2.5)(redux@5.0.1)(three@0.183.2)(usehooks-ts@3.1.1(react@19.2.5))(zdog@1.1.3)(zod@4.3.6)
       '@hisptz/dhis2-ui':
         specifier: ^2.0.52
-        version: 2.0.52(@dhis2/app-runtime@3.16.0(react-dom@19.2.5(react@19.2.5))(react-native@0.85.0(@babel/core@7.29.0)(@types/react@19.2.14)(react@19.2.5))(react@19.2.5))(@dhis2/d2-i18n@1.2.0)(classnames@2.5.1)(prop-types@15.8.1)(react-dom@19.2.5(react@19.2.5))(react-native@0.85.0(@babel/core@7.29.0)(@types/react@19.2.14)(react@19.2.5))(react@19.2.5)(usehooks-ts@3.1.1(react@19.2.5))
+        version: 2.0.52(@dhis2/app-runtime@3.17.0(@dhis2/data-engine@3.17.0)(react-dom@19.2.5(react@19.2.5))(react-native@0.85.0(@babel/core@7.29.0)(@types/react@19.2.14)(react@19.2.5))(react@19.2.5))(@dhis2/d2-i18n@1.2.0)(classnames@2.5.1)(prop-types@15.8.1)(react-dom@19.2.5(react@19.2.5))(react-native@0.85.0(@babel/core@7.29.0)(@types/react@19.2.14)(react@19.2.5))(react@19.2.5)(usehooks-ts@3.1.1(react@19.2.5))
       '@hisptz/dhis2-utils':
         specifier: ^2.0.19
         version: 2.0.19(@dhis2/d2-i18n@1.2.0)(lodash@4.18.1)(react-dom@19.2.5(react@19.2.5))(react@19.2.5)(usehooks-ts@3.1.1(react@19.2.5))
@@ -2064,14 +2064,32 @@ packages:
       react: ^16.8.6 || ^18
       react-dom: ^16.8.6 || ^18
 
+  '@dhis2/app-runtime@3.17.0':
+    resolution: {integrity: sha512-2vIgbNetNBB67Qp5y3ac14xUWO0I8epXATqZ5jau9O8h0+Ixr1W8UeNwdcFn44KVQQLYwv2gPQqcl2+1ptyCiA==}
+    peerDependencies:
+      react: ^16.8.6 || ^18
+      react-dom: ^16.8.6 || ^18
+
   '@dhis2/app-service-alerts@3.16.0':
     resolution: {integrity: sha512-aTC47gbYebuf0yJfSX7POpmaC+ejG7DCBmAm+qBL3NkBqlsmNI3A0sO9EjztEvkuxnLA/WRuKhu1an+0jsmpTw==}
     peerDependencies:
       react: ^16.8.6 || ^18
       react-dom: ^16.8.6 || ^18
 
+  '@dhis2/app-service-alerts@3.17.0':
+    resolution: {integrity: sha512-As/js2FF1d7rrvWX+xbYfNxkmE/b3OqwgU1AvIRGDW5IMWCsDnFs6KdgadLpgUlOOgxV8p1FEk9ipi8rHhP7Tg==}
+    peerDependencies:
+      react: ^16.8.6 || ^18
+      react-dom: ^16.8.6 || ^18
+
   '@dhis2/app-service-config@3.16.0':
     resolution: {integrity: sha512-kU9aavV8GBjRP8NU/ZsmOuQSSs8p5kcX3bTaCvlw7dgRA4eHscdG24JaHYqAfPFQI0ntPT88Qf8m86Obz375cA==}
+    peerDependencies:
+      react: ^16.8.6 || ^18
+      react-dom: ^16.8.6 || ^18
+
+  '@dhis2/app-service-config@3.17.0':
+    resolution: {integrity: sha512-fhfVbXCaaVdV05HnZL/VB2bCCnzkIzN9SBUjYnlra4cQ8WI8gpsR0qDgB1O9ZEiQZirOVpZPv1HVetUzNoVsuA==}
     peerDependencies:
       react: ^16.8.6 || ^18
       react-dom: ^16.8.6 || ^18
@@ -2083,10 +2101,25 @@ packages:
       react: ^16.8.6 || ^18
       react-dom: ^16.8.6 || ^18
 
+  '@dhis2/app-service-data@3.17.0':
+    resolution: {integrity: sha512-P/jcSOE8SW1Xrmd9Lsw0k4mhzoKpCtOaqbX5gafHHNQkIySIzbtv387v/9daXVIoQtBPDQePCWCri5SS14waRA==}
+    peerDependencies:
+      '@dhis2/app-service-config': 3.17.0
+      '@dhis2/data-engine': 3.17.0
+      react: ^16.8.6 || ^18
+      react-dom: ^16.8.6 || ^18
+
   '@dhis2/app-service-offline@3.16.0':
     resolution: {integrity: sha512-I67msCV3miwh4La4Dpb0HI2dab5Hs20mNmJGPbaN7WLizxbgVMvyrqtTXBGOT7iZulTgc0fB4zUSAaeE3r7pvA==}
     peerDependencies:
       '@dhis2/app-service-config': 3.16.0
+      react: ^16.8.6 || ^18
+      react-dom: ^16.8.6 || ^18
+
+  '@dhis2/app-service-offline@3.17.0':
+    resolution: {integrity: sha512-2pkRPHSbkD0aRzqldi2RCeHJfN/y2NeW/GEF8/n8E58AqmteWTHie19lRFzZ+rvEbZW5wEcdWdJpHdoJXbC/CA==}
+    peerDependencies:
+      '@dhis2/app-service-config': 3.17.0
       react: ^16.8.6 || ^18
       react-dom: ^16.8.6 || ^18
 
@@ -2098,8 +2131,22 @@ packages:
       react: ^16.8.6 || ^18
       react-dom: ^16.8.6 || ^18
 
+  '@dhis2/app-service-plugin@3.17.0':
+    resolution: {integrity: sha512-4ehK6cWoI6tcWte6In9tv31dsaDywu22fjnpsGwSU7N4yuLOq5jFu/jkw3Fjay0oDsw59XkTbuIJu5t14xtkqg==}
+    peerDependencies:
+      '@dhis2/app-service-alerts': 3.17.0
+      '@dhis2/app-service-data': 3.17.0
+      react: ^16.8.6 || ^18
+      react-dom: ^16.8.6 || ^18
+
   '@dhis2/app-service-user@3.16.0':
     resolution: {integrity: sha512-3bFeiy4NDtwvzo+mF9q70B6GslNKf0lbr9Ujb6PXsp9IqJpahzqFvzMDruTjP/eAdOCNE6o/UL8ZHgSux7aVTg==}
+    peerDependencies:
+      react: ^16.8.6 || ^18
+      react-dom: ^16.8.6 || ^18
+
+  '@dhis2/app-service-user@3.17.0':
+    resolution: {integrity: sha512-BRMX6L9jigUVvBSgls8DG9qh1hVMqSbXKbeUKfpBJlYSWL3K8uPzSd2NHl5VjHz8mqpPvKq6p+s4Y02qejqe9A==}
     peerDependencies:
       react: ^16.8.6 || ^18
       react-dom: ^16.8.6 || ^18
@@ -2142,8 +2189,8 @@ packages:
   '@dhis2/d2-i18n@1.2.0':
     resolution: {integrity: sha512-bpJggHy5dyuS9DHCQuLbStccsHIRGj4WjZh10wk7jmctOpzKHBTsm5ZgKYYLTN2JjtiCPqPFYIxKeVQEZWOhkA==}
 
-  '@dhis2/data-engine@3.17.0-beta.2':
-    resolution: {integrity: sha512-1Cp3KN5WYBHifQQEIZFjdfRJJgb8DGMz6FBWU8DrbDW7O3flRTmU+0dqIBoQLu2BVRTqoDRx78CRoagvUdschA==}
+  '@dhis2/data-engine@3.17.0':
+    resolution: {integrity: sha512-T2TKpsKL+sBWLFIevO3grXecrz41NFMH4V79HSAtxn7KDrxkEDalHDNQACuehcgZpUBcYT3Cna1I/TeREp/p0g==}
 
   '@dhis2/multi-calendar-dates@2.1.2':
     resolution: {integrity: sha512-7/EuYZFi266QwyRpK+s79iEiwdOUVBwM+QjKwNUHN3zdYMDmQcWLTo5TujJFg1XnnQ8UhdiRqESq5rgoJkM2fQ==}
@@ -16189,7 +16236,7 @@ snapshots:
       react-dom: 19.2.5(react@19.2.5)
       styled-jsx: 4.0.1(@babel/core@7.29.0)(react@19.2.5)
 
-  '@dhis2-ui/header-bar@10.12.13(@dhis2/app-runtime@3.16.0(react-dom@18.3.1(react@18.3.1))(react-native@0.85.0(@babel/core@7.29.0)(@types/react@19.2.14)(react@18.3.1))(react@18.3.1))(@dhis2/d2-i18n@1.2.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(styled-jsx@4.0.1(@babel/core@7.29.0)(react@18.3.1))':
+  '@dhis2-ui/header-bar@10.12.13(@dhis2/app-runtime@3.17.0(@dhis2/data-engine@3.17.0)(react-dom@18.3.1(react@18.3.1))(react-native@0.85.0(@babel/core@7.29.0)(@types/react@19.2.14)(react@18.3.1))(react@18.3.1))(@dhis2/d2-i18n@1.2.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(styled-jsx@4.0.1(@babel/core@7.29.0)(react@18.3.1))':
     dependencies:
       '@dhis2-ui/box': 10.12.13(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(styled-jsx@4.0.1(@babel/core@7.29.0)(react@18.3.1))
       '@dhis2-ui/button': 10.12.13(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(styled-jsx@4.0.1(@babel/core@7.29.0)(react@18.3.1))
@@ -16202,8 +16249,8 @@ snapshots:
       '@dhis2-ui/logo': 10.12.13(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(styled-jsx@4.0.1(@babel/core@7.29.0)(react@18.3.1))
       '@dhis2-ui/menu': 10.12.13(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(styled-jsx@4.0.1(@babel/core@7.29.0)(react@18.3.1))
       '@dhis2-ui/modal': 10.12.13(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(styled-jsx@4.0.1(@babel/core@7.29.0)(react@18.3.1))
-      '@dhis2-ui/user-avatar': 10.12.13(@dhis2/app-runtime@3.16.0(react-dom@18.3.1(react@18.3.1))(react-native@0.85.0(@babel/core@7.29.0)(@types/react@19.2.14)(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(styled-jsx@4.0.1(@babel/core@7.29.0)(react@18.3.1))
-      '@dhis2/app-runtime': 3.16.0(react-dom@18.3.1(react@18.3.1))(react-native@0.85.0(@babel/core@7.29.0)(@types/react@19.2.14)(react@18.3.1))(react@18.3.1)
+      '@dhis2-ui/user-avatar': 10.12.13(@dhis2/app-runtime@3.17.0(@dhis2/data-engine@3.17.0)(react-dom@18.3.1(react@18.3.1))(react-native@0.85.0(@babel/core@7.29.0)(@types/react@19.2.14)(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(styled-jsx@4.0.1(@babel/core@7.29.0)(react@18.3.1))
+      '@dhis2/app-runtime': 3.17.0(@dhis2/data-engine@3.17.0)(react-dom@18.3.1(react@18.3.1))(react-native@0.85.0(@babel/core@7.29.0)(@types/react@19.2.14)(react@18.3.1))(react@18.3.1)
       '@dhis2/d2-i18n': 1.2.0
       '@dhis2/prop-types': 3.1.2(prop-types@15.8.1)
       '@dhis2/ui-constants': 10.12.13
@@ -16215,7 +16262,7 @@ snapshots:
       react-dom: 18.3.1(react@18.3.1)
       styled-jsx: 4.0.1(@babel/core@7.29.0)(react@18.3.1)
 
-  '@dhis2-ui/header-bar@10.12.13(@dhis2/app-runtime@3.16.0(react-dom@19.2.5(react@19.2.5))(react-native@0.85.0(@babel/core@7.29.0)(@types/react@19.2.14)(react@19.2.5))(react@19.2.5))(@dhis2/d2-i18n@1.2.0)(react-dom@19.2.5(react@19.2.5))(react@19.2.5)(styled-jsx@4.0.1(@babel/core@7.29.0)(react@19.2.5))':
+  '@dhis2-ui/header-bar@10.12.13(@dhis2/app-runtime@3.17.0(@dhis2/data-engine@3.17.0)(react-dom@19.2.5(react@19.2.5))(react-native@0.85.0(@babel/core@7.29.0)(@types/react@19.2.14)(react@19.2.5))(react@19.2.5))(@dhis2/d2-i18n@1.2.0)(react-dom@19.2.5(react@19.2.5))(react@19.2.5)(styled-jsx@4.0.1(@babel/core@7.29.0)(react@19.2.5))':
     dependencies:
       '@dhis2-ui/box': 10.12.13(react-dom@19.2.5(react@19.2.5))(react@19.2.5)(styled-jsx@4.0.1(@babel/core@7.29.0)(react@19.2.5))
       '@dhis2-ui/button': 10.12.13(react-dom@19.2.5(react@19.2.5))(react@19.2.5)(styled-jsx@4.0.1(@babel/core@7.29.0)(react@19.2.5))
@@ -16228,8 +16275,8 @@ snapshots:
       '@dhis2-ui/logo': 10.12.13(react-dom@19.2.5(react@19.2.5))(react@19.2.5)(styled-jsx@4.0.1(@babel/core@7.29.0)(react@19.2.5))
       '@dhis2-ui/menu': 10.12.13(react-dom@19.2.5(react@19.2.5))(react@19.2.5)(styled-jsx@4.0.1(@babel/core@7.29.0)(react@19.2.5))
       '@dhis2-ui/modal': 10.12.13(react-dom@19.2.5(react@19.2.5))(react@19.2.5)(styled-jsx@4.0.1(@babel/core@7.29.0)(react@19.2.5))
-      '@dhis2-ui/user-avatar': 10.12.13(@dhis2/app-runtime@3.16.0(react-dom@19.2.5(react@19.2.5))(react-native@0.85.0(@babel/core@7.29.0)(@types/react@19.2.14)(react@19.2.5))(react@19.2.5))(react-dom@19.2.5(react@19.2.5))(react@19.2.5)(styled-jsx@4.0.1(@babel/core@7.29.0)(react@19.2.5))
-      '@dhis2/app-runtime': 3.16.0(react-dom@19.2.5(react@19.2.5))(react-native@0.85.0(@babel/core@7.29.0)(@types/react@19.2.14)(react@19.2.5))(react@19.2.5)
+      '@dhis2-ui/user-avatar': 10.12.13(@dhis2/app-runtime@3.17.0(@dhis2/data-engine@3.17.0)(react-dom@19.2.5(react@19.2.5))(react-native@0.85.0(@babel/core@7.29.0)(@types/react@19.2.14)(react@19.2.5))(react@19.2.5))(react-dom@19.2.5(react@19.2.5))(react@19.2.5)(styled-jsx@4.0.1(@babel/core@7.29.0)(react@19.2.5))
+      '@dhis2/app-runtime': 3.17.0(@dhis2/data-engine@3.17.0)(react-dom@19.2.5(react@19.2.5))(react-native@0.85.0(@babel/core@7.29.0)(@types/react@19.2.14)(react@19.2.5))(react@19.2.5)
       '@dhis2/d2-i18n': 1.2.0
       '@dhis2/prop-types': 3.1.2(prop-types@15.8.1)
       '@dhis2/ui-constants': 10.12.13
@@ -16523,13 +16570,13 @@ snapshots:
       react-dom: 19.2.5(react@19.2.5)
       styled-jsx: 4.0.1(@babel/core@7.29.0)(react@19.2.5)
 
-  '@dhis2-ui/organisation-unit-tree@10.12.13(@dhis2/app-runtime@3.16.0(react-dom@18.3.1(react@18.3.1))(react-native@0.85.0(@babel/core@7.29.0)(@types/react@19.2.14)(react@18.3.1))(react@18.3.1))(@dhis2/d2-i18n@1.2.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(styled-jsx@4.0.1(@babel/core@7.29.0)(react@18.3.1))':
+  '@dhis2-ui/organisation-unit-tree@10.12.13(@dhis2/app-runtime@3.17.0(@dhis2/data-engine@3.17.0)(react-dom@18.3.1(react@18.3.1))(react-native@0.85.0(@babel/core@7.29.0)(@types/react@19.2.14)(react@18.3.1))(react@18.3.1))(@dhis2/d2-i18n@1.2.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(styled-jsx@4.0.1(@babel/core@7.29.0)(react@18.3.1))':
     dependencies:
       '@dhis2-ui/button': 10.12.13(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(styled-jsx@4.0.1(@babel/core@7.29.0)(react@18.3.1))
       '@dhis2-ui/checkbox': 10.12.13(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(styled-jsx@4.0.1(@babel/core@7.29.0)(react@18.3.1))
       '@dhis2-ui/loader': 10.12.13(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(styled-jsx@4.0.1(@babel/core@7.29.0)(react@18.3.1))
       '@dhis2-ui/node': 10.12.13(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(styled-jsx@4.0.1(@babel/core@7.29.0)(react@18.3.1))
-      '@dhis2/app-runtime': 3.16.0(react-dom@18.3.1(react@18.3.1))(react-native@0.85.0(@babel/core@7.29.0)(@types/react@19.2.14)(react@18.3.1))(react@18.3.1)
+      '@dhis2/app-runtime': 3.17.0(@dhis2/data-engine@3.17.0)(react-dom@18.3.1(react@18.3.1))(react-native@0.85.0(@babel/core@7.29.0)(@types/react@19.2.14)(react@18.3.1))(react@18.3.1)
       '@dhis2/d2-i18n': 1.2.0
       '@dhis2/prop-types': 3.1.2(prop-types@15.8.1)
       '@dhis2/ui-constants': 10.12.13
@@ -16539,13 +16586,13 @@ snapshots:
       react-dom: 18.3.1(react@18.3.1)
       styled-jsx: 4.0.1(@babel/core@7.29.0)(react@18.3.1)
 
-  '@dhis2-ui/organisation-unit-tree@10.12.13(@dhis2/app-runtime@3.16.0(react-dom@19.2.5(react@19.2.5))(react-native@0.85.0(@babel/core@7.29.0)(@types/react@19.2.14)(react@19.2.5))(react@19.2.5))(@dhis2/d2-i18n@1.2.0)(react-dom@19.2.5(react@19.2.5))(react@19.2.5)(styled-jsx@4.0.1(@babel/core@7.29.0)(react@19.2.5))':
+  '@dhis2-ui/organisation-unit-tree@10.12.13(@dhis2/app-runtime@3.17.0(@dhis2/data-engine@3.17.0)(react-dom@19.2.5(react@19.2.5))(react-native@0.85.0(@babel/core@7.29.0)(@types/react@19.2.14)(react@19.2.5))(react@19.2.5))(@dhis2/d2-i18n@1.2.0)(react-dom@19.2.5(react@19.2.5))(react@19.2.5)(styled-jsx@4.0.1(@babel/core@7.29.0)(react@19.2.5))':
     dependencies:
       '@dhis2-ui/button': 10.12.13(react-dom@19.2.5(react@19.2.5))(react@19.2.5)(styled-jsx@4.0.1(@babel/core@7.29.0)(react@19.2.5))
       '@dhis2-ui/checkbox': 10.12.13(react-dom@19.2.5(react@19.2.5))(react@19.2.5)(styled-jsx@4.0.1(@babel/core@7.29.0)(react@19.2.5))
       '@dhis2-ui/loader': 10.12.13(react-dom@19.2.5(react@19.2.5))(react@19.2.5)(styled-jsx@4.0.1(@babel/core@7.29.0)(react@19.2.5))
       '@dhis2-ui/node': 10.12.13(react-dom@19.2.5(react@19.2.5))(react@19.2.5)(styled-jsx@4.0.1(@babel/core@7.29.0)(react@19.2.5))
-      '@dhis2/app-runtime': 3.16.0(react-dom@19.2.5(react@19.2.5))(react-native@0.85.0(@babel/core@7.29.0)(@types/react@19.2.14)(react@19.2.5))(react@19.2.5)
+      '@dhis2/app-runtime': 3.17.0(@dhis2/data-engine@3.17.0)(react-dom@19.2.5(react@19.2.5))(react-native@0.85.0(@babel/core@7.29.0)(@types/react@19.2.14)(react@19.2.5))(react@19.2.5)
       '@dhis2/d2-i18n': 1.2.0
       '@dhis2/prop-types': 3.1.2(prop-types@15.8.1)
       '@dhis2/ui-constants': 10.12.13
@@ -16787,7 +16834,7 @@ snapshots:
       react-dom: 19.2.5(react@19.2.5)
       styled-jsx: 4.0.1(@babel/core@7.29.0)(react@19.2.5)
 
-  '@dhis2-ui/sharing-dialog@10.12.13(@dhis2/app-runtime@3.16.0(react-dom@18.3.1(react@18.3.1))(react-native@0.85.0(@babel/core@7.29.0)(@types/react@19.2.14)(react@18.3.1))(react@18.3.1))(@dhis2/d2-i18n@1.2.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(styled-jsx@4.0.1(@babel/core@7.29.0)(react@18.3.1))':
+  '@dhis2-ui/sharing-dialog@10.12.13(@dhis2/app-runtime@3.17.0(@dhis2/data-engine@3.17.0)(react-dom@18.3.1(react@18.3.1))(react-native@0.85.0(@babel/core@7.29.0)(@types/react@19.2.14)(react@18.3.1))(react@18.3.1))(@dhis2/d2-i18n@1.2.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(styled-jsx@4.0.1(@babel/core@7.29.0)(react@18.3.1))':
     dependencies:
       '@dhis2-ui/box': 10.12.13(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(styled-jsx@4.0.1(@babel/core@7.29.0)(react@18.3.1))
       '@dhis2-ui/button': 10.12.13(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(styled-jsx@4.0.1(@babel/core@7.29.0)(react@18.3.1))
@@ -16802,8 +16849,8 @@ snapshots:
       '@dhis2-ui/select': 10.12.13(@dhis2/d2-i18n@1.2.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(styled-jsx@4.0.1(@babel/core@7.29.0)(react@18.3.1))
       '@dhis2-ui/tab': 10.12.13(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(styled-jsx@4.0.1(@babel/core@7.29.0)(react@18.3.1))
       '@dhis2-ui/tooltip': 10.12.13(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(styled-jsx@4.0.1(@babel/core@7.29.0)(react@18.3.1))
-      '@dhis2-ui/user-avatar': 10.12.13(@dhis2/app-runtime@3.16.0(react-dom@18.3.1(react@18.3.1))(react-native@0.85.0(@babel/core@7.29.0)(@types/react@19.2.14)(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(styled-jsx@4.0.1(@babel/core@7.29.0)(react@18.3.1))
-      '@dhis2/app-runtime': 3.16.0(react-dom@18.3.1(react@18.3.1))(react-native@0.85.0(@babel/core@7.29.0)(@types/react@19.2.14)(react@18.3.1))(react@18.3.1)
+      '@dhis2-ui/user-avatar': 10.12.13(@dhis2/app-runtime@3.17.0(@dhis2/data-engine@3.17.0)(react-dom@18.3.1(react@18.3.1))(react-native@0.85.0(@babel/core@7.29.0)(@types/react@19.2.14)(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(styled-jsx@4.0.1(@babel/core@7.29.0)(react@18.3.1))
+      '@dhis2/app-runtime': 3.17.0(@dhis2/data-engine@3.17.0)(react-dom@18.3.1(react@18.3.1))(react-native@0.85.0(@babel/core@7.29.0)(@types/react@19.2.14)(react@18.3.1))(react@18.3.1)
       '@dhis2/d2-i18n': 1.2.0
       '@dhis2/prop-types': 3.1.2(prop-types@15.8.1)
       '@dhis2/ui-constants': 10.12.13
@@ -16815,7 +16862,7 @@ snapshots:
       react-dom: 18.3.1(react@18.3.1)
       styled-jsx: 4.0.1(@babel/core@7.29.0)(react@18.3.1)
 
-  '@dhis2-ui/sharing-dialog@10.12.13(@dhis2/app-runtime@3.16.0(react-dom@19.2.5(react@19.2.5))(react-native@0.85.0(@babel/core@7.29.0)(@types/react@19.2.14)(react@19.2.5))(react@19.2.5))(@dhis2/d2-i18n@1.2.0)(react-dom@19.2.5(react@19.2.5))(react@19.2.5)(styled-jsx@4.0.1(@babel/core@7.29.0)(react@19.2.5))':
+  '@dhis2-ui/sharing-dialog@10.12.13(@dhis2/app-runtime@3.17.0(@dhis2/data-engine@3.17.0)(react-dom@19.2.5(react@19.2.5))(react-native@0.85.0(@babel/core@7.29.0)(@types/react@19.2.14)(react@19.2.5))(react@19.2.5))(@dhis2/d2-i18n@1.2.0)(react-dom@19.2.5(react@19.2.5))(react@19.2.5)(styled-jsx@4.0.1(@babel/core@7.29.0)(react@19.2.5))':
     dependencies:
       '@dhis2-ui/box': 10.12.13(react-dom@19.2.5(react@19.2.5))(react@19.2.5)(styled-jsx@4.0.1(@babel/core@7.29.0)(react@19.2.5))
       '@dhis2-ui/button': 10.12.13(react-dom@19.2.5(react@19.2.5))(react@19.2.5)(styled-jsx@4.0.1(@babel/core@7.29.0)(react@19.2.5))
@@ -16830,8 +16877,8 @@ snapshots:
       '@dhis2-ui/select': 10.12.13(@dhis2/d2-i18n@1.2.0)(react-dom@19.2.5(react@19.2.5))(react@19.2.5)(styled-jsx@4.0.1(@babel/core@7.29.0)(react@19.2.5))
       '@dhis2-ui/tab': 10.12.13(react-dom@19.2.5(react@19.2.5))(react@19.2.5)(styled-jsx@4.0.1(@babel/core@7.29.0)(react@19.2.5))
       '@dhis2-ui/tooltip': 10.12.13(react-dom@19.2.5(react@19.2.5))(react@19.2.5)(styled-jsx@4.0.1(@babel/core@7.29.0)(react@19.2.5))
-      '@dhis2-ui/user-avatar': 10.12.13(@dhis2/app-runtime@3.16.0(react-dom@19.2.5(react@19.2.5))(react-native@0.85.0(@babel/core@7.29.0)(@types/react@19.2.14)(react@19.2.5))(react@19.2.5))(react-dom@19.2.5(react@19.2.5))(react@19.2.5)(styled-jsx@4.0.1(@babel/core@7.29.0)(react@19.2.5))
-      '@dhis2/app-runtime': 3.16.0(react-dom@19.2.5(react@19.2.5))(react-native@0.85.0(@babel/core@7.29.0)(@types/react@19.2.14)(react@19.2.5))(react@19.2.5)
+      '@dhis2-ui/user-avatar': 10.12.13(@dhis2/app-runtime@3.17.0(@dhis2/data-engine@3.17.0)(react-dom@19.2.5(react@19.2.5))(react-native@0.85.0(@babel/core@7.29.0)(@types/react@19.2.14)(react@19.2.5))(react@19.2.5))(react-dom@19.2.5(react@19.2.5))(react@19.2.5)(styled-jsx@4.0.1(@babel/core@7.29.0)(react@19.2.5))
+      '@dhis2/app-runtime': 3.17.0(@dhis2/data-engine@3.17.0)(react-dom@19.2.5(react@19.2.5))(react-native@0.85.0(@babel/core@7.29.0)(@types/react@19.2.14)(react@19.2.5))(react@19.2.5)
       '@dhis2/d2-i18n': 1.2.0
       '@dhis2/prop-types': 3.1.2(prop-types@15.8.1)
       '@dhis2/ui-constants': 10.12.13
@@ -17043,9 +17090,9 @@ snapshots:
       react-dom: 19.2.5(react@19.2.5)
       styled-jsx: 4.0.1(@babel/core@7.29.0)(react@19.2.5)
 
-  '@dhis2-ui/user-avatar@10.12.13(@dhis2/app-runtime@3.16.0(react-dom@18.3.1(react@18.3.1))(react-native@0.85.0(@babel/core@7.29.0)(@types/react@19.2.14)(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(styled-jsx@4.0.1(@babel/core@7.29.0)(react@18.3.1))':
+  '@dhis2-ui/user-avatar@10.12.13(@dhis2/app-runtime@3.17.0(@dhis2/data-engine@3.17.0)(react-dom@18.3.1(react@18.3.1))(react-native@0.85.0(@babel/core@7.29.0)(@types/react@19.2.14)(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(styled-jsx@4.0.1(@babel/core@7.29.0)(react@18.3.1))':
     dependencies:
-      '@dhis2/app-runtime': 3.16.0(react-dom@18.3.1(react@18.3.1))(react-native@0.85.0(@babel/core@7.29.0)(@types/react@19.2.14)(react@18.3.1))(react@18.3.1)
+      '@dhis2/app-runtime': 3.17.0(@dhis2/data-engine@3.17.0)(react-dom@18.3.1(react@18.3.1))(react-native@0.85.0(@babel/core@7.29.0)(@types/react@19.2.14)(react@18.3.1))(react@18.3.1)
       '@dhis2/prop-types': 3.1.2(prop-types@15.8.1)
       '@dhis2/ui-constants': 10.12.13
       classnames: 2.5.1
@@ -17054,9 +17101,9 @@ snapshots:
       react-dom: 18.3.1(react@18.3.1)
       styled-jsx: 4.0.1(@babel/core@7.29.0)(react@18.3.1)
 
-  '@dhis2-ui/user-avatar@10.12.13(@dhis2/app-runtime@3.16.0(react-dom@19.2.5(react@19.2.5))(react-native@0.85.0(@babel/core@7.29.0)(@types/react@19.2.14)(react@19.2.5))(react@19.2.5))(react-dom@19.2.5(react@19.2.5))(react@19.2.5)(styled-jsx@4.0.1(@babel/core@7.29.0)(react@19.2.5))':
+  '@dhis2-ui/user-avatar@10.12.13(@dhis2/app-runtime@3.17.0(@dhis2/data-engine@3.17.0)(react-dom@19.2.5(react@19.2.5))(react-native@0.85.0(@babel/core@7.29.0)(@types/react@19.2.14)(react@19.2.5))(react@19.2.5))(react-dom@19.2.5(react@19.2.5))(react@19.2.5)(styled-jsx@4.0.1(@babel/core@7.29.0)(react@19.2.5))':
     dependencies:
-      '@dhis2/app-runtime': 3.16.0(react-dom@19.2.5(react@19.2.5))(react-native@0.85.0(@babel/core@7.29.0)(@types/react@19.2.14)(react@19.2.5))(react@19.2.5)
+      '@dhis2/app-runtime': 3.17.0(@dhis2/data-engine@3.17.0)(react-dom@19.2.5(react@19.2.5))(react-native@0.85.0(@babel/core@7.29.0)(@types/react@19.2.14)(react@19.2.5))(react@19.2.5)
       '@dhis2/prop-types': 3.1.2(prop-types@15.8.1)
       '@dhis2/ui-constants': 10.12.13
       classnames: 2.5.1
@@ -17065,32 +17112,18 @@ snapshots:
       react-dom: 19.2.5(react@19.2.5)
       styled-jsx: 4.0.1(@babel/core@7.29.0)(react@19.2.5)
 
-  '@dhis2/app-adapter@12.11.0(@dhis2/app-runtime@3.16.0(react-dom@18.3.1(react@18.3.1))(react-native@0.85.0(@babel/core@7.29.0)(@types/react@19.2.14)(react@18.3.1))(react@18.3.1))(@dhis2/d2-i18n@1.2.0)(@dhis2/ui@10.12.13(@dhis2/app-runtime@3.16.0(react-dom@18.3.1(react@18.3.1))(react-native@0.85.0(@babel/core@7.29.0)(@types/react@19.2.14)(react@18.3.1))(react@18.3.1))(@dhis2/d2-i18n@1.2.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(styled-jsx@4.0.1(@babel/core@7.29.0)(react@18.3.1)))(classnames@2.5.1)(moment@2.30.1)(prop-types@15.8.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(styled-jsx@4.0.1(@babel/core@7.29.0)(react@18.3.1))':
+  '@dhis2/app-adapter@12.11.0(@dhis2/app-runtime@3.17.0(@dhis2/data-engine@3.17.0)(react-dom@18.3.1(react@18.3.1))(react-native@0.85.0(@babel/core@7.29.0)(@types/react@19.2.14)(react@18.3.1))(react@18.3.1))(@dhis2/d2-i18n@1.2.0)(@dhis2/ui@10.12.13(@dhis2/app-runtime@3.17.0(@dhis2/data-engine@3.17.0)(react-dom@18.3.1(react@18.3.1))(react-native@0.85.0(@babel/core@7.29.0)(@types/react@19.2.14)(react@18.3.1))(react@18.3.1))(@dhis2/d2-i18n@1.2.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(styled-jsx@4.0.1(@babel/core@7.29.0)(react@18.3.1)))(classnames@2.5.1)(moment@2.30.1)(prop-types@15.8.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(styled-jsx@4.0.1(@babel/core@7.29.0)(react@18.3.1))':
     dependencies:
-      '@dhis2/app-runtime': 3.16.0(react-dom@18.3.1(react@18.3.1))(react-native@0.85.0(@babel/core@7.29.0)(@types/react@19.2.14)(react@18.3.1))(react@18.3.1)
+      '@dhis2/app-runtime': 3.17.0(@dhis2/data-engine@3.17.0)(react-dom@18.3.1(react@18.3.1))(react-native@0.85.0(@babel/core@7.29.0)(@types/react@19.2.14)(react@18.3.1))(react@18.3.1)
       '@dhis2/d2-i18n': 1.2.0
       '@dhis2/pwa': 12.11.0
-      '@dhis2/ui': 10.12.13(@dhis2/app-runtime@3.16.0(react-dom@18.3.1(react@18.3.1))(react-native@0.85.0(@babel/core@7.29.0)(@types/react@19.2.14)(react@18.3.1))(react@18.3.1))(@dhis2/d2-i18n@1.2.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(styled-jsx@4.0.1(@babel/core@7.29.0)(react@18.3.1))
+      '@dhis2/ui': 10.12.13(@dhis2/app-runtime@3.17.0(@dhis2/data-engine@3.17.0)(react-dom@18.3.1(react@18.3.1))(react-native@0.85.0(@babel/core@7.29.0)(@types/react@19.2.14)(react@18.3.1))(react@18.3.1))(@dhis2/d2-i18n@1.2.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(styled-jsx@4.0.1(@babel/core@7.29.0)(react@18.3.1))
       classnames: 2.5.1
       moment: 2.30.1
       prop-types: 15.8.1
       react: 18.3.1
       react-dom: 18.3.1(react@18.3.1)
       styled-jsx: 4.0.1(@babel/core@7.29.0)(react@18.3.1)
-
-  '@dhis2/app-runtime@3.16.0(react-dom@18.3.1(react@18.3.1))(react-native@0.85.0(@babel/core@7.29.0)(@types/react@19.2.14)(react@18.3.1))(react@18.3.1)':
-    dependencies:
-      '@dhis2/app-service-alerts': 3.16.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
-      '@dhis2/app-service-config': 3.16.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
-      '@dhis2/app-service-data': 3.16.0(@dhis2/app-service-config@3.16.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react-native@0.85.0(@babel/core@7.29.0)(@types/react@19.2.14)(react@18.3.1))(react@18.3.1)
-      '@dhis2/app-service-offline': 3.16.0(@dhis2/app-service-config@3.16.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
-      '@dhis2/app-service-plugin': 3.16.0(@dhis2/app-service-alerts@3.16.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(@dhis2/app-service-data@3.16.0(@dhis2/app-service-config@3.16.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react-native@0.85.0(@babel/core@7.29.0)(@types/react@19.2.14)(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
-      '@dhis2/app-service-user': 3.16.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
-      prop-types: 15.8.1
-      react: 18.3.1
-      react-dom: 18.3.1(react@18.3.1)
-    transitivePeerDependencies:
-      - react-native
 
   '@dhis2/app-runtime@3.16.0(react-dom@19.2.5(react@19.2.5))(react-native@0.85.0(@babel/core@7.29.0)(@types/react@19.2.14)(react@19.2.5))(react@19.2.5)':
     dependencies:
@@ -17106,11 +17139,35 @@ snapshots:
     transitivePeerDependencies:
       - react-native
 
-  '@dhis2/app-service-alerts@3.16.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
+  '@dhis2/app-runtime@3.17.0(@dhis2/data-engine@3.17.0)(react-dom@18.3.1(react@18.3.1))(react-native@0.85.0(@babel/core@7.29.0)(@types/react@19.2.14)(react@18.3.1))(react@18.3.1)':
     dependencies:
+      '@dhis2/app-service-alerts': 3.17.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      '@dhis2/app-service-config': 3.17.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      '@dhis2/app-service-data': 3.17.0(@dhis2/app-service-config@3.17.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(@dhis2/data-engine@3.17.0)(react-dom@18.3.1(react@18.3.1))(react-native@0.85.0(@babel/core@7.29.0)(@types/react@19.2.14)(react@18.3.1))(react@18.3.1)
+      '@dhis2/app-service-offline': 3.17.0(@dhis2/app-service-config@3.17.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      '@dhis2/app-service-plugin': 3.17.0(@dhis2/app-service-alerts@3.17.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(@dhis2/app-service-data@3.17.0(@dhis2/app-service-config@3.17.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(@dhis2/data-engine@3.17.0)(react-dom@18.3.1(react@18.3.1))(react-native@0.85.0(@babel/core@7.29.0)(@types/react@19.2.14)(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      '@dhis2/app-service-user': 3.17.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       prop-types: 15.8.1
       react: 18.3.1
       react-dom: 18.3.1(react@18.3.1)
+    transitivePeerDependencies:
+      - '@dhis2/data-engine'
+      - react-native
+
+  '@dhis2/app-runtime@3.17.0(@dhis2/data-engine@3.17.0)(react-dom@19.2.5(react@19.2.5))(react-native@0.85.0(@babel/core@7.29.0)(@types/react@19.2.14)(react@19.2.5))(react@19.2.5)':
+    dependencies:
+      '@dhis2/app-service-alerts': 3.17.0(react-dom@19.2.5(react@19.2.5))(react@19.2.5)
+      '@dhis2/app-service-config': 3.17.0(react-dom@19.2.5(react@19.2.5))(react@19.2.5)
+      '@dhis2/app-service-data': 3.17.0(@dhis2/app-service-config@3.17.0(react-dom@19.2.5(react@19.2.5))(react@19.2.5))(@dhis2/data-engine@3.17.0)(react-dom@19.2.5(react@19.2.5))(react-native@0.85.0(@babel/core@7.29.0)(@types/react@19.2.14)(react@19.2.5))(react@19.2.5)
+      '@dhis2/app-service-offline': 3.17.0(@dhis2/app-service-config@3.17.0(react-dom@19.2.5(react@19.2.5))(react@19.2.5))(react-dom@19.2.5(react@19.2.5))(react@19.2.5)
+      '@dhis2/app-service-plugin': 3.17.0(@dhis2/app-service-alerts@3.17.0(react-dom@19.2.5(react@19.2.5))(react@19.2.5))(@dhis2/app-service-data@3.17.0(@dhis2/app-service-config@3.17.0(react-dom@19.2.5(react@19.2.5))(react@19.2.5))(@dhis2/data-engine@3.17.0)(react-dom@19.2.5(react@19.2.5))(react-native@0.85.0(@babel/core@7.29.0)(@types/react@19.2.14)(react@19.2.5))(react@19.2.5))(react-dom@19.2.5(react@19.2.5))(react@19.2.5)
+      '@dhis2/app-service-user': 3.17.0(react-dom@19.2.5(react@19.2.5))(react@19.2.5)
+      prop-types: 15.8.1
+      react: 19.2.5
+      react-dom: 19.2.5(react@19.2.5)
+    transitivePeerDependencies:
+      - '@dhis2/data-engine'
+      - react-native
 
   '@dhis2/app-service-alerts@3.16.0(react-dom@19.2.5(react@19.2.5))(react@19.2.5)':
     dependencies:
@@ -17118,11 +17175,17 @@ snapshots:
       react: 19.2.5
       react-dom: 19.2.5(react@19.2.5)
 
-  '@dhis2/app-service-config@3.16.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
+  '@dhis2/app-service-alerts@3.17.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
     dependencies:
       prop-types: 15.8.1
       react: 18.3.1
       react-dom: 18.3.1(react@18.3.1)
+
+  '@dhis2/app-service-alerts@3.17.0(react-dom@19.2.5(react@19.2.5))(react@19.2.5)':
+    dependencies:
+      prop-types: 15.8.1
+      react: 19.2.5
+      react-dom: 19.2.5(react@19.2.5)
 
   '@dhis2/app-service-config@3.16.0(react-dom@19.2.5(react@19.2.5))(react@19.2.5)':
     dependencies:
@@ -17130,15 +17193,17 @@ snapshots:
       react: 19.2.5
       react-dom: 19.2.5(react@19.2.5)
 
-  '@dhis2/app-service-data@3.16.0(@dhis2/app-service-config@3.16.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react-native@0.85.0(@babel/core@7.29.0)(@types/react@19.2.14)(react@18.3.1))(react@18.3.1)':
+  '@dhis2/app-service-config@3.17.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
     dependencies:
-      '@dhis2/app-service-config': 3.16.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
-      '@tanstack/react-query': 4.44.0(react-dom@18.3.1(react@18.3.1))(react-native@0.85.0(@babel/core@7.29.0)(@types/react@19.2.14)(react@18.3.1))(react@18.3.1)
       prop-types: 15.8.1
       react: 18.3.1
       react-dom: 18.3.1(react@18.3.1)
-    transitivePeerDependencies:
-      - react-native
+
+  '@dhis2/app-service-config@3.17.0(react-dom@19.2.5(react@19.2.5))(react@19.2.5)':
+    dependencies:
+      prop-types: 15.8.1
+      react: 19.2.5
+      react-dom: 19.2.5(react@19.2.5)
 
   '@dhis2/app-service-data@3.16.0(@dhis2/app-service-config@3.16.0(react-dom@19.2.5(react@19.2.5))(react@19.2.5))(react-dom@19.2.5(react@19.2.5))(react-native@0.85.0(@babel/core@7.29.0)(@types/react@19.2.14)(react@19.2.5))(react@19.2.5)':
     dependencies:
@@ -17150,13 +17215,27 @@ snapshots:
     transitivePeerDependencies:
       - react-native
 
-  '@dhis2/app-service-offline@3.16.0(@dhis2/app-service-config@3.16.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
+  '@dhis2/app-service-data@3.17.0(@dhis2/app-service-config@3.17.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(@dhis2/data-engine@3.17.0)(react-dom@18.3.1(react@18.3.1))(react-native@0.85.0(@babel/core@7.29.0)(@types/react@19.2.14)(react@18.3.1))(react@18.3.1)':
     dependencies:
-      '@dhis2/app-service-config': 3.16.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
-      lodash: 4.18.1
+      '@dhis2/app-service-config': 3.17.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      '@dhis2/data-engine': 3.17.0
+      '@tanstack/react-query': 4.44.0(react-dom@18.3.1(react@18.3.1))(react-native@0.85.0(@babel/core@7.29.0)(@types/react@19.2.14)(react@18.3.1))(react@18.3.1)
       prop-types: 15.8.1
       react: 18.3.1
       react-dom: 18.3.1(react@18.3.1)
+    transitivePeerDependencies:
+      - react-native
+
+  '@dhis2/app-service-data@3.17.0(@dhis2/app-service-config@3.17.0(react-dom@19.2.5(react@19.2.5))(react@19.2.5))(@dhis2/data-engine@3.17.0)(react-dom@19.2.5(react@19.2.5))(react-native@0.85.0(@babel/core@7.29.0)(@types/react@19.2.14)(react@19.2.5))(react@19.2.5)':
+    dependencies:
+      '@dhis2/app-service-config': 3.17.0(react-dom@19.2.5(react@19.2.5))(react@19.2.5)
+      '@dhis2/data-engine': 3.17.0
+      '@tanstack/react-query': 4.44.0(react-dom@19.2.5(react@19.2.5))(react-native@0.85.0(@babel/core@7.29.0)(@types/react@19.2.14)(react@19.2.5))(react@19.2.5)
+      prop-types: 15.8.1
+      react: 19.2.5
+      react-dom: 19.2.5(react@19.2.5)
+    transitivePeerDependencies:
+      - react-native
 
   '@dhis2/app-service-offline@3.16.0(@dhis2/app-service-config@3.16.0(react-dom@19.2.5(react@19.2.5))(react@19.2.5))(react-dom@19.2.5(react@19.2.5))(react@19.2.5)':
     dependencies:
@@ -17166,14 +17245,21 @@ snapshots:
       react: 19.2.5
       react-dom: 19.2.5(react@19.2.5)
 
-  '@dhis2/app-service-plugin@3.16.0(@dhis2/app-service-alerts@3.16.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(@dhis2/app-service-data@3.16.0(@dhis2/app-service-config@3.16.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react-native@0.85.0(@babel/core@7.29.0)(@types/react@19.2.14)(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
+  '@dhis2/app-service-offline@3.17.0(@dhis2/app-service-config@3.17.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
     dependencies:
-      '@dhis2/app-service-alerts': 3.16.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
-      '@dhis2/app-service-data': 3.16.0(@dhis2/app-service-config@3.16.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react-native@0.85.0(@babel/core@7.29.0)(@types/react@19.2.14)(react@18.3.1))(react@18.3.1)
-      post-robot: 10.0.46
+      '@dhis2/app-service-config': 3.17.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      lodash: 4.18.1
       prop-types: 15.8.1
       react: 18.3.1
       react-dom: 18.3.1(react@18.3.1)
+
+  '@dhis2/app-service-offline@3.17.0(@dhis2/app-service-config@3.17.0(react-dom@19.2.5(react@19.2.5))(react@19.2.5))(react-dom@19.2.5(react@19.2.5))(react@19.2.5)':
+    dependencies:
+      '@dhis2/app-service-config': 3.17.0(react-dom@19.2.5(react@19.2.5))(react@19.2.5)
+      lodash: 4.18.1
+      prop-types: 15.8.1
+      react: 19.2.5
+      react-dom: 19.2.5(react@19.2.5)
 
   '@dhis2/app-service-plugin@3.16.0(@dhis2/app-service-alerts@3.16.0(react-dom@19.2.5(react@19.2.5))(react@19.2.5))(@dhis2/app-service-data@3.16.0(@dhis2/app-service-config@3.16.0(react-dom@19.2.5(react@19.2.5))(react@19.2.5))(react-dom@19.2.5(react@19.2.5))(react-native@0.85.0(@babel/core@7.29.0)(@types/react@19.2.14)(react@19.2.5))(react@19.2.5))(react-dom@19.2.5(react@19.2.5))(react@19.2.5)':
     dependencies:
@@ -17184,11 +17270,23 @@ snapshots:
       react: 19.2.5
       react-dom: 19.2.5(react@19.2.5)
 
-  '@dhis2/app-service-user@3.16.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
+  '@dhis2/app-service-plugin@3.17.0(@dhis2/app-service-alerts@3.17.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(@dhis2/app-service-data@3.17.0(@dhis2/app-service-config@3.17.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(@dhis2/data-engine@3.17.0)(react-dom@18.3.1(react@18.3.1))(react-native@0.85.0(@babel/core@7.29.0)(@types/react@19.2.14)(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
     dependencies:
+      '@dhis2/app-service-alerts': 3.17.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      '@dhis2/app-service-data': 3.17.0(@dhis2/app-service-config@3.17.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(@dhis2/data-engine@3.17.0)(react-dom@18.3.1(react@18.3.1))(react-native@0.85.0(@babel/core@7.29.0)(@types/react@19.2.14)(react@18.3.1))(react@18.3.1)
+      post-robot: 10.0.46
       prop-types: 15.8.1
       react: 18.3.1
       react-dom: 18.3.1(react@18.3.1)
+
+  '@dhis2/app-service-plugin@3.17.0(@dhis2/app-service-alerts@3.17.0(react-dom@19.2.5(react@19.2.5))(react@19.2.5))(@dhis2/app-service-data@3.17.0(@dhis2/app-service-config@3.17.0(react-dom@19.2.5(react@19.2.5))(react@19.2.5))(@dhis2/data-engine@3.17.0)(react-dom@19.2.5(react@19.2.5))(react-native@0.85.0(@babel/core@7.29.0)(@types/react@19.2.14)(react@19.2.5))(react@19.2.5))(react-dom@19.2.5(react@19.2.5))(react@19.2.5)':
+    dependencies:
+      '@dhis2/app-service-alerts': 3.17.0(react-dom@19.2.5(react@19.2.5))(react@19.2.5)
+      '@dhis2/app-service-data': 3.17.0(@dhis2/app-service-config@3.17.0(react-dom@19.2.5(react@19.2.5))(react@19.2.5))(@dhis2/data-engine@3.17.0)(react-dom@19.2.5(react@19.2.5))(react-native@0.85.0(@babel/core@7.29.0)(@types/react@19.2.14)(react@19.2.5))(react@19.2.5)
+      post-robot: 10.0.46
+      prop-types: 15.8.1
+      react: 19.2.5
+      react-dom: 19.2.5(react@19.2.5)
 
   '@dhis2/app-service-user@3.16.0(react-dom@19.2.5(react@19.2.5))(react@19.2.5)':
     dependencies:
@@ -17196,13 +17294,25 @@ snapshots:
       react: 19.2.5
       react-dom: 19.2.5(react@19.2.5)
 
-  '@dhis2/app-shell@12.11.0(@babel/core@7.29.0)(react-native@0.85.0(@babel/core@7.29.0)(@types/react@19.2.14)(react@18.3.1))':
+  '@dhis2/app-service-user@3.17.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
     dependencies:
-      '@dhis2/app-adapter': 12.11.0(@dhis2/app-runtime@3.16.0(react-dom@18.3.1(react@18.3.1))(react-native@0.85.0(@babel/core@7.29.0)(@types/react@19.2.14)(react@18.3.1))(react@18.3.1))(@dhis2/d2-i18n@1.2.0)(@dhis2/ui@10.12.13(@dhis2/app-runtime@3.16.0(react-dom@18.3.1(react@18.3.1))(react-native@0.85.0(@babel/core@7.29.0)(@types/react@19.2.14)(react@18.3.1))(react@18.3.1))(@dhis2/d2-i18n@1.2.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(styled-jsx@4.0.1(@babel/core@7.29.0)(react@18.3.1)))(classnames@2.5.1)(moment@2.30.1)(prop-types@15.8.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(styled-jsx@4.0.1(@babel/core@7.29.0)(react@18.3.1))
-      '@dhis2/app-runtime': 3.16.0(react-dom@18.3.1(react@18.3.1))(react-native@0.85.0(@babel/core@7.29.0)(@types/react@19.2.14)(react@18.3.1))(react@18.3.1)
+      prop-types: 15.8.1
+      react: 18.3.1
+      react-dom: 18.3.1(react@18.3.1)
+
+  '@dhis2/app-service-user@3.17.0(react-dom@19.2.5(react@19.2.5))(react@19.2.5)':
+    dependencies:
+      prop-types: 15.8.1
+      react: 19.2.5
+      react-dom: 19.2.5(react@19.2.5)
+
+  '@dhis2/app-shell@12.11.0(@babel/core@7.29.0)(@dhis2/data-engine@3.17.0)(react-native@0.85.0(@babel/core@7.29.0)(@types/react@19.2.14)(react@18.3.1))':
+    dependencies:
+      '@dhis2/app-adapter': 12.11.0(@dhis2/app-runtime@3.17.0(@dhis2/data-engine@3.17.0)(react-dom@18.3.1(react@18.3.1))(react-native@0.85.0(@babel/core@7.29.0)(@types/react@19.2.14)(react@18.3.1))(react@18.3.1))(@dhis2/d2-i18n@1.2.0)(@dhis2/ui@10.12.13(@dhis2/app-runtime@3.17.0(@dhis2/data-engine@3.17.0)(react-dom@18.3.1(react@18.3.1))(react-native@0.85.0(@babel/core@7.29.0)(@types/react@19.2.14)(react@18.3.1))(react@18.3.1))(@dhis2/d2-i18n@1.2.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(styled-jsx@4.0.1(@babel/core@7.29.0)(react@18.3.1)))(classnames@2.5.1)(moment@2.30.1)(prop-types@15.8.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(styled-jsx@4.0.1(@babel/core@7.29.0)(react@18.3.1))
+      '@dhis2/app-runtime': 3.17.0(@dhis2/data-engine@3.17.0)(react-dom@18.3.1(react@18.3.1))(react-native@0.85.0(@babel/core@7.29.0)(@types/react@19.2.14)(react@18.3.1))(react@18.3.1)
       '@dhis2/d2-i18n': 1.2.0
       '@dhis2/pwa': 12.11.0
-      '@dhis2/ui': 10.12.13(@dhis2/app-runtime@3.16.0(react-dom@18.3.1(react@18.3.1))(react-native@0.85.0(@babel/core@7.29.0)(@types/react@19.2.14)(react@18.3.1))(react@18.3.1))(@dhis2/d2-i18n@1.2.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(styled-jsx@4.0.1(@babel/core@7.29.0)(react@18.3.1))
+      '@dhis2/ui': 10.12.13(@dhis2/app-runtime@3.17.0(@dhis2/data-engine@3.17.0)(react-dom@18.3.1(react@18.3.1))(react-native@0.85.0(@babel/core@7.29.0)(@types/react@19.2.14)(react@18.3.1))(react@18.3.1))(@dhis2/d2-i18n@1.2.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(styled-jsx@4.0.1(@babel/core@7.29.0)(react@18.3.1))
       classnames: 2.5.1
       moment: 2.30.1
       post-robot: 10.0.46
@@ -17213,9 +17323,10 @@ snapshots:
       typeface-roboto: 0.0.75
     transitivePeerDependencies:
       - '@babel/core'
+      - '@dhis2/data-engine'
       - react-native
 
-  '@dhis2/cli-app-scripts@12.11.0(@types/babel__core@7.20.5)(@types/node@24.12.2)(esbuild@0.27.7)(lightningcss@1.32.0)(react-native@0.85.0(@babel/core@7.29.0)(@types/react@19.2.14)(react@18.3.1))(react@18.3.1)(sugarss@5.0.1(postcss@8.5.9))(terser@5.46.1)(type-fest@4.41.0)(typescript@5.6.3)(webpack-dev-server@5.2.3(webpack@5.106.0(esbuild@0.27.7)))':
+  '@dhis2/cli-app-scripts@12.11.0(@dhis2/data-engine@3.17.0)(@types/babel__core@7.20.5)(@types/node@24.12.2)(esbuild@0.27.7)(lightningcss@1.32.0)(react-native@0.85.0(@babel/core@7.29.0)(@types/react@19.2.14)(react@18.3.1))(react@18.3.1)(sugarss@5.0.1(postcss@8.5.9))(terser@5.46.1)(type-fest@4.41.0)(typescript@5.6.3)(webpack-dev-server@5.2.3(webpack@5.106.0(esbuild@0.27.7)))':
     dependencies:
       '@babel/core': 7.29.0
       '@babel/plugin-syntax-dynamic-import': 7.8.3(@babel/core@7.29.0)
@@ -17228,7 +17339,7 @@ snapshots:
       '@babel/preset-env': 7.29.2(@babel/core@7.29.0)
       '@babel/preset-react': 7.28.5(@babel/core@7.29.0)
       '@babel/preset-typescript': 7.28.5(@babel/core@7.29.0)
-      '@dhis2/app-shell': 12.11.0(@babel/core@7.29.0)(react-native@0.85.0(@babel/core@7.29.0)(@types/react@19.2.14)(react@18.3.1))
+      '@dhis2/app-shell': 12.11.0(@babel/core@7.29.0)(@dhis2/data-engine@3.17.0)(react-native@0.85.0(@babel/core@7.29.0)(@types/react@19.2.14)(react@18.3.1))
       '@dhis2/cli-helpers-engine': 3.2.2
       '@jest/core': 27.5.1
       '@pmmmwh/react-refresh-webpack-plugin': 0.5.17(react-refresh@0.11.0)(type-fest@4.41.0)(webpack-dev-server@5.2.3(webpack@5.106.0(esbuild@0.27.7)))(webpack@5.106.0(esbuild@0.27.7))
@@ -17268,6 +17379,7 @@ snapshots:
       webpack: 5.106.0(esbuild@0.27.7)
       workbox-build: 7.4.0(@types/babel__core@7.20.5)
     transitivePeerDependencies:
+      - '@dhis2/data-engine'
       - '@rspack/core'
       - '@swc/core'
       - '@types/babel__core'
@@ -17338,7 +17450,7 @@ snapshots:
       i18next: 10.6.0
       moment: 2.30.1
 
-  '@dhis2/data-engine@3.17.0-beta.2': {}
+  '@dhis2/data-engine@3.17.0': {}
 
   '@dhis2/multi-calendar-dates@2.1.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
     dependencies:
@@ -17425,7 +17537,7 @@ snapshots:
       react: 19.2.5
       react-dom: 19.2.5(react@19.2.5)
 
-  '@dhis2/ui@10.12.13(@dhis2/app-runtime@3.16.0(react-dom@18.3.1(react@18.3.1))(react-native@0.85.0(@babel/core@7.29.0)(@types/react@19.2.14)(react@18.3.1))(react@18.3.1))(@dhis2/d2-i18n@1.2.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(styled-jsx@4.0.1(@babel/core@7.29.0)(react@18.3.1))':
+  '@dhis2/ui@10.12.13(@dhis2/app-runtime@3.17.0(@dhis2/data-engine@3.17.0)(react-dom@18.3.1(react@18.3.1))(react-native@0.85.0(@babel/core@7.29.0)(@types/react@19.2.14)(react@18.3.1))(react@18.3.1))(@dhis2/d2-i18n@1.2.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(styled-jsx@4.0.1(@babel/core@7.29.0)(react@18.3.1))':
     dependencies:
       '@dhis2-ui/alert': 10.12.13(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(styled-jsx@4.0.1(@babel/core@7.29.0)(react@18.3.1))
       '@dhis2-ui/box': 10.12.13(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(styled-jsx@4.0.1(@babel/core@7.29.0)(react@18.3.1))
@@ -17440,7 +17552,7 @@ snapshots:
       '@dhis2-ui/divider': 10.12.13(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(styled-jsx@4.0.1(@babel/core@7.29.0)(react@18.3.1))
       '@dhis2-ui/field': 10.12.13(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(styled-jsx@4.0.1(@babel/core@7.29.0)(react@18.3.1))
       '@dhis2-ui/file-input': 10.12.13(@dhis2/d2-i18n@1.2.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(styled-jsx@4.0.1(@babel/core@7.29.0)(react@18.3.1))
-      '@dhis2-ui/header-bar': 10.12.13(@dhis2/app-runtime@3.16.0(react-dom@18.3.1(react@18.3.1))(react-native@0.85.0(@babel/core@7.29.0)(@types/react@19.2.14)(react@18.3.1))(react@18.3.1))(@dhis2/d2-i18n@1.2.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(styled-jsx@4.0.1(@babel/core@7.29.0)(react@18.3.1))
+      '@dhis2-ui/header-bar': 10.12.13(@dhis2/app-runtime@3.17.0(@dhis2/data-engine@3.17.0)(react-dom@18.3.1(react@18.3.1))(react-native@0.85.0(@babel/core@7.29.0)(@types/react@19.2.14)(react@18.3.1))(react@18.3.1))(@dhis2/d2-i18n@1.2.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(styled-jsx@4.0.1(@babel/core@7.29.0)(react@18.3.1))
       '@dhis2-ui/help': 10.12.13(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(styled-jsx@4.0.1(@babel/core@7.29.0)(react@18.3.1))
       '@dhis2-ui/input': 10.12.13(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(styled-jsx@4.0.1(@babel/core@7.29.0)(react@18.3.1))
       '@dhis2-ui/intersection-detector': 10.12.13(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(styled-jsx@4.0.1(@babel/core@7.29.0)(react@18.3.1))
@@ -17453,7 +17565,7 @@ snapshots:
       '@dhis2-ui/modal': 10.12.13(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(styled-jsx@4.0.1(@babel/core@7.29.0)(react@18.3.1))
       '@dhis2-ui/node': 10.12.13(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(styled-jsx@4.0.1(@babel/core@7.29.0)(react@18.3.1))
       '@dhis2-ui/notice-box': 10.12.13(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(styled-jsx@4.0.1(@babel/core@7.29.0)(react@18.3.1))
-      '@dhis2-ui/organisation-unit-tree': 10.12.13(@dhis2/app-runtime@3.16.0(react-dom@18.3.1(react@18.3.1))(react-native@0.85.0(@babel/core@7.29.0)(@types/react@19.2.14)(react@18.3.1))(react@18.3.1))(@dhis2/d2-i18n@1.2.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(styled-jsx@4.0.1(@babel/core@7.29.0)(react@18.3.1))
+      '@dhis2-ui/organisation-unit-tree': 10.12.13(@dhis2/app-runtime@3.17.0(@dhis2/data-engine@3.17.0)(react-dom@18.3.1(react@18.3.1))(react-native@0.85.0(@babel/core@7.29.0)(@types/react@19.2.14)(react@18.3.1))(react@18.3.1))(@dhis2/d2-i18n@1.2.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(styled-jsx@4.0.1(@babel/core@7.29.0)(react@18.3.1))
       '@dhis2-ui/pagination': 10.12.13(@dhis2/d2-i18n@1.2.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(styled-jsx@4.0.1(@babel/core@7.29.0)(react@18.3.1))
       '@dhis2-ui/popover': 10.12.13(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(styled-jsx@4.0.1(@babel/core@7.29.0)(react@18.3.1))
       '@dhis2-ui/popper': 10.12.13(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(styled-jsx@4.0.1(@babel/core@7.29.0)(react@18.3.1))
@@ -17463,7 +17575,7 @@ snapshots:
       '@dhis2-ui/segmented-control': 10.12.13(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(styled-jsx@4.0.1(@babel/core@7.29.0)(react@18.3.1))
       '@dhis2-ui/select': 10.12.13(@dhis2/d2-i18n@1.2.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(styled-jsx@4.0.1(@babel/core@7.29.0)(react@18.3.1))
       '@dhis2-ui/selector-bar': 10.12.13(@dhis2/d2-i18n@1.2.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(styled-jsx@4.0.1(@babel/core@7.29.0)(react@18.3.1))
-      '@dhis2-ui/sharing-dialog': 10.12.13(@dhis2/app-runtime@3.16.0(react-dom@18.3.1(react@18.3.1))(react-native@0.85.0(@babel/core@7.29.0)(@types/react@19.2.14)(react@18.3.1))(react@18.3.1))(@dhis2/d2-i18n@1.2.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(styled-jsx@4.0.1(@babel/core@7.29.0)(react@18.3.1))
+      '@dhis2-ui/sharing-dialog': 10.12.13(@dhis2/app-runtime@3.17.0(@dhis2/data-engine@3.17.0)(react-dom@18.3.1(react@18.3.1))(react-native@0.85.0(@babel/core@7.29.0)(@types/react@19.2.14)(react@18.3.1))(react@18.3.1))(@dhis2/d2-i18n@1.2.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(styled-jsx@4.0.1(@babel/core@7.29.0)(react@18.3.1))
       '@dhis2-ui/switch': 10.12.13(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(styled-jsx@4.0.1(@babel/core@7.29.0)(react@18.3.1))
       '@dhis2-ui/tab': 10.12.13(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(styled-jsx@4.0.1(@babel/core@7.29.0)(react@18.3.1))
       '@dhis2-ui/table': 10.12.13(@dhis2/d2-i18n@1.2.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(styled-jsx@4.0.1(@babel/core@7.29.0)(react@18.3.1))
@@ -17471,8 +17583,8 @@ snapshots:
       '@dhis2-ui/text-area': 10.12.13(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(styled-jsx@4.0.1(@babel/core@7.29.0)(react@18.3.1))
       '@dhis2-ui/tooltip': 10.12.13(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(styled-jsx@4.0.1(@babel/core@7.29.0)(react@18.3.1))
       '@dhis2-ui/transfer': 10.12.13(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(styled-jsx@4.0.1(@babel/core@7.29.0)(react@18.3.1))
-      '@dhis2-ui/user-avatar': 10.12.13(@dhis2/app-runtime@3.16.0(react-dom@18.3.1(react@18.3.1))(react-native@0.85.0(@babel/core@7.29.0)(@types/react@19.2.14)(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(styled-jsx@4.0.1(@babel/core@7.29.0)(react@18.3.1))
-      '@dhis2/app-runtime': 3.16.0(react-dom@18.3.1(react@18.3.1))(react-native@0.85.0(@babel/core@7.29.0)(@types/react@19.2.14)(react@18.3.1))(react@18.3.1)
+      '@dhis2-ui/user-avatar': 10.12.13(@dhis2/app-runtime@3.17.0(@dhis2/data-engine@3.17.0)(react-dom@18.3.1(react@18.3.1))(react-native@0.85.0(@babel/core@7.29.0)(@types/react@19.2.14)(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(styled-jsx@4.0.1(@babel/core@7.29.0)(react@18.3.1))
+      '@dhis2/app-runtime': 3.17.0(@dhis2/data-engine@3.17.0)(react-dom@18.3.1(react@18.3.1))(react-native@0.85.0(@babel/core@7.29.0)(@types/react@19.2.14)(react@18.3.1))(react@18.3.1)
       '@dhis2/d2-i18n': 1.2.0
       '@dhis2/ui-constants': 10.12.13
       '@dhis2/ui-forms': 10.12.13(@dhis2/d2-i18n@1.2.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(styled-jsx@4.0.1(@babel/core@7.29.0)(react@18.3.1))
@@ -17482,7 +17594,7 @@ snapshots:
       react-dom: 18.3.1(react@18.3.1)
       styled-jsx: 4.0.1(@babel/core@7.29.0)(react@18.3.1)
 
-  '@dhis2/ui@10.12.13(@dhis2/app-runtime@3.16.0(react-dom@19.2.5(react@19.2.5))(react-native@0.85.0(@babel/core@7.29.0)(@types/react@19.2.14)(react@19.2.5))(react@19.2.5))(@dhis2/d2-i18n@1.2.0)(react-dom@19.2.5(react@19.2.5))(react@19.2.5)(styled-jsx@4.0.1(@babel/core@7.29.0)(react@19.2.5))':
+  '@dhis2/ui@10.12.13(@dhis2/app-runtime@3.17.0(@dhis2/data-engine@3.17.0)(react-dom@19.2.5(react@19.2.5))(react-native@0.85.0(@babel/core@7.29.0)(@types/react@19.2.14)(react@19.2.5))(react@19.2.5))(@dhis2/d2-i18n@1.2.0)(react-dom@19.2.5(react@19.2.5))(react@19.2.5)(styled-jsx@4.0.1(@babel/core@7.29.0)(react@19.2.5))':
     dependencies:
       '@dhis2-ui/alert': 10.12.13(react-dom@19.2.5(react@19.2.5))(react@19.2.5)(styled-jsx@4.0.1(@babel/core@7.29.0)(react@19.2.5))
       '@dhis2-ui/box': 10.12.13(react-dom@19.2.5(react@19.2.5))(react@19.2.5)(styled-jsx@4.0.1(@babel/core@7.29.0)(react@19.2.5))
@@ -17497,7 +17609,7 @@ snapshots:
       '@dhis2-ui/divider': 10.12.13(react-dom@19.2.5(react@19.2.5))(react@19.2.5)(styled-jsx@4.0.1(@babel/core@7.29.0)(react@19.2.5))
       '@dhis2-ui/field': 10.12.13(react-dom@19.2.5(react@19.2.5))(react@19.2.5)(styled-jsx@4.0.1(@babel/core@7.29.0)(react@19.2.5))
       '@dhis2-ui/file-input': 10.12.13(@dhis2/d2-i18n@1.2.0)(react-dom@19.2.5(react@19.2.5))(react@19.2.5)(styled-jsx@4.0.1(@babel/core@7.29.0)(react@19.2.5))
-      '@dhis2-ui/header-bar': 10.12.13(@dhis2/app-runtime@3.16.0(react-dom@19.2.5(react@19.2.5))(react-native@0.85.0(@babel/core@7.29.0)(@types/react@19.2.14)(react@19.2.5))(react@19.2.5))(@dhis2/d2-i18n@1.2.0)(react-dom@19.2.5(react@19.2.5))(react@19.2.5)(styled-jsx@4.0.1(@babel/core@7.29.0)(react@19.2.5))
+      '@dhis2-ui/header-bar': 10.12.13(@dhis2/app-runtime@3.17.0(@dhis2/data-engine@3.17.0)(react-dom@19.2.5(react@19.2.5))(react-native@0.85.0(@babel/core@7.29.0)(@types/react@19.2.14)(react@19.2.5))(react@19.2.5))(@dhis2/d2-i18n@1.2.0)(react-dom@19.2.5(react@19.2.5))(react@19.2.5)(styled-jsx@4.0.1(@babel/core@7.29.0)(react@19.2.5))
       '@dhis2-ui/help': 10.12.13(react-dom@19.2.5(react@19.2.5))(react@19.2.5)(styled-jsx@4.0.1(@babel/core@7.29.0)(react@19.2.5))
       '@dhis2-ui/input': 10.12.13(react-dom@19.2.5(react@19.2.5))(react@19.2.5)(styled-jsx@4.0.1(@babel/core@7.29.0)(react@19.2.5))
       '@dhis2-ui/intersection-detector': 10.12.13(react-dom@19.2.5(react@19.2.5))(react@19.2.5)(styled-jsx@4.0.1(@babel/core@7.29.0)(react@19.2.5))
@@ -17510,7 +17622,7 @@ snapshots:
       '@dhis2-ui/modal': 10.12.13(react-dom@19.2.5(react@19.2.5))(react@19.2.5)(styled-jsx@4.0.1(@babel/core@7.29.0)(react@19.2.5))
       '@dhis2-ui/node': 10.12.13(react-dom@19.2.5(react@19.2.5))(react@19.2.5)(styled-jsx@4.0.1(@babel/core@7.29.0)(react@19.2.5))
       '@dhis2-ui/notice-box': 10.12.13(react-dom@19.2.5(react@19.2.5))(react@19.2.5)(styled-jsx@4.0.1(@babel/core@7.29.0)(react@19.2.5))
-      '@dhis2-ui/organisation-unit-tree': 10.12.13(@dhis2/app-runtime@3.16.0(react-dom@19.2.5(react@19.2.5))(react-native@0.85.0(@babel/core@7.29.0)(@types/react@19.2.14)(react@19.2.5))(react@19.2.5))(@dhis2/d2-i18n@1.2.0)(react-dom@19.2.5(react@19.2.5))(react@19.2.5)(styled-jsx@4.0.1(@babel/core@7.29.0)(react@19.2.5))
+      '@dhis2-ui/organisation-unit-tree': 10.12.13(@dhis2/app-runtime@3.17.0(@dhis2/data-engine@3.17.0)(react-dom@19.2.5(react@19.2.5))(react-native@0.85.0(@babel/core@7.29.0)(@types/react@19.2.14)(react@19.2.5))(react@19.2.5))(@dhis2/d2-i18n@1.2.0)(react-dom@19.2.5(react@19.2.5))(react@19.2.5)(styled-jsx@4.0.1(@babel/core@7.29.0)(react@19.2.5))
       '@dhis2-ui/pagination': 10.12.13(@dhis2/d2-i18n@1.2.0)(react-dom@19.2.5(react@19.2.5))(react@19.2.5)(styled-jsx@4.0.1(@babel/core@7.29.0)(react@19.2.5))
       '@dhis2-ui/popover': 10.12.13(react-dom@19.2.5(react@19.2.5))(react@19.2.5)(styled-jsx@4.0.1(@babel/core@7.29.0)(react@19.2.5))
       '@dhis2-ui/popper': 10.12.13(react-dom@19.2.5(react@19.2.5))(react@19.2.5)(styled-jsx@4.0.1(@babel/core@7.29.0)(react@19.2.5))
@@ -17520,7 +17632,7 @@ snapshots:
       '@dhis2-ui/segmented-control': 10.12.13(react-dom@19.2.5(react@19.2.5))(react@19.2.5)(styled-jsx@4.0.1(@babel/core@7.29.0)(react@19.2.5))
       '@dhis2-ui/select': 10.12.13(@dhis2/d2-i18n@1.2.0)(react-dom@19.2.5(react@19.2.5))(react@19.2.5)(styled-jsx@4.0.1(@babel/core@7.29.0)(react@19.2.5))
       '@dhis2-ui/selector-bar': 10.12.13(@dhis2/d2-i18n@1.2.0)(react-dom@19.2.5(react@19.2.5))(react@19.2.5)(styled-jsx@4.0.1(@babel/core@7.29.0)(react@19.2.5))
-      '@dhis2-ui/sharing-dialog': 10.12.13(@dhis2/app-runtime@3.16.0(react-dom@19.2.5(react@19.2.5))(react-native@0.85.0(@babel/core@7.29.0)(@types/react@19.2.14)(react@19.2.5))(react@19.2.5))(@dhis2/d2-i18n@1.2.0)(react-dom@19.2.5(react@19.2.5))(react@19.2.5)(styled-jsx@4.0.1(@babel/core@7.29.0)(react@19.2.5))
+      '@dhis2-ui/sharing-dialog': 10.12.13(@dhis2/app-runtime@3.17.0(@dhis2/data-engine@3.17.0)(react-dom@19.2.5(react@19.2.5))(react-native@0.85.0(@babel/core@7.29.0)(@types/react@19.2.14)(react@19.2.5))(react@19.2.5))(@dhis2/d2-i18n@1.2.0)(react-dom@19.2.5(react@19.2.5))(react@19.2.5)(styled-jsx@4.0.1(@babel/core@7.29.0)(react@19.2.5))
       '@dhis2-ui/switch': 10.12.13(react-dom@19.2.5(react@19.2.5))(react@19.2.5)(styled-jsx@4.0.1(@babel/core@7.29.0)(react@19.2.5))
       '@dhis2-ui/tab': 10.12.13(react-dom@19.2.5(react@19.2.5))(react@19.2.5)(styled-jsx@4.0.1(@babel/core@7.29.0)(react@19.2.5))
       '@dhis2-ui/table': 10.12.13(@dhis2/d2-i18n@1.2.0)(react-dom@19.2.5(react@19.2.5))(react@19.2.5)(styled-jsx@4.0.1(@babel/core@7.29.0)(react@19.2.5))
@@ -17528,8 +17640,8 @@ snapshots:
       '@dhis2-ui/text-area': 10.12.13(react-dom@19.2.5(react@19.2.5))(react@19.2.5)(styled-jsx@4.0.1(@babel/core@7.29.0)(react@19.2.5))
       '@dhis2-ui/tooltip': 10.12.13(react-dom@19.2.5(react@19.2.5))(react@19.2.5)(styled-jsx@4.0.1(@babel/core@7.29.0)(react@19.2.5))
       '@dhis2-ui/transfer': 10.12.13(react-dom@19.2.5(react@19.2.5))(react@19.2.5)(styled-jsx@4.0.1(@babel/core@7.29.0)(react@19.2.5))
-      '@dhis2-ui/user-avatar': 10.12.13(@dhis2/app-runtime@3.16.0(react-dom@19.2.5(react@19.2.5))(react-native@0.85.0(@babel/core@7.29.0)(@types/react@19.2.14)(react@19.2.5))(react@19.2.5))(react-dom@19.2.5(react@19.2.5))(react@19.2.5)(styled-jsx@4.0.1(@babel/core@7.29.0)(react@19.2.5))
-      '@dhis2/app-runtime': 3.16.0(react-dom@19.2.5(react@19.2.5))(react-native@0.85.0(@babel/core@7.29.0)(@types/react@19.2.14)(react@19.2.5))(react@19.2.5)
+      '@dhis2-ui/user-avatar': 10.12.13(@dhis2/app-runtime@3.17.0(@dhis2/data-engine@3.17.0)(react-dom@19.2.5(react@19.2.5))(react-native@0.85.0(@babel/core@7.29.0)(@types/react@19.2.14)(react@19.2.5))(react@19.2.5))(react-dom@19.2.5(react@19.2.5))(react@19.2.5)(styled-jsx@4.0.1(@babel/core@7.29.0)(react@19.2.5))
+      '@dhis2/app-runtime': 3.17.0(@dhis2/data-engine@3.17.0)(react-dom@19.2.5(react@19.2.5))(react-native@0.85.0(@babel/core@7.29.0)(@types/react@19.2.14)(react@19.2.5))(react@19.2.5)
       '@dhis2/d2-i18n': 1.2.0
       '@dhis2/ui-constants': 10.12.13
       '@dhis2/ui-forms': 10.12.13(@dhis2/d2-i18n@1.2.0)(react-dom@19.2.5(react@19.2.5))(react@19.2.5)(styled-jsx@4.0.1(@babel/core@7.29.0)(react@19.2.5))
@@ -18618,63 +18730,10 @@ snapshots:
     transitivePeerDependencies:
       - '@types/react'
 
-  '@hisptz/dhis2-analytics@2.1.36(@dhis2/app-runtime@3.16.0(react-dom@19.2.5(react@19.2.5))(react-native@0.85.0(@babel/core@7.29.0)(@types/react@19.2.14)(react@19.2.5))(react@19.2.5))(@dhis2/d2-i18n@1.2.0)(@react-three/fiber@9.5.0(@types/react@19.2.14)(react-dom@19.2.5(react@19.2.5))(react-native@0.85.0(@babel/core@7.29.0)(@types/react@19.2.14)(react@19.2.5))(react@19.2.5)(three@0.183.2))(@tanstack/react-query@4.44.0(react-dom@19.2.5(react@19.2.5))(react-native@0.85.0(@babel/core@7.29.0)(@types/react@19.2.14)(react@19.2.5))(react@19.2.5))(@types/node@20.19.39)(@types/react@19.2.14)(classnames@2.5.1)(highcharts-react-official@3.2.3(highcharts@12.5.0)(react@19.2.5))(highcharts@12.5.0)(konva@10.2.3)(lodash@4.18.1)(prop-types@15.8.1)(react-dom@19.2.5(react@19.2.5))(react-native@0.85.0(@babel/core@7.29.0)(@types/react@19.2.14)(react@19.2.5))(react-zdog@1.2.2)(react@19.2.5)(redux@5.0.1)(three@0.183.2)(usehooks-ts@3.1.1(react@19.2.5))(zdog@1.1.3)(zod@4.3.6)':
+  '@hisptz/dhis2-analytics@2.1.36(19970fdc033939d307827961afeb45a0)':
     dependencies:
-      '@dhis2/app-runtime': 3.16.0(react-dom@19.2.5(react@19.2.5))(react-native@0.85.0(@babel/core@7.29.0)(@types/react@19.2.14)(react@19.2.5))(react@19.2.5)
-      '@hisptz/dhis2-ui': 2.0.52(@dhis2/app-runtime@3.16.0(react-dom@19.2.5(react@19.2.5))(react-native@0.85.0(@babel/core@7.29.0)(@types/react@19.2.14)(react@19.2.5))(react@19.2.5))(@dhis2/d2-i18n@1.2.0)(classnames@2.5.1)(prop-types@15.8.1)(react-dom@19.2.5(react@19.2.5))(react-native@0.85.0(@babel/core@7.29.0)(@types/react@19.2.14)(react@19.2.5))(react@19.2.5)(usehooks-ts@3.1.1(react@19.2.5))
-      '@hisptz/dhis2-utils': 2.0.19(@dhis2/d2-i18n@1.2.0)(lodash@4.18.1)(react-dom@19.2.5(react@19.2.5))(react@19.2.5)(usehooks-ts@3.1.1(react@19.2.5))
-      '@react-leaflet/core': 2.1.0(leaflet@1.9.4)(react-dom@19.2.5(react@19.2.5))(react@19.2.5)
-      '@react-pdf/renderer': 4.4.0(react@19.2.5)
-      '@tanstack/react-query': 4.44.0(react-dom@19.2.5(react@19.2.5))(react-native@0.85.0(@babel/core@7.29.0)(@types/react@19.2.14)(react@19.2.5))(react@19.2.5)
-      '@tanstack/react-table': 8.21.3(react-dom@19.2.5(react@19.2.5))(react@19.2.5)
-      async-es: 3.2.6
-      classnames: 2.5.1
-      d3-color: 3.1.0
-      d3-scale: 4.0.2
-      file-saver: 2.0.5
-      geolib: 3.3.14
-      highcharts: 12.5.0
-      highcharts-react-official: 3.2.3(highcharts@12.5.0)(react@19.2.5)
-      jotai-devtools: 0.10.1(@types/react@19.2.14)(react-dom@19.2.5(react@19.2.5))(react@19.2.5)(redux@5.0.1)
-      leaflet: 1.9.4
-      leaflet-easyprint: 2.1.9
-      leaflet.fullscreen: 4.0.0
-      lodash: 4.18.1
-      luxon: 3.7.2
-      react-circular-progressbar: 2.2.0(react@19.2.5)
-      react-dnd: 16.0.1(@types/node@20.19.39)(@types/react@19.2.14)(react@19.2.5)
-      react-dnd-html5-backend: 16.0.1
-      react-error-boundary: 4.1.2(react@19.2.5)
-      react-helmet: 6.1.0(react@19.2.5)
-      react-leaflet: 4.2.1(leaflet@1.9.4)(react-dom@19.2.5(react@19.2.5))(react@19.2.5)
-      react-leaflet-custom-control: 1.5.0(leaflet@1.9.4)(react-dom@19.2.5(react@19.2.5))(react@19.2.5)
-      react-spring: 9.7.5(@react-three/fiber@9.5.0(@types/react@19.2.14)(react-dom@19.2.5(react@19.2.5))(react-native@0.85.0(@babel/core@7.29.0)(@types/react@19.2.14)(react@19.2.5))(react@19.2.5)(three@0.183.2))(konva@10.2.3)(react-dom@19.2.5(react@19.2.5))(react-konva@18.2.14(@types/react@19.2.14)(konva@10.2.3)(react-dom@19.2.5(react@19.2.5))(react@19.2.5))(react-native@0.85.0(@babel/core@7.29.0)(@types/react@19.2.14)(react@19.2.5))(react-zdog@1.2.2)(react@19.2.5)(three@0.183.2)(zdog@1.1.3)
-      react-to-print: 3.3.0(react@19.2.5)
-      screenfull: 6.0.2
-      xlsx: 0.18.5
-      zod: 4.3.6
-    transitivePeerDependencies:
-      - '@dhis2/d2-i18n'
-      - '@react-three/fiber'
-      - '@types/hoist-non-react-statics'
-      - '@types/node'
-      - '@types/react'
-      - konva
-      - prop-types
-      - react
-      - react-dom
-      - react-konva
-      - react-native
-      - react-zdog
-      - redux
-      - three
-      - usehooks-ts
-      - zdog
-
-  '@hisptz/dhis2-analytics@2.1.36(c71f6b65fbbe0dcef48b474778185bff)':
-    dependencies:
-      '@dhis2/app-runtime': 3.16.0(react-dom@18.3.1(react@18.3.1))(react-native@0.85.0(@babel/core@7.29.0)(@types/react@19.2.14)(react@18.3.1))(react@18.3.1)
-      '@hisptz/dhis2-ui': 2.0.52(@dhis2/app-runtime@3.16.0(react-dom@18.3.1(react@18.3.1))(react-native@0.85.0(@babel/core@7.29.0)(@types/react@19.2.14)(react@18.3.1))(react@18.3.1))(@dhis2/d2-i18n@1.2.0)(classnames@2.5.1)(prop-types@15.8.1)(react-dom@18.3.1(react@18.3.1))(react-native@0.85.0(@babel/core@7.29.0)(@types/react@19.2.14)(react@18.3.1))(react@18.3.1)(usehooks-ts@3.1.1(react@18.3.1))
+      '@dhis2/app-runtime': 3.17.0(@dhis2/data-engine@3.17.0)(react-dom@18.3.1(react@18.3.1))(react-native@0.85.0(@babel/core@7.29.0)(@types/react@19.2.14)(react@18.3.1))(react@18.3.1)
+      '@hisptz/dhis2-ui': 2.0.52(@dhis2/app-runtime@3.17.0(@dhis2/data-engine@3.17.0)(react-dom@18.3.1(react@18.3.1))(react-native@0.85.0(@babel/core@7.29.0)(@types/react@19.2.14)(react@18.3.1))(react@18.3.1))(@dhis2/d2-i18n@1.2.0)(classnames@2.5.1)(prop-types@15.8.1)(react-dom@18.3.1(react@18.3.1))(react-native@0.85.0(@babel/core@7.29.0)(@types/react@19.2.14)(react@18.3.1))(react@18.3.1)(usehooks-ts@3.1.1(react@18.3.1))
       '@hisptz/dhis2-utils': 2.0.19(@dhis2/d2-i18n@1.2.0)(lodash@4.18.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(usehooks-ts@3.1.1(react@18.3.1))
       '@react-leaflet/core': 2.1.0(leaflet@1.9.4)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@react-pdf/renderer': 4.4.0(react@18.3.1)
@@ -18703,6 +18762,59 @@ snapshots:
       react-leaflet-custom-control: 1.5.0(leaflet@1.9.4)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       react-spring: 9.7.5(@react-three/fiber@9.5.0(@types/react@19.2.14)(react-dom@18.3.1(react@18.3.1))(react-native@0.85.0(@babel/core@7.29.0)(@types/react@19.2.14)(react@18.3.1))(react@18.3.1)(three@0.183.2))(konva@10.2.3)(react-dom@18.3.1(react@18.3.1))(react-konva@18.2.14(@types/react@19.2.14)(konva@10.2.3)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-native@0.85.0(@babel/core@7.29.0)(@types/react@19.2.14)(react@18.3.1))(react-zdog@1.2.2)(react@18.3.1)(three@0.183.2)(zdog@1.1.3)
       react-to-print: 3.3.0(react@18.3.1)
+      screenfull: 6.0.2
+      xlsx: 0.18.5
+      zod: 4.3.6
+    transitivePeerDependencies:
+      - '@dhis2/d2-i18n'
+      - '@react-three/fiber'
+      - '@types/hoist-non-react-statics'
+      - '@types/node'
+      - '@types/react'
+      - konva
+      - prop-types
+      - react
+      - react-dom
+      - react-konva
+      - react-native
+      - react-zdog
+      - redux
+      - three
+      - usehooks-ts
+      - zdog
+
+  '@hisptz/dhis2-analytics@2.1.36(@dhis2/app-runtime@3.17.0(@dhis2/data-engine@3.17.0)(react-dom@19.2.5(react@19.2.5))(react-native@0.85.0(@babel/core@7.29.0)(@types/react@19.2.14)(react@19.2.5))(react@19.2.5))(@dhis2/d2-i18n@1.2.0)(@react-three/fiber@9.5.0(@types/react@19.2.14)(react-dom@19.2.5(react@19.2.5))(react-native@0.85.0(@babel/core@7.29.0)(@types/react@19.2.14)(react@19.2.5))(react@19.2.5)(three@0.183.2))(@tanstack/react-query@4.44.0(react-dom@19.2.5(react@19.2.5))(react-native@0.85.0(@babel/core@7.29.0)(@types/react@19.2.14)(react@19.2.5))(react@19.2.5))(@types/node@20.19.39)(@types/react@19.2.14)(classnames@2.5.1)(highcharts-react-official@3.2.3(highcharts@12.5.0)(react@19.2.5))(highcharts@12.5.0)(konva@10.2.3)(lodash@4.18.1)(prop-types@15.8.1)(react-dom@19.2.5(react@19.2.5))(react-native@0.85.0(@babel/core@7.29.0)(@types/react@19.2.14)(react@19.2.5))(react-zdog@1.2.2)(react@19.2.5)(redux@5.0.1)(three@0.183.2)(usehooks-ts@3.1.1(react@19.2.5))(zdog@1.1.3)(zod@4.3.6)':
+    dependencies:
+      '@dhis2/app-runtime': 3.17.0(@dhis2/data-engine@3.17.0)(react-dom@19.2.5(react@19.2.5))(react-native@0.85.0(@babel/core@7.29.0)(@types/react@19.2.14)(react@19.2.5))(react@19.2.5)
+      '@hisptz/dhis2-ui': 2.0.52(@dhis2/app-runtime@3.17.0(@dhis2/data-engine@3.17.0)(react-dom@19.2.5(react@19.2.5))(react-native@0.85.0(@babel/core@7.29.0)(@types/react@19.2.14)(react@19.2.5))(react@19.2.5))(@dhis2/d2-i18n@1.2.0)(classnames@2.5.1)(prop-types@15.8.1)(react-dom@19.2.5(react@19.2.5))(react-native@0.85.0(@babel/core@7.29.0)(@types/react@19.2.14)(react@19.2.5))(react@19.2.5)(usehooks-ts@3.1.1(react@19.2.5))
+      '@hisptz/dhis2-utils': 2.0.19(@dhis2/d2-i18n@1.2.0)(lodash@4.18.1)(react-dom@19.2.5(react@19.2.5))(react@19.2.5)(usehooks-ts@3.1.1(react@19.2.5))
+      '@react-leaflet/core': 2.1.0(leaflet@1.9.4)(react-dom@19.2.5(react@19.2.5))(react@19.2.5)
+      '@react-pdf/renderer': 4.4.0(react@19.2.5)
+      '@tanstack/react-query': 4.44.0(react-dom@19.2.5(react@19.2.5))(react-native@0.85.0(@babel/core@7.29.0)(@types/react@19.2.14)(react@19.2.5))(react@19.2.5)
+      '@tanstack/react-table': 8.21.3(react-dom@19.2.5(react@19.2.5))(react@19.2.5)
+      async-es: 3.2.6
+      classnames: 2.5.1
+      d3-color: 3.1.0
+      d3-scale: 4.0.2
+      file-saver: 2.0.5
+      geolib: 3.3.14
+      highcharts: 12.5.0
+      highcharts-react-official: 3.2.3(highcharts@12.5.0)(react@19.2.5)
+      jotai-devtools: 0.10.1(@types/react@19.2.14)(react-dom@19.2.5(react@19.2.5))(react@19.2.5)(redux@5.0.1)
+      leaflet: 1.9.4
+      leaflet-easyprint: 2.1.9
+      leaflet.fullscreen: 4.0.0
+      lodash: 4.18.1
+      luxon: 3.7.2
+      react-circular-progressbar: 2.2.0(react@19.2.5)
+      react-dnd: 16.0.1(@types/node@20.19.39)(@types/react@19.2.14)(react@19.2.5)
+      react-dnd-html5-backend: 16.0.1
+      react-error-boundary: 4.1.2(react@19.2.5)
+      react-helmet: 6.1.0(react@19.2.5)
+      react-leaflet: 4.2.1(leaflet@1.9.4)(react-dom@19.2.5(react@19.2.5))(react@19.2.5)
+      react-leaflet-custom-control: 1.5.0(leaflet@1.9.4)(react-dom@19.2.5(react@19.2.5))(react@19.2.5)
+      react-spring: 9.7.5(@react-three/fiber@9.5.0(@types/react@19.2.14)(react-dom@19.2.5(react@19.2.5))(react-native@0.85.0(@babel/core@7.29.0)(@types/react@19.2.14)(react@19.2.5))(react@19.2.5)(three@0.183.2))(konva@10.2.3)(react-dom@19.2.5(react@19.2.5))(react-konva@18.2.14(@types/react@19.2.14)(konva@10.2.3)(react-dom@19.2.5(react@19.2.5))(react@19.2.5))(react-native@0.85.0(@babel/core@7.29.0)(@types/react@19.2.14)(react@19.2.5))(react-zdog@1.2.2)(react@19.2.5)(three@0.183.2)(zdog@1.1.3)
+      react-to-print: 3.3.0(react@19.2.5)
       screenfull: 6.0.2
       xlsx: 0.18.5
       zod: 4.3.6
@@ -18777,9 +18889,31 @@ snapshots:
       - usehooks-ts
       - zdog
 
-  '@hisptz/dhis2-ui@2.0.52(@dhis2/app-runtime@3.16.0(react-dom@18.3.1(react@18.3.1))(react-native@0.85.0(@babel/core@7.29.0)(@types/react@19.2.14)(react@18.3.1))(react@18.3.1))(@dhis2/d2-i18n@1.2.0)(classnames@2.5.1)(prop-types@15.8.1)(react-dom@18.3.1(react@18.3.1))(react-native@0.85.0(@babel/core@7.29.0)(@types/react@19.2.14)(react@18.3.1))(react@18.3.1)(usehooks-ts@3.1.1(react@18.3.1))':
+  '@hisptz/dhis2-ui@2.0.52(@dhis2/app-runtime@3.16.0(react-dom@19.2.5(react@19.2.5))(react-native@0.85.0(@babel/core@7.29.0)(@types/react@19.2.14)(react@19.2.5))(react@19.2.5))(@dhis2/d2-i18n@1.2.0)(classnames@2.5.1)(prop-types@15.8.1)(react-dom@19.2.5(react@19.2.5))(react-native@0.85.0(@babel/core@7.29.0)(@types/react@19.2.14)(react@19.2.5))(react@19.2.5)(usehooks-ts@3.1.1(react@19.2.5))':
     dependencies:
-      '@dhis2/app-runtime': 3.16.0(react-dom@18.3.1(react@18.3.1))(react-native@0.85.0(@babel/core@7.29.0)(@types/react@19.2.14)(react@18.3.1))(react@18.3.1)
+      '@dhis2/app-runtime': 3.16.0(react-dom@19.2.5(react@19.2.5))(react-native@0.85.0(@babel/core@7.29.0)(@types/react@19.2.14)(react@19.2.5))(react@19.2.5)
+      '@hisptz/dhis2-utils': 2.0.19(@dhis2/d2-i18n@1.2.0)(lodash@4.18.1)(react-dom@19.2.5(react@19.2.5))(react@19.2.5)(usehooks-ts@3.1.1(react@19.2.5))
+      classnames: 2.5.1
+      dexie: 3.2.7
+      jodit-react: 5.3.21(react-dom@19.2.5(react@19.2.5))(react@19.2.5)
+      lodash: 4.18.1
+      luxon: 3.7.2
+      prop-types: 15.8.1
+      react-circular-progressbar: 2.2.0(react@19.2.5)
+      react-collapsible: 2.10.0(react-dom@19.2.5(react@19.2.5))(react@19.2.5)
+      react-color: 2.19.3(react@19.2.5)
+      recoil: 0.7.7(react-dom@19.2.5(react@19.2.5))(react-native@0.85.0(@babel/core@7.29.0)(@types/react@19.2.14)(react@19.2.5))(react@19.2.5)
+      styled-components: 6.3.12(react-dom@19.2.5(react@19.2.5))(react@19.2.5)
+      usehooks-ts: 3.1.1(react@19.2.5)
+    transitivePeerDependencies:
+      - '@dhis2/d2-i18n'
+      - react
+      - react-dom
+      - react-native
+
+  '@hisptz/dhis2-ui@2.0.52(@dhis2/app-runtime@3.17.0(@dhis2/data-engine@3.17.0)(react-dom@18.3.1(react@18.3.1))(react-native@0.85.0(@babel/core@7.29.0)(@types/react@19.2.14)(react@18.3.1))(react@18.3.1))(@dhis2/d2-i18n@1.2.0)(classnames@2.5.1)(prop-types@15.8.1)(react-dom@18.3.1(react@18.3.1))(react-native@0.85.0(@babel/core@7.29.0)(@types/react@19.2.14)(react@18.3.1))(react@18.3.1)(usehooks-ts@3.1.1(react@18.3.1))':
+    dependencies:
+      '@dhis2/app-runtime': 3.17.0(@dhis2/data-engine@3.17.0)(react-dom@18.3.1(react@18.3.1))(react-native@0.85.0(@babel/core@7.29.0)(@types/react@19.2.14)(react@18.3.1))(react@18.3.1)
       '@hisptz/dhis2-utils': 2.0.19(@dhis2/d2-i18n@1.2.0)(lodash@4.18.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(usehooks-ts@3.1.1(react@18.3.1))
       classnames: 2.5.1
       dexie: 3.2.7
@@ -18799,9 +18933,9 @@ snapshots:
       - react-dom
       - react-native
 
-  '@hisptz/dhis2-ui@2.0.52(@dhis2/app-runtime@3.16.0(react-dom@19.2.5(react@19.2.5))(react-native@0.85.0(@babel/core@7.29.0)(@types/react@19.2.14)(react@19.2.5))(react@19.2.5))(@dhis2/d2-i18n@1.2.0)(classnames@2.5.1)(prop-types@15.8.1)(react-dom@19.2.5(react@19.2.5))(react-native@0.85.0(@babel/core@7.29.0)(@types/react@19.2.14)(react@19.2.5))(react@19.2.5)(usehooks-ts@3.1.1(react@19.2.5))':
+  '@hisptz/dhis2-ui@2.0.52(@dhis2/app-runtime@3.17.0(@dhis2/data-engine@3.17.0)(react-dom@19.2.5(react@19.2.5))(react-native@0.85.0(@babel/core@7.29.0)(@types/react@19.2.14)(react@19.2.5))(react@19.2.5))(@dhis2/d2-i18n@1.2.0)(classnames@2.5.1)(prop-types@15.8.1)(react-dom@19.2.5(react@19.2.5))(react-native@0.85.0(@babel/core@7.29.0)(@types/react@19.2.14)(react@19.2.5))(react@19.2.5)(usehooks-ts@3.1.1(react@19.2.5))':
     dependencies:
-      '@dhis2/app-runtime': 3.16.0(react-dom@19.2.5(react@19.2.5))(react-native@0.85.0(@babel/core@7.29.0)(@types/react@19.2.14)(react@19.2.5))(react@19.2.5)
+      '@dhis2/app-runtime': 3.17.0(@dhis2/data-engine@3.17.0)(react-dom@19.2.5(react@19.2.5))(react-native@0.85.0(@babel/core@7.29.0)(@types/react@19.2.14)(react@19.2.5))(react@19.2.5)
       '@hisptz/dhis2-utils': 2.0.19(@dhis2/d2-i18n@1.2.0)(lodash@4.18.1)(react-dom@19.2.5(react@19.2.5))(react@19.2.5)(usehooks-ts@3.1.1(react@19.2.5))
       classnames: 2.5.1
       dexie: 3.2.7
