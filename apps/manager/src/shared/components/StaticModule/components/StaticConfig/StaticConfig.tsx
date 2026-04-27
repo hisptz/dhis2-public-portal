@@ -23,7 +23,7 @@ export function StaticConfig() {
         },
     })
     const navigate = useNavigate({
-        from: '/modules/$moduleId/edit/static/$itemId',
+        from: '/modules/$moduleId/edit/static/$itemId/',
     })
 
     if (form.formState.isLoading)

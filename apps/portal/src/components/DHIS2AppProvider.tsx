@@ -44,6 +44,7 @@ export function DHIS2AppProvider({
             }}
             config={{
                 baseUrl: `${window.location.protocol}//${window.location.host}${contextPath ?? ''}`,
+                // @ts-expect-error not required in this instance
                 apiVersion: '',
             }}
             plugin={false}
