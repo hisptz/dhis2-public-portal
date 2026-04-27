@@ -1,72 +1,20 @@
 import { ConnectionStatus } from '@/types/connection'
 import {
     DataEngine,
+    type DataEngineConfig,
     FetchError,
     RestAPILink,
-    type DataEngineConfig,
 } from '@dhis2/data-engine'
 
 export class D2HttpClient {
     baseURL: URL
     pat: string
-    private engineReady: DataEngine | null
-    private _initPromise: Promise<void> | null
+    private dataEngine: DataEngine | null
 
     constructor(baseURL: string, pat: string) {
         this.baseURL = D2HttpClient.sanitizeURL(baseURL)
         this.pat = pat
-        this.engineReady = null
-        this._initPromise = null
-    }
-
-    async init(): Promise<void> {
-        if (this.engineReady) return
-        if (!this._initPromise) {
-            this._initPromise = this._initialize().catch((err) => {
-                this._initPromise = null // allow retry on next call
-                throw err
-            })
-        }
-        return this._initPromise
-    }
-
-    private async _initialize(): Promise<void> {
-        let apiVersion = 40 // default to 2.40 for older DHIS2 instances
-        try {
-            const url = new URL('system/info', this.baseURL)
-            const response = await fetch(url, {
-                cache: 'no-store',
-                headers: { Authorization: `ApiToken ${this.pat}` },
-            })
-            if (response.ok) {
-                const info = (await response.json()) as { version?: string }
-                const parsed = D2HttpClient.parseApiVersion(info.version)
-                if (parsed !== null) {
-                    apiVersion = parsed
-                }
-            }
-        } catch {
-            // fall back to default apiVersion
-        }
-
-        const config: DataEngineConfig = {
-            baseUrl: this.baseURL
-                .toString()
-                .replace(/\/api\/?$/, '')
-                .replace(/\/$/, ''),
-            apiVersion,
-            apiToken: this.pat,
-        }
-        this.engineReady = new DataEngine(new RestAPILink(config))
-    }
-
-    private static parseApiVersion(version?: string): number | null {
-        if (!version) return null
-        const parts = version.split('.')
-        const major = parseInt(parts[0], 10)
-        const minor = parseInt(parts[1], 10)
-        if (isNaN(major)) return null
-        return major === 2 ? (isNaN(minor) ? null : minor) : major
+        this.dataEngine = null
     }
 
     static sanitizeURL(baseURL: string): URL {
@@ -82,10 +30,37 @@ export class D2HttpClient {
         return new URL('api/', `${baseURL}/`)
     }
 
+    static handleFetchError(e: unknown, context?: string): never {
+        const prefix = context ? `[D2HttpClient:${context}]` : '[D2HttpClient]'
+        if (e instanceof FetchError) {
+            console.error(
+                `${prefix} ${e.type} error (HTTP ${e.details?.httpStatusCode ?? 'unknown'}):`,
+                e.message
+            )
+        } else {
+            console.error(`${prefix} Unexpected error:`, e)
+        }
+        throw e
+    }
+
+    private static parseApiVersion(version?: string): number | null {
+        if (!version) return null
+        const parts = version.split('.')
+        const major = parseInt(parts[0], 10)
+        const minor = parseInt(parts[1], 10)
+        if (isNaN(major)) return null
+        return major === 2 ? (isNaN(minor) ? null : minor) : major
+    }
+
+    async init(): Promise<void> {
+        if (!this.dataEngine) {
+            await this._initialize()
+        }
+    }
+
     async getIcon(path: string) {
         await this.init()
-        const url = path
-        const response: Response = (await this.engineReady!.fetch(url, {
+        const response: Response = (await this.dataEngine!.fetch(path, {
             cache: 'force-cache',
             headers: {
                 Authorization: `ApiToken ${this.pat}`,
@@ -109,14 +84,12 @@ export class D2HttpClient {
 
     async getRaw(path: string) {
         await this.init()
-
-        const result = await this.engineReady!.fetch(path, {
+        const result = await this.dataEngine!.fetch(path, {
             cache: 'default',
             headers: {
                 Authorization: `ApiToken ${this.pat}`,
             },
         })
-
         // The data engine returns a Blob directly for binary content types
         if (result instanceof Blob) {
             return new Response(result, { status: 200 })
@@ -216,7 +189,7 @@ export class D2HttpClient {
             `fileResources/${details.url}`
         )
 
-        const result = await this.engineReady!.fetch(url, {
+        const result = await this.dataEngine!.fetch(url, {
             cache: 'force-cache',
             headers: {
                 Authorization: `ApiToken ${this.pat}`,
@@ -264,7 +237,7 @@ export class D2HttpClient {
             url = `${path}?${qs}`
         }
 
-        return this.engineReady!.get(url).catch((e) =>
+        return this.dataEngine!.get(url).catch((e) =>
             D2HttpClient.handleFetchError(e, `GET ${path}`)
         ) as Promise<T>
     }
@@ -284,7 +257,7 @@ export class D2HttpClient {
             url = `${path}?${qs}`
         }
 
-        return this.engineReady!.post(url, body).catch((e) =>
+        return this.dataEngine!.post(url, body).catch((e) =>
             D2HttpClient.handleFetchError(e, `POST ${path}`)
         ) as Promise<R>
     }
@@ -304,7 +277,7 @@ export class D2HttpClient {
             url = `${path}?${qs}`
         }
 
-        return this.engineReady!.put(url, body).catch((e) =>
+        return this.dataEngine!.put(url, body).catch((e) =>
             D2HttpClient.handleFetchError(e, `PUT ${path}`)
         ) as Promise<R>
     }
@@ -317,21 +290,39 @@ export class D2HttpClient {
         const { params } = meta ?? {}
 
         const mutation = { resource: path, type: 'create' as const, params }
-        return this.engineReady!.mutate(
-            mutation as Parameters<NonNullable<typeof this.engineReady>['mutate']>[0]
-        ).catch((e) => D2HttpClient.handleFetchError(e, `POST ${path}`)) as Promise<T>
+        return this.dataEngine!.mutate(
+            mutation as Parameters<
+                NonNullable<typeof this.dataEngine>['mutate']
+            >[0]
+        ).catch((e) =>
+            D2HttpClient.handleFetchError(e, `POST ${path}`)
+        ) as Promise<T>
     }
 
-    static handleFetchError(e: unknown, context?: string): never {
-        const prefix = context ? `[D2HttpClient:${context}]` : '[D2HttpClient]'
-        if (e instanceof FetchError) {
-            console.error(
-                `${prefix} ${e.type} error (HTTP ${e.details?.httpStatusCode ?? 'unknown'}):`,
-                e.message
-            )
-        } else {
-            console.error(`${prefix} Unexpected error:`, e)
+    private async _initialize(): Promise<void> {
+        let apiVersion = 40 // default to 2.40 for older DHIS2 instances
+        try {
+            const url = new URL('system/info', this.baseURL)
+            const response = await fetch(url, {
+                cache: 'no-store',
+                headers: { Authorization: `ApiToken ${this.pat}` },
+            })
+            if (response.ok) {
+                const info = (await response.json()) as { version?: string }
+                const parsed = D2HttpClient.parseApiVersion(info.version)
+                if (parsed !== null) {
+                    apiVersion = parsed
+                }
+            }
+        } catch (error) {
+            console.error('Error fetching DHIS2 version:', error)
+            console.error(`Falling back to default version ${apiVersion}`)
         }
-        throw e
+        const config: DataEngineConfig = {
+            baseUrl: this.baseURL.toString().replace('/api/', ''),
+            apiVersion,
+            apiToken: this.pat,
+        }
+        this.dataEngine = new DataEngine(new RestAPILink(config))
     }
 }

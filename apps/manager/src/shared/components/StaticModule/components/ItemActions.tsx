@@ -21,7 +21,7 @@ export function ItemActions() {
         from: '/modules/_provider/$moduleId/_formProvider/edit/static/$itemId/',
     })
     const navigate = useNavigate({
-        from: '/modules/$moduleId/edit/static/$itemId',
+        from: '/modules/$moduleId/edit/static/$itemId/',
     })
     const { save } = useSaveItem(itemId!)
     const module = useModule() as StaticModule

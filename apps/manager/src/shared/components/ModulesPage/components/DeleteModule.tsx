@@ -23,7 +23,7 @@ export function DeleteModule() {
     const [showDialog, setShowDialog] = useState(false)
     const [loading, setLoading] = useState(false)
     const navigate = useNavigate({
-        from: '/modules/$moduleId/edit',
+        from: '/modules/$moduleId/edit/',
     })
     const module = useModule() as AppModule
     const engine = useDataEngine()

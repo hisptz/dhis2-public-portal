@@ -9,7 +9,7 @@ import { useAlert } from '@dhis2/app-runtime'
 
 export function DashboardGroupEditActions() {
     const navigate = useNavigate({
-        from: '/modules/$moduleId/edit/$groupIndex',
+        from: '/modules/$moduleId/edit/$groupIndex/',
     })
 
     useParams({
