@@ -177,10 +177,10 @@ importers:
         version: 2.5.1
       cypress-file-upload:
         specifier: ^5.0.8
-        version: 5.0.8(cypress@15.13.1)
+        version: 5.0.8(cypress@15.14.1)
       cypress-real-events:
         specifier: ^1.14.0
-        version: 1.15.0(cypress@15.13.1)
+        version: 1.15.0(cypress@15.14.1)
       dompurify:
         specifier: ^3.3.3
         version: 3.3.3
@@ -262,10 +262,10 @@ importers:
         version: 12.11.0(@dhis2/data-engine@3.17.0)(@types/babel__core@7.20.5)(@types/node@24.12.2)(esbuild@0.27.7)(lightningcss@1.32.0)(react-native@0.85.0(@babel/core@7.29.0)(@types/react@19.2.14)(react@18.3.1))(react@18.3.1)(sugarss@5.0.1(postcss@8.5.9))(terser@5.46.1)(type-fest@4.41.0)(typescript@5.6.3)(webpack-dev-server@5.2.3(webpack@5.106.0(esbuild@0.27.7)))
       '@dhis2/cypress-commands':
         specifier: ^10.0.6
-        version: 10.1.2(@babel/preset-env@7.29.2(@babel/core@7.29.0))(cypress@15.13.1)
+        version: 10.1.2(@babel/preset-env@7.29.2(@babel/core@7.29.0))(cypress@15.14.1)
       '@dhis2/cypress-plugins':
         specifier: ^10.0.6
-        version: 10.1.2(@cypress/webpack-preprocessor@6.0.4(@babel/core@7.29.0)(@babel/preset-env@7.29.2(@babel/core@7.29.0))(babel-loader@9.2.1(@babel/core@7.29.0)(webpack@5.106.0(esbuild@0.27.7)))(webpack@5.106.0(esbuild@0.27.7)))(cypress@15.13.1)
+        version: 10.1.2(@cypress/webpack-preprocessor@6.0.4(@babel/core@7.29.0)(@babel/preset-env@7.29.2(@babel/core@7.29.0))(babel-loader@9.2.1(@babel/core@7.29.0)(webpack@5.106.0(esbuild@0.27.7)))(webpack@5.106.0(esbuild@0.27.7)))(cypress@15.14.1)
       '@tailwindcss/cli':
         specifier: ^4.1.4
         version: 4.2.2
@@ -300,8 +300,8 @@ importers:
         specifier: ^1.1.0
         version: 1.1.0
       cypress:
-        specifier: ^15.11.0
-        version: 15.13.1
+        specifier: ^15.14.1
+        version: 15.14.1
       dotenv:
         specifier: ^16.5.0
         version: 16.6.1
@@ -384,8 +384,8 @@ importers:
         specifier: ^3.1.2
         version: 3.2.0
       cypress:
-        specifier: ^15.11.0
-        version: 15.13.1
+        specifier: ^15.14.1
+        version: 15.14.1
       highcharts:
         specifier: ^12.4.0
         version: 12.5.0
@@ -464,7 +464,7 @@ importers:
     devDependencies:
       '@cypress/code-coverage':
         specifier: ^3.14.0
-        version: 3.14.7(@babel/core@7.29.0)(@babel/preset-env@7.29.2(@babel/core@7.29.0))(babel-loader@9.2.1(@babel/core@7.29.0)(webpack@5.106.0))(cypress@15.13.1)(webpack@5.106.0)
+        version: 3.14.7(@babel/core@7.29.0)(@babel/preset-env@7.29.2(@babel/core@7.29.0))(babel-loader@9.2.1(@babel/core@7.29.0)(webpack@5.106.0))(cypress@15.14.1)(webpack@5.106.0)
       '@svgr/webpack':
         specifier: ^8.1.0
         version: 8.1.0(typescript@5.6.3)
@@ -7049,8 +7049,8 @@ packages:
   cypress-ssr-localhost-mocker@0.0.4:
     resolution: {integrity: sha512-2fNRseKDeq4WW4SnqJdWtfNmOKJLzpq2+8S6KXwE1Y3idIRTxbwyTHJBDggKHGKr6DWX66qdTFNJMYcngZhHvw==}
 
-  cypress@15.13.1:
-    resolution: {integrity: sha512-jLkgo75zlwo7PhXp0XJot+zIfFSDzN1SvTml6Xf3ETM1XHRWnH3Q4LAR3orCo/BsnxPnhjG3m5HYSvn9DAtwBg==}
+  cypress@15.14.1:
+    resolution: {integrity: sha512-AkuiHNSnmm0a+h/horcvbjmY6dWpCe1Ebp1R0LjMP5I6pjMaNA50Mw1YP/d07pLHJ/sV8FZoGecUWFCJ/Nifpw==}
     engines: {node: ^20.1.0 || ^22.0.0 || >=24.0.0}
     hasBin: true
 
@@ -15850,14 +15850,14 @@ snapshots:
     dependencies:
       postcss: 8.5.9
 
-  '@cypress/code-coverage@3.14.7(@babel/core@7.29.0)(@babel/preset-env@7.29.2(@babel/core@7.29.0))(babel-loader@9.2.1(@babel/core@7.29.0)(webpack@5.106.0))(cypress@15.13.1)(webpack@5.106.0)':
+  '@cypress/code-coverage@3.14.7(@babel/core@7.29.0)(@babel/preset-env@7.29.2(@babel/core@7.29.0))(babel-loader@9.2.1(@babel/core@7.29.0)(webpack@5.106.0))(cypress@15.14.1)(webpack@5.106.0)':
     dependencies:
       '@babel/core': 7.29.0
       '@babel/preset-env': 7.29.2(@babel/core@7.29.0)
       '@cypress/webpack-preprocessor': 6.0.4(@babel/core@7.29.0)(@babel/preset-env@7.29.2(@babel/core@7.29.0))(babel-loader@9.2.1(@babel/core@7.29.0)(webpack@5.106.0))(webpack@5.106.0)
       babel-loader: 9.2.1(@babel/core@7.29.0)(webpack@5.106.0)
       chalk: 4.1.2
-      cypress: 15.13.1
+      cypress: 15.14.1
       dayjs: 1.11.13
       debug: 4.4.0
       execa: 4.1.0
@@ -17430,17 +17430,17 @@ snapshots:
     dependencies:
       prettier: 3.8.1
 
-  '@dhis2/cypress-commands@10.1.2(@babel/preset-env@7.29.2(@babel/core@7.29.0))(cypress@15.13.1)':
+  '@dhis2/cypress-commands@10.1.2(@babel/preset-env@7.29.2(@babel/core@7.29.0))(cypress@15.14.1)':
     dependencies:
-      cypress: 15.13.1
+      cypress: 15.14.1
       jscodeshift: 17.3.0(@babel/preset-env@7.29.2(@babel/core@7.29.0))
     transitivePeerDependencies:
       - '@babel/preset-env'
       - supports-color
 
-  '@dhis2/cypress-plugins@10.1.2(@cypress/webpack-preprocessor@6.0.4(@babel/core@7.29.0)(@babel/preset-env@7.29.2(@babel/core@7.29.0))(babel-loader@9.2.1(@babel/core@7.29.0)(webpack@5.106.0(esbuild@0.27.7)))(webpack@5.106.0(esbuild@0.27.7)))(cypress@15.13.1)':
+  '@dhis2/cypress-plugins@10.1.2(@cypress/webpack-preprocessor@6.0.4(@babel/core@7.29.0)(@babel/preset-env@7.29.2(@babel/core@7.29.0))(babel-loader@9.2.1(@babel/core@7.29.0)(webpack@5.106.0(esbuild@0.27.7)))(webpack@5.106.0(esbuild@0.27.7)))(cypress@15.14.1)':
     dependencies:
-      cypress: 15.13.1
+      cypress: 15.14.1
     optionalDependencies:
       '@cypress/webpack-preprocessor': 6.0.4(@babel/core@7.29.0)(@babel/preset-env@7.29.2(@babel/core@7.29.0))(babel-loader@9.2.1(@babel/core@7.29.0)(webpack@5.106.0(esbuild@0.27.7)))(webpack@5.106.0(esbuild@0.27.7))
 
@@ -21504,7 +21504,7 @@ snapshots:
 
   '@types/yauzl@2.10.3':
     dependencies:
-      '@types/node': 24.12.2
+      '@types/node': 25.5.2
     optional: true
 
   '@typescript-eslint/eslint-plugin@8.58.1(@typescript-eslint/parser@8.58.1(eslint@9.39.4(jiti@2.6.1))(typescript@5.8.3))(eslint@9.39.4(jiti@2.6.1))(typescript@5.6.3)':
@@ -24065,13 +24065,13 @@ snapshots:
 
   csstype@3.2.3: {}
 
-  cypress-file-upload@5.0.8(cypress@15.13.1):
+  cypress-file-upload@5.0.8(cypress@15.14.1):
     dependencies:
-      cypress: 15.13.1
+      cypress: 15.14.1
 
-  cypress-real-events@1.15.0(cypress@15.13.1):
+  cypress-real-events@1.15.0(cypress@15.14.1):
     dependencies:
-      cypress: 15.13.1
+      cypress: 15.14.1
 
   cypress-ssr-localhost-mocker@0.0.4:
     dependencies:
@@ -24079,7 +24079,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  cypress@15.13.1:
+  cypress@15.14.1:
     dependencies:
       '@cypress/request': 3.0.10
       '@cypress/xvfb': 1.2.4(supports-color@8.1.1)
