@@ -11,8 +11,9 @@ import { getAppearanceConfig } from '@/utils/config/appConfig'
 import { env } from '@/utils/env'
 import { dhis2HttpClient } from '@/utils/api/dhis2'
 import { DHIS2ConnectionError } from '@/components/DHIS2ConnectionError'
+import { Metadata } from 'next'
 
-export async function generateMetadata() {
+export async function generateMetadata(): Promise<Metadata> {
     return await getAppMetadata()
 }
 

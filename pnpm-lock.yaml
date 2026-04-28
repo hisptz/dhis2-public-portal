@@ -377,6 +377,9 @@ importers:
       '@tabler/icons-react':
         specifier: ^3.31.0
         version: 3.41.1(react@19.2.5)
+      adapter-bun:
+        specifier: github:nnkogift/adapter-bun
+        version: https://codeload.github.com/nnkogift/adapter-bun/tar.gz/05e07156710a37710c96b1edfbcc73f935d9fd29
       canvas:
         specifier: ^3.1.0
         version: 3.2.3
@@ -5415,6 +5418,10 @@ packages:
     resolution: {integrity: sha512-UVJyE9MttOsBQIDKw1skb9nAwQuR5wuGD3+82K6JgJlm/Y+KI92oNsMNGZCYdDsVtRHSak0pcV5Dno5+4jh9sw==}
     engines: {node: '>=0.4.0'}
     hasBin: true
+
+  adapter-bun@https://codeload.github.com/nnkogift/adapter-bun/tar.gz/05e07156710a37710c96b1edfbcc73f935d9fd29:
+    resolution: {tarball: https://codeload.github.com/nnkogift/adapter-bun/tar.gz/05e07156710a37710c96b1edfbcc73f935d9fd29}
+    version: 0.0.1
 
   address@1.2.2:
     resolution: {integrity: sha512-4B/qKCfeE/ODUaAUpSwfzazo5x29WD4r3vXiWsB7I2mSDAihwEqKO+g8GELZUQSSAo5e1XTYh3ZVfLyxBc12nA==}
@@ -19006,8 +19013,7 @@ snapshots:
     dependencies:
       react: 19.2.5
 
-  '@img/colour@1.1.0':
-    optional: true
+  '@img/colour@1.1.0': {}
 
   '@img/sharp-darwin-arm64@0.34.5':
     optionalDependencies:
@@ -21946,6 +21952,10 @@ snapshots:
   acorn@7.4.1: {}
 
   acorn@8.16.0: {}
+
+  adapter-bun@https://codeload.github.com/nnkogift/adapter-bun/tar.gz/05e07156710a37710c96b1edfbcc73f935d9fd29:
+    dependencies:
+      sharp: 0.34.5
 
   address@1.2.2: {}
 
@@ -31472,7 +31482,6 @@ snapshots:
       '@img/sharp-win32-arm64': 0.34.5
       '@img/sharp-win32-ia32': 0.34.5
       '@img/sharp-win32-x64': 0.34.5
-    optional: true
 
   shebang-command@1.2.0:
     dependencies:

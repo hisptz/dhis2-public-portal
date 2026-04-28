@@ -4,7 +4,7 @@
     "private": true,
     "scripts": {
         "dev": "next dev",
-        "build": "next build",
+        "build": "bun --bun next build",
         "build:standalone": "./build.sh",
         "start": "bun bun-dist/server.js",
         "lint": "next lint",
@@ -15,8 +15,8 @@
         "format:check": "prettier --check ."
     },
     "dependencies": {
-        "@dhis2/data-engine": "3.17.0",
         "@dhis2/app-runtime": "^3.17.0",
+        "@dhis2/data-engine": "3.17.0",
         "@dhis2/multi-calendar-dates": "^2.1.0",
         "@dhis2/ui": "^10.5.1",
         "@hisptz/dhis2-analytics": "^2.1.35",
@@ -33,6 +33,7 @@
         "@next/env": "16.2.3",
         "@packages/shared": "workspace:*",
         "@tabler/icons-react": "^3.31.0",
+        "adapter-bun": "github:nnkogift/adapter-bun",
         "canvas": "^3.1.0",
         "chroma-js": "^3.1.2",
         "cypress": "^15.14.1",
@@ -63,7 +64,6 @@
         "zod": "^4.3.6"
     },
     "devDependencies": {
-        "@packages/adapter-bun": "workspace:*",
         "@cypress/code-coverage": "^3.14.0",
         "@svgr/webpack": "^8.1.0",
         "@tailwindcss/postcss": "^4",

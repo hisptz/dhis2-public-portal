@@ -16,6 +16,7 @@ onlyBuiltDependencies:
     - '@tailwindcss/oxide'
     - core-js-pure
     - esbuild
+    - 'adapter-bun'
 
 publicHoistPattern:
     - '@dhis2/ui'

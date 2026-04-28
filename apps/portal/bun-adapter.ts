@@ -1,7 +1,7 @@
-import { createBunAdapter } from '@packages/adapter-bun'
+import { createBunAdapter } from 'adapter-bun'
 
 export default createBunAdapter({
-    outDir: 'apps/portal/server',
+    outDir: 'server',
     port: 3000,
     cacheHandlerMode: 'sqlite',
 })
