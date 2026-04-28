@@ -5,9 +5,9 @@ import { createRequire } from 'node:module'
 const require = createRequire(import.meta.url)
 
 const nextConfig: NextConfig = {
+    basePath: process.env.CONTEXT_PATH,
     adapterPath: require.resolve('./bun-adapter.ts'),
     reactStrictMode: false,
-    basePath: process.env.CONTEXT_PATH ?? '',
     images: {
         dangerouslyAllowSVG: true,
         contentDispositionType: 'inline',

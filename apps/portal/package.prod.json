@@ -1,0 +1,10 @@
+{
+    "name": "portal",
+    "private": true,
+    "scripts": {
+        "start": "bun --bun next start"
+    },
+    "dependencies": {
+        "next": "16.2.3"
+    }
+}

@@ -2,7 +2,7 @@ module.exports = {
     apps: [
         {
             name: 'FlexiPortal',
-            script: 'apps/portal/bun-dist/server.js',
+            script: 'apps/portal/server/start.js',
             interpreter: 'bun',
         },
     ],

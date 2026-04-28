@@ -379,7 +379,7 @@ importers:
         version: 3.41.1(react@19.2.5)
       adapter-bun:
         specifier: github:nnkogift/adapter-bun
-        version: https://codeload.github.com/nnkogift/adapter-bun/tar.gz/05e07156710a37710c96b1edfbcc73f935d9fd29
+        version: https://codeload.github.com/nnkogift/adapter-bun/tar.gz/515e31d1fbd4872bb213155d9bd229c3f330adee
       canvas:
         specifier: ^3.1.0
         version: 3.2.3
@@ -5419,9 +5419,9 @@ packages:
     engines: {node: '>=0.4.0'}
     hasBin: true
 
-  adapter-bun@https://codeload.github.com/nnkogift/adapter-bun/tar.gz/05e07156710a37710c96b1edfbcc73f935d9fd29:
-    resolution: {tarball: https://codeload.github.com/nnkogift/adapter-bun/tar.gz/05e07156710a37710c96b1edfbcc73f935d9fd29}
-    version: 0.0.1
+  adapter-bun@https://codeload.github.com/nnkogift/adapter-bun/tar.gz/515e31d1fbd4872bb213155d9bd229c3f330adee:
+    resolution: {tarball: https://codeload.github.com/nnkogift/adapter-bun/tar.gz/515e31d1fbd4872bb213155d9bd229c3f330adee}
+    version: 0.0.2
 
   address@1.2.2:
     resolution: {integrity: sha512-4B/qKCfeE/ODUaAUpSwfzazo5x29WD4r3vXiWsB7I2mSDAihwEqKO+g8GELZUQSSAo5e1XTYh3ZVfLyxBc12nA==}
@@ -21953,7 +21953,7 @@ snapshots:
 
   acorn@8.16.0: {}
 
-  adapter-bun@https://codeload.github.com/nnkogift/adapter-bun/tar.gz/05e07156710a37710c96b1edfbcc73f935d9fd29:
+  adapter-bun@https://codeload.github.com/nnkogift/adapter-bun/tar.gz/515e31d1fbd4872bb213155d9bd229c3f330adee:
     dependencies:
       sharp: 0.34.5
 

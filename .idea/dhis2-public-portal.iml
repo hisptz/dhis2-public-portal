@@ -23,6 +23,8 @@
       <excludeFolder url="file://$MODULE_DIR$/services/data-service/outputs" />
       <excludeFolder url="file://$MODULE_DIR$/services/data-service/.turbo" />
       <excludeFolder url="file://$MODULE_DIR$/apps/portal/bun-dist" />
+      <excludeFolder url="file://$MODULE_DIR$/apps/portal/.next-template" />
+      <excludeFolder url="file://$MODULE_DIR$/apps/portal/server" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

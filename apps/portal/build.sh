@@ -14,6 +14,7 @@ if ! command -v bun &>/dev/null; then
     export PATH="$HOME/.bun/bin:$PATH"
 fi
 
+
 echo "Pruning portal app for building"
 turbo prune portal --out-dir apps/portal/build
 
@@ -31,7 +32,7 @@ cp apps/portal/next.config.ts app/
 cp apps/portal/package.json app/
 
 mkdir -p app/apps/portal
-cp -r apps/portal/bun-dist/ app/apps/portal/bun-dist/
+cp -r apps/portal/server/ app/apps/portal/server/
 cp -r apps/portal/.next/static/ app/apps/portal/.next/static/
 cp -r apps/portal/public/ app/apps/portal/public/
 

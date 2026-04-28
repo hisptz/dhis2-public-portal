@@ -46,3 +46,4 @@ yarn-error.log*
 /services/data-service/bundle/
 /services/data-service/src/generated/
 /apps/portal/bun-dist/
+/apps/portal/server/

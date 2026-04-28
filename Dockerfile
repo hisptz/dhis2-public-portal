@@ -1,9 +1,9 @@
-FROM --platform=linux/amd64 node:20-alpine AS base
+FROM node:24-alpine AS base
 
 # This Dockerfile is copy-pasted into our main docs at /docs/handbook/deploying-with-docker.
 # Make sure you update both files!
 
-FROM base AS builder
+FROM base AS installer
 # Check https://github.com/nodejs/docker-node/tree/b4117f9333da4138b03a546ec926ef50a31506c3#nodealpine to understand why libc6-compat might be needed.
 RUN apk add --no-cache libc6-compat
 RUN apk update
@@ -14,35 +14,31 @@ COPY . .
 RUN turbo prune portal --docker
 
 # Add lockfile and package.json's of isolated subworkspace
-FROM base AS installer
+FROM base AS builder
 RUN apk add --no-cache libc6-compat
 RUN apk update
+
 WORKDIR /app
 
 # First install the dependencies (as they change less often)
 COPY .gitignore .gitignore
-COPY --from=builder /app/out/json/ .
-COPY --from=builder /app/out/pnpm-lock.yaml ./pnpm-lock.yaml
-RUN corepack enable
-RUN apk add --no-cache python3 make g++ build-base cairo-dev pango-dev giflib-dev py-setuptools
-RUN npm -g install corepack@latest
-RUN corepack enable
-RUN pnpm install --no-frozen-lockfile
+COPY --from=installer /app/out/json/ .
+COPY --from=installer /app/out/pnpm-lock.yaml ./pnpm-lock.yaml
+COPY --from=installer /app/out/pnpm-workspace.yaml ./pnpm-workspace.yaml
 
 # Install bun for building with the bun adapter
 RUN apk add --no-cache curl bash && \
     curl -fsSL https://bun.sh/install | bash
 ENV PATH="/root/.bun/bin:${PATH}"
 
+
+RUN corepack enable
+RUN npm -g install corepack@latest
+RUN corepack enable
+RUN pnpm install  --frozen-lockfile
+
 # Build the project
-COPY --from=builder /app/out/full/ .
-
-# Uncomment and use build args to enable remote caching
-# ARG TURBO_TEAM
-# ENV TURBO_TEAM=$TURBO_TEAM
-
-# ARG TURBO_TOKEN
-# ENV TURBO_TOKEN=$TURBO_TOKEN
+COPY --from=installer /app/out/full/ .
 
 # Only the context path is required during build
 ARG CONTEXT_PATH
@@ -54,7 +50,7 @@ RUN npm -g install corepack@latest
 RUN corepack enable
 RUN pnpm run build --filter portal
 
-FROM --platform=linux/amd64 oven/bun:1-alpine AS runner
+FROM oven/bun:1-alpine AS runner
 WORKDIR /app
 
 ENV NODE_ENV=production
@@ -62,17 +58,12 @@ ENV NODE_ENV=production
 # Don't run production as root
 RUN addgroup --system --gid 1001 nodejs
 RUN adduser --system --uid 1001 nextjs
+
+COPY --from=builder --chown=nextjs:nodejs /app/apps/portal/.next-template .
+COPY --from=builder --chown=nextjs:nodejs /app/apps/portal/server .
+COPY --from=builder --chown=nextjs:nodejs /app/apps/portal/package.prod.json package.json
+
+
 USER nextjs
 
-COPY --from=installer /app/apps/portal/next.config.ts .
-COPY --from=installer /app/apps/portal/package.json .
-
-# Automatically leverage output traces to reduce image size
-# https://nextjs.org/docs/advanced-features/output-file-tracing
-COPY --from=installer --chown=nextjs:nodejs /app/apps/portal/.next/standalone ./
-COPY --from=installer --chown=nextjs:nodejs /app/apps/portal/.next/static ./apps/portal/.next/static
-
-# Bun adapter server entry and runtime modules
-COPY --from=installer --chown=nextjs:nodejs /app/apps/portal/bun-dist ./apps/portal/bun-dist
-
-CMD ["bun", "apps/portal/bun-dist/server.js"]
+CMD ["bun", "--bun", "server/start.js"]

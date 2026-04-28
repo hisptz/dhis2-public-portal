@@ -5,8 +5,9 @@
     "scripts": {
         "dev": "next dev",
         "build": "bun --bun next build",
+        "postbuild": "./postbuild.sh",
         "build:standalone": "./build.sh",
-        "start": "bun bun-dist/server.js",
+        "start": "CONTEXT_PATH=/dashboard bun --bun server/start.js",
         "lint": "next lint",
         "check-types": "next typegen &&  tsc --noEmit",
         "test:e2e": "dotenv -- cross-var concurrently --kill-others --success first -c blue,green --names app,cypress 'yarn dev' 'cypress run'",
