@@ -15,7 +15,8 @@
         "format:check": "prettier --check ."
     },
     "dependencies": {
-        "@dhis2/app-runtime": "3.16.0",
+        "@dhis2/data-engine": "3.17.0",
+        "@dhis2/app-runtime": "^3.17.0",
         "@dhis2/multi-calendar-dates": "^2.1.0",
         "@dhis2/ui": "^10.5.1",
         "@hisptz/dhis2-analytics": "^2.1.35",
@@ -34,7 +35,7 @@
         "@tabler/icons-react": "^3.31.0",
         "canvas": "^3.1.0",
         "chroma-js": "^3.1.2",
-        "cypress": "^15.11.0",
+        "cypress": "^15.14.1",
         "highcharts": "^12.4.0",
         "highcharts-react-official": "^3.2.2",
         "jszip": "^3.10.1",
