@@ -51,19 +51,25 @@ RUN corepack enable
 RUN pnpm run build --filter portal
 
 FROM oven/bun:1-alpine AS runner
-WORKDIR /app
-
 ENV NODE_ENV=production
 
 # Don't run production as root
 RUN addgroup --system --gid 1001 nodejs
 RUN adduser --system --uid 1001 nextjs
 
-COPY --from=builder --chown=nextjs:nodejs /app/apps/portal/.next-template .
-COPY --from=builder --chown=nextjs:nodejs /app/apps/portal/server .
+RUN mkdir -p /app
+RUN chown -R nextjs:nodejs /app
+
+WORKDIR /app
+
+COPY --from=builder --chown=nextjs:nodejs /app/apps/portal/.next-template /app/.next-template
+COPY --from=builder --chown=nextjs:nodejs /app/apps/portal/server /app/server
 COPY --from=builder --chown=nextjs:nodejs /app/apps/portal/package.prod.json package.json
 
+RUN bun install
 
 USER nextjs
 
-CMD ["bun", "--bun", "server/start.js"]
+EXPOSE 3000
+
+CMD ["bun", "--bun", "/app/server/start.js"]

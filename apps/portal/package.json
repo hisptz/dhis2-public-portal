@@ -3,7 +3,7 @@
     "version": "1.5.5",
     "private": true,
     "scripts": {
-        "dev": "next dev",
+        "dev": "bun --bun next dev",
         "build": "bun --bun next build",
         "postbuild": "./postbuild.sh",
         "build:standalone": "./build.sh",

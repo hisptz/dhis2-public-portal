@@ -4,7 +4,7 @@ import { NoConfigLandingPage } from '@/components/NoConfigLandingPage'
 import { getAppearanceConfig } from '@/utils/config/appConfig'
 import { Providers } from '@/components/Providers'
 import { getAppMeta } from '@/utils/appMetadata'
-import { getServerImageUrl } from '@/utils/server/images'
+import { getServerImageUrl } from '../utils/backend/images'
 
 export default async function MainLoadingScreen() {
     const config = await getAppearanceConfig()
