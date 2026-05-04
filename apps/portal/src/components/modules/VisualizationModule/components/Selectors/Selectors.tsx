@@ -1,12 +1,20 @@
 'use client'
 
 import { Card, Group } from '@mantine/core'
-import { GlobalOrgUnitFilter } from '@/components/GlobalOrgUnitFilter'
-import { GlobalPeriodFilter } from '@/components/GlobalPeriodFilter'
+import dynamic from 'next/dynamic'
 import { VisualizationModuleConfig } from '@packages/shared/schemas'
 import { useSearchParams } from 'next/navigation'
+import { GlobalPeriodFilter } from '@/components/GlobalPeriodFilter'
 import { ResetDimensionButton } from '@/components/modules/VisualizationModule/components/ResetDimensionButton'
 import { useTransition } from 'react'
+
+const GlobalOrgUnitFilter = dynamic(
+    () =>
+        import('@/components/GlobalOrgUnitFilter').then((m) => ({
+            default: m.GlobalOrgUnitFilter,
+        })),
+    { ssr: false }
+)
 
 export function Selectors({ config }: { config: VisualizationModuleConfig }) {
     const searchParams = useSearchParams()

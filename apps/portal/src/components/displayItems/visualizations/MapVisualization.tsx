@@ -1,6 +1,6 @@
 import { dhis2HttpClient } from '@/utils/api/dhis2'
 import { ChartVisualizationItem, MapConfig } from '@packages/shared/schemas'
-import { MapVisComponent } from '@/components/displayItems/visualizations/MapVisComponent'
+import { MapVisualizationClient } from './MapVisualizationClient'
 
 export interface MainVisualizationProps {
     showFilter?: boolean
@@ -45,7 +45,7 @@ export async function MapVisualization({
     }
 
     return (
-        <MapVisComponent
+        <MapVisualizationClient
             showFilter={showFilter}
             disableActions={disableActions}
             mapConfig={mapConfig}
