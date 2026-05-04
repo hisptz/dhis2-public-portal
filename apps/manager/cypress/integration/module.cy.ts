@@ -154,7 +154,9 @@ describe('Modules Page', () => {
         cy.get('[data-test="screen-size-select"]').click()
         cy.get('[data-value="lg"]').click()
 
-        cy.get(`[data-prefix="${visualizations[1]}"]`).find('[title="Remove visualization"]').click()
+        cy.get(`[data-prefix="${visualizations[1]}"]`)
+            .find('[title="Remove visualization"]')
+            .click()
 
         cy.get('.react-grid-layout').then(() => {
             cy.get(
@@ -234,7 +236,9 @@ describe('Modules Page', () => {
         cy.get('[data-test="screen-size-select"]').click()
         cy.get('[data-value="lg"]').click()
 
-        cy.get(`[data-prefix="${visualizations[1]}"]`).find('[title="Remove visualization"]').click()
+        cy.get(`[data-prefix="${visualizations[1]}"]`)
+            .find('[title="Remove visualization"]')
+            .click()
 
         cy.get('.react-grid-layout').then(() => {
             cy.get(
