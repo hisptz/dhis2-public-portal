@@ -36,7 +36,7 @@ jobs:
                   file: ./Dockerfile
                   push: true
                   build-args: |
-                      CONTEXT_PATH: null
+                      NEXT_PUBLIC_CONTEXT_PATH: null
                   tags: hisptanzania/dhis2-public-portal:develop
                   cache-from: type=gha
                   cache-to: type=gha,mode=max
@@ -47,7 +47,7 @@ jobs:
                   file: ./Dockerfile
                   push: true
                   build-args: |
-                      CONTEXT_PATH: /portal
+                      NEXT_PUBLIC_CONTEXT_PATH: /portal
                   tags: hisptanzania/dhis2-public-portal:develop-with-context-path
                   cache-from: type=gha
                   cache-to: type=gha,mode=max

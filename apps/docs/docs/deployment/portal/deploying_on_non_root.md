@@ -26,13 +26,13 @@ cd dhis2-public-portal
 
 ### 2. Set the Base Path
 
-The most important configuration is setting the `CONTEXT_PATH` environment variable.
+The most important configuration is setting the `NEXT_PUBLIC_CONTEXT_PATH` environment variable.
 
 Create the `.env` file in the `apps/portal/` folder. The file should have the following variables:
 
 - `DHIS2_BASE_URL`: The URL of your DHIS2 instance
 - `DHIS2_BASE_PAT_TOKEN`: A Personal Access Token for your DHIS2 instance
-- `CONTEXT_PATH`: A subpath where your application will be hosted (e.g `/portal`)
+- `NEXT_PUBLIC_CONTEXT_PATH`: A subpath where your application will be hosted (e.g `/portal`)
 
 This tells the Next.js application to use `/portal` as the base path for all assets and navigation.
 

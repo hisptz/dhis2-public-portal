@@ -67,7 +67,7 @@ export async function FileVisualizer({ config }: PDFVisualizerProps) {
 
     return (
         <Link
-            href={href.replace(env.CONTEXT_PATH ?? '', '')}
+            href={href.replace(env.NEXT_PUBLIC_CONTEXT_PATH ?? '', '')}
             target="_blank"
             referrerPolicy="no-referrer"
             style={{

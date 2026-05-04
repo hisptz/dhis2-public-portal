@@ -27,7 +27,7 @@ export default async function RootLayout({
         return <DHIS2ConnectionError error={connectionStatus} />
     }
     const config = await getAppearanceConfig()
-    const contextPath = env.CONTEXT_PATH ?? ''
+    const contextPath = env.NEXT_PUBLIC_CONTEXT_PATH ?? ''
 
     return (
         <html lang="en" {...mantineHtmlProps}>
