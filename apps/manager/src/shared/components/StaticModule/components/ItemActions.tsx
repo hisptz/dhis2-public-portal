@@ -16,9 +16,7 @@ import { useSaveItem } from '../hooks/save'
 import { useModule } from '../../ModulesPage/providers/ModuleProvider'
 import { useRefreshModules } from '../../ModulesPage/providers/ModulesProvider'
 import { useManageDocument } from '../../../hooks/document'
-import {
-    StaticItemFormValues,
-} from './StaticConfig/staticItemFormSchema'
+import { StaticItemFormValues } from './StaticConfig/staticItemFormSchema'
 
 export function ItemActions() {
     const { itemId } = useParams({
@@ -62,7 +60,8 @@ export function ItemActions() {
             await save(staticItemSchema.parse(updatedData))
             navigate({ to: '/modules/$moduleId/edit' })
         } catch (error) {
-            const message = error instanceof Error ? error.message : String(error)
+            const message =
+                error instanceof Error ? error.message : String(error)
             show({
                 message: i18n.t('Error: {{error}}', { error: message }),
                 type: { critical: true },

@@ -9,7 +9,10 @@ import { Button, IconArrowLeft16 } from '@dhis2/ui'
 import { PageHeader } from '../../../PageHeader'
 import { ItemActions } from '../ItemActions'
 import { StaticForm } from './StaticForm'
-import { staticItemFormSchema, StaticItemFormValues } from './staticItemFormSchema'
+import {
+    staticItemFormSchema,
+    StaticItemFormValues,
+} from './staticItemFormSchema'
 
 export function StaticConfig() {
     const { itemId } = useParams({

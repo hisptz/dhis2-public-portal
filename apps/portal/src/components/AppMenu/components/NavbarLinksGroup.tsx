@@ -52,8 +52,7 @@ export function LinksGroup({
 
     const items = hasLinks
         ? subMenus.map((subMenu) => {
-              const isActiveSubMenu =
-                  subMenu.path && isPathMatch(subMenu.path)
+              const isActiveSubMenu = subMenu.path && isPathMatch(subMenu.path)
               return (
                   <Link
                       key={subMenu.label}

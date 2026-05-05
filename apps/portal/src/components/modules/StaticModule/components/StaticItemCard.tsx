@@ -1,5 +1,13 @@
 import { StaticItemConfig } from '@packages/shared/schemas'
-import { Button, Card, Group, Image, Text, ThemeIcon, Title } from '@mantine/core'
+import {
+    Button,
+    Card,
+    Group,
+    Image,
+    Text,
+    ThemeIcon,
+    Title,
+} from '@mantine/core'
 import NextImage from 'next/image'
 import Link from 'next/link'
 import { getServerImageUrl } from '@/utils/server/images'
@@ -46,7 +54,13 @@ export function StaticItemCard({
                     style={{ overflow: 'visible' }}
                 >
                     <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 z-10">
-                        <ThemeIcon size={100} radius="xl" p={8} variant="filled" className="shadow-md">
+                        <ThemeIcon
+                            size={100}
+                            radius="xl"
+                            p={8}
+                            variant="filled"
+                            className="shadow-md"
+                        >
                             {iconUrl ? (
                                 <Image
                                     alt={item.icon!}
@@ -62,9 +76,7 @@ export function StaticItemCard({
                     </div>
 
                     <div className="flex flex-col h-full p-4 pt-12 overflow-hidden">
-                        <Title order={4}>
-                            {item.title}
-                        </Title>
+                        <Title order={4}>{item.title}</Title>
                         <Text
                             ta="justify"
                             size="sm"
@@ -74,7 +86,10 @@ export function StaticItemCard({
                         >
                             {item.shortDescription}
                         </Text>
-                        <Group justify="flex-end" className="mt-auto pt-1 shrink-0">
+                        <Group
+                            justify="flex-end"
+                            className="mt-auto pt-1 shrink-0"
+                        >
                             <Button component="span" variant="subtle" size="sm">
                                 Learn more
                             </Button>
