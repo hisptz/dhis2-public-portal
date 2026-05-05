@@ -43,14 +43,17 @@ export function LinksGroup({
     const getImageUrl = useGetImageUrl()
     const imageURL = icon ? getImageUrl(icon) : undefined
     const pathAfterModules = pathname.replace(/^\/modules\//, '')
-    const isActive = path && pathAfterModules === path
+    const isPathMatch = (menuPath: string) =>
+        pathAfterModules === menuPath ||
+        pathAfterModules.startsWith(menuPath + '/')
+    const isActive = path && isPathMatch(path)
     const theme = useMantineTheme()
     const color = theme.primaryColor
 
     const items = hasLinks
         ? subMenus.map((subMenu) => {
               const isActiveSubMenu =
-                  subMenu.path && pathAfterModules === subMenu.path
+                  subMenu.path && isPathMatch(subMenu.path)
               return (
                   <Link
                       key={subMenu.label}
@@ -71,7 +74,7 @@ export function LinksGroup({
         : null
 
     const hasActiveSubmenu = subMenus?.some(
-        (subMenu) => subMenu.path && pathAfterModules === subMenu.path
+        (subMenu) => subMenu.path && isPathMatch(subMenu.path)
     )
 
     const mainContent = (

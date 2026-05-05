@@ -11,10 +11,14 @@ import i18n from '@dhis2/d2-i18n'
 import { useState } from 'react'
 import { useNavigate, useParams } from '@tanstack/react-router'
 import { FetchError, useAlert, useDataEngine } from '@dhis2/app-runtime'
-import { StaticItemConfig, StaticModule } from '@packages/shared/schemas'
+import { staticItemSchema, StaticModule } from '@packages/shared/schemas'
 import { useSaveItem } from '../hooks/save'
 import { useModule } from '../../ModulesPage/providers/ModuleProvider'
 import { useRefreshModules } from '../../ModulesPage/providers/ModulesProvider'
+import { useManageDocument } from '../../../hooks/document'
+import {
+    StaticItemFormValues,
+} from './StaticConfig/staticItemFormSchema'
 
 export function ItemActions() {
     const { itemId } = useParams({
@@ -29,7 +33,8 @@ export function ItemActions() {
     const refreshModules = useRefreshModules()
     const [loading, setLoading] = useState(false)
     const [showDialog, setShowDialog] = useState(false)
-    const { handleSubmit, formState } = useFormContext<StaticItemConfig>()
+    const { handleSubmit, formState } = useFormContext<StaticItemFormValues>()
+    const { create: createIcon } = useManageDocument()
     const { show } = useAlert(
         ({ message }) => message,
         ({ type }) => ({ ...type, duration: 3000 })
@@ -45,13 +50,21 @@ export function ItemActions() {
         setShowDialog(true)
     }
 
-    const onSubmit = async (data: StaticItemConfig) => {
+    const onSubmit = async (data: StaticItemFormValues) => {
         try {
-            await save(data)
+            const updatedData = {
+                ...data,
+                icon: data.icon?.id,
+            }
+            if ((data.icon?.size ?? 0) > 0) {
+                updatedData.icon = await createIcon(data.icon!)
+            }
+            await save(staticItemSchema.parse(updatedData))
             navigate({ to: '/modules/$moduleId/edit' })
         } catch (error) {
+            const message = error instanceof Error ? error.message : String(error)
             show({
-                message: i18n.t('Error: {{error}}', { error: error.message }),
+                message: i18n.t('Error: {{error}}', { error: message }),
                 type: { critical: true },
             })
         }

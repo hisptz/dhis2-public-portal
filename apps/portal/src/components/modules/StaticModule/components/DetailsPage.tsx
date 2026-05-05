@@ -1,11 +1,11 @@
-import { Button, Card, Container, Stack, Title } from '@mantine/core'
+import { Card, Container, Stack, Title } from '@mantine/core'
 import { getAppModule } from '@/utils/module'
 import { ModuleType, StaticItemConfig } from '@packages/shared/schemas'
 import { getAppConfigWithNamespace } from '@/utils/config'
 import { DatastoreNamespaces } from '@packages/shared/constants'
 import { BaseCardError } from '@/components/CardError'
 import { RichContent } from '@/components/RichContent'
-import { IconArrowLeft } from '@tabler/icons-react'
+import { BackButton } from '@/components/modules/StaticModule/components/BackButton'
 
 export async function DetailsPage({
     id,
@@ -38,14 +38,7 @@ export async function DetailsPage({
     return (
         <Container fluid px={0}>
             <Stack align="flex-start">
-                <Button
-                    variant="subtle"
-                    href={'../'}
-                    component="a"
-                    leftSection={<IconArrowLeft size={14} />}
-                >
-                    Back
-                </Button>
+                <BackButton href="../" />
                 <Title order={2}>{item.title}</Title>
                 <Card>
                     <RichContent content={item.content} />
