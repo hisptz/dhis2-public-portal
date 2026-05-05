@@ -19,8 +19,14 @@ export async function StaticItemsList({
     return (
         <SimpleGrid
             cols={{
-                base: 4,
+                base: 1,
+                xs: 2,
+                sm: 2,
+                md: 3,
+                lg: 4,
+                xl: 4,
             }}
+            spacing="md"
         >
             {items.map((item) => (
                 <StaticItemCard moduleId={moduleId} key={item.id} item={item} />

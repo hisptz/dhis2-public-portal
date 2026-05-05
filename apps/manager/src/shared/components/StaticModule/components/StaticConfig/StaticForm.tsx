@@ -2,6 +2,7 @@ import { RHFTextInputField } from '@hisptz/dhis2-ui'
 import i18n from '@dhis2/d2-i18n'
 import { RHFRichTextAreaField } from '../../../Fields/RHFRichTextAreaField'
 import { RHFTextAreaField } from '../../../Fields/RHFTextAreaField'
+import { RHFIconInput } from '../../../Fields/RHFIconInput'
 
 export function StaticForm() {
     return (
@@ -22,14 +23,11 @@ export function StaticForm() {
                 name="content"
                 label={i18n.t('Content')}
             />
-            {/* <RHFTextAreaField
-				required
-				autoGrow
-				rows={2}
-				name="icon"
-				helpText={i18n.t("Should be a valid svg string")}
-				label={i18n.t("Icon")}
-			/> */}
+            <RHFIconInput
+                name="icon"
+                label={i18n.t('Icon')}
+                accept="image/svg+xml"
+            />
         </form>
     )
 }
