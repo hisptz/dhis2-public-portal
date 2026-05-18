@@ -12,7 +12,7 @@ export function AddItem() {
     const refreshModules = useRefreshModules()
     const { value: hide, setTrue: onHide, setFalse: onShow } = useBoolean(true)
     const navigate = useNavigate({
-        from: '/modules/$moduleId/edit',
+        from: '/modules/$moduleId/edit/',
     })
     const { items, loading, error } = useItemList()
     const itemList = items.flat() as StaticItemConfig[]

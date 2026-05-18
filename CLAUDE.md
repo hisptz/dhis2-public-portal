@@ -78,7 +78,7 @@ pnpm prisma:studio    # Open Prisma Studio
 
 - `DHIS2_BASE_URL` — URL of the DHIS2 instance
 - `DHIS2_BASE_PAT_TOKEN` — Personal Access Token for server-side API calls
-- `CONTEXT_PATH` — Optional subpath for non-root deployments
+- `NEXT_PUBLIC_CONTEXT_PATH` — Optional subpath for non-root deployments
 
 **Manager** (`apps/manager/.env`):
 
@@ -98,7 +98,7 @@ The portal is a **server-rendered Next.js app**. All DHIS2 data fetching happens
 
 - **Route**: `src/app/modules/[...module]/page.tsx` — central catch-all; last path segment is the `moduleId`. A `/details/{resourceId}` sub-path is also handled for resource detail views.
 - **API proxy**: `src/app/api/[...path]/route.ts` — whitelisted DHIS2 API proxy for client-side chart/map rendering (only allows `analytics`, `legendSets`, `organisationUnits`, `geoFeatures`, `tokens/google`). Additional internal routes: `/api/documents`, `/api/icons`, `/api/info`.
-- **Config storage**: Portal configuration is read from DHIS2 Datastore at runtime; `reactStrictMode` is disabled in `next.config.ts`; `CONTEXT_PATH` affects both runtime (`basePath`) and the Turborepo build cache.
+- **Config storage**: Portal configuration is read from DHIS2 Datastore at runtime; `reactStrictMode` is disabled in `next.config.ts`; `NEXT_PUBLIC_CONTEXT_PATH` affects both runtime (`basePath`) and the Turborepo build cache.
 
 ### Manager (DHIS2 Custom App)
 

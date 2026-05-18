@@ -14,7 +14,7 @@ export function SectionEditActions() {
     const namePrefix = useSectionNamePrefix()
     const { confirm } = useDialog()
     const navigate = useNavigate({
-        from: '/modules/$moduleId/edit/section/$sectionIndex',
+        from: '/modules/$moduleId/edit/section/$sectionIndex/',
     })
 
     const { moduleId } = useParams({

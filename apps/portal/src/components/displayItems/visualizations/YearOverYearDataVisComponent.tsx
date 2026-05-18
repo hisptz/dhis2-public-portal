@@ -17,17 +17,29 @@ import {
     useDimensionViewControls,
     useVisualizationRefs,
 } from '@/hooks/dataVisualization'
-import {
-    VisualizationTitle,
-    YearOverYearVisualizer,
-} from '@packages/shared/visualizations'
+import dynamic from 'next/dynamic'
+import { VisualizationTitle } from '@/components/displayItems/visualizations/VisualizationTitle'
 import { ActionMenu } from './ActionMenu'
-import { CustomOrgUnitModal } from './CustomOrgUnitModal'
 import { CustomPeriodModal } from '@/components/displayItems/visualizations/CustomPeriodModal'
-
 import { useSearchParams } from 'next/navigation'
 import { useYearOverYearAnalytics } from '@/hooks/charts'
 import { useMemo } from 'react'
+
+const YearOverYearVisualizer = dynamic(
+    () =>
+        import('@packages/shared/visualizations').then((m) => ({
+            default: m.YearOverYearVisualizer,
+        })),
+    { ssr: false }
+)
+
+const CustomOrgUnitModal = dynamic(
+    () =>
+        import('./CustomOrgUnitModal').then((m) => ({
+            default: m.CustomOrgUnitModal,
+        })),
+    { ssr: false }
+)
 
 export function YearOverYearDataVisComponent({
     visualizationConfig,

@@ -2,14 +2,11 @@ import { ReadonlyURLSearchParams } from 'next/navigation'
 import { dhis2HttpClient } from '@/utils/api/dhis2'
 import {
     ChartVisualizationItem,
-    VisualizationChartType,
     VisualizationConfig,
     visualizationFields,
-    YearOverYearVisualizationConfig,
 } from '@packages/shared/schemas'
 import { getAppearanceConfig } from '@/utils/config/appConfig'
-import { YearOverYearDataVisComponent } from '@/components/displayItems/visualizations/YearOverYearDataVisComponent'
-import { DataVisComponent } from '@/components/displayItems/visualizations/DataVisComponent'
+import { DataVisualizationClient } from './DataVisualizationClient'
 
 export interface MainVisualizationProps {
     searchParams?: ReadonlyURLSearchParams
@@ -50,32 +47,13 @@ export async function DataVisualization({
         throw Error('Could not get visualization details')
     }
 
-    if (
-        [
-            VisualizationChartType.YEAR_OVER_YEAR_COLUMN,
-            VisualizationChartType.YEAR_OVER_YEAR_LINE,
-        ].includes(visualizationConfig.type)
-    ) {
-        return (
-            <YearOverYearDataVisComponent
-                colors={colors}
-                disableActions={disableActions}
-                config={config}
-                showFilter={showFilter}
-                visualizationConfig={
-                    visualizationConfig as YearOverYearVisualizationConfig
-                }
-            />
-        )
-    }
-
     return (
-        <DataVisComponent
-            showFilter={showFilter}
+        <DataVisualizationClient
+            visualizationConfig={visualizationConfig}
+            config={config}
             colors={colors}
             disableActions={disableActions}
-            config={config}
-            visualizationConfig={visualizationConfig}
+            showFilter={showFilter}
         />
     )
 }

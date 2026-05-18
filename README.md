@@ -126,7 +126,7 @@ The following environment variables are required in the `.env` file:
 In cases where your application will be available through a subpath (e.g https://example.org/some/path, you will need to
 build the app yourself before deploying.
 
-Before building your application, make sure to set the `CONTEXT_PATH` to the desired subpath. For example, the
+Before building your application, make sure to set the `NEXT_PUBLIC_CONTEXT_PATH` to the desired subpath. For example, the
 URL https://example.org/some/path' the subpath is `/some/path`
 
 ### Docker
@@ -141,7 +141,7 @@ Then create the `.env` file in the `apps/portal/` folder. The file should have t
 
 - `DHIS2_BASE_URL`: The URL of your DHIS2 instance
 - `DHIS2_BASE_PAT_TOKEN`: A Personal Access Token for your DHIS2 instance
-- `CONTEXT_PATH`: A subpath where your application will be hosted
+- `NEXT_PUBLIC_CONTEXT_PATH`: A subpath where your application will be hosted
 
 Then run;
 

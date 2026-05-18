@@ -1,5 +1,6 @@
 'use client'
 
+import { useMemo } from 'react'
 import { ActionIcon, Loader, Tooltip } from '@mantine/core'
 import { IconArrowsMaximize, IconArrowsMinimize } from '@tabler/icons-react'
 import i18n from '@dhis2/d2-i18n'
@@ -9,8 +10,7 @@ import {
     VisualizationItem,
 } from '@packages/shared/schemas'
 import { FullScreen } from 'react-full-screen'
-import { CustomOrgUnitModal } from './CustomOrgUnitModal'
-import { CustomPeriodModal } from './CustomPeriodModal'
+import dynamic from 'next/dynamic'
 import { useSearchParams } from 'next/navigation'
 import { isEmpty } from 'lodash-es'
 import { ActionMenu } from '@/components/displayItems/visualizations/ActionMenu'
@@ -21,9 +21,32 @@ import {
     useDimensionViewControls,
     useVisualizationRefs,
 } from '@/hooks/dataVisualization'
-import { ChartSelector, TableVisualizer } from '@packages/shared/visualizations'
-import { useMemo } from 'react'
+import { CustomPeriodModal } from './CustomPeriodModal'
 import { useAnalytics } from '@/hooks/charts'
+
+const CustomOrgUnitModal = dynamic(
+    () =>
+        import('./CustomOrgUnitModal').then((m) => ({
+            default: m.CustomOrgUnitModal,
+        })),
+    { ssr: false }
+)
+
+const ChartSelector = dynamic(
+    () =>
+        import('@packages/shared/visualizations').then((m) => ({
+            default: m.ChartSelector,
+        })),
+    { ssr: false }
+)
+
+const TableVisualizer = dynamic(
+    () =>
+        import('@packages/shared/visualizations').then((m) => ({
+            default: m.TableVisualizer,
+        })),
+    { ssr: false }
+)
 
 export function DataVisComponent({
     visualizationConfig,

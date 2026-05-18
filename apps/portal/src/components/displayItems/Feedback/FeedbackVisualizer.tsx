@@ -14,8 +14,12 @@ import { notifications } from '@mantine/notifications'
 import { useCallback, useRef } from 'react'
 import { FormProvider, useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
-
-import { FeedbackItem, feedbackSchema } from '@packages/shared/schemas'
+import {
+    FeedbackConfig,
+    FeedbackItem,
+    feedbackSchema,
+} from '@packages/shared/schemas'
+import { sendFeedbackEmail } from '@/utils/sendEmail'
 
 export default function FeedbackVisualizer({ item }: { item: FeedbackItem }) {
     const theme = useMantineTheme()
@@ -27,28 +31,31 @@ export default function FeedbackVisualizer({ item }: { item: FeedbackItem }) {
     })
     const formRef = useRef<HTMLFormElement>(null)
 
-    const onFormSubmit = useCallback(async () => {
-        try {
-            //   await sendFeedbackEmail({ data, item });
-            form.reset()
-            notifications.show({
-                title: i18n.t('Success'),
-                message: i18n.t('Feedback sent successfully'),
-                color: 'green',
-            })
-        } catch (e) {
-            console.log('Error sending feedback:', e)
-            const errorMessage =
-                e instanceof Error
-                    ? e.message
-                    : 'Error sending feedback. Try again later.'
-            notifications.show({
-                title: i18n.t('Error'),
-                message: i18n.t(errorMessage),
-                color: 'red',
-            })
-        }
-    }, [form, item])
+    const onFormSubmit = useCallback(
+        async (data: FeedbackConfig) => {
+            try {
+                await sendFeedbackEmail({ data, item })
+                form.reset()
+                notifications.show({
+                    title: i18n.t('Success'),
+                    message: i18n.t('Feedback sent successfully'),
+                    color: 'green',
+                })
+            } catch (e) {
+                console.log('Error sending feedback:', e)
+                const errorMessage =
+                    e instanceof Error
+                        ? e.message
+                        : 'Error sending feedback. Try again later.'
+                notifications.show({
+                    title: i18n.t('Error'),
+                    message: i18n.t(errorMessage),
+                    color: 'red',
+                })
+            }
+        },
+        [form, item]
+    )
 
     const handleCancel = async () => {
         form.reset()

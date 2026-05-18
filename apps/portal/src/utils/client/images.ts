@@ -1,15 +1,9 @@
 'use client'
 
-import { useConfig } from '@dhis2/app-runtime'
-import { getImageUrl } from '@/utils/images'
-
 export function useGetImageUrl() {
-    const dhis2Config = useConfig()
-    const baseUrl = dhis2Config.baseUrl
-    const contextPath = new URL(baseUrl).pathname
-
-    return (documentId: string) =>
-        getImageUrl(documentId, {
-            baseUrl: `${contextPath}`,
-        })
+    if (process.env.NEXT_PUBLIC_CONTEXT_PATH) {
+        return (documentId: string) =>
+            `${process.env.NEXT_PUBLIC_CONTEXT_PATH}/api/documents/${documentId}/data`
+    }
+    return (documentId: string) => `/api/documents/${documentId}/data`
 }

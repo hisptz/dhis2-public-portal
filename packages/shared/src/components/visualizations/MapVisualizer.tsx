@@ -166,6 +166,7 @@ export const MapVisualizer = memo(function MapVisualizer({
                 bounceAtZoomLimits: true,
                 boxZoom: true,
                 zoom: mapConfig.zoom ?? 1,
+                attributionControl: false,
                 style: {
                     height: '100%',
                     width: '100%',

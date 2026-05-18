@@ -101,6 +101,14 @@ export function AppHeader({
                             height={
                                 headerConfig.style?.leadingLogo?.height ?? 100
                             }
+                            style={{
+                                width:
+                                    headerConfig.style?.leadingLogo?.width ??
+                                    100,
+                                height:
+                                    headerConfig.style?.leadingLogo?.height ??
+                                    100,
+                            }}
                             alt="logo"
                             src={leadingImage}
                         />
@@ -168,6 +176,14 @@ export function AppHeader({
                             height={
                                 headerConfig.style?.trailingLogo?.height ?? 100
                             }
+                            style={{
+                                width:
+                                    headerConfig.style?.trailingLogo?.width ??
+                                    100,
+                                height:
+                                    headerConfig.style?.trailingLogo?.height ??
+                                    100,
+                            }}
                             alt="logo"
                             src={trailingImage}
                             hiddenFrom="!xs"

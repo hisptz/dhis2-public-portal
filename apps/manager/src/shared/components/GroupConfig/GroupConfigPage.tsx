@@ -30,7 +30,7 @@ export function GroupConfigPage() {
     })
 
     const navigate = useNavigate({
-        from: '/modules/$moduleId/edit/$groupIndex',
+        from: '/modules/$moduleId/edit/$groupIndex/',
     })
 
     return (

@@ -40,11 +40,11 @@ COPY --from=builder /app/out/full/ .
 # ENV TURBO_TOKEN=$TURBO_TOKEN
 
 # Only the context path is required during build
-ARG CONTEXT_PATH
-ENV CONTEXT_PATH=$CONTEXT_PATH
+ARG NEXT_PUBLIC_CONTEXT_PATH
+ENV NEXT_PUBLIC_CONTEXT_PATH=$NEXT_PUBLIC_CONTEXT_PATH
 
 RUN touch ./apps/portal/.env.local
-RUN echo CONTEXT_PATH=$CONTEXT_PATH >> ./apps/portal/.env.local
+RUN echo NEXT_PUBLIC_CONTEXT_PATH=$NEXT_PUBLIC_CONTEXT_PATH >> ./apps/portal/.env.local
 RUN npm -g install corepack@latest
 RUN corepack enable
 RUN pnpm run build --filter portal
