@@ -237,6 +237,24 @@ export class D2HttpClient {
             url = `${path}?${qs}`
         }
 
+        /*
+         * The data engine does not handle well query parameters with repeated keys. Something like ?filters=dx:some-id&filters=pe:2025 will only take the first entry of the key.
+         * To deal with this, the below logic has been added. It basically converts repeated keys into a comma-separated string.
+         * */
+        if (path.includes('?')) {
+            const [, searchParams] = path.split('?')
+            const rawParams = new URLSearchParams(searchParams)
+            const params: Record<string, string> = {}
+            for (const [key, value] of rawParams) {
+                if (key in params) {
+                    params[key] = `${params[key]},${value}`
+                } else {
+                    params[key] = value
+                }
+            }
+            url = `${path}?${new URLSearchParams(params).toString()}`
+        }
+
         return this.dataEngine!.get(url).catch((e) =>
             D2HttpClient.handleFetchError(e, `GET ${path}`)
         ) as Promise<T>
