@@ -1,9 +1,8 @@
 # [1.6.0](https://github.com/hisptz/dhis2-public-portal/compare/v1.5.5...v1.6.0) (2026-05-18)
 
-
 ### Features
 
-* support for images on theme cards ([b7cddc2](https://github.com/hisptz/dhis2-public-portal/commit/b7cddc296ed13b05192a566cc3d481a25ad7be6e)), closes [#292](https://github.com/hisptz/dhis2-public-portal/issues/292)
+- support for images on theme cards ([b7cddc2](https://github.com/hisptz/dhis2-public-portal/commit/b7cddc296ed13b05192a566cc3d481a25ad7be6e)), closes [#292](https://github.com/hisptz/dhis2-public-portal/issues/292)
 
 ## [1.5.5](https://github.com/hisptz/dhis2-public-portal/compare/v1.5.4...v1.5.5) (2026-04-09)
 
