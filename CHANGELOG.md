@@ -1,3 +1,10 @@
+## [1.6.1](https://github.com/hisptz/dhis2-public-portal/compare/v1.6.0...v1.6.1) (2026-05-19)
+
+
+### Bug Fixes
+
+* fixes issues with some visualization not showing data due to API fetch errors ([#295](https://github.com/hisptz/dhis2-public-portal/issues/295)) ([4846eaf](https://github.com/hisptz/dhis2-public-portal/commit/4846eaf3accf8de6949901747a3b662480528b2b))
+
 # [1.6.0](https://github.com/hisptz/dhis2-public-portal/compare/v1.5.5...v1.6.0) (2026-05-18)
 
 ### Features
