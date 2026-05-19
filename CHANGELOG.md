@@ -1,3 +1,10 @@
+## [1.6.2](https://github.com/hisptz/dhis2-public-portal/compare/v1.6.1...v1.6.2) (2026-05-19)
+
+
+### Bug Fixes
+
+* fixes issues with geoFeatures API fetch errors for maps ([d94d2ed](https://github.com/hisptz/dhis2-public-portal/commit/d94d2ede02d95e59df73ad06c905aa4698b14ea8))
+
 ## [1.6.1](https://github.com/hisptz/dhis2-public-portal/compare/v1.6.0...v1.6.1) (2026-05-19)
 
 ### Bug Fixes
