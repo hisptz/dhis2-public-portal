@@ -242,7 +242,7 @@ export class D2HttpClient {
          * To deal with this, the below logic has been added. It basically converts repeated keys into a comma-separated string.
          * */
         if (path.includes('?')) {
-            const [, searchParams] = path.split('?')
+            const [actualPath, searchParams] = path.split('?')
             const rawParams = new URLSearchParams(searchParams)
             const params: Record<string, string> = {}
             for (const [key, value] of rawParams) {
@@ -252,7 +252,7 @@ export class D2HttpClient {
                     params[key] = value
                 }
             }
-            url = `${path}?${new URLSearchParams(params).toString()}`
+            url = `${actualPath}?${new URLSearchParams(params).toString()}`
         }
 
         return this.dataEngine!.get(url).catch((e) =>
