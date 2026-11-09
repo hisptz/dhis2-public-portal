@@ -47,3 +47,6 @@ graphify-out
 /services/data-service/app/
 /services/data-service/bundle/
 /services/data-service/src/generated/
+
+# TypeScript incremental build cache
+*.tsbuildinfo
