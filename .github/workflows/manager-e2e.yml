@@ -37,7 +37,7 @@ jobs:
               working-directory: apps/manager
 
             - name: Cypress run
-              uses: cypress-io/github-action@v6
+              uses: cypress-io/github-action@v7
               with:
                   install: false
                   working-directory: apps/manager
