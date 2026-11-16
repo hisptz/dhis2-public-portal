@@ -33,6 +33,8 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
+graphify-out
+
 # Misc
 .DS_Store
 *.pem
@@ -45,3 +47,6 @@ yarn-error.log*
 /services/data-service/app/
 /services/data-service/bundle/
 /services/data-service/src/generated/
+
+# TypeScript incremental build cache
+*.tsbuildinfo
